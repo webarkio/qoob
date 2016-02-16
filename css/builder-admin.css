@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "OpenSans-Bold";
+    src: url("../fonts/opensans/OpenSans-Bold.eot");
+    src: url("../fonts/opensans/OpenSans-Bold.eot?#iefix")format("embedded-opentype"),
+        url("../fonts/opensans/OpenSans-Bold.woff") format("woff"),
+        url("../fonts/opensans/OpenSans-Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+.cube-button-block {
+    width: 100%;
+    overflow: hidden;
+}
+
+.cube-button {
+    display: inline-block;
+    float: right;
+/*    width: 160px;
+    height: 56px;*/
+    margin: 20px 0 10px 0;
+    background-color: #2bc0e4;
+    border-bottom: solid 2px #008fb2;
+}
+.cube-button i.cube {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    vertical-align: middle;
+    margin: 0 11px 0 0;
+    background: transparent url('../img/cube_button.png') no-repeat;
+}
+.cube-button a,
+.cube-button a:hover {
+    display: block;
+    outline: none;
+    padding: 10px 32px 12px 33px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'OpenSans-Bold';
+}
+.cube-button span {
+    display: inline-block;
+    line-height: 33px;
+    vertical-align: bottom;
+    color: #ffffff;
+}
+.cube-button .cube-btn {
+    border-radius: 0;
+}
+.cube-button:hover {
+    background-color: #eec818;
+    border-bottom: solid 2px #b39404;
+}
+
+.cube-button a:focus, .cube-button a:active {
+    outline: 0;
+}
+

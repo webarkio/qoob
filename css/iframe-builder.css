@@ -1,0 +1,288 @@
+@font-face {
+    font-family: 'OpenSans-Light';
+    src: url('../fonts/opensans/OpenSans-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans-Regular';
+    src: url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('../fonts/opensans/OpenSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "PTSansRegular";
+    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "PTSansRegular";
+    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@-webkit-keyframes rotate {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+@-webkit-keyframes scaleUp {
+    from { 
+        opacity: 0;
+        -webkit-transform: scale(.5);
+    }
+}
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        transform: scale(.5);
+    }
+}
+
+html.active-js {
+    margin-top: 0 !important;
+}
+
+.fancybox_inner {
+    overflow-y: hidden;
+}
+
+.control-block-button {
+    position: absolute;
+    /*display: none;*/
+    margin-top: 44px;
+    right: 0;
+    z-index: 999;
+}
+
+.control-block-button a {
+    display: inline-block;
+    height: 31px;
+    width: 31px;
+    margin-right: 8px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    background-color: #C9C9C9;
+    background-repeat: no-repeat;
+    background-position: center center;
+    outline: none;
+}
+
+.control-block-button a:last-child {
+    margin-right: 19px;
+}
+
+.control-block-button a:hover {
+    background-color: #A0A0A0;
+}
+
+.control-block-button a.remove {
+    background-color: #D61616;
+    background-image: url(../img/cross.png);
+}
+
+.control-block-button a.remove:hover {
+    background-color: #970D0D;
+}
+
+.control-block-button a.edit {
+    background-image: url(../img/pencil.png);
+}
+
+.control-block-button a.list-up {
+    background-image: url(../img/arrow_up_move.png);
+}
+
+.control-block-button a.list-down {
+    background-image: url(../img/arrow_down_move.png);
+}
+
+.control-block-button.hidden-button {
+    display: none;
+}
+
+#builder-blocks {
+    position: relative;
+    min-height: 200px;
+}
+
+.content-block:first-child {
+    margin-top: -75px;
+}
+
+.content-block.content-fade  {
+    -webkit-animation: scaleUp .7s ease both;
+    animation: scaleUp .7s ease both;
+}
+
+.content-block-inner {
+    position: relative;
+}
+
+/* Misc visuals
+----------------------------------*/
+
+/* Overlays */
+#droppable-0 {
+    margin-top: -1px;
+}
+.ui-droppable {
+    position: relative;
+    width: 100%;
+    height: 75px;
+    /*display: none;*/
+    visibility: hidden;
+    margin-top: -38px;
+    z-index: 999;
+    font-family: 'OpenSans-Regular';
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+    background-color: rgba(178, 178, 178, 0.8);
+    /*margin-bottom: -15px;*/
+}
+
+.ui-droppable i.plus {
+    display: inline-block;
+    height: 21px;
+    width: 21px;
+    margin: 4px 8px 0 0;
+    vertical-align: middle;
+    background: transparent url(../img/plus.png) no-repeat center center;
+}
+
+.ui-droppable i.plus + span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ui-droppable .dropp-block,
+.ui-droppable .wait-block {
+    cursor: default;
+    line-height: 68px;
+    height: 70px;
+}
+
+.ui-droppable-active {
+    /*background-color: blue;*/
+    visibility: visible;
+    display: block;
+}
+
+.ui-droppable-hover {
+    /*margin-top: -43px;*/
+    /*height: 70px;*/
+    border-top: solid #2bc0e4 5px;
+    background-color: rgba(0, 208, 236, 0.8);
+    display: block;
+}
+
+.ui-droppable-hover i.plus {
+    margin-top: -6px;
+}
+
+.ui-droppable-hover span {
+    margin-top: -10px;
+}
+
+.ui-droppable.active-wait {
+    visibility: visible;
+    background-color: #2bc0e4;
+    font-family: 'OpenSans-Bold';
+    font-size: 18px;
+}
+
+.ui-droppable.active-wait .dropp-block {
+    display: none;
+}
+
+.ui-droppable .wait-block {
+    display: none;
+    line-height: 70px;
+}
+
+.ui-droppable.active-wait .wait-block {
+    display: block;
+}
+
+.wait-block .clock {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #fff;
+    height: 35px;
+    position: relative;
+    width: 35px;
+    vertical-align: middle;
+}
+
+.wait-block .clock + span {
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+.wait-block .clock:after {
+    background: #2bc0e4;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 2px;
+    z-index: 10;
+    border-radius: 50%;
+}
+
+.wait-block .minutes-container,
+.wait-block .seconds-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.wait-block .minutes {
+    background: #2bc0e4;
+    height: 15px;
+    left: 47%;
+    position: absolute;
+    top: 10%;
+    width: 3px;
+}
+
+.wait-block .seconds {
+    background: #2bc0e4;
+    height: 15px;
+    left: 47%;
+    position: absolute;
+    top: 14%;
+    width: 3px;
+    z-index: 8;
+}
+
+.wait-block .minutes-container {
+    animation: rotate 1s infinite linear;
+}
+.wait-block .seconds-container {
+    animation: rotate 0.3s infinite linear;
+}
