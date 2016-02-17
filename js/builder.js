@@ -88,7 +88,7 @@ Builder.prototype.create = function () {
  * @param integer pageId id of the page
  * @returns string URL
  */
-Builder.prototype.loadBuilderData = function (pageId) {
+Builder.prototype.getIframePageUrl = function (pageId) {
     return this.driver.getIframePageUrl(pageId);
 };
 
