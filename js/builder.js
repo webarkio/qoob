@@ -18,6 +18,7 @@ function Builder(options) {
     this.builderData = null;
     this.modelCounter = 0;
 }
+
 /**
  * Create html page builder
  * @returns {DOMElement}
