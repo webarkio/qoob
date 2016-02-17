@@ -73,7 +73,7 @@ Builder.prototype.create = function () {
             '</div>' +
             '</div>' +
             '<div id="builder-content"><div id="builder-viewport" class="pc">' +
-            '<iframe src="' + this.iframe.getPageUrl() + '" scrolling="auto" id="builder-iframe"></iframe>' +
+            '<iframe src="' + this.getIframePageUrl(this.pageId) + '" scrolling="auto" id="builder-iframe"></iframe>' +
             '</div></div>' +
             '</div>';
     
@@ -81,6 +81,15 @@ Builder.prototype.create = function () {
 //            '<div class="back"></div>' +
     
     jQuery('body').prepend(el);
+};
+
+/*
+ * Getting driver page id for iframe
+ * @param integer pageId id of the page
+ * @returns string URL
+ */
+Builder.prototype.loadBuilderData = function (pageId) {
+    return this.driver.getIframePageUrl(pageId);
 };
 
 /**
