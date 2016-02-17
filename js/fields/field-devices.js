@@ -34,6 +34,8 @@ Fields.devices = Backbone.View.extend(
 
         input.val(active);
         this.model.set(this.config.name, active.join(','));
+        
+        builder.iframe.visibilityBlocks(this.model.id, active);
     },
     /**
      * Get value field devices

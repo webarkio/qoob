@@ -793,6 +793,12 @@ ul.catalog-list li a:focus {
     margin-top: 30px;
 }
 
+.settings-block:after {
+    content: '';
+    display: block;
+    margin-bottom: 80px;
+}
+
 .settings-item .title {
     color: #ffffff;
     font-family: 'OpenSans-Regular';

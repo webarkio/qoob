@@ -34,7 +34,7 @@ BuilderIframe.prototype.resize = function () {
 
     var height = jQuery(window).height() - hideBuilder,
             width;
-            
+
     width = jQuery('#builder-viewport').hasClass('pc') ? '100%' : jQuery('#builder-iframe').width();
 
     jQuery('#builder-iframe').height(height).width(width);
@@ -78,4 +78,26 @@ BuilderIframe.prototype.getIframePageData = function () {
     };
 
     return result;
+};
+
+/**
+ * Change devices display
+ */
+BuilderIframe.prototype.visibilityBlocks = function (blockId, devices) {
+    var iframe = this.getIframeContents();
+
+    var block = iframe.find("[data-model-id='" + blockId + "']");
+
+    block.removeClass(function (index, classes) {
+        var regex = /^visible_/;
+        return classes.split(/\s+/).filter(function (c) {
+            return regex.test(c);
+        }).join(' ');
+    });
+    
+    console.log(blockId, devices, block);
+
+    for (var i = 0; i < devices.length; i++) {
+        block.addClass('visible_' + devices[i]);
+    }
 };

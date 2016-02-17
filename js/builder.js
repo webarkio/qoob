@@ -18,7 +18,6 @@ function Builder(options) {
     this.builderData = null;
     this.modelCounter = 0;
 }
-
 /**
  * Create html page builder
  * @returns {DOMElement}
@@ -39,23 +38,23 @@ Builder.prototype.create = function () {
             '<div class="edit-control-bar">' +
             '<div class="autosave">' +
             '<label class="checkbox-sb">' +
-            '<input type="checkbox" checked="checked"><span></span><em>Autosave</em>' +
+            '<input type="checkbox"  onclick="parent.builder.autosavePageData();" checked="checked"><span></span><em>Autosave</em>' +
             '</label>' +
             '</div>' +
             '<div class="edit-control-button">' +
-            '<button class="save" type="button"><span>Save</span>' +
+            '<button class="save" type="button" onclick="parent.builder.save(); return false;"><span>Save</span>' +
             '<div class="clock">' +
             '<div class="minutes-container"><div class="minutes"></div></div>' +
             '<div class="seconds-container"><div class="seconds"></div></div>' +
             '</div>' +
             '</button>' +
             '<button class="exit-btn" onclick="builder.exit(); return false;" type="button">Exit</button>' +
-            '<button class="screen-size pc active" type="button"></button>' +
-            '<button class="screen-size tablet-vertical" type="button"></button>' +
-            '<button class="screen-size phone-vertical" type="button"></button>' +
-            '<button class="screen-size tablet-horizontal" type="button"></button>' +
-            '<button class="screen-size phone-horizontal" type="button"></button>' +
-            '<button class="arrow-btn hide-builder" type="button"></button>' +
+            '<button class="screen-size pc active" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size tablet-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size phone-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size tablet-horizontal" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size phone-horizontal" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="arrow-btn hide-builder" onclick="parent.builder.toolbar.hideBuilder(this); return false;" type="button"></button>' +
             '</div>' +
             '</div>' +
             '</div>' +
