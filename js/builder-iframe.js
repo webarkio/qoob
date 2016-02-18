@@ -41,15 +41,6 @@ BuilderIframe.prototype.resize = function () {
 };
 
 /**
- * Get url iframe
- * 
- * @returns {String}
- */
-BuilderIframe.prototype.getPageUrl = function () {
-    return '/?page_id=' + jQuery('#post_ID').val() + '&qoob=true';
-};
-
-/**
  * Get iframe data
  * @returns {Object} data object and html
  */

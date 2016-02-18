@@ -81,10 +81,10 @@ BuilderMenu.prototype.showGroups = function () {
     this.rotate = false;
 
     // rotate menu
-    this.menuRotation(0);
+    this.menuRotation(90);
 
     // rotate logo
-    this.builder.toolbar.logoRotation(0);
+    this.builder.toolbar.logoRotation(-90);
 
     // add Scrollbar
     var catalogGroups = jQuery('#catalog-groups');
@@ -104,9 +104,9 @@ BuilderMenu.prototype.showGroups = function () {
  */
 BuilderMenu.prototype.showBlocks = function (groupId) {
     // rotate menu
-    this.menuRotation(-90);
+    this.menuRotation(180);
     // rotate logo
-    this.builder.toolbar.logoRotation(90);
+    this.builder.toolbar.logoRotation(-180);
 
     this.hideAll();
     jQuery('#group-' + groupId).show();
@@ -130,16 +130,16 @@ BuilderMenu.prototype.showSettings = function (blockId) {
     
     if (this.rotate == true) {
         // logo rotation
-        this.builder.toolbar.logoRotation(-450);
+        this.builder.toolbar.logoRotation(-360);
         // menu rotation
-        this.menuRotation(450);
+        this.menuRotation(360);
         // state rotate
         this.rotate = false;
     } else {
         // logo rotation
-        this.builder.toolbar.logoRotation(-90);
+        this.builder.toolbar.logoRotation(0);
         // menu rotation
-        this.menuRotation(90);
+        this.menuRotation(0);
         // state rotate
         this.rotate = true;
     }

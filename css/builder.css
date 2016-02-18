@@ -728,19 +728,21 @@ ul.catalog-list li a:focus {
 }
 
 #card .groups {
-    transform: translateZ(129px);
-}
-
-#card .list-group {
-    transform: rotateY(90deg) translateZ(129px);
-}
-
-#card .blocks-settings {
+    /*transform: translateZ(129px);*/
     transform: rotateY(-90deg) translateZ(129px);
 }
 
-#card .global-settings {
+#card .list-group {
     transform: rotateY(180deg) translateZ(129px);
+}
+
+#card .blocks-settings {
+    transform: translateZ(129px);
+    /*transform: rotateY(-90deg) translateZ(129px);*/
+}
+
+#card .global-settings {
+    transform: rotateY(90deg) translateZ(129px);
 }
 
 .preview-block {

@@ -38,26 +38,12 @@ Fields.textarea = Backbone.View.extend(
         return '<div class="title">' + this.config.label + '</div>' + '<textarea class="wpb-textarea visual_composer_tinymce content textarea_html wp-editor-area" id="' + textareaId + '"  rows="5" cols="27" name="' + this.config.name + '">' + this.getValue() + '</textarea>' +
                 '<script type="text/javascript">' +
                 'tinymce.init({' +
-                'theme: "-modern",' +
-                'object_resizing: false,' +
-                'menubar: false,' +
-                'toolbar: "undo redo | bullist numlist | styleselect | bold italic | link image",' +
+                'menubar: "false",' +
+                'toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist",' +
                 'statusbar: false,' +
-                'paste_as_text: true,' +
                 'selector: "textarea#' + textareaId + '",' +
                 'setup: function (ed) {' +
-                'ed.on("touchstart",function(e) {' +
-                'console.log("touchstart");'+
-                     
-                 
-                '}),' +
-                'ed.on("keyup undo redo change init",function(e) {' +
-                    'jQuery(ed.getBody()).on("blur", function(e) {' +
-                   '    console.log("blur");'+
-                   '});' +
-                   'jQuery(ed.getBody()).on("focus", function(e) {' +
-                       'console.log("focus");' +
-                   '});' +
+                'ed.on("change keyup undo redo change init",function(e) {' +
                 'var content = tinyMCE.get(ed.id).getContent();' +
                 'var escapedClassName = ed.id.replace(/(\[|\])/g, "\\$&");' +
                 'jQuery("#' + textareaId + '").html(content).trigger("change");' +

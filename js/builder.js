@@ -26,14 +26,14 @@ Builder.prototype.create = function () {
     var el = '<div id="builder">' +
             '<div id="builder-toolbar">' +
             '<div class="logo">' +
-                '<div class="wrap-cube">' +
-                    '<div class="cube">' +
-                        '<div class="two"></div>' +
-                        '<div class="three"></div>' +
-                        '<div class="four"></div>' +
-                        '<div class="five"></div>' +
-                    '</div>' +
-                '</div>' +
+            '<div class="wrap-cube">' +
+            '<div class="cube">' +
+            '<div class="two"></div>' +
+            '<div class="three"></div>' +
+            '<div class="four"></div>' +
+            '<div class="five"></div>' +
+            '</div>' +
+            '</div>' +
             '<div class="text"></div></div>' +
             '<div class="edit-control-bar">' +
             '<div class="autosave">' +
@@ -62,9 +62,9 @@ Builder.prototype.create = function () {
             '<div id="card">' +
             '<div class="card-wrap">' +
             '<div class="card-main">' +
+            '<div class="blocks-settings"></div>' +
             '<div class="groups"></div>' +
             '<div class="list-group"></div>' +
-            '<div class="blocks-settings"></div>' +
             '<div class="global-settings"></div>' +
             '</div>' +
             '</div>' +
@@ -75,10 +75,6 @@ Builder.prototype.create = function () {
             '<iframe src="' + this.getIframePageUrl(this.pageId) + '" scrolling="auto" id="builder-iframe"></iframe>' +
             '</div></div>' +
             '</div>';
-    
-//                '<div class="front"></div>' +
-//            '<div class="back"></div>' +
-    
     jQuery('body').prepend(el);
 };
 
