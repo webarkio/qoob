@@ -135,6 +135,11 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
 
     // create droppable event
     this.droppable(block.model.id);
+    
+    // default visible block
+    if (block.model.get('devices')) {
+        builder.iframe.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
+    }
 
     // setting block height
     this.builder.menu.resize();

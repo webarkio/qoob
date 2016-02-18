@@ -76,6 +76,9 @@ BuilderMenu.prototype.createBlocks = function () {
  */
 BuilderMenu.prototype.showGroups = function () {
     jQuery('#catalog-groups').show();
+    
+    // default position block settings
+    this.rotate = false;
 
     // rotate menu
     this.menuRotation(0);
@@ -121,6 +124,9 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
  * @param {Integer} blockId
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
+    
+    if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
+        return;
     
     if (this.rotate == true) {
         // logo rotation
