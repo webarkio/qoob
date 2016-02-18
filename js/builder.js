@@ -152,15 +152,7 @@ Builder.prototype.save = function () {
  * Out of the Builder
  */
 Builder.prototype.exit = function () {
-    if (!jQuery('.autosave input').prop("checked")) {
-        var alert_exit = confirm("Are you sure you want to exit without save?");
-        if (!alert_exit) {
-            return false;
-        }
-    }
-
-    var url = '/wp-admin/post.php?post=' + jQuery('#post_ID').val() + '&action=edit';
-    window.location.href = url;
+    this.driver.exit(this.pageId);
 };
 
 /**
