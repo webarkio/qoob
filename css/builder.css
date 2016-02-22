@@ -133,7 +133,7 @@
 
 #builder-toolbar .logo {
     position: absolute;
-    margin: 20px 0 0 24px;
+    margin: 17px 0 0 24px;
 
 }
 
@@ -142,62 +142,71 @@
     display: inline-block;
     vertical-align: middle;
 }
-
-#builder-toolbar .logo .text {
-    width: 40px;
-    height: 16px;
-    margin-left: 10px;
-    background: transparent url(../img/logo_text.png) no-repeat;
-}
-
 #builder-toolbar .logo .wrap-cube {
-    -webkit-perspective: 1000px;
-    -webkit-perspective-origin: 50% 50%;
-    perspective: 1000px;
-    perspective-origin: 50% 50%;
-}
+    /*    -webkit-perspective: 1000px;
+        perspective: 1000px;*/
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
 
+}
 #builder-toolbar .logo .cube {
     position: relative;
-    margin: 0 auto;
-    height: 30px;
-    width: 30px;
+    height: 100%;
+    width: 100%;
     -webkit-transform-style: preserve-3d;
     -webkit-transition: all .5s ease;
     transform-style: preserve-3d;
     transition: all .5s ease;
+    transform-origin: 17.5px 17.5px 0;
 }
-
 #builder-toolbar .logo .cube div {
     position: absolute;
-    height: 30px;
-    width: 30px;
-    background: #1b1b1b url(../img/logo.png) no-repeat;
+    height: 36px;
+    width: 36px;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
-
-
-
-#builder-toolbar .logo .cube .two {
-    -webkit-transform: translateZ(14px);
-    transform: translateZ(14px);
+#builder-toolbar .logo .cube .front {
+    background: transparent url(../img/logo_front.png) no-repeat;
+    transform: translateZ(17.5px);
+}
+#builder-toolbar .logo .cube .back {
+    background: transparent url(../img/logo_back.png) no-repeat;
+    transform: rotateY(180deg) translateZ(17.5px);
+}
+#builder-toolbar .logo .cube .right {
+    transform: rotateY(90deg) translateZ(17.5px);
+}
+#builder-toolbar .logo .cube .left {
+    transform: rotateY(-90deg) translateZ(17.5px);
+}
+#builder-toolbar .logo .cube .top {
+    background: transparent url(../img/logo_top.png) no-repeat;
+    transform: rotateY(90deg) rotateX(90deg) rotateZ(90deg) translateZ(17.5px);
+}
+#builder-toolbar .logo .cube .bottom {
+    background: transparent url(../img/logo_bottom.png) no-repeat;
+    transform: rotateX(-90deg) translateZ(17.5px);
+}
+#builder-toolbar .logo .text {
+    width: 64px;
+    height: 28px;
+    margin-left: 8px;
+}
+#builder-toolbar .logo .text.show-front {
+    background: transparent url(../img/logo_front_text.png) no-repeat;
+}
+#builder-toolbar .logo .text.show-bottom {
+    background: transparent url(../img/logo_bottom_text.png) no-repeat;
+}
+#builder-toolbar .logo .text.show-back {
+    background: transparent url(../img/logo_back_text.png) no-repeat;
+}
+#builder-toolbar .logo .text.show-top {
+    background: transparent url(../img/logo_top_text.png) no-repeat;
 }
 
-#builder-toolbar .logo .cube .three {
-    -webkit-transform: rotateY(90deg) translateZ(14px);
-    transform: rotateY(90deg) translateZ(14px);
-}
-
-#builder-toolbar .logo .cube .four {
-    -webkit-transform: rotateY(180deg) translateZ(14px);
-    transform: rotateY(180deg) translateZ(14px);
-}
-
-#builder-toolbar .logo .cube .five {
-    -webkit-transform: rotateY(-90deg) translateZ(14px);
-    transform: rotateY(-90deg) translateZ(14px);
-}
 
 #builder-toolbar .edit-control-bar {
     position: absolute;
@@ -232,7 +241,18 @@
     color: #fff;
     font-family: 'OpenSans-Regular';
     font-size: 16px;
+}
+#builder-toolbar .edit-control-button.show-front .save {
     background-color: #2bc0e4;
+}
+#builder-toolbar .edit-control-button.show-bottom .save {
+    background-color: #FF1865;
+}
+#builder-toolbar .edit-control-button.show-back .save {
+    background-color: #FF5504;
+}
+#builder-toolbar .edit-control-button.show-top .save {
+    background-color: #00C526;
 }
 
 #builder-toolbar .edit-control-button .undo {
@@ -255,53 +275,117 @@
     background-image: url(../img/pc.png);
 }
 
-#builder-toolbar .edit-control-button .pc:hover,
-#builder-toolbar .edit-control-button .pc.active {
-    background-image: url(../img/pc_hover.png);
+#builder-toolbar .edit-control-button.show-front .pc:hover,
+#builder-toolbar .edit-control-button.show-front .pc.active {
+    background-image: url(../img/pc_hover_front.png);
+}
+#builder-toolbar .edit-control-button.show-bottom .pc:hover,
+#builder-toolbar .edit-control-button.show-bottom .pc.active {
+    background-image: url(../img/pc_hover_bottom.png);
+}
+#builder-toolbar .edit-control-button.show-back .pc:hover,
+#builder-toolbar .edit-control-button.show-back .pc.active {
+    background-image: url(../img/pc_hover_back.png);
+}
+#builder-toolbar .edit-control-button.show-top .pc:hover,
+#builder-toolbar .edit-control-button.show-top .pc.active {
+    background-image: url(../img/pc_hover_top.png);
 }
 
 #builder-toolbar .edit-control-button .tablet-vertical {
     background-image: url(../img/tablet_vertical.png);
 }
-
-#builder-toolbar .edit-control-button .tablet-vertical:hover,
-#builder-toolbar .edit-control-button .tablet-vertical.active {
-    background-image: url(../img/tablet_vertical_hover.png);
+#builder-toolbar .edit-control-button.show-front .tablet-vertical:hover,
+#builder-toolbar .edit-control-button.show-front .tablet-vertical.active {
+    background-image: url(../img/tablet_vertical_hover_front.png);
+}
+#builder-toolbar .edit-control-button.show-bottom .tablet-vertical:hover,
+#builder-toolbar .edit-control-button.show-bottom .tablet-vertical.active {
+    background-image: url(../img/tablet_vertical_hover_bottom.png);
+}
+#builder-toolbar .edit-control-button.show-back .tablet-vertical:hover,
+#builder-toolbar .edit-control-button.show-back .tablet-vertical.active {
+    background-image: url(../img/tablet_vertical_hover_back.png);
+}
+#builder-toolbar .edit-control-button.show-top .tablet-vertical:hover,
+#builder-toolbar .edit-control-button.show-top .tablet-vertical.active {
+    background-image: url(../img/tablet_vertical_hover_top.png);
 }
 
 #builder-toolbar .edit-control-button .phone-vertical {
     background-image: url(../img/phone_vertical.png);
 }
-
-#builder-toolbar .edit-control-button .phone-vertical:hover,
-#builder-toolbar .edit-control-button .phone-vertical.active {
-    background-image: url(../img/phone_vertical_hover.png);
+#builder-toolbar .edit-control-button.show-front .phone-vertical:hover,
+#builder-toolbar .edit-control-button.show-front .phone-vertical.active {
+    background-image: url(../img/phone_vertical_hover_front.png);
+}
+#builder-toolbar .edit-control-button.show-bottom .phone-vertical:hover,
+#builder-toolbar .edit-control-button.show-bottom .phone-vertical.active {
+    background-image: url(../img/phone_vertical_hover_bottom.png);
+}
+#builder-toolbar .edit-control-button.show-back .phone-vertical:hover,
+#builder-toolbar .edit-control-button.show-back .phone-vertical.active {
+    background-image: url(../img/phone_vertical_hover_back.png);
+}
+#builder-toolbar .edit-control-button.show-top .phone-vertical:hover,
+#builder-toolbar .edit-control-button.show-top .phone-vertical.active {
+    background-image: url(../img/phone_vertical_hover_top.png);
 }
 
 #builder-toolbar .edit-control-button .tablet-horizontal {
     background-image: url(../img/tablet_horizontal.png);
 }
-
-#builder-toolbar .edit-control-button .tablet-horizontal:hover,
-#builder-toolbar .edit-control-button .tablet-horizontal.active {
-    background-image: url(../img/tablet_horizontal_hover.png);
+#builder-toolbar .edit-control-button.show-front .tablet-horizontal:hover,
+#builder-toolbar .edit-control-button.show-front .tablet-horizontal.active {
+    background-image: url(../img/tablet_horizontal_hover_front.png);
+}
+#builder-toolbar .edit-control-button.show-bottom .tablet-horizontal:hover,
+#builder-toolbar .edit-control-button.show-bottom .tablet-horizontal.active {
+    background-image: url(../img/tablet_horizontal_hover_bottom.png);
+}
+#builder-toolbar .edit-control-button.show-back .tablet-horizontal:hover,
+#builder-toolbar .edit-control-button.show-back .tablet-horizontal.active {
+    background-image: url(../img/tablet_horizontal_hover_back.png);
+}
+#builder-toolbar .edit-control-button.show-top .tablet-horizontal:hover,
+#builder-toolbar .edit-control-button.show-top .tablet-horizontal.active {
+    background-image: url(../img/tablet_horizontal_hover_top.png);
 }
 
 #builder-toolbar .edit-control-button .phone-horizontal {
     background-image: url(../img/phone_horizontal.png);
 }
-
-#builder-toolbar .edit-control-button .phone-horizontal:hover,
-#builder-toolbar .edit-control-button .phone-horizontal.active {
-    background-image: url(../img/phone_horizontal_hover.png);
+#builder-toolbar .edit-control-button.show-front .phone-horizontal:hover,
+#builder-toolbar .edit-control-button.show-front .phone-horizontal.active {
+    background-image: url(../img/phone_horizontal_hover_front.png);
+}
+#builder-toolbar .edit-control-button.show-bottom .phone-horizontal:hover,
+#builder-toolbar .edit-control-button.show-bottom .phone-horizontal.active {
+    background-image: url(../img/phone_horizontal_hover_bottom.png);
+}
+#builder-toolbar .edit-control-button.show-back .phone-horizontal:hover,
+#builder-toolbar .edit-control-button.show-back .phone-horizontal.active {
+    background-image: url(../img/phone_horizontal_hover_back.png);
+}
+#builder-toolbar .edit-control-button.show-top .phone-horizontal:hover,
+#builder-toolbar .edit-control-button.show-top .phone-horizontal.active {
+    background-image: url(../img/phone_horizontal_hover_top.png);
 }
 
 #builder-toolbar .edit-control-button .arrow-btn {
     background-image: url(../img/arrow.png);
 }
-
-#builder-toolbar .edit-control-button .arrow-btn:hover {
-    background-image: url(../img/arrow_hover.png);
+#builder-toolbar .edit-control-button.show-front .arrow-btn:hover {
+    background-image: url(../img/arrow_hover_front.png);
+}
+#builder-toolbar .edit-control-button.show-bottom .arrow-btn:hover {
+    background-image: url(../img/arrow_hover_bottom.png);
+}
+#builder-toolbar .edit-control-button.show-back .arrow-btn:hover {
+    background-image: url(../img/arrow_hover_back.png);
+}
+#builder-toolbar .edit-control-button.show-top .arrow-btn:hover {
+    background-image: url(../img/arrow_hover_top.png);
 }
 
 #builder>.arrow-btn.active {
@@ -333,9 +417,17 @@
     font-family: 'OpenSans-Regular';
     font-size: 16px;
 }
-
-#builder-toolbar .edit-control-button .exit-btn:hover {
+#builder-toolbar .edit-control-button.show-front .exit-btn:hover {
     color: #2bc0e4;
+}
+#builder-toolbar .edit-control-button.show-bottom .exit-btn:hover {
+    color: #FF1865;
+}
+#builder-toolbar .edit-control-button.show-back .exit-btn:hover {
+    color: #FF5504;
+}
+#builder-toolbar .edit-control-button.show-top .exit-btn:hover {
+    color: #00C526;
 }
 
 #builder-toolbar .clock {
@@ -349,7 +441,6 @@
 }
 
 #builder-toolbar .clock:after {
-    background: #2bc0e4;
     content: "";
     position: absolute;
     left: 50%;
@@ -369,23 +460,42 @@
     left: 0;
 }
 
-#builder-toolbar .minutes {
-    background: #2bc0e4;
+#builder-toolbar .minutes,
+#builder-toolbar .seconds {
     height: 15px;
     left: 47%;
     position: absolute;
-    top: 10%;
     width: 3px;
 }
 
+#builder-toolbar .minutes {
+    top: 10%;
+}
+
 #builder-toolbar .seconds {
-    background: #2bc0e4;
-    height: 15px;
-    left: 47%;
-    position: absolute;
     top: 14%;
-    width: 3px;
     z-index: 8;
+}
+
+#builder-toolbar .edit-control-button.show-front .minutes,
+#builder-toolbar .edit-control-button.show-front .seconds,
+#builder-toolbar .edit-control-button.show-front .clock:after {
+    background-color: #2bc0e4;
+}
+#builder-toolbar .edit-control-button.show-bottom .minutes,
+#builder-toolbar .edit-control-button.show-bottom .seconds,
+#builder-toolbar .edit-control-button.show-bottom .clock:after {
+    background-color: #FF1865;
+}
+#builder-toolbar .edit-control-button.show-back .minutes,
+#builder-toolbar .edit-control-button.show-back .seconds,
+#builder-toolbar .edit-control-button.show-back .clock:after {
+    background-color: #FF5504;
+}
+#builder-toolbar .edit-control-button.show-top .minutes,
+#builder-toolbar .edit-control-button.show-top .seconds,
+#builder-toolbar .edit-control-button.show-top .clock:after {
+    background-color: #00C526;
 }
 
 #builder-toolbar .minutes-container {
@@ -643,21 +753,15 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 ul.catalog-list {
-    overflow-y: auto;
-    width: 188px;
     height: 100%;
-    margin: 70px 0 0 70px;
+    margin: 70px 0 0 0;
     z-index: 1;
 }
 
 ul.catalog-list li {
     font-family: 'OpenSans-Regular';
     font-size: 16px;
-    margin: 40px 0 0 0;
-}
-
-ul.catalog-list li:first-child  {
-    margin: 0;
+    margin: 0 0 1px 0;
 }
 
 ul.catalog-list:after {
@@ -666,15 +770,31 @@ ul.catalog-list:after {
     margin-bottom: 70px;
 }
 
-ul.catalog-list li a, 
+ul.catalog-list li a {
+    display: block;
+    background: #525252 url(../img/menu-arrow-right.png) no-repeat 231px center;
+    padding: 29px 0 29px 27px;
+    -webkit-transition-property: border,background,color;
+    transition-property: border,background,color;
+    -webkit-transition-duration: .05s;
+    transition-duration: .05s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+
+ul.catalog-list li a,
 ul.catalog-list li a:hover,
-ul.catalog-list li a:active, 
+ul.catalog-list li a:active,
 ul.catalog-list li a:focus {
     outline: none;
     border:none;
     text-decoration: none;
     color: #ffffff;
-    box-shadow:none;
+    box-shadow: none;
+}
+
+ul.catalog-list li a:hover {
+    background: #b2b2b2 url(../img/menu-arrow-right-hover.png) no-repeat 231px center;
 }
 
 .menu-block{
@@ -716,7 +836,7 @@ ul.catalog-list li a:focus {
 #card .groups,
 #card .list-group,
 #card .blocks-settings,
-#card .global-settings {   
+#card .global-settings {
     position: absolute;
     left: 0;
     top: 0;
@@ -936,11 +1056,11 @@ ul.catalog-list li a:focus {
 }
 .ui-accordion-content-active {
     height: inherit !important;
-} 
+}
 
 .ui-sortable-helper, .ui-sortable-helper * {
     cursor: all-scroll!important;
-} 
+}
 /* end accordion */
 .settings-item .title.inline-block {
     margin-bottom: 0;
@@ -1417,7 +1537,7 @@ body.builder-editor {
 }
 
 .ps-container.ps-active-y .preview-block {
-    padding-left: 2px;    
+    padding-left: 2px;
 }
 
 .ps-container.ps-active-y .settings-item {

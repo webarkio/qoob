@@ -84,7 +84,7 @@ BuilderMenu.prototype.showGroups = function () {
     this.menuRotation(90);
 
     // rotate logo
-    this.builder.toolbar.logoRotation(-90);
+    this.builder.toolbar.logoRotation();
 
     // add Scrollbar
     var catalogGroups = jQuery('#catalog-groups');
@@ -106,7 +106,7 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
     // rotate menu
     this.menuRotation(180);
     // rotate logo
-    this.builder.toolbar.logoRotation(-180);
+    this.builder.toolbar.logoRotation();
 
     this.hideAll();
     jQuery('#group-' + groupId).show();
@@ -128,16 +128,15 @@ BuilderMenu.prototype.showSettings = function (blockId) {
     if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
         return;
     
+    // logo rotation
+    this.builder.toolbar.logoRotation();
+    
     if (this.rotate == true) {
-        // logo rotation
-        this.builder.toolbar.logoRotation(-360);
         // menu rotation
         this.menuRotation(360);
         // state rotate
         this.rotate = false;
     } else {
-        // logo rotation
-        this.builder.toolbar.logoRotation(0);
         // menu rotation
         this.menuRotation(0);
         // state rotate

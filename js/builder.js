@@ -28,10 +28,12 @@ Builder.prototype.create = function () {
             '<div class="logo">' +
             '<div class="wrap-cube">' +
             '<div class="cube">' +
-            '<div class="two"></div>' +
-            '<div class="three"></div>' +
-            '<div class="four"></div>' +
-            '<div class="five"></div>' +
+            '<div class="front"></div>' +
+            '<div class="back"></div>' +
+            '<div class="top"></div>' +
+            '<div class="bottom"></div>' +
+            '<div class="left"></div>' +
+            '<div class="right"></div>' +
             '</div>' +
             '</div>' +
             '<div class="text"></div></div>' +

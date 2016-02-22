@@ -5,6 +5,9 @@
  * @class  BuilderToolbar
  */
 function BuilderToolbar() {
+    this.steps = 0;
+    this.countTransform = 0;
+    this.sideClassName = '';
 }
 
 /**
@@ -39,8 +42,30 @@ BuilderToolbar.prototype.isVisible = function () {
  * Logo rotation
  * @param {Integer} rot
  */
-BuilderToolbar.prototype.logoRotation = function (rot) {
-    jQuery('#builder-toolbar .logo .cube').css("transform", "rotateY(" + rot + "deg)");
+BuilderToolbar.prototype.logoRotation = function () {
+    if (this.sideClassName != '') {
+        jQuery('#builder-toolbar .logo .text').removeClass(this.sideClassName);
+        jQuery('.edit-control-button').removeClass(this.sideClassName);
+    }
+
+    if (this.steps == 0) {
+        this.sideClassName = 'show-front';
+        this.steps++;
+    } else if (this.steps == 1) {
+        this.sideClassName = 'show-bottom';
+        this.steps++;
+    } else if (this.steps == 2) {
+        this.sideClassName = 'show-back';
+        this.steps++;
+    } else if (this.steps == 3) {
+        this.sideClassName = 'show-top';
+        this.steps = 0;
+    }
+
+    jQuery('#builder-toolbar .logo .text').addClass(this.sideClassName);
+    jQuery('.edit-control-button').addClass(this.sideClassName);
+    jQuery('#builder-toolbar .logo .cube').css({transform: "rotateX(" + this.countTransform + "deg)"});
+    this.countTransform += 90;
 };
 
 /**

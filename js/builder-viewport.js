@@ -192,7 +192,7 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
         // logo rotation
-        this.builder.toolbar.logoRotation(-90);
+        this.builder.toolbar.logoRotation();
         //menu rotation
         this.builder.menu.menuRotation(90);
     }
