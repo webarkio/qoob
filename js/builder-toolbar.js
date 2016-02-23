@@ -111,6 +111,8 @@ BuilderToolbar.prototype.screenSize = function (elem) {
 BuilderToolbar.prototype.hideBuilder = function (elem) {
 
     var iframe = builder.iframe.getIframeContents();
+    
+    var activeClassColor = jQuery('.edit-control-button').prop('class').split(' ')[1] || '';
 
     if (jQuery(elem).hasClass('active')) {
         jQuery('#builder-toolbar').fadeIn(300);
@@ -128,8 +130,10 @@ BuilderToolbar.prototype.hideBuilder = function (elem) {
             builder.viewPort.resize();
             builder.iframe.resize();
             var width = (jQuery('#builder-iframe').width() - jQuery('#builder-iframe').contents().width());
-            jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button>');
-            jQuery('#builder>.hide-builder').fadeIn(300);
+            
+            jQuery('#builder').prepend('<div class="container-button '+ activeClassColor +'">' +
+                    '<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button></div>');
+            jQuery('#builder .container-button>.hide-builder').fadeIn(300);
         });
         jQuery('#builder-menu').fadeOut(300);
         iframe.find('.control-block-button').fadeOut(300);

@@ -375,20 +375,24 @@
 #builder-toolbar .edit-control-button .arrow-btn {
     background-image: url(../img/arrow.png);
 }
-#builder-toolbar .edit-control-button.show-front .arrow-btn:hover {
+#builder-toolbar .edit-control-button.show-front .arrow-btn:hover,
+#builder .container-button.show-front .arrow-btn:hover {
     background-image: url(../img/arrow_hover_front.png);
 }
-#builder-toolbar .edit-control-button.show-bottom .arrow-btn:hover {
+#builder-toolbar .edit-control-button.show-bottom .arrow-btn:hover,
+#builder .container-button.show-bottom .arrow-btn:hover {
     background-image: url(../img/arrow_hover_bottom.png);
 }
-#builder-toolbar .edit-control-button.show-back .arrow-btn:hover {
+#builder-toolbar .edit-control-button.show-back .arrow-btn:hover,
+#builder .container-button.show-back .arrow-btn:hover {
     background-image: url(../img/arrow_hover_back.png);
 }
-#builder-toolbar .edit-control-button.show-top .arrow-btn:hover {
+#builder-toolbar .edit-control-button.show-top .arrow-btn:hover,
+#builder .container-button.show-top .arrow-btn:hover {
     background-image: url(../img/arrow_hover_top.png);
 }
 
-#builder>.arrow-btn.active {
+#builder>.container-button>.arrow-btn.active {
     cursor: pointer;
     width: 70px;
     height: 70px;
@@ -406,10 +410,6 @@
     -ms-transform: rotate(-180deg);
     -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
-}
-
-#builder>.arrow-btn.active:hover {
-    background-image: url(../img/arrow_hover.png);
 }
 
 #builder-toolbar .edit-control-button .exit-btn {

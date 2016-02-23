@@ -26,7 +26,7 @@ Fields.accordion = Backbone.View.extend(
         blocks.each(function (index, listItem) {
             var dataId = jQuery(listItem).data('model-id');
             var model = _.findWhere(values.models, {id: dataId});
-            model.set('order', jQuery(listItem).index());
+            model.set('order', jQuery(listItem).index()-1);
         });
     },
     /**
