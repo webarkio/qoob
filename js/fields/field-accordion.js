@@ -59,6 +59,7 @@ Fields.accordion = Backbone.View.extend(
             item.config = settings;
             items.push(item.render().el);
         }
+        
 
         var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
 
@@ -94,6 +95,10 @@ Fields.accordion = Backbone.View.extend(
                 '}); </script>';
 
         var block = jQuery('<div id="' + this.getUniqueId() + '"></div>');
+        
+        if (settings.length == 1 && settings[0].type == 'image') {
+            block.addClass('without-title');
+        }
 
         block.append('<div class="title">' + this.config.label + '</div>');
         block.append(items);

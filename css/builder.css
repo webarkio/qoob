@@ -921,6 +921,9 @@ ul.catalog-list li a:hover {
     margin-bottom: 80px;
 }
 
+.ui-accordion-content.settings-block:after {
+    margin-bottom: 0;
+}
 .settings-item .title {
     color: #ffffff;
     font-family: 'OpenSans-Regular';
@@ -1032,14 +1035,19 @@ ul.catalog-list li a:hover {
     margin-top: 20px;
 }
 
+.without-title .settings-accordion .title_accordion .text {
+    display: none;
+}
+
 .drag-elem {
     background: url(../img/drag.png) no-repeat;
     width: 34px;
     height: 34px;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 14px;
+    margin-right: 0;
     display: inline-block;
     float: right;
+    background-size: 25px 25px;
 }
 
 .add-block {
