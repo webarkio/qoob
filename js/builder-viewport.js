@@ -135,6 +135,11 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
 
     // create droppable event
     this.droppable(block.model.id);
+    
+    // default visible block
+    if (block.model.get('devices')) {
+        builder.iframe.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
+    }
 
     // setting block height
     this.builder.menu.resize();
@@ -187,9 +192,9 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
         // logo rotation
-        this.builder.toolbar.logoRotation(0);
+        this.builder.toolbar.logoRotation();
         //menu rotation
-        this.builder.menu.menuRotation(0);
+        this.builder.menu.menuRotation(90);
     }
 
     // remove DOM

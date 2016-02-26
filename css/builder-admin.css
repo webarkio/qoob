@@ -34,26 +34,29 @@
 .cube-button a:hover {
     display: block;
     outline: none;
-    padding: 10px 32px 12px 33px;
+    padding: 10px 33px 12px 33px;
     text-decoration: none;
     font-size: 20px;
     font-family: 'OpenSans-Bold';
 }
 .cube-button span {
     display: inline-block;
-    line-height: 33px;
-    vertical-align: bottom;
-    color: #ffffff;
+    vertical-align: middle;
+    width: 64px;
+    height: 28px;
+    background: transparent url(../img/cube_button_text.png) no-repeat center center;
 }
 .cube-button .cube-btn {
     border-radius: 0;
 }
 .cube-button:hover {
-    background-color: #eec818;
-    border-bottom: solid 2px #b39404;
+    background-color: #FF5617;
+    border-bottom: solid 2px #CE2500;
 }
 
-.cube-button a:focus, .cube-button a:active {
+.cube-button:focus, .cube-button:active {
     outline: 0;
+    background-color: #6BC43B;
+    border-bottom: solid 2px #49951E;
 }
 

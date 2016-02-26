@@ -76,12 +76,15 @@ BuilderMenu.prototype.createBlocks = function () {
  */
 BuilderMenu.prototype.showGroups = function () {
     jQuery('#catalog-groups').show();
+    
+    // default position block settings
+    this.rotate = false;
 
     // rotate menu
-    this.menuRotation(0);
+    this.menuRotation(90);
 
     // rotate logo
-    this.builder.toolbar.logoRotation(0);
+    this.builder.toolbar.logoRotation();
 
     // add Scrollbar
     var catalogGroups = jQuery('#catalog-groups');
@@ -101,9 +104,9 @@ BuilderMenu.prototype.showGroups = function () {
  */
 BuilderMenu.prototype.showBlocks = function (groupId) {
     // rotate menu
-    this.menuRotation(-90);
+    this.menuRotation(180);
     // rotate logo
-    this.builder.toolbar.logoRotation(90);
+    this.builder.toolbar.logoRotation();
 
     this.hideAll();
     jQuery('#group-' + groupId).show();
@@ -122,18 +125,20 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
     
+    if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
+        return;
+    
+    // logo rotation
+    this.builder.toolbar.logoRotation();
+    
     if (this.rotate == true) {
-        // logo rotation
-        this.builder.toolbar.logoRotation(-450);
         // menu rotation
-        this.menuRotation(450);
+        this.menuRotation(360);
         // state rotate
         this.rotate = false;
     } else {
-        // logo rotation
-        this.builder.toolbar.logoRotation(-90);
         // menu rotation
-        this.menuRotation(90);
+        this.menuRotation(0);
         // state rotate
         this.rotate = true;
     }

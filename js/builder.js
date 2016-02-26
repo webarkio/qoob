@@ -26,35 +26,37 @@ Builder.prototype.create = function () {
     var el = '<div id="builder">' +
             '<div id="builder-toolbar">' +
             '<div class="logo">' +
-                '<div class="wrap-cube">' +
-                    '<div class="cube">' +
-                        '<div class="two"></div>' +
-                        '<div class="three"></div>' +
-                        '<div class="four"></div>' +
-                        '<div class="five"></div>' +
-                    '</div>' +
-                '</div>' +
+            '<div class="wrap-cube">' +
+            '<div class="cube">' +
+            '<div class="front"></div>' +
+            '<div class="back"></div>' +
+            '<div class="top"></div>' +
+            '<div class="bottom"></div>' +
+            '<div class="left"></div>' +
+            '<div class="right"></div>' +
+            '</div>' +
+            '</div>' +
             '<div class="text"></div></div>' +
             '<div class="edit-control-bar">' +
             '<div class="autosave">' +
             '<label class="checkbox-sb">' +
-            '<input type="checkbox" checked="checked"><span></span><em>Autosave</em>' +
+            '<input type="checkbox"  onclick="parent.builder.autosavePageData();" checked="checked"><span></span><em>Autosave</em>' +
             '</label>' +
             '</div>' +
             '<div class="edit-control-button">' +
-            '<button class="save" type="button"><span>Save</span>' +
+            '<button class="save" type="button" onclick="parent.builder.save(); return false;"><span>Save</span>' +
             '<div class="clock">' +
             '<div class="minutes-container"><div class="minutes"></div></div>' +
             '<div class="seconds-container"><div class="seconds"></div></div>' +
             '</div>' +
             '</button>' +
             '<button class="exit-btn" onclick="builder.exit(); return false;" type="button">Exit</button>' +
-            '<button class="screen-size pc active" type="button"></button>' +
-            '<button class="screen-size tablet-vertical" type="button"></button>' +
-            '<button class="screen-size phone-vertical" type="button"></button>' +
-            '<button class="screen-size tablet-horizontal" type="button"></button>' +
-            '<button class="screen-size phone-horizontal" type="button"></button>' +
-            '<button class="arrow-btn hide-builder" type="button"></button>' +
+            '<button class="screen-size pc active" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size tablet-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size phone-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size tablet-horizontal" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="screen-size phone-horizontal" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
+            '<button class="arrow-btn hide-builder" onclick="parent.builder.toolbar.hideBuilder(this); return false;" type="button"></button>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -62,9 +64,9 @@ Builder.prototype.create = function () {
             '<div id="card">' +
             '<div class="card-wrap">' +
             '<div class="card-main">' +
+            '<div class="blocks-settings"></div>' +
             '<div class="groups"></div>' +
             '<div class="list-group"></div>' +
-            '<div class="blocks-settings"></div>' +
             '<div class="global-settings"></div>' +
             '</div>' +
             '</div>' +
@@ -72,14 +74,19 @@ Builder.prototype.create = function () {
             '</div>' +
             '</div>' +
             '<div id="builder-content"><div id="builder-viewport" class="pc">' +
-            '<iframe src="' + this.iframe.getPageUrl() + '" scrolling="auto" id="builder-iframe"></iframe>' +
+            '<iframe src="' + this.getIframePageUrl(this.pageId) + '" scrolling="auto" id="builder-iframe"></iframe>' +
             '</div></div>' +
             '</div>';
-    
-//                '<div class="front"></div>' +
-//            '<div class="back"></div>' +
-    
     jQuery('body').prepend(el);
+};
+
+/*
+ * Getting driver page id for iframe
+ * @param integer pageId id of the page
+ * @returns string URL
+ */
+Builder.prototype.getIframePageUrl = function (pageId) {
+    return this.driver.getIframePageUrl(pageId);
 };
 
 /**
@@ -142,15 +149,7 @@ Builder.prototype.save = function () {
  * Out of the Builder
  */
 Builder.prototype.exit = function () {
-    if (!jQuery('.autosave input').prop("checked")) {
-        var alert_exit = confirm("Are you sure you want to exit without save?");
-        if (!alert_exit) {
-            return false;
-        }
-    }
-
-    var url = '/wp-admin/post.php?post=' + jQuery('#post_ID').val() + '&action=edit';
-    window.location.href = url;
+    this.driver.exit(this.pageId);
 };
 
 /**
