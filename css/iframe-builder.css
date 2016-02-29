@@ -151,7 +151,7 @@ html.active-js {
     height: 75px;
     /*display: none;*/
     visibility: hidden;
-    margin-top: -38px;
+    margin-top: -75px;
     z-index: 999;
     font-family: 'OpenSans-Regular';
     font-size: 16px;
