@@ -91,7 +91,7 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
  */
 BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     var self = this;
-    var iframe = this.builder.iframe.getIframeContents();
+    var iframe = this.builder.iframe.getWindowIframe();
 
 //    var isFlipped = '';
 //    if (jQuery('#card').hasClass('flipped')) {
@@ -118,24 +118,24 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
         }
 
         //Add controll buttons
-        iframe.find('.content-block[data-model-id="' + afterBlockId + '"]').after('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
-        iframe.find('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+        iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]').after('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
+        iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
     } else {
         self.builder.pageData.push(block.model);
 //            jQuery("#builder-viewport").append(fullBlock);
 
         if (afterBlockId == 0) {
-            iframe.find('#builder-blocks').prepend('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
-            iframe.find('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+            iframe.jQuery('#builder-blocks').prepend('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
+            iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
         } else {
-            iframe.find('#builder-blocks').append('<div class="content-block" data-model-id="' + block.model.id + '"></div>');
-            iframe.find('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+            iframe.jQuery('#builder-blocks').append('<div class="content-block" data-model-id="' + block.model.id + '"></div>');
+            iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
         }
     }
 
     // create droppable event
     this.droppable(block.model.id);
-    
+
     // default visible block
     if (block.model.get('devices')) {
         builder.iframe.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
@@ -157,11 +157,8 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
  */
 BuilderViewPort.prototype.triggerBuilderBlock = function () {
     // Trigger change builder blocks for theme
-    var iframe = builder.iframe.getIframeContents();
-    var elem = iframe.find('#builder-blocks');
-    var ev = builder.iframe.getIframe()[0].contentWindow.document.createEvent('UIEvents');
-    ev.initUIEvent('change', true, true, window, 1);
-    elem[0].dispatchEvent(ev);
+    var iframe = this.builder.iframe.getWindowIframe();
+    iframe.jQuery('#builder-blocks').trigger('change');
 };
 
 /**
@@ -176,10 +173,10 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
     }
 
     var self = this;
-    var iframe = this.builder.iframe.getIframeContents();
+    var iframe = this.builder.iframe.getWindowIframe();
 
     // remove DOM on iframe
-    iframe.find('div[data-model-id="' + blockId + '"]').remove();
+    iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
 
     // remove model
     for (var i = 0; i < self.builder.pageData.length; i++) {
@@ -242,12 +239,12 @@ BuilderViewPort.prototype.droppable = function (blockId) {
  * Create default droppable in iframe
  */
 BuilderViewPort.prototype.createDefaultDroppable = function () {
-    var iframe = this.builder.iframe.getIframeContents();
+    var iframe = this.builder.iframe.getWindowIframe();
     var droppable = '<div id="droppable-0" class="droppable">' +
             '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
             '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
             '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
-    iframe.find('#builder-blocks').before(jQuery(droppable));
+    iframe.jQuery('#builder-blocks').before(iframe.jQuery(droppable));
     this.droppable('0');
 }
 

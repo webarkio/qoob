@@ -74,7 +74,7 @@ Builder.prototype.create = function () {
             '</div>' +
             '</div>' +
             '<div id="builder-content"><div id="builder-viewport" class="pc">' +
-            '<iframe src="' + this.getIframePageUrl(this.pageId) + '" scrolling="auto" id="builder-iframe"></iframe>' +
+            '<iframe src="' + this.getIframePageUrl(this.pageId) + '" scrolling="auto" name="builder-iframe" id="builder-iframe"></iframe>' +
             '</div></div>' +
             '</div>';
     jQuery('body').prepend(el);
