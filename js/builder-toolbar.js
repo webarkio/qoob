@@ -5,8 +5,6 @@
  * @class  BuilderToolbar
  */
 function BuilderToolbar() {
-    this.steps = 0;
-    this.countTransform = 0;
     this.sideClassName = '';
 }
 
@@ -42,30 +40,23 @@ BuilderToolbar.prototype.isVisible = function () {
  * Logo rotation
  * @param {Integer} rot
  */
-BuilderToolbar.prototype.logoRotation = function () {
+BuilderToolbar.prototype.logoRotation = function (rot) {
     if (this.sideClassName != '') {
         jQuery('#builder-toolbar .logo .text').removeClass(this.sideClassName);
-        jQuery('.edit-control-button').removeClass(this.sideClassName);
     }
 
-    if (this.steps == 0) {
-        this.sideClassName = 'show-front';
-        this.steps++;
-    } else if (this.steps == 1) {
-        this.sideClassName = 'show-bottom';
-        this.steps++;
-    } else if (this.steps == 2) {
-        this.sideClassName = 'show-back';
-        this.steps++;
-    } else if (this.steps == 3) {
-        this.sideClassName = 'show-top';
-        this.steps = 0;
+    if (rot == '-90') {
+        this.sideClassName = 'step-one';
+    } else if (rot == '-180') {
+        this.sideClassName = 'step-two';
+    } else if (this.steps == '-270') {
+        this.sideClassName = 'step-three';
+    } else if (rot == '0' || rot == '-360') {
+        this.sideClassName = 'step-four';
     }
 
     jQuery('#builder-toolbar .logo .text').addClass(this.sideClassName);
-    jQuery('.edit-control-button').addClass(this.sideClassName);
-    jQuery('#builder-toolbar .logo .cube').css({transform: "rotateX(" + this.countTransform + "deg)"});
-    this.countTransform += 90;
+    jQuery('#builder-toolbar .logo .cube').css("transform", "rotateY(" + rot + "deg)");
 };
 
 /**
@@ -111,8 +102,6 @@ BuilderToolbar.prototype.screenSize = function (elem) {
 BuilderToolbar.prototype.hideBuilder = function (elem) {
 
     var iframe = builder.iframe.getIframeContents();
-    
-    var activeClassColor = jQuery('.edit-control-button').prop('class').split(' ')[1] || '';
 
     if (jQuery(elem).hasClass('active')) {
         jQuery('#builder-toolbar').fadeIn(300);
@@ -131,9 +120,8 @@ BuilderToolbar.prototype.hideBuilder = function (elem) {
             builder.iframe.resize();
             var width = (jQuery('#builder-iframe').width() - jQuery('#builder-iframe').contents().width());
             
-            jQuery('#builder').prepend('<div class="container-button '+ activeClassColor +'">' +
-                    '<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button></div>');
-            jQuery('#builder .container-button>.hide-builder').fadeIn(300);
+            jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button>');
+            jQuery('#builder>.hide-builder').fadeIn(300);
         });
         jQuery('#builder-menu').fadeOut(300);
         iframe.find('.control-block-button').fadeOut(300);
