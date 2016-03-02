@@ -26,6 +26,14 @@ BuilderIframe.prototype.getIframeContents = function () {
 }
 
 /**
+ * Get iframe documnet
+ * @returns {DOMElement}
+ */
+BuilderIframe.prototype.getWindowIframe = function () {
+    return window.frames["builder-iframe"];
+}
+
+/**
  * Resize iframe
  */
 BuilderIframe.prototype.resize = function () {

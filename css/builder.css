@@ -168,25 +168,25 @@
     backface-visibility: hidden;
 }
 #builder-toolbar .logo .cube .front {
-    background: transparent url(../img/logo_front.png) no-repeat;
+    background: transparent url(../img/logo_four.png) no-repeat;
     transform: translateZ(17.5px);
 }
 #builder-toolbar .logo .cube .back {
-    background: transparent url(../img/logo_back.png) no-repeat;
+    background: transparent url(../img/logo_two.png) no-repeat;    
     transform: rotateY(180deg) translateZ(17.5px);
 }
 #builder-toolbar .logo .cube .right {
+    background: transparent url(../img/logo_one.png) no-repeat;
     transform: rotateY(90deg) translateZ(17.5px);
 }
 #builder-toolbar .logo .cube .left {
+    background: transparent url(../img/logo_three.png) no-repeat;
     transform: rotateY(-90deg) translateZ(17.5px);
 }
 #builder-toolbar .logo .cube .top {
-    background: transparent url(../img/logo_top.png) no-repeat;
     transform: rotateY(90deg) rotateX(90deg) rotateZ(90deg) translateZ(17.5px);
 }
 #builder-toolbar .logo .cube .bottom {
-    background: transparent url(../img/logo_bottom.png) no-repeat;
     transform: rotateX(-90deg) translateZ(17.5px);
 }
 #builder-toolbar .logo .text {
@@ -194,17 +194,17 @@
     height: 28px;
     margin-left: 8px;
 }
-#builder-toolbar .logo .text.show-front {
-    background: transparent url(../img/logo_front_text.png) no-repeat;
+#builder-toolbar .logo .text.step-one {
+    background: transparent url(../img/logo_text_one.png) no-repeat;
 }
-#builder-toolbar .logo .text.show-bottom {
-    background: transparent url(../img/logo_bottom_text.png) no-repeat;
+#builder-toolbar .logo .text.step-two {
+    background: transparent url(../img/logo_text_two.png) no-repeat;
 }
-#builder-toolbar .logo .text.show-back {
-    background: transparent url(../img/logo_back_text.png) no-repeat;
+#builder-toolbar .logo .text.step-three {
+    background: transparent url(../img/logo_text_three.png) no-repeat;
 }
-#builder-toolbar .logo .text.show-top {
-    background: transparent url(../img/logo_top_text.png) no-repeat;
+#builder-toolbar .logo .text.step-four {
+    background: transparent url(../img/logo_text_four.png) no-repeat;
 }
 
 
@@ -241,18 +241,7 @@
     color: #fff;
     font-family: 'OpenSans-Regular';
     font-size: 16px;
-}
-#builder-toolbar .edit-control-button.show-front .save {
     background-color: #2bc0e4;
-}
-#builder-toolbar .edit-control-button.show-bottom .save {
-    background-color: #FF1865;
-}
-#builder-toolbar .edit-control-button.show-back .save {
-    background-color: #FF5504;
-}
-#builder-toolbar .edit-control-button.show-top .save {
-    background-color: #00C526;
 }
 
 #builder-toolbar .edit-control-button .undo {
@@ -274,125 +263,49 @@
 #builder-toolbar .edit-control-button .pc {
     background-image: url(../img/pc.png);
 }
+#builder-toolbar .edit-control-button .pc:hover,
+#builder-toolbar .edit-control-button .pc.active {
+    background-image: url(../img/pc_hover.png);
+}
 
-#builder-toolbar .edit-control-button.show-front .pc:hover,
-#builder-toolbar .edit-control-button.show-front .pc.active {
-    background-image: url(../img/pc_hover_front.png);
-}
-#builder-toolbar .edit-control-button.show-bottom .pc:hover,
-#builder-toolbar .edit-control-button.show-bottom .pc.active {
-    background-image: url(../img/pc_hover_bottom.png);
-}
-#builder-toolbar .edit-control-button.show-back .pc:hover,
-#builder-toolbar .edit-control-button.show-back .pc.active {
-    background-image: url(../img/pc_hover_back.png);
-}
-#builder-toolbar .edit-control-button.show-top .pc:hover,
-#builder-toolbar .edit-control-button.show-top .pc.active {
-    background-image: url(../img/pc_hover_top.png);
-}
 
 #builder-toolbar .edit-control-button .tablet-vertical {
     background-image: url(../img/tablet_vertical.png);
 }
-#builder-toolbar .edit-control-button.show-front .tablet-vertical:hover,
-#builder-toolbar .edit-control-button.show-front .tablet-vertical.active {
-    background-image: url(../img/tablet_vertical_hover_front.png);
+#builder-toolbar .edit-control-button .tablet-vertical:hover,
+#builder-toolbar .edit-control-button .tablet-vertical.active {
+    background-image: url(../img/tablet_vertical_hover.png);
 }
-#builder-toolbar .edit-control-button.show-bottom .tablet-vertical:hover,
-#builder-toolbar .edit-control-button.show-bottom .tablet-vertical.active {
-    background-image: url(../img/tablet_vertical_hover_bottom.png);
-}
-#builder-toolbar .edit-control-button.show-back .tablet-vertical:hover,
-#builder-toolbar .edit-control-button.show-back .tablet-vertical.active {
-    background-image: url(../img/tablet_vertical_hover_back.png);
-}
-#builder-toolbar .edit-control-button.show-top .tablet-vertical:hover,
-#builder-toolbar .edit-control-button.show-top .tablet-vertical.active {
-    background-image: url(../img/tablet_vertical_hover_top.png);
-}
+
 
 #builder-toolbar .edit-control-button .phone-vertical {
     background-image: url(../img/phone_vertical.png);
 }
-#builder-toolbar .edit-control-button.show-front .phone-vertical:hover,
-#builder-toolbar .edit-control-button.show-front .phone-vertical.active {
-    background-image: url(../img/phone_vertical_hover_front.png);
-}
-#builder-toolbar .edit-control-button.show-bottom .phone-vertical:hover,
-#builder-toolbar .edit-control-button.show-bottom .phone-vertical.active {
-    background-image: url(../img/phone_vertical_hover_bottom.png);
-}
-#builder-toolbar .edit-control-button.show-back .phone-vertical:hover,
-#builder-toolbar .edit-control-button.show-back .phone-vertical.active {
-    background-image: url(../img/phone_vertical_hover_back.png);
-}
-#builder-toolbar .edit-control-button.show-top .phone-vertical:hover,
-#builder-toolbar .edit-control-button.show-top .phone-vertical.active {
-    background-image: url(../img/phone_vertical_hover_top.png);
+#builder-toolbar .edit-control-button .phone-vertical:hover,
+#builder-toolbar .edit-control-button .phone-vertical.active {
+    background-image: url(../img/phone_vertical_hover.png);
 }
 
 #builder-toolbar .edit-control-button .tablet-horizontal {
     background-image: url(../img/tablet_horizontal.png);
 }
-#builder-toolbar .edit-control-button.show-front .tablet-horizontal:hover,
-#builder-toolbar .edit-control-button.show-front .tablet-horizontal.active {
-    background-image: url(../img/tablet_horizontal_hover_front.png);
-}
-#builder-toolbar .edit-control-button.show-bottom .tablet-horizontal:hover,
-#builder-toolbar .edit-control-button.show-bottom .tablet-horizontal.active {
-    background-image: url(../img/tablet_horizontal_hover_bottom.png);
-}
-#builder-toolbar .edit-control-button.show-back .tablet-horizontal:hover,
-#builder-toolbar .edit-control-button.show-back .tablet-horizontal.active {
-    background-image: url(../img/tablet_horizontal_hover_back.png);
-}
-#builder-toolbar .edit-control-button.show-top .tablet-horizontal:hover,
-#builder-toolbar .edit-control-button.show-top .tablet-horizontal.active {
-    background-image: url(../img/tablet_horizontal_hover_top.png);
+#builder-toolbar .edit-control-button .tablet-horizontal:hover,
+#builder-toolbar .edit-control-button .tablet-horizontal.active {
+    background-image: url(../img/tablet_horizontal_hover.png);
 }
 
 #builder-toolbar .edit-control-button .phone-horizontal {
     background-image: url(../img/phone_horizontal.png);
 }
-#builder-toolbar .edit-control-button.show-front .phone-horizontal:hover,
-#builder-toolbar .edit-control-button.show-front .phone-horizontal.active {
-    background-image: url(../img/phone_horizontal_hover_front.png);
-}
-#builder-toolbar .edit-control-button.show-bottom .phone-horizontal:hover,
-#builder-toolbar .edit-control-button.show-bottom .phone-horizontal.active {
-    background-image: url(../img/phone_horizontal_hover_bottom.png);
-}
-#builder-toolbar .edit-control-button.show-back .phone-horizontal:hover,
-#builder-toolbar .edit-control-button.show-back .phone-horizontal.active {
-    background-image: url(../img/phone_horizontal_hover_back.png);
-}
-#builder-toolbar .edit-control-button.show-top .phone-horizontal:hover,
-#builder-toolbar .edit-control-button.show-top .phone-horizontal.active {
-    background-image: url(../img/phone_horizontal_hover_top.png);
+#builder-toolbar .edit-control-button .phone-horizontal:hover,
+#builder-toolbar .edit-control-button .phone-horizontal.active {
+    background-image: url(../img/phone_horizontal_hover.png);
 }
 
 #builder-toolbar .edit-control-button .arrow-btn {
     background-image: url(../img/arrow.png);
 }
-#builder-toolbar .edit-control-button.show-front .arrow-btn:hover,
-#builder .container-button.show-front .arrow-btn:hover {
-    background-image: url(../img/arrow_hover_front.png);
-}
-#builder-toolbar .edit-control-button.show-bottom .arrow-btn:hover,
-#builder .container-button.show-bottom .arrow-btn:hover {
-    background-image: url(../img/arrow_hover_bottom.png);
-}
-#builder-toolbar .edit-control-button.show-back .arrow-btn:hover,
-#builder .container-button.show-back .arrow-btn:hover {
-    background-image: url(../img/arrow_hover_back.png);
-}
-#builder-toolbar .edit-control-button.show-top .arrow-btn:hover,
-#builder .container-button.show-top .arrow-btn:hover {
-    background-image: url(../img/arrow_hover_top.png);
-}
-
-#builder>.container-button>.arrow-btn.active {
+#builder>.arrow-btn.active {
     cursor: pointer;
     width: 70px;
     height: 70px;
@@ -411,23 +324,18 @@
     -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
 }
+#builder-toolbar .edit-control-button .arrow-btn:hover,
+#builder>.arrow-btn:hover {
+    background-image: url(../img/arrow_hover.png);
+}
 
 #builder-toolbar .edit-control-button .exit-btn {
     color: #c9c9c9;
     font-family: 'OpenSans-Regular';
     font-size: 16px;
 }
-#builder-toolbar .edit-control-button.show-front .exit-btn:hover {
+#builder-toolbar .edit-control-button .exit-btn:hover {
     color: #2bc0e4;
-}
-#builder-toolbar .edit-control-button.show-bottom .exit-btn:hover {
-    color: #FF1865;
-}
-#builder-toolbar .edit-control-button.show-back .exit-btn:hover {
-    color: #FF5504;
-}
-#builder-toolbar .edit-control-button.show-top .exit-btn:hover {
-    color: #00C526;
 }
 
 #builder-toolbar .clock {
@@ -477,25 +385,10 @@
     z-index: 8;
 }
 
-#builder-toolbar .edit-control-button.show-front .minutes,
-#builder-toolbar .edit-control-button.show-front .seconds,
-#builder-toolbar .edit-control-button.show-front .clock:after {
+#builder-toolbar .edit-control-button .minutes,
+#builder-toolbar .edit-control-button .seconds,
+#builder-toolbar .edit-control-button .clock:after {
     background-color: #2bc0e4;
-}
-#builder-toolbar .edit-control-button.show-bottom .minutes,
-#builder-toolbar .edit-control-button.show-bottom .seconds,
-#builder-toolbar .edit-control-button.show-bottom .clock:after {
-    background-color: #FF1865;
-}
-#builder-toolbar .edit-control-button.show-back .minutes,
-#builder-toolbar .edit-control-button.show-back .seconds,
-#builder-toolbar .edit-control-button.show-back .clock:after {
-    background-color: #FF5504;
-}
-#builder-toolbar .edit-control-button.show-top .minutes,
-#builder-toolbar .edit-control-button.show-top .seconds,
-#builder-toolbar .edit-control-button.show-top .clock:after {
-    background-color: #00C526;
 }
 
 #builder-toolbar .minutes-container {
