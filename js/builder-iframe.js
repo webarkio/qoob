@@ -88,7 +88,7 @@ BuilderIframe.prototype.visibilityBlocks = function (blockId, devices) {
     var block = iframe.find("[data-model-id='" + blockId + "']");
 
     block.removeClass(function (index, classes) {
-        var regex = /^visible_/;
+        var regex = /^visible-/;
         return classes.split(/\s+/).filter(function (c) {
             return regex.test(c);
         }).join(' ');
@@ -97,6 +97,6 @@ BuilderIframe.prototype.visibilityBlocks = function (blockId, devices) {
     console.log(blockId, devices, block);
 
     for (var i = 0; i < devices.length; i++) {
-        block.addClass('visible_' + devices[i]);
+        block.addClass('visible-' + devices[i]);
     }
 };
