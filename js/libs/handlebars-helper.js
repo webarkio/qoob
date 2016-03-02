@@ -36,24 +36,6 @@ Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
 /**
  * Handlebars helpers.
  * @namespace Handlebars.helpers
- * If block helper equal
- * @param {string} a
- * @param {string} b
- * @param {object} opts
- * @function if_eq
- * @memberof Handlebars.helpers
- * @returns {unresolved}
- */
-Handlebars.registerHelper('if_eq', function (a, b, opts) {
-    if (a == b)
-        return opts.fn(this);
-    else
-        return opts.inverse(this);
-});
-
-/**
- * Handlebars helpers.
- * @namespace Handlebars.helpers
  * each with index and modulo
  * @param {object} options
  * @function ifIsNthItem
@@ -129,5 +111,57 @@ Handlebars.registerHelper("videoUrl", function (url, full) {
     }
 
     return url;
+});
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * @function for
+ * @param {n} string
+ * @param {object} options
+ * @memberof Handlebars.helpers
+ * @returns {Array}
+ */
+Handlebars.registerHelper('for', function(n, options) {
+    var accum = '';
+    for(var i = 0; i < n; ++i)
+        accum += options.fn(i);
+    return accum;
+});
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * If block helper ifCond
+ * @param {string} v1
+ * @param {string} operator
+ * @param {string} v2
+ * @param {object} options
+ * @function ifCond
+ * @memberof Handlebars.helpers
+ * @returns {unresolved}
+ */
+Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+    switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
 });
 
