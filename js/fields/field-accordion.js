@@ -53,13 +53,18 @@ Fields.accordion = Backbone.View.extend(
 
         var items = [];
         var value_models = values.models;
+        
+        // sort accordion settings
+        value_models = _.sortBy(value_models, function(model){
+            console.log(model.get('order'));
+            return model.get('order');
+        });       
 
         for (var i = 0; i < value_models.length; i++) {
             var item = new Fields['accordion_item']({model: value_models[i]});
             item.config = settings;
             items.push(item.render().el);
-        }
-        
+        }       
 
         var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
 
