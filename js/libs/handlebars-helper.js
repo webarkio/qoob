@@ -90,17 +90,17 @@ Handlebars.registerHelper("videoUrl", function (url, full) {
             type_video = "//www.youtube.com/embed/" + url_split[url_split.length - 1];
 
             if (full) {
-                type_video = type_video + "?controls=0&disablekb=1&fs=0&showinfo=0&vq=hd1080";
+                type_video = type_video + "?controls=0&disablekb=1&fs=0&showinfo=0&vq=hd1080&wmode=opaque";
             } else {
-                type_video = type_video + "?controls=1&disablekb=1&fs=0&showinfo=0&vq=hd1080";
+                type_video = type_video + "?controls=1&disablekb=1&fs=0&showinfo=0&vq=hd1080&wmode=opaque";
             }
         } else if (url_split[2] == 'www.youtube.com') {
             type_video = "//www.youtube.com/embed/" + id_video;
 
             if (full) {
-                type_video = type_video + "?controls=0&disablekb=1&fs=0&showinfo=0&vq=hd1080";
+                type_video = type_video + "?controls=0&disablekb=1&fs=0&showinfo=0&vq=hd1080&wmode=opaque";
             } else {
-                type_video = type_video + "?controls=1&disablekb=1&fs=0&showinfo=0&vq=hd1080";
+                type_video = type_video + "?controls=1&disablekb=1&fs=0&showinfo=0&vq=hd1080&wmode=opaque";
             }
         } else {
             type_video = "//player.vimeo.com/video/" + url_split[url_split.length - 1];
