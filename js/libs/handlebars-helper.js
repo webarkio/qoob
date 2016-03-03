@@ -80,14 +80,14 @@ Handlebars.registerHelper("splitString", function (context, options) {
  * @memberof Handlebars.helpers
  * @returns {String}
  */
-Handlebars.registerHelper("videoUrl", function (url, full) {    
+Handlebars.registerHelper("videoUrl", function (url, full) {
     if (url) {
         var url_split = url.split(/[/]/);
         var id_video = url.substr(url.indexOf('=') + 1, url.length);
-        
+
         var type_video = "";
         if (url_split[2] == 'youtu.be') {
-            type_video = "//www.youtube.com/embed/" + url_split[url_split.length-1];
+            type_video = "//www.youtube.com/embed/" + url_split[url_split.length - 1];
 
             if (full) {
                 type_video = type_video + "?controls=0&disablekb=1&fs=0&showinfo=0&vq=hd1080&wmode=opaque";
@@ -103,10 +103,10 @@ Handlebars.registerHelper("videoUrl", function (url, full) {
                 type_video = type_video + "?controls=1&disablekb=1&fs=0&showinfo=0&vq=hd1080&wmode=opaque";
             }
         } else {
-            type_video = "//player.vimeo.com/video/" + url_split[url_split.length-1];
+            type_video = "//player.vimeo.com/video/" + url_split[url_split.length - 1];
             type_video = type_video + "?color=ffffff&title=0&portrait=0";
         }
-        
+
         return type_video;
     }
 
@@ -122,9 +122,9 @@ Handlebars.registerHelper("videoUrl", function (url, full) {
  * @memberof Handlebars.helpers
  * @returns {Array}
  */
-Handlebars.registerHelper('for', function(n, options) {
+Handlebars.registerHelper('for', function (n, options) {
     var accum = '';
-    for(var i = 0; i < n; ++i)
+    for (var i = 0; i < n; ++i)
         accum += options.fn(i);
     return accum;
 });
@@ -165,3 +165,54 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Sorts array by a given key and return every count
+ * @function everyNth
+ * @memberof Handlebars.helpers
+ * @param {array} context - The data to sort.
+ * @param {key} every - The key to sort by.
+ * @returns {array}
+ */
+Handlebars.registerHelper('everyNth', function (context, every, options) {
+
+    if (options.sort == 'sort') {
+        var key = options.key;
+        context = context.sort(function (a, b) {
+            a = a[key];
+            b = b[key];
+            if (a > b) {
+                return 1;
+            }
+            if (a === b) {
+                return 0;
+            }
+            if (a < b) {
+                return -1;
+            }
+        });
+    }
+
+    var fn = options.fn, inverse = options.inverse;
+    var ret = "";
+    if (context && context.length > 0) {
+        var counter = 0;
+        for (var i = 0, j = context.length; i < j; i++) {
+            var modZero = i % every === 0;
+            ret = ret + fn(_.extend({}, context[i], {
+                isModZero: modZero,
+                isModZeroNotFirst: modZero && i > 0,
+                isLast: i === context.length - 1,
+                itteration: counter
+            }));
+            if (modZero) {
+                counter++;
+            }
+        }
+    } else {
+        ret = inverse(this);
+    }
+
+    return ret;
+});
