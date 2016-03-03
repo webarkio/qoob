@@ -1,10 +1,13 @@
+/*global jQuery*/
+'use strict';
+
 /**
  * The class responsible for the loader builder
  *  
  * @version 0.0.1
  * @class  BuilderLoader
  */
-//module.exports.BuilderLoader = BuilderLoader;
+
 function BuilderLoader(builder) {
     this.builder = builder;
     this.left = 0;
@@ -77,3 +80,7 @@ BuilderLoader.prototype.hideWaitBlock = function () {
         iframe.find('.content-block').removeClass('content-fade');
     }, 1000);
 };
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = BuilderLoader;
+}
