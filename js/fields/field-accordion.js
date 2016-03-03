@@ -56,7 +56,6 @@ Fields.accordion = Backbone.View.extend(
         
         // sort accordion settings
         value_models = _.sortBy(value_models, function(model){
-            console.log(model.get('order'));
             return model.get('order');
         });       
 
