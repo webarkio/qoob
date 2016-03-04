@@ -1,4 +1,4 @@
-/**
+    /**
  * Initialize page builder
  *
  * @version 0.0.1
@@ -278,12 +278,12 @@ Builder.prototype.getDefaultSettings = function (templateId, cb) {
  * Activate page builder
  */
 Builder.prototype.activate = function () {
-    this.loader.add(4);
+    
     var self = this;
-    this.create();
-
+    self.loader.add(4);
+    self.create();
     self.loader.sub();
-    this.makeLayoutSize();
+    self.makeLayoutSize();
     self.loader.sub();
     jQuery(window).resize(function () {
         self.makeLayoutSize();

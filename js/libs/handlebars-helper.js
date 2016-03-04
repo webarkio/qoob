@@ -165,17 +165,6 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 
-
-
-Handlebars.registerHelper("everyOther", function (index, amount, scope) {
-    if (++index % amount)
-        return scope.inverse(this);
-    else
-        return scope.fn(this);
-});
-
-
-
 /**
  * Handlebars helpers.
  * @namespace Handlebars.helpers
@@ -208,13 +197,18 @@ Handlebars.registerHelper('everyNth', function (context, every, options) {
     var fn = options.fn, inverse = options.inverse;
     var ret = "";
     if (context && context.length > 0) {
+        var counter = 0;
         for (var i = 0, j = context.length; i < j; i++) {
             var modZero = i % every === 0;
             ret = ret + fn(_.extend({}, context[i], {
                 isModZero: modZero,
                 isModZeroNotFirst: modZero && i > 0,
-                isLast: i === context.length - 1
+                isLast: i === context.length - 1,
+                itteration: counter
             }));
+            if (modZero) {
+                counter++;
+            }
         }
     } else {
         ret = inverse(this);
@@ -222,4 +216,3 @@ Handlebars.registerHelper('everyNth', function (context, every, options) {
 
     return ret;
 });
-
