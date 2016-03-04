@@ -2,6 +2,7 @@ var Fields = Fields || {};
 Fields.accordion = Backbone.View.extend(
 /** @lends Fields.accordion.prototype */{
     className: "settings-item",
+    uniqueId: null,
     events: {
         'click .add-block': 'addNewItem',
         'drop': 'changePosition'
@@ -41,7 +42,7 @@ Fields.accordion = Backbone.View.extend(
      * @returns {String}
      */
     getUniqueId: function () {
-        return "accordion-" + this.model.id;
+        return this.uniqueId = this.uniqueId || _.uniqueId('accordion-');
     },
     /**
      * Create filed accordion
