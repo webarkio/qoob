@@ -17,8 +17,10 @@ var BlockView = Backbone.View.extend({
                 data[i] = data[i].toJSON();
             }
         }
-
-        this.$el.html(this.template(data));
+        
+        var iframe = builder.iframe.getWindowIframe();
+        iframe.jQuery(this.$el).html(this.template(data));
+//        this.$el.html(this.template(data));
         this.afterRender();
         this.trigger('afterRender');
         return this;
