@@ -142,7 +142,7 @@ Fields.accordion = Backbone.View.extend(
             self.changePosition();
         });
 
-        item.model.set('order', (values.models ? values.models.length : 0));
+        item.model.set('order', (values.models ? values.models.length-1 : 0));
 
         jQuery("#" + this.getUniqueId()).append(item.render().el);
         jQuery("#" + this.getUniqueId()).accordion("refresh");

@@ -657,10 +657,11 @@ ul.catalog-list li {
     margin: 0 0 1px 0;
 }
 
-ul.catalog-list:after {
+ul.catalog-list:after,
+.preview-blocks:after {
     content: '';
     display: block;
-    margin-bottom: 70px;
+    margin-bottom: 75px;
 }
 
 ul.catalog-list li a {
