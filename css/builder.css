@@ -76,8 +76,8 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
     margin-left: 35px;
     border-radius: 50%;
 }

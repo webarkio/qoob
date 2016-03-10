@@ -51,7 +51,8 @@ Fields.accordion = Backbone.View.extend(
     create: function () {
         var values = this.getValue(),
                 settings = this.config.settings;
-
+        
+        var self = this;
         var items = [];
         var value_models = values.models;
         
@@ -64,6 +65,10 @@ Fields.accordion = Backbone.View.extend(
             var item = new Fields['accordion_item']({model: value_models[i]});
             item.config = settings;
             items.push(item.render().el);
+            
+            values.listenTo(item.model, "change", function () {
+                self.changePosition();
+            });
         }       
 
         var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
