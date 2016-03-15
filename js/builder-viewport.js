@@ -65,7 +65,7 @@ BuilderViewPort.prototype.devicesSettings = function () {
  * @param {createSettingsCallback} cb - A callback to run.
  */
 BuilderViewPort.prototype.createSettings = function (model, cb) {
-    self = this;
+    var self = this;
     this.builder.getSettings(model.get('template'), function (err, config) {
         var settingsBlock = new SettingsView({
             model: model,
@@ -213,11 +213,10 @@ BuilderViewPort.prototype.droppable = function (blockId) {
         tolerance: "pointer",
         drop: function (event, ui) {
             var dropElement = jQuery(this);
-            //get template id
-//            console.log("Add");
 
             jQuery(event.target).addClass('active-wait');
-
+            
+            //get template id
             var templateId = ui.draggable.attr("id").replace("preview-block-", "");
             self.builder.getTemplate(templateId, function (err, template) {
                 self.builder.getDefaultSettings(templateId, function (err, settings) {
@@ -255,15 +254,16 @@ BuilderViewPort.prototype.createDefaultDroppable = function () {
  */
 BuilderViewPort.prototype.create = function (data) {
     var self = this;
-
+    
     self.createDefaultDroppable();
+    
     if (data) {
+        var blocks = data.blocks;
+            
         function loop(i) {
-            if (i < data.length) {
-//                console.log('DONE');
-//            } else {
-                this.builder.getTemplate(data[i].template, function (err, template) {
-                    var model = self.builder.createModel(data[i]);
+            if (i < blocks.length) {
+                this.builder.getTemplate(blocks[i].template, function (err, template) {
+                    var model = self.builder.createModel(blocks[i]);
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);
