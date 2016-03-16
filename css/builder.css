@@ -1,13 +1,9 @@
 @font-face {
-    font-family: 'OpenSans-Light';
-    src: url('../fonts/opensans/OpenSans-Light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'OpenSans-Regular';
-    src: url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+    src: url("../fonts/opensans/OpenSans-Regular.eot");
+    src: url("../fonts/opensans/OpenSans-Regular.eot?#iefix")format("embedded-opentype"),
+        url("../fonts/opensans/OpenSans-Regular.woff") format("woff"),
+        url("../fonts/opensans/OpenSans-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
@@ -19,18 +15,6 @@
         url("../fonts/opensans/OpenSans-Bold.woff") format("woff"),
         url("../fonts/opensans/OpenSans-Bold.ttf") format("truetype");
     font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
     font-weight: normal;
 }
 
@@ -622,6 +606,44 @@ label.checkbox-sb [type=checkbox]:checked + span {
     outline: none;
 }
 
+#builder-menu .edit-menu-settings {
+    height: 75px;
+    width: 100%;
+    background-color: #525252;
+    text-align: center;
+    /*position: relative;*/
+/*    bottom: -webkit-calc(-100% + 145px);
+    bottom: calc(-100% + 145px);*/
+    position: absolute;
+    bottom: 0;
+}
+#builder-menu .edit-menu-settings button {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    border: 1px solid transparent;
+    margin: 26px 34px -1px -1px;
+    padding: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+#builder-menu .edit-menu-settings .reload {
+    background-image: url(../img/reload.png);
+}
+#builder-menu .edit-menu-settings .reload:hover,
+#builder-menu .edit-menu-settings .reload.active {
+    background-image: url(../img/reload_hover.png);
+}
+#builder-menu .edit-menu-settings .settings {
+    background-image: url(../img/settings.png);
+}
+#builder-menu .edit-menu-settings .settings:hover,
+#builder-menu .edit-menu-settings .settings.active {
+    background-image: url(../img/settings_hover.png);
+}
+
 .visible-block a {
     padding: 5px 14.5px;
     color: white;
@@ -646,7 +668,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 ul.catalog-list {
-    height: 100%;
+    height: calc(100% - 145px);
     margin: 70px 0 0 0;
     z-index: 1;
 }
@@ -657,7 +679,7 @@ ul.catalog-list li {
     margin: 0 0 1px 0;
 }
 
-ul.catalog-list:after,
+/*ul.catalog-list:after,*/
 .preview-blocks:after {
     content: '';
     display: block;
@@ -1428,8 +1450,8 @@ body.builder-editor {
     background-color: #757575;
 }
 
-#catalog-groups .ps-scrollbar-y-rail {
-    margin-top: 70px;
+#catalog-groups.ps-container.ps-active-y>.ps-scrollbar-y-rail {
+    margin-top: calc(0px + 70px) !important;
 }
 
 .ps-container .ps-scrollbar-y {

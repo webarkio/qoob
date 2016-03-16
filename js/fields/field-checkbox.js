@@ -19,17 +19,30 @@ Fields.checkbox = Backbone.View.extend(
      */
     changeInput: function (evt) {
         var target = jQuery(evt.target);
-        this.model.set(target.attr('name'), target[0].checked);
+        this.model.set(target.attr('name'), (target[0].checked));
 
         var elem = target.parents('.checkbox-switcher').next('.status').find('span');
-        elem.toggleClass('status-on');       
+        elem.toggleClass('status-on');
+    },
+    /**
+     * Get boolean value
+     * @param {String} val
+     * @returns {Boolean}
+     */
+    getBool: function (val){ 
+        var num = +val;
+        return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0,'');
     },
     /**
      * Get checked
      * @returns {String}
      */
-    checked: function () {
-        return (this.model.get(this.config.name)) ? "checked" : "";
+    checked: function () {        
+        if (this.model.get(this.config.name)) {
+            return this.getBool(this.model.get(this.config.name));
+        } else {
+            return this.getBool(this.config.default);
+        }
     },
     /**
      * Create filed checkbox
@@ -37,12 +50,12 @@ Fields.checkbox = Backbone.View.extend(
      */
     create: function () {
         return '<div class="title">' + this.config.label + '</div>' +
-        '<div class="checkbox-switcher">' +
-        '<label>' +
-        '<input name="' + this.config.name + '" type="checkbox" ' + this.checked() + '><span></span>' +
-        '</label>' +
-        '</div>' +
-        '<div class="status"><span class="status-on">On</span> / Off</div>';
+                '<div class="checkbox-switcher">' +
+                '<label>' +
+                '<input name="' + this.config.name + '" type="checkbox" ' + (this.checked()  ? "checked" : "") + '><span></span>' +
+                '</label>' +
+                '</div>' +
+                '<div class="status"><span class="' + (this.checked() ? "status-on" : "") + '">On</span> / Off</div>';
     },
     /**
      * Render filed checkbox

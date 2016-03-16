@@ -54,26 +54,39 @@ BuilderIframe.prototype.resize = function () {
  */
 BuilderIframe.prototype.getIframePageData = function () {
     var self = this;
-    var iframe = jQuery('#builder-iframe').contents(),
+    var iframe = this.getIframeContents(),
             blocks = iframe.find('.content-block');
 
-    var blocks_html = '';
-    var blocks_data = [];
+    var blocks_html = '',
+            blocks_data = [],
+            blocks_items = [];
+
 
     blocks.each(function (i, v) {
         if (v) {
-            var index = jQuery(v).index();
+//            var index = jQuery(v).index();
             blocks_html += jQuery(blocks[i]).find('.content-block-inner').html();
 
             var model = _.findWhere(self.builder.pageData, {id: jQuery(v).data('model-id')});
 //            model.set({"position": index});
-            blocks_data.push(JSON.parse(JSON.stringify(model)));
+            blocks_items.push(model);
+
         }
     });
 
+    // global settings
+    var global_settings = iframe.find('#builder-blocks style');
+    var model_global_settings = this.builder.builderSettingsData;
+    
+    blocks_data = {
+        'global_settings': model_global_settings,
+        'blocks': blocks_items
+    };
+
     var result = {
         'html': (blocks_html ? blocks_html : ''),
-        'data': (blocks_data.length > 0 ? blocks_data : '')
+        'data': (Object.keys(blocks_data).length > 0 ? JSON.parse(JSON.stringify(blocks_data)) : ''),
+        'settings': global_settings.html()
     };
 
     return result;
@@ -93,8 +106,6 @@ BuilderIframe.prototype.visibilityBlocks = function (blockId, devices) {
             return regex.test(c);
         }).join(' ');
     });
-    
-    console.log(blockId, devices, block);
 
     for (var i = 0; i < devices.length; i++) {
         block.addClass('visible-' + devices[i]);
