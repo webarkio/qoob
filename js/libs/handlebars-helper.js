@@ -25,10 +25,60 @@ Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
             return -1;
         }
     });
-
     for (var i = 0; i < array.length; i++) {
         array[i].index = i;
         s += opts.fn(array[i]);
+    }
+    return s;
+});
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Sorts two arrays by a given key
+ * @function each_with_sort_arrays
+ * @memberof Handlebars.helpers
+ * @param {array} array - The data to sort.
+ * @param {array} array2 - The data to sort.
+ * @param {key} key - The key to sort by.
+ * @returns {array}
+ */
+Handlebars.registerHelper('each_with_sort_arrays', function (array, array2, key, opts) {
+    var s = '';
+    
+    array = array.sort(function (a, b) {
+        a = a[key];
+        b = b[key];
+        if (a > b) {
+            return 1;
+        }
+        if (a === b) {
+            return 0;
+        }
+        if (a < b) {
+            return -1;
+        }
+    });
+    
+    array2 = array2.sort(function (a, b) {
+        a = a[key];
+        b = b[key];
+        if (a > b) {
+            return 1;
+        }
+        if (a === b) {
+            return 0;
+        }
+        if (a < b) {
+            return -1;
+        }
+    });
+    
+    var concat = array.concat(array2);
+    
+    for (var i = 0; i < concat.length; i++) {
+        concat[i].order = i;
+        s += opts.fn(concat[i]);
     }
     return s;
 });
