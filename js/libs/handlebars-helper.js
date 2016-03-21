@@ -35,7 +35,7 @@ Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
 /**
  * Handlebars helpers.
  * @namespace Handlebars.helpers
- * Sorts two arrays by a given key
+ * Sorts some count arrays by a given key and makes one of the arrays
  * @function each_with_sort_arrays
  * @memberof Handlebars.helpers
  * @param {array} array - The data to sort.
@@ -43,42 +43,31 @@ Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
  * @param {key} key - The key to sort by.
  * @returns {array}
  */
-Handlebars.registerHelper('each_with_sort_arrays', function (array, array2, key, opts) {
+Handlebars.registerHelper('each_with_sort_arrays', function (key, opts) {
     var s = '';
-    
-    array = array.sort(function (a, b) {
-        a = a[key];
-        b = b[key];
-        if (a > b) {
-            return 1;
-        }
-        if (a === b) {
-            return 0;
-        }
-        if (a < b) {
-            return -1;
-        }
-    });
-    
-    array2 = array2.sort(function (a, b) {
-        a = a[key];
-        b = b[key];
-        if (a > b) {
-            return 1;
-        }
-        if (a === b) {
-            return 0;
-        }
-        if (a < b) {
-            return -1;
-        }
-    });
-    
-    var concat = array.concat(array2);
-    
-    for (var i = 0; i < concat.length; i++) {
-        concat[i].order = i;
-        s += opts.fn(concat[i]);
+    var arr = [];
+    var tempArr = opts.hash;
+
+    for (i in tempArr) {
+        tempArr[i].sort(function (a, b) {
+            a = a[key];
+            b = b[key];
+            if (a > b) {
+                return 1;
+            }
+            if (a === b) {
+                return 0;
+            }
+            if (a < b) {
+                return -1;
+            }
+        });
+        
+        arr.push.apply(arr, tempArr[i]);
+    }
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].order = i;
+        s += opts.fn(arr[i]);
     }
     return s;
 });
@@ -86,47 +75,34 @@ Handlebars.registerHelper('each_with_sort_arrays', function (array, array2, key,
 /**
  * Handlebars helpers.
  * @namespace Handlebars.helpers
- * Sorts two arrays by a given key
- * @function each_with_sort_arrays
+ * Sorts some count arrays by a given key and makes one of the arrays
+ * @function each_with_sort_arr
  * @memberof Handlebars.helpers
- * @param {array} array - The data to sort.
- * @param {array} array2 - The data to sort.
  * @param {key} key - The key to sort by.
+ * @param {array} opts - The data to sort.
  * @returns {array}
  */
-Handlebars.registerHelper('each_with_sort_arr', function (array, array2, key, opts) {
+Handlebars.registerHelper('each_with_sort_arr', function (key, opts) {
     var s = '';
     var arr = [];
+    var tempArr = opts.hash;
 
-    array = array.sort(function (a, b) {
-        a = a[key];
-        b = b[key];
-        if (a > b) {
-            return 1;
-        }
-        if (a === b) {
-            return 0;
-        }
-        if (a < b) {
-            return -1;
-        }
-    });
-    
-    array2 = array2.sort(function (a, b) {
-        a = a[key];
-        b = b[key];
-        if (a > b) {
-            return 1;
-        }
-        if (a === b) {
-            return 0;
-        }
-        if (a < b) {
-            return -1;
-        }
-    });
-    arr.push(array, array2);
-    
+    for (i in tempArr) {
+        tempArr[i].sort(function (a, b) {
+            a = a[key];
+            b = b[key];
+            if (a > b) {
+                return 1;
+            }
+            if (a === b) {
+                return 0;
+            }
+            if (a < b) {
+                return -1;
+            }
+        });
+        arr.push(tempArr[i]);
+    }
     for (var i = 0; i < arr.length; i++) {
         arr[i].order = i;
         s += opts.fn(arr[i]);
