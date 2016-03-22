@@ -28,6 +28,7 @@ BuilderMenu.prototype.createGlobalControl = function (data) {
     var global_settings = this.builder.builderData.global_settings;
 
     var settings = {};
+
     if (data && data.global_settings) {
         settings = data.global_settings;
     } else {

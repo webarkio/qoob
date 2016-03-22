@@ -261,7 +261,7 @@ BuilderViewPort.prototype.create = function (data) {
         var blocks = data.blocks;
             
         function loop(i) {
-            if (i < blocks.length) {
+            if (undefined !== blocks && i < blocks.length) {
                 this.builder.getTemplate(blocks[i].template, function (err, template) {
                     var model = self.builder.createModel(blocks[i]);
                     self.createBlock(model, template, function (err, block) {

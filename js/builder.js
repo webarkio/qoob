@@ -305,8 +305,9 @@ Builder.prototype.activate = function () {
             self.autosavePageData();
 
             self.loadPageData(function (err, pageData) {
-                if (pageData && pageData.blocks.length > 0)
+                if (pageData && pageData.blocks) {
                     self.loader.add(pageData.blocks.length);
+                }
 
                 self.viewPort.create(pageData);
                 self.menu.createGlobalControl(pageData);

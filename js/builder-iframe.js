@@ -54,8 +54,8 @@ BuilderIframe.prototype.resize = function () {
  */
 BuilderIframe.prototype.getIframePageData = function () {
     var self = this;
-    var iframe = this.getIframeContents(),
-            blocks = iframe.find('.content-block');
+    var iframe = this.getWindowIframe(),
+            blocks = iframe.jQuery('.content-block');
 
     var blocks_html = '',
             blocks_data = [],
@@ -70,13 +70,13 @@ BuilderIframe.prototype.getIframePageData = function () {
             var model = _.findWhere(self.builder.pageData, {id: jQuery(v).data('model-id')});
 //            model.set({"position": index});
             blocks_items.push(model);
-
         }
     });
 
     // global settings
-    var global_settings = iframe.find('#builder-blocks style');
+    var global_settings = iframe.jQuery('#builder-blocks style').prop('outerHTML');
     var model_global_settings = this.builder.builderSettingsData;
+    
     
     blocks_data = {
         'global_settings': model_global_settings,
@@ -84,9 +84,8 @@ BuilderIframe.prototype.getIframePageData = function () {
     };
 
     var result = {
-        'html': (blocks_html ? blocks_html : ''),
-        'data': (Object.keys(blocks_data).length > 0 ? JSON.parse(JSON.stringify(blocks_data)) : ''),
-        'settings': global_settings.html()
+        'html': (global_settings ? global_settings : '') + (blocks_html ? blocks_html : ''),
+        'data': (Object.keys(blocks_data).length > 0 ? JSON.parse(JSON.stringify(blocks_data)) : '')
     };
 
     return result;
