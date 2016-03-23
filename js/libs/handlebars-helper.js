@@ -69,7 +69,6 @@ Handlebars.registerHelper('each_with_sort_arrays', function (key, opts) {
     for (var i = 0; i < arr.length; i++) {
         arr[i].order = i;
         s += opts.fn(arr[i]);
-        console.log(s);
     }
     return s;
 });
