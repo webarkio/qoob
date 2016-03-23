@@ -62,14 +62,52 @@ Handlebars.registerHelper('each_with_sort_arrays', function (key, opts) {
                 return -1;
             }
         });
-        
+
         arr.push.apply(arr, tempArr[i]);
     }
+    
     for (var i = 0; i < arr.length; i++) {
         arr[i].order = i;
         s += opts.fn(arr[i]);
+        console.log(s);
     }
     return s;
+});
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Each group by array with sorts
+ * @function each_by_group_with_sort
+ * @memberof Handlebars.helpers
+ * @returns {array}
+ */
+Handlebars.registerHelper('each_by_group', function (opts) {
+    var s = '', arr = [],
+            tempArr = opts.hash.array,
+            group = opts.hash.group;
+
+    var arr = _.chain(tempArr)
+            .groupBy(function (obj) {
+                return obj[group];
+            })
+            .sortBy(function (v, k) {
+                return k;
+            })
+            .value();
+
+    var result = [];
+    for (var i = 0; i < arr.length; i++) {
+        result[i] = {
+            group: arr[i],
+            index: i,
+            type_name: arr[i][0]['type_name'],
+            last: arr.length - 1
+        };
+        s += opts.fn(result[i]);
+    }
+    return s;
+
 });
 
 /**
@@ -254,20 +292,11 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
  */
 Handlebars.registerHelper('everyNth', function (context, every, options) {
 
-    if (options.sort == 'sort') {
-        var key = options.key;
+    if (options.hash.sort == 'sort') {
+        var key = options.hash.key;
         context = context.sort(function (a, b) {
-            a = a[key];
-            b = b[key];
-            if (a > b) {
-                return 1;
-            }
-            if (a === b) {
-                return 0;
-            }
-            if (a < b) {
-                return -1;
-            }
+            var x = a[key], y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         });
     }
 

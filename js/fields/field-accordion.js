@@ -69,7 +69,7 @@ Fields.accordion = Backbone.View.extend(
             values.listenTo(item.model, "change", function () {
                 self.changePosition();
             });
-        }       
+        }
 
         var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
 
