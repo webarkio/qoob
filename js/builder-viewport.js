@@ -176,7 +176,10 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
     var iframe = this.builder.iframe.getWindowIframe();
 
     // remove DOM on iframe
-    iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
+    iframe.jQuery('div[data-model-id="' + blockId + '"]').addClass('content-hide');
+    setTimeout(function () {
+        iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
+    }, 1000);
 
     // remove model
     for (var i = 0; i < self.builder.pageData.length; i++) {
@@ -215,7 +218,7 @@ BuilderViewPort.prototype.droppable = function (blockId) {
             var dropElement = jQuery(this);
 
             jQuery(event.target).addClass('active-wait');
-            
+
             //get template id
             var templateId = ui.draggable.attr("id").replace("preview-block-", "");
             self.builder.getTemplate(templateId, function (err, template) {
@@ -254,12 +257,12 @@ BuilderViewPort.prototype.createDefaultDroppable = function () {
  */
 BuilderViewPort.prototype.create = function (data) {
     var self = this;
-    
+
     self.createDefaultDroppable();
-    
+
     if (data) {
         var blocks = data.blocks;
-            
+
         function loop(i) {
             if (undefined !== blocks && i < blocks.length) {
                 this.builder.getTemplate(blocks[i].template, function (err, template) {
