@@ -37,7 +37,7 @@ BuilderMenu.prototype.createGlobalControl = function (data) {
         }
     }
 
-    this.builder.getTemplate('global_settings', function (err, template) {
+    this.builder.getTemplate('global', function (err, template) {
         var model = self.builder.createModel(settings);
         self.createBlockStyle(model, template, function (err, block) {
             self.createGlobalSettings(block.model, global_settings, function (err, container) {
