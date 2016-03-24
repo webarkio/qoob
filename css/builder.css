@@ -670,8 +670,8 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 ul.catalog-list {
-    height: calc(100% - 145px);
-    margin: 70px 0 0 0;
+    height: calc(100% - 100px);
+    margin: 0;
     z-index: 1;
 }
 
@@ -1452,9 +1452,9 @@ body.builder-editor {
     background-color: #757575;
 }
 
-#catalog-groups.ps-container.ps-active-y>.ps-scrollbar-y-rail {
+/*#catalog-groups.ps-container.ps-active-y>.ps-scrollbar-y-rail {
     margin-top: calc(0px + 70px) !important;
-}
+}*/
 
 .ps-container .ps-scrollbar-y {
     background-image: url(../img/scroll_line.png);
