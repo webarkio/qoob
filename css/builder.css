@@ -60,8 +60,8 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     margin-left: 35px;
     border-radius: 50%;
 }
@@ -78,27 +78,29 @@
 #loader .minutes {
     background: #2bc0e4;
     height: 28px;
-    left: 47%;
+    left: 46.5%;
     position: absolute;
     top: 10%;
     width: 5px;
+    border-radius: 50px;
 }
 
 #loader .seconds {
     background: #2bc0e4;
     height: 28px;
-    left: 47%;
+    left: 46%;
     position: absolute;
     top: 14%;
     width: 5px;
     z-index: 8;
+    border-radius: 50px;
 }
 
 #loader .minutes-container {
-    animation: rotate 1s infinite linear;
+    animation: rotate 1.5s infinite linear;
 }
 #loader .seconds-container {
-    animation: rotate 0.3s infinite linear;
+    animation: rotate 0.4s infinite linear;
 }
 
 #builder {
@@ -1337,7 +1339,7 @@ input[type="text"]#datepicker {
 }
 
 .ui-front {
-    z-index: 100;
+    z-index: 99999;
 }
 
 /* Interaction Cues
