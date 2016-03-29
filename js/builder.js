@@ -52,6 +52,7 @@ Builder.prototype.create = function () {
             '</div>' +
             '</button>' +
             '<button class="exit-btn" onclick="builder.exit(); return false;" type="button">Exit</button>' +
+            '<button class="screen-size settings" type="button" onclick="builder.menu.showGlobalSettings();return false;"></button>' +
             '<button class="screen-size pc active" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
             '<button class="screen-size tablet-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
             '<button class="screen-size phone-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
@@ -67,10 +68,6 @@ Builder.prototype.create = function () {
             '<div class="card-main">' +
             '<div class="blocks-settings"></div>' +
             '<div class="groups">' +
-            '<div class="edit-menu-settings">' +
-            '<button class="reload" type="button"></button>' +
-            '<button class="settings" type="button" onclick="builder.menu.showGlobalSettings();return false;"></button>' +
-            '</div>' +
             '</div>' +
             '<div class="list-group"></div>' +
             '<div class="global-settings"></div>' +

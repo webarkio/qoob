@@ -291,6 +291,14 @@
 #builder-toolbar .edit-control-button .arrow-btn {
     background-image: url(../img/arrow.png);
 }
+
+#builder-toolbar .edit-control-button .settings {
+    background-image: url(../img/settingstop.png);
+}
+#builder-toolbar .edit-control-button .settings:hover,
+#builder-toolbar .edit-control-button .settings.active {
+    background-image: url(../img/settings_hover.png);
+}
 #builder>.arrow-btn.active {
     cursor: pointer;
     width: 70px;
@@ -606,44 +614,6 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #builder-menu .backward a:focus {
     outline: none;
-}
-
-#builder-menu .edit-menu-settings {
-    height: 75px;
-    width: 100%;
-    background-color: #525252;
-    text-align: center;
-    /*position: relative;*/
-/*    bottom: -webkit-calc(-100% + 145px);
-    bottom: calc(-100% + 145px);*/
-    position: absolute;
-    bottom: 0;
-}
-#builder-menu .edit-menu-settings button {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    outline: none;
-    border: 1px solid transparent;
-    margin: 26px 34px -1px -1px;
-    padding: 0;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-}
-#builder-menu .edit-menu-settings .reload {
-    background-image: url(../img/reload.png);
-}
-#builder-menu .edit-menu-settings .reload:hover,
-#builder-menu .edit-menu-settings .reload.active {
-    background-image: url(../img/reload_hover.png);
-}
-#builder-menu .edit-menu-settings .settings {
-    background-image: url(../img/settings.png);
-}
-#builder-menu .edit-menu-settings .settings:hover,
-#builder-menu .edit-menu-settings .settings.active {
-    background-image: url(../img/settings_hover.png);
 }
 
 .visible-block a {
