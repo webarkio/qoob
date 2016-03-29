@@ -119,7 +119,7 @@ BuilderMenu.prototype.createBlocks = function () {
 //        for (var j = 0; j < group.templates.length; j++) {
         for (var k = 0; k < this.builder.builderData.templates.length; k++) {
             if (this.builder.builderData.templates[k].groups == group.id) {
-                res = res + '<div id="preview-block-' + this.builder.builderData.templates[k].id + '" class="preview-block"><img src="' + this.builder.builderData.templates[k].url + 'preview.png"></div>';
+                res = res + '<div id="preview-block-' + this.builder.builderData.templates[k].id + '" class="preview-block" onclick="builder.viewPort.clickBlockAdd(this.id);return false;"><img src="' + this.builder.builderData.templates[k].url + 'preview.png"></div>';
             }
         }
 //        }

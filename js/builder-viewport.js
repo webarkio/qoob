@@ -228,6 +228,7 @@ BuilderViewPort.prototype.droppable = function (blockId) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);
                             var afterBlockId = dropElement.attr("id").replace("droppable-", "");
+                            console.log(afterBlockId);
                             self.addBlock(block, afterBlockId);
                         });
                     });
@@ -250,6 +251,29 @@ BuilderViewPort.prototype.createDefaultDroppable = function () {
     this.droppable('0');
 }
 
+/**
+ * Add block onclick
+ */
+BuilderViewPort.prototype.clickBlockAdd = function(elementid) {
+    var self = this;
+    var templateId = elementid.replace("preview-block-", "");
+    self.builder.getTemplate(templateId, function (err, template) {
+        self.builder.getDefaultSettings(templateId, function (err, settings) {
+            var model = self.builder.createModel(settings);
+            self.createBlock(model, template, function (err, block) {
+            self.createSettings(block.model, function (err, container) {
+                var iframe = this.builder.iframe.getWindowIframe();
+                    jQuery('#builder-menu .blocks-settings').append(container);
+                    var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
+                    self.addBlock(block, afterBlockId);
+                    iframe.jQuery('html, body').animate({
+                        scrollTop: jQuery(block.el).offset().top
+                    }, 1000);
+                });
+            });
+        });
+    });
+}
 /**
  * Create blocks
  * 
