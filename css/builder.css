@@ -1,13 +1,9 @@
 @font-face {
-    font-family: 'OpenSans-Light';
-    src: url('../fonts/opensans/OpenSans-Light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'OpenSans-Regular';
-    src: url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+    src: url("../fonts/opensans/OpenSans-Regular.eot");
+    src: url("../fonts/opensans/OpenSans-Regular.eot?#iefix")format("embedded-opentype"),
+        url("../fonts/opensans/OpenSans-Regular.woff") format("woff"),
+        url("../fonts/opensans/OpenSans-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
@@ -19,18 +15,6 @@
         url("../fonts/opensans/OpenSans-Bold.woff") format("woff"),
         url("../fonts/opensans/OpenSans-Bold.ttf") format("truetype");
     font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
     font-weight: normal;
 }
 
@@ -76,8 +60,8 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     margin-left: 35px;
     border-radius: 50%;
 }
@@ -94,27 +78,29 @@
 #loader .minutes {
     background: #2bc0e4;
     height: 28px;
-    left: 47%;
+    left: 46.5%;
     position: absolute;
     top: 10%;
     width: 5px;
+    border-radius: 50px;
 }
 
 #loader .seconds {
     background: #2bc0e4;
     height: 28px;
-    left: 47%;
+    left: 46%;
     position: absolute;
     top: 14%;
     width: 5px;
     z-index: 8;
+    border-radius: 50px;
 }
 
 #loader .minutes-container {
-    animation: rotate 1s infinite linear;
+    animation: rotate 1.5s infinite linear;
 }
 #loader .seconds-container {
-    animation: rotate 0.3s infinite linear;
+    animation: rotate 0.4s infinite linear;
 }
 
 #builder {
@@ -304,6 +290,14 @@
 
 #builder-toolbar .edit-control-button .arrow-btn {
     background-image: url(../img/arrow.png);
+}
+
+#builder-toolbar .edit-control-button .settings {
+    background-image: url(../img/settingstop.png);
+}
+#builder-toolbar .edit-control-button .settings:hover,
+#builder-toolbar .edit-control-button .settings.active {
+    background-image: url(../img/settings_hover.png);
 }
 #builder>.arrow-btn.active {
     cursor: pointer;
@@ -646,8 +640,8 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 ul.catalog-list {
-    height: 100%;
-    margin: 70px 0 0 0;
+    height: calc(100% - 100px);
+    margin: 0;
     z-index: 1;
 }
 
@@ -657,10 +651,11 @@ ul.catalog-list li {
     margin: 0 0 1px 0;
 }
 
-ul.catalog-list:after {
+/*ul.catalog-list:after,*/
+.preview-blocks:after {
     content: '';
     display: block;
-    margin-bottom: 70px;
+    margin-bottom: 75px;
 }
 
 ul.catalog-list li a {
@@ -1314,7 +1309,7 @@ input[type="text"]#datepicker {
 }
 
 .ui-front {
-    z-index: 100;
+    z-index: 99999;
 }
 
 /* Interaction Cues
@@ -1427,9 +1422,9 @@ body.builder-editor {
     background-color: #757575;
 }
 
-#catalog-groups .ps-scrollbar-y-rail {
-    margin-top: 70px;
-}
+/*#catalog-groups.ps-container.ps-active-y>.ps-scrollbar-y-rail {
+    margin-top: calc(0px + 70px) !important;
+}*/
 
 .ps-container .ps-scrollbar-y {
     background-image: url(../img/scroll_line.png);

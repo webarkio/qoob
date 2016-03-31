@@ -57,6 +57,23 @@
     }
 }
 
+
+@-webkit-keyframes scaleDown {
+    from { }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.8);
+    }
+}
+@keyframes scaleDown {
+    from { }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.8);
+        transform: scale(.8);
+    }
+}
+
 html.active-js {
     margin-top: 0 !important;
 }
@@ -132,6 +149,11 @@ html.active-js {
 .content-block.content-fade  {
     -webkit-animation: scaleUp .7s ease both;
     animation: scaleUp .7s ease both;
+}
+
+.content-block.content-hide  {
+    -webkit-animation: scaleDown .7s ease both;
+    animation: scaleDown .7s ease both;
 }
 
 .content-block-inner {

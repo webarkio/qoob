@@ -25,10 +25,124 @@ Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
             return -1;
         }
     });
-
     for (var i = 0; i < array.length; i++) {
         array[i].index = i;
         s += opts.fn(array[i]);
+    }
+    return s;
+});
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Sorts some count arrays by a given key and makes one of the arrays
+ * @function each_with_sort_arrays
+ * @memberof Handlebars.helpers
+ * @param {array} array - The data to sort.
+ * @param {array} array2 - The data to sort.
+ * @param {key} key - The key to sort by.
+ * @returns {array}
+ */
+Handlebars.registerHelper('each_with_sort_arrays', function (key, opts) {
+    var s = '';
+    var arr = [];
+    var tempArr = opts.hash;
+
+    for (i in tempArr) {
+        tempArr[i].sort(function (a, b) {
+            a = a[key];
+            b = b[key];
+            if (a > b) {
+                return 1;
+            }
+            if (a === b) {
+                return 0;
+            }
+            if (a < b) {
+                return -1;
+            }
+        });
+
+        arr.push.apply(arr, tempArr[i]);
+    }
+    
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].order = i;
+        s += opts.fn(arr[i]);
+    }
+    return s;
+});
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Each group by array with sorts
+ * @function each_by_group_with_sort
+ * @memberof Handlebars.helpers
+ * @returns {array}
+ */
+Handlebars.registerHelper('each_by_group', function (opts) {
+    var s = '', arr = [],
+            tempArr = opts.hash.array,
+            group = opts.hash.group;
+
+    var arr = _.chain(tempArr)
+            .groupBy(function (obj) {
+                return obj[group];
+            })
+            .sortBy(function (v, k) {
+                return k;
+            })
+            .value();
+
+    var result = [];
+    for (var i = 0; i < arr.length; i++) {
+        result[i] = {
+            group: arr[i],
+            index: i,
+            type_name: arr[i][0]['type_name'],
+            last: arr.length - 1
+        };
+        s += opts.fn(result[i]);
+    }
+    return s;
+
+});
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Sorts some count arrays by a given key and makes one of the arrays
+ * @function each_with_sort_arr
+ * @memberof Handlebars.helpers
+ * @param {key} key - The key to sort by.
+ * @param {array} opts - The data to sort.
+ * @returns {array}
+ */
+Handlebars.registerHelper('each_with_sort_arr', function (key, opts) {
+    var s = '';
+    var arr = [];
+    var tempArr = opts.hash;
+
+    for (i in tempArr) {
+        tempArr[i].sort(function (a, b) {
+            a = a[key];
+            b = b[key];
+            if (a > b) {
+                return 1;
+            }
+            if (a === b) {
+                return 0;
+            }
+            if (a < b) {
+                return -1;
+            }
+        });
+        arr.push(tempArr[i]);
+    }
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].order = i;
+        s += opts.fn(arr[i]);
     }
     return s;
 });
@@ -146,6 +260,8 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     switch (operator) {
         case '==':
             return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case "!=":
+            return (v1 != v2) ? options.fn(this) : options.inverse(this);
         case '===':
             return (v1 === v2) ? options.fn(this) : options.inverse(this);
         case '<':
@@ -177,20 +293,11 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
  */
 Handlebars.registerHelper('everyNth', function (context, every, options) {
 
-    if (options.sort == 'sort') {
-        var key = options.key;
+    if (options.hash.sort == 'sort') {
+        var key = options.hash.key;
         context = context.sort(function (a, b) {
-            a = a[key];
-            b = b[key];
-            if (a > b) {
-                return 1;
-            }
-            if (a === b) {
-                return 0;
-            }
-            if (a < b) {
-                return -1;
-            }
+            var x = a[key], y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         });
     }
 

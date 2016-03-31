@@ -17,6 +17,80 @@ BuilderMenu.prototype.create = function () {
     this.createBlocks();
     this.showGroups();
 };
+
+/*
+ * Create global settings
+ */
+BuilderMenu.prototype.createGlobalControl = function (data) {
+    var self = this;
+    var iframe = this.builder.iframe.getWindowIframe();
+
+    var global_settings = this.builder.builderData.global_settings;
+
+    var settings = {};
+
+    if (data && data.global_settings) {
+        settings = data.global_settings;
+    } else {
+        for (var i = 0; i < global_settings.length; i++) {
+            settings[global_settings[i].name] = global_settings[i].default;
+        }
+    }
+
+    this.builder.getTemplate('global', function (err, template) {
+        var model = self.builder.createModel(settings);
+        self.createBlockStyle(model, template, function (err, block) {
+            self.createGlobalSettings(block.model, global_settings, function (err, container) {
+                jQuery('#builder-menu .global-settings').append(container);
+                iframe.jQuery('#builder-blocks').append(block.render().el);
+                self.builder.builderSettingsData = block.model;
+            });
+        });
+    });
+};
+
+/**
+ * Create global settings view
+ * 
+ * @param {Object} model
+ * @param {Object} config
+ * @param {createSettingsCallback} cb - A callback to run.
+ */
+BuilderMenu.prototype.createGlobalSettings = function (model, config, cb) {
+    var settingsBlock = new SettingsView({
+        model: model,
+        className: 'settings-block settings-scroll'
+    });
+
+    settingsBlock.config = config;
+    var container = jQuery('<div class="settings"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
+    container.append(settingsBlock.render().el);
+    cb(null, container);
+};
+
+/**
+ * Create view block style
+ * 
+ * @param {Object} model
+ * @param {String} template html block
+ * @param {createBlockCallback} cb - A callback to run.
+ */
+BuilderMenu.prototype.createBlockStyle = function (model, template, cb) {
+    var block = new BlockView({
+        model: model,
+        tagName: 'style',
+        className: '',
+        attributes: function () {
+            return {
+                'data-model-id': this.model.id
+            }
+        }
+    });
+
+    block.template = Handlebars.compile(template);
+    cb(null, block);
+};
+
 /**
  * Create groups blocks
  */
@@ -29,7 +103,7 @@ BuilderMenu.prototype.createGroups = function () {
         res = res + '<li><a href="#' + group_id + '" onclick="builder.menu.showBlocks(\'' + group_id + '\');return false;">' + (group.label ? group.label : group.id) + '</a></li>';
     }
     res = res + '</ul>';
-    jQuery('#builder-menu .groups').append(res);
+    jQuery('#builder-menu .groups').prepend(res);
 };
 /**
  * Create blocks menu
@@ -45,7 +119,7 @@ BuilderMenu.prototype.createBlocks = function () {
 //        for (var j = 0; j < group.templates.length; j++) {
         for (var k = 0; k < this.builder.builderData.templates.length; k++) {
             if (this.builder.builderData.templates[k].groups == group.id) {
-                res = res + '<div id="preview-block-' + this.builder.builderData.templates[k].id + '" class="preview-block"><img src="' + this.builder.builderData.templates[k].url + 'preview.png"></div>';
+                res = res + '<div id="preview-block-' + this.builder.builderData.templates[k].id + '" class="preview-block" onclick="builder.viewPort.clickBlockAdd(this.id);return false;"><img src="' + this.builder.builderData.templates[k].url + 'preview.png"></div>';
             }
         }
 //        }
@@ -75,8 +149,8 @@ BuilderMenu.prototype.createBlocks = function () {
  * Show groups menu
  */
 BuilderMenu.prototype.showGroups = function () {
-    jQuery('#catalog-groups').show();
-    
+//    jQuery('#catalog-groups').show();
+
     // default position block settings
     this.rotate = false;
 
@@ -117,17 +191,16 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
     jQuery(window).resize(function () {
         previewBlocks.perfectScrollbar('update');
     });
-
 };
 /**
  * Show settings by block id
  * @param {Integer} blockId
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
-    
+
     if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
         return;
-    
+
     if (this.rotate == true) {
         // logo rotation
         this.builder.toolbar.logoRotation(-360);
@@ -180,4 +253,25 @@ BuilderMenu.prototype.resize = function () {
  */
 BuilderMenu.prototype.menuRotation = function (rot) {
     jQuery('#builder-menu .card-main').css("transform", "rotateY(" + rot + "deg)");
+};
+
+/**
+ * Show global settings
+ */
+BuilderMenu.prototype.showGlobalSettings = function () {
+    // default position block settings
+    this.rotate = false;
+
+    // rotate menu
+    this.menuRotation(270);
+
+    // rotate logo
+    this.builder.toolbar.logoRotation(-270);
+
+    // add Scrollbar
+    var settingsScroll = jQuery('.global-settings').find('.settings-scroll');
+    settingsScroll.perfectScrollbar();
+    jQuery(window).resize(function () {
+        settingsScroll.perfectScrollbar('update');
+    });
 };

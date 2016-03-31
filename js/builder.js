@@ -1,4 +1,4 @@
-    /**
+/**
  * Initialize page builder
  *
  * @version 0.0.1
@@ -16,6 +16,7 @@ function Builder(options) {
     this.iframe = new BuilderIframe(this);
     this.pageData = [];
     this.builderData = null;
+    this.builderSettingsData = null;
     this.modelCounter = 0;
 }
 /**
@@ -51,6 +52,7 @@ Builder.prototype.create = function () {
             '</div>' +
             '</button>' +
             '<button class="exit-btn" onclick="builder.exit(); return false;" type="button">Exit</button>' +
+            '<button class="screen-size settings" type="button" onclick="builder.menu.showGlobalSettings();return false;"></button>' +
             '<button class="screen-size pc active" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
             '<button class="screen-size tablet-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
             '<button class="screen-size phone-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
@@ -65,7 +67,8 @@ Builder.prototype.create = function () {
             '<div class="card-wrap">' +
             '<div class="card-main">' +
             '<div class="blocks-settings"></div>' +
-            '<div class="groups"></div>' +
+            '<div class="groups">' +
+            '</div>' +
             '<div class="list-group"></div>' +
             '<div class="global-settings"></div>' +
             '</div>' +
@@ -278,7 +281,7 @@ Builder.prototype.getDefaultSettings = function (templateId, cb) {
  * Activate page builder
  */
 Builder.prototype.activate = function () {
-    
+
     var self = this;
     self.loader.add(4);
     self.create();
@@ -290,21 +293,23 @@ Builder.prototype.activate = function () {
     });
 
     self.callIframe(function () {
-        self.loadBuilderData(function (err, data) {
-            self.builderData = data;
+        self.loadBuilderData(function (err, builderData) {
+            self.builderData = builderData;
             self.menu.create();
             self.loader.sub();
             
             // Autosave
             self.autosavePageData();
 
-        });
+            self.loadPageData(function (err, pageData) {
+                if (pageData && pageData.blocks) {
+                    self.loader.add(pageData.blocks.length);
+                }
 
-        self.loadPageData(function (err, data) {
-            if (data && data.length > 0)
-                self.loader.add(data.length);
-            self.viewPort.create(data);
-            self.loader.sub();
+                self.viewPort.create(pageData);
+                self.menu.createGlobalControl(pageData);
+                self.loader.sub();
+            });
         });
     });
 };
