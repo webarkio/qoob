@@ -19,7 +19,8 @@ Fields.checkbox = Backbone.View.extend(
      */
     changeInput: function (evt) {
         var target = jQuery(evt.target);
-        this.model.set(target.attr('name'), (target[0].checked == false ? 0 : target[0].checked));
+        
+        this.model.set(target.attr('name'), (target[0].checked == false ? 'false' : target[0].checked));
 
         var elem = target.parents('.checkbox-switcher').next('.status').find('span');
         elem.toggleClass('status-on');
@@ -49,6 +50,7 @@ Fields.checkbox = Backbone.View.extend(
      * @returns {String}
      */
     create: function () {
+        console.log(this.checked());
         return '<div class="title">' + this.config.label + '</div>' +
                 '<div class="checkbox-switcher">' +
                 '<label>' +
