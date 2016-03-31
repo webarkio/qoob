@@ -93,8 +93,6 @@ BuilderIframe.prototype.visibilityBlocks = function (blockId, devices) {
             return regex.test(c);
         }).join(' ');
     });
-    
-    console.log(blockId, devices, block);
 
     for (var i = 0; i < devices.length; i++) {
         block.addClass('visible-' + devices[i]);

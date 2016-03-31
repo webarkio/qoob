@@ -132,7 +132,7 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
             iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
         }
     }
-
+    
     // create droppable event
     this.droppable(block.model.id);
 
@@ -260,8 +260,6 @@ BuilderViewPort.prototype.create = function (data) {
     if (data) {
         function loop(i) {
             if (i < data.length) {
-//                console.log('DONE');
-//            } else {
                 this.builder.getTemplate(data[i].template, function (err, template) {
                     var model = self.builder.createModel(data[i]);
                     self.createBlock(model, template, function (err, block) {
