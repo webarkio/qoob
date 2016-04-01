@@ -49,7 +49,6 @@ Fields.checkbox = Backbone.View.extend(
      * @returns {String}
      */
     create: function () {
-        console.log(this.checked());
         return '<div class="title">' + this.config.label + '</div>' +
                 '<div class="checkbox-switcher">' +
                 '<label>' +
