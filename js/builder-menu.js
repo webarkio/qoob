@@ -161,16 +161,9 @@ BuilderMenu.prototype.showGroups = function () {
     this.builder.toolbar.logoRotation(-90);
 
     // add Scrollbar
-    var catalogGroups = jQuery('#catalog-groups');
-    catalogGroups.perfectScrollbar();
-
     setTimeout(function () {
         jQuery('.settings.menu-block').hide();
     }, 1000);
-
-    jQuery(window).resize(function () {
-        catalogGroups.perfectScrollbar('update');
-    });
 };
 /**
  * Show blocks by group id
@@ -184,13 +177,6 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
 
     this.hideAll();
     jQuery('#group-' + groupId).show();
-
-    // add Scrollbar
-    var previewBlocks = jQuery('#group-' + groupId).find('.preview-blocks');
-    previewBlocks.perfectScrollbar();
-    jQuery(window).resize(function () {
-        previewBlocks.perfectScrollbar('update');
-    });
 };
 /**
  * Show settings by block id
@@ -199,7 +185,7 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
 BuilderMenu.prototype.showSettings = function (blockId) {
     if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
         return;
-    
+
     if (this.rotate == true) {
         // logo rotation
         this.builder.toolbar.logoRotation(-360);
@@ -218,22 +204,6 @@ BuilderMenu.prototype.showSettings = function (blockId) {
 
     jQuery('.settings.menu-block').hide();
     jQuery('#settings-block-' + blockId).show();
-
-    // add Scrollbar
-    var settingsScroll = jQuery('#settings-block-' + blockId).find('.settings-block');
-    // settingsScroll.perfectScrollbar();
-    // jQuery(window).resize(function () {
-        // settingsScroll.perfectScrollbar('update');
-    // });
-    settingsScroll.niceScroll({
-        horizrailenabled: false,
-        cursorcolor: "#757575",
-        cursorborder: "1px solid #757575",
-        cursorwidth: '2px',
-        scrollspeed: 50,
-        mousescrollstep: 100,
-        enablemousewheel : true,
-    });
 };
 /**
  * Hide group by id
@@ -266,7 +236,7 @@ BuilderMenu.prototype.menuRotation = function (rot) {
 /**
  * Show global settings
  */
-BuilderMenu.prototype.showGlobalSettings = function () {    
+BuilderMenu.prototype.showGlobalSettings = function () {
     // default position block settings
     this.rotate = false;
 
@@ -276,13 +246,6 @@ BuilderMenu.prototype.showGlobalSettings = function () {
     // rotate logo
     this.builder.toolbar.logoRotation(-270);
 
-    // add Scrollbar
-    var settingsScroll = jQuery('.global-settings').find('.settings-scroll');
-    settingsScroll.perfectScrollbar();
-    jQuery(window).resize(function () {
-        settingsScroll.perfectScrollbar('update');
-    });
-    
     // hide menu blocks
     this.hideAll();
 };
