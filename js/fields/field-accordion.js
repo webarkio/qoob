@@ -90,7 +90,6 @@ Fields.accordion = Backbone.View.extend(
                 '}' +
                 '},' +
                 'sort: function( event, ui ) {'+
-                    'console.log(event.onscroll);'+
                 '},'+
                 'stop: function(event, ui) {' +
                 'ui.item.trigger("drop", ui.item.index());' +
