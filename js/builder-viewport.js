@@ -118,8 +118,12 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
         }
 
         //Add controll buttons
-        iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]').after('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
+        var $block = jQuery('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
+        $block.appendTo(iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]'));
         iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+        iframe.jQuery('body').animate({
+            scrollTop: $block.offset().top
+        }, 1000);
     } else {
         self.builder.pageData.push(block.model);
 //            jQuery("#builder-viewport").append(fullBlock);
@@ -262,13 +266,29 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
                     iframe = this.builder.iframe.getWindowIframe();
             self.createBlock(model, template, function (err, block) {
                 self.createSettings(block.model, function (err, container) {
-                    iframe.jQuery('body').animate({
-                        scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
-                    }, 1000, function () {
+                    //Creating waiting block in bottom
+                    var droppable = '<div id="droppable-' + block.model.id + '" class="droppable ui-droppable active-wait">' +
+                            '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
+                            '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
+                            '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
+                    iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
+                    //Animation scrolling to the bottom of the block's container
+                    if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
+                        var checkFoxDom = !!window.sidebar ? 'html' : 'body'; 
+                        iframe.jQuery(checkFoxDom).animate({
+                            scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
+                        }, 1000, function () {
+                            //Appending added block
+                            jQuery('#builder-menu .blocks-settings').append(container);
+                            var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
+                            self.addBlock(block, afterBlockId);
+                        });
+                    } else {
                         jQuery('#builder-menu .blocks-settings').append(container);
                         var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                         self.addBlock(block, afterBlockId);
-                    });
+                    }
+
                 });
             });
         });
