@@ -297,7 +297,7 @@ Builder.prototype.activate = function () {
             self.builderData = builderData;
             self.menu.create();
             self.loader.sub();
-
+            
             // Autosave
             self.autosavePageData();
 
