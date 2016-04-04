@@ -197,10 +197,9 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
  * @param {Integer} blockId
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
-
     if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
         return;
-
+    
     if (this.rotate == true) {
         // logo rotation
         this.builder.toolbar.logoRotation(-360);
@@ -267,7 +266,7 @@ BuilderMenu.prototype.menuRotation = function (rot) {
 /**
  * Show global settings
  */
-BuilderMenu.prototype.showGlobalSettings = function () {
+BuilderMenu.prototype.showGlobalSettings = function () {    
     // default position block settings
     this.rotate = false;
 
@@ -283,4 +282,7 @@ BuilderMenu.prototype.showGlobalSettings = function () {
     jQuery(window).resize(function () {
         settingsScroll.perfectScrollbar('update');
     });
+    
+    // hide menu blocks
+    this.hideAll();
 };
