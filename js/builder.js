@@ -41,7 +41,7 @@ Builder.prototype.create = function () {
             '<div class="edit-control-bar">' +
             '<div class="autosave">' +
             '<label class="checkbox-sb">' +
-            '<input type="checkbox"  onclick="parent.builder.autosavePageData();" checked="checked"><span></span><em>Autosave</em>' +
+            '<input type="checkbox"  onclick="parent.builder.autosavePageData();"><span></span><em>Autosave</em>' +
             '</label>' +
             '</div>' +
             '<div class="edit-control-button">' +

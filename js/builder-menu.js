@@ -221,10 +221,19 @@ BuilderMenu.prototype.showSettings = function (blockId) {
     jQuery('#settings-block-' + blockId).show();
 
     // add Scrollbar
-    var settingsScroll = jQuery('#settings-block-' + blockId).find('.settings-scroll');
-    settingsScroll.perfectScrollbar();
-    jQuery(window).resize(function () {
-        settingsScroll.perfectScrollbar('update');
+    var settingsScroll = jQuery('#settings-block-' + blockId).find('.settings-block');
+    // settingsScroll.perfectScrollbar();
+    // jQuery(window).resize(function () {
+        // settingsScroll.perfectScrollbar('update');
+    // });
+    settingsScroll.niceScroll({
+        horizrailenabled: false,
+        cursorcolor: "#757575",
+        cursorborder: "1px solid #757575",
+        cursorwidth: '2px',
+        scrollspeed: 50,
+        mousescrollstep: 100,
+        enablemousewheel : true,
     });
 };
 /**
