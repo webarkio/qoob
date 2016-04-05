@@ -50,8 +50,7 @@ Fields.accordion = Backbone.View.extend(
      */
     create: function () {
         var values = this.getValue(),
-                settings = this.config.settings;
-        
+            settings = this.config.settings;
         var self = this;
         var items = [];
         var value_models = values.models;
@@ -65,7 +64,6 @@ Fields.accordion = Backbone.View.extend(
             var item = new Fields['accordion_item']({model: value_models[i]});
             item.config = settings;
             items.push(item.render().el);
-            
             values.listenTo(item.model, "change", function () {
                 self.changePosition();
             });
@@ -107,18 +105,6 @@ Fields.accordion = Backbone.View.extend(
                 '}' +
                 '}' +
                 '});'+ 
-                // 'var container = jQuery("#' + this.getUniqueId() + '");'+
-                // 'var sort = Sortable.create(container[0], {'+
-                //       'animation: 150, '+
-                //       'handle: "h3",'+
-                //       'draggable: ".settings-accordion",'+ // Specifies which items inside the element should be sortable
-                //       'scroll: true,'+
-                //       'scrollSensitivity: 100,'+ // px, how near the mouse must be to an edge to start scrolling.
-                //       'scrollSpeed: 10,'+ // px
-                //       'onUpdate: function (evt){'+
-                //        'var item = evt.item;' + // the current dragged HTMLElement
-                //       '}'+
-                //     '});'+
                  '</script>';
 
         var block = jQuery('<div id="' + this.getUniqueId() + '"></div>');
