@@ -54,15 +54,14 @@ Fields.accordion = Backbone.View.extend(
             settings = this.config.settings,
             self = this,
             items = [],
-            value_models = values.models,
-            frontsettings = this.config.frontsettings;
+            value_models = values.models;
         // sort accordion settings
         value_models = _.sortBy(value_models, function(model){
             return model.get('order');
         });       
 
         for (var i = 0; i < value_models.length; i++) {
-            var item = new Fields['accordion_item']({model: value_models[i], frontsettings: frontsettings});
+            var item = new Fields['accordion_item']({model: value_models[i], frontsettings: this.config.frontsettings});
             item.config = settings;
             items.push(item.render().el);
             values.listenTo(item.model, "change", function () {
@@ -73,8 +72,8 @@ Fields.accordion = Backbone.View.extend(
         var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
 
         var sortable = '<script type="text/javascript"> var idblock="'+this.getUniqueId()+'"; jQuery("#' + this.getUniqueId() + '").accordion({' +
-                'header: "> div > h3 "' +
-                ',collapsible: true}).sortable({' +
+                'header: "> div > h3.inner-settings-false "' +
+                ',collapsible: true, disabled: true}).sortable({' +
                 'items: ".settings-accordion",' +
                 'revert: false,'+
                 'axis: "y",' +
@@ -141,7 +140,7 @@ Fields.accordion = Backbone.View.extend(
 
         var model = builder.createModel(data);
         
-        var item = new Fields['accordion_item']({model: model, frontsettings: frontsettings});
+        var item = new Fields['accordion_item']({model: model, frontsettings: this.config.frontsettings});
         
         item.config = settings;
 
@@ -158,17 +157,6 @@ Fields.accordion = Backbone.View.extend(
         jQuery("#" + this.getUniqueId()).accordion("refresh");
         values.trigger('change');
     },
-    /**
-     * 
-     * @returns {String}
-     */
-    createInnerSettings: function () {
-        var settings = '<div id="inner-settings-accordion" class="inner-settings-accordion" style="display:none;">\
-                            <div class="backward"><a href="#">Back</a>\
-                            </div>\
-                        </div>';
-        return settings;
-    },
     
     /**
      * Show accordion item's settings
@@ -176,9 +164,15 @@ Fields.accordion = Backbone.View.extend(
      */
     
     showSettings: function (evt) {
-        var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0],
-            type = this.config.type;
-        builder.menu.showInnerSettings(blockId, type);
+        var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+        var settings = jQuery(evt.currentTarget).siblings('.settings-block').clone(true);
+        var markup = '<div id="inner-settings-accordion" class="inner-settings">\
+                            <div class="backward"><a onclick="builder.menu.showSettings('+ blockId +'); return false;" href="#">Back</a></div>\
+                      </div>';    
+        builder.menu.showInnerSettings(blockId, markup);
+        settings.appendTo('#inner-settings-accordion');
+        //скрывать филды если есть true class
+        
     },
     
     /**
