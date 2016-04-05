@@ -1271,6 +1271,37 @@ input[type="text"]#datepicker {
     filter: brightness(50%);
 }
 
+.settings-item .other-colors {
+    margin-bottom: 10px;
+}
+
+.settings-item .other-colors div {
+    overflow: hidden;
+    height: 50px;
+    width: 50px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 6px;
+}
+
+.settings-item .other-colors div:first-child {
+    margin-left: 3px;
+}
+
+.settings-item .other-colors div.active {
+    border-width: 4px;
+    height: 44px;
+    width: 44px;
+}
+
+.settings-item .other-colors div span{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
 .edit-submenu .settings-item #sliders-size .ui-state-default,
 .edit-submenu .settings-item #sliders-size .ui-widget-content .ui-state-default,
 .edit-submenu .settings-item #sliders-size .ui-widget-header .ui-state-default {
