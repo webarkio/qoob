@@ -67,8 +67,7 @@ Builder.prototype.create = function () {
             '<div class="card-wrap">' +
             '<div class="card-main">' +
             '<div class="blocks-settings"></div>' +
-            '<div class="groups">' +
-            '</div>' +
+            '<div class="groups"></div>' +
             '<div class="list-group"></div>' +
             '<div class="global-settings"></div>' +
             '</div>' +
