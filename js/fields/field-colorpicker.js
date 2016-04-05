@@ -48,6 +48,7 @@ Fields.colorpicker = Backbone.View.extend(
         var elem = jQuery(evt.currentTarget);
         this.$el.find('.other-color').removeClass('active');
         elem.addClass('active');
+        console.log('ddd');
         this.$el.find('input').trigger("change");
 //        this.$el.find('.edit-image img').attr('src', elem.find('img').attr('src'));
 //        console.log(this.$el.find('input').trigger("change"));
@@ -61,10 +62,20 @@ Fields.colorpicker = Backbone.View.extend(
      * @returns {String}
      */
     create: function () {
-        return '<div class="title">'+this.config.label+'</div>' + 
+        var block = '<div class="title">'+this.config.label+'</div>' + 
                  (this.config.colors ? this.getOherColors() : '') +
-                 '<input type="hidden" name="' + this.config.name + '" value="' + this.getValue() + '">' +
-                 '<input type="text" id="wheel-demo" class="form-control demo" data-control="wheel" value="#ff99ee">' ;
+                 '<button class="change-color other-color" data-wheelcolorpicker data-wcp-preview="true" id="color-input"></button>' +
+                 '<input type="hidden" name="' + this.config.name + '" value="' + this.getValue() + '">'
+                
+        var colorpicker = "<script type='text/javascript'>" +
+                "jQuery(function() {" + 
+                    "jQuery('#color-input').wheelColorPicker();" + 
+                    "jQuery('#color-input').on('slidermove', function() {"+
+                        "jQuery('#event-color').val(jQuery(this).wheelColorPicker('getValue', 'rgb'));"+
+                    "});" + 
+                "});" + 
+                "</script>";
+        return  [block, colorpicker];
     },
     /**
      * Render filed colorpicker
