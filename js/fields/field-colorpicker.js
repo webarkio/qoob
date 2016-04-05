@@ -48,7 +48,6 @@ Fields.colorpicker = Backbone.View.extend(
         var elem = jQuery(evt.currentTarget);
         this.$el.find('.other-color').removeClass('active');
         elem.addClass('active');
-        console.log('ddd');
         this.$el.find('input').trigger("change");
 //        this.$el.find('.edit-image img').attr('src', elem.find('img').attr('src'));
 //        console.log(this.$el.find('input').trigger("change"));
@@ -64,15 +63,12 @@ Fields.colorpicker = Backbone.View.extend(
     create: function () {
         var block = '<div class="title">'+this.config.label+'</div>' + 
                  (this.config.colors ? this.getOherColors() : '') +
-                 '<button class="change-color other-color" data-wheelcolorpicker data-wcp-preview="true" id="color-input"></button>' +
+                 '<button class="change-color other-color" data-wheelcolorpicker data-wcp-preview="true" data-wcp-sliders="wv" id="color-input"></button>' +
                  '<input type="hidden" name="' + this.config.name + '" value="' + this.getValue() + '">'
                 
         var colorpicker = "<script type='text/javascript'>" +
                 "jQuery(function() {" + 
                     "jQuery('#color-input').wheelColorPicker();" + 
-                    "jQuery('#color-input').on('slidermove', function() {"+
-                        "jQuery('#event-color').val(jQuery(this).wheelColorPicker('getValue', 'rgb'));"+
-                    "});" + 
                 "});" + 
                 "</script>";
         return  [block, colorpicker];
