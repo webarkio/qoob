@@ -20,6 +20,7 @@ Fields.colorpicker = Backbone.View.extend(
      */
     changeInput: function (evt) {
         var target = jQuery(evt.target);
+        console.log(this.model);
         this.model.set(target.attr('name'), target.prev().find('.active').children().css('background-color'));
     },
     /**
@@ -36,7 +37,7 @@ Fields.colorpicker = Backbone.View.extend(
     getOherColors: function () {
         var colors = '';
         for (var i = 0; i < this.config.colors.length; i++) {
-            colors += '<div class="other-color ' + (this.config.colors[i] == this.getValue() ? 'active' : '') + '"><span style="background-color: ' + this.config.colors[i] +'"></span></div>';
+            colors += '<div class="other-color ' + (this.config.colors[i] == this.getValue() ? 'active' : '') + '" style="background-color: ' + this.config.colors[i] +'"><span ></span></div>';
         }
         return '<div class="other-colors">' + colors + '</div>';
     },
@@ -69,6 +70,9 @@ Fields.colorpicker = Backbone.View.extend(
         var colorpicker = "<script type='text/javascript'>" +
                 "jQuery(function() {" + 
                     "jQuery('#color-input').wheelColorPicker();" + 
+                    "jQuery('.settings-block').scroll(function(){" + 
+                        "jQuery('.jQWCP-wWidget').hide();" + 
+                    "});" +
                 "});" + 
                 "</script>";
         return  [block, colorpicker];
