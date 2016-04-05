@@ -49,7 +49,7 @@ BuilderToolbar.prototype.logoRotation = function (rot) {
         this.sideClassName = 'step-one';
     } else if (rot == '-180') {
         this.sideClassName = 'step-two';
-    } else if (this.steps == '-270') {
+    } else if (rot == '-270') {
         this.sideClassName = 'step-three';
     } else if (rot == '0' || rot == '-360') {
         this.sideClassName = 'step-four';

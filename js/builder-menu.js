@@ -183,7 +183,6 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
  * @param {Integer} blockId
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
-
     if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
         return;
 
@@ -205,6 +204,18 @@ BuilderMenu.prototype.showSettings = function (blockId) {
 
     jQuery('.settings.menu-block').hide();
     jQuery('#settings-block-' + blockId).show();
+};
+
+BuilderMenu.prototype.showInnerSettings = function (blockId, type) { 
+    // logo rotation
+    this.builder.toolbar.logoRotation(-360);
+    // menu rotation
+    this.menuRotation(360);
+    // state rotate
+    this.rotate = false;
+    
+    jQuery('#settings-block-' + blockId).hide();
+    jQuery('#inner-settings-block-' + type).show();
 };
 /**
  * Hide group by id
@@ -246,4 +257,7 @@ BuilderMenu.prototype.showGlobalSettings = function () {
 
     // rotate logo
     this.builder.toolbar.logoRotation(-270);
+
+    // hide menu blocks
+    this.hideAll();
 };
