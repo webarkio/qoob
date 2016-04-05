@@ -5,6 +5,7 @@ Fields.accordion = Backbone.View.extend(
     uniqueId: null,
     events: {
         'click .add-block': 'addNewItem',
+        'click .title_accordion.inner-settings-true' : 'showSettings',
         'drop': 'changePosition'
     },
     /**
@@ -50,18 +51,18 @@ Fields.accordion = Backbone.View.extend(
      */
     create: function () {
         var values = this.getValue(),
-            settings = this.config.settings;
-        var self = this;
-        var items = [];
-        var value_models = values.models;
-        
+            settings = this.config.settings,
+            self = this,
+            items = [],
+            value_models = values.models,
+            frontsettings = this.config.frontsettings;
         // sort accordion settings
         value_models = _.sortBy(value_models, function(model){
             return model.get('order');
         });       
 
         for (var i = 0; i < value_models.length; i++) {
-            var item = new Fields['accordion_item']({model: value_models[i]});
+            var item = new Fields['accordion_item']({model: value_models[i], frontsettings: frontsettings});
             item.config = settings;
             items.push(item.render().el);
             values.listenTo(item.model, "change", function () {
@@ -139,9 +140,9 @@ Fields.accordion = Backbone.View.extend(
         }
 
         var model = builder.createModel(data);
-
-        var item = new Fields['accordion_item']({model: model});
-        console.log(item);
+        
+        var item = new Fields['accordion_item']({model: model, frontsettings: frontsettings});
+        
         item.config = settings;
 
         values.add(model);
@@ -162,12 +163,24 @@ Fields.accordion = Backbone.View.extend(
      * @returns {String}
      */
     createInnerSettings: function () {
-        var settings = '<div id="inner-settings-block-accordion" class="inner-settings-accordion" style="display:none;">\
+        var settings = '<div id="inner-settings-accordion" class="inner-settings-accordion" style="display:none;">\
                             <div class="backward"><a href="#">Back</a>\
                             </div>\
                         </div>';
         return settings;
     },
+    
+    /**
+     * Show accordion item's settings
+     * @returns {Object}
+     */
+    
+    showSettings: function (evt) {
+        var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0],
+            type = this.config.type;
+        builder.menu.showInnerSettings(blockId, type);
+    },
+    
     /**
      * Render filed accordion
      * @returns {Object}
