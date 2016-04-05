@@ -140,7 +140,8 @@ Fields.accordion = Backbone.View.extend(
 
         var model = builder.createModel(data);
 
-        var item = new Fields['accordion_item']({model: model});        
+        var item = new Fields['accordion_item']({model: model});
+        console.log(item);
         item.config = settings;
 
         values.add(model);
@@ -155,6 +156,17 @@ Fields.accordion = Backbone.View.extend(
         jQuery("#" + this.getUniqueId()).append(item.render().el);
         jQuery("#" + this.getUniqueId()).accordion("refresh");
         values.trigger('change');
+    },
+    /**
+     * 
+     * @returns {String}
+     */
+    createInnerSettings: function () {
+        var settings = '<div id="inner-settings-block-accordion" class="inner-settings-accordion" style="display:none;">\
+                            <div class="backward"><a href="#">Back</a>\
+                            </div>\
+                        </div>';
+        return settings;
     },
     /**
      * Render filed accordion
