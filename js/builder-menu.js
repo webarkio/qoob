@@ -205,6 +205,18 @@ BuilderMenu.prototype.showSettings = function (blockId) {
     jQuery('.settings.menu-block').hide();
     jQuery('#settings-block-' + blockId).show();
 };
+
+BuilderMenu.prototype.showInnerSettings = function (blockId, type) { 
+    // logo rotation
+    this.builder.toolbar.logoRotation(-360);
+    // menu rotation
+    this.menuRotation(360);
+    // state rotate
+    this.rotate = false;
+    
+    jQuery('#settings-block-' + blockId).hide();
+    jQuery('#inner-settings-block-' + type).show();
+};
 /**
  * Hide group by id
  * @param {Integer} groupId

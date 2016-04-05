@@ -41,21 +41,27 @@ Fields.image = Backbone.View.extend(
              * @param {Object} evt
              */
             imageUpload: function (evt) {
-                window.send_to_editor = function (html) {
-                    var img_url = jQuery('img', html).attr('src');
-                    var img = jQuery(evt.target).prev().show().find('img');
+                  var src = this.getValue(),
+                      blockId = this.model.id,
+                      type = this.config.type;
+              
+                  builder.menu.showInnerSettings(blockId, type);
 
-                    jQuery(evt.target).parent().find('.title').find('.cross-delete').show();
-
-                    if (img != undefined && img != '') {
-                        img.attr('src', img_url);
-                        jQuery(evt.target).trigger("change");
-                    }
-
-                    tb_remove();
-                };
-
-                tb_show('Upload a Image', 'media-upload.php?referer=media_page&type=image&TB_iframe=true&post_id=0', false);
+//                window.send_to_editor = function (html) {
+//                    var img_url = jQuery('img', html).attr('src');
+//                    var img = jQuery(evt.target).prev().show().find('img');
+//
+//                    jQuery(evt.target).parent().find('.title').find('.cross-delete').show();
+//
+//                    if (img != undefined && img != '') {
+//                        img.attr('src', img_url);
+//                        jQuery(evt.target).trigger("change");
+//                    }
+//
+//                    tb_remove();
+//                };
+//
+//                tb_show('Upload a Image', 'media-upload.php?referer=media_page&type=image&TB_iframe=true&post_id=0', false);
                 return false;
             },
             /**
@@ -107,7 +113,19 @@ Fields.image = Backbone.View.extend(
                         '<div class="cross-delete"><a href="#"></a></div></div>' +
                         (this.config.images ? this.getOherPhotos() : '') +
                         '<div class="edit-image"><img src="' + this.getValue() + '" /></div>' +
-                        '<input name="' + this.config.name + '" class="btn-upload btn-builder" type="button" value="Select Image" />';
+                        '<input name="' + this.config.name + '" class="btn-upload btn-builder" type="button" value="Media Center" />';
+            },
+            /**
+             * 
+             * @returns {String}
+             */
+            createInnerSettings: function () {
+                var settings = '<div id="inner-settings-block-image" class="inner-settings-image" style="display:none;">\
+                                    <div class="backward"><a href="#">Back</a>\
+                                    </div>\
+                                </div>';
+
+                return settings;
             },
             /**
              * Render filed image
