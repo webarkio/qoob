@@ -161,16 +161,9 @@ BuilderMenu.prototype.showGroups = function () {
     this.builder.toolbar.logoRotation(-90);
 
     // add Scrollbar
-    var catalogGroups = jQuery('#catalog-groups');
-    catalogGroups.perfectScrollbar();
-
     setTimeout(function () {
         jQuery('.settings.menu-block').hide();
     }, 1000);
-
-    jQuery(window).resize(function () {
-        catalogGroups.perfectScrollbar('update');
-    });
 };
 /**
  * Show blocks by group id
@@ -184,20 +177,12 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
 
     this.hideAll();
     jQuery('#group-' + groupId).show();
-
-    // add Scrollbar
-    var previewBlocks = jQuery('#group-' + groupId).find('.preview-blocks');
-    previewBlocks.perfectScrollbar();
-    jQuery(window).resize(function () {
-        previewBlocks.perfectScrollbar('update');
-    });
 };
 /**
  * Show settings by block id
  * @param {Integer} blockId
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
-
     if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
         return;
 
@@ -219,13 +204,6 @@ BuilderMenu.prototype.showSettings = function (blockId) {
 
     jQuery('.settings.menu-block').hide();
     jQuery('#settings-block-' + blockId).show();
-
-    // add Scrollbar
-    var settingsScroll = jQuery('#settings-block-' + blockId).find('.settings-scroll');
-    settingsScroll.perfectScrollbar();
-    jQuery(window).resize(function () {
-        settingsScroll.perfectScrollbar('update');
-    });
 };
 /**
  * Hide group by id
@@ -268,10 +246,6 @@ BuilderMenu.prototype.showGlobalSettings = function () {
     // rotate logo
     this.builder.toolbar.logoRotation(-270);
 
-    // add Scrollbar
-    var settingsScroll = jQuery('.global-settings').find('.settings-scroll');
-    settingsScroll.perfectScrollbar();
-    jQuery(window).resize(function () {
-        settingsScroll.perfectScrollbar('update');
-    });
+    // hide menu blocks
+    this.hideAll();
 };

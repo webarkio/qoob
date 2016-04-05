@@ -74,6 +74,7 @@ BuilderLoader.prototype.hideAutosave = function () {
  */
 BuilderLoader.prototype.hideWaitBlock = function () {
     var iframe = this.builder.iframe.getIframeContents();
+    
     iframe.find('.droppable').removeClass('active-wait');
     // remove animation
     setTimeout(function () {

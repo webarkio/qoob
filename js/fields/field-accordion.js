@@ -73,12 +73,14 @@ Fields.accordion = Backbone.View.extend(
 
         var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
 
-        var sortable = '<script type="text/javascript"> jQuery("#' + this.getUniqueId() + '").accordion({' +
+        var sortable = '<script type="text/javascript"> var idblock="'+this.getUniqueId()+'"; jQuery("#' + this.getUniqueId() + '").accordion({' +
                 'header: "> div > h3 "' +
                 ',collapsible: true}).sortable({' +
                 'items: ".settings-accordion",' +
+                'revert: false,'+
                 'axis: "y",' +
-                'handle: "h3",' +
+                // 'handle: "h3",' +
+                //'scroll: true,' +
                 'start: function(event, ui) {' +
                 'builder.iframe.getIframeContents().find(".droppable").css("visibility", "hidden");' +
                 'if (jQuery(this).find(".tinyMCE").length) {' +
@@ -87,6 +89,8 @@ Fields.accordion = Backbone.View.extend(
                 '});' +
                 '}' +
                 '},' +
+                'sort: function( event, ui ) {'+
+                '},'+
                 'stop: function(event, ui) {' +
                 'ui.item.trigger("drop", ui.item.index());' +
                 // IE doesn't register the blur when sorting
@@ -102,7 +106,20 @@ Fields.accordion = Backbone.View.extend(
                  '});' +
                 '}' +
                 '}' +
-                '}); </script>';
+                '});'+ 
+                // 'var container = jQuery("#' + this.getUniqueId() + '");'+
+                // 'var sort = Sortable.create(container[0], {'+
+                //       'animation: 150, '+
+                //       'handle: "h3",'+
+                //       'draggable: ".settings-accordion",'+ // Specifies which items inside the element should be sortable
+                //       'scroll: true,'+
+                //       'scrollSensitivity: 100,'+ // px, how near the mouse must be to an edge to start scrolling.
+                //       'scrollSpeed: 10,'+ // px
+                //       'onUpdate: function (evt){'+
+                //        'var item = evt.item;' + // the current dragged HTMLElement
+                //       '}'+
+                //     '});'+
+                 '</script>';
 
         var block = jQuery('<div id="' + this.getUniqueId() + '"></div>');
         
