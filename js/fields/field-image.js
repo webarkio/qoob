@@ -41,27 +41,15 @@ Fields.image = Backbone.View.extend(
              * @param {Object} evt
              */
             imageUpload: function (evt) {
-                var src = this.getValue(),
-                        blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0],
-                        type = this.config.type;
+                var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+                var type = this.config.type;
+                var markup = '<div id="inner-settings-image" class="inner-settings">\
+                                        <div class="backward"><a onclick="builder.menu.showSettings('+ blockId +'); return false;" href="#">Back</a></div>\
+                                        <input class="input-text img-src" type="text" value="' + this.getValue() + '" placeholder="Filter">\
+                                    </div>';
 
-                builder.menu.showInnerSettings(blockId, type);
-
-//                window.send_to_editor = function (html) {
-//                    var img_url = jQuery('img', html).attr('src');
-//                    var img = jQuery(evt.target).prev().show().find('img');
-//
-//                    jQuery(evt.target).parent().find('.title').find('.cross-delete').show();
-//
-//                    if (img != undefined && img != '') {
-//                        img.attr('src', img_url);
-//                        jQuery(evt.target).trigger("change");
-//                    }
-//
-//                    tb_remove();
-//                };
-//
-//                tb_show('Upload a Image', 'media-upload.php?referer=media_page&type=image&TB_iframe=true&post_id=0', false);
+                builder.menu.showInnerSettings(blockId, markup);
+                
                 return false;
             },
             /**
@@ -114,18 +102,6 @@ Fields.image = Backbone.View.extend(
                         (this.config.images ? this.getOherPhotos() : '') +
                         '<div class="edit-image"><img src="' + this.getValue() + '" /></div>' +
                         '<input name="' + this.config.name + '" class="btn-upload btn-builder" type="button" value="Media Center" />';
-            },
-            /**
-             * 
-             * @returns {String}
-             */
-            createInnerSettings: function () {
-                var settings = '<div id="inner-settings-block-image" class="inner-settings-image" style="display:none;">\
-                                    <div class="backward"><a href="#">Back</a>\
-                                    </div>\
-                                </div>';
-
-                return settings;
             },
             /**
              * Render filed image
