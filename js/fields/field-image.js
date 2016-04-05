@@ -41,11 +41,11 @@ Fields.image = Backbone.View.extend(
              * @param {Object} evt
              */
             imageUpload: function (evt) {
-                  var src = this.getValue(),
-                      blockId = this.model.id,
-                      type = this.config.type;
-              
-                  builder.menu.showInnerSettings(blockId, type);
+                var src = this.getValue(),
+                        blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0],
+                        type = this.config.type;
+
+                builder.menu.showInnerSettings(blockId, type);
 
 //                window.send_to_editor = function (html) {
 //                    var img_url = jQuery('img', html).attr('src');
