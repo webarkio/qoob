@@ -1297,25 +1297,9 @@ input[type="text"]#datepicker {
     width: 44px;
 }
 
-
-/*.settings-item .other-color.active,.settings-item .other-color.active span {
-    border-width: 4px;
-    height: 44px;
-    width: 44px;
-}
-
-.settings-item .other-color span{
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-}*/
-.settings-item .other-color.change-color {
-    
-}
 .settings-item .other-color.change-color {
     display: inline-block;
-    background-image: url(../img/colorpicker.png);
-    background-size: 100%;
+    background: url(../img/colorpicker.png) 100%;
     width: 52px;
     height:52px;
 }
