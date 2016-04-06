@@ -5,6 +5,7 @@ Fields.accordion = Backbone.View.extend(
     uniqueId: null,
     events: {
         'click .add-block': 'addNewItem',
+        'click .title_accordion.inner-settings-true' : 'showSettings',
         'drop': 'changePosition'
     },
     /**
@@ -50,22 +51,19 @@ Fields.accordion = Backbone.View.extend(
      */
     create: function () {
         var values = this.getValue(),
-                settings = this.config.settings;
-        
-        var self = this;
-        var items = [];
-        var value_models = values.models;
-        
+            settings = this.config.settings,
+            self = this,
+            items = [],
+            value_models = values.models;
         // sort accordion settings
         value_models = _.sortBy(value_models, function(model){
             return model.get('order');
         });       
 
         for (var i = 0; i < value_models.length; i++) {
-            var item = new Fields['accordion_item']({model: value_models[i]});
+            var item = new Fields['accordion_item']({model: value_models[i], frontsettings: this.config.frontsettings});
             item.config = settings;
             items.push(item.render().el);
-            
             values.listenTo(item.model, "change", function () {
                 self.changePosition();
             });
@@ -74,8 +72,8 @@ Fields.accordion = Backbone.View.extend(
         var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
 
         var sortable = '<script type="text/javascript"> var idblock="'+this.getUniqueId()+'"; jQuery("#' + this.getUniqueId() + '").accordion({' +
-                'header: "> div > h3 "' +
-                ',collapsible: true}).sortable({' +
+                'header: "> div > h3.inner-settings-false "' +
+                ',collapsible: true, disabled: true}).sortable({' +
                 'items: ".settings-accordion",' +
                 'revert: false,'+
                 'axis: "y",' +
@@ -107,18 +105,6 @@ Fields.accordion = Backbone.View.extend(
                 '}' +
                 '}' +
                 '});'+ 
-                // 'var container = jQuery("#' + this.getUniqueId() + '");'+
-                // 'var sort = Sortable.create(container[0], {'+
-                //       'animation: 150, '+
-                //       'handle: "h3",'+
-                //       'draggable: ".settings-accordion",'+ // Specifies which items inside the element should be sortable
-                //       'scroll: true,'+
-                //       'scrollSensitivity: 100,'+ // px, how near the mouse must be to an edge to start scrolling.
-                //       'scrollSpeed: 10,'+ // px
-                //       'onUpdate: function (evt){'+
-                //        'var item = evt.item;' + // the current dragged HTMLElement
-                //       '}'+
-                //     '});'+
                  '</script>';
 
         var block = jQuery('<div id="' + this.getUniqueId() + '"></div>');
@@ -153,8 +139,9 @@ Fields.accordion = Backbone.View.extend(
         }
 
         var model = builder.createModel(data);
-
-        var item = new Fields['accordion_item']({model: model});        
+        
+        var item = new Fields['accordion_item']({model: model, frontsettings: this.config.frontsettings});
+        
         item.config = settings;
 
         values.add(model);
@@ -170,6 +157,24 @@ Fields.accordion = Backbone.View.extend(
         jQuery("#" + this.getUniqueId()).accordion("refresh");
         values.trigger('change');
     },
+    
+    /**
+     * Show accordion item's settings
+     * @returns {Object}
+     */
+    
+    showSettings: function (evt) {
+        var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+        var settings = jQuery(evt.currentTarget).siblings('.settings-block').clone(true);
+        var markup = '<div id="inner-settings-accordion" class="inner-settings">\
+                            <div class="backward"><a onclick="builder.menu.showSettings('+ blockId +'); return false;" href="#">Back</a></div>\
+                      </div>';    
+        builder.menu.showInnerSettings(blockId, markup);
+        settings.appendTo('#inner-settings-accordion');
+        //скрывать филды если есть true class
+        
+    },
+    
     /**
      * Render filed accordion
      * @returns {Object}

@@ -12,7 +12,8 @@ Fields.accordion_item = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
+    initialize: function (options) {
+        this.frontsettings = options.frontsettings;
         this.$el.attr('data-model-id', this.model.id);
     },
     /**
@@ -20,16 +21,17 @@ Fields.accordion_item = Backbone.View.extend(
      * @returns {String}
      */
     create: function () {
+        var frontsettings = (this.frontsettings === undefined) ? "false" : this.frontsettings;
         var items = [];
         var settingsView = new SettingsView({model: this.model});
         settingsView.config = this.config;
-        
+        //console.log(this.frontsettings);
         // change preview accordion item
         this.listenTo(settingsView.model, 'change', function (){
             this.$el.find("h3 span.text").html(this.model.get('title'));
             this.$el.find("h3 span.preview_img img").prop('src', this.model.get('image'));
         });
-        items.push('<h3 class="title title_accordion">' +
+        items.push('<h3 class="title title_accordion inner-settings-'+ frontsettings +'">' +
                 (settingsView.model.get('image')!= undefined ? '<span class="preview_img"><img src="'+ settingsView.model.get('image') +'" /></span>' : '') +
                 '<span class="text">' + settingsView.model.get('title') + '</span><span class="drag-elem"></span>' +
                 '<span class="cross-delete"><a href="#"></a></span></h3>');

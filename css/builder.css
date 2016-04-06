@@ -904,6 +904,10 @@ ul.catalog-list li a:hover {
     margin: 0;
 }
 
+.settings-accordion .title_accordion.inner-settings-true + .settings-block{
+    display: none;
+}
+
 .settings-accordion .title_accordion .text{
     color:#6f6f6f;
     font-size: 16px;
