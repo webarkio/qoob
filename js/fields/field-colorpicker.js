@@ -59,11 +59,13 @@ Fields.colorpicker = Backbone.View.extend(
              */
             changeColorPicker: function (evt) {
                 var elem = jQuery(evt.currentTarget);
-                this.$el.find('.other-color').removeClass('active');
-                elem.addClass('active');
-
                 var name = elem.closest('.settings-item').find('input').prop('name');
                 var model = this.model;
+                this.$el.find('.other-color').removeClass('active');
+                elem.addClass('active');
+                if (elem.css('background-color') != 'rgba(0, 0, 0, 0)'){
+                    model.set(name, elem.css('background-color'));
+                }
                 elem.on('slidermove', function () {
                     elem.addClass('active');
                     model.set(name, elem.css('background-color'));
