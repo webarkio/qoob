@@ -1316,6 +1316,9 @@ input[type="text"]#datepicker {
     z-index: 99999;
     margin-top: 7px;
     left: 4px!important;
+    background: #fff;
+    width: 217px!important;
+    box-shadow: none;
 }
 
 .edit-submenu .settings-item #sliders-size .ui-state-default,

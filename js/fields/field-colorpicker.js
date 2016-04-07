@@ -91,7 +91,7 @@ Fields.colorpicker = Backbone.View.extend(
 
                 var colorpicker = "<script type='text/javascript'>" +
                         "jQuery(function() {" +
-                        "jQuery('#color-input').wheelColorPicker();" +
+                        "jQuery('[data-wheelcolorpicker]').wheelColorPicker();" +
                         "jQuery('.settings-block').scroll(function(){" +
                         "jQuery('.jQWCP-wWidget').hide();" +
                         "});" +
