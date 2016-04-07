@@ -38,7 +38,6 @@ Fields.colorpicker = Backbone.View.extend(
                 var arr_colors = jQuery.inArray(this.getValue(), this.config.colors);
                 var btn = '<button class="change-color other-color ' + (arr_colors == -1 ? 'active' : '') +
                         '" data-wheelcolorpicker data-wcp-preview="true" data-wcp-sliders="wv" id="color-input" ' + (arr_colors == -1 ? 'style="background: ' + this.getValue() + '"' : '') + '"></button>';
-
                 return btn;
             },
             /**
@@ -48,7 +47,6 @@ Fields.colorpicker = Backbone.View.extend(
             getOherColors: function () {
                 var colors = '';
                 for (var i = 0; i < this.config.colors.length; i++) {
-                    this.config.colors[i]
                     colors += '<div class="other-color theme-colors ' + (this.config.colors[i] == this.getValue() ? 'active' : '') + '" style="background: ' + this.config.colors[i] + '"><span ></span></div>';
                 }
                 return '<div class="other-colors">' + colors + '</div>';
@@ -58,9 +56,9 @@ Fields.colorpicker = Backbone.View.extend(
              * @param {Object} evt
              */
             changeColorPicker: function (evt) {
-                var elem = jQuery(evt.currentTarget);
-                var name = elem.closest('.settings-item').find('input').prop('name');
-                var model = this.model;
+                var elem = jQuery(evt.currentTarget),
+                    name = elem.closest('.settings-item').find('input').prop('name'),
+                    model = this.model;
                 this.$el.find('.other-color').removeClass('active');
                 elem.addClass('active');
                 if (elem.css('background-color') != 'rgba(0, 0, 0, 0)'){
