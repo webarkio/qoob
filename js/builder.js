@@ -6,17 +6,13 @@
  * @param {Object} options [current page id and {Object} data]
  */
 //module.exports.Builder = Builder;
-function Builder(options) {
+function Builder() {
     this.loader = new BuilderLoader(this);
-    this.driver = options.driver || new LocalDriver();
     this.toolbar = new BuilderToolbar(this);
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
-    this.storage = new BuilderStorage(this);
-    this.pageId = options.pageId || null;
     this.iframe = new BuilderIframe(this);
     this.pageData = [];
-    this.builderData = null;
     this.builderSettingsData = null;
     this.modelCounter = 0;
 }
@@ -54,7 +50,6 @@ Builder.prototype.create = function () {
             '</div>' +
             '</button>' +
             '<button class="exit-btn" onclick="builder.exit(); return false;" type="button">Exit</button>' +
-            '<button class="screen-size settings" type="button" onclick="builder.menu.showGlobalSettings();return false;"></button>' +
             '<button class="screen-size pc active" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
             '<button class="screen-size tablet-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
             '<button class="screen-size phone-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
@@ -102,10 +97,10 @@ Builder.prototype.getIframePageUrl = function (pageId) {
  *
  * @param {loadBuilderDataCallback} cb - A callback to run.
  */
-Builder.prototype.loadBuilderData = function (cb) {
-    this.driver.loadBuilderData(cb);
-
-};
+//Builder.prototype.loadBuilderData = function (cb) {
+//    this.driver.loadBuilderData(cb);
+//
+//};
 
 /**
  * @callback callIframeCallback
@@ -141,7 +136,7 @@ Builder.prototype.loadPageData = function (cb) {
 Builder.prototype.save = function () {
     var self = this;
     this.loader.showAutosave();
-    
+
     var data = {
         data: this.storage.getPageJSON(),
         html: this.storage.getPageHtml()
@@ -185,9 +180,9 @@ Builder.prototype.autosavePageData = function () {
  * @param {integer} templateId
  * @param {getTemplateCallback} cb - A callback to run.
  */
-Builder.prototype.getTemplate = function (templateId, cb) {
-    this.driver.loadTemplate(templateId, cb);
-};
+//Builder.prototype.getTemplate = function (templateId, cb) {
+//    this.driver.loadTemplate(templateId, cb);
+//};
 
 /**
  * Get settings by id
@@ -285,7 +280,6 @@ Builder.prototype.getDefaultSettings = function (templateId, cb) {
  * Activate page builder
  */
 Builder.prototype.activate = function () {
-
     var self = this;
     self.loader.add(4);
     self.create();
@@ -297,22 +291,19 @@ Builder.prototype.activate = function () {
     });
 
     self.callIframe(function () {
-        self.loadBuilderData(function (err, builderData) {
-            
-            self.builderData = builderData;
+        self.storage.getBuilderData(function (err, builderData) {
             self.menu.create();
             self.loader.sub();
-            
+
             // Autosave
             self.autosavePageData();
 
-            self.loadPageData(function (err, pageData) {
-                if (pageData && pageData.blocks) {
-                    self.loader.add(pageData.blocks.length);
+            self.storage.getPageData(function (err, pageData) {
+                if (pageData) {
+                    self.loader.add(pageData.length);
                 }
 
                 self.viewPort.create(pageData);
-                self.menu.createGlobalControl(pageData);
                 self.loader.sub();
             });
         });

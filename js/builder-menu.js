@@ -18,88 +18,6 @@ BuilderMenu.prototype.create = function () {
     this.showGroups();
 };
 
-/*
- * Create global settings
- */
-BuilderMenu.prototype.createGlobalControl = function (data) {
-    var self = this;
-    var iframe = this.builder.iframe.getWindowIframe();
-
-    var global_settings = this.builder.builderData.global_settings;
-
-    var settings = {};
-
-    if (data && data.global_settings) {
-        settings = data.global_settings;
-    } else {
-        for (var i = 0; i < global_settings.length; i++) {
-            settings[global_settings[i].name] = global_settings[i].default;
-        }
-    }
-
-    this.builder.getTemplate('global', function (err, template) {
-        var model = self.builder.createModel(settings);
-        self.builder.storage.addModel(model.id, model, 'global_settings');
-        self.createBlockStyle(model, template, function (err, block) {
-            self.createGlobalSettings(block.model, global_settings, function (err, container) {
-                jQuery('#builder-menu .global-settings').append(container);
-                iframe.jQuery('#builder-blocks').append(block.render().el);
-                self.builder.builderSettingsData = block.model;
-            });
-        });
-    });
-};
-
-/**
- * Create global settings view
- * 
- * @param {Object} model
- * @param {Object} config
- * @param {createSettingsCallback} cb - A callback to run.
- */
-BuilderMenu.prototype.createGlobalSettings = function (model, config, cb) {
-    var settingsBlock = new SettingsView({
-        model: model,
-        className: 'settings-block settings-scroll'
-    });
-
-    settingsBlock.config = config;
-    var container = jQuery('<div class="settings"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
-    container.append(settingsBlock.render().el);
-    
-    // add SettingsView to storage
-    this.builder.storage.addSettingsView(model.id, settingsBlock);
-    
-    cb(null, container);
-};
-
-/**
- * Create view block style
- * 
- * @param {Object} model
- * @param {String} template html block
- * @param {createBlockCallback} cb - A callback to run.
- */
-BuilderMenu.prototype.createBlockStyle = function (model, template, cb) {
-    var block = new BlockView({
-        model: model,
-        tagName: 'style',
-        className: '',
-        attributes: function () {
-            return {
-                'data-model-id': this.model.id
-            }
-        }
-    });
-
-    block.template = Handlebars.compile(template);
-    
-    // add BlockView to storage
-    this.builder.storage.addBlockView(model.id, block);
-    
-    cb(null, block);
-};
-
 /**
  * Create groups blocks
  */
@@ -257,21 +175,4 @@ BuilderMenu.prototype.resize = function () {
  */
 BuilderMenu.prototype.menuRotation = function (rot) {
     jQuery('#builder-menu .card-main').css("transform", "rotateY(" + rot + "deg)");
-};
-
-/**
- * Show global settings
- */
-BuilderMenu.prototype.showGlobalSettings = function () {
-    // default position block settings
-    this.rotate = false;
-
-    // rotate menu
-    this.menuRotation(270);
-
-    // rotate logo
-    this.builder.toolbar.logoRotation(-270);
-
-    // hide menu blocks
-    this.hideAll();
 };

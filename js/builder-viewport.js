@@ -28,9 +28,6 @@ BuilderViewPort.prototype.createBlock = function (model, template, cb) {
 
     block.template = Handlebars.compile(template);
     
-    // add BlockView to storage
-    this.builder.storage.addBlockView(model.id, block);
-    
     cb(null, block);
 };
 
@@ -83,9 +80,6 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
 
         var container = jQuery('<div class="settings menu-block" id="settings-block-' + model.id + '"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
         container.append(settingsBlock.render().el);
-        
-        // add SettingsView to storage
-        self.builder.storage.addSettingsView(model.id, settingsBlock);
         
         cb(null, container);
     });
@@ -187,9 +181,6 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
         iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
     }, 1000);    
 
-   // remove block data and views from storage
-    this.builder.storage.remove(blockId);
-
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
         // logo rotation
@@ -225,8 +216,6 @@ BuilderViewPort.prototype.droppable = function (blockId) {
             self.builder.getTemplate(templateId, function (err, template) {
                 self.builder.getDefaultSettings(templateId, function (err, settings) {
                     var model = self.builder.createModel(settings);
-                    // add model to storage
-                    self.builder.storage.addModel(model.id, model, 'blocks');
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);
@@ -303,23 +292,19 @@ BuilderViewPort.prototype.create = function (data) {
 
     self.createDefaultDroppable();
     if (data) {
-        var blocks = data.blocks;
         function loop(i) {
-            if (undefined !== blocks && i < blocks.length) {
-                this.builder.getTemplate(blocks[i].template, function (err, template) {
-                    var model = self.builder.createModel(blocks[i]);
-                    // add model to storage
-                    self.builder.storage.addModel(model.id, model, 'blocks');
-                    self.createBlock(model, template, function (err, block) {
-                        self.createSettings(block.model, function (err, container) {
-                            jQuery('#builder-menu .blocks-settings').append(container);
-                            self.addBlock(block);
-                            self.builder.loader.sub();
-                            loop(i + 1);
-                        });
+            this.builder.storage.getTemplate(data[i].template, function (err, template) {
+                var model = self.builder.storage.getModel(data[i]);
+
+                self.createBlock(model, template, function (err, block) {
+                    self.createSettings(block.model, function (err, container) {
+                        jQuery('#builder-menu .blocks-settings').append(container);
+                        self.addBlock(block);
+                        self.builder.loader.sub();
+                        loop(i + 1);
                     });
                 });
-            }
+            });
         }
 
         // Start create
