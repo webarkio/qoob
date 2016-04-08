@@ -24,6 +24,7 @@ function Builder(options) {
  * @returns {DOMElement}
  */
 Builder.prototype.create = function () {
+
     var el = '<div id="builder">' +
             '<div id="builder-toolbar">' +
             '<div class="logo">' +
@@ -293,6 +294,7 @@ Builder.prototype.activate = function () {
 
     self.callIframe(function () {
         self.loadBuilderData(function (err, builderData) {
+            
             self.builderData = builderData;
             self.menu.create();
             self.loader.sub();

@@ -206,7 +206,11 @@ BuilderMenu.prototype.showSettings = function (blockId) {
     jQuery('.inner-settings').remove();
     jQuery('#settings-block-' + blockId).show();
 };
-
+/**
+ * Switching to inner field's settings 
+ * @param {number} blockId
+ * @param {string} markup
+ */
 BuilderMenu.prototype.showInnerSettings = function (blockId, markup) { 
     // logo rotation
     this.builder.toolbar.logoRotation(-360);
