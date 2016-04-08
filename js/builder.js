@@ -20,69 +20,6 @@ function Builder(options) {
     this.builderSettingsData = null;
     this.modelCounter = 0;
 }
-/**
- * Create html page builder
- * @returns {DOMElement}
- */
-Builder.prototype.create = function () {
-
-    var el = '<div id="builder">' +
-            '<div id="builder-toolbar">' +
-            '<div class="logo">' +
-            '<div class="wrap-cube">' +
-            '<div class="cube">' +
-            '<div class="front"></div>' +
-            '<div class="back"></div>' +
-            '<div class="top"></div>' +
-            '<div class="bottom"></div>' +
-            '<div class="left"></div>' +
-            '<div class="right"></div>' +
-            '</div>' +
-            '</div>' +
-            '<div class="text"></div></div>' +
-            '<div class="edit-control-bar">' +
-            '<div class="autosave">' +
-            '<label class="checkbox-sb">' +
-            '<input type="checkbox"  onclick="parent.builder.autosavePageData();"><span></span><em>Autosave</em>' +
-            '</label>' +
-            '</div>' +
-            '<div class="edit-control-button">' +
-            '<button class="save" type="button" onclick="parent.builder.save(); return false;"><span>Save</span>' +
-            '<div class="clock">' +
-            '<div class="minutes-container"><div class="minutes"></div></div>' +
-            '<div class="seconds-container"><div class="seconds"></div></div>' +
-            '</div>' +
-            '</button>' +
-            '<button class="exit-btn" onclick="builder.exit(); return false;" type="button">Exit</button>' +
-            '<button class="screen-size settings" type="button" onclick="builder.menu.showGlobalSettings();return false;"></button>' +
-            '<button class="screen-size pc active" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
-            '<button class="screen-size tablet-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
-            '<button class="screen-size phone-vertical" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
-            '<button class="screen-size tablet-horizontal" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
-            '<button class="screen-size phone-horizontal" onclick="parent.builder.toolbar.screenSize(this); return false;" type="button"></button>' +
-            '<button class="arrow-btn hide-builder" onclick="parent.builder.toolbar.hideBuilder(this); return false;" type="button"></button>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div id="builder-menu">' +
-            '<div id="card">' +
-            '<div class="card-wrap">' +
-            '<div class="card-main">' +
-            '<div class="blocks-settings"></div>' +
-            '<div class="groups"></div>' +
-            '<div class="list-group"></div>' +
-            '<div class="global-settings"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div id="builder-content"><div id="builder-viewport" class="pc">' +
-            '<iframe src="' + this.getIframePageUrl(this.pageId) + '" scrolling="auto" name="builder-iframe" id="builder-iframe"></iframe>' +
-            '</div></div>' +
-            '</div>';
-    jQuery('body').prepend(el);
-};
 
 /*
  * Getting driver page id for iframe
@@ -288,7 +225,6 @@ Builder.prototype.activate = function () {
 
     var self = this;
     self.loader.add(4);
-    self.create();
     self.loader.sub();
     self.makeLayoutSize();
     self.loader.sub();
