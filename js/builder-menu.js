@@ -210,12 +210,13 @@ BuilderMenu.prototype.showSettings = function (blockId) {
         // state rotate
         this.rotate = true;
     }
-
+    
     jQuery('.settings.menu-block').hide();
+    jQuery('.inner-settings').remove();
     jQuery('#settings-block-' + blockId).show();
 };
 
-BuilderMenu.prototype.showInnerSettings = function (blockId, type) { 
+BuilderMenu.prototype.showInnerSettings = function (blockId, markup) { 
     // logo rotation
     this.builder.toolbar.logoRotation(-360);
     // menu rotation
@@ -224,7 +225,7 @@ BuilderMenu.prototype.showInnerSettings = function (blockId, type) {
     this.rotate = false;
     
     jQuery('#settings-block-' + blockId).hide();
-    jQuery('#inner-settings-block-' + type).show();
+    jQuery('.blocks-settings').append(markup);
 };
 /**
  * Hide group by id

@@ -25,14 +25,6 @@ function Builder(options) {
  * @returns {DOMElement}
  */
 Builder.prototype.create = function () {
-    var innerSettings = '';
-    
-    for (field in Fields) {
-        if(Fields[field].prototype.createInnerSettings) {
-            innerSettings += Fields[field].prototype.createInnerSettings();
-        }
-    }
-
     var el = '<div id="builder">' +
             '<div id="builder-toolbar">' +
             '<div class="logo">' +
@@ -75,7 +67,7 @@ Builder.prototype.create = function () {
             '<div id="card">' +
             '<div class="card-wrap">' +
             '<div class="card-main">' +
-            '<div class="blocks-settings">' + innerSettings + '</div>' +
+            '<div class="blocks-settings"></div>' +
             '<div class="groups"></div>' +
             '<div class="list-group"></div>' +
             '<div class="global-settings"></div>' +
