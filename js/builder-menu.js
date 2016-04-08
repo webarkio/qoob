@@ -39,6 +39,7 @@ BuilderMenu.prototype.createGlobalControl = function (data) {
 
     this.builder.getTemplate('global', function (err, template) {
         var model = self.builder.createModel(settings);
+        self.builder.storage.addModel(model.id, model, 'global_settings');
         self.createBlockStyle(model, template, function (err, block) {
             self.createGlobalSettings(block.model, global_settings, function (err, container) {
                 jQuery('#builder-menu .global-settings').append(container);
@@ -65,6 +66,10 @@ BuilderMenu.prototype.createGlobalSettings = function (model, config, cb) {
     settingsBlock.config = config;
     var container = jQuery('<div class="settings"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
     container.append(settingsBlock.render().el);
+    
+    // add SettingsView to storage
+    this.builder.storage.addSettingsView(model.id, settingsBlock);
+    
     cb(null, container);
 };
 
@@ -88,6 +93,10 @@ BuilderMenu.prototype.createBlockStyle = function (model, template, cb) {
     });
 
     block.template = Handlebars.compile(template);
+    
+    // add BlockView to storage
+    this.builder.storage.addBlockView(model.id, block);
+    
     cb(null, block);
 };
 

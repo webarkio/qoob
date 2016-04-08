@@ -615,7 +615,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 #builder-menu .backward {
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 70px;
     background-color: #b2b2b2;
 }

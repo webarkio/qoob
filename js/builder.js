@@ -12,6 +12,7 @@ function Builder(options) {
     this.toolbar = new BuilderToolbar(this);
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
+    this.storage = new BuilderStorage(this);
     this.pageId = options.pageId || null;
     this.iframe = new BuilderIframe(this);
     this.pageData = [];
@@ -147,8 +148,11 @@ Builder.prototype.loadPageData = function (cb) {
 Builder.prototype.save = function () {
     var self = this;
     this.loader.showAutosave();
-
-    var data = this.iframe.getIframePageData();
+    
+    var data = {
+        data: this.storage.getPageJSON(),
+        html: this.storage.getPageHtml()
+    };
 
     this.driver.savePageData(this.pageId, data, function () {
         self.loader.hideAutosave();
