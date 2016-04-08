@@ -615,7 +615,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 #builder-menu .backward {
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 70px;
     background-color: #b2b2b2;
 }
@@ -902,6 +902,10 @@ ul.catalog-list li a:hover {
     background: #fff;
     padding: 3px;
     margin: 0;
+}
+
+.settings-accordion .title_accordion.inner-settings-true + .settings-block{
+    display: none;
 }
 
 .settings-accordion .title_accordion .text{
@@ -1273,9 +1277,10 @@ input[type="text"]#datepicker {
 
 .settings-item .other-colors {
     margin-bottom: 10px;
+    display: inline-block;
 }
 
-.settings-item .other-colors div {
+.settings-item .other-color {
     overflow: hidden;
     height: 50px;
     width: 50px;
@@ -1290,16 +1295,30 @@ input[type="text"]#datepicker {
     margin-left: 3px;
 }
 
-.settings-item .other-colors div.active {
+.settings-item .other-color.active {
     border-width: 4px;
     height: 44px;
     width: 44px;
 }
 
-.settings-item .other-colors div span{
+.settings-item .other-color.change-color {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    background: url(../img/colorpicker.png) 100%;
+    width: 52px;
+    height:52px;
+}
+
+.settings-item button.other-color:focus {
+    outline: none;
+}
+
+.jQWCP-wWidget {
+    z-index: 99999;
+    margin-top: 7px;
+    left: 4px!important;
+    background: #fff;
+    width: 217px!important;
+    box-shadow: none;
 }
 
 .edit-submenu .settings-item #sliders-size .ui-state-default,

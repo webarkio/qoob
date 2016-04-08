@@ -27,6 +27,10 @@ BuilderViewPort.prototype.createBlock = function (model, template, cb) {
     });
 
     block.template = Handlebars.compile(template);
+    
+    // add BlockView to storage
+    this.builder.storage.addBlockView(model.id, block);
+    
     cb(null, block);
 };
 
@@ -79,6 +83,10 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
 
         var container = jQuery('<div class="settings menu-block" id="settings-block-' + model.id + '"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
         container.append(settingsBlock.render().el);
+        
+        // add SettingsView to storage
+        self.builder.storage.addSettingsView(model.id, settingsBlock);
+        
         cb(null, container);
     });
 };
@@ -92,11 +100,6 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
 BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     var self = this;
     var iframe = this.builder.iframe.getWindowIframe();
-
-//    var isFlipped = '';
-//    if (jQuery('#card').hasClass('flipped')) {
-//        isFlipped = 'hidden-button';
-//    }
 
     var controlButtons = '<div class="control-block-button">' +
             '<a onclick="parent.builder.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
@@ -176,22 +179,16 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
         return false;
     }
 
-    var self = this;
     var iframe = this.builder.iframe.getWindowIframe();
 
     // remove DOM on iframe
     iframe.jQuery('div[data-model-id="' + blockId + '"]').addClass('content-hide');
     setTimeout(function () {
         iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
-    }, 1000);
+    }, 1000);    
 
-    // remove model
-    for (var i = 0; i < self.builder.pageData.length; i++) {
-        if (self.builder.pageData[i].id == blockId) {
-            self.builder.pageData.splice(i, 1);
-            break;
-        }
-    }
+   // remove block data and views from storage
+    this.builder.storage.remove(blockId);
 
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
@@ -228,6 +225,8 @@ BuilderViewPort.prototype.droppable = function (blockId) {
             self.builder.getTemplate(templateId, function (err, template) {
                 self.builder.getDefaultSettings(templateId, function (err, settings) {
                     var model = self.builder.createModel(settings);
+                    // add model to storage
+                    self.builder.storage.addModel(model.id, model, 'blocks');
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);
@@ -303,14 +302,14 @@ BuilderViewPort.prototype.create = function (data) {
     var self = this;
 
     self.createDefaultDroppable();
-
     if (data) {
         var blocks = data.blocks;
-
         function loop(i) {
             if (undefined !== blocks && i < blocks.length) {
                 this.builder.getTemplate(blocks[i].template, function (err, template) {
                     var model = self.builder.createModel(blocks[i]);
+                    // add model to storage
+                    self.builder.storage.addModel(model.id, model, 'blocks');
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);
