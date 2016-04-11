@@ -42,7 +42,13 @@ Fields.image = Backbone.View.extend(
             imageUpload: function (evt) {
                 var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
                 var markup = '';
-
+                window.selectFieldImage = function(src) {
+                    var img = jQuery(evt.target).prev().find('img');
+                    if(src && src != '') {
+                        img.attr('src', src);
+                        jQuery(evt.target).trigger("change");
+                    }
+                };
                 if (!builder.builderData.assets) {
                     builder.driver.loadAssets(function (err, assets) {
                         builder.builderData.assets = assets;
@@ -115,6 +121,15 @@ Fields.image = Backbone.View.extend(
                                 "jQuery('#inner-settings-image .ajax-image').removeClass('chosen');" +
                                 "jQuery('#inner-settings-image .img-select').removeClass('no-active');" +
                                 "jQuery(this).addClass('chosen');" +
+                            "});" +
+                            "jQuery('#inner-settings-image .img-select').click(function() {" + 
+                                "var url;" +
+                                "var chosen = jQuery('#inner-settings-image .chosen img');" +
+                                "if(chosen.get(0)) {" +
+                                    "url = chosen.attr('src');" +
+                                    "window.selectFieldImage(url);" +
+                                    "builder.menu.showSettings(" + blockId + ");" +
+                                "}" +
                             "});" +
                           "});" +
                           "</script>";
