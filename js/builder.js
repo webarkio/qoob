@@ -28,20 +28,6 @@ Builder.prototype.getIframePageUrl = function (pageId) {
 };
 
 /**
- * @callback loadBuilderDataCallback
- */
-
-/**
- * Get builder data
- *
- * @param {loadBuilderDataCallback} cb - A callback to run.
- */
-//Builder.prototype.loadBuilderData = function (cb) {
-//    this.driver.loadBuilderData(cb);
-//
-//};
-
-/**
  * @callback callIframeCallback
  */
 
@@ -57,23 +43,10 @@ Builder.prototype.callIframe = function (cb) {
 };
 
 /**
- * @callback loadPageDataCallback
- */
-
-/**
- * Get page data
- *
- * @param {loadPageDataCallback} cb - A callback to run.
- */
-Builder.prototype.loadPageData = function (cb) {
-    this.driver.loadPageData(this.pageId, cb);
-};
-
-/**
  * Out of the Builder
  */
 Builder.prototype.exit = function () {
-    this.driver.exit(this.pageId);
+    this.storage.driver.exit(this.storage.pageId);
 };
 
 /**
@@ -90,32 +63,6 @@ Builder.prototype.autosavePageData = function () {
             }
         }, 60000);
     }
-};
-
-/**
- * @callback getTemplateCallback
- */
-
-/**
- * Get template by id
- *
- * @param {integer} templateId
- * @param {getTemplateCallback} cb - A callback to run.
- */
-//Builder.prototype.getTemplate = function (templateId, cb) {
-//    this.driver.loadTemplate(templateId, cb);
-//};
-
-/**
- * DEPRECATED
- * 
- * Get settings by id
- *
- * @param {integer} templateId
- * @param {getSettingsCallback} cb - A callback to run.
- */
-Builder.prototype.getSettings = function (templateId, cb) {
-    this.driver.loadSettings(templateId, cb);
 };
 
 /**
@@ -154,6 +101,10 @@ Builder.prototype.createModel = function (settings) {
             newSettings[i] = this.createCollection(settings[i]);
             model.listenTo(newSettings[i], "change", function () {
                 this.trigger('change', this);
+            });
+            
+            newSettings[i].forEach(function(model, index) {
+                model.owner_id = settings.id;
             });
         } else {
             newSettings[i] = settings[i];
@@ -232,4 +183,3 @@ Builder.prototype.activate = function () {
         });
     });
 };
-
