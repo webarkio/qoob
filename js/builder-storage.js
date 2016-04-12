@@ -13,6 +13,7 @@ function BuilderStorage(options) {
     this.blockViewData = [];
     this.blockSettingsViewData = [];
     this.templates = [];
+    this.fieldsTemplate = {};
     this.driver = options.driver || new LocalDriver();
 }
 
@@ -122,7 +123,6 @@ BuilderStorage.prototype.getPageData = function (cb) {
         cb(null, this.models);
     } else {
         this.driver.loadPageData(this.pageId, function (err, pageData) {
-
             if (pageData) {
                 for (var i = 0; i < pageData.length; i++) {
                     self.models.push(this.builder.createModel(pageData[i]));
@@ -178,4 +178,33 @@ BuilderStorage.prototype.save = function (json, html, cb) {
     this.driver.savePageData(this.pageId, data, function (err, state) {
         cb(err, state);
     });
+};
+
+/**
+ * Get builder data from storage builderData
+ * @param {getBuilderDataCallback} cb - A callback to run.
+ */
+BuilderStorage.prototype.getFieldsTemplate = function (cb) {
+   
+    console.log("here"); 
+    // if (this.fieldsTemplate.length > 0 && _.findWhere(this.fieldsTemplate, {id: itemId})) {
+    //     var item = _.findWhere(this.fieldsTemplate, {id: itemId});
+    //     cb(null, item.template);
+    // } else {
+        this.driver.loadFieldsTmpl(function (err, templates) {
+            this.fieldsTemplate = templates;
+            // for (var i = 0; i < templates.length; i++) {
+            //       self.fieldsTemplate.push(templates[i]);
+            //      // console.log(self.fieldsTemplate);
+            //      // this.fieldsTemplate = templates[i];
+            //      //this.fieldsTemplate = templates[i];
+            // }
+            // console.log(self.fieldsTemplate);
+            // self.fieldsTemplate.push({id: itemId, template: template});
+            // cb(err, template);
+            console.log(this);
+            console.log(this.fieldsTemplate["field-text"]);
+        }.bind(this));
+    // }
+    
 };

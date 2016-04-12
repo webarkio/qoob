@@ -41,6 +41,7 @@ Fields.text = Backbone.View.extend(
      * @returns {Object}
      */
     render: function () {
+        builder.storage.getFieldsTemplate();
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
             this.$el.html(this.create());
         }
