@@ -1,13 +1,12 @@
 /**
  * Initialize builder storage
- * 
+ *
  * @param {Object} options
  * @version 0.0.1
  * @class  BuilderStorage
  */
 
 function BuilderStorage(options) {
-    console.log(options.pageId);
     this.pageId = options.pageId || null;
     this.builderData = null;
     this.models = [];
@@ -30,7 +29,11 @@ BuilderStorage.prototype.addModel = function (model) {
  * @param {Object} bv
  */
 BuilderStorage.prototype.addBlockView = function (bv) {
-    this.blockViewData.push(bv);
+    if (this.blockViewData.indexOf(bv) == -1) {
+        this.blockViewData.push(bv);
+    } else {
+        this.blockViewData[this.blockViewData.indexOf(bv)] = bv;
+    }
 };
 
 /**
@@ -38,7 +41,11 @@ BuilderStorage.prototype.addBlockView = function (bv) {
  * @param {Object} sv
  */
 BuilderStorage.prototype.addSettingsView = function (sv) {
-    this.blockSettingsViewData.push(sv);
+    if (this.blockSettingsViewData.indexOf(sv) == -1) {
+        this.blockSettingsViewData.push(sv);
+    } else {
+        this.blockSettingsViewData[this.blockSettingsViewData.indexOf(sv)] = sv;
+    }
 };
 
 /**
@@ -95,7 +102,7 @@ BuilderStorage.prototype.getSettingsView = function (id) {
  */
 BuilderStorage.prototype.getBuilderData = function (cb) {
     var self = this;
-    if (this.builderData.length > 0) {
+    if (undefined != this.builderData && this.builderData.length > 0) {
         cb(null, this.builderData);
     } else {
         this.driver.loadBuilderData(function (err, builderData) {
@@ -115,7 +122,13 @@ BuilderStorage.prototype.getPageData = function (cb) {
         cb(null, this.models);
     } else {
         this.driver.loadPageData(this.pageId, function (err, pageData) {
-            self.models = pageData;
+
+            if (pageData) {
+                for (var i = 0; i < pageData.length; i++) {
+                    self.models.push(this.builder.createModel(pageData[i]));
+                }
+            }
+
             cb(err, self.models);
         });
     }
@@ -129,8 +142,8 @@ BuilderStorage.prototype.getPageData = function (cb) {
 BuilderStorage.prototype.getTemplate = function (itemId, cb) {
     var self = this;
     if (this.templates.length > 0 && _.findWhere(this.templates, {id: itemId})) {
-        var tpl = _.findWhere(this.templates, {id: itemId});
-        cb(null, tpl);
+        var item = _.findWhere(this.templates, {id: itemId});
+        cb(null, item.template);
     } else {
         this.driver.loadTemplate(itemId, function (err, template) {
             self.templates.push({id: itemId, template: template});
@@ -145,8 +158,8 @@ BuilderStorage.prototype.getTemplate = function (itemId, cb) {
  * @param {getConfigCallback} cb - A callback to run.
  */
 BuilderStorage.prototype.getConfig = function (itemId, cb) {
-    var config = this.builderData;
-    
+    var item = _.findWhere(this.builderData.items, {id: itemId});
+    var config = item.config.settings;
     cb(null, config);
 };
 
@@ -161,64 +174,8 @@ BuilderStorage.prototype.save = function (json, html, cb) {
         data: json,
         html: html
     };
-        
+
     this.driver.savePageData(this.pageId, data, function (err, state) {
         cb(err, state);
     });
-};
-
-
-/**
- * Get page html from storage
- * @return {String} Html blocks
- */
-BuilderStorage.prototype.getPageHtml = function () {
-    var self = this, blocks = [];
-//            iframe = this.builder.iframe.getWindowIframe(),
-//            elements = iframe.jQuery('#builder-blocks').find('[data-model-id]');
-
-    if (elements.length > 0) {
-        var i = 0;
-        elements.each(function (i, v) {
-            _.each(self.storage, function (item) {
-                if (jQuery(v).data('model-id') == item.model.id) {
-                    blocks.push(jQuery(item.block_view.render().el).html());
-                    item.model.set('position', i);
-                    i++;
-                }
-            });
-        });
-    }
-
-    return blocks.join('');
-};
-
-/**
- * Get page JSON from storage
- * @return {String} JSON blocks
- */
-BuilderStorage.prototype.getPageJSON = function () {
-    var blocks_json = {};
-
-    // group by
-    var groups = _.chain(this.storage)
-            .groupBy(function (obj) {
-                return obj['group'];
-            })
-            .value();
-
-    // remove all except model
-    _.each(groups, function (v, k) {
-        if (k == 'global_settings') {
-            blocks_json[k] = _.first(_.pluck(v, 'model'));
-        } else {
-            blocks_json[k] = _.pluck(v, 'model');
-
-            blocks_json[k] = _.sortBy(blocks_json[k], function (model) {
-                return model.get('position');
-            });
-        }
-    });
-
-    return JSON.parse(JSON.stringify(blocks_json));
 };

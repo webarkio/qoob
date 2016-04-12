@@ -6,12 +6,13 @@
  * @param {Object} options [current page id and {Object} data]
  */
 //module.exports.Builder = Builder;
-function Builder() {
+function Builder(storage) {
     this.loader = new BuilderLoader(this);
     this.toolbar = new BuilderToolbar(this);
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
     this.iframe = new BuilderIframe(this);
+    this.storage = storage;
     this.pageData = [];
     this.builderSettingsData = null;
     this.modelCounter = 0;
@@ -69,23 +70,6 @@ Builder.prototype.loadPageData = function (cb) {
 };
 
 /**
- * Save page data
- */
-Builder.prototype.save = function () {
-    var self = this;
-    this.loader.showAutosave();
-
-    var data = {
-        data: this.storage.getPageJSON(),
-        html: this.storage.getPageHtml()
-    };
-
-    this.driver.savePageData(this.pageId, data, function () {
-        self.loader.hideAutosave();
-    });
-};
-
-/**
  * Out of the Builder
  */
 Builder.prototype.exit = function () {
@@ -123,6 +107,8 @@ Builder.prototype.autosavePageData = function () {
 //};
 
 /**
+ * DEPRECATED
+ * 
  * Get settings by id
  *
  * @param {integer} templateId
@@ -203,14 +189,14 @@ Builder.prototype.createCollection = function (settings) {
  * @param {integer} templateId
  * @param {getDefaultSettingsCallback} cb - A callback to run.
  */
-Builder.prototype.getDefaultSettings = function (templateId, cb) {
-    this.getSettings(templateId, function (err, data) {
-        var settings = {};
+Builder.prototype.getDefaultConfig = function (templateId, cb) {
+    this.storage.getConfig(templateId, function (err, data) {
+        var config = {};
         for (var i = 0; i < data.length; i++) {
-            settings[data[i].name] = data[i].default;
+            config[data[i].name] = data[i].default;
         }
-        settings.template = templateId;
-        cb(null, settings);
+        config.template = templateId;
+        cb(null, config);
     });
 };
 
@@ -236,7 +222,7 @@ Builder.prototype.activate = function () {
             self.autosavePageData();
 
             self.storage.getPageData(function (err, pageData) {
-                if (pageData) {
+                if (pageData.length > 0) {
                     self.loader.add(pageData.length);
                 }
 

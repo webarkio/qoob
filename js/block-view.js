@@ -23,6 +23,10 @@ var BlockView = Backbone.View.extend({
 //        this.$el.html(this.template(data));
         this.afterRender();
         this.trigger('afterRender');
+        
+        // add BlockView to storage
+        builder.storage.addBlockView(this);
+        
         return this;
     },
     /**
