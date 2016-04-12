@@ -27,6 +27,7 @@ BuilderViewPort.prototype.createBlock = function (model, template, cb) {
     });
 
     block.template = Handlebars.compile(template);
+
     cb(null, block);
 };
 
@@ -66,7 +67,7 @@ BuilderViewPort.prototype.devicesSettings = function () {
  */
 BuilderViewPort.prototype.createSettings = function (model, cb) {
     var self = this;
-    this.builder.getSettings(model.get('template'), function (err, config) {
+    this.builder.storage.getConfig(model.get('template'), function (err, config) {
         var settingsBlock = new SettingsView({
             model: model,
             className: 'settings-block settings-scroll'
@@ -79,6 +80,7 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
 
         var container = jQuery('<div class="settings menu-block" id="settings-block-' + model.id + '"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
         container.append(settingsBlock.render().el);
+
         cb(null, container);
     });
 };
@@ -92,11 +94,6 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
 BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     var self = this;
     var iframe = this.builder.iframe.getWindowIframe();
-
-//    var isFlipped = '';
-//    if (jQuery('#card').hasClass('flipped')) {
-//        isFlipped = 'hidden-button';
-//    }
 
     var controlButtons = '<div class="control-block-button">' +
             '<a onclick="parent.builder.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
@@ -176,7 +173,6 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
         return false;
     }
 
-    var self = this;
     var iframe = this.builder.iframe.getWindowIframe();
 
     // remove DOM on iframe
@@ -184,14 +180,6 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
     setTimeout(function () {
         iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
     }, 1000);
-
-    // remove model
-    for (var i = 0; i < self.builder.pageData.length; i++) {
-        if (self.builder.pageData[i].id == blockId) {
-            self.builder.pageData.splice(i, 1);
-            break;
-        }
-    }
 
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
@@ -225,9 +213,13 @@ BuilderViewPort.prototype.droppable = function (blockId) {
 
             //get template id
             var templateId = ui.draggable.attr("id").replace("preview-block-", "");
-            self.builder.getTemplate(templateId, function (err, template) {
-                self.builder.getDefaultSettings(templateId, function (err, settings) {
-                    var model = self.builder.createModel(settings);
+            self.builder.storage.getTemplate(templateId, function (err, template) {
+                self.builder.getDefaultConfig(templateId, function (err, config) {
+                    var model = self.builder.createModel(config);
+
+                    //add model to storage
+                    self.builder.storage.addModel(model);
+
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);
@@ -264,6 +256,10 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
         self.builder.getDefaultSettings(templateId, function (err, settings) {
             var model = self.builder.createModel(settings),
                     iframe = this.builder.iframe.getWindowIframe();
+
+            //add model to storage
+            self.builder.storage.addModel(model);
+
             self.createBlock(model, template, function (err, block) {
                 self.createSettings(block.model, function (err, container) {
                     //Creating waiting block in bottom
@@ -274,7 +270,7 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
                     iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
                     //Animation scrolling to the bottom of the block's container
                     if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
-                        var checkFoxDom = !!window.sidebar ? 'html' : 'body'; 
+                        var checkFoxDom = !!window.sidebar ? 'html' : 'body';
                         iframe.jQuery(checkFoxDom).animate({
                             scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
                         }, 1000, function () {
@@ -303,29 +299,23 @@ BuilderViewPort.prototype.create = function (data) {
     var self = this;
 
     self.createDefaultDroppable();
-
-    if (data) {
-        var blocks = data.blocks;
-
-        function loop(i) {
-            if (undefined !== blocks && i < blocks.length) {
-                this.builder.getTemplate(blocks[i].template, function (err, template) {
-                    var model = self.builder.createModel(blocks[i]);
-                    self.createBlock(model, template, function (err, block) {
-                        self.createSettings(block.model, function (err, container) {
-                            jQuery('#builder-menu .blocks-settings').append(container);
-                            self.addBlock(block);
-                            self.builder.loader.sub();
-                            loop(i + 1);
-                        });
+    function loop(i) {
+        if (i < data.length) {
+            this.builder.storage.getTemplate(data[i].get('template'), function (err, template) {
+                self.createBlock(data[i], template, function (err, block) {
+                    self.createSettings(block.model, function (err, container) {
+                        jQuery('#builder-menu .blocks-settings').append(container);
+                        self.addBlock(block);
+                        self.builder.loader.sub();
+                        loop(i + 1);
                     });
                 });
-            }
+            });
         }
-
-        // Start create
-        loop(0);
     }
+
+    // Start create
+    loop(0);
 };
 
 /**
@@ -342,5 +332,45 @@ BuilderViewPort.prototype.resize = function () {
         top: hideBuilder.height,
         width: jQuery(window).width() - hideBuilder.width,
         left: hideBuilder.width
+    });
+};
+
+/**
+ * Get array model ids blocks
+ * @returns {Array|BuilderViewPort.prototype.getSort.blocks_ids}
+ */
+BuilderViewPort.prototype.getSort = function () {
+    var iframe = this.builder.iframe.getWindowIframe(),
+            blocks = iframe.jQuery('.content-block'), blocks_ids = [];
+
+    blocks.each(function (i, v) {
+        blocks_ids.push(jQuery(v).data('model-id'));
+    });
+
+    return blocks_ids;
+};
+
+/**
+ * Save page data
+ */
+BuilderViewPort.prototype.save = function () {
+    var self = this, html = '', json = [];
+
+    // postion blocks on page
+    var sort = this.getSort();
+
+    this.builder.loader.showAutosave();
+
+    for (var i = 0; i < sort.length; i++) {
+        for (var j = 0; j < this.builder.storage.blockViewData.length; j++) {
+            if (sort[i] == this.builder.storage.blockViewData[j].model.id) {
+                html += jQuery(this.builder.storage.blockViewData[j].render().el).html();
+                json.push(this.builder.storage.blockViewData[j].model.toJSON());
+            }
+        }
+    }
+
+    this.builder.storage.save(json, html, function () {
+        self.builder.loader.hideAutosave();
     });
 };

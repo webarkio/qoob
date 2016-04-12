@@ -615,7 +615,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 #builder-menu .backward {
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 70px;
     background-color: #b2b2b2;
 }
@@ -1459,4 +1459,47 @@ body.builder-editor {
 
 .ui-draggable-dragging {
     z-index: 9999999 !important;
+}
+
+/*Field image*/
+#inner-settings-image {
+    height: 100%;
+}
+
+#inner-settings-image .img-search {
+    width: 97%;
+    margin-left: 3px;
+    height: 37px;
+}
+
+#inner-settings-image .filtered-images .ajax-image {
+    cursor: pointer;
+}
+
+#inner-settings-image .filtered-images .ajax-image.chosen img {
+    border: 2px solid #2bc0e4;
+}
+
+#inner-settings-image .filtered-images img {
+    width: 100%;
+    height: auto;
+}
+#inner-settings-image .img-select {
+    background: #00c1e6;
+    padding: 9px 0;
+    color: #fff;
+    border-radius: 2px;
+    border: none;
+    width: 97%;
+    font-size: 16px;
+    margin-top: 1px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    cursor:pointer;
+}
+
+#inner-settings-image .img-select.no-active {
+    background: #888d95;
+    cursor: auto;
 }

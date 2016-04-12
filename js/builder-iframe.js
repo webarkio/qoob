@@ -52,6 +52,7 @@ BuilderIframe.prototype.resize = function () {
  * Get iframe data
  * @returns {Object} data object and html
  */
+/*
 BuilderIframe.prototype.getIframePageData = function () {
     var self = this;
     var iframe = this.getWindowIframe(),
@@ -82,6 +83,8 @@ BuilderIframe.prototype.getIframePageData = function () {
         'global_settings': model_global_settings,
         'blocks': blocks_items
     };
+    
+    console.log(JSON.parse(JSON.stringify(blocks_data)));
 
     var result = {
         'html': (global_settings ? global_settings : '') + (blocks_html ? blocks_html : ''),
@@ -90,6 +93,7 @@ BuilderIframe.prototype.getIframePageData = function () {
 
     return result;
 };
+*/
 
 /**
  * Change devices display

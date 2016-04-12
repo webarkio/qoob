@@ -1,3 +1,8 @@
+/**
+ * Create view settings for block
+ * 
+ * @type @exp;Backbone@pro;View@call;extend
+ */
 var SettingsView = Backbone.View.extend(
 /** @lends SettingsView.prototype */{
     tagName: "div",
@@ -22,6 +27,10 @@ var SettingsView = Backbone.View.extend(
             res.push(input.render().el);
         }
         this.$el.html(res);
+        
+        // add SettingsView to storage
+        builder.storage.addSettingsView(this);
+        
         return this;
     }
 });
