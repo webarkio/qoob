@@ -16,7 +16,6 @@ function Builder(storage) {
     this.pageData = [];
     this.builderSettingsData = null;
     this.modelCounter = 0;
-    this.baseUrl = options.baseUrl || null;
 }
 
 /*
