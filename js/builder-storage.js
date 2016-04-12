@@ -62,7 +62,12 @@ BuilderStorage.prototype.delModel = function (id) {
  * @param {Number} id modelId
  */
 BuilderStorage.prototype.delBlockView = function (id) {
-    this.blockViewData = _.without(this.blockViewData, _.findWhere(this.blockViewData, {id: id}));
+    this.blockViewData = this.blockViewData.filter(function(item) {
+        if (item.model.id !== id) {
+            return true;
+        }
+        return false;
+    });
 };
 
 /**
@@ -70,7 +75,12 @@ BuilderStorage.prototype.delBlockView = function (id) {
  * @param {Number} id modelId
  */
 BuilderStorage.prototype.delSettingsView = function (id) {
-    this.blockSettingsViewData = _.without(this.blockSettingsViewData, _.findWhere(this.blockSettingsViewData, {id: id}));
+    this.blockSettingsViewData = this.blockSettingsViewData.filter(function(item) {
+        if (item.model.id === id || item.model.owner_id === id) {
+            return false;
+        }
+        return true;
+    });
 };
 
 /**

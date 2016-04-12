@@ -184,13 +184,19 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
         // logo rotation
-        this.builder.toolbar.logoRotation();
+        this.builder.toolbar.logoRotation(-90);
         //menu rotation
         this.builder.menu.menuRotation(90);
     }
 
     // remove DOM
     jQuery('#settings-block-' + blockId).remove();
+    
+    // remove from storage
+    this.builder.storage.delModel(blockId);
+    this.builder.storage.delBlockView(blockId);
+    this.builder.storage.delSettingsView(blockId);
+    
 };
 
 /**
@@ -363,14 +369,14 @@ BuilderViewPort.prototype.save = function () {
 
     for (var i = 0; i < sort.length; i++) {
         for (var j = 0; j < this.builder.storage.blockViewData.length; j++) {
-            if (sort[i] == this.builder.storage.blockViewData[j].model.id) {
-                html += jQuery(this.builder.storage.blockViewData[j].render().el).html();
-                json.push(this.builder.storage.blockViewData[j].model.toJSON());
+            if (sort[i] == this.builder.storage.blockViewData[j].model.id) {                
+                html += this.builder.storage.blockViewData[j].render_template;
+                json.push(JSON.parse(JSON.stringify(this.builder.storage.blockViewData[j].model)));
             }
         }
     }
 
-    this.builder.storage.save(json, html, function () {
+    this.builder.storage.save(json, html, function (err, state) {
         self.builder.loader.hideAutosave();
     });
 };
