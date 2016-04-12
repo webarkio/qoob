@@ -35,6 +35,7 @@ Fields.text = Backbone.View.extend(
     create: function () {
         return '<div class="title">'+this.config.label+'</div>' + '<input class="input-text" type="text" name="' + this.config.name + '" value="' + this.getValue() + '" placeholder="'+ this.config.placeholder +'">';
     },
+
     /**
      * Render filed text
      * @returns {Object}

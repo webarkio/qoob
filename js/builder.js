@@ -18,6 +18,7 @@ function Builder(options) {
     this.builderData = null;
     this.builderSettingsData = null;
     this.modelCounter = 0;
+    this.baseUrl = options.baseUrl || null;
 }
 /**
  * Create html page builder
