@@ -17,18 +17,17 @@ var BlockView = Backbone.View.extend({
                 data[i] = data[i].toJSON();
             }
         }
-        
+
         this.render_template = this.template(data);
-        
+
         var iframe = builder.iframe.getWindowIframe();
         iframe.jQuery(this.$el).html(this.render_template);
-//        this.$el.html(this.template(data));
         this.afterRender();
         this.trigger('afterRender');
-        
+
         // add BlockView to storage
         builder.storage.addBlockView(this);
-        
+
         return this;
     },
     /**
@@ -36,6 +35,18 @@ var BlockView = Backbone.View.extend({
      */
     afterRender: function () {
         builder.viewPort.triggerBuilderBlock();
+    },
+    dispose: function () {
+        // same as this.$el.remove();
+        this.remove();
+
+        // unbind events that are
+        // set on this view
+        this.off();
+
+        // remove all models bindings
+        // made by this view
+        this.model.off(null, null, this);
     }
 });
 
