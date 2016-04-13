@@ -92,7 +92,7 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
  * @param {getDefaultSettingsCallback} cb - A callback to run.
  */
 BuilderViewPort.prototype.getDefaultSettings = function (templateId, cb) {
-    this.storage.getConfig(templateId, function (err, data) {
+    this.builder.storage.getConfig(templateId, function (err, data) {
         var config = {};
         for (var i = 0; i < data.length; i++) {
             config[data[i].name] = data[i].default;
@@ -112,7 +112,7 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     var iframe = this.builder.iframe.getWindowIframe();
 
     var controlButtons = '<div class="control-block-button">' +
-            '<a onclick="parent.builder.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
+            '<a onclick="parent.builder.viewPort.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
             '<a onclick="parent.builder.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
             '</div>';
     var droppable = '<div id="droppable-' + block.model.id + '" class="droppable">' +
