@@ -101,8 +101,8 @@ BuilderToolbar.prototype.screenSize = function (elem) {
  * Button hide all builder
  */
 BuilderToolbar.prototype.hideBuilder = function (elem) {
-
-    var iframe = this.builder.iframe.getIframeContents();
+    var self = this,
+            iframe = this.builder.iframe.getIframeContents();
 
     if (jQuery(elem).hasClass('active')) {
         jQuery('#builder-toolbar').fadeIn(300);
@@ -112,15 +112,15 @@ BuilderToolbar.prototype.hideBuilder = function (elem) {
         jQuery('#builder-toolbar').find('.hide-builder').removeClass('active');
         jQuery(elem).remove();
 
-        this.builder.viewPort.resize();
-        this.builder.iframe.resize();
+        self.builder.viewPort.resize();
+        self.builder.iframe.resize();
     } else {
         jQuery(elem).addClass('active');
         jQuery('#builder-toolbar').fadeOut(300, function () {
-            this.builder.viewPort.resize();
-            this.builder.iframe.resize();
+            self.builder.viewPort.resize();
+            self.builder.iframe.resize();
             var width = (jQuery('#builder-iframe').width() - jQuery('#builder-iframe').contents().width());
-            
+
             jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button>');
             jQuery('#builder>.hide-builder').fadeIn(300);
         });
