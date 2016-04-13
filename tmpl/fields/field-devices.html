@@ -1,0 +1,9 @@
+<div class="title"><%= label %></div>
+<div class="visible-block btn-group">
+	<% _.each( settings, function( setting ){ %>
+		<a href="#" class="btn <% if ( devices.indexOf(setting.name) != -1 ){ %> no-active <% } %> " data-device="<%- setting.name %>">
+			<%- setting.label %>
+		</a>
+	<% }); %>
+</div>
+<input type="hidden" name="<%= name %>" value="<%= devices %>">
