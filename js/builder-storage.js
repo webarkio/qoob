@@ -63,10 +63,11 @@ BuilderStorage.prototype.delModel = function (id) {
  */
 BuilderStorage.prototype.delBlockView = function (id) {
     this.blockViewData = this.blockViewData.filter(function(item) {
-        if (item.model.id !== id) {
-            return true;
+        if (item.model.id === id) {
+            item.dispose();
+            return false;
         }
-        return false;
+        return true;
     });
 };
 
@@ -77,6 +78,8 @@ BuilderStorage.prototype.delBlockView = function (id) {
 BuilderStorage.prototype.delSettingsView = function (id) {
     this.blockSettingsViewData = this.blockSettingsViewData.filter(function(item) {
         if (item.model.id === id || item.model.owner_id === id) {
+            
+            item.dispose();
             return false;
         }
         return true;
@@ -135,7 +138,7 @@ BuilderStorage.prototype.getPageData = function (cb) {
         this.driver.loadPageData(this.pageId, function (err, pageData) {
             if (pageData) {
                 for (var i = 0; i < pageData.length; i++) {
-                    self.models.push(this.builder.createModel(pageData[i]));
+                    self.models.push(builder.utils.createModel(pageData[i]));
                 }
             }
 
@@ -207,5 +210,5 @@ BuilderStorage.prototype.setFieldsData = function(cb) {
         }
         cb();
     }.bind(this)); 
-}
+};
 

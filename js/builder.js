@@ -12,10 +12,8 @@ function Builder(storage) {
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
     this.iframe = new BuilderIframe(this);
+    this.utils = new BuilderUtils();
     this.storage = storage;
-    this.pageData = [];
-    this.builderSettingsData = null;
-    this.modelCounter = 0;
 }
 
 /*
@@ -73,82 +71,6 @@ Builder.prototype.makeLayoutSize = function () {
     this.menu.resize();
     this.viewPort.resize();
     this.iframe.resize();
-};
-
-/**
- * Show settings current block
- *
- * @param {integer} blockId
- */
-Builder.prototype.editBlock = function (blockId) {
-    this.menu.showSettings(blockId);
-};
-
-/**
- * Create Backbone.Model for settings
- *
- * @param {Object} settings
- * @returns {Backbone.Model|Builder.prototype.createModel.model}
- */
-Builder.prototype.createModel = function (settings) {
-    settings.id = ++this.modelCounter;
-    var model = new Backbone.Model();
-
-    var newSettings = {};
-
-    for (var i in settings) {
-        if (_.isArray(settings[i])) {
-            newSettings[i] = this.createCollection(settings[i]);
-            model.listenTo(newSettings[i], "change", function () {
-                this.trigger('change', this);
-            });
-            
-            newSettings[i].forEach(function(model, index) {
-                model.owner_id = settings.id;
-            });
-        } else {
-            newSettings[i] = settings[i];
-        }
-        model.set(i, newSettings[i]);
-    }
-
-    return model;
-};
-
-/**
- * Create collection when nested field is array
- *
- * @param {Object} settings
- * @returns {Builder.prototype.createCollection.collection|Backbone.Collection}
- */
-Builder.prototype.createCollection = function (settings) {
-    var collection = new Backbone.Collection();
-
-    for (var i = 0; i < settings.length; i++) {
-        var model = this.createModel(settings[i]);
-        collection.add(model);
-        collection.listenTo(model, 'change', function () {
-            this.trigger('change', this);
-        });
-    }
-    return collection;
-};
-
-/**
- * Get default settings
- *
- * @param {integer} templateId
- * @param {getDefaultSettingsCallback} cb - A callback to run.
- */
-Builder.prototype.getDefaultConfig = function (templateId, cb) {
-    this.storage.getConfig(templateId, function (err, data) {
-        var config = {};
-        for (var i = 0; i < data.length; i++) {
-            config[data[i].name] = data[i].default;
-        }
-        config.template = templateId;
-        cb(null, config);
-    });
 };
 
 /**
