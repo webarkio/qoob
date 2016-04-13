@@ -165,21 +165,22 @@ Builder.prototype.activate = function () {
     });
 
     self.callIframe(function () {
+        
         self.storage.getBuilderData(function (err, builderData) {
             self.menu.create();
             self.loader.sub();
-
             // Autosave
             self.autosavePageData();
+            self.storage.setFieldsData(function() {
+                self.storage.getPageData(function (err, pageData) {
+                    if (pageData.length > 0) {
+                        self.loader.add(pageData.length);
+                    }
 
-            self.storage.getPageData(function (err, pageData) {
-                if (pageData.length > 0) {
-                    self.loader.add(pageData.length);
-                }
-
-                self.viewPort.create(pageData);
-                self.loader.sub();
-            });
+                    self.viewPort.create(pageData);
+                    self.loader.sub();
+                });
+            });   
         });
     });
 };
