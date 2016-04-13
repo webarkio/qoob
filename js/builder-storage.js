@@ -210,5 +210,5 @@ BuilderStorage.prototype.setFieldsData = function(cb) {
         }
         cb();
     }.bind(this)); 
-}
+};
 
