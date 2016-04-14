@@ -85,7 +85,7 @@ Handlebars.registerHelper('each_by_group', function (opts) {
     var s = '', arr = [],
             tempArr = opts.hash.array,
             group = opts.hash.group;
-
+            
     var arr = _.chain(tempArr)
             .groupBy(function (obj) {
                 return obj[group];
