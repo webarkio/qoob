@@ -1,0 +1,46 @@
+<div id="<%= uniqueId %>" class="<% if(settings.length == 1 && settings[0].type == 'image') {%> without-title <%}%>">
+    <div class="title"><%= label %></div>
+</div>  
+<div class="add-block btn-builder">Add component</div>
+<script type="text/javascript">
+var idblock = "<%= uniqueId %>";
+
+jQuery("#<%= uniqueId %>").accordion({
+    header: "> div > h3.inner-settings-false ",
+    collapsible: true
+}).sortable({
+    items: ".settings-accordion",
+    revert: false,
+    axis: "y",
+    //handle: "h3",
+    //scroll: true,
+    start: function(event, ui) {
+        builder.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");
+        if (jQuery(this).find(".tinyMCE").length) {
+            jQuery(this).find(".tinyMCE").each(function() {
+                try {
+                    tinymce.execCommand("mceRemoveEditor", false, jQuery(this).attr("id"));
+                } catch (e) {}
+            });
+        }
+    },
+    sort: function(event, ui) {},
+    stop: function(event, ui) {
+        ui.item.trigger("drop", ui.item.index());
+        // IE doesn't register the blur when sorting
+        // so trigger focusout handlers to remove .ui-state-focus
+        ui.item.children("h3").triggerHandler("focusout");
+        // Refresh accordion to handle new order
+        jQuery(this).accordion("refresh");
+        builder.viewPort.getIframeContents().find(".droppable").removeAttr("style");
+        // Refresh tinyMCE
+        if (jQuery(this).find(".tinyMCE").length) {
+            jQuery(this).find(".tinyMCE").each(function() {
+                try {
+                    tinymce.execCommand("mceAddEditor", true, jQuery(this).attr("id"));
+                } catch (e) {}
+            });
+        }
+    }
+});
+</script>

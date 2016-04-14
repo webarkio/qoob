@@ -1,0 +1,19 @@
+<div class="title">
+    <div class="text">
+        <%= label %>
+    </div>
+    <div class="cross-delete">
+        <a href="#"></a>
+    </div>
+</div>
+<% if(images) { %>
+    <div class="other-photos">
+        <%   for (var i = 0; i < images.length; i++) { %>
+            <div class="other-photo <% if(images[i] == value){ %> active <%}%>">
+                <img src="<%= images[i] %>">
+            </div>
+        <%}%>
+    </div>
+<%}%>
+<div class="edit-image"><img src="<%= value %>" /></div>
+<input name="<%= name %>" class="btn-upload btn-builder" type="button" value="Media Center" />
