@@ -112,8 +112,8 @@ BuilderToolbar.prototype.hideBuilder = function (elem) {
         jQuery('#builder-toolbar').find('.hide-builder').removeClass('active');
         jQuery(elem).remove();
 
-        self.builder.viewPort.resize();
-        self.builder.iframe.resize();
+        this.builder.viewPort.resize();
+        this.builder.iframe.resize();
     } else {
         jQuery(elem).addClass('active');
         jQuery('#builder-toolbar').fadeOut(300, function () {
