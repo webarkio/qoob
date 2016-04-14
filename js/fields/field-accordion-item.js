@@ -3,6 +3,7 @@ Fields.accordion_item = Backbone.View.extend(
 /** @lends Fields.accordion_item.prototype */{
     className: "settings-item settings-accordion",
     frontsettings: '',
+    accordion_itemTpl : null,
     events: {
         'click .cross-delete': 'deleteModel'
     },
@@ -16,37 +17,33 @@ Fields.accordion_item = Backbone.View.extend(
     initialize: function (options) {
         this.frontsettings = options.frontsettings;
         this.$el.attr('data-model-id', this.model.id);
-    },
-    /**
-     * Create filed accordion_item
-     * @returns {String}
-     */
-    create: function () {
-        var frontsettings = (this.frontsettings === undefined) ? "false" : this.frontsettings;
-        var items = [];
-        var settingsView = new SettingsView({model: this.model});
-        settingsView.config = this.config;
-        //console.log(this.frontsettings);
-        // change preview accordion item
-        this.listenTo(settingsView.model, 'change', function (){
-            this.$el.find("h3 span.text").html(this.model.get('title'));
-            this.$el.find("h3 span.preview_img img").prop('src', this.model.get('image'));
-        });
-        items.push('<h3 class="title title_accordion inner-settings-'+ frontsettings +'">' +
-                (settingsView.model.get('image')!= undefined ? '<span class="preview_img"><img src="'+ settingsView.model.get('image') +'" /></span>' : '') +
-                '<span class="text">' + settingsView.model.get('title') + '</span><span class="drag-elem"></span>' +
-                '<span class="cross-delete"><a href="#"></a></span></h3>');
-        items.push(settingsView.render().el);
-        
-        return items;
+        this.accordion_itemTpl = _.template(builder.storage.getFieldTemplate('field-accordion-item'));
     },
     /**
      * Render filed accordion_item
      * @returns {Object}
      */
     render: function () {
+        var items = [];
+        var settingsView = new SettingsView({model: this.model});
+        settingsView.config = this.config;
+
+        var htmldata = {
+            "frontsettings" : (this.frontsettings === undefined) ? "false" : this.frontsettings,
+            "image" : settingsView.model.get('image'),
+            "title" : settingsView.model.get('title'),
+        }
+        
+        this.listenTo(settingsView.model, 'change', function (){
+            this.$el.find("h3 span.text").html(this.model.get('title'));
+            this.$el.find("h3 span.preview_img img").prop('src', this.model.get('image'));
+        });
+        
+        items.push(this.accordion_itemTpl( htmldata ));
+        items.push(settingsView.render().el);
+
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.create());
+            this.$el.html(items);
         }
         return this;
     },
