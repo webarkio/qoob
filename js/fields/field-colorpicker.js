@@ -42,7 +42,7 @@ Fields.colorpicker = Backbone.View.extend(
                     model = this.model;
                 this.$el.find('.other-color').removeClass('active');
                 elem.addClass('active');
-                if (elem.css('background-color') != 'rgba(0, 0, 0, 0)'){
+                if ((elem.css('background-color') != 'transparent') && (elem.css('background-color') != 'rgba(0, 0, 0, 0)')) {
                     model.set(name, elem.css('background-color'));
                 }
                 elem.on('slidermove', function () {
