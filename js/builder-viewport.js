@@ -109,7 +109,7 @@ BuilderViewPort.prototype.getDefaultSettings = function (templateId, cb) {
  * @param {integer} afterBlockId
  */
 BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
 
     var controlButtons = '<div class="control-block-button">' +
             '<a onclick="parent.builder.viewPort.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
@@ -164,7 +164,7 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
  */
 BuilderViewPort.prototype.triggerBuilderBlock = function () {
     // Trigger change builder blocks for theme
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
     iframe.jQuery('#builder-blocks').trigger('change');
 };
 
@@ -188,7 +188,7 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
         return false;
     }
 
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
 
     // add class when delete block
     iframe.jQuery('div[data-model-id="' + blockId + '"]').addClass('content-hide');
@@ -219,7 +219,7 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
  */
 BuilderViewPort.prototype.droppable = function (blockId) {
     var self = this;
-    var iframe = this.builder.iframe.getIframeContents();
+    var iframe = this.getIframeContents();
 
     iframe.find('#droppable-' + blockId).droppable({
         activeClass: "ui-droppable-active",
@@ -256,7 +256,7 @@ BuilderViewPort.prototype.droppable = function (blockId) {
  * Create default droppable in iframe
  */
 BuilderViewPort.prototype.createDefaultDroppable = function () {
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
     var droppable = '<div id="droppable-0" class="droppable">' +
             '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
             '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
@@ -274,7 +274,7 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
     self.builder.getTemplate(templateId, function (err, template) {
         self.builder.getDefaultSettings(templateId, function (err, settings) {
             var model = self.builder.utils.createModel(settings),
-                    iframe = this.builder.iframe.getWindowIframe();
+                    iframe = this.getWindowIframe();
 
             //add model to storage
             self.builder.storage.addModel(model);
@@ -355,11 +355,26 @@ BuilderViewPort.prototype.resize = function () {
 };
 
 /**
+ * Resize iframe
+ */
+BuilderViewPort.prototype.resizeIframe = function () {
+    // Set size iframe
+    var hideBuilder = (jQuery('.hide-builder').hasClass('active') ? 0 : 70);
+
+    var height = jQuery(window).height() - hideBuilder,
+            width;
+
+    width = jQuery('#builder-viewport').hasClass('pc') ? '100%' : jQuery('#builder-iframe').width();
+
+    jQuery('#builder-iframe').height(height).width(width);
+};
+
+/**
  * Get array model ids blocks
  * @returns {Array|BuilderViewPort.prototype.getSort.blocks_ids}
  */
 BuilderViewPort.prototype.getSort = function () {
-    var iframe = this.builder.iframe.getWindowIframe(),
+    var iframe = this.getWindowIframe(),
             blocks = iframe.jQuery('.content-block'), blocks_ids = [];
 
     blocks.each(function (i, v) {
@@ -392,4 +407,40 @@ BuilderViewPort.prototype.save = function () {
     this.builder.storage.save(json, html, function (err, state) {
         self.builder.loader.hideAutosave();
     });
+};
+
+/**
+ * Get iframe contents
+ * @returns {DOMElement}
+ */
+BuilderViewPort.prototype.getIframeContents = function () {
+    return jQuery('#builder-iframe').contents();
+}
+
+/**
+ * Get iframe documnet
+ * @returns {DOMElement}
+ */
+BuilderViewPort.prototype.getWindowIframe = function () {
+    return window.frames["builder-iframe"];
+}
+
+/**
+ * Change devices display
+ */
+BuilderViewPort.prototype.visibilityBlocks = function (blockId, devices) {
+    var iframe = this.getIframeContents();
+
+    var block = iframe.find("[data-model-id='" + blockId + "']");
+
+    block.removeClass(function (index, classes) {
+        var regex = /^visible-/;
+        return classes.split(/\s+/).filter(function (c) {
+            return regex.test(c);
+        }).join(' ');
+    });
+
+    for (var i = 0; i < devices.length; i++) {
+        block.addClass('visible-' + devices[i]);
+    }
 };

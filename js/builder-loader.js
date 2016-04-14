@@ -73,7 +73,7 @@ BuilderLoader.prototype.hideAutosave = function () {
  * Block added 
  */
 BuilderLoader.prototype.hideWaitBlock = function () {
-    var iframe = this.builder.iframe.getIframeContents();
+    var iframe = this.builder.viewPort.getIframeContents();
     
     iframe.find('.droppable').removeClass('active-wait');
     // remove animation

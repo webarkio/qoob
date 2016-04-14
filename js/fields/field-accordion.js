@@ -88,7 +88,7 @@ Fields.accordion = Backbone.View.extend(
                 // 'handle: "h3",' +
                 //'scroll: true,' +
                 'start: function(event, ui) {' +
-                'builder.iframe.getIframeContents().find(".droppable").css("visibility", "hidden");' +
+                'builder.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");' +
                 'if (jQuery(this).find(".tinyMCE").length) {' +
                 'jQuery(this).find(".tinyMCE").each(function(){' +
                     'try {tinymce.execCommand( "mceRemoveEditor", false, jQuery(this).attr("id") ); } catch(e){}' +
@@ -104,7 +104,7 @@ Fields.accordion = Backbone.View.extend(
                 'ui.item.children( "h3" ).triggerHandler( "focusout" );' +
                 // Refresh accordion to handle new order
                 'jQuery( this ).accordion( "refresh" );' +
-                'builder.iframe.getIframeContents().find(".droppable").removeAttr("style");' +
+                'builder.viewPort.getIframeContents().find(".droppable").removeAttr("style");' +
                 // Refresh tinyMCE
                 'if (jQuery(this).find(".tinyMCE").length) {' +
                 'jQuery(this).find(".tinyMCE").each(function(){' +
