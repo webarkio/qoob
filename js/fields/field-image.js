@@ -6,6 +6,7 @@ var Fields = Fields || {};
 Fields.image = Backbone.View.extend(
         /** @lends Fields.image.prototype */{
             className: "settings-item",
+            image_settingTpl : null, 
             events: {
                 'change input': 'changeInput',
                 'click input': 'imageUpload',
@@ -19,6 +20,7 @@ Fields.image = Backbone.View.extend(
              * @constructs
              */
             initialize: function () {
+                this.image_settingTpl = _.template(builder.storage.getFieldTemplate('field-image-setting'));
             },
             /**
              * Event change input
@@ -70,69 +72,73 @@ Fields.image = Backbone.View.extend(
              */
             createAssetsMarkup: function (blockId, assets) {
                 var imagesMarkup = '';
-                var markup;
-
-                for (var i = 0; i < assets.length; i++) {
-                    for (var j = 0; j < assets[i].length; j++) { 
-                        if (assets[i][j].type === 'image') {
-                            imagesMarkup += '<div class="ajax-image" data-image-tags="' + (assets[i][j].tags ? assets[i][j].tags.join() : '') + '">' +
-                                                '<img src="' + assets[i][j].src + '" alt="" />' + 
-                                            '</div>';
-                        }
-                    }
+                var htmldata = {
+                    "blockId" : blockId,
+                    "assets" : assets
                 }
+                var markup = this.image_settingTpl( htmldata );
 
-                markup = '<div id="inner-settings-image" class="inner-settings">' +
-                        '<div class="backward">' +
-                        '<a onclick="builder.menu.showSettings(' + blockId + '); return false;" href="#">Back</a>' +
-                        '</div>' +
-                        '<input class="input-text img-search" type="text" placeholder="Filter">' +
-                        '<input class="no-active img-select" type="button" value="Select image">' +
-                        '<div class="settings-block settings-scroll">' +
-                        '<div class="filtered-images">' + imagesMarkup + '</div>' +
-                        '</div>' +
-                        '</div>';
+                // for (var i = 0; i < assets.length; i++) {
+                //     for (var j = 0; j < assets[i].length; j++) { 
+                //         if (assets[i][j].type === 'image') {
+                //             imagesMarkup += '<div class="ajax-image" data-image-tags="' + (assets[i][j].tags ? assets[i][j].tags.join() : '') + '">' +
+                //                                 '<img src="' + assets[i][j].src + '" alt="" />' + 
+                //                             '</div>';
+                //         }
+                //     }
+                // }
+
+                // markup = '<div id="inner-settings-image" class="inner-settings">' +
+                //         '<div class="backward">' +
+                //         '<a onclick="builder.menu.showSettings(' + blockId + '); return false;" href="#">Back</a>' +
+                //         '</div>' +
+                //         '<input class="input-text img-search" type="text" placeholder="Filter">' +
+                //         '<input class="no-active img-select" type="button" value="Select image">' +
+                //         '<div class="settings-block settings-scroll">' +
+                //         '<div class="filtered-images">' + imagesMarkup + '</div>' +
+                //         '</div>' +
+                //         '</div>';
                 
-                markup += "<script type='text/javascript'>" +
-                        "jQuery(document).ready(function() {" +
-                            "jQuery('.img-search').keyup(function(e) {" +
-                                "var filteredWords = jQuery(this).val().split(' ');" +
-                                "var imagesToFilter = jQuery('#inner-settings-image .ajax-image');" +
-                                "imagesToFilter.stop(true, true).fadeIn();" +
-                                "if(filteredWords.length <= 1 && filteredWords[0] === '') {" +
-                                    "imagesToFilter.stop(true, true).fadeIn();" +
-                                "} else {" +
-                                    "imagesToFilter.each(function() {" +
-                                        "var filtered = false;" +
-                                        "for(var i = 0; i < filteredWords.length; i++) {" +
-                                            "if(filteredWords[i] !== '' && jQuery(this).attr('data-image-tags').match(new RegExp(filteredWords[i]))) {" +
-                                                "filtered = true;" +
-                                                "jQuery(this).stop(true, true).fadeIn();" +
-                                                "break;" +
-                                            "}" +
-                                        "}" +
-                                        "if(!filtered) {" +
-                                            "jQuery(this).stop(true, true).fadeOut();" +
-                                        "}" +
-                                "});" +
-                               "}" +
-                            "});" +
-                            "jQuery('#inner-settings-image .ajax-image').click(function() {" +
-                                "jQuery('#inner-settings-image .ajax-image').removeClass('chosen');" +
-                                "jQuery('#inner-settings-image .img-select').removeClass('no-active');" +
-                                "jQuery(this).addClass('chosen');" +
-                            "});" +
-                            "jQuery('#inner-settings-image .img-select').click(function() {" + 
-                                "var url;" +
-                                "var chosen = jQuery('#inner-settings-image .chosen img');" +
-                                "if(chosen.get(0)) {" +
-                                    "url = chosen.attr('src');" +
-                                    "window.selectFieldImage(url);" +
-                                    "builder.menu.showSettings(" + blockId + ");" +
-                                "}" +
-                            "});" +
-                          "});" +
-                          "</script>";
+                // markup += "<script type='text/javascript'>" +
+                //         "jQuery(document).ready(function() {" +
+                //             "jQuery('.img-search').keyup(function(e) {" +
+                //                 "var filteredWords = jQuery(this).val().split(' ');" +
+                //                 "var imagesToFilter = jQuery('#inner-settings-image .ajax-image');" +
+                //                 "imagesToFilter.stop(true, true).fadeIn();" +
+                //                 "if(filteredWords.length <= 1 && filteredWords[0] === '') {" +
+                //                     "imagesToFilter.stop(true, true).fadeIn();" +
+                //                 "} else {" +
+                //                     "imagesToFilter.each(function() {" +
+                //                         "var filtered = false;" +
+                //                         "for(var i = 0; i < filteredWords.length; i++) {" +
+                //                             "if(filteredWords[i] !== '' && jQuery(this).attr('data-image-tags').match(new RegExp(filteredWords[i]))) {" +
+                //                                 "filtered = true;" +
+                //                                 "jQuery(this).stop(true, true).fadeIn();" +
+                //                                 "break;" +
+                //                             "}" +
+                //                         "}" +
+                //                         "if(!filtered) {" +
+                //                             "jQuery(this).stop(true, true).fadeOut();" +
+                //                         "}" +
+                //                 "});" +
+                //                "}" +
+                //             "});" +
+                //             "jQuery('#inner-settings-image .ajax-image').click(function() {" +
+                //                 "jQuery('#inner-settings-image .ajax-image').removeClass('chosen');" +
+                //                 "jQuery('#inner-settings-image .img-select').removeClass('no-active');" +
+                //                 "jQuery(this).addClass('chosen');" +
+                //             "});" +
+                //             "jQuery('#inner-settings-image .img-select').click(function() {" + 
+                //                 "var url;" +
+                //                 "var chosen = jQuery('#inner-settings-image .chosen img');" +
+                //                 "if(chosen.get(0)) {" +
+                //                     "url = chosen.attr('src');" +
+                //                     "window.selectFieldImage(url);" +
+                //                     "builder.menu.showSettings(" + blockId + ");" +
+                //                 "}" +
+                //             "});" +
+                //           "});" +
+                //           "</script>";
                 return markup;
             },
             /**
