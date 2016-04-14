@@ -44,23 +44,26 @@ Fields.image = Backbone.View.extend(
             imageUpload: function (evt) {
                 var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
                 var markup = '';
-                window.selectFieldImage = function(src) {
+                var blockItems = builder.storage.builderData.items;
+                var assets = [];
+
+                window.selectFieldImage = function (src) {
                     var img = jQuery(evt.target).prev().find('img');
-                    if(src && src != '') {
+                    if (src && src != '') {
                         img.attr('src', src);
                         jQuery(evt.target).trigger("change");
                     }
                 };
-                if (!builder.builderData.assets) {
-                    builder.driver.loadAssets(function (err, assets) {
-                        builder.builderData.assets = assets;
-                        markup = Fields.image.prototype.createAssetsMarkup(blockId, assets);
-                        builder.menu.showInnerSettings(blockId, markup);
-                    });
-                } else {
-                    markup = Fields.image.prototype.createAssetsMarkup(blockId, builder.builderData.assets);
-                    builder.menu.showInnerSettings(blockId, markup);
+
+                for (var i = 0, lng = blockItems.length; i < lng; i++) {
+                    if (!!blockItems[i].config.assets) {
+                        assets.push(blockItems[i].config.assets);
+                    }
                 }
+
+                markup = Fields.image.prototype.createAssetsMarkup(blockId, assets);
+                builder.menu.showInnerSettings(blockId, markup);
+
 
                 return false;
             },
@@ -98,7 +101,7 @@ Fields.image = Backbone.View.extend(
                 //         '<div class="filtered-images">' + imagesMarkup + '</div>' +
                 //         '</div>' +
                 //         '</div>';
-                
+
                 // markup += "<script type='text/javascript'>" +
                 //         "jQuery(document).ready(function() {" +
                 //             "jQuery('.img-search').keyup(function(e) {" +
