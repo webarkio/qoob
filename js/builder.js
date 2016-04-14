@@ -11,7 +11,6 @@ function Builder(storage) {
     this.toolbar = new BuilderToolbar(this);
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
-//    this.iframe = new BuilderIframe(this);
     this.utils = new BuilderUtils();
     this.storage = storage;
 }
