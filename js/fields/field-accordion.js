@@ -3,6 +3,7 @@ Fields.accordion = Backbone.View.extend(
 /** @lends Fields.accordion.prototype */{
     className: "settings-item",
     uniqueId: null,
+    accordionTpl : null,
     classNameItem: "",
     events: {
         'click .add-block': 'addNewItem',
@@ -14,7 +15,9 @@ Fields.accordion = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {},
+    initialize: function () {
+         this.accordionTpl = _.template(builder.storage.getFieldTemplate('field-accordion'));
+    },
     /**
      * Change position blocks accordion
      * @param {Object} event
@@ -46,86 +49,7 @@ Fields.accordion = Backbone.View.extend(
     getUniqueId: function () {
         return this.uniqueId = this.uniqueId || _.uniqueId('accordion-');
     },
-    /**
-     * Create filed accordion
-     * @returns {String}
-     */
-    create: function () {
-        var values = this.getValue(),
-            settings = this.config.settings,
-            self = this,
-            items = [],
-            value_models = values.models;
-        // sort accordion settings
-        value_models = _.sortBy(value_models, function(model){
-            return model.get('order');
-        });
-        
-        if(this.config.frontsettings === undefined || this.config.frontsettings === false){
-            this.classNameItem = 'accordion_item';
-        }else{
-            this.classNameItem = 'accordion_item_front';
-        } 
-        
-        for (var i = 0; i < value_models.length; i++) {
-            var item = new Fields[this.classNameItem]({model: value_models[i], frontsettings: this.config.frontsettings});
-            item.config = settings;
-      
-            items.push(item.render().el);
-            values.listenTo(item.model, "change", function () {
-                self.changePosition();
-            });
-        }
-
-        var add_block = jQuery('<div class="add-block btn-builder">Add component</div>');
-
-        var sortable = '<script type="text/javascript"> var idblock="'+this.getUniqueId()+'"; jQuery("#' + this.getUniqueId() + '").accordion({'+
-                'header: "> div > h3.inner-settings-false ",'+
-                'collapsible: true }).sortable({' +
-                'items: ".settings-accordion",' +
-                'revert: false,'+
-                'axis: "y",' +
-                // 'handle: "h3",' +
-                //'scroll: true,' +
-                'start: function(event, ui) {' +
-                'builder.iframe.getIframeContents().find(".droppable").css("visibility", "hidden");' +
-                'if (jQuery(this).find(".tinyMCE").length) {' +
-                'jQuery(this).find(".tinyMCE").each(function(){' +
-                    'try {tinymce.execCommand( "mceRemoveEditor", false, jQuery(this).attr("id") ); } catch(e){}' +
-                '});' +
-                '}' +
-                '},' +
-                'sort: function( event, ui ) {'+
-                '},'+
-                'stop: function(event, ui) {' +
-                'ui.item.trigger("drop", ui.item.index());' +
-                // IE doesn't register the blur when sorting
-                // so trigger focusout handlers to remove .ui-state-focus
-                'ui.item.children( "h3" ).triggerHandler( "focusout" );' +
-                // Refresh accordion to handle new order
-                'jQuery( this ).accordion( "refresh" );' +
-                'builder.iframe.getIframeContents().find(".droppable").removeAttr("style");' +
-                // Refresh tinyMCE
-                'if (jQuery(this).find(".tinyMCE").length) {' +
-                'jQuery(this).find(".tinyMCE").each(function(){' +
-                    'try { tinymce.execCommand( "mceAddEditor", true, jQuery(this).attr("id") ); } catch(e){}' +
-                 '});' +
-                '}' +
-                '}' +
-                '});'+ 
-                 '</script>';
-
-        var block = jQuery('<div id="' + this.getUniqueId() + '"></div>');
-        
-        if (settings.length == 1 && settings[0].type == 'image') {
-            block.addClass('without-title');
-        }
-
-        block.append('<div class="title">' + this.config.label + '</div>');     
-        block.append(items);
-
-        return [block, add_block, sortable];
-    },
+    
     /**
      * Add new item to accordion
      * @param {Object} e
@@ -171,8 +95,40 @@ Fields.accordion = Backbone.View.extend(
      * @returns {Object}
      */
     render: function () {
+        var values = this.getValue(),
+            settings = this.config.settings,
+            self = this,
+            items = [],
+            value_models = values.models;
+        // sort accordion settings
+        value_models = _.sortBy(value_models, function(model){
+            return model.get('order');
+        });
+        
+        if(this.config.frontsettings === undefined || this.config.frontsettings === false){
+            this.classNameItem = 'accordion_item';
+        }else{
+            this.classNameItem = 'accordion_item_front';
+        } 
+        
+        for (var i = 0; i < value_models.length; i++) {
+            var item = new Fields[this.classNameItem]({model: value_models[i], frontsettings: this.config.frontsettings});
+            item.config = settings;
+            
+            items.push(item.render().el);
+            values.listenTo(item.model, "change", function () {
+                self.changePosition();
+            });
+        }
+        var htmldata = {
+            "label" : this.config.label,
+            "uniqueId" : this.getUniqueId(),
+            "settings" : settings
+        }
+   
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.create());
+            this.$el.html(this.accordionTpl( htmldata ));
+            this.$el.find('#'+ this.getUniqueId()).append(items);
         }
         return this;
     }
