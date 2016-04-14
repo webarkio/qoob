@@ -42,23 +42,26 @@ Fields.image = Backbone.View.extend(
             imageUpload: function (evt) {
                 var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
                 var markup = '';
-                window.selectFieldImage = function(src) {
+                var blockItems = builder.storage.builderData.items;
+                var assets = [];
+
+                window.selectFieldImage = function (src) {
                     var img = jQuery(evt.target).prev().find('img');
-                    if(src && src != '') {
+                    if (src && src != '') {
                         img.attr('src', src);
                         jQuery(evt.target).trigger("change");
                     }
                 };
-                if (!builder.builderData.assets) {
-                    builder.driver.loadAssets(function (err, assets) {
-                        builder.builderData.assets = assets;
-                        markup = Fields.image.prototype.createAssetsMarkup(blockId, assets);
-                        builder.menu.showInnerSettings(blockId, markup);
-                    });
-                } else {
-                    markup = Fields.image.prototype.createAssetsMarkup(blockId, builder.builderData.assets);
-                    builder.menu.showInnerSettings(blockId, markup);
+
+                for (var i = 0, lng = blockItems.length; i < lng; i++) {
+                    if (!!blockItems[i].config.assets) {
+                        assets.push(blockItems[i].config.assets);
+                    }
                 }
+
+                markup = Fields.image.prototype.createAssetsMarkup(blockId, assets);
+                builder.menu.showInnerSettings(blockId, markup);
+
 
                 return false;
             },
@@ -73,11 +76,11 @@ Fields.image = Backbone.View.extend(
                 var markup;
 
                 for (var i = 0; i < assets.length; i++) {
-                    for (var j = 0; j < assets[i].length; j++) { 
+                    for (var j = 0; j < assets[i].length; j++) {
                         if (assets[i][j].type === 'image') {
                             imagesMarkup += '<div class="ajax-image" data-image-tags="' + (assets[i][j].tags ? assets[i][j].tags.join() : '') + '">' +
-                                                '<img src="' + assets[i][j].src + '" alt="" />' + 
-                                            '</div>';
+                                    '<img src="' + assets[i][j].src + '" alt="" />' +
+                                    '</div>';
                         }
                     }
                 }
@@ -92,47 +95,47 @@ Fields.image = Backbone.View.extend(
                         '<div class="filtered-images">' + imagesMarkup + '</div>' +
                         '</div>' +
                         '</div>';
-                
+
                 markup += "<script type='text/javascript'>" +
                         "jQuery(document).ready(function() {" +
-                            "jQuery('.img-search').keyup(function(e) {" +
-                                "var filteredWords = jQuery(this).val().split(' ');" +
-                                "var imagesToFilter = jQuery('#inner-settings-image .ajax-image');" +
-                                "imagesToFilter.stop(true, true).fadeIn();" +
-                                "if(filteredWords.length <= 1 && filteredWords[0] === '') {" +
-                                    "imagesToFilter.stop(true, true).fadeIn();" +
-                                "} else {" +
-                                    "imagesToFilter.each(function() {" +
-                                        "var filtered = false;" +
-                                        "for(var i = 0; i < filteredWords.length; i++) {" +
-                                            "if(filteredWords[i] !== '' && jQuery(this).attr('data-image-tags').match(new RegExp(filteredWords[i]))) {" +
-                                                "filtered = true;" +
-                                                "jQuery(this).stop(true, true).fadeIn();" +
-                                                "break;" +
-                                            "}" +
-                                        "}" +
-                                        "if(!filtered) {" +
-                                            "jQuery(this).stop(true, true).fadeOut();" +
-                                        "}" +
-                                "});" +
-                               "}" +
-                            "});" +
-                            "jQuery('#inner-settings-image .ajax-image').click(function() {" +
-                                "jQuery('#inner-settings-image .ajax-image').removeClass('chosen');" +
-                                "jQuery('#inner-settings-image .img-select').removeClass('no-active');" +
-                                "jQuery(this).addClass('chosen');" +
-                            "});" +
-                            "jQuery('#inner-settings-image .img-select').click(function() {" + 
-                                "var url;" +
-                                "var chosen = jQuery('#inner-settings-image .chosen img');" +
-                                "if(chosen.get(0)) {" +
-                                    "url = chosen.attr('src');" +
-                                    "window.selectFieldImage(url);" +
-                                    "builder.menu.showSettings(" + blockId + ");" +
-                                "}" +
-                            "});" +
-                          "});" +
-                          "</script>";
+                        "jQuery('.img-search').keyup(function(e) {" +
+                        "var filteredWords = jQuery(this).val().split(' ');" +
+                        "var imagesToFilter = jQuery('#inner-settings-image .ajax-image');" +
+                        "imagesToFilter.stop(true, true).fadeIn();" +
+                        "if(filteredWords.length <= 1 && filteredWords[0] === '') {" +
+                        "imagesToFilter.stop(true, true).fadeIn();" +
+                        "} else {" +
+                        "imagesToFilter.each(function() {" +
+                        "var filtered = false;" +
+                        "for(var i = 0; i < filteredWords.length; i++) {" +
+                        "if(filteredWords[i] !== '' && jQuery(this).attr('data-image-tags').match(new RegExp(filteredWords[i]))) {" +
+                        "filtered = true;" +
+                        "jQuery(this).stop(true, true).fadeIn();" +
+                        "break;" +
+                        "}" +
+                        "}" +
+                        "if(!filtered) {" +
+                        "jQuery(this).stop(true, true).fadeOut();" +
+                        "}" +
+                        "});" +
+                        "}" +
+                        "});" +
+                        "jQuery('#inner-settings-image .ajax-image').click(function() {" +
+                        "jQuery('#inner-settings-image .ajax-image').removeClass('chosen');" +
+                        "jQuery('#inner-settings-image .img-select').removeClass('no-active');" +
+                        "jQuery(this).addClass('chosen');" +
+                        "});" +
+                        "jQuery('#inner-settings-image .img-select').click(function() {" +
+                        "var url;" +
+                        "var chosen = jQuery('#inner-settings-image .chosen img');" +
+                        "if(chosen.get(0)) {" +
+                        "url = chosen.attr('src');" +
+                        "window.selectFieldImage(url);" +
+                        "builder.menu.showSettings(" + blockId + ");" +
+                        "}" +
+                        "});" +
+                        "});" +
+                        "</script>";
                 return markup;
             },
             /**
