@@ -70,7 +70,7 @@ Fields.accordion = Backbone.View.extend(
             data[settingsParams[i].name] = settingsParams[i].default;
         }
 
-        var model = builder.createModel(data);
+        var model = builder.utils.createModel(data);
         
         var item = new Fields[this.classNameItem]({model: model, frontsettings: this.config.frontsettings});
         
