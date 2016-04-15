@@ -72,7 +72,7 @@ Fields.accordion = Backbone.View.extend(
 
         var model = builder.utils.createModel(data);
         
-        var item = new Fields[this.classNameItem]({model: model, frontsettings: this.config.frontsettings});
+        var item = new Fields[this.classNameItem]({model: model});
         
         item.config = settings;
 
@@ -105,10 +105,10 @@ Fields.accordion = Backbone.View.extend(
             return model.get('order');
         });
         
-        if(this.config.frontsettings === undefined || this.config.frontsettings === false){
-            this.classNameItem = 'accordion_item';
+        if(this.config.viewType === undefined || this.config.viewType === "expand"){
+            this.classNameItem = 'accordion_item_expand';
         }else{
-            this.classNameItem = 'accordion_item_front';
+            this.classNameItem = 'accordion_item_flip';
         } 
         
         for (var i = 0; i < value_models.length; i++) {
