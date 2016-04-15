@@ -62,7 +62,7 @@ BuilderStorage.prototype.delModel = function (id) {
  * @param {Number} id modelId
  */
 BuilderStorage.prototype.delBlockView = function (id) {
-    this.blockViewData = this.blockViewData.filter(function(item) {
+    this.blockViewData = this.blockViewData.filter(function (item) {
         if (item.model.id === id) {
             item.dispose();
             return false;
@@ -76,9 +76,9 @@ BuilderStorage.prototype.delBlockView = function (id) {
  * @param {Number} id modelId
  */
 BuilderStorage.prototype.delSettingsView = function (id) {
-    this.blockSettingsViewData = this.blockSettingsViewData.filter(function(item) {
+    this.blockSettingsViewData = this.blockSettingsViewData.filter(function (item) {
         if (item.model.id === id || item.model.owner_id === id) {
-            
+
             item.dispose();
             return false;
         }
@@ -203,12 +203,39 @@ BuilderStorage.prototype.getFieldTemplate = function (fieldId) {
     return false;
 };
 
-BuilderStorage.prototype.setFieldsData = function(cb) {
+BuilderStorage.prototype.setFieldsData = function (cb) {
     this.driver.loadFieldsTmpl(function (err, templates) {
-        for(var template in templates) {
+        for (var template in templates) {
             this.fieldsTemplate[template] = templates[template];
         }
         cb();
-    }.bind(this)); 
+    }.bind(this));
+};
+
+/**
+ * Getting all assets from storage
+ * @returns Array of assets
+ */
+BuilderStorage.prototype.getAssets = function () {
+    var assets = [];
+    var self = this;
+
+    if (!!this.builderData) {
+        var bd = this.builderData;
+        var items = bd.items;
+        
+        for (var i = 0, lng = items.length; i < lng; i++) {
+            if (!!items[i].config.assets) {
+                assets.push(items[i].config.assets);
+            }
+        }
+
+        return assets;
+    } else {
+        this.driver.loadBuilderData(function(err, builderdata) {
+            self.builderData = builderData;
+            self.getAssets();
+        });
+    }
 };
 

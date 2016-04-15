@@ -47,8 +47,7 @@ Fields.image = Backbone.View.extend(
         imageUpload: function(evt) {
             var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
             var markup = '';
-            var blockItems = builder.storage.builderData.items;
-            var assets = [];
+            var assets = builder.storage.getAssets();
 
             window.selectFieldImage = function(src) {
                 var img = jQuery(evt.target).prev().find('img');
@@ -58,15 +57,8 @@ Fields.image = Backbone.View.extend(
                 }
             };
 
-            for (var i = 0, lng = blockItems.length; i < lng; i++) {
-                if (!!blockItems[i].config.assets) {
-                    assets.push(blockItems[i].config.assets);
-                }
-            }
-
             markup = Fields.image.prototype.createAssetsMarkup(blockId, assets, this.image_settingTpl);
             builder.menu.showInnerSettings(blockId, markup);
-
 
             return false;
         },
