@@ -20,7 +20,7 @@ var BlockView = Backbone.View.extend({
 
         this.render_template = this.template(data);
 
-        var iframe = builder.iframe.getWindowIframe();
+        var iframe = builder.viewPort.getWindowIframe();
         iframe.jQuery(this.$el).html(this.render_template);
         this.afterRender();
         this.trigger('afterRender');
