@@ -54,7 +54,7 @@ Fields.image = Backbone.View.extend(
             };
             var markup = '';
             var blockItems = builder.storage.builderData.items;
-            var assets = [];
+            var assets = builder.storage.getAssets();
 
             window.selectFieldImage = function(src) {
                 var img = jQuery(evt.target).prev().find('img');
@@ -63,12 +63,6 @@ Fields.image = Backbone.View.extend(
                     jQuery(evt.target).trigger("change");
                 }
             };
-
-            for (var i = 0, lng = blockItems.length; i < lng; i++) {
-                if (!!blockItems[i].config.assets) {
-                    assets.push(blockItems[i].config.assets);
-                }
-            }
 
             markup = Fields.image.prototype.createAssetsMarkup(blockId, assets, this.image_settingTpl);
             builder.menu.showInnerSettings(parentId, markup);
