@@ -45,7 +45,13 @@ Fields.image = Backbone.View.extend(
          * @param {Object} evt
          */
         imageUpload: function(evt) {
-            var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+            var blockId;
+            var parentId = jQuery(evt.target).closest('.inner-settings').attr('id');
+            if (parentId == "inner-settings-accordion") {
+                blockId = parentId;
+            }else {
+                blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+            };
             var markup = '';
             var blockItems = builder.storage.builderData.items;
             var assets = [];
@@ -65,8 +71,7 @@ Fields.image = Backbone.View.extend(
             }
 
             markup = Fields.image.prototype.createAssetsMarkup(blockId, assets, this.image_settingTpl);
-            builder.menu.showInnerSettings(blockId, markup);
-
+            builder.menu.showInnerSettings(parentId, markup);
 
             return false;
         },

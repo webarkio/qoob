@@ -108,6 +108,19 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
  * @param {Integer} blockId
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
+
+    if(blockId === "inner-settings-accordion") {
+        jQuery('.settings.menu-block').hide();
+        jQuery('#inner-settings-image').remove();
+        // logo rotation
+        this.builder.toolbar.logoRotation(-360);
+        // menu rotation
+        this.menuRotation(360);
+        jQuery('#inner-settings-accordion').show();
+
+        return;
+    }
+
     if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
         return;
 
@@ -136,15 +149,22 @@ BuilderMenu.prototype.showSettings = function (blockId) {
  * @param {number} blockId
  * @param {string} markup
  */
-BuilderMenu.prototype.showInnerSettings = function (blockId, markup) { 
+BuilderMenu.prototype.showInnerSettings = function (parentId, markup) { 
     // logo rotation
     this.builder.toolbar.logoRotation(-360);
     // menu rotation
     this.menuRotation(360);
     // state rotate
     this.rotate = false;
+
+    if(parentId === 'inner-settings-accordion'){
+        jQuery("#inner-settings-accordion").hide();
+        this.menuRotation(-360);
+    }else {
+        this.hideAll();
+    }
+    // jQuery('#settings-block-' + blockId).hide();
     
-    jQuery('#settings-block-' + blockId).hide();
     jQuery('.blocks-settings').append(markup);
 };
 /**
