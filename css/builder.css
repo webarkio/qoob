@@ -843,7 +843,7 @@ ul.catalog-list li a:hover {
     font-size: 14px;
     padding-bottom: 13px;
     line-height: 15px;
-    text-transform: initial;
+    text-transform: capitalize;
     overflow: hidden;
     border-color: transparent;
 }
