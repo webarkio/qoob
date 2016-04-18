@@ -1468,7 +1468,7 @@ body.builder-editor {
 }
 
 #inner-settings-image .img-search {
-    width: 97%;
+    width: 57%;
     margin-left: 3px;
     height: 37px;
 }
@@ -1503,4 +1503,15 @@ body.builder-editor {
 #inner-settings-image .img-select.no-active {
     background: #888d95;
     cursor: auto;
+}
+
+#inner-settings-image .img-pack {
+    display: inline-block;
+    width: 38%;
+    height: 37px;
+    margin-top: -2px;
+}
+
+#inner-settings-image .not-in-pack {
+    display: none!important;
 }

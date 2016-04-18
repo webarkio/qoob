@@ -3,13 +3,16 @@
         <a onclick="builder.menu.showSettings(<%= blockId %>); return false;" href="#">Back</a>
     </div>
     <input class="input-text img-search" type="text" placeholder="Filter">
+    <select class="img-pack">
+        <option selected value="all">all</option>
+    </select>
     <input class="no-active img-select" type="button" value="Select image">
     <div class="settings-block settings-scroll">
         <div class="filtered-images"> 
            <%  for (var i = 0; i < assets.length; i++) {
                     for (var j = 0; j < assets[i].length; j++) { 
                         if (assets[i][j].type === 'image') { %>
-                            <div class="ajax-image" data-image-tags="<% if( assets[i][j].tags ){ %> <%= assets[i][j].tags.join() %> <% } %>">
+                        <div class="ajax-image" data-image-pack="<%if(assets[i][j].pack) {%><%=assets[i][j].pack%><%} else {%><%='default'%><% } %>" data-image-tags="<% if( assets[i][j].tags ){ %><%=assets[i][j].tags.join()%><% } %>">
                                 <img src="<%= assets[i][j].src %>" alt="" /> 
                             </div>
                         <% }
@@ -21,6 +24,39 @@
 </div>
 <script type='text/javascript'>
 jQuery(document).ready(function() {
+    //Getting assets
+    var assets = builder.storage.getAssets();
+    var packs = [];
+    for (var i = 0; i < assets.length; i++) {
+        for (var j = 0, asset = assets[i]; j < asset.length; j++) {
+            if (asset[j].type == 'image') {
+                var pack = asset[j].pack || 'default';
+                if (jQuery.inArray(pack, packs) === -1) {
+                    packs.push(pack);
+                    jQuery('#inner-settings-image .img-pack').append('<option value="' + pack + '">' + pack + '</option>');
+                }
+            }
+        }
+    }
+    //On changing category
+    jQuery('#inner-settings-image .img-pack').change(function() {
+        var pack = jQuery(this).val();
+        var imagesToFilter = jQuery('#inner-settings-image .ajax-image');
+       
+        imagesToFilter.removeClass('not-in-pack');
+        
+        if(pack !== 'all') {
+            imagesToFilter.each(function() {
+                var imagePack = jQuery(this).data('image-pack');
+                if(pack !== imagePack) {
+                    jQuery(this).addClass('not-in-pack');
+                }
+            });
+        }
+        
+        jQuery('.img-search').trigger('keyup');
+    });
+    
     jQuery('.img-search').keyup(function(e) {
         var filteredWords = jQuery(this).val().split(' ');
         var imagesToFilter = jQuery('#inner-settings-image .ajax-image');
@@ -31,7 +67,7 @@ jQuery(document).ready(function() {
             imagesToFilter.each(function() {
                 var filtered = false;
                 for (var i = 0; i < filteredWords.length; i++) {
-                    if (filteredWords[i] !== '' && jQuery(this).attr('data-image-tags').match(new RegExp(filteredWords[i]))) {
+                    if (filteredWords[i] !== '' && jQuery(this).data('image-tags').match(new RegExp(filteredWords[i]))) {
                         filtered = true;
                         jQuery(this).stop(true, true).fadeIn();
                         break;
