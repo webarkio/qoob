@@ -14,7 +14,7 @@ var BlockView = Backbone.View.extend({
         var data = this.model.toJSON();
         for (var i in data) {
             if (data[i] instanceof Backbone.Collection) {
-                data[i] = data[i].toJSON();
+                data[i] = JSON.parse(JSON.stringify(data[i]));
             }
         }
 
