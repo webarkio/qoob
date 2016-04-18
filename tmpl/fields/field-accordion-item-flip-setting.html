@@ -3,3 +3,11 @@
     	<a onclick=" builder.menu.showSettings('<%= blockId %>'); return false;" href="#">Back</a>
     </div>
 </div>
+<script>
+	jQuery(document).ready(function() {
+		jQuery('.<%= classname %> > .backward').find('a').click(function(){
+			jQuery('.<%= classname %>').remove();
+		});
+	});	
+</script>
+
