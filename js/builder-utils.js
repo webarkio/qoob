@@ -35,9 +35,9 @@ BuilderUtils.prototype.createModel = function (settings) {
     for (var i in settings) {
         if (_.isArray(settings[i])) {
             newSettings[i] = this.createCollection(settings[i]);
-            model.listenTo(newSettings[i], "change", function () {
-                this.trigger('change', this);
-            });
+//            model.listenTo(newSettings[i], "change", function () {
+//                this.trigger('change', this);
+//            });
             
             newSettings[i].forEach(function(model, index) {
                 model.owner_id = settings.id;

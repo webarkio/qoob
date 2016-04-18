@@ -94,10 +94,9 @@ Fields.accordion = Backbone.View.extend(
      * Render filed accordion
      * @returns {Object}
      */
-    render: function () {
+    render: function () {        
         var values = this.getValue(),
             settings = this.config.settings,
-            self = this,
             items = [],
             value_models = values.models;
         // sort accordion settings
@@ -109,16 +108,21 @@ Fields.accordion = Backbone.View.extend(
             this.classNameItem = 'accordion_item_expand';
         }else{
             this.classNameItem = 'accordion_item_flip';
-        } 
+        }
         
         for (var i = 0; i < value_models.length; i++) {
             var item = new Fields[this.classNameItem]({model: value_models[i], frontsettings: this.config.frontsettings});
             item.config = settings;
             
             items.push(item.render().el);
-            values.listenTo(item.model, "change", function () {
-                self.changePosition();
+            
+            this.model.listenTo(item.model, "change", function () {
+                this.trigger('change', this);
             });
+//            
+//            values.listenTo(item.model, "change", function () {
+//                self.changePosition();
+//            });
         }
         var htmldata = {
             "label" : this.config.label,
@@ -127,8 +131,7 @@ Fields.accordion = Backbone.View.extend(
         }
    
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.accordionTpl( htmldata ));
-            this.$el.find('#'+ this.getUniqueId()).append(items);
+            this.$el.html(this.accordionTpl( htmldata )).find('#'+ this.getUniqueId()).append(items);
         }
         return this;
     }

@@ -27,17 +27,25 @@ Fields.accordion_item_flip = Backbone.View.extend(
      */
     
     showSettings: function (evt) {
-        var blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
-
-        var htmldata = {
-            "blockId" : blockId,
+        var blockId;
+        var parentId = jQuery(evt.target).closest('.inner-settings').attr('id');
+        
+        if (parentId == "inner-settings-accordion") {
+            blockId = parentId;
+        }else {
+            blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
         }
 
-        builder.menu.showInnerSettings(blockId, this.accordion_item_front_settingTpl( htmldata ));
         var settingsView = new SettingsView({model: this.model});
         settingsView.config = this.config;
         
-        jQuery('#inner-settings-accordion').append(settingsView.render().el);
+        var htmldata = {
+            "blockId" : blockId,
+            "classname" : 'inner-accordion-'+this.model.id
+        }
+
+        builder.menu.showInnerSettings(blockId, this.accordion_item_front_settingTpl( htmldata ));
+        jQuery('.inner-accordion-'+this.model.id).append(settingsView.render().el);
     },
     
     /**
