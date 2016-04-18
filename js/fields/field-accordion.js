@@ -131,8 +131,7 @@ Fields.accordion = Backbone.View.extend(
         }
    
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.accordionTpl( htmldata ));
-            this.$el.find('#'+ this.getUniqueId()).append(items);
+            this.$el.html(this.accordionTpl( htmldata )).find('#'+ this.getUniqueId()).append(items);
         }
         return this;
     }
