@@ -271,10 +271,10 @@ BuilderViewPort.prototype.createDefaultDroppable = function () {
 BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
     var self = this;
     var templateId = elementid.replace("preview-block-", "");
-    self.builder.getTemplate(templateId, function (err, template) {
-        self.builder.getDefaultSettings(templateId, function (err, settings) {
+    this.builder.storage.getTemplate(templateId, function (err, template) {
+        self.getDefaultSettings(templateId, function (err, settings) {
             var model = self.builder.utils.createModel(settings),
-                    iframe = this.getWindowIframe();
+                    iframe = self.getWindowIframe();
 
             //add model to storage
             self.builder.storage.addModel(model);

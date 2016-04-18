@@ -13,7 +13,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function (options) {
+    initialize: function () {
         this.$el.attr('data-model-id', this.model.id);
         this.accordion_itemTpl = _.template(builder.storage.getFieldTemplate('field-accordion-item-expand'));
     },
@@ -28,12 +28,12 @@ Fields.accordion_item_expand = Backbone.View.extend(
 
         var htmldata = {
             "image" : settingsView.model.get('image'),
-            "title" : settingsView.model.get('title'),
-        }
+            "title" : settingsView.model.get('title')
+        };
         
-        this.listenTo(settingsView.model, 'change', function (){
-            this.$el.find("h3 span.text").html(this.model.get('title'));
-            this.$el.find("h3 span.preview_img img").prop('src', this.model.get('image'));
+        this.listenTo(this.model, 'change', function (){
+            this.$el.find("h3 span.text").first().html(this.model.get('title'));
+            this.$el.find("h3 span.preview_img img").first().prop('src', this.model.get('image'));
         });
         
         items.push(this.accordion_itemTpl( htmldata ));
