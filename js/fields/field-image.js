@@ -53,17 +53,22 @@ Fields.image = Backbone.View.extend(
                 blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
             };
             var markup = '';
-            var blockItems = builder.storage.builderData.items;
             var assets = builder.storage.getAssets();
             var curSrc = jQuery(evt.target).siblings('.edit-image').find('img').attr('src');
             
             window.selectFieldImage = function(src) {
                 var img = jQuery(evt.target).prev().find('img');
-                if (src && src != '') {
+                if (src) {
                     img.attr('src', src);
                     jQuery(evt.target).trigger("change");
+                    if (!this.$el.find('.edit-image').is(":visible")) {
+                        this.$el.find('.edit-image').show();
+                    }
+                    if (!this.$el.find('.cross-delete').is(":visible")) {
+                        this.$el.find('.cross-delete').show();
+                    }
                 }
-            };
+            }.bind(this);
 
             markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.image_settingTpl);
             builder.menu.showInnerSettings(parentId, markup);
@@ -114,6 +119,9 @@ Fields.image = Backbone.View.extend(
             this.$el.find('input').trigger("change");
             if (!this.$el.find('.edit-image').is(":visible")) {
                 this.$el.find('.edit-image').show();
+            }
+            if (!this.$el.find('.cross-delete').is(":visible")) {
+                this.$el.find('.cross-delete').show();
             }
         },
 
