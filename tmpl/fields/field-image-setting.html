@@ -101,7 +101,7 @@ jQuery(document).ready(function() {
         if (chosen.get(0)) {
             url = chosen.attr('src');
             window.selectFieldImage(url);
-            builder.menu.showSettings("4");
+            builder.menu.showSettings("<%= blockId %>");
         }
     });
     
