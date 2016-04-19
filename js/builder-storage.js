@@ -157,7 +157,7 @@ BuilderStorage.prototype.getTemplate = function (itemId, cb) {
         var item = _.findWhere(this.templates, {id: itemId});
         cb(null, item.template);
     } else {
-        this.driver.loadTemplate(itemId, function (err, template) {
+        this.driver.loadItem(itemId, function (err, template) {
             this.templates.push({id: itemId, template: template});
             cb(err, template);
         }.bind(this));
