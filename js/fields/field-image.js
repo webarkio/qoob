@@ -55,7 +55,8 @@ Fields.image = Backbone.View.extend(
             var markup = '';
             var blockItems = builder.storage.builderData.items;
             var assets = builder.storage.getAssets();
-
+            var curSrc = jQuery(evt.target).siblings('.edit-image').find('img').attr('src');
+            
             window.selectFieldImage = function(src) {
                 var img = jQuery(evt.target).prev().find('img');
                 if (src && src != '') {
@@ -64,7 +65,7 @@ Fields.image = Backbone.View.extend(
                 }
             };
 
-            markup = Fields.image.prototype.createAssetsMarkup(blockId, assets, this.image_settingTpl);
+            markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.image_settingTpl);
             builder.menu.showInnerSettings(parentId, markup);
 
             return false;
@@ -75,9 +76,10 @@ Fields.image = Backbone.View.extend(
          * @param {Array} assets Assets object from all config files
          * @returns {String} Resulted markup
          */
-        createAssetsMarkup: function(blockId, assets, template) {
+        createAssetsMarkup: function(curSrc, blockId, assets, template) {
             var imagesMarkup = '';
             var htmldata = {
+                "curSrc": curSrc,
                 "blockId": blockId,
                 "assets": assets
             }
@@ -92,7 +94,7 @@ Fields.image = Backbone.View.extend(
             jQuery(evt.target).hide();
             var item = jQuery(evt.target).parents('.settings-item');
             var name = item.find('input').prop('name');
-            item.find('edit-image > img').attr('src', '');
+            item.find('.edit-image > img').attr('src', '');
             item.find('.edit-image').hide();
             if (this.$el.find('.other-photos').length) {
                 this.$el.find('.other-photo').removeClass('active');
