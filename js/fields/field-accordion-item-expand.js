@@ -15,7 +15,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
      */
     initialize: function () {
         this.$el.attr('data-model-id', this.model.id);
-        this.accordion_itemTpl = _.template(builder.storage.getFieldTemplate('field-accordion-item-expand'));
+        this.accordion_itemTpl = _.template(builder.storage.getBuilderTemplate('field-accordion-item-expand'));
     },
     /**
      * Render filed accordion_item

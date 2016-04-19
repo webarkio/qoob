@@ -22,8 +22,8 @@ Fields.image = Backbone.View.extend(
          * @constructs
          */
         initialize: function() {
-            this.image_settingTpl = _.template(builder.storage.getFieldTemplate('field-image-setting'));
-            this.imageTpl = _.template(builder.storage.getFieldTemplate('field-image'));
+            this.image_settingTpl = _.template(builder.storage.getBuilderTemplate('field-image-setting'));
+            this.imageTpl = _.template(builder.storage.getBuilderTemplate('field-image'));
         },
         /**
          * Event change input

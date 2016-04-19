@@ -17,8 +17,8 @@ Fields.accordion_item_flip = Backbone.View.extend(
      */
     initialize: function (options) {
         this.$el.attr('data-model-id', this.model.id);
-        this.accordion_item_frontTpl = _.template(builder.storage.getFieldTemplate('field-accordion-item-flip'));
-        this.accordion_item_front_settingTpl = _.template(builder.storage.getFieldTemplate('field-accordion-item-flip-setting'));
+        this.accordion_item_frontTpl = _.template(builder.storage.getBuilderTemplate('field-accordion-item-flip'));
+        this.accordion_item_front_settingTpl = _.template(builder.storage.getBuilderTemplate('field-accordion-item-flip-setting'));
     },
 
     /**

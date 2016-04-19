@@ -16,7 +16,7 @@ Fields.select = Backbone.View.extend(
          * @constructs
          */
         initialize: function() {
-            this.selectTpl = _.template(builder.storage.getFieldTemplate('field-select'));
+            this.selectTpl = _.template(builder.storage.getBuilderTemplate('field-select'));
         },
         /**
          * Event change colorpicker

@@ -15,7 +15,7 @@ Fields.colorpicker = Backbone.View.extend(
              * @constructs
              */
             initialize: function () {
-                this.colorpickerTpl = _.template(builder.storage.getFieldTemplate('field-colorpicker'));
+                this.colorpickerTpl = _.template(builder.storage.getBuilderTemplate('field-colorpicker'));
             },
             /**
              * Event change colorpicker
