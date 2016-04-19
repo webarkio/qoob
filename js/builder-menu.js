@@ -22,53 +22,23 @@ BuilderMenu.prototype.create = function () {
  * Create groups blocks
  */
 BuilderMenu.prototype.createGroups = function () {
-    var groups_arr = _.sortBy(this.builder.storage.builderData.groups, 'position');
-    var res = '<ul id="catalog-groups" class="catalog-list">';
-    for (var i = 0; i < groups_arr.length; i++) {
-        var group = groups_arr[i];
-        var group_id = group.id.replace(/\s+/g, '').toLowerCase();
-        res = res + '<li><a href="#' + group_id + '" onclick="builder.menu.showBlocks(\'' + group_id + '\');return false;">' + (group.label ? group.label : group.id) + '</a></li>';
+    var menuGroupsView = new BuilderMenuGroupsView();
+    var data = {
+        "groups_arr" : _.sortBy(this.builder.storage.builderData.groups, 'position')
     }
-    res = res + '</ul>';
-    jQuery('#builder-menu .groups').prepend(res);
+
+    menuGroupsView.render(data);
 };
 /**
  * Create blocks menu
  */
 BuilderMenu.prototype.createBlocks = function () {
-    var res = '';
-    for (var i = 0; i < this.builder.storage.builderData.groups.length; i++) {
-        var group = this.builder.storage.builderData.groups[i];
-        var group_id = group.id.replace(/\s+/g, '').toLowerCase();
-        res = res + '<div class="catalog-templates menu-block" id="group-' + group_id + '">';
-        res = res + '<div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">' + (group.label ? group.label : group.id) + '</a></div>';
-        res = res + '<div class="preview-blocks">';
-        for (var k = 0; k < this.builder.storage.builderData.items.length; k++) {
-            if (this.builder.storage.builderData.items[k].config.groups == group.id) {
-                res = res + '<div id="preview-block-' + this.builder.storage.builderData.items[k].id + '" class="preview-block" onclick="builder.viewPort.clickBlockAdd(this.id);return false;"><img src="' + this.builder.storage.builderData.items[k].url + 'preview.png"></div>';
-            }
-        }
-        res = res + '</div></div>';
+    var blocksPreviewView = new BuilderMenuBlocksPreviewView();
+    var data = {
+        "groups" : this.builder.storage.builderData.groups,
+        "items" : this.builder.storage.builderData.items
     }
-    jQuery('#builder-menu .list-group').append(res);
-    jQuery('.preview-block').draggable({
-        appendTo: "body",
-        helper: "clone",
-        iframeFix: true,
-        iframeScroll: true,
-        scrollSensitivity: 50,
-        scrollSpeed: 10,
-        start: function (event, ui) {
-            jQuery('.droppable').show();
-        },
-        stop: function (event, ui) {
-            jQuery('.droppable').hide();
-            // Remove empty div for mobile
-            if (jQuery('#builder-viewport').find('div').length > 0) {
-                jQuery('#builder-viewport').find('div').remove();
-            }
-        }
-    });
+    blocksPreviewView.render(data);
 };
 /**
  * Show groups menu

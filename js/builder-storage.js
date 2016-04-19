@@ -13,7 +13,7 @@ function BuilderStorage(options) {
     this.blockViewData = [];
     this.blockSettingsViewData = [];
     this.templates = [];
-    this.fieldsTemplate = {};
+    this.builderTemplates = {};
     this.driver = options.driver || new LocalDriver();
 }
 
@@ -196,17 +196,17 @@ BuilderStorage.prototype.save = function (json, html, cb) {
  * Get field template
  * @param {String} field name
  */
-BuilderStorage.prototype.getFieldTemplate = function (fieldId) {
-    if (!!this.fieldsTemplate[fieldId]) {
-        return this.fieldsTemplate[fieldId];
+BuilderStorage.prototype.getBuilderTemplate = function (templateId) {
+    if (!!this.builderTemplates[templateId]) {
+        return this.builderTemplates[templateId];
     }
     return false;
 };
 
 BuilderStorage.prototype.setFieldsData = function (cb) {
-    this.driver.loadFieldsTmpl(function (err, templates) {
+    this.driver.loadBuilderTmpl(function (err, templates) {
         for (var template in templates) {
-            this.fieldsTemplate[template] = templates[template];
+            this.builderTemplates[template] = templates[template];
         }
         cb();
     }.bind(this));

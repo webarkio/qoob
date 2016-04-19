@@ -68,7 +68,7 @@ BuilderViewPort.prototype.devicesSettings = function () {
 BuilderViewPort.prototype.createSettings = function (model, cb) {
     var self = this;
     this.builder.storage.getConfig(model.get('template'), function (err, config) {
-        var settingsBlock = new SettingsView({
+        var settingsBlock = new FieldsView({
             model: model,
             className: 'settings-block settings-scroll'
         });
@@ -77,7 +77,7 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
         config.push(self.devicesSettings());
 
         settingsBlock.config = config;
-
+        
         var container = jQuery('<div class="settings menu-block" id="settings-block-' + model.id + '"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
         container.append(settingsBlock.render().el);
 

@@ -23,7 +23,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
      */
     render: function () {
         var items = [];
-        var settingsView = new SettingsView({model: this.model});
+        var settingsView = new FieldsView({model: this.model});
         settingsView.config = this.config;
 
         var htmldata = {

@@ -36,7 +36,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
             blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
         }
 
-        var settingsView = new SettingsView({model: this.model});
+        var settingsView = new FieldsView({model: this.model});
         settingsView.config = this.config;
         
         var htmldata = {
@@ -54,7 +54,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
      */
     render: function () {
         var items = [];
-        var settingsView = new SettingsView({model: this.model});
+        var settingsView = new FieldsView({model: this.model});
         var htmldata = {
             "image" : settingsView.model.get('image'),
             "title" : settingsView.model.get('title'),
