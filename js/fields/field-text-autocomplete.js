@@ -3,6 +3,7 @@ Fields.text_autocomplete = Backbone.View.extend(
 /** @lends Fields.text_autocomplete.prototype */{
     className: "settings-item",
     uniqueId: null,
+    text_autocompletTpl: null,
     events: {
         'keyup input': 'changeInput'
     },
@@ -13,6 +14,7 @@ Fields.text_autocomplete = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
+         this.text_autocompletTpl = _.template(builder.storage.getBuilderTemplate('field-text-autocomplete'));
     },
     /**
      * Event change input
@@ -37,38 +39,20 @@ Fields.text_autocomplete = Backbone.View.extend(
         return this.uniqueId = this.uniqueId || _.uniqueId('text-');
     },
     /**
-     * Create filed text
-     * @returns {String}
-     */
-    create: function () {
-
-        return '<script type="text/javascript">' +
-                'jQuery("#' + this.getUniqueId() + '").autocomplete({' +
-                      'source: function(request, callback){' +
-                      'var searchParam = request.term;' +
-                      'init(searchParam, callback);' +
-                      '}' +
-                '});' +
-                'function init(query, callback) {' +
-                    'var response = [];' +
-                    'var inputs = jQuery("#' + this.getUniqueId() + '").parents(".ui-accordion").find(".text-autocomplete");' +                    
-                    'inputs.each(function() {' +
-                        'if (! _.contains(response, jQuery(this).val())) {' +
-                            'response.push(jQuery(this).val());' +
-                        '}' +
-                    '});' +
-                    'callback(response);' +
-                '};' +
-                '</script>' +
-                '<div class="title">'+this.config.label+'</div>' + '<input id="' + this.getUniqueId() + '" class="input-text text-autocomplete" type="text" name="' + this.config.name + '" value="' + this.getValue() + '" placeholder="'+ this.config.placeholder +'">';
-    },
-    /**
      * Render filed text
      * @returns {Object}
      */
     render: function () {
+        var htmldata = {
+            "label" : this.config.label,
+            "name" : this.config.name,
+            "value" : this.getValue(),
+            "placeholder" : this.config.placeholder,
+            "uniqueId" : this.getUniqueId()
+        }
+
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.create());
+            this.$el.html(this.text_autocompletTpl( htmldata ));
         }
         return this;
     }

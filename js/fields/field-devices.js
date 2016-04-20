@@ -2,6 +2,7 @@ var Fields = Fields || {};
 Fields.devices = Backbone.View.extend(
 /** @lends Fields.devices.prototype */{
     className: "settings-item",
+    devicesTpl: null,
     events: {
         'click .btn-group a': 'clickDevice'
     },
@@ -12,6 +13,7 @@ Fields.devices = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
+        this.devicesTpl = _.template(builder.storage.getBuilderTemplate('field-devices'));
     },
     /**
      * Event change input
@@ -35,7 +37,7 @@ Fields.devices = Backbone.View.extend(
         input.val(active);
         this.model.set(this.config.name, active.join(','));
         
-        builder.iframe.visibilityBlocks(this.model.id, active);
+        builder.viewPort.visibilityBlocks(this.model.id, active);
     },
     /**
      * Get value field devices
@@ -66,6 +68,12 @@ Fields.devices = Backbone.View.extend(
      * @returns {Object}
      */
     render: function () {
+        var htmldata = {
+            "settings" : this.config.settings,
+            "devices" : this.getValue(),
+            "label" : this.config.label,
+            "name" : this.config.name
+        }
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
             this.$el.html(this.create());
         }

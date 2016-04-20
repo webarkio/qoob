@@ -68,7 +68,7 @@ BuilderViewPort.prototype.devicesSettings = function () {
 BuilderViewPort.prototype.createSettings = function (model, cb) {
     var self = this;
     this.builder.storage.getConfig(model.get('template'), function (err, config) {
-        var settingsBlock = new SettingsView({
+        var settingsBlock = new FieldsView({
             model: model,
             className: 'settings-block settings-scroll'
         });
@@ -77,11 +77,28 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
         config.push(self.devicesSettings());
 
         settingsBlock.config = config;
-
+        
         var container = jQuery('<div class="settings menu-block" id="settings-block-' + model.id + '"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
         container.append(settingsBlock.render().el);
 
         cb(null, container);
+    });
+};
+
+/**
+ * Get default settings
+ *
+ * @param {integer} templateId
+ * @param {getDefaultSettingsCallback} cb - A callback to run.
+ */
+BuilderViewPort.prototype.getDefaultSettings = function (templateId, cb) {
+    this.builder.storage.getConfig(templateId, function (err, data) {
+        var config = {};
+        for (var i = 0; i < data.length; i++) {
+            config[data[i].name] = data[i].default;
+        }
+        config.template = templateId;
+        cb(null, config);
     });
 };
 
@@ -92,11 +109,10 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
  * @param {integer} afterBlockId
  */
 BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
-    var self = this;
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
 
     var controlButtons = '<div class="control-block-button">' +
-            '<a onclick="parent.builder.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
+            '<a onclick="parent.builder.viewPort.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
             '<a onclick="parent.builder.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
             '</div>';
     var droppable = '<div id="droppable-' + block.model.id + '" class="droppable">' +
@@ -107,24 +123,15 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     var fullBlock = [jQuery(controlButtons), block.render().el, jQuery(droppable)];
 
     if (afterBlockId && afterBlockId > 0) {
-        for (var i = 0; i < self.builder.pageData.length; i++) {
-            if (self.builder.pageData[i].id == afterBlockId) {
-                self.builder.pageData.splice(i + 1, 0, block.model);
-                break;
-            }
-        }
-
         //Add controll buttons
         var $block = jQuery('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
         $block.appendTo(iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]'));
         iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+        
         iframe.jQuery('body').animate({
             scrollTop: $block.offset().top
         }, 1000);
     } else {
-        self.builder.pageData.push(block.model);
-//            jQuery("#builder-viewport").append(fullBlock);
-
         if (afterBlockId == 0) {
             iframe.jQuery('#builder-blocks').prepend('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
             iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
@@ -150,6 +157,7 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
 
     // when added block hide loader
     this.builder.loader.hideWaitBlock();
+
 };
 
 /**
@@ -158,8 +166,17 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
  */
 BuilderViewPort.prototype.triggerBuilderBlock = function () {
     // Trigger change builder blocks for theme
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
     iframe.jQuery('#builder-blocks').trigger('change');
+};
+
+/**
+ * Show settings current block
+ *
+ * @param {integer} blockId
+ */
+BuilderViewPort.prototype.editBlock = function (blockId) {
+    this.builder.menu.showSettings(blockId);
 };
 
 /**
@@ -173,24 +190,28 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
         return false;
     }
 
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
 
-    // remove DOM on iframe
+    // add class when delete block
     iframe.jQuery('div[data-model-id="' + blockId + '"]').addClass('content-hide');
-    setTimeout(function () {
-        iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
-    }, 1000);
 
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
         // logo rotation
-        this.builder.toolbar.logoRotation();
+        this.builder.toolbar.logoRotation(-90);
         //menu rotation
         this.builder.menu.menuRotation(90);
     }
 
-    // remove DOM
-    jQuery('#settings-block-' + blockId).remove();
+    // remove from storage and DOM
+    this.builder.storage.delModel(blockId);
+    this.builder.storage.delBlockView(blockId);
+    this.builder.storage.delSettingsView(blockId);
+
+    // remove container block
+    setTimeout(function () {
+        iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
+    }, 1000);
 };
 
 /**
@@ -200,7 +221,7 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
  */
 BuilderViewPort.prototype.droppable = function (blockId) {
     var self = this;
-    var iframe = this.builder.iframe.getIframeContents();
+    var iframe = this.getIframeContents();
 
     iframe.find('#droppable-' + blockId).droppable({
         activeClass: "ui-droppable-active",
@@ -214,8 +235,8 @@ BuilderViewPort.prototype.droppable = function (blockId) {
             //get template id
             var templateId = ui.draggable.attr("id").replace("preview-block-", "");
             self.builder.storage.getTemplate(templateId, function (err, template) {
-                self.builder.getDefaultConfig(templateId, function (err, config) {
-                    var model = self.builder.createModel(config);
+                self.getDefaultSettings(templateId, function (err, config) {
+                    var model = self.builder.utils.createModel(config);
 
                     //add model to storage
                     self.builder.storage.addModel(model);
@@ -237,7 +258,7 @@ BuilderViewPort.prototype.droppable = function (blockId) {
  * Create default droppable in iframe
  */
 BuilderViewPort.prototype.createDefaultDroppable = function () {
-    var iframe = this.builder.iframe.getWindowIframe();
+    var iframe = this.getWindowIframe();
     var droppable = '<div id="droppable-0" class="droppable">' +
             '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
             '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
@@ -252,10 +273,10 @@ BuilderViewPort.prototype.createDefaultDroppable = function () {
 BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
     var self = this;
     var templateId = elementid.replace("preview-block-", "");
-    self.builder.getTemplate(templateId, function (err, template) {
-        self.builder.getDefaultSettings(templateId, function (err, settings) {
-            var model = self.builder.createModel(settings),
-                    iframe = this.builder.iframe.getWindowIframe();
+    this.builder.storage.getTemplate(templateId, function (err, template) {
+        self.getDefaultSettings(templateId, function (err, settings) {
+            var model = self.builder.utils.createModel(settings),
+                    iframe = self.getWindowIframe();
 
             //add model to storage
             self.builder.storage.addModel(model);
@@ -270,6 +291,7 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
                     iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
                     //Animation scrolling to the bottom of the block's container
                     if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
+
                         var checkFoxDom = !!window.sidebar ? 'html' : 'body';
                         iframe.jQuery(checkFoxDom).animate({
                             scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
@@ -284,6 +306,7 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
                         var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                         self.addBlock(block, afterBlockId);
                     }
+
 
                 });
             });
@@ -336,11 +359,26 @@ BuilderViewPort.prototype.resize = function () {
 };
 
 /**
+ * Resize iframe
+ */
+BuilderViewPort.prototype.resizeIframe = function () {
+    // Set size iframe
+    var hideBuilder = (jQuery('.hide-builder').hasClass('active') ? 0 : 70);
+
+    var height = jQuery(window).height() - hideBuilder,
+            width;
+
+    width = jQuery('#builder-viewport').hasClass('pc') ? '100%' : jQuery('#builder-iframe').width();
+
+    jQuery('#builder-iframe').height(height).width(width);
+};
+
+/**
  * Get array model ids blocks
  * @returns {Array|BuilderViewPort.prototype.getSort.blocks_ids}
  */
 BuilderViewPort.prototype.getSort = function () {
-    var iframe = this.builder.iframe.getWindowIframe(),
+    var iframe = this.getWindowIframe(),
             blocks = iframe.jQuery('.content-block'), blocks_ids = [];
 
     blocks.each(function (i, v) {
@@ -364,13 +402,49 @@ BuilderViewPort.prototype.save = function () {
     for (var i = 0; i < sort.length; i++) {
         for (var j = 0; j < this.builder.storage.blockViewData.length; j++) {
             if (sort[i] == this.builder.storage.blockViewData[j].model.id) {
-                html += jQuery(this.builder.storage.blockViewData[j].render().el).html();
-                json.push(this.builder.storage.blockViewData[j].model.toJSON());
+                html += this.builder.storage.blockViewData[j].render_template;
+                json.push(JSON.parse(JSON.stringify(this.builder.storage.blockViewData[j].model)));
             }
         }
     }
 
-    this.builder.storage.save(json, html, function () {
+    this.builder.storage.save(json, html, function (err, state) {
         self.builder.loader.hideAutosave();
     });
+};
+
+/**
+ * Get iframe contents
+ * @returns {DOMElement}
+ */
+BuilderViewPort.prototype.getIframeContents = function () {
+    return jQuery('#builder-iframe').contents();
+}
+
+/**
+ * Get iframe documnet
+ * @returns {DOMElement}
+ */
+BuilderViewPort.prototype.getWindowIframe = function () {
+    return window.frames["builder-iframe"];
+}
+
+/**
+ * Change devices display
+ */
+BuilderViewPort.prototype.visibilityBlocks = function (blockId, devices) {
+    var iframe = this.getIframeContents();
+
+    var block = iframe.find("[data-model-id='" + blockId + "']");
+
+    block.removeClass(function (index, classes) {
+        var regex = /^visible-/;
+        return classes.split(/\s+/).filter(function (c) {
+            return regex.test(c);
+        }).join(' ');
+    });
+
+    for (var i = 0; i < devices.length; i++) {
+        block.addClass('visible-' + devices[i]);
+    }
 };

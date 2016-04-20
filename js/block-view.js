@@ -14,19 +14,20 @@ var BlockView = Backbone.View.extend({
         var data = this.model.toJSON();
         for (var i in data) {
             if (data[i] instanceof Backbone.Collection) {
-                data[i] = data[i].toJSON();
+                data[i] = JSON.parse(JSON.stringify(data[i]));
             }
         }
-        
-        var iframe = builder.iframe.getWindowIframe();
-        iframe.jQuery(this.$el).html(this.template(data));
-//        this.$el.html(this.template(data));
+
+        this.render_template = this.template(data);
+
+        var iframe = builder.viewPort.getWindowIframe();
+        iframe.jQuery(this.$el).html(this.render_template);
         this.afterRender();
         this.trigger('afterRender');
-        
+
         // add BlockView to storage
         builder.storage.addBlockView(this);
-        
+
         return this;
     },
     /**
@@ -34,6 +35,18 @@ var BlockView = Backbone.View.extend({
      */
     afterRender: function () {
         builder.viewPort.triggerBuilderBlock();
+    },
+    dispose: function () {
+        // same as this.$el.remove();
+        this.remove();
+
+        // unbind events that are
+        // set on this view
+        this.off();
+
+        // remove all models bindings
+        // made by this view
+        this.model.off(null, null, this);
     }
 });
 

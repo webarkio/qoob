@@ -2,6 +2,7 @@ var Fields = Fields || {};
 Fields.text = Backbone.View.extend(
 /** @lends Fields.text.prototype */{
     className: "settings-item",
+    textTpl: null,
     events: {
         'keyup input': 'changeInput'
     },
@@ -12,6 +13,7 @@ Fields.text = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
+        this.textTpl = _.template(builder.storage.getBuilderTemplate('field-text'));
     },
     /**
      * Event change input
@@ -28,22 +30,23 @@ Fields.text = Backbone.View.extend(
     getValue: function () {
         return this.model.get(this.config.name) || this.config.default;
     },
-    /**
-     * Create filed text
-     * @returns {String}
-     */
-    create: function () {
-        return '<div class="title">'+this.config.label+'</div>' + '<input class="input-text" type="text" name="' + this.config.name + '" value="' + this.getValue() + '" placeholder="'+ this.config.placeholder +'">';
-    },
 
     /**
      * Render filed text
      * @returns {Object}
      */
     render: function () {
-        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.create());
+        var htmldata = {
+            "label" : this.config.label,
+            "name" : this.config.name,
+            "value" : this.getValue(),
+            "placeholder" : this.config.placeholder
         }
+
+        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
+            this.$el.html(this.textTpl( htmldata ));
+        }
+
         return this;
     }
 });

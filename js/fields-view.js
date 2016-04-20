@@ -3,7 +3,7 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var SettingsView = Backbone.View.extend(
+var FieldsView = Backbone.View.extend(
 /** @lends SettingsView.prototype */{
     tagName: "div",
     className: "settings-block",

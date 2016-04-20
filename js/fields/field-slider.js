@@ -2,6 +2,7 @@ var Fields = Fields || {};
 Fields.slider = Backbone.View.extend(
 /** @lends Fields.slider.prototype */{
     className: "settings-item",
+    sliderTpl: null,
     events: {
         'change input': 'changeInput'
     },
@@ -12,6 +13,7 @@ Fields.slider = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
+         this.sliderTpl = _.template(builder.storage.getBuilderTemplate('field-slider'));
     },
     /**
      * Event change input
@@ -29,35 +31,18 @@ Fields.slider = Backbone.View.extend(
         return this.model.get(this.config.name) || this.config.default;
     },
     /**
-     * Create filed slider
-     * @returns {String}
-     */
-    create: function () {
-        var sliderId = _.uniqueId('slider'),
-        sizeId = _.uniqueId('size');
-
-        return  '<div class="title">' + this.config.label + '</div>' +
-                '<div id="' + sliderId + '" class="sliders-size"></div>' +
-                '<input class="size" name="' + this.config.name + '" type="text" id="' + sizeId + '" value="' + this.getValue() +'">' +
-                '<script type="text/javascript">' +
-                'jQuery("#' + sliderId +'").slider({' +
-                'value: ' + this.getValue() +',' +
-                'min: 0,' +
-                'max: 100,' +
-                'step: 1,' +
-                'slide: function (event, ui) {' +
-                'jQuery("#' + sizeId +'").val(ui.value);' +
-                'jQuery("#' + sizeId +'").trigger("change");' +
-                '}' +
-                '});' +
-                '</script>';
-    },
-    /**
      * Render filed slider
      * @returns {Object}
      */
     render: function () {
-        this.$el.html(this.create());
+        var htmldata = {
+            "sliderId" : _.uniqueId('slider'),
+            "sizeId" : _.uniqueId('size'),
+            "label" : this.config.label,
+            "name" : this.config.name,
+            "value" : this.getValue()
+        }
+        this.$el.html(this.sliderTpl( htmldata ));
         return this;
     }
 });

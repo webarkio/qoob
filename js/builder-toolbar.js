@@ -4,7 +4,8 @@
  * @version 0.0.1
  * @class  BuilderToolbar
  */
-function BuilderToolbar() {
+function BuilderToolbar(builder) {
+    this.builder = builder;
     this.sideClassName = '';
 }
 
@@ -100,8 +101,8 @@ BuilderToolbar.prototype.screenSize = function (elem) {
  * Button hide all builder
  */
 BuilderToolbar.prototype.hideBuilder = function (elem) {
-
-    var iframe = builder.iframe.getIframeContents();
+    var self = this,
+            iframe = this.builder.viewPort.getIframeContents();
 
     if (jQuery(elem).hasClass('active')) {
         jQuery('#builder-toolbar').fadeIn(300);
@@ -111,15 +112,15 @@ BuilderToolbar.prototype.hideBuilder = function (elem) {
         jQuery('#builder-toolbar').find('.hide-builder').removeClass('active');
         jQuery(elem).remove();
 
-        builder.viewPort.resize();
-        builder.iframe.resize();
+        this.builder.viewPort.resize();
+        this.builder.viewPort.resizeIframe();
     } else {
         jQuery(elem).addClass('active');
         jQuery('#builder-toolbar').fadeOut(300, function () {
-            builder.viewPort.resize();
-            builder.iframe.resize();
+            self.builder.viewPort.resize();
+            self.builder.viewPort.resizeIframe();
             var width = (jQuery('#builder-iframe').width() - jQuery('#builder-iframe').contents().width());
-            
+
             jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button>');
             jQuery('#builder>.hide-builder').fadeIn(300);
         });
