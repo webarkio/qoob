@@ -68,20 +68,12 @@ BuilderViewPort.prototype.devicesSettings = function () {
 BuilderViewPort.prototype.createSettings = function (model, cb) {
     var self = this;
     this.builder.storage.getConfig(model.get('template'), function (err, config) {
-        var settingsBlock = new FieldsView({
-            model: model,
-            className: 'settings-block settings-scroll'
-        });
-
         // Add devices field
         config.push(self.devicesSettings());
 
-        settingsBlock.config = config;
+        var settingsView = new SettingsView({"model" : model, "config" : config});
         
-        var container = jQuery('<div class="settings menu-block" id="settings-block-' + model.id + '"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
-        container.append(settingsBlock.render().el);
-
-        cb(null, container);
+        cb(null, settingsView.el);
     });
 };
 
@@ -125,7 +117,7 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     if (afterBlockId && afterBlockId > 0) {
         //Add controll buttons
         var $block = jQuery('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
-        $block.appendTo(iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]'));
+        iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]').after($block);
         iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
         
         iframe.jQuery('body').animate({
@@ -240,7 +232,7 @@ BuilderViewPort.prototype.droppable = function (blockId) {
 
                     //add model to storage
                     self.builder.storage.addModel(model);
-
+                    
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);

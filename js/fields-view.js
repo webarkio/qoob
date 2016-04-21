@@ -1,5 +1,5 @@
 /**
- * Create view settings for block
+ * Create view fields for block's settings 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
