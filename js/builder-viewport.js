@@ -72,22 +72,12 @@ BuilderViewPort.prototype.devicesSettings = function () {
 BuilderViewPort.prototype.createSettings = function (model, cb) {
     var self = this;
     this.builder.storage.getConfig(model.get('template'), function (err, config) {
-        var settingsBlock = new FieldsView({
-            model: model,
-            className: 'settings-block settings-scroll'
-        });
-
         // Add devices field
         config.push(self.devicesSettings());
 
-        settingsBlock.config = config;
+        var settingsView = new SettingsView({"model" : model, "config" : config});
         
-        var settingsView = new SettingsView({"model" : model});
-
-        var container = settingsView.render();
-        container.$el.append(settingsBlock.render().el);
-
-        cb(null, container.el);
+        cb(null, settingsView.el);
     });
 };
 

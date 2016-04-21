@@ -23,22 +23,14 @@ BuilderMenu.prototype.create = function () {
  */
 BuilderMenu.prototype.createGroups = function () {
     var menuGroupsView = new BuilderMenuGroupsView();
-    var data = {
-        "groups_arr" : _.sortBy(this.builder.storage.builderData.groups, 'position')
-    }
-
-    menuGroupsView.render(data);
+    jQuery('#builder-menu .groups').prepend(menuGroupsView.el);
 };
 /**
  * Create blocks menu
  */
 BuilderMenu.prototype.createBlocks = function () {
     var blocksPreviewView = new BuilderMenuBlocksPreviewView();
-    var data = {
-        "groups" : this.builder.storage.builderData.groups,
-        "items" : this.builder.storage.builderData.items
-    }
-    blocksPreviewView.render(data);
+    jQuery('#builder-menu .list-group').append(blocksPreviewView.el);
 };
 /**
  * Show groups menu
