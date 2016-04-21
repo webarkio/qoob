@@ -126,7 +126,6 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
         //Add controll buttons
         var $block = jQuery('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
         iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]').after($block);
-        //$block.appendTo(iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]'));
         iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
         
         iframe.jQuery('body').animate({
