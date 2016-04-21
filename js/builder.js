@@ -15,13 +15,12 @@ function Builder(options) {
     _.extend(this.options, options);
     delete this.options.storage;
     this.storage = options.storage;
-    
     this.loader = new BuilderLoader(this);        
     this.toolbar = new BuilderToolbar(this);
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
     this.utils = new BuilderUtils();
-    this.builderView = new BuilderView({"storage" : this.storage});
+    this.builderView = new BuilderView({"storage" : options.storage});
 }
 
 /*
@@ -113,6 +112,6 @@ Builder.prototype.activate = function () {
                 });   
             });
         });
-    }, 100);
+    }, 1);
     
 };
