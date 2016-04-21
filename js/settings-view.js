@@ -6,7 +6,21 @@
 var SettingsView = Backbone.View.extend(
 /** @lends SettingsView.prototype */{
     tagName: "div",
-    className: "settings-block",
+    className: "settings menu-block",
+    buidler_menu_blocks_settingsTpl : null,
+    
+    /**
+     * Set setting's id
+     * @class SettingsView
+     * @augments Backbone.View
+     * @constructs
+     */
+    attributes : function () {
+        return {
+            id : "settings-block-" + this.model.id
+        };
+    },
+
     /**
      * View settings
      * @class SettingsView
@@ -14,35 +28,14 @@ var SettingsView = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
+        this.buidler_menu_blocks_settingsTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-settings'));
     },
     /**
      * Render settings
      * @returns {Object}
      */
     render: function () {
-        var res = [];
-        for (var i = 0; i < this.config.length; i++) {
-            var input = new Fields[this.config[i].type]({model: this.model});
-            input.config = this.config[i];
-            res.push(input.render().el);
-        }
-        this.$el.html(res);
-        
-        // add SettingsView to storage
-        builder.storage.addSettingsView(this);
-        
+        this.$el.html(this.buidler_menu_blocks_settingsTpl());
         return this;
-    },
-    dispose: function () {
-        // same as this.$el.remove();
-        this.remove();
-
-        // unbind events that are
-        // set on this view
-        this.off();
-
-        // remove all models bindings
-        // made by this view
-        this.model.off(null, null, this);
     }
 });
