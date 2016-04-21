@@ -163,9 +163,11 @@ BuilderMenu.prototype.rotate = function (id, back) {
 
     // current block for id
     var element = jQuery('#' + id);
-
+   
     // block side
     var side = element.parent().prop('id');
+    
+    console.log(element.parent('[id]'));
 
     // hide all blocks
     jQuery('.menu-block').hide();
