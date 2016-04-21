@@ -22,8 +22,8 @@ Fields.image = Backbone.View.extend(
          * @constructs
          */
         initialize: function() {
-            this.image_settingTpl = _.template(builder.storage.getFieldTemplate('field-image-setting'));
-            this.imageTpl = _.template(builder.storage.getFieldTemplate('field-image'));
+            this.image_settingTpl = _.template(builder.storage.getBuilderTemplate('field-image-setting'));
+            this.imageTpl = _.template(builder.storage.getBuilderTemplate('field-image'));
         },
         /**
          * Event change input
@@ -53,24 +53,24 @@ Fields.image = Backbone.View.extend(
                 blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
             };
             var markup = '';
-            var blockItems = builder.storage.builderData.items;
-            var assets = [];
-
+            var assets = builder.storage.getAssets();
+            var curSrc = jQuery(evt.target).siblings('.edit-image').find('img').attr('src');
+            
             window.selectFieldImage = function(src) {
                 var img = jQuery(evt.target).prev().find('img');
-                if (src && src != '') {
+                if (src) {
                     img.attr('src', src);
                     jQuery(evt.target).trigger("change");
+                    if (!this.$el.find('.edit-image').is(":visible")) {
+                        this.$el.find('.edit-image').show();
+                    }
+                    if (!this.$el.find('.cross-delete').is(":visible")) {
+                        this.$el.find('.cross-delete').show();
+                    }
                 }
-            };
+            }.bind(this);
 
-            for (var i = 0, lng = blockItems.length; i < lng; i++) {
-                if (!!blockItems[i].config.assets) {
-                    assets.push(blockItems[i].config.assets);
-                }
-            }
-
-            markup = Fields.image.prototype.createAssetsMarkup(blockId, assets, this.image_settingTpl);
+            markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.image_settingTpl);
             builder.menu.showInnerSettings(parentId, markup);
 
             return false;
@@ -81,9 +81,10 @@ Fields.image = Backbone.View.extend(
          * @param {Array} assets Assets object from all config files
          * @returns {String} Resulted markup
          */
-        createAssetsMarkup: function(blockId, assets, template) {
+        createAssetsMarkup: function(curSrc, blockId, assets, template) {
             var imagesMarkup = '';
             var htmldata = {
+                "curSrc": curSrc,
                 "blockId": blockId,
                 "assets": assets
             }
@@ -98,7 +99,7 @@ Fields.image = Backbone.View.extend(
             jQuery(evt.target).hide();
             var item = jQuery(evt.target).parents('.settings-item');
             var name = item.find('input').prop('name');
-            item.find('edit-image > img').attr('src', '');
+            item.find('.edit-image > img').attr('src', '');
             item.find('.edit-image').hide();
             if (this.$el.find('.other-photos').length) {
                 this.$el.find('.other-photo').removeClass('active');
@@ -118,6 +119,9 @@ Fields.image = Backbone.View.extend(
             this.$el.find('input').trigger("change");
             if (!this.$el.find('.edit-image').is(":visible")) {
                 this.$el.find('.edit-image').show();
+            }
+            if (!this.$el.find('.cross-delete').is(":visible")) {
+                this.$el.find('.cross-delete').show();
             }
         },
 

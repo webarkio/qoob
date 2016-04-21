@@ -1,0 +1,15 @@
+<ul id="catalog-groups" class="catalog-list">
+    <% for (var i = 0; i < groups_arr.length; i++) { %>
+        <% var group = groups_arr[i]; %>
+        <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
+        <li>
+        	<a href="#<%= group_id %>" onclick="builder.menu.showBlocks('<%= group_id %>');return false;">
+        	<% if (group.label){ %> 
+        		<%= group.label %> 
+        	<% } else { %> 
+        		<%= group.id %> 
+        	<% } %> 
+        	</a>
+        </li>
+    <% } %>
+</ul>

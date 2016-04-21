@@ -13,7 +13,7 @@ Fields.slider = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-         this.sliderTpl = _.template(builder.storage.getFieldTemplate('field-slider'));
+         this.sliderTpl = _.template(builder.storage.getBuilderTemplate('field-slider'));
     },
     /**
      * Event change input

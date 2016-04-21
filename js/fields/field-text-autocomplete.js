@@ -14,7 +14,7 @@ Fields.text_autocomplete = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-         this.text_autocompletTpl = _.template(builder.storage.getFieldTemplate('field-text-autocomplete'));
+         this.text_autocompletTpl = _.template(builder.storage.getBuilderTemplate('field-text-autocomplete'));
     },
     /**
      * Event change input

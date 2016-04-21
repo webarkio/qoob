@@ -13,7 +13,7 @@ Fields.devices = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.devicesTpl = _.template(builder.storage.getFieldTemplate('field-devices'));
+        this.devicesTpl = _.template(builder.storage.getBuilderTemplate('field-devices'));
     },
     /**
      * Event change input
