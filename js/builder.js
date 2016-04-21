@@ -98,13 +98,13 @@ Builder.prototype.activate = function () {
                         if (pageData.length > 0) {
                             self.loader.add(pageData.length);
                         }
-                        
+
                         self.viewPort.create(pageData);
                         self.loader.sub();
                     });
                 });   
             });
         });
-    }, 1);
+    }, 100);
     
 };
