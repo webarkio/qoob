@@ -15,7 +15,6 @@ var BuilderView = Backbone.View.extend(
      * @constructs
      */
     initialize: function (data) {
-        console.log(data);
         this.postId = data.storage.pageId;
         jQuery.get( data.storage.builderViewFolderUrl + '/builder.html', function (data) {
                 this.buidlerTpl = _.template(data);

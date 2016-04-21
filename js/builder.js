@@ -112,6 +112,6 @@ Builder.prototype.activate = function () {
                 });   
             });
         });
-    }, 1);
+    }, 100);
     
 };
