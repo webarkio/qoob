@@ -12,6 +12,7 @@
     font-family: "OpenSans-Bold";
     src: url("../fonts/opensans/OpenSans-Bold.eot");
     src: url("../fonts/opensans/OpenSans-Bold.eot?#iefix")format("embedded-opentype"),
+        url('../fonts/opensans/OpenSans-Bold.svg#myfont') format('svg'),
         url("../fonts/opensans/OpenSans-Bold.woff") format("woff"),
         url("../fonts/opensans/OpenSans-Bold.ttf") format("truetype");
     font-style: normal;
@@ -28,14 +29,14 @@
 ::-webkit-scrollbar {
     width: 4px;
 }
- 
+
 /* Track */
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
@@ -615,15 +616,18 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 #builder-menu .backward {
-    /*overflow: hidden;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
     height: 70px;
-    background-color: #b2b2b2;
+    width: 258px;
 }
 
 #builder-menu .backward a {
     visibility: visible;
     display: block;
-    width: 100%;
+    width: 258px;
     height: 100%;
     padding-left: 60px;
     color: #ffffff;
@@ -631,7 +635,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
     line-height: 70px;
     font-family: 'OpenSans-Bold';
     text-decoration: none;
-    background: transparent url(../img/backward.png) no-repeat 27px center;
+    background: #b2b2b2 url(../img/backward.png) no-repeat 27px center;
 }
 
 #builder-menu .backward a:focus {
@@ -713,35 +717,64 @@ ul.catalog-list li a:hover {
 }
 
 #card {
-    perspective: 52rem;
+    /*    perspective: 52rem;
+        transform: perspective(1px) scale(1.1);
+        transform: translate3D(0,0,-4em);
+        position: absolute;
+        width: 258px;
+        height: 100%;
+        background-color: #444444;
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;*/
     position: absolute;
+    left: 0;
+    top: 0;
     width: 258px;
     height: 100%;
-    background-color: #444444;
-    -webkit-transform-origin: 50% 50%;
-    transform-origin: 50% 50%;
 }
 
 #card .card-wrap {
-    transform-style: preserve-3d;
-    transform: translateZ(287px) scale(0.5);
+    /*    transform-style: preserve-3d;
+        transform: translateZ(287px) scale(0.5);
+        transform: translateZ(-212px);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;*/
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
+    -webkit-perspective: 1000px;
+    perspective: 1000px; /* The lower the value, the more pronounced the 3d effect is */
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 #card .card-main {
+    /*    position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-transition: all .5s ease;
+        transition: all .5s ease;*/
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    -webkit-transition: all .5s ease;
-    transition: all .5s ease;
+    transform-style: preserve-3d; /* IE 11 or below doesn't support this, so in IE, we need to add another "perspective" property here via IE specific media queries (see below) */
+    -webkit-transform: translate3D(0,0,-9.7em);
+    transform: translate3D(0,0,-9.7em); /* move cube back by 1/2 cube height (translateZ) to undo each cube's side being moved forward by 1/2 cube height */
+
 }
 
 #card .groups,
@@ -756,25 +789,118 @@ ul.catalog-list li a:hover {
     background-color: #444444;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease; /* transition duration */
 }
 
-#card .groups {
+#card .side-1>.groups {
     /*transform: translateZ(129px);*/
-    transform: rotateY(-90deg) translateZ(129px);
-    overflow: auto;
-}
-
-#card .list-group {
-    transform: rotateY(180deg) translateZ(129px);
-}
-
-#card .blocks-settings {
-    transform: translateZ(129px);
     /*transform: rotateY(-90deg) translateZ(129px);*/
+    overflow: auto;
+    -webkit-transform: rotateY(0deg) translate3D(0,0,9.7em);
+    transform: rotateY(0deg) translate3D(0,0,9.7em); /* set tranlateZ value to 1/2 cube height to bring it closer to screen, creating 3D effect */
+    z-index: 10;
 }
 
-#card .global-settings {
-    transform: rotateY(90deg) translateZ(129px);
+#card .side-1>.list-group {
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    /*transform: rotateY(180deg) translateZ(129px);*/
+    z-index: -1;
+}
+
+#card .side-1>.blocks-settings {
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.7em);
+    transform: rotateY(-180deg) translate3D(0,0,9.7em);
+    /*transform: translateZ(129px);*/
+    /*transform: rotateY(-90deg) translateZ(129px);*/
+    z-index: -1;
+}
+
+#card .side-1>.global-settings {
+    -webkit-transform: rotateY(-270deg) translate3D(0,0,9.7em);
+    transform: rotateY(-270deg) translate3D(0,0,9.7em);
+    /*transform: rotateY(90deg) translateZ(129px);*/
+    z-index: -1;
+}
+
+#card .side-2>.groups {
+    -webkit-transform: rotateY(90deg) translate3D(0,0,9.7em);
+    transform: rotateY(90deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-2>.list-group {
+    -webkit-transform: rotateY(0deg) translate3D(0,0,9.7em);
+    transform: rotateY(0) translate3D(0,0,9.7em);
+    z-index: 10;
+}
+
+#card .side-2>.blocks-settings {
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-2>.global-settings {
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.7em);
+    transform: rotateY(-180deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-3>.groups {
+    -webkit-transform: rotateY(180deg) translate3D(0,0,9.7em);
+    transform: rotateY(180deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-3>.list-group {
+    -webkit-transform: rotateY(90deg) translate3D(0,0,9.7em);
+    transform: rotateY(90deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-3>.blocks-settings {
+    -webkit-transform: rotateY(0deg) translate3D(0,0,9.7em);
+    transform: rotateY(0deg) translate3D(0,0,9.7em);
+    z-index: 10;
+}
+
+#card .side-3>.global-settings {
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-4>.groups {
+    -webkit-transform: rotateY(270deg) translate3D(0,0,9.7em);
+    transform: rotateY(270deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-4>.list-group {
+    -webkit-transform: rotateY(180deg) translate3D(0,0,9.7em);
+    transform: rotateY(180deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-4>.blocks-settings {
+    -webkit-transform: rotateY(90deg) translate3D(0,0,9.7em);
+    transform: rotateY(90deg) translate3D(0,0,9.7em);
+    z-index: -1;
+}
+
+#card .side-4>.global-settings {
+    -webkit-transform: rotateY(0deg) translate3D(0,0,9.7em);
+    transform: rotateY(0deg) translate3D(0,0,9.7em);
+    z-index: 10;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) { 
+    #card .card-main {
+        perspective: 1000px;
+    }
 }
 
 .preview-block {
@@ -793,6 +919,7 @@ ul.catalog-list li a:hover {
 .catalog-templates {
     background-color: #000;
     height: 100%;
+    /*overflow: visible;*/
 }
 
 /* Edit forms */
@@ -807,10 +934,11 @@ ul.catalog-list li a:hover {
     padding-right: 5px;
 }
 .preview-blocks {
-    position: relative;
     overflow: auto;
     height: 100%;
     width: 100%;
+    padding-top: 70px;
+    background-color: #000;
 }
 
 .settings {

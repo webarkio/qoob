@@ -3,6 +3,7 @@
  *  
  * @version 0.0.1
  * @class  BuilderMenu
+ * @param {Object} builder
  */
 function BuilderMenu(builder) {
     this.builder = builder;
@@ -80,7 +81,7 @@ BuilderMenu.prototype.showGroups = function () {
     this.rotate = false;
 
     // rotate menu
-    this.menuRotation(90);
+    this.rotate(90);
 
     // rotate logo
     this.builder.toolbar.logoRotation(-90);
@@ -96,7 +97,8 @@ BuilderMenu.prototype.showGroups = function () {
  */
 BuilderMenu.prototype.showBlocks = function (groupId) {
     // rotate menu
-    this.menuRotation(180);
+    this.rotate(180);
+
     // rotate logo
     this.builder.toolbar.logoRotation(-180);
 
@@ -109,13 +111,13 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
  */
 BuilderMenu.prototype.showSettings = function (blockId) {
 
-    if(blockId === "inner-settings-accordion") {
+    if (blockId === "inner-settings-accordion") {
         jQuery('.settings.menu-block').hide();
         jQuery('#inner-settings-image').remove();
         // logo rotation
         this.builder.toolbar.logoRotation(-360);
         // menu rotation
-        this.menuRotation(360);
+        this.rotate(360);
         jQuery('#inner-settings-accordion').show();
 
         return;
@@ -128,18 +130,18 @@ BuilderMenu.prototype.showSettings = function (blockId) {
         // logo rotation
         this.builder.toolbar.logoRotation(-360);
         // menu rotation
-        this.menuRotation(360);
+        this.rotate(360);
         // state rotate
         this.rotate = false;
     } else {
         // logo rotation
         this.builder.toolbar.logoRotation(0);
         // menu rotation
-        this.menuRotation(0);
+        this.rotate(0);
         // state rotate
         this.rotate = true;
     }
-    
+
     jQuery('.settings.menu-block').hide();
     jQuery('.inner-settings').remove();
     jQuery('#settings-block-' + blockId).show();
@@ -149,22 +151,22 @@ BuilderMenu.prototype.showSettings = function (blockId) {
  * @param {number} blockId
  * @param {string} markup
  */
-BuilderMenu.prototype.showInnerSettings = function (parentId, markup) { 
+BuilderMenu.prototype.showInnerSettings = function (parentId, markup) {
     // logo rotation
     this.builder.toolbar.logoRotation(-360);
     // menu rotation
-    this.menuRotation(360);
+    this.rotate(360);
     // state rotate
     this.rotate = false;
 
-    if(parentId === 'inner-settings-accordion'){
+    if (parentId === 'inner-settings-accordion') {
         jQuery("#inner-settings-accordion").hide();
-        this.menuRotation(-360);
-    }else {
+        this.rotate(-360);
+    } else {
         this.hideAll();
     }
     // jQuery('#settings-block-' + blockId).hide();
-    
+
     jQuery('.blocks-settings').append(markup);
 };
 /**
@@ -191,6 +193,13 @@ BuilderMenu.prototype.resize = function () {
  * Menu rotation
  * @param {Integer} rot
  */
-BuilderMenu.prototype.menuRotation = function (rot) {
-    jQuery('#builder-menu .card-main').css("transform", "rotateY(" + rot + "deg)");
+BuilderMenu.prototype.rotate = function (id, back) {
+    back = typeof back !== 'undefined' ?  back : false;
+      
+    jQuery('#builder-menu .card-main').removeClass(function (index, css) {
+        return (css.match(/\side-\S+/g) || []).join(' ');
+    });
+
+//    jQuery('#builder-menu .card-main').removeClass('side-1').addClass('side-2');
+//    jQuery('#builder-menu .card-main').css("transform", "rotateY(" + rot + "deg)");
 };

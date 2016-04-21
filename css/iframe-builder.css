@@ -1,33 +1,20 @@
 @font-face {
-    font-family: 'OpenSans-Light';
-    src: url('../fonts/opensans/OpenSans-Light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'OpenSans-Regular';
-    src: url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+    src: url("../fonts/opensans/OpenSans-Regular.eot");
+    src: url("../fonts/opensans/OpenSans-Regular.eot?#iefix")format("embedded-opentype"),
+        url("../fonts/opensans/OpenSans-Regular.woff") format("woff"),
+        url("../fonts/opensans/OpenSans-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'OpenSans-Bold';
-    src: url('../fonts/opensans/OpenSans-Bold.ttf') format('truetype');
-    font-weight: bold;
+    font-family: "OpenSans-Bold";
+    src: url("../fonts/opensans/OpenSans-Bold.eot");
+    src: url("../fonts/opensans/OpenSans-Bold.eot?#iefix")format("embedded-opentype"),
+        url("../fonts/opensans/OpenSans-Bold.woff") format("woff"),
+        url("../fonts/opensans/OpenSans-Bold.ttf") format("truetype");
     font-style: normal;
-}
-
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
     font-weight: normal;
 }
 
