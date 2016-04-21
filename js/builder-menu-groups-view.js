@@ -23,6 +23,7 @@ var BuilderMenuGroupsView = Backbone.View.extend(
      * @returns {Object}
      */
     render: function (data) {
+        
       var res = this.buidler_menu_groupsTpl(data);
       jQuery('#builder-menu .groups').prepend(res);
 

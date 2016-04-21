@@ -24,7 +24,7 @@ BuilderMenu.prototype.create = function () {
 BuilderMenu.prototype.createGroups = function () {
     var menuGroupsView = new BuilderMenuGroupsView();
     var data = {
-        "groups_arr" : _.sortBy(this.builder.storage.builderData.groups, 'position')
+        "groups_arr" : _.sortBy(this.builder.storage.builderData.groups, 'position') // FIXME getBuilderData
     }
 
     menuGroupsView.render(data);
