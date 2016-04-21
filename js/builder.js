@@ -13,6 +13,7 @@ function Builder(storage) {
     this.menu = new BuilderMenu(this);
     this.utils = new BuilderUtils();
     this.storage = storage;
+    this.builderView = new BuilderView({"storage" : storage});
 }
 
 /*
@@ -78,30 +79,32 @@ Builder.prototype.makeLayoutSize = function () {
 Builder.prototype.activate = function () {
     var self = this;
     self.loader.add(4);
-    self.loader.sub();
-    self.makeLayoutSize();
-    self.loader.sub();
-    jQuery(window).resize(function () {
+    jQuery('body').prepend(self.builderView.el);
+    setTimeout(function() {
+        self.loader.sub();
         self.makeLayoutSize();
-    });
-
-    self.callIframe(function () {
-        
-        self.storage.getBuilderData(function (err, builderData) {
-            self.storage.setFieldsData(function() {
-                self.menu.create();
-                self.loader.sub();
-                // Autosave
-                self.autosavePageData();
-                self.storage.getPageData(function (err, pageData) {
-                    if (pageData.length > 0) {
-                        self.loader.add(pageData.length);
-                    }
-
-                    self.viewPort.create(pageData);
-                    self.loader.sub();
-                });
-            });   
+        self.loader.sub();
+        jQuery(window).resize(function () {
+            self.makeLayoutSize();
         });
-    });
+        self.callIframe(function () {
+            self.storage.getBuilderData(function (err, builderData) {
+                self.storage.setFieldsData(function() {
+                    self.menu.create();
+                    self.loader.sub();
+                    // Autosave
+                    self.autosavePageData();
+                    self.storage.getPageData(function (err, pageData) {
+                        if (pageData.length > 0) {
+                            self.loader.add(pageData.length);
+                        }
+                        
+                        self.viewPort.create(pageData);
+                        self.loader.sub();
+                    });
+                });   
+            });
+        });
+    }, 1);
+    
 };

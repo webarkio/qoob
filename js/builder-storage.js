@@ -8,6 +8,7 @@
 
 function BuilderStorage(options) {
     this.pageId = options.pageId || null;
+    this.builderViewFolderUrl = options.builderViewFolderUrl || null;
     this.builderData = null;
     this.models = [];
     this.blockViewData = [];
