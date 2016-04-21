@@ -78,10 +78,12 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
 
         settingsBlock.config = config;
         
-        var container = jQuery('<div class="settings menu-block" id="settings-block-' + model.id + '"><div class="backward"><a href="#" onclick="builder.menu.showGroups();return false;">Back</a></div></div>');
-        container.append(settingsBlock.render().el);
+        var settingsView = new SettingsView({"model" : model});
 
-        cb(null, container);
+        var container = settingsView.render();
+        container.$el.append(settingsBlock.render().el);
+
+        cb(null, container.el);
     });
 };
 
