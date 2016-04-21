@@ -7,7 +7,7 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
 /** @lends BuilderMenuGroupsView.prototype */{
     tagName: "div",
     className: "catalog-templates",
-    buidler_menu_blocks_previewTpl : null,
+    buidlerMenuBlocksPreviewTpl : null,
     
     /**
      * View menu groups
@@ -16,15 +16,19 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.buidler_menu_blocks_previewTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-blocks-preview'));
+        this.buidlerMenuBlocksPreviewTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-blocks-preview'));
+        this.render();
     },
     /**
      * Render menu groups
      * @returns {Object}
      */
-    render: function (data) {
-      var res = this.buidler_menu_blocks_previewTpl(data);
-      jQuery('#builder-menu .list-group').append(res);
+    render: function () {
+      var data = {
+        "groups" : builder.storage.builderData.groups,
+        "items" : builder.storage.builderData.items
+      }
+      this.$el.html(this.buidlerMenuBlocksPreviewTpl(data));
       return this;
     }
 });
