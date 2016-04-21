@@ -6,13 +6,21 @@
  * @param {Object} options [current page id and {Object} data]
  */
 //module.exports.Builder = Builder;
-function Builder(storage) {
-    this.loader = new BuilderLoader(this);
+function Builder(options) {
+    this.options = {
+        blockTemplateAdapter: 'hbs',
+        blockPreviewUrl: "preview.png",
+        blockTemplateUrl: "template.hbs"
+    };
+    _.extend(this.options, options);
+    delete this.options.storage;
+    this.storage = options.storage;
+    
+    this.loader = new BuilderLoader(this);        
     this.toolbar = new BuilderToolbar(this);
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
     this.utils = new BuilderUtils();
-    this.storage = storage;
 }
 
 /*

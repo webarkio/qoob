@@ -25,10 +25,14 @@ BuilderViewPort.prototype.createBlock = function (model, template, cb) {
     var block = new BlockView({
         model: model
     });
-
-    block.template = Handlebars.compile(template);
-
-    cb(null, block);
+    
+    var templateId = model.attributes.template;
+    
+    builder.storage.getConfig(templateId, function(err, config) {
+        var tplAdapter = config.blockTemplateAdapter || builder.options.blockTemplateAdapter;
+        block.template = BuilderExtensions.templating[tplAdapter](template);
+        cb(null, block);
+    });
 };
 
 /**
