@@ -9,18 +9,6 @@ var BuilderView = Backbone.View.extend(
     postId : null,
     
     /**
-     * Set setting's id
-     * @class SettingsView
-     * @augments Backbone.View
-     * @constructs
-     */
-    attributes : function () {
-        return {
-            // id : "settings-block-" + this.model.id
-        };
-    },
-
-    /**
      * View buider
      * @class BuilderView
      * @augments Backbone.View
