@@ -125,7 +125,8 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     if (afterBlockId && afterBlockId > 0) {
         //Add controll buttons
         var $block = jQuery('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
-        $block.appendTo(iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]'));
+        iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]').after($block);
+        //$block.appendTo(iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]'));
         iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
         
         iframe.jQuery('body').animate({
@@ -240,7 +241,7 @@ BuilderViewPort.prototype.droppable = function (blockId) {
 
                     //add model to storage
                     self.builder.storage.addModel(model);
-
+                    
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, container) {
                             jQuery('#builder-menu .blocks-settings').append(container);
