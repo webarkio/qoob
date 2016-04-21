@@ -1,7 +1,7 @@
 <% for (var i = 0; i < groups.length; i++) { %>
         <% var group = groups[i]; %>
         <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
-       <div class="catalog-templates menu-block" id="group-<%= group_id %>">
+       <div id="group-<%= group_id %>" class="catalog-templates menu-block">
        <div class="backward">
         <a href="#" onclick="builder.menu.showGroups();return false;">
             <% if(group.label){ %> 
