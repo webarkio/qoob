@@ -11,7 +11,7 @@ var BuilderMenuGroupsView = Backbone.View.extend(
 
     /**
      * Set setting's id
-     * @class SettingsView
+     * @class BuilderMenuSettingsView
      * @augments Backbone.View
      * @constructs
      */

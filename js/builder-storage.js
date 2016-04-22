@@ -73,7 +73,7 @@ BuilderStorage.prototype.delBlockView = function (id) {
 };
 
 /**
- * Remove SettingsView by id
+ * Remove BuilderMenuSettingsView by id
  * @param {Number} id modelId
  */
 BuilderStorage.prototype.delSettingsView = function (id) {
@@ -104,7 +104,7 @@ BuilderStorage.prototype.getBlockView = function (id) {
 };
 
 /**
- * Get SettingsView by id
+ * Get BuilderMenuSettingsView by id
  * @param {Number} id modelId
  */
 BuilderStorage.prototype.getSettingsView = function (id) {

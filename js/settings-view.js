@@ -3,8 +3,8 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var SettingsView = Backbone.View.extend(
-/** @lends SettingsView.prototype */{
+var BuilderMenuSettingsView = Backbone.View.extend(
+/** @lends BuilderMenuSettingsView.prototype */{
     tagName: "div",
     className: "settings menu-block",
     buidlerMenuBlocksSettingsTpl : null,
@@ -24,7 +24,7 @@ var SettingsView = Backbone.View.extend(
 
     /**
      * View settings
-     * @class SettingsView
+     * @class BuilderMenuSettingsView
      * @augments Backbone.View
      * @constructs
      */

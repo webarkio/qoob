@@ -77,7 +77,7 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
             config.push(self.devicesSettings());
         }
         
-        var settingsView = new SettingsView({"model" : model, "config" : config});
+        var settingsView = new BuilderMenuSettingsView({"model" : model, "config" : config});
         
         cb(null, settingsView.el);
     });
