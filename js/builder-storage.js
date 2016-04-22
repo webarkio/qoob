@@ -153,18 +153,17 @@ BuilderStorage.prototype.getPageData = function (cb) {
  * @param {Number} itemId
  * @param {getTemplateCallback} cb - A callback to run.
  */
-BuilderStorage.prototype.getTemplate = function (itemId, cb) {
-    var item = _.findWhere(this.builderData.items, {id: itemId});
-    var blockTemplateUrl = item.config.blockTemplateUrl || builder.options.blockTemplateUrl;
+BuilderStorage.prototype.getTemplate = function (templateId, cb) {
+    var self = this;
     
-    if (this.templates.length > 0 && _.findWhere(this.templates, {id: itemId})) {
-        var item = _.findWhere(this.templates, {id: itemId});
+    if (this.templates.length > 0 && _.findWhere(this.templates, {id: templateId})) {
+        var item = _.findWhere(this.templates, {id: templateId});
         cb(null, item.template);
     } else {
-        this.driver.loadItem(itemId, blockTemplateUrl, function (err, template) {
-            this.templates.push({id: itemId, template: template});
+        this.driver.loadTemplate(templateId, function (err, template) {
+            self.templates.push({id: templateId, template: template});
             cb(err, template);
-        }.bind(this));
+        });
     }
 };
 

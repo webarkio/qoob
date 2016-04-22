@@ -58,7 +58,7 @@ BuilderViewPort.prototype.triggerLoad = function () {
 BuilderViewPort.prototype.devicesSettings = function () {
     return {
         "name": "devices",
-        "label": "Visibile Devices",
+        "label": "Visible Devices",
         "type": "devices",
         "settings": [{
                 "name": "desktop",
@@ -89,8 +89,10 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
     var self = this;
     this.builder.storage.getConfig(model.get('template'), function (err, config) {
         // Add devices field
-        config.push(self.devicesSettings());
-
+        if(!_.findWhere(config, {label: "Visible Devices"})) {
+            config.push(self.devicesSettings());
+        }
+        
         var settingsView = new SettingsView({"model" : model, "config" : config});
         
         cb(null, settingsView.el);
