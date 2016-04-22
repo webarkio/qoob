@@ -16,8 +16,12 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.buidlerMenuBlocksPreviewTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-blocks-preview'));
-        this.render();
+        var self = this;
+        builder.storage.getBuilderTemplate('buildermenu-blocks-preview', function(err, data){
+            self.buidlerMenuBlocksPreviewTpl = _.template(data);
+            self.render();
+        });        
+
     },
     /**
      * Render menu groups

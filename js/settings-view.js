@@ -30,7 +30,10 @@ var SettingsView = Backbone.View.extend(
      */
     initialize: function (data) {
         this.config = data.config;
-        this.buidlerMenuBlocksSettingsTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-settings'));
+        var self = this;
+        builder.storage.getBuilderTemplate('buildermenu-settings', function(err, data){
+            self.buidlerMenuBlocksSettingsTpl = _.template(data);
+        });
         this.render();
     },
     /**

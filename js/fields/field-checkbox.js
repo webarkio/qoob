@@ -13,7 +13,10 @@ Fields.checkbox = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.checkboxTpl = _.template(builder.storage.getBuilderTemplate('field-checkbox'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-checkbox', function(err, data){
+            self.checkboxTpl = _.template(data);
+        });
     },
     /**
      * Event change input

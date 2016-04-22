@@ -2,7 +2,7 @@ var Fields = Fields || {};
 Fields.colorpicker = Backbone.View.extend(
         /** @lends Fields.colorpicker.prototype */{
             className: "settings-item",
-            colorpickerTpl: null,
+            colorPickerTpl: null,
             events: {
                 'change input': 'changeInput',
                 'click .theme-colors': 'changeColor',
@@ -15,7 +15,10 @@ Fields.colorpicker = Backbone.View.extend(
              * @constructs
              */
             initialize: function () {
-                this.colorpickerTpl = _.template(builder.storage.getBuilderTemplate('field-colorpicker'));
+                var self = this;
+                builder.storage.getBuilderTemplate('field-colorpicker', function(err, data){
+                    self.colorPickerTpl = _.template(data);
+                });
             },
             /**
              * Event change colorpicker
@@ -74,7 +77,7 @@ Fields.colorpicker = Backbone.View.extend(
                     "colors" : this.config.colors,
                 }
                 if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-                    this.$el.html(this.colorpickerTpl( htmldata ));
+                    this.$el.html(this.colorPickerTpl( htmldata ));
                 }
                 return this;
             }

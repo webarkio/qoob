@@ -13,7 +13,10 @@ Fields.text = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.textTpl = _.template(builder.storage.getBuilderTemplate('field-text'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-text', function(err, data){
+            self.textTpl = _.template(data);
+        });
     },
     /**
      * Event change input
