@@ -7,6 +7,8 @@
  */
 function BuilderViewPort(builder) {
     this.builder = builder;
+    this.iframeLoaded = false;
+    this.iframeLoadedFunctions = [];
 }
 
 /**
@@ -35,6 +37,20 @@ BuilderViewPort.prototype.createBlock = function (model, template, cb) {
     });
 };
 
+BuilderViewPort.prototype.onLoad = function(func) {
+    if(this.iframeLoaded){
+        func();
+    }else{
+        this.iframeLoadedFunctions.push(func);
+    }
+}
+
+BuilderViewPort.prototype.triggerLoad = function () {
+     this.iframeLoaded = true;
+     while (this.iframeLoadedFunctions.length > 0){
+        this.iframeLoadedFunctions.shift()();
+    }
+}
 /**
  * Devices settings
  * @returns object field devices

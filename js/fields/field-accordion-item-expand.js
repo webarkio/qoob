@@ -2,7 +2,7 @@ var Fields = Fields || {};
 Fields.accordion_item_expand = Backbone.View.extend(
 /** @lends Fields.accordion_item.prototype */{
     className: "settings-item settings-accordion",
-    accordion_itemTpl : null,
+    accordionItemTpl : null,
     events: {
         'click .cross-delete': 'deleteModel'
     },
@@ -15,7 +15,10 @@ Fields.accordion_item_expand = Backbone.View.extend(
      */
     initialize: function () {
         this.$el.attr('data-model-id', this.model.id);
-        this.accordion_itemTpl = _.template(builder.storage.getBuilderTemplate('field-accordion-item-expand'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-accordion-item-expand', function(err, data){
+            self.accordionItemTpl = _.template(data);
+        });
     },
     /**
      * Render filed accordion_item
@@ -36,7 +39,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
             this.$el.find("h3 span.preview_img img").first().prop('src', this.model.get('image'));
         });
         
-        items.push(this.accordion_itemTpl( htmldata ));
+        items.push(this.accordionItemTpl( htmldata ));
         items.push(settingsView.render().el);
 
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {

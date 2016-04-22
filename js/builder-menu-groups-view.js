@@ -28,8 +28,11 @@ var BuilderMenuGroupsView = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.buidler_menu_groupsTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-groups'));
-        this.render();
+        var self = this;
+        builder.storage.getBuilderTemplate('buildermenu-groups', function(err, data){
+            self.buidler_menu_groupsTpl = _.template(data);
+            self.render();
+        });
     },
     /**
      * Render menu groups

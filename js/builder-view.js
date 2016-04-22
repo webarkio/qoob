@@ -15,22 +15,21 @@ var BuilderView = Backbone.View.extend(
      * @constructs
      */
     initialize: function (data) {
+        var self=this;
         this.postId = data.storage.pageId;
-        jQuery.get( data.storage.builderViewFolderUrl + '/builder.html', function (data) {
-                this.buidlerTpl = _.template(data);
-                this.render();
-        }.bind(this), 'html');
+        data.storage.getBuilderTemplate('builder', function(err, data){
+            self.buidlerTpl = _.template(data);
+            self.render();
+        });
     },
     /**
      * Render builder view
      * @returns {Object}
      */
     render: function () {
-        var data = {
+        this.$el.html(this.buidlerTpl({
             "postId" : this.postId
-        }
-
-        this.$el.html(this.buidlerTpl(data));
+        }));
         return this;
     }
 });

@@ -16,7 +16,10 @@ Fields.accordion = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-         this.accordionTpl = _.template(builder.storage.getBuilderTemplate('field-accordion'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-accordion', function(err, data){
+            self.accordionTpl = _.template(data);
+        });
     },
     /**
      * Change position blocks accordion

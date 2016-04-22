@@ -3,7 +3,7 @@ Fields.text_autocomplete = Backbone.View.extend(
 /** @lends Fields.text_autocomplete.prototype */{
     className: "settings-item",
     uniqueId: null,
-    text_autocompletTpl: null,
+    textAutocompletTpl: null,
     events: {
         'keyup input': 'changeInput'
     },
@@ -14,7 +14,10 @@ Fields.text_autocomplete = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-         this.text_autocompletTpl = _.template(builder.storage.getBuilderTemplate('field-text-autocomplete'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-text-autocomplete', function(err, data){
+            self.textAutocompletTpl = _.template(data);
+        });
     },
     /**
      * Event change input
@@ -52,7 +55,7 @@ Fields.text_autocomplete = Backbone.View.extend(
         }
 
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.text_autocompletTpl( htmldata ));
+            this.$el.html(this.textAutocompletTpl( htmldata ));
         }
         return this;
     }
