@@ -7,7 +7,7 @@ var BuilderMenuGroupsView = Backbone.View.extend(
 /** @lends BuilderMenuGroupsView.prototype */{
     tagName: "ul",
     className: "catalog-list",
-    buidler_menu_groupsTpl : null,
+    tpl : null,
 
     /**
      * Set setting's id
@@ -30,7 +30,7 @@ var BuilderMenuGroupsView = Backbone.View.extend(
     initialize: function () {
         var self = this;
         builder.storage.getBuilderTemplate('buildermenu-groups', function(err, data){
-            self.buidler_menu_groupsTpl = _.template(data);
+            self.tpl = _.template(data);
             self.render();
         });
     },
@@ -42,7 +42,7 @@ var BuilderMenuGroupsView = Backbone.View.extend(
       var data = {
         "groups_arr" : _.sortBy(builder.storage.builderData.groups, 'position') // FIXME getBuilderData
       }  
-      this.$el.html(this.buidler_menu_groupsTpl(data));
+      this.$el.html(this.tpl(data));
       return this;
     }
 });

@@ -1,5 +1,5 @@
 /**
- * Create view for toolbar in builder layout
+ * Create view for viewport in builder layout
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
@@ -11,7 +11,7 @@ var BuilderViewportView = Backbone.View.extend(
     
     /**
      * View toolbar
-     * @class BuilderToolbarView
+     * @class BuilderViewportView
      * @augments Backbone.View
      * @constructs
      */
@@ -23,7 +23,7 @@ var BuilderViewportView = Backbone.View.extend(
         });
     },
     /**
-     * Render toolbar
+     * Render viewport
      * @returns {Object}
      */
     render: function () { 
