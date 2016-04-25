@@ -17,7 +17,6 @@ function BuilderMenu(builder) {
 BuilderMenu.prototype.create = function () {
     this.createGroups();
     this.createBlocks();
-    this.showGroups();
 };
 
 /**
