@@ -26,7 +26,6 @@ BuilderMenu.prototype.create = function () {
 BuilderMenu.prototype.createGroups = function () {
     var menuGroupsView = new BuilderMenuGroupsView();
     this.addView(menuGroupsView, 0);
-    // jQuery('#side-0').prepend(menuGroupsView.el); DEPRECATED
 };
 /**
  * Create blocks menu
@@ -34,121 +33,26 @@ BuilderMenu.prototype.createGroups = function () {
 BuilderMenu.prototype.createBlocks = function () {
     var blocksPreviewView = new BuilderMenuBlocksPreviewView();
     this.addView(blocksPreviewView, 90);
-    // jQuery('#side-90').append(blocksPreviewView.el); DEPRECATED
 };
-/**
- * DEPRECATED
- * 
- * Show groups menu
- */
-BuilderMenu.prototype.showGroups = function () {
-//    jQuery('#catalog-groups').show();
 
-    // default position block settings
-//    this.rotate = false;
 
-    // rotate menu
-//    this.rotate(90);
-
-    // rotate logo
-//    this.builder.toolbar.logoRotation(-90);
-
-    // add Scrollbar
-    setTimeout(function () {
-        jQuery('.settings.menu-block').hide();
-    }, 1000);
-};
-/**
- * DEPRECATED
- * 
- * Show blocks by group id
- * @param {Integer} groupId
- */
-BuilderMenu.prototype.showBlocks = function (groupId) {
-    // rotate menu
-//    this.rotate(180);
-
-    // rotate logo
-//    this.builder.toolbar.logoRotation(-180);
-
-    this.hideAll();
-    jQuery('#group-' + groupId).show();
-};
-/**
- * DEPRECATED
- * 
- * Show settings by block id
- * @param {Integer} blockId
- */
-BuilderMenu.prototype.showSettings = function (blockId) {
-
-    if (blockId === "inner-settings-accordion") {
-        jQuery('.settings.menu-block').hide();
-        jQuery('#inner-settings-image').remove();
-        // logo rotation
-//        this.builder.toolbar.logoRotation(-360);
-        // menu rotation
-//        this.rotate(360);
-        jQuery('#inner-settings-accordion').show();
-
-        return;
-    }
-
-    if (jQuery('#settings-block-' + blockId).is(":not(':hidden')"))
-        return;
-//
-//    if (this.rotate == true) {
-//        // logo rotation
-//        this.builder.toolbar.logoRotation(-360);
-//        // menu rotation
-//        this.rotate(360);
-//        // state rotate
-//        this.rotate = false;
-//    } else {
-//        // logo rotation
-//        this.builder.toolbar.logoRotation(0);
-//        // menu rotation
-//        this.rotate(0);
-//        // state rotate
-//        this.rotate = true;
-//    }
-
-    jQuery('.settings.menu-block').hide();
-    jQuery('.inner-settings').remove();
-    jQuery('#settings-block-' + blockId).show();
-};
 /**
  * Switching to inner field's settings 
  * @param {number} blockId
  * @param {string} markup
  */
 BuilderMenu.prototype.showInnerSettings = function (parentId, markup) {
-    // logo rotation
-//    this.builder.toolbar.logoRotation(-360);
-    // menu rotation
-//    this.rotate(360);
-//    // state rotate
-//    this.rotate = false;
+
 
     if (parentId === 'inner-settings-accordion') {
         jQuery("#inner-settings-accordion").hide();
-//        this.rotate(-360);
     } else {
         this.hideAll();
     }
-    // jQuery('#settings-block-' + blockId).hide();
 
     jQuery('.blocks-settings').append(markup);
 };
-/**
- * DEPRECATED
- * 
- * Hide group by id
- * @param {Integer} groupId
- */
-BuilderMenu.prototype.hideAll = function (groupId) {
-    jQuery('.menu-block').hide();
-};
+
 /**
  * Resize menu
  */
@@ -193,7 +97,7 @@ BuilderMenu.prototype.rotate = function (id, back) {
                 return (css.match(/\bside-\S+/g) || []).join(' ');
             })
             .addClass(this.currentSide);
-    
+
     this.builder.toolbar.logoRotation(this.currentSide);
 };
 
@@ -225,4 +129,3 @@ BuilderMenu.prototype.back = function () {
 BuilderMenu.prototype.addView = function (BackboneView, side) {
     jQuery('#side-' + side).append(BackboneView.el);
 };
-

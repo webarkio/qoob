@@ -237,7 +237,6 @@ BuilderViewPort.prototype.droppable = function (blockId) {
 
                     self.createBlock(model, template, function (err, block) {
                         self.createSettings(block.model, function (err, view) {
-//                            jQuery('#side-270').append(container); // DEPRECATED
                             self.builder.menu.addView(view, 270);
                             var afterBlockId = dropElement.attr("id").replace("droppable-", "");
                             self.addBlock(block, afterBlockId);
@@ -292,13 +291,12 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
                             scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
                         }, 1000, function () {
                             //Appending added block
-                            //jQuery('#side-270').append(container); DEPRECATED
                             self.builder.menu.addView(view, 270);
                             var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                             self.addBlock(block, afterBlockId);
                         });
                     } else {
-//                        jQuery('#side-270').append(container);  DEPRECATED
+                        //Appending added block
                         self.builder.menu.addView(view, 270);
                         var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                         self.addBlock(block, afterBlockId);
