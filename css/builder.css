@@ -474,6 +474,7 @@
 
 #builder-toolbar .minutes-container,
 #builder-toolbar .seconds-container {
+    display: block;
     position: absolute;
     top: 0;
     right: 0;
@@ -483,6 +484,7 @@
 
 #builder-toolbar .minutes,
 #builder-toolbar .seconds {
+    display: block;
     height: 15px;
     left: 47%;
     position: absolute;
