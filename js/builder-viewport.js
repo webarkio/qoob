@@ -95,7 +95,7 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
         
         var settingsView = new BuilderMenuSettingsView({"model" : model, "config" : config});
         
-        cb(null, settingsView.el);
+        cb(null, settingsView);
     });
 };
 
@@ -125,8 +125,10 @@ BuilderViewPort.prototype.getDefaultSettings = function (templateId, cb) {
 BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
     var iframe = this.getWindowIframe();
 
+    var blockEditId = '"settings-block-' + block.model.id + '"';
+    var blockEditId = '"settings-block-' + block.model.id + '"';
     var controlButtons = '<div class="control-block-button">' +
-            '<a onclick="parent.builder.viewPort.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
+            "<a onclick='parent.builder.menu.rotate(" + blockEditId + "); return false;' class='edit' href='#'></a>" +
             '<a onclick="parent.builder.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
             '</div>';
     var droppable = '<div id="droppable-' + block.model.id + '" class="droppable">' +
@@ -141,7 +143,7 @@ BuilderViewPort.prototype.addBlock = function (block, afterBlockId) {
         var $block = jQuery('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
         iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]').after($block);
         iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
-        
+
         iframe.jQuery('body').animate({
             scrollTop: $block.offset().top
         }, 1000);
@@ -185,6 +187,8 @@ BuilderViewPort.prototype.triggerBuilderBlock = function () {
 };
 
 /**
+ * DEPRECATED
+ * 
  * Show settings current block
  *
  * @param {integer} blockId
@@ -212,9 +216,7 @@ BuilderViewPort.prototype.removeBlock = function (blockId) {
     // if settings is open
     if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
         // logo rotation
-        this.builder.toolbar.logoRotation(-90);
-        //menu rotation
-        this.builder.menu.menuRotation(90);
+//        this.builder.toolbar.logoRotation(-90);
     }
 
     // remove from storage and DOM
@@ -254,10 +256,10 @@ BuilderViewPort.prototype.droppable = function (blockId) {
 
                     //add model to storage
                     self.builder.storage.addModel(model);
-                    
+
                     self.createBlock(model, template, function (err, block) {
-                        self.createSettings(block.model, function (err, container) {
-                            jQuery('#builder-menu .blocks-settings').append(container);
+                        self.createSettings(block.model, function (err, view) {
+                            self.builder.menu.addView(view, 270);
                             var afterBlockId = dropElement.attr("id").replace("droppable-", "");
                             self.addBlock(block, afterBlockId);
                         });
@@ -296,7 +298,7 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
             self.builder.storage.addModel(model);
 
             self.createBlock(model, template, function (err, block) {
-                self.createSettings(block.model, function (err, container) {
+                self.createSettings(block.model, function (err, view) {
                     //Creating waiting block in bottom
                     var droppable = '<div id="droppable-' + block.model.id + '" class="droppable ui-droppable active-wait">' +
                             '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
@@ -305,18 +307,21 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
                     iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
                     //Animation scrolling to the bottom of the block's container
                     if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
-
-                        var checkFoxDom = !!window.sidebar ? 'html' : 'body';
+                        var trident = !!navigator.userAgent.match(/Trident\/7.0/);
+                        var net = !!navigator.userAgent.match(/.NET4.0E/);
+                        var IE11 = trident && net
+                        var checkFoxDom = !!window.sidebar || trident && net ? 'html' : 'body';
                         iframe.jQuery(checkFoxDom).animate({
                             scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
                         }, 1000, function () {
                             //Appending added block
-                            jQuery('#builder-menu .blocks-settings').append(container);
+                            self.builder.menu.addView(view, 270);
                             var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                             self.addBlock(block, afterBlockId);
                         });
                     } else {
-                        jQuery('#builder-menu .blocks-settings').append(container);
+                        //Appending added block
+                        self.builder.menu.addView(view, 270);
                         var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                         self.addBlock(block, afterBlockId);
                     }
@@ -340,8 +345,9 @@ BuilderViewPort.prototype.create = function (data) {
         if (i < data.length) {
             this.builder.storage.getTemplate(data[i].get('template'), function (err, template) {
                 self.createBlock(data[i], template, function (err, block) {
-                    self.createSettings(block.model, function (err, container) {
-                        jQuery('#builder-menu .blocks-settings').append(container);
+                    self.createSettings(block.model, function (err, view) {
+                        self.builder.menu.addView(view, 270);
+//                        jQuery('#side-270').append(container);
                         self.addBlock(block);
                         self.builder.loader.sub();
                         loop(i + 1);

@@ -6,7 +6,6 @@
  */
 function BuilderToolbar(builder) {
     this.builder = builder;
-    this.sideClassName = '';
 }
 
 /**
@@ -39,25 +38,15 @@ BuilderToolbar.prototype.isVisible = function () {
 
 /**
  * Logo rotation
- * @param {Integer} rot
+ * @param {Integer} side
  */
-BuilderToolbar.prototype.logoRotation = function (rot) {
-    if (this.sideClassName != '') {
-        jQuery('#builder-toolbar .logo .text').removeClass(this.sideClassName);
-    }
-
-    if (rot == '-90') {
-        this.sideClassName = 'step-one';
-    } else if (rot == '-180') {
-        this.sideClassName = 'step-two';
-    } else if (rot == '-270') {
-        this.sideClassName = 'step-three';
-    } else if (rot == '0' || rot == '-360') {
-        this.sideClassName = 'step-four';
-    }
-
-    jQuery('#builder-toolbar .logo .text').addClass(this.sideClassName);
-    jQuery('#builder-toolbar .logo .cube').css("transform", "rotateY(" + rot + "deg)");
+BuilderToolbar.prototype.logoRotation = function (side) {    
+    // rotate cube logo
+    jQuery('#builder-toolbar .logo')
+            .removeClass(function (index, css) {
+                return (css.match(/\bside-\S+/g) || []).join(' ');
+            })
+            .addClass(side);
 };
 
 /**

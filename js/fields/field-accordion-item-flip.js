@@ -40,7 +40,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
         if (parentId == "inner-settings-accordion") {
             blockId = parentId;
         }else {
-            blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+            blockId = jQuery(evt.target).closest('.settings').attr('id').match(new RegExp(/(\d)+/))[0];
         }
 
         var settingsView = new FieldsView({model: this.model});

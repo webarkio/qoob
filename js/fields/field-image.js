@@ -56,7 +56,7 @@ Fields.image = Backbone.View.extend(
             if (parentId == "inner-settings-accordion") {
                 blockId = parentId;
             }else {
-                blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+                blockId = jQuery(evt.target).closest('.settings').attr('id').match(new RegExp(/(\d)+/))[0];
             };
             var markup = '';
             var assets = builder.storage.getAssets();

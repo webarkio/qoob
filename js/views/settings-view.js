@@ -6,7 +6,7 @@
 var BuilderMenuSettingsView = Backbone.View.extend(
 /** @lends BuilderMenuSettingsView.prototype */{
     tagName: "div",
-    className: "settings menu-block",
+    className: "settings",
     buidlerMenuBlocksSettingsTpl : null,
     config : null,
     
@@ -49,6 +49,26 @@ var BuilderMenuSettingsView = Backbone.View.extend(
         settingsBlock.config = this.config;
 
         this.$el.html(this.buidlerMenuBlocksSettingsTpl()).append(settingsBlock.render().el);
+        
+        // add SettingsView to storage
+        builder.storage.addSettingsView(this);
+        
         return this;
+    },
+    dispose: function () {
+        if (this.$el.css('display') != 'none') {
+            builder.menu.rotate('catalog-groups');
+        }        
+        
+        // same as this.$el.remove();
+        this.remove();
+
+        // unbind events that are
+        // set on this view
+        this.off();
+
+        // remove all models bindings
+        // made by this view
+        this.model.off(null, null, this);
     }
 });

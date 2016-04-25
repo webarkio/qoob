@@ -78,7 +78,6 @@ BuilderStorage.prototype.delBlockView = function (id) {
 BuilderStorage.prototype.delSettingsView = function (id) {
     this.blockSettingsViewData = this.blockSettingsViewData.filter(function (item) {
         if (item.model.id === id || item.model.owner_id === id) {
-
             item.dispose();
             return false;
         }
