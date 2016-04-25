@@ -7,7 +7,7 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
 /** @lends BuilderMenuGroupsView.prototype */{
     tagName: "div",
     className: "catalog-templates",
-    buidlerMenuBlocksPreviewTpl : null,
+    tpl : null,
     
     /**
      * View menu groups
@@ -16,8 +16,12 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.buidlerMenuBlocksPreviewTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-blocks-preview'));
-        this.render();
+        var self = this;
+        builder.storage.getBuilderTemplate('buildermenu-blocks-preview', function(err, data){
+            self.tpl = _.template(data);
+            self.render();
+        });        
+
     },
     /**
      * Render menu groups
@@ -28,7 +32,7 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
         "groups" : builder.storage.builderData.groups,
         "items" : builder.storage.builderData.items
       }
-      this.$el.html(this.buidlerMenuBlocksPreviewTpl(data));
+      this.$el.html(this.tpl(data));
       return this;
     }
 });

@@ -809,10 +809,6 @@ ul.catalog-list li a:hover {
     background: #b2b2b2 url(../img/menu-arrow-right-hover.png) no-repeat 231px center;
 }
 
-.menu-block {
-    /*display: none;*/
-}
-
 #card {
     /*    perspective: 52rem;
         transform: perspective(1px) scale(1.1);

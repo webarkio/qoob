@@ -1,5 +1,5 @@
 <% for (var i = 0; i < groups.length; i++) { %>
-        <% var group = groups[i]; %>
+        <% var group = groups[i];%>
         <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
        <div id="group-<%= group_id %>" class="catalog-templates menu-block">
             <div class="backward">
@@ -15,7 +15,7 @@
             <% for (var k = 0; k < items.length; k++) { %>
                <% if (items[k].config.groups == group.id) { %>
                     <div id="preview-block-<%= items[k].id %>" class="preview-block" onclick="builder.viewPort.clickBlockAdd(this.id); return false;">
-                        <img src="<%= items[k].url %>preview.png">
+                        <img src="<%= items[k].url + (items[k].config.blockPreviewUrl ? items[k].config.blockPreviewUrl : builder.options.blockPreviewUrl) %>">
                     </div>
                <% } %>
             <% } %>

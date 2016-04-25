@@ -13,7 +13,10 @@ Fields.textarea = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.textareaTpl = _.template(builder.storage.getBuilderTemplate('field-textarea'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-textarea', function(err, data){
+            self.textareaTpl = _.template(data);
+        });
     },
     /**
      * Event change textarea

@@ -7,7 +7,7 @@ Fields.image = Backbone.View.extend(
     /** @lends Fields.image.prototype */
     {
         className: "settings-item",
-        image_settingTpl: null,
+        imageSettingTpl: null,
         imageTpl: null,
         events: {
             'change input': 'changeInput',
@@ -22,8 +22,14 @@ Fields.image = Backbone.View.extend(
          * @constructs
          */
         initialize: function() {
-            this.image_settingTpl = _.template(builder.storage.getBuilderTemplate('field-image-setting'));
-            this.imageTpl = _.template(builder.storage.getBuilderTemplate('field-image'));
+            var self = this;
+            builder.storage.getBuilderTemplate('field-image-setting', function(err, data){
+                self.imageSettingTpl = _.template(data);
+            });
+
+            builder.storage.getBuilderTemplate('field-image', function(err, data){
+                self.imageTpl = _.template(data);
+            });
         },
         /**
          * Event change input
@@ -50,7 +56,7 @@ Fields.image = Backbone.View.extend(
             if (parentId == "inner-settings-accordion") {
                 blockId = parentId;
             }else {
-                blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
+                blockId = jQuery(evt.target).closest('.settings').attr('id').match(new RegExp(/(\d)+/))[0];
             };
             var markup = '';
             var assets = builder.storage.getAssets();
@@ -70,7 +76,7 @@ Fields.image = Backbone.View.extend(
                 }
             }.bind(this);
 
-            markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.image_settingTpl);
+            markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.imageSettingTpl);
             builder.menu.showInnerSettings(parentId, markup);
 
             return false;

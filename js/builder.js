@@ -6,13 +6,20 @@
  * @param {Object} options [current page id and {Object} data]
  */
 //module.exports.Builder = Builder;
-function Builder(storage) {
-    this.loader = new BuilderLoader(this);
+function Builder(options) {
+    this.options = {
+        blockTemplateAdapter: 'hbs',
+        blockPreviewUrl: "preview.png"
+    };
+    _.extend(this.options, options);
+    delete this.options.storage;
+    this.storage = options.storage;
+    this.loader = new BuilderLoader(this);        
     this.toolbar = new BuilderToolbar(this);
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
     this.utils = new BuilderUtils();
-    this.storage = storage;
+    this.builderLayout = new BuilderLayout({"storage" : options.storage});
 }
 
 /*
@@ -24,20 +31,6 @@ Builder.prototype.getIframePageUrl = function (pageId) {
     return this.driver.getIframePageUrl(pageId);
 };
 
-/**
- * @callback callIframeCallback
- */
-
-/**
- * Get is callback state iframe when loading
- *
- * @param {callIframeCallback} cb - A callback to run.
- */
-Builder.prototype.callIframe = function (cb) {
-    jQuery('iframe#builder-iframe').load(function () {
-        cb(this);
-    });
-};
 
 /**
  * Out of the Builder
@@ -78,30 +71,29 @@ Builder.prototype.makeLayoutSize = function () {
 Builder.prototype.activate = function () {
     var self = this;
     self.loader.add(4);
+    jQuery('body').prepend(self.builderLayout.el);
     self.loader.sub();
-    self.makeLayoutSize();
+    
     self.loader.sub();
     jQuery(window).resize(function () {
         self.makeLayoutSize();
     });
-
-    self.callIframe(function () {
-        
+    self.viewPort.onLoad(function () {
         self.storage.getBuilderData(function (err, builderData) {
-            self.storage.setFieldsData(function() {
-                self.menu.create();
+            self.menu.create();
+            self.loader.sub();
+            // Autosave
+            self.autosavePageData();
+            self.storage.getPageData(function (err, pageData) {
+                if (pageData.length > 0) {
+                    self.loader.add(pageData.length);
+                }
+                self.viewPort.create(pageData);
                 self.loader.sub();
-                // Autosave
-                self.autosavePageData();
-                self.storage.getPageData(function (err, pageData) {
-                    if (pageData.length > 0) {
-                        self.loader.add(pageData.length);
-                    }
+                self.makeLayoutSize();
+            });
 
-                    self.viewPort.create(pageData);
-                    self.loader.sub();
-                });
-            });   
         });
     });
+    
 };

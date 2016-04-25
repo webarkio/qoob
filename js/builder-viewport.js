@@ -7,6 +7,8 @@
  */
 function BuilderViewPort(builder) {
     this.builder = builder;
+    this.iframeLoaded = false;
+    this.iframeLoadedFunctions = [];
 }
 
 /**
@@ -25,12 +27,30 @@ BuilderViewPort.prototype.createBlock = function (model, template, cb) {
     var block = new BlockView({
         model: model
     });
-
-    block.template = Handlebars.compile(template);
-
-    cb(null, block);
+    
+    var templateId = model.attributes.template;
+    
+    builder.storage.getConfig(templateId, function(err, config) {
+        var tplAdapter = config.blockTemplateAdapter || builder.options.blockTemplateAdapter;
+        block.template = BuilderExtensions.templating[tplAdapter](template);
+        cb(null, block);
+    });
 };
 
+BuilderViewPort.prototype.onLoad = function(func) {
+    if(this.iframeLoaded){
+        func();
+    }else{
+        this.iframeLoadedFunctions.push(func);
+    }
+}
+
+BuilderViewPort.prototype.triggerLoad = function () {
+     this.iframeLoaded = true;
+     while (this.iframeLoadedFunctions.length > 0){
+        this.iframeLoadedFunctions.shift()();
+    }
+}
 /**
  * Devices settings
  * @returns object field devices
@@ -38,7 +58,7 @@ BuilderViewPort.prototype.createBlock = function (model, template, cb) {
 BuilderViewPort.prototype.devicesSettings = function () {
     return {
         "name": "devices",
-        "label": "Visibile Devices",
+        "label": "Visible Devices",
         "type": "devices",
         "settings": [{
                 "name": "desktop",
@@ -69,10 +89,12 @@ BuilderViewPort.prototype.createSettings = function (model, cb) {
     var self = this;
     this.builder.storage.getConfig(model.get('template'), function (err, config) {
         // Add devices field
-        config.push(self.devicesSettings());
-
-        var settingsView = new SettingsView({"model": model, "config": config});
-
+        if(!_.findWhere(config, {label: "Visible Devices"})) {
+            config.push(self.devicesSettings());
+        }
+        
+        var settingsView = new BuilderMenuSettingsView({"model" : model, "config" : config});
+        
         cb(null, settingsView);
     });
 };
