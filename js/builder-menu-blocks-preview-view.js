@@ -5,6 +5,8 @@
  */
 var BuilderMenuBlocksPreviewView = Backbone.View.extend(
 /** @lends BuilderMenuGroupsView.prototype */{
+    tagName: "div",
+    className: "catalog-templates",
     buidlerMenuBlocksPreviewTpl : null,
     
     /**
@@ -25,11 +27,8 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
       var data = {
         "groups" : builder.storage.builderData.groups,
         "items" : builder.storage.builderData.items
-      };
-      
-     this.setElement(this.buidlerMenuBlocksPreviewTpl(data));
-
-//      this.$el.html(this.buidlerMenuBlocksPreviewTpl(data));
+      }
+      this.$el.html(this.buidlerMenuBlocksPreviewTpl(data));
       return this;
     }
 });

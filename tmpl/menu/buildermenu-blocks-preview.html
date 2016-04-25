@@ -3,7 +3,7 @@
         <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
        <div id="group-<%= group_id %>" class="catalog-templates menu-block">
             <div class="backward">
-            <a href="#" onclick="builder.menu.showGroups();return false;">
+            <a href="#" onclick="builder.menu.rotate('catalog-groups'); return false;">
                 <% if(group.label){ %> 
                     <%= group.label %> 
                 <% }else{ %> 
@@ -14,7 +14,7 @@
             <div class="preview-blocks">
             <% for (var k = 0; k < items.length; k++) { %>
                <% if (items[k].config.groups == group.id) { %>
-                    <div id="preview-block-<%= items[k].id %>" class="preview-block" onclick="builder.viewPort.clickBlockAdd(this.id);return false;">
+                    <div id="preview-block-<%= items[k].id %>" class="preview-block" onclick="builder.viewPort.clickBlockAdd(this.id); return false;">
                         <img src="<%= items[k].url %>preview.png">
                     </div>
                <% } %>

@@ -7,7 +7,8 @@
  */
 function BuilderMenu(builder) {
     this.builder = builder;
-//    this.rotate = false;
+    this.currentSide = 'side-0';
+    this.backSide = null;
 }
 
 /**
@@ -24,16 +25,20 @@ BuilderMenu.prototype.create = function () {
  */
 BuilderMenu.prototype.createGroups = function () {
     var menuGroupsView = new BuilderMenuGroupsView();
-    jQuery('#builder-menu .groups').prepend(menuGroupsView.el);
+    this.addView(menuGroupsView, 0);
+    // jQuery('#side-0').prepend(menuGroupsView.el); DEPRECATED
 };
 /**
  * Create blocks menu
  */
 BuilderMenu.prototype.createBlocks = function () {
     var blocksPreviewView = new BuilderMenuBlocksPreviewView();
-    jQuery('#builder-menu .list-group').append(blocksPreviewView.el);
+    this.addView(blocksPreviewView, 90);
+    // jQuery('#side-90').append(blocksPreviewView.el); DEPRECATED
 };
 /**
+ * DEPRECATED
+ * 
  * Show groups menu
  */
 BuilderMenu.prototype.showGroups = function () {
@@ -46,7 +51,7 @@ BuilderMenu.prototype.showGroups = function () {
 //    this.rotate(90);
 
     // rotate logo
-    this.builder.toolbar.logoRotation(-90);
+//    this.builder.toolbar.logoRotation(-90);
 
     // add Scrollbar
     setTimeout(function () {
@@ -54,6 +59,8 @@ BuilderMenu.prototype.showGroups = function () {
     }, 1000);
 };
 /**
+ * DEPRECATED
+ * 
  * Show blocks by group id
  * @param {Integer} groupId
  */
@@ -62,12 +69,14 @@ BuilderMenu.prototype.showBlocks = function (groupId) {
 //    this.rotate(180);
 
     // rotate logo
-    this.builder.toolbar.logoRotation(-180);
+//    this.builder.toolbar.logoRotation(-180);
 
     this.hideAll();
     jQuery('#group-' + groupId).show();
 };
 /**
+ * DEPRECATED
+ * 
  * Show settings by block id
  * @param {Integer} blockId
  */
@@ -77,7 +86,7 @@ BuilderMenu.prototype.showSettings = function (blockId) {
         jQuery('.settings.menu-block').hide();
         jQuery('#inner-settings-image').remove();
         // logo rotation
-        this.builder.toolbar.logoRotation(-360);
+//        this.builder.toolbar.logoRotation(-360);
         // menu rotation
 //        this.rotate(360);
         jQuery('#inner-settings-accordion').show();
@@ -115,7 +124,7 @@ BuilderMenu.prototype.showSettings = function (blockId) {
  */
 BuilderMenu.prototype.showInnerSettings = function (parentId, markup) {
     // logo rotation
-    this.builder.toolbar.logoRotation(-360);
+//    this.builder.toolbar.logoRotation(-360);
     // menu rotation
 //    this.rotate(360);
 //    // state rotate
@@ -132,6 +141,8 @@ BuilderMenu.prototype.showInnerSettings = function (parentId, markup) {
     jQuery('.blocks-settings').append(markup);
 };
 /**
+ * DEPRECATED
+ * 
  * Hide group by id
  * @param {Integer} groupId
  */
@@ -146,31 +157,32 @@ BuilderMenu.prototype.resize = function () {
         height: jQuery(window).height() - 70,
         top: 70
     });
-//    jQuery('.settings-block, .preview-blocks').css({
-//        height: jQuery(window).height() - 140
-//    });
 };
 
 /**
  * Menu rotation
  * @param {Integer} id
- * @param {Boolean} back
+ * @param {Boolean} back Rotate back
  */
-
 BuilderMenu.prototype.rotate = function (id, back) {
-    // if return back
+    // if rotate back
     back = typeof back !== 'undefined' ? back : false;
 
     // current block for id
     var element = jQuery('#' + id);
-   
-    // block side
-    var side = element.parent().prop('id');
-    
-    console.log(element.parent('[id]'));
 
-    // hide all blocks
-    jQuery('.menu-block').hide();
+    // get block side
+    var side = element.parent().closest('div[id]');
+    var sideId = element.parent().closest('div[id]').prop('id');
+
+    // Set back side
+    this.backSide = this.currentSide;
+
+    // Set current side
+    this.currentSide = sideId;
+
+    // hide all blocks side
+    side.find('.menu-block').hide();
 
     // show current block menu
     element.show();
@@ -178,9 +190,39 @@ BuilderMenu.prototype.rotate = function (id, back) {
     // rotate cube menu
     jQuery('#builder-menu .card-main')
             .removeClass(function (index, css) {
-                return (css.match(/\side-\S+/g) || []).join(' ');
+                return (css.match(/\bside-\S+/g) || []).join(' ');
             })
-            .addClass(side);
-
-//    jQuery('#builder-menu .card-main').css("transform", "rotateY(" + rot + "deg)");
+            .addClass(this.currentSide);
+    
+    this.builder.toolbar.logoRotation(this.currentSide);
 };
+
+/**
+ * Rotate menu back
+ */
+BuilderMenu.prototype.back = function () {
+    var tmp = this.backSide;
+
+    // rotate cube menu
+    jQuery('#builder-menu .card-main')
+            .removeClass(function (index, css) {
+                return (css.match(/\bside-\S+/g) || []).join(' ');
+            })
+            .addClass(this.backSide);
+
+    // Set back side
+    this.backSide = this.currentSide;
+
+    // Set current side
+    this.currentSide = tmp;
+};
+
+/**
+ * Add view to side cube
+ * @param {Object} BackboneView  View from render
+ * @param {String} side Side cube
+ */
+BuilderMenu.prototype.addView = function (BackboneView, side) {
+    jQuery('#side-' + side).append(BackboneView.el);
+};
+
