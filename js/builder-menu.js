@@ -46,7 +46,7 @@ BuilderMenu.prototype.showInnerSettings = function (parentId, markup) {
     if (parentId === 'inner-settings-accordion') {
         jQuery("#inner-settings-accordion").hide();
     } else {
-        this.hideAll();
+        // this.hideAll();
     }
 
     jQuery('.blocks-settings').append(markup);
