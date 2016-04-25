@@ -9,8 +9,7 @@
 function Builder(options) {
     this.options = {
         blockTemplateAdapter: 'hbs',
-        blockPreviewUrl: "preview.png",
-        blockTemplateUrl: "template.hbs"
+        blockPreviewUrl: "preview.png"
     };
     _.extend(this.options, options);
     delete this.options.storage;
@@ -20,7 +19,7 @@ function Builder(options) {
     this.viewPort = new BuilderViewPort(this);
     this.menu = new BuilderMenu(this);
     this.utils = new BuilderUtils();
-    this.builderView = new BuilderView({"storage" : options.storage});
+    this.builderLayout = new BuilderLayout({"storage" : options.storage});
 }
 
 /*
@@ -72,7 +71,7 @@ Builder.prototype.makeLayoutSize = function () {
 Builder.prototype.activate = function () {
     var self = this;
     self.loader.add(4);
-    jQuery('body').prepend(self.builderView.el);
+    jQuery('body').prepend(self.builderLayout.el);
     self.loader.sub();
     
     self.loader.sub();
