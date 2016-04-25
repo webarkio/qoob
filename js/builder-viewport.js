@@ -307,8 +307,10 @@ BuilderViewPort.prototype.clickBlockAdd = function (elementid) {
                     iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
                     //Animation scrolling to the bottom of the block's container
                     if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
-
-                        var checkFoxDom = !!window.sidebar ? 'html' : 'body';
+                        var trident = !!navigator.userAgent.match(/Trident\/7.0/);
+                        var net = !!navigator.userAgent.match(/.NET4.0E/);
+                        var IE11 = trident && net
+                        var checkFoxDom = !!window.sidebar || trident && net ? 'html' : 'body';
                         iframe.jQuery(checkFoxDom).animate({
                             scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
                         }, 1000, function () {
