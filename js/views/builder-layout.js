@@ -17,8 +17,8 @@ var BuilderLayout = Backbone.View.extend(
     initialize: function (builder) {
         var self=this;
         self.builder = builder;
-        self.builder.toolbar = new BuilderToolbarView(this.builder);
         self.builder.menu = new BuilderMenuView(this.builder);      
+        self.builder.toolbar = new BuilderToolbarView(this.builder);
         self.builder.viewPort = new BuilderViewportView(this.builder);
         
         self.builder.storage.getBuilderTemplate('builder', function(err, data){

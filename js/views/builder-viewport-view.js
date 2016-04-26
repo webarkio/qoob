@@ -12,27 +12,32 @@ var BuilderViewportView = Backbone.View.extend(
             iframeLoaded: false,
             iframeLoadedFunctions: [],
             /**
-             * View toolbar
-             * @class BuilderViewportView
+             * View menu
+             * @class BuilderMenuView
              * @augments Backbone.View
              * @constructs
              */
             initialize: function (builder) {
                 var self = this;
                 self.builder = builder;
-                self.builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
+                builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
                     self.tpl = _.template(data);
                     self.render();
                 });
             },
             /**
-             * Render viewport
+             * Render menu
              * @returns {Object}
              */
             render: function () {
-                this.$el.html(this.tpl({"postId": builder.storage.pageId}));
+                this.$el.html(this.tpl({"postId" : this.builder.storage.pageId}));
                 return this;
             },
+            /**
+             * @callback createBlockCallback
+             * @param {Object} view block.
+             */
+
             /**
              * Create view block
              * 
@@ -109,7 +114,7 @@ var BuilderViewportView = Backbone.View.extend(
 
                     var settingsView = new BuilderMenuSettingsView({"model": model, "config": config});
 
-                    cb(null, settingsView.el);
+                    cb(null, settingsView);
                 });
             },
             /**
@@ -137,8 +142,10 @@ var BuilderViewportView = Backbone.View.extend(
             addBlock: function (block, afterBlockId) {
                 var iframe = this.getWindowIframe();
 
+                var blockEditId = '"settings-block-' + block.model.id + '"';
+                var blockEditId = '"settings-block-' + block.model.id + '"';
                 var controlButtons = '<div class="control-block-button">' +
-                        '<a onclick="parent.builder.viewPort.editBlock(' + block.model.id + '); return false;" class="edit" href="#"></a>' +
+                        "<a onclick='parent.builder.menu.rotate(" + blockEditId + "); return false;' class='edit' href='#'></a>" +
                         '<a onclick="parent.builder.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
                         '</div>';
                 var droppable = '<div id="droppable-' + block.model.id + '" class="droppable">' +
@@ -195,6 +202,8 @@ var BuilderViewportView = Backbone.View.extend(
                 iframe.jQuery('#builder-blocks').trigger('change');
             },
             /**
+             * DEPRECATED
+             * 
              * Show settings current block
              *
              * @param {integer} blockId
@@ -221,9 +230,7 @@ var BuilderViewportView = Backbone.View.extend(
                 // if settings is open
                 if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
                     // logo rotation
-                    this.builder.toolbar.logoRotation(-90);
-                    //menu rotation
-                    this.builder.menu.menuRotation(90);
+//        this.builder.toolbar.logoRotation(-90);
                 }
 
                 // remove from storage and DOM
@@ -264,8 +271,8 @@ var BuilderViewportView = Backbone.View.extend(
                                 self.builder.storage.addModel(model);
 
                                 self.createBlock(model, template, function (err, block) {
-                                    self.createSettings(block.model, function (err, container) {
-                                        jQuery('#builder-menu .blocks-settings').append(container);
+                                    self.createSettings(block.model, function (err, view) {
+                                        self.builder.menu.addView(view, 270);
                                         var afterBlockId = dropElement.attr("id").replace("droppable-", "");
                                         self.addBlock(block, afterBlockId);
                                     });
@@ -302,7 +309,7 @@ var BuilderViewportView = Backbone.View.extend(
                         self.builder.storage.addModel(model);
 
                         self.createBlock(model, template, function (err, block) {
-                            self.createSettings(block.model, function (err, container) {
+                            self.createSettings(block.model, function (err, view) {
                                 //Creating waiting block in bottom
                                 var droppable = '<div id="droppable-' + block.model.id + '" class="droppable ui-droppable active-wait">' +
                                         '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
@@ -311,18 +318,21 @@ var BuilderViewportView = Backbone.View.extend(
                                 iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
                                 //Animation scrolling to the bottom of the block's container
                                 if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
-
-                                    var checkFoxDom = !!window.sidebar ? 'html' : 'body';
+                                    var trident = !!navigator.userAgent.match(/Trident\/7.0/);
+                                    var net = !!navigator.userAgent.match(/.NET4.0E/);
+                                    var IE11 = trident && net
+                                    var checkFoxDom = !!window.sidebar || trident && net ? 'html' : 'body';
                                     iframe.jQuery(checkFoxDom).animate({
                                         scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
                                     }, 1000, function () {
                                         //Appending added block
-                                        jQuery('#builder-menu .blocks-settings').append(container);
+                                        self.builder.menu.addView(view, 270);
                                         var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                                         self.addBlock(block, afterBlockId);
                                     });
                                 } else {
-                                    jQuery('#builder-menu .blocks-settings').append(container);
+                                    //Appending added block
+                                    self.builder.menu.addView(view, 270);
                                     var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                                     self.addBlock(block, afterBlockId);
                                 }
@@ -346,8 +356,8 @@ var BuilderViewportView = Backbone.View.extend(
                     if (i < data.length) {
                         this.builder.storage.getTemplate(data[i].get('template'), function (err, template) {
                             self.createBlock(data[i], template, function (err, block) {
-                                self.createSettings(block.model, function (err, container) {
-                                    jQuery('#builder-menu .blocks-settings').append(container);
+                                self.createSettings(block.model, function (err, view) {
+                                    self.builder.menu.addView(view, 270);
                                     self.addBlock(block);
                                     self.builder.loader.sub();
                                     loop(i + 1);
@@ -462,5 +472,3 @@ var BuilderViewportView = Backbone.View.extend(
                 }
             }
         });
-
-
