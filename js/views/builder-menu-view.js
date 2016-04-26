@@ -7,7 +7,6 @@ var BuilderMenuView = Backbone.View.extend({
     id: "builder-menu",
     tpl: '',
     builder: null,
-    rotate: false,
     currentSide: 'side-0',
     backSide: null,
     /**
@@ -52,20 +51,6 @@ var BuilderMenuView = Backbone.View.extend({
     createBlocks: function () {
         var blocksPreviewView = new BuilderMenuBlocksPreviewView();
         this.addView(blocksPreviewView, 90);
-    },
-    /**
-     * Switching to inner field's settings 
-     * @param {number} blockId
-     * @param {string} markup
-     */
-    showInnerSettings: function (parentId, markup) {
-        if (parentId === 'inner-settings-accordion') {
-            jQuery("#inner-settings-accordion").hide();
-        } else {
-            this.hideAll();
-        }
-
-        jQuery('.blocks-settings').append(markup);
     },
     /**
      * Resize menu
