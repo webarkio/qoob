@@ -6,10 +6,9 @@
 var BuilderMenuSettingsView = Backbone.View.extend(
 /** @lends BuilderMenuSettingsView.prototype */{
     tagName: "div",
-    className: "settings",
+    className: "settings menu-block",
     buidlerMenuBlocksSettingsTpl : null,
     config : null,
-    
     /**
      * Set setting's id
      * @class SettingsView
@@ -21,7 +20,6 @@ var BuilderMenuSettingsView = Backbone.View.extend(
             id : "settings-block-" + this.model.id
         };
     },
-
     /**
      * View settings
      * @class BuilderMenuSettingsView

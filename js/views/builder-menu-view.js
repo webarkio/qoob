@@ -9,6 +9,7 @@ var BuilderMenuView = Backbone.View.extend({
     builder: null,
     currentSide: 'side-0',
     backSide: null,
+    currentRotateId: null,
     /**
      * View menu
      * @class BuilderMenuView
@@ -67,6 +68,12 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {Boolean} back Rotate back
      */
     rotate: function (id, back) {
+        if (this.currentRotateId == id)
+            return;
+        
+        // set current rotate id
+        this.currentRotateId = id;
+        
         // if rotate back
         back = typeof back !== 'undefined' ? back : false;
 
@@ -79,6 +86,10 @@ var BuilderMenuView = Backbone.View.extend({
 
         // Set back side
         this.backSide = this.currentSide;
+        
+        if (this.currentSide == sideId) {
+            sideId += ' side-full-rotation';
+        }
 
         // Set current side
         this.currentSide = sideId;
@@ -94,7 +105,12 @@ var BuilderMenuView = Backbone.View.extend({
                 .removeClass(function (index, css) {
                     return (css.match(/\bside-\S+/g) || []).join(' ');
                 })
-                .addClass(this.currentSide);
+                .addClass(this.currentSide)
+                .children()
+                .removeClass('active');
+        
+        // add active class
+        side.addClass('active');
 
         this.builder.builderLayout.toolbar.logoRotation(this.currentSide);
     },

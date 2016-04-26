@@ -217,11 +217,10 @@
     -webkit-transform: rotateY(-180deg) translate3D(0,0,17.5px);
     transform: rotateY(-180deg) translate3D(0,0,17.5px);
     z-index: 1;
-    opacity:0;
 }
 #builder-toolbar .logo.side-0 .cube .side-270 {
-    -webkit-transform: rotateY(90deg) translate3D(0,0,17.5px);
-    transform: rotateY(90deg) translate3D(0,0,17.5px);
+    -webkit-transform: rotateY(-270deg) translate3D(0,0,17.5px);
+    transform: rotateY(-270deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
 
@@ -241,8 +240,8 @@
     z-index: 1;
 }
 #builder-toolbar .logo.side-90 .cube .side-270 {
-    -webkit-transform: rotateY(0deg) translate3D(0,0,17.5px);
-    transform: rotateY(0deg) translate3D(0,0,17.5px);
+    -webkit-transform: rotateY(-360deg) translate3D(0,0,17.5px);
+    transform: rotateY(-360deg) translate3D(0,0,17.5px);
     z-index: 10;
 }
 
@@ -250,7 +249,6 @@
     -webkit-transform: rotateY(180deg) translate3D(0,0,17.5px);
     transform: rotateY(180deg) translate3D(0,0,17.5px);
     z-index: 1;
-    opacity:0;
 }
 #builder-toolbar .logo.side-180 .cube .side-90 {
     -webkit-transform: rotateY(90deg) translate3D(0,0,17.5px);
@@ -263,7 +261,7 @@
     z-index: 10;
 }
 #builder-toolbar .logo.side-180 .cube .side-270 {
-    -webkit-transform: rotateY(270deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(270deg) translate3D(0,0,17.5px);
     transform: rotateY(270deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
@@ -284,8 +282,29 @@
     z-index: 1;
 }
 #builder-toolbar .logo.side-270 .cube .side-270 {
-    -webkit-transform: rotateY(180deg) translate3D(0,0,17.5px);
-    transform: rotateY(180deg) translate3D(0,0,17.5px);
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,17.5px);
+    transform: rotateY(-180deg) translate3D(0,0,17.5px);
+    z-index: 1;
+}
+
+#builder-toolbar .logo.side-270.side-full-rotation .cube .side-0  {
+    -webkit-transform: rotateY(-270deg) translate3D(0,0,17.5px);
+    transform: rotateY(-270deg) translate3D(0,0,17.5px);
+    z-index: 1;
+}
+#builder-toolbar .logo.side-270.side-full-rotation .cube .side-90 {
+    -webkit-transform: rotateY(-360deg) translate3D(0,0,17.5px);
+    transform: rotateY(-360deg) translate3D(0,0,17.5px);
+    z-index: 10;
+}
+#builder-toolbar .logo.side-270.side-full-rotation .cube .side-180 {
+    -webkit-transform: rotateY(-450deg) translate3D(0,0,17.5px);
+    transform: rotateY(-450deg) translate3D(0,0,17.5px);
+    z-index: 1;
+}
+#builder-toolbar .logo.side-270.side-full-rotation .cube .side-270 {
+    -webkit-transform: rotateY(-540deg) translate3D(0,0,17.5px);
+    transform: rotateY(-540deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
 
@@ -868,99 +887,136 @@ ul.catalog-list li a:hover {
 
 #card .side-0>#side-0 {
     overflow: auto;
-    -webkit-transform: rotateY(0deg) translate3D(0,0,9.7em);
-    transform: rotateY(0deg) translate3D(0,0,9.7em); /* set tranlateZ value to 1/2 cube height to bring it closer to screen, creating 3D effect */
+    -webkit-transform: rotateY(0deg) translate3D(0,0,9.9em);
+    transform: rotateY(0deg) translate3D(0,0,9.9em); /* set tranlateZ value to 1/2 cube height to bring it closer to screen, creating 3D effect */
     z-index: 10;
 }
 
 #card .side-0>#side-90 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.7em);
-    transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    transform: rotateY(-90deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-0>#side-180 {
-    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.7em);
-    transform: rotateY(-180deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.9em);
+    transform: rotateY(-180deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-0>#side-270 {
-    -webkit-transform: rotateY(90deg) translate3D(0,0,9.7em);
-    transform: rotateY(90deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(90deg) translate3D(0,0,9.9em);
+    transform: rotateY(90deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-90>#side-0 {
-    -webkit-transform: rotateY(90deg) translate3D(0,0,9.7em);
-    transform: rotateY(90deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(90deg) translate3D(0,0,9.9em);
+    transform: rotateY(90deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-90>#side-90 {
-    -webkit-transform: rotateY(0deg) translate3D(0,0,9.7em);
-    transform: rotateY(0deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(0deg) translate3D(0,0,9.9em);
+    transform: rotateY(0deg) translate3D(0,0,9.9em);
     z-index: 10;
 }
 
 #card .side-90>#side-180 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.7em);
-    transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    transform: rotateY(-90deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-90>#side-270 {
-    -webkit-transform: rotateY(180deg) translate3D(0,0,9.7em);
-    transform: rotateY(180deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(180deg) translate3D(0,0,9.9em);
+    transform: rotateY(180deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-180>#side-0 {
-    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.7em);
-    transform: rotateY(-180deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.9em);
+    transform: rotateY(-180deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-180>#side-90 {
-    -webkit-transform: rotateY(-270deg) translate3D(0,0,9.7em);
-    transform: rotateY(-270deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-270deg) translate3D(0,0,9.9em);
+    transform: rotateY(-270deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-180>#side-180 {
-    -webkit-transform: rotateY(-360deg) translate3D(0,0,9.7em);
-    transform: rotateY(-360deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-360deg) translate3D(0,0,9.9em);
+    transform: rotateY(-360deg) translate3D(0,0,9.9em);
     z-index: 10;
 }
 
 #card .side-180>#side-270 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.7em);
-    transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    transform: rotateY(-90deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-270>#side-0 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.7em);
-    transform: rotateY(-90deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    transform: rotateY(-90deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-270>#side-90 {
-    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.7em);
-    transform: rotateY(-180deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.9em);
+    transform: rotateY(-180deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-270>#side-180 {
-    -webkit-transform: rotateY(-270deg) translate3D(0,0,9.7em);
-    transform: rotateY(-270deg) translate3D(0,0,9.7em);
+    -webkit-transform: rotateY(-270deg) translate3D(0,0,9.9em);
+    transform: rotateY(-270deg) translate3D(0,0,9.9em);
     z-index: 1;
 }
 
 #card .side-270>#side-270 {
+    -webkit-transform: rotateY(0deg) translate3D(0,0,9.9em);
+    transform: rotateY(0deg) translate3D(0,0,9.9em);
+    z-index: 10;
+}
+
+#card .side-270.side-full-rotation>#side-0 {
+    -webkit-transform: rotateY(270deg) translate3D(0,0,9.9em);
+    transform: rotateY(270deg) translate3D(0,0,9.9em);
+    z-index: 1;
+}
+
+#card .side-270.side-full-rotation>#side-90 {
+    -webkit-transform: rotateY(180deg) translate3D(0,0,9.9em);
+    transform: rotateY(180deg) translate3D(0,0,9.9em);    
+    z-index: 1;
+}
+
+#card .side-270.side-full-rotation>#side-180 {
+    -webkit-transform: rotateY(90deg) translate3D(0,0,9.9em);
+    transform: rotateY(90deg) translate3D(0,0,9.9em);
+    z-index: 1;
+}
+
+#card .side-270.side-full-rotation>#side-270 {
+    -webkit-transform: rotateY(360deg) translate3D(0,0,9.9em);
+    transform: rotateY(360deg) translate3D(0,0,9.9em);
+    z-index: 10;
+}
+
+#card .side-270.side-full-rotation>#side-270.active {
+    -webkit-transform: rotateY(360deg) translate3D(0,0,9.7em);
+    transform: rotateY(360deg) translate3D(0,0,9.7em);
+}
+
+#card #side-0.active,
+#card #side-90.active,
+#card #side-180.active,
+#card #side-270.active {
     -webkit-transform: rotateY(0deg) translate3D(0,0,9.7em);
     transform: rotateY(0deg) translate3D(0,0,9.7em);
-    z-index: 10;
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
