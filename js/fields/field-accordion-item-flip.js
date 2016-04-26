@@ -53,14 +53,14 @@ Fields.accordion_item_flip = Backbone.View.extend(
 
         // console.log(parentId);
 
-        builder.menu.addView(settingsView, 270);
-        builder.menu.rotate('settings-block-' + this.model.id);
+        builder.builderLayout.addView(settingsView, 270);
+        builder.builderLayout.menu.rotate('settings-block-' + this.model.id);
         console.log(settingsView);
 
 
 
 
-        // builder.menu.showInnerSettings(blockId, this.accordionItemFrontSettingTpl( htmldata ));
+        // builder.builderLayout.menu.showInnerSettings(blockId, this.accordionItemFrontSettingTpl( htmldata ));
         // jQuery('.inner-accordion-'+this.model.id).append(settingsView.render().el);
     },
     

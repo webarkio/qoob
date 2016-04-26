@@ -16,6 +16,7 @@ function Builder(options) {
     this.storage = options.storage;
     this.loader = new BuilderLoader(this);        
     this.utils = new BuilderUtils();
+    this.builderLayout = new BuilderLayout(this);
 }
 
 /*
@@ -55,10 +56,10 @@ Builder.prototype.autosavePageData = function () {
  * Make layout size
  */
 Builder.prototype.makeLayoutSize = function () {
-    this.toolbar.resize();
-    this.menu.resize();
-    this.viewPort.resize();
-    this.viewPort.resizeIframe();
+    this.builderLayout.toolbar.resize();
+    this.builderLayout.menu.resize();
+    this.builderLayout.viewPort.resize();
+    this.builderLayout.viewPort.resizeIframe();
 };
 
 /**
@@ -68,7 +69,7 @@ Builder.prototype.activate = function () {
     var self = this;
     self.loader.add(4);
     //Creating and appending builder layout
-    self.builderLayout = new BuilderLayout(self);
+    
     jQuery('body').prepend(self.builderLayout.el);
     self.loader.sub();
     
@@ -76,9 +77,9 @@ Builder.prototype.activate = function () {
     jQuery(window).resize(function () {
         self.makeLayoutSize();
     });
-    self.viewPort.onLoad(function () {
+    self.builderLayout.viewPort.onLoad(function () {
         self.storage.getBuilderData(function (err, builderData) {
-            self.menu.create();
+            self.builderLayout.menu.create();
             self.loader.sub();
             // Autosave
             self.autosavePageData();
@@ -86,7 +87,7 @@ Builder.prototype.activate = function () {
                 if (pageData.length > 0) {
                     self.loader.add(pageData.length);
                 }
-                self.viewPort.create(pageData);
+                self.builderLayout.viewPort.create(pageData);
                 self.loader.sub();
                 self.makeLayoutSize();
             });

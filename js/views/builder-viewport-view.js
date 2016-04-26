@@ -145,8 +145,8 @@ var BuilderViewportView = Backbone.View.extend(
                 var blockEditId = '"settings-block-' + block.model.id + '"';
                 var blockEditId = '"settings-block-' + block.model.id + '"';
                 var controlButtons = '<div class="control-block-button">' +
-                        "<a onclick='parent.builder.menu.rotate(" + blockEditId + "); return false;' class='edit' href='#'></a>" +
-                        '<a onclick="parent.builder.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
+                        "<a onclick='parent.builder.builderLayout.menu.rotate(" + blockEditId + "); return false;' class='edit' href='#'></a>" +
+                        '<a onclick="parent.builder.builderLayout.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
                         '</div>';
                 var droppable = '<div id="droppable-' + block.model.id + '" class="droppable">' +
                         '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
@@ -179,11 +179,11 @@ var BuilderViewportView = Backbone.View.extend(
 
                 // default visible block
                 if (block.model.get('devices')) {
-                    builder.iframe.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
+                    this.builder.iframe.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
                 }
 
                 // setting block height
-                this.builder.menu.resize();
+                this.builder.builderLayout.menu.resize();
 
                 // Trigger change
                 this.triggerBuilderBlock();
@@ -209,7 +209,7 @@ var BuilderViewportView = Backbone.View.extend(
              * @param {integer} blockId
              */
             editBlock: function (blockId) {
-                this.builder.menu.showSettings(blockId);
+                this.builder.builderLayout.menu.showSettings(blockId);
             },
             /**
              * Remove block by id
@@ -272,7 +272,7 @@ var BuilderViewportView = Backbone.View.extend(
 
                                 self.createBlock(model, template, function (err, block) {
                                     self.createSettings(block.model, function (err, view) {
-                                        self.builder.menu.addView(view, 270);
+                                        self.builder.builderLayout.menu.addView(view, 270);
                                         var afterBlockId = dropElement.attr("id").replace("droppable-", "");
                                         self.addBlock(block, afterBlockId);
                                     });
@@ -326,13 +326,13 @@ var BuilderViewportView = Backbone.View.extend(
                                         scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
                                     }, 1000, function () {
                                         //Appending added block
-                                        self.builder.menu.addView(view, 270);
+                                        self.builder.builderLayout.menu.addView(view, 270);
                                         var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                                         self.addBlock(block, afterBlockId);
                                     });
                                 } else {
                                     //Appending added block
-                                    self.builder.menu.addView(view, 270);
+                                    self.builder.builderLayout.menu.addView(view, 270);
                                     var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
                                     self.addBlock(block, afterBlockId);
                                 }
@@ -357,7 +357,7 @@ var BuilderViewportView = Backbone.View.extend(
                         this.builder.storage.getTemplate(data[i].get('template'), function (err, template) {
                             self.createBlock(data[i], template, function (err, block) {
                                 self.createSettings(block.model, function (err, view) {
-                                    self.builder.menu.addView(view, 270);
+                                    self.builder.builderLayout.menu.addView(view, 270);
                                     self.addBlock(block);
                                     self.builder.loader.sub();
                                     loop(i + 1);

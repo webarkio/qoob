@@ -1,6 +1,6 @@
 <div id="inner-settings-image" class="inner-settings" data-current-src="<%= curSrc %>">
     <div class="backward">
-        <a onclick="builder.menu.showSettings('<%= blockId %>'); return false;" href="#">Back</a>
+        <a onclick="builder.builderLayout.menu.showSettings('<%= blockId %>'); return false;" href="#">Back</a>
     </div>
     <input class="input-text img-search" type="text" placeholder="Filter">
     <select class="img-pack">
@@ -23,7 +23,7 @@
 </div>
 <script type='text/javascript'>
 jQuery(document).ready(function() {
-    var assets = builder.storage.getAssets();
+    var assets = builder.builderLayout.storage.getAssets();
     var curSrc = jQuery('#inner-settings-image').data('current-src');
     var tags = [];
     var packs = [];
@@ -100,7 +100,7 @@ jQuery(document).ready(function() {
         if (chosen.get(0)) {
             url = chosen.attr('src');
             window.selectFieldImage(url);
-            builder.menu.showSettings("<%= blockId %>");
+            builder.builderLayout.menu.showSettings("<%= blockId %>");
         }
     });
     

@@ -17,9 +17,9 @@ var BuilderLayout = Backbone.View.extend(
     initialize: function (builder) {
         var self=this;
         self.builder = builder;
-        self.builder.menu = new BuilderMenuView(this.builder);      
-        self.builder.toolbar = new BuilderToolbarView(this.builder);
-        self.builder.viewPort = new BuilderViewportView(this.builder);
+        self.menu = new BuilderMenuView(this.builder);      
+        self.toolbar = new BuilderToolbarView(this.builder);
+        self.viewPort = new BuilderViewportView(this.builder);
         
         self.builder.storage.getBuilderTemplate('builder', function(err, data){
             self.tpl = _.template(data);
@@ -33,9 +33,9 @@ var BuilderLayout = Backbone.View.extend(
     render: function () {   
         //Creating layout
         this.$el.html(this.tpl({"postId" : this.builder.storage.pageId}));
-        this.$el.find('#builder').append(this.builder.toolbar.el);
-        this.$el.find('#builder').append(this.builder.menu.el);
-        this.$el.find('#builder-content').append(this.builder.viewPort.el);
+        this.$el.find('#builder').append(this.toolbar.el);
+        this.$el.find('#builder').append(this.menu.el);
+        this.$el.find('#builder-content').append(this.viewPort.el);
         return this;
     }
 });
