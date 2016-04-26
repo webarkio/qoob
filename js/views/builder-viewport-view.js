@@ -20,17 +20,18 @@ var BuilderViewportView = Backbone.View.extend(
             initialize: function (builder) {
                 var self = this;
                 self.builder = builder;
-                builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
-                    self.tpl = _.template(data);
-                    self.render();
-                });
+                
             },
             /**
              * Render menu
              * @returns {Object}
              */
             render: function () {
-                this.$el.html(this.tpl({"postId" : this.builder.storage.pageId}));
+                var self = this;
+                this.builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
+                    self.tpl = _.template(data);
+                    self.$el.html(self.tpl({"postId" : this.builder.storage.pageId}));
+                });
                 return this;
             },
             /**
@@ -52,8 +53,8 @@ var BuilderViewportView = Backbone.View.extend(
 
                 var templateId = model.attributes.template;
 
-                builder.storage.getConfig(templateId, function (err, config) {
-                    var tplAdapter = config.blockTemplateAdapter || builder.options.blockTemplateAdapter;
+                this.builder.storage.getConfig(templateId, function (err, config) {
+                    var tplAdapter = config.blockTemplateAdapter || this.builder.options.blockTemplateAdapter;
                     block.template = BuilderExtensions.templating[tplAdapter](template);
                     cb(null, block);
                 });
@@ -107,12 +108,13 @@ var BuilderViewportView = Backbone.View.extend(
             createSettings: function (model, cb) {
                 var self = this;
                 this.builder.storage.getConfig(model.get('template'), function (err, config) {
+                    var settings = config.settings;
                     // Add devices field
-                    if (!_.findWhere(config, {label: "Visible Devices"})) {
-                        config.push(self.devicesSettings());
+                    if (!_.findWhere(settings, {label: "Visible Devices"})) {
+                        settings.push(self.devicesSettings());
                     }
 
-                    var settingsView = new BuilderMenuSettingsView({"model": model, "config": config});
+                    var settingsView = new BuilderMenuSettingsView({"model": model, "config": settings});
 
                     cb(null, settingsView);
                 });
@@ -126,8 +128,9 @@ var BuilderViewportView = Backbone.View.extend(
             getDefaultSettings: function (templateId, cb) {
                 this.builder.storage.getConfig(templateId, function (err, data) {
                     var config = {};
-                    for (var i = 0; i < data.length; i++) {
-                        config[data[i].name] = data[i].default;
+                    var settings = data.settings;
+                    for (var i = 0; i < settings.length; i++) {
+                        config[settings[i].name] = settings[i].default;
                     }
                     config.template = templateId;
                     cb(null, config);

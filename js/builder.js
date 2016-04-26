@@ -68,14 +68,13 @@ Builder.prototype.activate = function () {
     var self = this;
     self.loader.add(4);
     //Creating and appending builder layout
-    
-    jQuery('body').prepend(self.builderLayout.el);
     self.loader.sub();
-    
     self.loader.sub();
     jQuery(window).resize(function () {
         self.makeLayoutSize();
     });
+    self.builderLayout.render();
+    jQuery('body').prepend(self.builderLayout.el);
     self.builderLayout.viewPort.onLoad(function () {
         self.storage.getBuilderData(function (err, builderData) {
             self.builderLayout.menu.create();
@@ -88,7 +87,7 @@ Builder.prototype.activate = function () {
                 }
                 self.builderLayout.viewPort.create(pageData);
                 self.loader.sub();
-                self.makeLayoutSize();
+                self.makeLayoutSize();      
             });
 
         });

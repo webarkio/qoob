@@ -172,7 +172,7 @@ BuilderStorage.prototype.getTemplate = function (templateId, cb) {
  */
 BuilderStorage.prototype.getConfig = function (itemId, cb) {
     var item = _.findWhere(this.builderData.items, {id: itemId});
-    var config = item.config.settings;
+    var config = item.config;
     cb(null, config);
 };
 
