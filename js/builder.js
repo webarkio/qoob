@@ -45,7 +45,7 @@ Builder.prototype.autosavePageData = function () {
             if (!jQuery('.checkbox-sb input').prop("checked")) {
                 clearInterval(intervalId);
             } else {
-                self.save();
+                self.builderLayout.viewPort.save();
             }
         }, 60000);
     }
