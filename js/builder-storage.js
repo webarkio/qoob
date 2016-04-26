@@ -137,7 +137,7 @@ BuilderStorage.prototype.getPageData = function (cb) {
         this.driver.loadPageData(this.pageId, function (err, pageData) {
             if (pageData) {
                 for (var i = 0; i < pageData.length; i++) {
-                    self.models.push(builder.utils.createModel(pageData[i]));
+                    self.models.push(BuilderUtils.createModel(pageData[i]));
                 }
             }
 

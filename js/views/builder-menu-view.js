@@ -99,7 +99,7 @@ var BuilderMenuView = Backbone.View.extend({
         this.currentSide = sideId;
 
         // hide all blocks side
-        side.children().hide();
+        side.find('.menu-block').hide();
 
         // show current block menu
         element.show();
@@ -115,6 +115,7 @@ var BuilderMenuView = Backbone.View.extend({
     },
     /**
      * Rotate menu back
+     * Not used
      */
     back: function () {
         var tmp = this.backSide;

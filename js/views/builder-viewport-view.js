@@ -265,7 +265,7 @@ var BuilderViewportView = Backbone.View.extend(
                         var templateId = ui.draggable.attr("id").replace("preview-block-", "");
                         self.builder.storage.getTemplate(templateId, function (err, template) {
                             self.getDefaultSettings(templateId, function (err, config) {
-                                var model = self.builder.utils.createModel(config);
+                                var model = BuilderUtils.createModel(config);
 
                                 //add model to storage
                                 self.builder.storage.addModel(model);
@@ -302,7 +302,7 @@ var BuilderViewportView = Backbone.View.extend(
                 var templateId = elementid.replace("preview-block-", "");
                 this.builder.storage.getTemplate(templateId, function (err, template) {
                     self.getDefaultSettings(templateId, function (err, settings) {
-                        var model = self.builder.utils.createModel(settings),
+                        var model = BuilderUtils.createModel(settings),
                                 iframe = self.getWindowIframe();
 
                         //add model to storage
