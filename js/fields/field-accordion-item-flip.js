@@ -35,24 +35,33 @@ Fields.accordion_item_flip = Backbone.View.extend(
     
     showSettings: function (evt) {
         var blockId;
-        var parentId = jQuery(evt.target).closest('.inner-settings').attr('id');
+        // var parentId = jQuery(evt.target).closest('.inner-settings').attr('id');
         
-        if (parentId == "inner-settings-accordion") {
-            blockId = parentId;
-        }else {
-            blockId = jQuery(evt.target).closest('.settings').attr('id').match(new RegExp(/(\d)+/))[0];
-        }
+        // if (parentId == "inner-settings-accordion") {
+        //     blockId = parentId;
+        // }else {
+        //     blockId = jQuery(evt.target).closest('.settings').attr('id').match(new RegExp(/(\d)+/))[0];
+        // }
 
         var settingsView = new FieldsView({model: this.model});
         settingsView.config = this.config;
         
-        var htmldata = {
-            "blockId" : blockId,
-            "classname" : 'inner-accordion-'+this.model.id
-        }
+        // var htmldata = {
+        //     "blockId" : blockId,
+        //     "classname" : 'inner-accordion-'+this.model.id
+        // };
 
-        builder.menu.showInnerSettings(blockId, this.accordionItemFrontSettingTpl( htmldata ));
-        jQuery('.inner-accordion-'+this.model.id).append(settingsView.render().el);
+        // console.log(parentId);
+
+        builder.menu.addView(settingsView, 270);
+        builder.menu.rotate('settings-block-' + this.model.id);
+        console.log(settingsView);
+
+
+
+
+        // builder.menu.showInnerSettings(blockId, this.accordionItemFrontSettingTpl( htmldata ));
+        // jQuery('.inner-accordion-'+this.model.id).append(settingsView.render().el);
     },
     
     /**
