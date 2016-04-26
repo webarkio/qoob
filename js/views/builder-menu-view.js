@@ -115,6 +115,7 @@ var BuilderMenuView = Backbone.View.extend({
     },
     /**
      * Rotate menu back
+     * Not used
      */
     back: function () {
         var tmp = this.backSide;

@@ -15,7 +15,6 @@ function Builder(options) {
     delete this.options.storage;
     this.storage = options.storage;
     this.loader = new BuilderLoader(this);        
-    this.utils = new BuilderUtils();
 }
 
 /*
