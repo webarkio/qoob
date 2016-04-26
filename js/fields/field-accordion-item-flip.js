@@ -50,12 +50,11 @@ Fields.accordion_item_flip = Backbone.View.extend(
         //     "blockId" : blockId,
         //     "classname" : 'inner-accordion-'+this.model.id
         // };
+        var flipView = new AccordionFlipView({"modelid" : this.model.id, "parentId" : this.model.owner_id});
 
-        // console.log(parentId);
-
-        builder.menu.addView(settingsView, 270);
-        builder.menu.rotate('settings-block-' + this.model.id);
-        console.log(settingsView);
+        flipView.$el.append(settingsView.render().el);
+        builder.menu.addView(flipView, 270);
+        builder.menu.rotate(flipView.$el.prop('id'));
 
 
 
