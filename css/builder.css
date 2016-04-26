@@ -812,15 +812,6 @@ ul.catalog-list li a:hover {
 }
 
 #card {
-    /*    perspective: 52rem;
-        transform: perspective(1px) scale(1.1);
-        transform: translate3D(0,0,-4em);
-        position: absolute;
-        width: 258px;
-        height: 100%;
-        background-color: #444444;
-        -webkit-transform-origin: 50% 50%;
-        transform-origin: 50% 50%;*/
     position: absolute;
     left: 0;
     top: 0;
@@ -829,14 +820,6 @@ ul.catalog-list li a:hover {
 }
 
 #card .card-wrap {
-    /*    transform-style: preserve-3d;
-        transform: translateZ(287px) scale(0.5);
-        transform: translateZ(-212px);
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;*/
     position: absolute;
     left: 0;
     top: 0;
@@ -844,22 +827,12 @@ ul.catalog-list li a:hover {
     height: 100%;
     -webkit-perspective: 1000px;
     perspective: 1000px; /* The lower the value, the more pronounced the 3d effect is */
-
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 #card .card-main {
-    /*    position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-        -webkit-transition: all .5s ease;
-        transition: all .5s ease;*/
     position: absolute;
     left: 0;
     top: 0;
@@ -869,7 +842,6 @@ ul.catalog-list li a:hover {
     transform-style: preserve-3d; /* IE 11 or below doesn't support this, so in IE, we need to add another "perspective" property here via IE specific media queries (see below) */
     -webkit-transform: translate3D(0,0,-9.7em);
     transform: translate3D(0,0,-9.7em); /* move cube back by 1/2 cube height (translateZ) to undo each cube's side being moved forward by 1/2 cube height */
-
 }
 
 #side-0,
