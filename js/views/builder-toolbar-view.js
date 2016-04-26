@@ -16,18 +16,20 @@ var BuilderToolbarView = Backbone.View.extend(
              */
             initialize: function (builder) {
                 var self = this;
-                self.builder = builder;
-                self.builder.storage.getBuilderTemplate('builder-toolbar', function (err, data) {
-                    self.tpl = _.template(data);
-                    self.render();
-                });
+                this.builder = builder;
+
             },
             /**
              * Render toolbar
              * @returns {Object}
              */
             render: function () {
-                this.$el.html(this.tpl());
+                var self = this;
+                self.builder.storage.getBuilderTemplate('builder-toolbar', function (err, data) {
+                    self.tpl = _.template(data);
+                    self.$el.html(self.tpl());
+                });
+
                 return this;
             },
             /**

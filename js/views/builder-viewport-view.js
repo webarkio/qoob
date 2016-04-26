@@ -20,17 +20,18 @@ var BuilderViewportView = Backbone.View.extend(
             initialize: function (builder) {
                 var self = this;
                 self.builder = builder;
-                builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
-                    self.tpl = _.template(data);
-                    self.render();
-                });
+                
             },
             /**
              * Render menu
              * @returns {Object}
              */
             render: function () {
-                this.$el.html(this.tpl({"postId" : this.builder.storage.pageId}));
+                var self = this;
+                this.builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
+                    self.tpl = _.template(data);
+                    self.$el.html(self.tpl({"postId" : this.builder.storage.pageId}));
+                });
                 return this;
             },
             /**

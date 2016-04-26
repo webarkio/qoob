@@ -19,17 +19,18 @@ var BuilderMenuView = Backbone.View.extend({
     initialize: function (builder) {
         var self = this;
         self.builder = builder;
-        builder.storage.getBuilderTemplate('builder-menu', function (err, data) {
-            self.tpl = _.template(data);
-            self.render();
-        });
     },
     /**
      * Render menu
      * @returns {Object}
      */
     render: function () {
-        this.$el.html(this.tpl());
+        var self = this;
+        this.builder.storage.getBuilderTemplate('builder-menu', function (err, data) {
+            self.tpl = _.template(data);
+            self.$el.html(self.tpl());
+        });
+
         return this;
     },
     /**
