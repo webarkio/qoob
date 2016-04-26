@@ -71,7 +71,7 @@ Fields.accordion = Backbone.View.extend(
             data[settingsParams[i].name] = settingsParams[i].default;
         }
 
-        var model = builder.utils.createModel(data);
+        var model = BuilderUtils.createModel(data);
 
         values.add(model);
 

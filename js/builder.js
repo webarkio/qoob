@@ -15,11 +15,6 @@ function Builder(options) {
     delete this.options.storage;
     this.storage = options.storage;
     this.loader = new BuilderLoader(this);        
-    this.toolbar = new BuilderToolbar(this);
-    this.viewPort = new BuilderViewPort(this);
-    this.menu = new BuilderMenu(this);
-    this.utils = new BuilderUtils();
-    this.builderLayout = new BuilderLayout({"storage" : options.storage});
 }
 
 /*
@@ -71,6 +66,8 @@ Builder.prototype.makeLayoutSize = function () {
 Builder.prototype.activate = function () {
     var self = this;
     self.loader.add(4);
+    //Creating and appending builder layout
+    self.builderLayout = new BuilderLayout(self);
     jQuery('body').prepend(self.builderLayout.el);
     self.loader.sub();
     
