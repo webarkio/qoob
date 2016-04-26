@@ -101,7 +101,7 @@ var BuilderMenuView = Backbone.View.extend({
         this.currentSide = sideId;
 
         // hide all blocks side
-        side.find('.menu-block').hide();
+        side.children().hide();
 
         // show current block menu
         element.show();
