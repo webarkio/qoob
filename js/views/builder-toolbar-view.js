@@ -34,25 +34,25 @@ var BuilderToolbarView = Backbone.View.extend(
              * Resize toolbar
              */
             resize: function () {
-                jQuery('#builder-toolbar').css({width: jQuery(window).width()});
+                this.$el.css({width: jQuery(window).width()});
             },
             /**
              * Show toolbar
              */
             show: function () {
-                jQuery('#builder-toolbar').show();
+                this.$el.show();
             },
             /**
              * Hide toolbar
              */
             hide: function () {
-                jQuery('#builder-toolbar').hide();
+                this.$el.hide();
             },
             /**
              * If visible toolbar
              */
             isVisible: function () {
-                return jQuery('#builder-toolbar').is(":visible");
+                return this.$el.is(":visible");
             },
             /**
              * Logo rotation
@@ -60,7 +60,7 @@ var BuilderToolbarView = Backbone.View.extend(
              */
             logoRotation: function (side) {
                 // rotate cube logo
-                jQuery('#builder-toolbar .logo')
+                this.$el.find('.logo')
                         .removeClass(function (index, css) {
                             return (css.match(/\bside-\S+/g) || []).join(' ');
                         })
@@ -110,18 +110,18 @@ var BuilderToolbarView = Backbone.View.extend(
                         iframe = this.builder.viewPort.getIframeContents();
 
                 if (jQuery(elem).hasClass('active')) {
-                    jQuery('#builder-toolbar').fadeIn(300);
+                    this.$el.fadeIn(300);
                     jQuery('#builder-menu').fadeIn(300);
                     iframe.find('.control-block-button').fadeIn(300);
 
-                    jQuery('#builder-toolbar').find('.hide-builder').removeClass('active');
+                    this.$el.find('.hide-builder').removeClass('active');
                     jQuery(elem).remove();
 
                     this.builder.viewPort.resize();
                     this.builder.viewPort.resizeIframe();
                 } else {
                     jQuery(elem).addClass('active');
-                    jQuery('#builder-toolbar').fadeOut(300, function () {
+                    this.$el.fadeOut(300, function () {
                         self.builder.viewPort.resize();
                         self.builder.viewPort.resizeIframe();
                         var width = (jQuery('#builder-iframe').width() - jQuery('#builder-iframe').contents().width());

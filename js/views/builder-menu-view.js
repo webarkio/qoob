@@ -59,8 +59,6 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {string} markup
      */
     showInnerSettings: function (parentId, markup) {
-
-
         if (parentId === 'inner-settings-accordion') {
             jQuery("#inner-settings-accordion").hide();
         } else {
@@ -73,7 +71,7 @@ var BuilderMenuView = Backbone.View.extend({
      * Resize menu
      */
     resize: function () {
-        jQuery('#builder-menu').css({
+        this.$el.css({
             height: jQuery(window).height() - 70,
             top: 70
         });
@@ -107,7 +105,7 @@ var BuilderMenuView = Backbone.View.extend({
         element.show();
 
         // rotate cube menu
-        jQuery('#builder-menu .card-main')
+        this.$el.find('.card-main')
                 .removeClass(function (index, css) {
                     return (css.match(/\bside-\S+/g) || []).join(' ');
                 })
@@ -122,7 +120,7 @@ var BuilderMenuView = Backbone.View.extend({
         var tmp = this.backSide;
 
         // rotate cube menu
-        jQuery('#builder-menu .card-main')
+        this.$el.find('.card-main')
                 .removeClass(function (index, css) {
                     return (css.match(/\bside-\S+/g) || []).join(' ');
                 })

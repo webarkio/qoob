@@ -396,9 +396,9 @@ var BuilderViewportView = Backbone.View.extend(
                 var height = jQuery(window).height() - hideBuilder,
                         width;
 
-                width = jQuery('#builder-viewport').hasClass('pc') ? '100%' : jQuery('#builder-iframe').width();
+                width = this.$el.hasClass('pc') ? '100%' : jQuery('#builder-iframe').width();
 
-                jQuery('#builder-iframe').height(height).width(width);
+                this.$el.find('#builder-iframe').height(height).width(width);
             },
             /**
              * Get array model ids blocks
@@ -443,7 +443,7 @@ var BuilderViewportView = Backbone.View.extend(
              * @returns {DOMElement}
              */
             getIframeContents: function () {
-                return jQuery('#builder-iframe').contents();
+                return this.$el.find('#builder-iframe').contents();
             },
             /**
              * Get iframe documnet
