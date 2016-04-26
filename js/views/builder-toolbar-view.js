@@ -107,7 +107,7 @@ var BuilderToolbarView = Backbone.View.extend(
              */
             hideBuilder: function (elem) {
                 var self = this,
-                        iframe = this.builder.viewPort.getIframeContents();
+                        iframe = this.builder.builderLayout.viewPort.getIframeContents();
 
                 if (jQuery(elem).hasClass('active')) {
                     this.$el.fadeIn(300);
@@ -117,16 +117,16 @@ var BuilderToolbarView = Backbone.View.extend(
                     this.$el.find('.hide-builder').removeClass('active');
                     jQuery(elem).remove();
 
-                    this.builder.viewPort.resize();
-                    this.builder.viewPort.resizeIframe();
+                    this.builder.builderLayout.viewPort.resize();
+                    this.builder.builderLayout.viewPort.resizeIframe();
                 } else {
                     jQuery(elem).addClass('active');
                     this.$el.fadeOut(300, function () {
-                        self.builder.viewPort.resize();
-                        self.builder.viewPort.resizeIframe();
+                        self.builder.builderLayout.viewPort.resize();
+                        self.builder.builderLayout.viewPort.resizeIframe();
                         var width = (jQuery('#builder-iframe').width() - jQuery('#builder-iframe').contents().width());
 
-                        jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button>');
+                        jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.builderLayout.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button>');
                         jQuery('#builder>.hide-builder').fadeIn(300);
                     });
                     jQuery('#builder-menu').fadeOut(300);

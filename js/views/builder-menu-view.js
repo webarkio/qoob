@@ -96,7 +96,7 @@ var BuilderMenuView = Backbone.View.extend({
                 })
                 .addClass(this.currentSide);
 
-        this.builder.toolbar.logoRotation(this.currentSide);
+        this.builder.builderLayout.toolbar.logoRotation(this.currentSide);
     },
     /**
      * Rotate menu back

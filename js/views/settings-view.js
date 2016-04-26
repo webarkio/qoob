@@ -57,7 +57,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
     },
     dispose: function () {
         if (this.$el.css('display') != 'none') {
-            builder.menu.rotate('catalog-groups');
+            builder.builderLayout.menu.rotate('catalog-groups');
         }        
         
         // same as this.$el.remove();

@@ -77,7 +77,7 @@ Fields.image = Backbone.View.extend(
             }.bind(this);
 
             markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.imageSettingTpl);
-            builder.menu.showInnerSettings(parentId, markup);
+            builder.builderLayout.menu.showInnerSettings(parentId, markup);
 
             return false;
         },
