@@ -25,7 +25,6 @@ var FieldsView = Backbone.View.extend(
             var input = new Fields[this.config[i].type]({model: this.model});
             input.config = this.config[i];
             res.push(input.render().el);
-            console.log(this.config[i]);
         }
         this.$el.html(res);
         

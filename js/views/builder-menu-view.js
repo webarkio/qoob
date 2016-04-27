@@ -10,6 +10,8 @@ var BuilderMenuView = Backbone.View.extend({
     currentSide: 'side-0',
     backSide: null,
     currentRotateId: null,
+    settingsViewStorage: {},
+
     /**
      * View menu
      * @class BuilderMenuView
@@ -141,9 +143,15 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {String} side Side cube
      */
     addView: function (BackboneView, side) {
-        if (jQuery('#side-' + side + " #" + BackboneView.$el.prop('id')).length == 0) {
-            jQuery('#side-' + side).append(BackboneView.el);
-        }
+        jQuery('#side-' + side).append(BackboneView.el);
+    },
+    
+    /**
+     * Delete view from settingsViewStorage
+     * @param {String} view id
+     */
+    delView: function (id) {
+        this.settingsViewStorage[id].dispose();
     }
 });
 

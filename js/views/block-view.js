@@ -36,6 +36,9 @@ var BlockView = Backbone.View.extend({
     afterRender: function () {
         builder.builderLayout.viewPort.triggerBuilderBlock();
     },
+    /**
+     * Remove view
+     */
     dispose: function () {
         // same as this.$el.remove();
         this.remove();

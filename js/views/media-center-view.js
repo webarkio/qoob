@@ -25,12 +25,6 @@ var MediaCenterView = Backbone.View.extend(
             id : "settings-block-media"
         };
     },
-    tutu: function (events) {
-        console.log(11);
-    },
-    lalala: function () {
-        this.dispose();
-    },
     /**
      * View buider
      * @class BuilderView
@@ -55,23 +49,19 @@ var MediaCenterView = Backbone.View.extend(
      * @returns {Object}
      */
     render: function () {
-        var id;
-        if(this.parentId === undefined){
-            id = "settings-block-" + this.model.id;
-        }else{
-            id = "settings-block-" + this.parentId;
-        };
+        var backId = "settings-block-" + this.model.id;
+
         //Creating layout
         this.$el.html(this.tpl({
-            "id" : id,
+            "backId" : backId,
             "curSrc" : this.curSrc, 
-            "blockId" : this.blockId, 
             "assets" : this.assets,
-            "self" : this 
         }));
         return this;
     },
-
+    /**
+     * Remove view
+     */
     dispose: function () {
         // same as this.$el.remove();
         this.remove();
@@ -79,9 +69,5 @@ var MediaCenterView = Backbone.View.extend(
         // unbind events that are
         // set on this view
         this.off();
-
-        // remove all models bindings
-        // made by this view
-        this.model.off(null, null, this);
     }
 });

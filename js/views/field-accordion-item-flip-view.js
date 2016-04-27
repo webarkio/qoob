@@ -42,8 +42,25 @@ var AccordionFlipView = Backbone.View.extend(
      */
     render: function () {
         var id = "settings-block-"+this.parentId;
+        var currentId = "settings-block-" + this.model.id;
         //Creating layout
-        this.$el.html(this.tpl({"id":id}));
+        this.$el.html(this.tpl({"id":id, "currentId": currentId}));
         return this;
+    },
+
+    /**
+     * Remove view
+     */
+    dispose: function () {
+        // same as this.$el.remove();
+        this.remove();
+
+        // unbind events that are
+        // set on this view
+        this.off();
+
+        // remove all models bindings
+        // made by this view
+        this.model.off(null, null, this);
     }
 });
