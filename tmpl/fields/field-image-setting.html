@@ -1,6 +1,6 @@
 <div id="inner-settings-image" class="inner-settings" data-current-src="<%= curSrc %>">
     <div class="backward">
-        <a onclick="builder.builderLayout.menu.showSettings('<%= blockId %>'); return false;" href="#">Back</a>
+        <a onclick="builder.builderLayout.menu.rotate('<%= id %>'); return false;" href="#">Back</a>
     </div>
     <input class="input-text img-search" type="text" placeholder="Filter">
     <select class="img-pack">
@@ -23,91 +23,93 @@
 </div>
 <script type='text/javascript'>
 jQuery(document).ready(function() {
-    var assets = builder.builderLayout.storage.getAssets();
-    var curSrc = jQuery('#inner-settings-image').data('current-src');
-    var tags = [];
-    var packs = [];
+    console.log("<%= self.dispose() %>");
+    // var assets = builder.builderLayout.storage.getAssets();
+    // // var curSrc = jQuery('#inner-settings-image').data('current-src');
+    // var
+    // var tags = [];
+    // var packs = [];
     
-    for (var i = 0; i < assets.length; i++) {
-        for (var j = 0, asset = assets[i]; j < asset.length; j++) {
-            if (asset[j].type === 'image') {
-                //Getting packs
-                var pack = asset[j].pack || 'default';
-                if (jQuery.inArray(pack, packs) === -1) {
-                    packs.push(pack);
-                    jQuery('#inner-settings-image .img-pack').append('<option value="' + pack + '">' + pack + '</option>');
-                }
-                //Getting current block image tags to paste them in filter
-                if (curSrc === asset[j].src && asset[j].tags) {
-                    tags = tags.concat(asset[j].tags);
-                }
-            }
-        }
-    }
+    // for (var i = 0; i < assets.length; i++) {
+    //     for (var j = 0, asset = assets[i]; j < asset.length; j++) {
+    //         if (asset[j].type === 'image') {
+    //             //Getting packs
+    //             var pack = asset[j].pack || 'default';
+    //             if (jQuery.inArray(pack, packs) === -1) {
+    //                 packs.push(pack);
+    //                 jQuery('#inner-settings-image .img-pack').append('<option value="' + pack + '">' + pack + '</option>');
+    //             }
+    //             //Getting current block image tags to paste them in filter
+    //             if (curSrc === asset[j].src && asset[j].tags) {
+    //                 tags = tags.concat(asset[j].tags);
+    //             }
+    //         }
+    //     }
+    // }
     
-    //Showing images for current category
-    jQuery('#inner-settings-image .img-pack').change(function() {
-        var pack = jQuery(this).val();
-        var imagesToFilter = jQuery('#inner-settings-image .ajax-image');
+    // //Showing images for current category
+    // jQuery('#inner-settings-image .img-pack').change(function() {
+    //     var pack = jQuery(this).val();
+    //     var imagesToFilter = jQuery('#inner-settings-image .ajax-image');
        
-        imagesToFilter.removeClass('not-in-pack');
+    //     imagesToFilter.removeClass('not-in-pack');
         
-        if(pack !== 'all') {
-            imagesToFilter.each(function() {
-                var imagePack = jQuery(this).data('image-pack');
-                if(pack !== imagePack) {
-                    jQuery(this).addClass('not-in-pack');
-                }
-            });
-        }
+    //     if(pack !== 'all') {
+    //         imagesToFilter.each(function() {
+    //             var imagePack = jQuery(this).data('image-pack');
+    //             if(pack !== imagePack) {
+    //                 jQuery(this).addClass('not-in-pack');
+    //             }
+    //         });
+    //     }
         
-        jQuery('#inner-settings-image .img-search').trigger('keyup');
-    });
+    //     jQuery('#inner-settings-image .img-search').trigger('keyup');
+    // });
     
-    //Search filter event
-    jQuery('#inner-settings-image .img-search').keyup(function(e) {
-        var filteredWords = jQuery(this).val().split(' ');
-        var imagesToFilter = jQuery('#inner-settings-image .ajax-image');
-        imagesToFilter.stop(true, true).fadeIn();
-        if (filteredWords.length <= 1 && filteredWords[0] === '') {
-            imagesToFilter.stop(true, true).fadeIn();
-        } else {
-            imagesToFilter.each(function() {
-                var filtered = false;
-                for (var i = 0; i < filteredWords.length; i++) {
-                    if (filteredWords[i] !== '' && jQuery(this).data('image-tags').match(new RegExp(filteredWords[i]))) {
-                        filtered = true;
-                        jQuery(this).stop(true, true).fadeIn();
-                        break;
-                    }
-                }
-                if (!filtered) {
-                    jQuery(this).stop(true, true).fadeOut();
-                }
-            });
-        }
-    });
+    // //Search filter event
+    // jQuery('#inner-settings-image .img-search').keyup(function(e) {
+    //     var filteredWords = jQuery(this).val().split(' ');
+    //     var imagesToFilter = jQuery('#inner-settings-image .ajax-image');
+    //     imagesToFilter.stop(true, true).fadeIn();
+    //     if (filteredWords.length <= 1 && filteredWords[0] === '') {
+    //         imagesToFilter.stop(true, true).fadeIn();
+    //     } else {
+    //         imagesToFilter.each(function() {
+    //             var filtered = false;
+    //             for (var i = 0; i < filteredWords.length; i++) {
+    //                 if (filteredWords[i] !== '' && jQuery(this).data('image-tags').match(new RegExp(filteredWords[i]))) {
+    //                     filtered = true;
+    //                     jQuery(this).stop(true, true).fadeIn();
+    //                     break;
+    //                 }
+    //             }
+    //             if (!filtered) {
+    //                 jQuery(this).stop(true, true).fadeOut();
+    //             }
+    //         });
+    //     }
+    // });
     
-    //Selecting image
-    jQuery('#inner-settings-image .ajax-image').click(function() {
-        jQuery('#inner-settings-image .ajax-image').removeClass('chosen');
-        jQuery('#inner-settings-image .img-select').removeClass('no-active');
-        jQuery(this).addClass('chosen');
-    });
-    jQuery('#inner-settings-image .img-select').click(function() {
-        var url;
-        var chosen = jQuery('#inner-settings-image .chosen img');
-        if (chosen.get(0)) {
-            url = chosen.attr('src');
-            window.selectFieldImage(url);
-            builder.builderLayout.menu.showSettings("<%= blockId %>");
-        }
-    });
+    // //Selecting image
+    // jQuery('#inner-settings-image .ajax-image').click(function() {
+    //     jQuery('#inner-settings-image .ajax-image').removeClass('chosen');
+    //     jQuery('#inner-settings-image .img-select').removeClass('no-active');
+    //     jQuery(this).addClass('chosen');
+    // });
+    // jQuery('#inner-settings-image .img-select').click(function() {
+    //     var url;
+    //     var chosen = jQuery('#inner-settings-image .chosen img');
+    //     if (chosen.get(0)) {
+    //         url = chosen.attr('src');
+    //         window.selectFieldImage(url);
+    //         builder.builderLayout.menu.showSettings("<%= blockId %>");
+    //     }
+    // });
     
-    //Inserting tags if such existed
-    if(tags.length > 0) {
-        var tagLine = tags.join(' ');
-        jQuery('#inner-settings-image .img-search').val(tagLine).trigger('keyup');
-    }
+    // //Inserting tags if such existed
+    // if(tags.length > 0) {
+    //     var tagLine = tags.join(' ');
+    //     jQuery('#inner-settings-image .img-search').val(tagLine).trigger('keyup');
+    // }
 });
 </script>

@@ -82,8 +82,8 @@ var BuilderMenuView = Backbone.View.extend({
         var element = jQuery('#' + id);
 
         // get block side
-        var side = element.parent().closest('div[id]');
-        var sideId = element.parent().closest('div[id]').prop('id');
+        var side = element.closest('div[id^="side-"]');
+        var sideId = element.closest('div[id^="side-"]').prop('id');
 
         // Set back side
         this.backSide = this.currentSide;
@@ -141,7 +141,9 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {String} side Side cube
      */
     addView: function (BackboneView, side) {
-        jQuery('#side-' + side).append(BackboneView.el);
+        if (jQuery('#side-' + side + " #" + BackboneView.$el.prop('id')).length == 0) {
+            jQuery('#side-' + side).append(BackboneView.el);
+        }
     }
 });
 

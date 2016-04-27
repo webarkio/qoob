@@ -75,9 +75,21 @@ Fields.image = Backbone.View.extend(
                     }
                 }
             }.bind(this);
+            console.log(this.model.id);
+            var mediaCenter = new MediaCenterView({
+                "model" : this.model, 
+                "parentId" : this.model.owner_id, 
+                "curSrc": curSrc, 
+                "blockId": blockId, 
+                "assets": assets
+            });
+            // console.log(mediaCenter);
+            // markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.imageSettingTpl);
+            builder.builderLayout.menu.addView(mediaCenter, 270);
+            // console.log(mediaCenter.$el.prop('id'));
+             builder.builderLayout.menu.rotate(mediaCenter.$el.prop('id'));
 
-            markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.imageSettingTpl);
-            builder.builderLayout.menu.showInnerSettings(parentId, markup);
+            //builder.builderLayout.menu.showInnerSettings(parentId, markup);
 
             return false;
         },

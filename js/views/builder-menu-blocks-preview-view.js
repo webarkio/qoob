@@ -6,8 +6,13 @@
 var BuilderMenuBlocksPreviewView = Backbone.View.extend(
 /** @lends BuilderMenuGroupsView.prototype */{
     tagName: "div",
-    className: "catalog-templates",
     tpl : null,
+    className: 'catalog-templates',
+    attributes : function () {
+        return {
+            id : 'catalog-templates'
+        };
+    },
     
     /**
      * View menu groups
