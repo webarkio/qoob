@@ -20,7 +20,7 @@ var BuilderViewportView = Backbone.View.extend(
             initialize: function (builder) {
                 var self = this;
                 self.builder = builder;
-                
+
             },
             /**
              * Render menu
@@ -30,7 +30,7 @@ var BuilderViewportView = Backbone.View.extend(
                 var self = this;
                 this.builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
                     self.tpl = _.template(data);
-                    self.$el.html(self.tpl({"postId" : this.builder.storage.pageId}));
+                    self.$el.html(self.tpl({"postId": this.builder.storage.pageId}));
                 });
                 return this;
             },
@@ -419,8 +419,9 @@ var BuilderViewportView = Backbone.View.extend(
             },
             /**
              * Save page data
+             * @param {createBlockCallback} cb - A callback to run.
              */
-            save: function () {
+            save: function (cb) {
                 var self = this, html = '', json = [];
 
                 // postion blocks on page
@@ -439,6 +440,12 @@ var BuilderViewportView = Backbone.View.extend(
 
                 this.builder.storage.save(json, html, function (err, state) {
                     self.builder.loader.hideAutosave();
+                    // Make sure the callback is a function​
+                    if (typeof cb === "function") {
+                        // Call it, since we have confirmed it is callable​
+                        cb(err, state);
+                    }
+
                 });
             },
             /**
