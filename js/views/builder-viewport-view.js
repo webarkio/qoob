@@ -182,7 +182,7 @@ var BuilderViewportView = Backbone.View.extend(
 
                 // default visible block
                 if (block.model.get('devices')) {
-                    this.builder.iframe.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
+                    this.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
                 }
 
                 // setting block height
