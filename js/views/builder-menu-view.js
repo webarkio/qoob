@@ -11,7 +11,6 @@ var BuilderMenuView = Backbone.View.extend({
     backSide: null,
     currentRotateId: null,
     settingsViewStorage: {},
-
     /**
      * View menu
      * @class BuilderMenuView
@@ -22,12 +21,20 @@ var BuilderMenuView = Backbone.View.extend({
         this.builder = builder;
         builder.on('start_edit_block', this.onEditStart.bind(this));
         builder.on('stop_edit_block', this.onEditStop.bind(this));
+        builder.on('set_preview_mode', this.onPreviewMode.bind(this));
+        builder.on('set_edit_mode', this.onEditMode.bind(this));
     },
-    onEditStart: function(blockId) {
-        this.rotate(blockId); 
+    onEditStart: function (blockId) {
+        this.rotate('settings-block-' + blockId);
     },
-    onEditStop: function() {
+    onEditStop: function () {
         this.rotate('catalog-groups');
+    },
+    onPreviewMode: function () {
+        this.$el.fadeOut(300);  
+    },
+    onEditMode: function () {
+        this.$el.fadeIn(300);
     },
     /**
      * Render menu
@@ -80,10 +87,10 @@ var BuilderMenuView = Backbone.View.extend({
     rotate: function (id, back) {
         if (this.currentRotateId == id)
             return;
-        
+
         // set current rotate id
         this.currentRotateId = id;
-        
+
         // if rotate back
         back = typeof back !== 'undefined' ? back : false;
 
@@ -96,7 +103,7 @@ var BuilderMenuView = Backbone.View.extend({
 
         // Set back side
         this.backSide = this.currentSide;
-        
+
         if (this.currentSide == sideId) {
             sideId += ' side-full-rotation';
         }
@@ -118,7 +125,7 @@ var BuilderMenuView = Backbone.View.extend({
                 .addClass(this.currentSide)
                 .children()
                 .removeClass('active');
-        
+
         // add active class
         side.addClass('active');
 
@@ -151,7 +158,6 @@ var BuilderMenuView = Backbone.View.extend({
     addView: function (BackboneView, side) {
         jQuery('#side-' + side).append(BackboneView.el);
     },
-    
     /**
      * Delete view from settingsViewStorage
      * @param {String} view id
