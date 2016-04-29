@@ -51,14 +51,6 @@ Fields.image = Backbone.View.extend(
          * @param {Object} evt
          */
         imageUpload: function(evt) {
-            var blockId;
-            var parentId = jQuery(evt.target).closest('.inner-settings').attr('id');
-            if (parentId == "inner-settings-accordion") {
-                blockId = parentId;
-            }else {
-                blockId = jQuery(evt.target).closest('.settings').attr('id').match(new RegExp(/(\d)+/))[0];
-            };
-            var markup = '';
             var assets = builder.storage.getAssets();
             var curSrc = jQuery(evt.target).siblings('.edit-image').find('img').attr('src');
             
@@ -75,40 +67,22 @@ Fields.image = Backbone.View.extend(
                     }
                 }
             }.bind(this);
-            console.log(this.model.id);
+
             var mediaCenter = new MediaCenterView({
                 "model" : this.model, 
                 "parentId" : this.model.owner_id, 
                 "curSrc": curSrc, 
-                "blockId": blockId, 
                 "assets": assets
             });
-            // console.log(mediaCenter);
-            // markup = Fields.image.prototype.createAssetsMarkup(curSrc, blockId, assets, this.imageSettingTpl);
-            builder.builderLayout.menu.addView(mediaCenter, 270);
-            // console.log(mediaCenter.$el.prop('id'));
-             builder.builderLayout.menu.rotate(mediaCenter.$el.prop('id'));
 
-            //builder.builderLayout.menu.showInnerSettings(parentId, markup);
+            builder.builderLayout.menu.addView(mediaCenter, 270);
+
+            builder.builderLayout.menu.rotate(mediaCenter.$el.prop('id'));
+            builder.builderLayout.menu.settingsViewStorage[mediaCenter.$el.prop('id')] = mediaCenter;
 
             return false;
         },
-        /**
-         * Creating media center imagea preview markup 
-         * @param {string} blockId Id of the current block
-         * @param {Array} assets Assets object from all config files
-         * @returns {String} Resulted markup
-         */
-        createAssetsMarkup: function(curSrc, blockId, assets, template) {
-            var imagesMarkup = '';
-            var htmldata = {
-                "curSrc": curSrc,
-                "blockId": blockId,
-                "assets": assets
-            }
-            var markup = template(htmldata);
-            return markup;
-        },
+        
         /**
          * Delete image
          * @param {type} evt

@@ -1715,6 +1715,7 @@ body.builder-editor {
 
 #inner-settings-image {
     height: 100%;
+    padding-top: 75px;
 }
 
 #inner-settings-image .img-search {

@@ -14,7 +14,7 @@ function Builder(options) {
     _.extend(this.options, options);
     delete this.options.storage;
     this.storage = options.storage;
-    this.loader = new BuilderLoader(this);        
+    this.loader = new BuilderLoader(this);
     this.builderLayout = new BuilderLayout(this);
 }
 
@@ -32,7 +32,14 @@ Builder.prototype.getIframePageUrl = function (pageId) {
  * Out of the Builder
  */
 Builder.prototype.exit = function () {
-    this.storage.driver.exit(this.storage.pageId);
+    var self = this;
+    if (jQuery('.checkbox-sb input').prop("checked")) {
+        this.builderLayout.viewPort.save(function (err, state) {
+            self.storage.driver.exit(self.storage.pageId);
+        });
+    } else {
+        this.storage.driver.exit(this.storage.pageId);
+    }
 };
 
 /**
@@ -87,10 +94,10 @@ Builder.prototype.activate = function () {
                 }
                 self.builderLayout.viewPort.create(pageData);
                 self.loader.sub();
-                self.makeLayoutSize();      
+                self.makeLayoutSize();
             });
 
         });
     });
-    
+
 };
