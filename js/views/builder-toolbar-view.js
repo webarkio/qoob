@@ -21,6 +21,8 @@ var BuilderToolbarView = Backbone.View.extend(
              */
             initialize: function (pageModel) {
                 this.pageModel = pageModel;
+                builder.on('set_preview_mode', this.onPreviewMode.bind(this));
+                builder.on('set_edit_mode', this.onEditMode.bind(this));
             },
             /**
              * Render toolbar
@@ -31,6 +33,14 @@ var BuilderToolbarView = Backbone.View.extend(
                 this.tpl = _.template(data);
                 this.$el.html(this.tpl());
                 return this;
+            },
+            onPreviewMode: function () {
+                this.$el.find('.hide-builder').addClass('active');
+                this.$el.fadeOut(300);
+            },
+            onEditMode: function () {
+                this.$el.find('.hide-builder').removeClass('active');
+                this.$el.fadeIn(300);
             },
             /**
              * Resize toolbar
@@ -103,37 +113,5 @@ var BuilderToolbarView = Backbone.View.extend(
 
                 var class_remove = jQuery('#builder-viewport').attr('class');
                 jQuery('#builder-viewport').removeClass(class_remove).addClass(current);
-            },
-            /**
-             * Button hide all builder
-             */
-            hideBuilder: function (elem) {
-                var self = this,
-                        iframe = builder.builderLayout.viewPort.getIframeContents();
-
-                if (jQuery(elem).hasClass('active')) {
-                    this.$el.fadeIn(300);
-                    jQuery('#builder-menu').fadeIn(300);
-                    iframe.find('.control-block-button').fadeIn(300);
-
-                    this.$el.find('.hide-builder').removeClass('active');
-                    jQuery(elem).remove();
-
-                    builder.builderLayout.viewPort.resize();
-                    builder.builderLayout.viewPort.resizeIframe();
-                } else {
-                    jQuery(elem).addClass('active');
-                    this.$el.fadeOut(300, function () {
-                        builder.builderLayout.viewPort.resize();
-                        builder.builderLayout.viewPort.resizeIframe();
-                        var width = (jQuery('#builder-iframe').width() - jQuery('#builder-iframe').contents().width());
-
-                        jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.builderLayout.toolbar.hideBuilder(this); return false;" style="display:none; right: ' + width + 'px"></button>');
-                        jQuery('#builder>.hide-builder').fadeIn(300);
-                    });
-                    jQuery('#builder-menu').fadeOut(300);
-                    iframe.find('.control-block-button').fadeOut(300);
-                }
-
             }
         });

@@ -25,8 +25,10 @@ var BuilderViewportView = Backbone.View.extend(
                     });
                 });
 
-//                builder.on('start_edit_block', this.onEditStart.bind(this));
-//                builder.on('stop_edit_block', this.onEditStop.bind(this));
+                builder.on('start_edit_block', this.onEditStart.bind(this));
+                builder.on('stop_edit_block', this.onEditStop.bind(this));
+                builder.on('set_preview_mode', this.onPreviewMode.bind(this));
+                builder.on('set_edit_mode', this.onEditMode.bind(this));
             },
             /**
              * Shows edit buttons, shadowing other blocks
@@ -44,6 +46,19 @@ var BuilderViewportView = Backbone.View.extend(
             onEditStop: function () {
                 var iframe = this.getWindowIframe();
                 iframe.jQuery('.content-block').removeClass('active').removeClass('no-active');
+            },
+            onPreviewMode: function () {
+                var iframe = this.getWindowIframe();
+                this.resize();
+                this.resizeIframe();
+                var width = (iframe.jQuery('#builder-iframe').width() - iframe.jQuery('#builder-iframe').contents().width());
+                var triggeredEvent = 'set_edit_mode';
+                iframe.jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.trigger(' + triggeredEvent + '); return false;" style="display:none; right: ' + width + 'px"></button>');
+                iframe.jQuery('#builder>.hide-builder').fadeIn(300);
+            },
+            onEditMode: function () {
+                var iframe = this.getWindowIframe();
+                //TODO: resize toolbar, activate all edit click and hover effects  
             },
             /**
              * Render menu

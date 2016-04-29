@@ -19,15 +19,23 @@ var BuilderMenuView = Backbone.View.extend({
      * @constructs
      */
     initialize: function (pageModel) {
-//        builder.on('start_edit_block', this.onEditStart.bind(this));
-//        builder.on('stop_edit_block', this.onEditStop.bind(this));
+        builder.on('start_edit_block', this.onEditStart.bind(this));
+        builder.on('stop_edit_block', this.onEditStop.bind(this));
+        builder.on('set_preview_mode', this.onPreviewMode.bind(this));
+        builder.on('set_edit_mode', this.onEditMode.bind(this));
         this.pageModel = pageModel;
     },
-    onEditStart: function(blockId) {
-        this.rotate(blockId); 
+    onEditStart: function (blockId) {
+        this.rotate('settings-block-' + blockId);
     },
-    onEditStop: function() {
+    onEditStop: function () {
         this.rotate('catalog-groups');
+    },
+    onPreviewMode: function () {
+        this.$el.fadeOut(300);  
+    },
+    onEditMode: function () {
+        this.$el.fadeIn(300);
     },
     /**
      * Render menu
