@@ -18,9 +18,8 @@ var BuilderViewportView = Backbone.View.extend(
              * @constructs
              */
             initialize: function (builder) {
-                var self = this;
-                self.builder = builder;
-                
+                this.builder = builder;
+                this.listenTo(Backbone, 'rotate', this.toggleActiveBlock);
             },
             /**
              * Render menu
@@ -33,6 +32,28 @@ var BuilderViewportView = Backbone.View.extend(
                     self.$el.html(self.tpl({"postId" : this.builder.storage.pageId}));
                 });
                 return this;
+            },
+            /**
+             * Shadowing not active blocks, when edit button is hovered
+             * or we are in the block's settigns
+             * 
+             */
+            toggleActiveBlock: function () {
+                var iframe = this.getWindowIframe(),
+                    curSide = this.builder.builderLayout.menu.currentSide,
+                    blocks = iframe.jQuery('.content-block'),
+                    curRotate = this.builder.builderLayout.menu.currentRotateId,
+                    blockId = curRotate.match(/\d+/i) ? curRotate.match(/\d+/i)[0] : null;
+                
+                if((curSide === 'side-0' || curSide === 'side-90') && !blockId) {
+                    blocks.removeClass('no-active');
+                } else {
+                    var curBlock = iframe.jQuery('.content-block[data-model-id=' + blockId + ']');
+                    if(curBlock.get(0)) {
+                        blocks.addClass('no-active');
+                        curBlock.removeClass('no-active');
+                    }                 
+                }
             },
             /**
              * @callback createBlockCallback
@@ -155,8 +176,10 @@ var BuilderViewportView = Backbone.View.extend(
                         '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
                         '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
                         '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
-
-                var fullBlock = [jQuery(controlButtons), block.render().el, jQuery(droppable)];
+                
+                var cover = '<div class="no-active-overlay"></div>';
+                
+                var fullBlock = [jQuery(controlButtons), block.render().el, jQuery(droppable), jQuery(cover)];
 
                 if (afterBlockId && afterBlockId > 0) {
                     //Add controll buttons

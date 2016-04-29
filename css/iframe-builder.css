@@ -307,7 +307,26 @@ html.active-js {
 }
 
 /* Active Scrolling */
-#builder-blocks .active-scrolling .control-block-button {
-    position: fixed;
-    top: 70px;
+#builder-blocks .content-block {
+    position: relative;
+}
+
+#builder-blocks .content-block .no-active-overlay {
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    transition: all;
+}
+
+#builder-blocks .content-block.no-active .control-block-button {
+    display: none;
+}
+
+#builder-blocks .content-block.no-active .no-active-overlay {
+    background: #000;
+    opacity: .7;
+    z-index: 999;
 }
