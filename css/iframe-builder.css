@@ -1,34 +1,31 @@
 @font-face {
-    font-family: 'OpenSans-Light';
-    src: url('../fonts/opensans/OpenSans-Light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'OpenSans-Regular';
-    src: url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+    src: url("../fonts/opensans/OpenSans-Regular.eot");
+    src: url("../fonts/opensans/OpenSans-Regular.eot?#iefix")format("embedded-opentype"),
+        url("../fonts/opensans/OpenSans-Regular.woff") format("woff"),
+        url("../fonts/opensans/OpenSans-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'OpenSans-Bold';
-    src: url('../fonts/opensans/OpenSans-Bold.ttf') format('truetype');
-    font-weight: bold;
+    font-family: "OpenSans-Bold";
+    src: url('../fonts/opensans/opensans-bold-webfont.eot');
+    src: local('OpenSans-Bold'),
+         url('../fonts/opensans/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-bold-webfont.woff2') format('woff2'),
+         url('../fonts/opensans/opensans-bold-webfont.woff') format('woff'),
+         url('../fonts/opensans/opensans-bold-webfont.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-bold-webfont.svg#OpenSans-Bold') format('svg');
+    font-weight: normal;
     font-style: normal;
 }
 
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "PTSansRegular";
-    src: url('../fonts/PTSansRegular/PTSansRegular.ttf') format('truetype');
-    font-weight: normal;
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: "OpenSans-Bold";
+        src: url('../fonts/opensans/OpenSans-Bold.svg#OpenSans-Bold') format('svg');
+    }
 }
 
 @-webkit-keyframes rotate {
@@ -87,7 +84,7 @@ html.active-js {
     /*display: none;*/
     margin-top: 44px;
     right: 0;
-    z-index: 999;
+    z-index: 99999;
 }
 
 .control-block-button a {
@@ -310,7 +307,45 @@ html.active-js {
 }
 
 /* Active Scrolling */
-#builder-blocks .active-scrolling .control-block-button {
-    position: fixed;
-    top: 70px;
+#builder-blocks .content-block {
+    position: relative;
+}
+
+#builder-blocks .content-block .control-block-button {
+    display: none;
+}
+
+#builder-blocks .content-block .no-active-overlay {
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    transition: all;
+    z-index: 9999;
+}
+
+#builder-blocks .content-block .no-active-overlay:hover {
+    background: #fff;
+    opacity: .4;
+    cursor: pointer;
+}
+
+#builder-blocks .content-block.active .control-block-button {
+    display: block;
+}
+
+#builder-blocks .content-block.active .no-active-overlay:hover {
+    background: none;
+}
+
+#builder-blocks .content-block.no-active .no-active-overlay {
+    background: #000;
+    opacity: .7;
+    z-index: 999;
+}
+
+#builder-blocks .content-block.no-active .no-active-overlay:hover {
+    opacity: .4;
 }

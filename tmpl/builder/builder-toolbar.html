@@ -1,0 +1,40 @@
+<div class="logo side-0">
+    <div class="wrap-cube">
+        <div class="cube">
+            <div class="side-0"></div>
+            <div class="side-90"></div>
+            <div class="side-180"></div>
+            <div class="side-270"></div>
+        </div>
+    </div>
+    <div class="text"></div></div>
+<div class="edit-control-bar">
+    <div class="autosave">
+        <label class="checkbox-sb">
+            <input type="checkbox"  onclick="parent.builder.autosavePageData();"><span></span><em>Autosave</em>
+        </label>
+    </div>
+    <div class="edit-control-button">
+        <button class="save" type="button" onclick="parent.builder.builderLayout.viewPort.save();
+                return false;"><span class="text">Save</span>
+            <span class="clock">
+                <span class="minutes-container"><span class="minutes"></span></span>
+                <span class="seconds-container"><span class="seconds"></span></span>
+            </span>
+        </button>
+        <button class="exit-btn" onclick="builder.exit();
+                return false;" type="button">Exit</button>
+        <button class="screen-size pc active" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
+                return false;" type="button"></button>
+        <button class="screen-size tablet-vertical" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
+                return false;" type="button"></button>
+        <button class="screen-size phone-vertical" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
+                return false;" type="button"></button>
+        <button class="screen-size tablet-horizontal" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
+                return false;" type="button"></button>
+        <button class="screen-size phone-horizontal" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
+                return false;" type="button"></button>
+        <button class="arrow-btn hide-builder" onclick="parent.builder.builderLayout.toolbar.hideBuilder(this);
+                return false;" type="button"></button>
+    </div>
+</div>

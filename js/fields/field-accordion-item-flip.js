@@ -2,8 +2,8 @@ var Fields = Fields || {};
 Fields.accordion_item_flip = Backbone.View.extend(
 /** @lends Fields.accordion_item_front.prototype */{
     className: "settings-item settings-accordion",
-    accordion_item_frontTpl : null,
-    accordion_item_front_settingTpl : null,
+    accordionItemFrontTpl : null,
+    accordionItemFrontSettingTpl : null,
     events: {
         'click .cross-delete': 'deleteModel',
         'click .title_accordion.inner-settings-flip' : 'showSettings',
@@ -17,35 +17,33 @@ Fields.accordion_item_flip = Backbone.View.extend(
      */
     initialize: function (options) {
         this.$el.attr('data-model-id', this.model.id);
-        this.accordion_item_frontTpl = _.template(builder.storage.getBuilderTemplate('field-accordion-item-flip'));
-        this.accordion_item_front_settingTpl = _.template(builder.storage.getBuilderTemplate('field-accordion-item-flip-setting'));
+
+        var self = this;
+        builder.storage.getBuilderTemplate('field-accordion-item-flip', function(err, data){
+            self.accordionItemFrontTpl = _.template(data);
+        });
+
+        builder.storage.getBuilderTemplate('field-accordion-item-flip-setting', function(err, data){
+            self.accordionItemFrontSettingTpl = _.template(data);
+        });
     },
 
     /**
      * Show accordion item's settings
      * @returns {Object}
      */
-    
     showSettings: function (evt) {
         var blockId;
-        var parentId = jQuery(evt.target).closest('.inner-settings').attr('id');
-        
-        if (parentId == "inner-settings-accordion") {
-            blockId = parentId;
-        }else {
-            blockId = jQuery(evt.target).closest('.settings.menu-block').attr('id').match(new RegExp(/(\d)+/))[0];
-        }
 
         var settingsView = new FieldsView({model: this.model});
         settingsView.config = this.config;
         
-        var htmldata = {
-            "blockId" : blockId,
-            "classname" : 'inner-accordion-'+this.model.id
-        }
+        var flipView = new AccordionFlipView({"model" : this.model, "parentId" : this.model.owner_id});
 
-        builder.menu.showInnerSettings(blockId, this.accordion_item_front_settingTpl( htmldata ));
-        jQuery('.inner-accordion-'+this.model.id).append(settingsView.render().el);
+        flipView.$el.append(settingsView.render().el);
+        builder.builderLayout.menu.addView(flipView, 270);
+        builder.builderLayout.menu.rotate(flipView.$el.prop('id'));
+        builder.builderLayout.menu.settingsViewStorage[flipView.$el.prop('id')] = flipView;
     },
     
     /**
@@ -65,7 +63,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
             this.$el.find("h3 span.preview_img img").prop('src', this.model.get('image'));
         });
 
-        items.push(this.accordion_item_frontTpl( htmldata ));
+        items.push(this.accordionItemFrontTpl( htmldata ));
 
         if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
             this.$el.html(items);

@@ -13,7 +13,10 @@ Fields.devices = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-        this.devicesTpl = _.template(builder.storage.getBuilderTemplate('field-devices'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-devices', function(err, data){
+            self.devicesTpl = _.template(data);
+        });
     },
     /**
      * Event change input
@@ -37,7 +40,7 @@ Fields.devices = Backbone.View.extend(
         input.val(active);
         this.model.set(this.config.name, active.join(','));
         
-        builder.viewPort.visibilityBlocks(this.model.id, active);
+        builder.builderLayout.viewPort.visibilityBlocks(this.model.id, active);
     },
     /**
      * Get value field devices

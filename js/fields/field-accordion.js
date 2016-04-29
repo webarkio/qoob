@@ -16,7 +16,10 @@ Fields.accordion = Backbone.View.extend(
      * @constructs
      */
     initialize: function () {
-         this.accordionTpl = _.template(builder.storage.getBuilderTemplate('field-accordion'));
+        var self = this;
+        builder.storage.getBuilderTemplate('field-accordion', function(err, data){
+            self.accordionTpl = _.template(data);
+        });
     },
     /**
      * Change position blocks accordion
@@ -28,10 +31,8 @@ Fields.accordion = Backbone.View.extend(
         var blocks = jQuery('#' + this.getUniqueId()).children( '.settings-accordion');
 
         blocks.each(function (index, listItem) {
-            
             var dataId = jQuery(listItem).data('model-id');
-            var model = _.findWhere(values.models, {id: dataId});
-            
+            var model = values.get(dataId);
             model.set('order', jQuery(listItem).index()-1);
         });
     },
@@ -70,20 +71,21 @@ Fields.accordion = Backbone.View.extend(
             data[settingsParams[i].name] = settingsParams[i].default;
         }
 
-        var model = builder.utils.createModel(data);
-        
+        var model = BuilderUtils.createModel(data);
+
+        values.add(model);
+
         var item = new Fields[this.classNameItem]({model: model});
         
         item.config = settings;
 
-        values.add(model);
-
-        values.listenTo(item.model, "change", function () {
+        this.model.listenTo(item.model, "change", function () {
             this.trigger('change');
             self.changePosition();
         });
-
+        
         item.model.set('order', (values.models ? values.models.length-1 : 0));
+
 
         jQuery("#" + this.getUniqueId()).append(item.render().el);
         jQuery("#" + this.getUniqueId()).accordion("refresh");
@@ -117,8 +119,9 @@ Fields.accordion = Backbone.View.extend(
             items.push(item.render().el);
             
             this.model.listenTo(item.model, "change", function () {
-                this.trigger('change', this);
+                this.trigger('change');
             });
+
 //            
 //            values.listenTo(item.model, "change", function () {
 //                self.changePosition();

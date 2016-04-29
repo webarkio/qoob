@@ -57,23 +57,23 @@ BuilderLoader.prototype.hide = function (count) {
  * Show loader autosave
  */
 BuilderLoader.prototype.showAutosave = function () {
-    jQuery('.save span').hide();
-    jQuery('.save .clock').show();
+    jQuery('.save span.text').hide();
+    jQuery('.save .clock').css('display', 'block');
 };
 
 /**
  * Hide loader autosave
  */
 BuilderLoader.prototype.hideAutosave = function () {
-    jQuery('.save .clock').hide();
-    jQuery('.save span').show();
+    jQuery('.save .clock').css('display', '');
+    jQuery('.save span.text').show();
 };
 
 /**
  * Block added 
  */
 BuilderLoader.prototype.hideWaitBlock = function () {
-    var iframe = this.builder.viewPort.getIframeContents();
+    var iframe = this.builder.builderLayout.viewPort.getIframeContents();
     
     iframe.find('.droppable').removeClass('active-wait');
     // remove animation

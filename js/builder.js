@@ -7,20 +7,17 @@
  */
 //module.exports.Builder = Builder;
 function Builder(options) {
+    //Apply events to treggier
+    _.extend(this, Backbone.Events);
     this.options = {
         blockTemplateAdapter: 'hbs',
-        blockPreviewUrl: "preview.png",
-        blockTemplateUrl: "template.hbs"
+        blockPreviewUrl: "preview.png"
     };
     _.extend(this.options, options);
     delete this.options.storage;
     this.storage = options.storage;
-    this.loader = new BuilderLoader(this);        
-    this.toolbar = new BuilderToolbar(this);
-    this.viewPort = new BuilderViewPort(this);
-    this.menu = new BuilderMenu(this);
-    this.utils = new BuilderUtils();
-    this.builderView = new BuilderView({"storage" : options.storage});
+    this.loader = new BuilderLoader(this);
+    this.builderLayout = new BuilderLayout(this);  
 }
 
 /*
@@ -32,26 +29,19 @@ Builder.prototype.getIframePageUrl = function (pageId) {
     return this.driver.getIframePageUrl(pageId);
 };
 
-/**
- * @callback callIframeCallback
- */
-
-/**
- * Get is callback state iframe when loading
- *
- * @param {callIframeCallback} cb - A callback to run.
- */
-Builder.prototype.callIframe = function (cb) {
-    jQuery('iframe#builder-iframe').load(function () {
-        cb(this);
-    });
-};
 
 /**
  * Out of the Builder
  */
 Builder.prototype.exit = function () {
-    this.storage.driver.exit(this.storage.pageId);
+    var self = this;
+    if (jQuery('.checkbox-sb input').prop("checked")) {
+        this.builderLayout.viewPort.save(function (err, state) {
+            self.storage.driver.exit(self.storage.pageId);
+        });
+    } else {
+        this.storage.driver.exit(this.storage.pageId);
+    }
 };
 
 /**
@@ -64,7 +54,7 @@ Builder.prototype.autosavePageData = function () {
             if (!jQuery('.checkbox-sb input').prop("checked")) {
                 clearInterval(intervalId);
             } else {
-                self.save();
+                self.builderLayout.viewPort.save();
             }
         }, 60000);
     }
@@ -74,10 +64,10 @@ Builder.prototype.autosavePageData = function () {
  * Make layout size
  */
 Builder.prototype.makeLayoutSize = function () {
-    this.toolbar.resize();
-    this.menu.resize();
-    this.viewPort.resize();
-    this.viewPort.resizeIframe();
+    this.builderLayout.toolbar.resize();
+    this.builderLayout.menu.resize();
+    this.builderLayout.viewPort.resize();
+    this.builderLayout.viewPort.resizeIframe();
 };
 
 /**
@@ -86,32 +76,30 @@ Builder.prototype.makeLayoutSize = function () {
 Builder.prototype.activate = function () {
     var self = this;
     self.loader.add(4);
-    jQuery('body').prepend(self.builderView.el);
-    setTimeout(function() {
-        self.loader.sub();
+    //Creating and appending builder layout
+    self.loader.sub();
+    self.loader.sub();
+    jQuery(window).resize(function () {
         self.makeLayoutSize();
-        self.loader.sub();
-        jQuery(window).resize(function () {
-            self.makeLayoutSize();
-        });
-        self.callIframe(function () {
-            self.storage.getBuilderData(function (err, builderData) {
-                self.storage.setFieldsData(function() {
-                    self.menu.create();
-                    self.loader.sub();
-                    // Autosave
-                    self.autosavePageData();
-                    self.storage.getPageData(function (err, pageData) {
-                        if (pageData.length > 0) {
-                            self.loader.add(pageData.length);
-                        }
-
-                        self.viewPort.create(pageData);
-                        self.loader.sub();
-                    });
-                });   
+    });
+    self.builderLayout.render();
+    jQuery('body').prepend(self.builderLayout.el);
+    self.builderLayout.viewPort.onLoad(function () {
+        self.storage.getBuilderData(function (err, builderData) {
+            self.builderLayout.menu.create();
+            self.loader.sub();
+            // Autosave
+            self.autosavePageData();
+            self.storage.getPageData(function (err, pageData) {
+                if (pageData.length > 0) {
+                    self.loader.add(pageData.length);
+                }
+                self.builderLayout.viewPort.create(pageData);
+                self.loader.sub();
+                self.makeLayoutSize();
             });
+
         });
-    }, 100);
-    
+    });
+
 };

@@ -3,13 +3,12 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var SettingsView = Backbone.View.extend(
-/** @lends SettingsView.prototype */{
+var BuilderMenuSettingsView = Backbone.View.extend(
+/** @lends BuilderMenuSettingsView.prototype */{
     tagName: "div",
     className: "settings menu-block",
     buidlerMenuBlocksSettingsTpl : null,
     config : null,
-    
     /**
      * Set setting's id
      * @class SettingsView
@@ -21,16 +20,18 @@ var SettingsView = Backbone.View.extend(
             id : "settings-block-" + this.model.id
         };
     },
-
     /**
      * View settings
-     * @class SettingsView
+     * @class BuilderMenuSettingsView
      * @augments Backbone.View
      * @constructs
      */
     initialize: function (data) {
         this.config = data.config;
-        this.buidlerMenuBlocksSettingsTpl = _.template(builder.storage.getBuilderTemplate('buildermenu-settings'));
+        var self = this;
+        builder.storage.getBuilderTemplate('buildermenu-settings', function(err, data){
+            self.buidlerMenuBlocksSettingsTpl = _.template(data);
+        });
         this.render();
     },
     /**
@@ -46,6 +47,26 @@ var SettingsView = Backbone.View.extend(
         settingsBlock.config = this.config;
 
         this.$el.html(this.buidlerMenuBlocksSettingsTpl()).append(settingsBlock.render().el);
+        
+        // add SettingsView to storage
+        builder.storage.addSettingsView(this);
+        
         return this;
+    },
+    dispose: function () {
+        if (this.$el.css('display') != 'none') {
+            builder.builderLayout.menu.rotate('catalog-groups');
+        }        
+        
+        // same as this.$el.remove();
+        this.remove();
+
+        // unbind events that are
+        // set on this view
+        this.off();
+
+        // remove all models bindings
+        // made by this view
+        this.model.off(null, null, this);
     }
 });

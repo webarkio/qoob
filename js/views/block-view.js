@@ -20,7 +20,7 @@ var BlockView = Backbone.View.extend({
 
         this.render_template = this.template(data);
 
-        var iframe = builder.viewPort.getWindowIframe();
+        var iframe = builder.builderLayout.viewPort.getWindowIframe();
         iframe.jQuery(this.$el).html(this.render_template);
         this.afterRender();
         this.trigger('afterRender');
@@ -34,8 +34,11 @@ var BlockView = Backbone.View.extend({
      * Trigger change builder blocks after render
      */
     afterRender: function () {
-        builder.viewPort.triggerBuilderBlock();
+        builder.builderLayout.viewPort.triggerBuilderBlock();
     },
+    /**
+     * Remove view
+     */
     dispose: function () {
         // same as this.$el.remove();
         this.remove();
