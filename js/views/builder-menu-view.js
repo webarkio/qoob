@@ -19,9 +19,8 @@ var BuilderMenuView = Backbone.View.extend({
      * @constructs
      */
     initialize: function (pageModel) {
-        console.log(builder);
-        builder.on('start_edit_block', this.onEditStart.bind(this));
-        builder.on('stop_edit_block', this.onEditStop.bind(this));
+//        builder.on('start_edit_block', this.onEditStart.bind(this));
+//        builder.on('stop_edit_block', this.onEditStop.bind(this));
         this.pageModel = pageModel;
     },
     onEditStart: function(blockId) {

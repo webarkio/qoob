@@ -20,26 +20,28 @@ var BuilderViewportView = Backbone.View.extend(
                 var self = this;
                 this.pageModel = this.model.pageModel;
                 this.pageModel.on("block_add", function (model, afterId) {
-                    self.addBlock(new BlockView({model: model}), afterId);
+                    builder.storage.getTemplate(model.get('template'), function (err, template) {
+                        self.addBlock(new BlockView({model: model, 'template': template}), afterId);
+                    });
                 });
-                
-                builder.on('start_edit_block', this.onEditStart.bind(this));
-                builder.on('stop_edit_block', this.onEditStop.bind(this));
+
+//                builder.on('start_edit_block', this.onEditStart.bind(this));
+//                builder.on('stop_edit_block', this.onEditStop.bind(this));
             },
             /**
              * Shows edit buttons, shadowing other blocks
              * @param {integer} blockId
              */
-            onEditStart: function(blockId) {
-              var iframe = this.getWindowIframe();
-              iframe.jQuery('.content-block').removeClass('active').addClass('no-active');
-              iframe.jQuery('.content-block[data-model-id="' + blockId + '"]').removeClass('no-active').addClass('active');
+            onEditStart: function (blockId) {
+                var iframe = this.getWindowIframe();
+                iframe.jQuery('.content-block').removeClass('active').addClass('no-active');
+                iframe.jQuery('.content-block[data-model-id="' + blockId + '"]').removeClass('no-active').addClass('active');
 
             },
             /**
              * Unshadowing all blocks, hidding current block's edit button
              */
-            onEditStop: function() {
+            onEditStop: function () {
                 var iframe = this.getWindowIframe();
                 iframe.jQuery('.content-block').removeClass('active').removeClass('no-active');
             },
@@ -171,12 +173,10 @@ var BuilderViewportView = Backbone.View.extend(
                         '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
                         '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
                         '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
-                
-                var cover = '<div onclick="parent.builder.builderLayout.viewPort.startEditBlock(' + blockView.model.id + ');" class="no-active-overlay"></div>';
-                
-                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable), jQuery(cover)];
 
-                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable)];
+                var cover = '<div onclick="parent.builder.builderLayout.viewPort.startEditBlock(' + blockView.model.id + ');" class="no-active-overlay"></div>';
+
+                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable), jQuery(cover)];
 
                 if (afterBlockId && afterBlockId > 0) {
                     //Add controll buttons
@@ -211,7 +211,7 @@ var BuilderViewportView = Backbone.View.extend(
                 // Trigger change
                 this.triggerBuilderBlock();
             },
-            startEditBlock: function(blockId) {
+            startEditBlock: function (blockId) {
                 builder.trigger('start_edit_block', blockId);
             },
             /**
@@ -258,7 +258,7 @@ var BuilderViewportView = Backbone.View.extend(
                 setTimeout(function () {
                     iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
                 }, 1000);
-                
+
                 builder.trigger('stop_edit_block');
             },
             /**
@@ -330,7 +330,7 @@ var BuilderViewportView = Backbone.View.extend(
 //                        '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
 //                        '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
 //                iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
-                
+
                 //Animation scrolling to the bottom of the block's container
                 if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
                     var trident = !!navigator.userAgent.match(/Trident\/7.0/);
@@ -348,7 +348,7 @@ var BuilderViewportView = Backbone.View.extend(
                     // add new block
                     builder.addNewBlock(templateId, afterId);
                 }
-                
+
 //
 //                builder.storage.getTemplate(templateId, function (err, template) {
 //                    self.getDefaultSettings(templateId, function (err, settings) {
