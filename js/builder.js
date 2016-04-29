@@ -15,7 +15,9 @@ function Builder(options) {
     delete this.options.storage;
     this.storage = options.storage;
     this.loader = new BuilderLoader(this);
-    this.builderLayout = new BuilderLayout(this);
+    this.pageModel = new PageModel();
+    this.builderLayout = new BuilderLayout({"pageModel": this.pageModel});
+
 }
 
 /*
@@ -68,36 +70,56 @@ Builder.prototype.makeLayoutSize = function () {
     this.builderLayout.viewPort.resizeIframe();
 };
 
+Builder.prototype.addNewBlock = function (templateId, afterId) {
+    var values = this.builderLayout.viewPort.getDefaultSettings(templateId, afterId);
+    this.addBlock(values, afterId);
+};
+
+Builder.prototype.addBlock = function (values, afterId) {
+    var model = BuilderUtils.createModel(values);
+    this.pageModel.addBlock(model, afterId);
+};
+
 /**
  * Activate page builder
  */
 Builder.prototype.activate = function () {
     var self = this;
-    self.loader.add(4);
+    this.loader.add(1);
     //Creating and appending builder layout
-    self.loader.sub();
-    self.loader.sub();
     jQuery(window).resize(function () {
         self.makeLayoutSize();
     });
-    self.builderLayout.render();
-    jQuery('body').prepend(self.builderLayout.el);
-    self.builderLayout.viewPort.onLoad(function () {
-        self.storage.getBuilderData(function (err, builderData) {
-            self.builderLayout.menu.create();
-            self.loader.sub();
-            // Autosave
-            self.autosavePageData();
-            self.storage.getPageData(function (err, pageData) {
-                if (pageData.length > 0) {
-                    self.loader.add(pageData.length);
-                }
-                self.builderLayout.viewPort.create(pageData);
-                self.loader.sub();
-                self.makeLayoutSize();
-            });
 
+    this.storage.getBuilderTemplate('builder', function (err, data) {
+        self.storage.getBuilderData(function (err, builderData) {
+            self.storage.getPageData(function (err, pageData) {
+                self.builderLayout.render();
+                jQuery('body').prepend(self.builderLayout.el);
+
+                self.builderLayout.viewPort.onLoad(function () {
+//                    if (pageData.length > 0) {
+//                        self.loader.add(pageData.length);
+//                    }
+
+                    // Create groups/previews
+                    self.builderLayout.menu.create();
+
+                    // Create default droppable zone
+                    self.builderLayout.viewPort.createDefaultDroppable();
+
+                    self.pageModel.load();
+
+                    // Autosave
+                    self.autosavePageData();
+
+                    // self.builderLayout.viewPort.create(pageData);
+
+                    self.loader.sub();
+
+                    self.makeLayoutSize();
+                });
+            });
         });
     });
-
 };

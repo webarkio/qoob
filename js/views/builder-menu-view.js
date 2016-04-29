@@ -6,33 +6,30 @@
 var BuilderMenuView = Backbone.View.extend({
     id: "builder-menu",
     tpl: '',
+    tagName: 'div',
     builder: null,
     currentSide: 'side-0',
     backSide: null,
     currentRotateId: null,
     settingsViewStorage: {},
-
     /**
      * View menu
      * @class BuilderMenuView
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function (builder) {
+    initialize: function (pageModel) {
         var self = this;
-        self.builder = builder;
+        self.pageModel = pageModel;
     },
     /**
      * Render menu
      * @returns {Object}
      */
     render: function () {
-        var self = this;
-        this.builder.storage.getBuilderTemplate('builder-menu', function (err, data) {
-            self.tpl = _.template(data);
-            self.$el.html(self.tpl());
-        });
-
+        var data = builder.storage.builderTemplates['builder-menu'];
+        this.tpl = _.template(data);
+        this.$el.html(this.tpl());
         return this;
     },
     /**
@@ -73,10 +70,10 @@ var BuilderMenuView = Backbone.View.extend({
     rotate: function (id, back) {
         if (this.currentRotateId == id)
             return;
-        
+
         // set current rotate id
         this.currentRotateId = id;
-        
+
         // if rotate back
         back = typeof back !== 'undefined' ? back : false;
 
@@ -89,7 +86,7 @@ var BuilderMenuView = Backbone.View.extend({
 
         // Set back side
         this.backSide = this.currentSide;
-        
+
         if (this.currentSide == sideId) {
             sideId += ' side-full-rotation';
         }
@@ -111,11 +108,11 @@ var BuilderMenuView = Backbone.View.extend({
                 .addClass(this.currentSide)
                 .children()
                 .removeClass('active');
-        
+
         // add active class
         side.addClass('active');
 
-        this.builder.builderLayout.toolbar.logoRotation(this.currentSide);
+        builder.builderLayout.toolbar.logoRotation(this.currentSide);
     },
     /**
      * Rotate menu back
@@ -145,7 +142,6 @@ var BuilderMenuView = Backbone.View.extend({
     addView: function (BackboneView, side) {
         jQuery('#side-' + side).append(BackboneView.el);
     },
-    
     /**
      * Delete view from settingsViewStorage
      * @param {String} view id
