@@ -6,6 +6,7 @@
 var BuilderMenuView = Backbone.View.extend({
     id: "builder-menu",
     tpl: '',
+    tagName: 'div',
     builder: null,
     currentSide: 'side-0',
     backSide: null,
@@ -17,12 +18,12 @@ var BuilderMenuView = Backbone.View.extend({
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function (builder) {
-        this.builder = builder;
+    initialize: function (pageModel) {
         builder.on('start_edit_block', this.onEditStart.bind(this));
         builder.on('stop_edit_block', this.onEditStop.bind(this));
         builder.on('set_preview_mode', this.onPreviewMode.bind(this));
         builder.on('set_edit_mode', this.onEditMode.bind(this));
+        this.pageModel = pageModel;
     },
     onEditStart: function (blockId) {
         this.rotate('settings-block-' + blockId);
@@ -41,12 +42,9 @@ var BuilderMenuView = Backbone.View.extend({
      * @returns {Object}
      */
     render: function () {
-        var self = this;
-        this.builder.storage.getBuilderTemplate('builder-menu', function (err, data) {
-            self.tpl = _.template(data);
-            self.$el.html(self.tpl());
-        });
-
+        var data = builder.storage.builderTemplates['builder-menu'];
+        this.tpl = _.template(data);
+        this.$el.html(this.tpl());
         return this;
     },
     /**
@@ -129,6 +127,7 @@ var BuilderMenuView = Backbone.View.extend({
         // add active class
         side.addClass('active');
 
+        builder.builderLayout.toolbar.logoRotation(this.currentSide);
     },
     /**
      * Rotate menu back

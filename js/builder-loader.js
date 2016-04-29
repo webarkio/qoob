@@ -80,6 +80,8 @@ BuilderLoader.prototype.hideWaitBlock = function () {
     setTimeout(function () {
         iframe.find('.content-block').removeClass('content-fade');
     }, 1000);
+    
+    console.log('hideWaitBlock');
 };
 
 if (typeof module !== 'undefined' && module.exports) {

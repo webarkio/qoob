@@ -9,7 +9,7 @@
 function BuilderStorage(options) {
     this.pageId = options.pageId || null;
     this.builderData = null;
-    this.models = [];
+    this.pageData = [];
     this.blockViewData = [];
     this.blockSettingsViewData = [];
     this.templates = [];
@@ -86,6 +86,8 @@ BuilderStorage.prototype.delSettingsView = function (id) {
 };
 
 /**
+ * DEPRECATED
+ * 
  * Get model by id
  * @param {Number} id modelId
  */
@@ -131,17 +133,15 @@ BuilderStorage.prototype.getBuilderData = function (cb) {
  */
 BuilderStorage.prototype.getPageData = function (cb) {
     var self = this;
-    if (this.models.length > 0) {
-        cb(null, this.models);
+    if (this.pageData.length > 0) {
+        cb(null, this.pageData);
     } else {
         this.driver.loadPageData(this.pageId, function (err, pageData) {
             if (pageData) {
-                for (var i = 0; i < pageData.length; i++) {
-                    self.models.push(BuilderUtils.createModel(pageData[i]));
-                }
+                self.pageData = pageData;
             }
 
-            cb(err, self.models);
+            cb(err, self.pageData);
         });
     }
 };
@@ -153,7 +153,7 @@ BuilderStorage.prototype.getPageData = function (cb) {
  */
 BuilderStorage.prototype.getTemplate = function (templateId, cb) {
     var self = this;
-    
+
     if (this.templates.length > 0 && _.findWhere(this.templates, {id: templateId})) {
         var item = _.findWhere(this.templates, {id: templateId});
         cb(null, item.template);
@@ -199,14 +199,14 @@ BuilderStorage.prototype.save = function (json, html, cb) {
  */
 BuilderStorage.prototype.getBuilderTemplate = function (templateId, cb) {
     var self = this;
-    if(!this.builderTemplates){
-        this.driver.loadBuilderTemplates(function(err, data){
-            if(!err){
-                self.builderTemplates=data;
+    if (!this.builderTemplates) {
+        this.driver.loadBuilderTemplates(function (err, data) {
+            if (!err) {
+                self.builderTemplates = data;
                 cb(null, self.builderTemplates[templateId]);
             }
         });
-    }else{
+    } else {
         cb(null, self.builderTemplates[templateId]);
     }
 };
@@ -229,7 +229,7 @@ BuilderStorage.prototype.getAssets = function () {
         }
         return assets;
     } else {
-        this.driver.loadBuilderData(function(err, builderdata) {
+        this.driver.loadBuilderData(function (err, builderdata) {
             self.builderData = builderData;
             self.getAssets();
         });

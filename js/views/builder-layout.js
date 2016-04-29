@@ -13,31 +13,24 @@ var BuilderLayout = Backbone.View.extend(
              * @augments Backbone.View
              * @constructs
              */
-            initialize: function (builder) {
-                var self = this;
-                this.builder = builder;
-                self.menu = new BuilderMenuView(this.builder);
-                self.toolbar = new BuilderToolbarView(this.builder);
-                self.viewPort = new BuilderViewportView(this.builder);
+            initialize: function (pageModel) {
+                this.menu = new BuilderMenuView({"model": pageModel});
+                this.toolbar = new BuilderToolbarView({"model": pageModel});
+                this.viewPort = new BuilderViewportView({"model": pageModel});
             },
             /**
              * Render builder view
              * @returns {Object}
              */
             render: function () {
-                var self = this;
-                this.builder.storage.getBuilderTemplate('builder', function (err, data) {
-                    self.tpl = _.template(data);
-                    self.menu.render();
-                    self.toolbar.render();
-                    self.viewPort.render();
+                var data = builder.storage.builderTemplates['builder'];
+                this.tpl = _.template(data);
 
-                    self.$el.html(self.tpl({"postId": self.builder.storage.pageId}));
-                    self.$el.find('#builder').append(self.toolbar.el);
-                    self.$el.find('#builder').append(self.menu.el);
-                    self.$el.find('#builder-content').append(self.viewPort.el);
-                });
-                
+                this.$el.html(this.tpl({"postId": builder.storage.pageId}));
+                this.$el.find('#builder').append(this.toolbar.render().el);
+                this.$el.find('#builder').append(this.menu.render().el);
+                this.$el.find('#builder-content').append(this.viewPort.render().el);
+
                 return this;
             }
         });

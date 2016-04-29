@@ -8,7 +8,6 @@ var BuilderViewportView = Backbone.View.extend(
             id: "builder-viewport",
             className: "pc",
             tpl: '',
-            builder: null,
             iframeLoaded: false,
             iframeLoadedFunctions: [],
             /**
@@ -17,8 +16,13 @@ var BuilderViewportView = Backbone.View.extend(
              * @augments Backbone.View
              * @constructs
              */
-            initialize: function (builder) {
-                this.builder = builder;
+            initialize: function () {
+                var self = this;
+                this.pageModel = this.model.pageModel;
+                this.pageModel.on("block_add", function (model, afterId) {
+                    self.addBlock(new BlockView({model: model}), afterId);
+                });
+                
                 builder.on('start_edit_block', this.onEditStart.bind(this));
                 builder.on('stop_edit_block', this.onEditStop.bind(this));
                 builder.on('set_preview_mode', this.onPreviewMode.bind(this));
@@ -59,11 +63,9 @@ var BuilderViewportView = Backbone.View.extend(
              * @returns {Object}
              */
             render: function () {
-                var self = this;
-                this.builder.storage.getBuilderTemplate('builder-viewport', function (err, data) {
-                    self.tpl = _.template(data);
-                    self.$el.html(self.tpl({"postId": this.builder.storage.pageId}));
-                });
+                var data = builder.storage.builderTemplates['builder-viewport'];
+                this.tpl = _.template(data);
+                this.$el.html(this.tpl({"postId": builder.storage.pageId}));
                 return this;
             },
             /**
@@ -85,8 +87,8 @@ var BuilderViewportView = Backbone.View.extend(
 
                 var templateId = model.attributes.template;
 
-                this.builder.storage.getConfig(templateId, function (err, config) {
-                    var tplAdapter = config.blockTemplateAdapter || this.builder.options.blockTemplateAdapter;
+                builder.storage.getConfig(templateId, function (err, config) {
+                    var tplAdapter = config.blockTemplateAdapter || builder.options.blockTemplateAdapter;
                     block.template = BuilderExtensions.templating[tplAdapter](template);
                     cb(null, block);
                 });
@@ -139,7 +141,7 @@ var BuilderViewportView = Backbone.View.extend(
              */
             createSettings: function (model, cb) {
                 var self = this;
-                this.builder.storage.getConfig(model.get('template'), function (err, config) {
+                builder.storage.getConfig(model.get('template'), function (err, config) {
                     var settings = config.settings;
                     // Add devices field
                     if (!_.findWhere(settings, {label: "Visible Devices"})) {
@@ -155,18 +157,18 @@ var BuilderViewportView = Backbone.View.extend(
              * Get default settings
              *
              * @param {integer} templateId
-             * @param {getDefaultSettingsCallback} cb - A callback to run.
              */
-            getDefaultSettings: function (templateId, cb) {
-                this.builder.storage.getConfig(templateId, function (err, data) {
-                    var config = {};
-                    var settings = data.settings;
-                    for (var i = 0; i < settings.length; i++) {
-                        config[settings[i].name] = settings[i].default;
-                    }
-                    config.template = templateId;
-                    cb(null, config);
-                });
+            getDefaultSettings: function (templateId) {
+                // get config from storage builderData
+                var data = _.findWhere(builder.storage.builderData.items, {id: templateId});
+                var config = {};
+                var settings = data.config.settings;
+                for (var i = 0; i < settings.length; i++) {
+                    config[settings[i].name] = settings[i].default;
+                }
+                config.template = templateId;
+
+                return config;
             },
             /**
              * Add block
@@ -174,58 +176,55 @@ var BuilderViewportView = Backbone.View.extend(
              * @param {Object} block
              * @param {integer} afterBlockId
              */
-            addBlock: function (block, afterBlockId) {
+            addBlock: function (blockView, afterBlockId) {
                 var iframe = this.getWindowIframe();
 
-                var blockEditId = '"settings-block-' + block.model.id + '"';
                 var controlButtons = '<div class="control-block-button">' +
-                        '<a onclick="parent.builder.builderLayout.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
+                        '<a onclick="parent.builder.builderLayout.viewPort.removeBlock(' + blockView.model.id + '); return false;"  class="remove" href="#"></a>' +
                         '</div>';
-                var droppable = '<div id="droppable-' + block.model.id + '" class="droppable">' +
+                var droppable = '<div id="droppable-' + blockView.model.id + '" class="droppable ui-droppable active-wait">' +
                         '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
                         '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
                         '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
 
-                var cover = '<div onclick="parent.builder.builderLayout.viewPort.startEditBlock(' + block.model.id + ');" class="no-active-overlay"></div>';
+                var cover = '<div onclick="parent.builder.builderLayout.viewPort.startEditBlock(' + blockView.model.id + ');" class="no-active-overlay"></div>';
 
-                var fullBlock = [jQuery(controlButtons), block.render().el, jQuery(droppable), jQuery(cover)];
+                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable), jQuery(cover)];
+
+                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable)];
 
                 if (afterBlockId && afterBlockId > 0) {
                     //Add controll buttons
-                    var $block = jQuery('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
+                    var $block = jQuery('<div class="content-block content-fade" data-model-id="' + blockView.model.id + '"></div>');
                     iframe.jQuery('.content-block[data-model-id="' + afterBlockId + '"]').after($block);
-                    iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+                    iframe.jQuery('.content-block[data-model-id="' + blockView.model.id + '"]').append(fullBlock);
 
                     iframe.jQuery('body').animate({
                         scrollTop: $block.offset().top
                     }, 1000);
                 } else {
                     if (afterBlockId == 0) {
-                        iframe.jQuery('#builder-blocks').prepend('<div class="content-block content-fade" data-model-id="' + block.model.id + '"></div>');
-                        iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+                        iframe.jQuery('#builder-blocks').prepend('<div class="content-block content-fade" data-model-id="' + blockView.model.id + '"></div>');
+                        iframe.jQuery('.content-block[data-model-id="' + blockView.model.id + '"]').append(fullBlock);
                     } else {
-                        iframe.jQuery('#builder-blocks').append('<div class="content-block" data-model-id="' + block.model.id + '"></div>');
-                        iframe.jQuery('.content-block[data-model-id="' + block.model.id + '"]').append(fullBlock);
+                        iframe.jQuery('#builder-blocks').append('<div class="content-block" data-model-id="' + blockView.model.id + '"></div>');
+                        iframe.jQuery('.content-block[data-model-id="' + blockView.model.id + '"]').append(fullBlock);
                     }
                 }
 
                 // create droppable event
-                this.droppable(block.model.id);
+                this.droppable(blockView.model.id);
 
                 // default visible block
-                if (block.model.get('devices')) {
-                    this.visibilityBlocks(block.model.id, block.model.get('devices').split(','));
+                if (blockView.model.get('devices')) {
+                    this.visibilityBlocks(blockView.model.id, blockView.model.get('devices').split(','));
                 }
 
                 // setting block height
-                this.builder.builderLayout.menu.resize();
+                builder.builderLayout.menu.resize();
 
                 // Trigger change
                 this.triggerBuilderBlock();
-
-                // when added block hide loader
-                this.builder.loader.hideWaitBlock();
-
             },
             startEditBlock: function (blockId) {
                 builder.trigger('start_edit_block', blockId);
@@ -247,7 +246,7 @@ var BuilderViewportView = Backbone.View.extend(
              * @param {integer} blockId
              */
             editBlock: function (blockId) {
-                this.builder.builderLayout.menu.showSettings(blockId);
+                builder.builderLayout.menu.showSettings(blockId);
             },
             /**
              * Remove block by id
@@ -264,12 +263,6 @@ var BuilderViewportView = Backbone.View.extend(
 
                 // add class when delete block
                 iframe.jQuery('div[data-model-id="' + blockId + '"]').addClass('content-hide');
-
-                // if settings is open
-                if (jQuery('#settings-block-' + blockId).css('display') != 'none') {
-                    // logo rotation
-//        this.builder.toolbar.logoRotation(-90);
-                }
 
                 // remove from storage and DOM
                 builder.storage.delModel(blockId);
@@ -289,7 +282,6 @@ var BuilderViewportView = Backbone.View.extend(
              * @param {integer} blockId
              */
             droppable: function (blockId) {
-                var self = this;
                 var iframe = this.getIframeContents();
 
                 iframe.find('#droppable-' + blockId).droppable({
@@ -298,27 +290,30 @@ var BuilderViewportView = Backbone.View.extend(
                     tolerance: "pointer",
                     drop: function (event, ui) {
                         var dropElement = jQuery(this);
-
-                        jQuery(event.target).addClass('active-wait');
+//                        jQuery(event.target).addClass('active-wait');
 
                         //get template id
                         var templateId = ui.draggable.attr("id").replace("preview-block-", "");
-                        self.builder.storage.getTemplate(templateId, function (err, template) {
-                            self.getDefaultSettings(templateId, function (err, config) {
-                                var model = BuilderUtils.createModel(config);
+                        //get after id
+                        var afterId = dropElement.attr("id").replace("droppable-", "");
 
-                                //add model to storage
-                                self.builder.storage.addModel(model);
+                        // add new block
+                        builder.addNewBlock(templateId, afterId);
 
-                                self.createBlock(model, template, function (err, block) {
-                                    self.createSettings(block.model, function (err, view) {
-                                        self.builder.builderLayout.menu.addView(view, 270);
-                                        var afterBlockId = dropElement.attr("id").replace("droppable-", "");
-                                        self.addBlock(block, afterBlockId);
-                                    });
-                                });
-                            });
-                        });
+                        // DEPRECATED
+//                        builder.storage.getTemplate(templateId, function (err, template) {
+//                            self.getDefaultSettings(templateId, function (err, config) {
+//                                var model = BuilderUtils.createModel(config);
+//
+//                                self.createBlock(model, template, function (err, block) {
+//                                    self.createSettings(block.model, function (err, view) {
+//                                        builder.builderLayout.menu.addView(view, 270);
+//                                        var afterBlockId = dropElement.attr("id").replace("droppable-", "");
+//                                        self.addBlock(block, afterBlockId);
+//                                    });
+//                                });
+//                            });
+//                        });
                     }
                 });
             },
@@ -327,6 +322,7 @@ var BuilderViewportView = Backbone.View.extend(
              */
             createDefaultDroppable: function () {
                 var iframe = this.getWindowIframe();
+
                 var droppable = '<div id="droppable-0" class="droppable">' +
                         '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
                         '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
@@ -338,52 +334,83 @@ var BuilderViewportView = Backbone.View.extend(
              * Add block onclick
              */
             clickBlockAdd: function (elementid) {
-                var self = this;
+                var afterId, iframe = this.getWindowIframe();
+
+                // get template id
                 var templateId = elementid.replace("preview-block-", "");
-                this.builder.storage.getTemplate(templateId, function (err, template) {
-                    self.getDefaultSettings(templateId, function (err, settings) {
-                        var model = BuilderUtils.createModel(settings),
-                                iframe = self.getWindowIframe();
 
-                        //add model to storage
-                        self.builder.storage.addModel(model);
-
-                        self.createBlock(model, template, function (err, block) {
-                            self.createSettings(block.model, function (err, view) {
-                                //Creating waiting block in bottom
-                                var droppable = '<div id="droppable-' + block.model.id + '" class="droppable ui-droppable active-wait">' +
-                                        '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
-                                        '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
-                                        '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
-                                iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
-                                //Animation scrolling to the bottom of the block's container
-                                if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
-                                    var trident = !!navigator.userAgent.match(/Trident\/7.0/);
-                                    var net = !!navigator.userAgent.match(/.NET4.0E/);
-                                    var IE11 = trident && net
-                                    var checkFoxDom = !!window.sidebar || trident && net ? 'html' : 'body';
-                                    iframe.jQuery(checkFoxDom).animate({
-                                        scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
-                                    }, 1000, function () {
-                                        //Appending added block
-                                        self.builder.builderLayout.menu.addView(view, 270);
-                                        var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
-                                        self.addBlock(block, afterBlockId);
-                                    });
-                                } else {
-                                    //Appending added block
-                                    self.builder.builderLayout.menu.addView(view, 270);
-                                    var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
-                                    self.addBlock(block, afterBlockId);
-                                }
-
-
-                            });
-                        });
+                //Creating waiting block in bottom
+//                var droppable = '<div id="droppable-' + block.model.id + '" class="droppable ui-droppable active-wait">' +
+//                        '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
+//                        '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
+//                        '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
+//                iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
+                
+                //Animation scrolling to the bottom of the block's container
+                if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
+                    var trident = !!navigator.userAgent.match(/Trident\/7.0/);
+                    var net = !!navigator.userAgent.match(/.NET4.0E/);
+                    var checkFoxDom = !!window.sidebar || trident && net ? 'html' : 'body';
+                    iframe.jQuery(checkFoxDom).animate({
+                        scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
+                    }, 1000, function () {
+                        afterId = iframe.jQuery('#builder-blocks .content-block:last-child').data('model-id');
+                        // add new block
+                        builder.addNewBlock(templateId, afterId);
                     });
-                });
+                } else {
+                    afterId = iframe.jQuery('#builder-blocks .content-block:last-child').data('model-id');
+                    // add new block
+                    builder.addNewBlock(templateId, afterId);
+                }
+                
+//
+//                builder.storage.getTemplate(templateId, function (err, template) {
+//                    self.getDefaultSettings(templateId, function (err, settings) {
+//                        var model = BuilderUtils.createModel(settings),
+//                                iframe = self.getWindowIframe();
+//
+//                        //add model to storage
+//                        builder.storage.addModel(model);
+//
+//                        self.createBlock(model, template, function (err, block) {
+//                            self.createSettings(block.model, function (err, view) {
+//                                //Creating waiting block in bottom
+//                                var droppable = '<div id="droppable-' + block.model.id + '" class="droppable ui-droppable active-wait">' +
+//                                        '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
+//                                        '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
+//                                        '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
+//                                iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
+//                                //Animation scrolling to the bottom of the block's container
+//                                if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
+//                                    var trident = !!navigator.userAgent.match(/Trident\/7.0/);
+//                                    var net = !!navigator.userAgent.match(/.NET4.0E/);
+//                                    var IE11 = trident && net
+//                                    var checkFoxDom = !!window.sidebar || trident && net ? 'html' : 'body';
+//                                    iframe.jQuery(checkFoxDom).animate({
+//                                        scrollTop: iframe.jQuery('#builder-blocks .content-block:last-child').offset().top + iframe.jQuery('#builder-blocks .content-block:last-child').height()
+//                                    }, 1000, function () {
+//                                        //Appending added block
+//                                        builder.builderLayout.menu.addView(view, 270);
+//                                        var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
+//                                        self.addBlock(block, afterBlockId);
+//                                    });
+//                                } else {
+//                                    //Appending added block
+//                                    builder.builderLayout.menu.addView(view, 270);
+//                                    var afterBlockId = iframe.jQuery('.content-block:last-child').attr('data-model-id');
+//                                    self.addBlock(block, afterBlockId);
+//                                }
+//
+//
+//                            });
+//                        });
+//                    });
+//                });
             },
             /**
+             * DEPRECATED
+             * 
              * Create blocks
              * 
              * @param {Array} data
@@ -394,12 +421,12 @@ var BuilderViewportView = Backbone.View.extend(
                 self.createDefaultDroppable();
                 function loop(i) {
                     if (i < data.length) {
-                        this.builder.storage.getTemplate(data[i].get('template'), function (err, template) {
+                        builder.storage.getTemplate(data[i].get('template'), function (err, template) {
                             self.createBlock(data[i], template, function (err, block) {
                                 self.createSettings(block.model, function (err, view) {
-                                    self.builder.builderLayout.menu.addView(view, 270);
+                                    builder.builderLayout.menu.addView(view, 270);
                                     self.addBlock(block);
-                                    self.builder.loader.sub();
+                                    builder.loader.sub();
                                     loop(i + 1);
                                 });
                             });
@@ -464,19 +491,19 @@ var BuilderViewportView = Backbone.View.extend(
                 // postion blocks on page
                 var sort = this.getSort();
 
-                this.builder.loader.showAutosave();
+                builder.loader.showAutosave();
 
                 for (var i = 0; i < sort.length; i++) {
-                    for (var j = 0; j < this.builder.storage.blockViewData.length; j++) {
-                        if (sort[i] == this.builder.storage.blockViewData[j].model.id) {
-                            html += this.builder.storage.blockViewData[j].render_template;
-                            json.push(JSON.parse(JSON.stringify(this.builder.storage.blockViewData[j].model)));
+                    for (var j = 0; j < builder.storage.blockViewData.length; j++) {
+                        if (sort[i] == builder.storage.blockViewData[j].model.id) {
+                            html += builder.storage.blockViewData[j].render_template;
+                            json.push(JSON.parse(JSON.stringify(builder.storage.blockViewData[j].model)));
                         }
                     }
                 }
 
-                this.builder.storage.save(json, html, function (err, state) {
-                    self.builder.loader.hideAutosave();
+                builder.storage.save(json, html, function (err, state) {
+                    builder.loader.hideAutosave();
                     // Make sure the callback is a function​
                     if (typeof cb === "function") {
                         // Call it, since we have confirmed it is callable​

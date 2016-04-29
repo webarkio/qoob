@@ -5,17 +5,22 @@
  */
 var BuilderToolbarView = Backbone.View.extend(
         /** @lends BuilderMenuGroupsView.prototype */{
-            id: "builder-toolbar",
+            tagName: 'div',
             tpl: '',
             builder: null,
+            attributes: function () {
+                return {
+                    id: "builder-toolbar"
+                };
+            },
             /**
              * View toolbar
              * @class BuilderToolbarView
              * @augments Backbone.View
              * @constructs
              */
-            initialize: function (builder) {
-                this.builder = builder;
+            initialize: function (pageModel) {
+                this.pageModel = pageModel;
                 builder.on('set_preview_mode', this.onPreviewMode.bind(this));
                 builder.on('set_edit_mode', this.onEditMode.bind(this));
             },
@@ -24,12 +29,9 @@ var BuilderToolbarView = Backbone.View.extend(
              * @returns {Object}
              */
             render: function () {
-                var self = this;
-                self.builder.storage.getBuilderTemplate('builder-toolbar', function (err, data) {
-                    self.tpl = _.template(data);
-                    self.$el.html(self.tpl());
-                });
-
+                var data = builder.storage.builderTemplates['builder-toolbar'];
+                this.tpl = _.template(data);
+                this.$el.html(this.tpl());
                 return this;
             },
             onPreviewMode: function () {

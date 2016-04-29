@@ -118,9 +118,9 @@ Fields.accordion = Backbone.View.extend(
             
             items.push(item.render().el);
             
-            this.model.listenTo(item.model, "change", function () {
-                this.trigger('change');
-            });
+//            this.model.listenTo(item.model, "change", function () {
+//                this.trigger('change');
+//            });
 
 //            
 //            values.listenTo(item.model, "change", function () {
