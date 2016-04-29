@@ -19,8 +19,15 @@ var BuilderMenuView = Backbone.View.extend({
      * @constructs
      */
     initialize: function (builder) {
-        var self = this;
-        self.builder = builder;
+        this.builder = builder;
+        builder.on('start_edit_block', this.onEditStart.bind(this));
+        builder.on('stop_edit_block', this.onEditStop.bind(this));
+    },
+    onEditStart: function(blockId) {
+        this.rotate(blockId); 
+    },
+    onEditStop: function() {
+        this.rotate('catalog-groups');
     },
     /**
      * Render menu
@@ -115,8 +122,6 @@ var BuilderMenuView = Backbone.View.extend({
         // add active class
         side.addClass('active');
 
-        this.builder.builderLayout.toolbar.logoRotation(this.currentSide);
-        Backbone.trigger('rotate');
     },
     /**
      * Rotate menu back

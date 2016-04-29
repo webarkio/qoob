@@ -84,7 +84,7 @@ html.active-js {
     /*display: none;*/
     margin-top: 44px;
     right: 0;
-    z-index: 999;
+    z-index: 99999;
 }
 
 .control-block-button a {
@@ -311,6 +311,10 @@ html.active-js {
     position: relative;
 }
 
+#builder-blocks .content-block .control-block-button {
+    display: none;
+}
+
 #builder-blocks .content-block .no-active-overlay {
     position: absolute;
     display: block;
@@ -319,14 +323,29 @@ html.active-js {
     right: 0px;
     bottom: 0px;
     transition: all;
+    z-index: 9999;
 }
 
-#builder-blocks .content-block.no-active .control-block-button {
-    display: none;
+#builder-blocks .content-block .no-active-overlay:hover {
+    background: #fff;
+    opacity: .4;
+    cursor: pointer;
+}
+
+#builder-blocks .content-block.active .control-block-button {
+    display: block;
+}
+
+#builder-blocks .content-block.active .no-active-overlay:hover {
+    background: none;
 }
 
 #builder-blocks .content-block.no-active .no-active-overlay {
     background: #000;
     opacity: .7;
     z-index: 999;
+}
+
+#builder-blocks .content-block.no-active .no-active-overlay:hover {
+    opacity: .4;
 }

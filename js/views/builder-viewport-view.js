@@ -19,7 +19,25 @@ var BuilderViewportView = Backbone.View.extend(
              */
             initialize: function (builder) {
                 this.builder = builder;
-                this.listenTo(Backbone, 'rotate', this.toggleActiveBlock);
+                builder.on('start_edit_block', this.onEditStart.bind(this));
+                builder.on('stop_edit_block', this.onEditStop.bind(this));
+            },
+            /**
+             * Shows edit buttons, shadowing other blocks
+             * @param {integer} blockId
+             */
+            onEditStart: function(blockId) {
+              var iframe = this.getWindowIframe();
+              iframe.jQuery('.content-block').removeClass('active').addClass('no-active');
+              iframe.jQuery('.content-block[data-model-id="' + blockId + '"]').removeClass('no-active').addClass('active');
+
+            },
+            /**
+             * Unshadowing all blocks, hidding current block's edit button
+             */
+            onEditStop: function() {
+                var iframe = this.getWindowIframe();
+                iframe.jQuery('.content-block').removeClass('active').removeClass('no-active');
             },
             /**
              * Render menu
@@ -32,28 +50,6 @@ var BuilderViewportView = Backbone.View.extend(
                     self.$el.html(self.tpl({"postId": this.builder.storage.pageId}));
                 });
                 return this;
-            },
-            /**
-             * Shadowing not active blocks, when edit button is hovered
-             * or we are in the block's settigns
-             * 
-             */
-            toggleActiveBlock: function () {
-                var iframe = this.getWindowIframe(),
-                    curSide = this.builder.builderLayout.menu.currentSide,
-                    blocks = iframe.jQuery('.content-block'),
-                    curRotate = this.builder.builderLayout.menu.currentRotateId,
-                    blockId = curRotate.match(/\d+/i) ? curRotate.match(/\d+/i)[0] : null;
-                
-                if((curSide === 'side-0' || curSide === 'side-90') && !blockId) {
-                    blocks.removeClass('no-active');
-                } else {
-                    var curBlock = iframe.jQuery('.content-block[data-model-id=' + blockId + ']');
-                    if(curBlock.get(0)) {
-                        blocks.addClass('no-active');
-                        curBlock.removeClass('no-active');
-                    }                 
-                }
             },
             /**
              * @callback createBlockCallback
@@ -167,9 +163,7 @@ var BuilderViewportView = Backbone.View.extend(
                 var iframe = this.getWindowIframe();
 
                 var blockEditId = '"settings-block-' + block.model.id + '"';
-                var blockEditId = '"settings-block-' + block.model.id + '"';
                 var controlButtons = '<div class="control-block-button">' +
-                        "<a onclick='parent.builder.builderLayout.menu.rotate(" + blockEditId + "); return false;' class='edit' href='#'></a>" +
                         '<a onclick="parent.builder.builderLayout.viewPort.removeBlock(' + block.model.id + '); return false;"  class="remove" href="#"></a>' +
                         '</div>';
                 var droppable = '<div id="droppable-' + block.model.id + '" class="droppable">' +
@@ -177,7 +171,7 @@ var BuilderViewportView = Backbone.View.extend(
                         '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
                         '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
                 
-                var cover = '<div class="no-active-overlay"></div>';
+                var cover = '<div onclick="parent.builder.builderLayout.viewPort.startEditBlock(' + block.model.id + ');" class="no-active-overlay"></div>';
                 
                 var fullBlock = [jQuery(controlButtons), block.render().el, jQuery(droppable), jQuery(cover)];
 
@@ -217,6 +211,9 @@ var BuilderViewportView = Backbone.View.extend(
                 // when added block hide loader
                 this.builder.loader.hideWaitBlock();
 
+            },
+            startEditBlock: function(blockId) {
+                builder.trigger('start_edit_block', blockId);
             },
             /**
              * Create event change for iframe
@@ -260,14 +257,16 @@ var BuilderViewportView = Backbone.View.extend(
                 }
 
                 // remove from storage and DOM
-                this.builder.storage.delModel(blockId);
-                this.builder.storage.delBlockView(blockId);
-                this.builder.storage.delSettingsView(blockId);
+                builder.storage.delModel(blockId);
+                builder.storage.delBlockView(blockId);
+                builder.storage.delSettingsView(blockId);
 
                 // remove container block
                 setTimeout(function () {
                     iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
                 }, 1000);
+                
+                builder.trigger('stop_edit_block');
             },
             /**
              * Create droppable event by id
