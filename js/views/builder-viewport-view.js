@@ -22,6 +22,26 @@ var BuilderViewportView = Backbone.View.extend(
                 this.pageModel.on("block_add", function (model, afterId) {
                     self.addBlock(new BlockView({model: model}), afterId);
                 });
+                
+                builder.on('start_edit_block', this.onEditStart.bind(this));
+                builder.on('stop_edit_block', this.onEditStop.bind(this));
+            },
+            /**
+             * Shows edit buttons, shadowing other blocks
+             * @param {integer} blockId
+             */
+            onEditStart: function(blockId) {
+              var iframe = this.getWindowIframe();
+              iframe.jQuery('.content-block').removeClass('active').addClass('no-active');
+              iframe.jQuery('.content-block[data-model-id="' + blockId + '"]').removeClass('no-active').addClass('active');
+
+            },
+            /**
+             * Unshadowing all blocks, hidding current block's edit button
+             */
+            onEditStop: function() {
+                var iframe = this.getWindowIframe();
+                iframe.jQuery('.content-block').removeClass('active').removeClass('no-active');
             },
             /**
              * Render menu
@@ -144,16 +164,17 @@ var BuilderViewportView = Backbone.View.extend(
             addBlock: function (blockView, afterBlockId) {
                 var iframe = this.getWindowIframe();
 
-                var blockEditId = '"settings-block-' + blockView.model.id + '"';
-
                 var controlButtons = '<div class="control-block-button">' +
-                        "<a onclick='parent.builder.builderLayout.menu.rotate(" + blockEditId + "); return false;' class='edit' href='#'></a>" +
                         '<a onclick="parent.builder.builderLayout.viewPort.removeBlock(' + blockView.model.id + '); return false;"  class="remove" href="#"></a>' +
                         '</div>';
                 var droppable = '<div id="droppable-' + blockView.model.id + '" class="droppable ui-droppable active-wait">' +
                         '<div class="dropp-block"><i class="plus"></i><span>Drag here to creative new block</span></div>' +
                         '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
                         '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
+                
+                var cover = '<div onclick="parent.builder.builderLayout.viewPort.startEditBlock(' + blockView.model.id + ');" class="no-active-overlay"></div>';
+                
+                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable), jQuery(cover)];
 
                 var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable)];
 
@@ -189,6 +210,9 @@ var BuilderViewportView = Backbone.View.extend(
 
                 // Trigger change
                 this.triggerBuilderBlock();
+            },
+            startEditBlock: function(blockId) {
+                builder.trigger('start_edit_block', blockId);
             },
             /**
              * Create event change for iframe
@@ -234,6 +258,8 @@ var BuilderViewportView = Backbone.View.extend(
                 setTimeout(function () {
                     iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
                 }, 1000);
+                
+                builder.trigger('stop_edit_block');
             },
             /**
              * Create droppable event by id

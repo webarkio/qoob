@@ -19,8 +19,16 @@ var BuilderMenuView = Backbone.View.extend({
      * @constructs
      */
     initialize: function (pageModel) {
-        var self = this;
-        self.pageModel = pageModel;
+        console.log(builder);
+        builder.on('start_edit_block', this.onEditStart.bind(this));
+        builder.on('stop_edit_block', this.onEditStop.bind(this));
+        this.pageModel = pageModel;
+    },
+    onEditStart: function(blockId) {
+        this.rotate(blockId); 
+    },
+    onEditStop: function() {
+        this.rotate('catalog-groups');
     },
     /**
      * Render menu

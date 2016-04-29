@@ -7,6 +7,8 @@
  */
 //module.exports.Builder = Builder;
 function Builder(options) {
+    //Apply events to treggier
+    _.extend(this, Backbone.Events);
     this.options = {
         blockTemplateAdapter: 'hbs',
         blockPreviewUrl: "preview.png"
@@ -17,7 +19,6 @@ function Builder(options) {
     this.loader = new BuilderLoader(this);
     this.pageModel = new PageModel();
     this.builderLayout = new BuilderLayout({"pageModel": this.pageModel});
-
 }
 
 /*
