@@ -24,17 +24,11 @@
         </button>
         <button class="exit-btn" onclick="builder.exit();
                 return false;" type="button">Exit</button>
-        <button class="screen-size pc active" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
-                return false;" type="button"></button>
-        <button class="screen-size tablet-vertical" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
-                return false;" type="button"></button>
-        <button class="screen-size phone-vertical" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
-                return false;" type="button"></button>
-        <button class="screen-size tablet-horizontal" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
-                return false;" type="button"></button>
-        <button class="screen-size phone-horizontal" onclick="parent.builder.builderLayout.toolbar.screenSize(this);
-                return false;" type="button"></button>
-        <button class="arrow-btn hide-builder" onclick="parent.builder.trigger('set_preview_mode');
-                return false;" type="button"></button>
+        <button class="screen-mode-button pc active" name="pc"></button>
+        <button class="screen-mode-button tablet-vertical" name="tablet-vertical"></button>
+        <button class="screen-size phone-vertical"></button>
+        <button class="screen-size tablet-horizontal"></button>
+        <button class="screen-size phone-horizontal"></button>
+        <button class="preview-mode-button"></button>
     </div>
 </div>

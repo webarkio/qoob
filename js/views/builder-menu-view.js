@@ -1,6 +1,6 @@
 /**
  * Create view for menu in builder layout
- * 
+ *
  * @type @exp;Backbone@pro;View@call;extend
  */
 var BuilderMenuView = Backbone.View.extend({
@@ -18,30 +18,34 @@ var BuilderMenuView = Backbone.View.extend({
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function (pageModel) {
-        builder.on('start_edit_block', this.onEditStart.bind(this));
-        builder.on('stop_edit_block', this.onEditStop.bind(this));
-        builder.on('set_preview_mode', this.onPreviewMode.bind(this));
-        builder.on('set_edit_mode', this.onEditMode.bind(this));
+    initialize: function(pageModel) {
+        // builder.on('start_edit_block', this.onEditStart.bind(this));
+        // builder.on('stop_edit_block', this.onEditStop.bind(this));
+        // builder.on('set_preview_mode', this.onPreviewMode.bind(this));
+        // builder.on('set_edit_mode', this.onEditMode.bind(this));
         this.pageModel = pageModel;
     },
-    onEditStart: function (blockId) {
+    onEditStart: function(blockId) {
         this.rotate('settings-block-' + blockId);
     },
-    onEditStop: function () {
+    onEditStop: function() {
         this.rotate('catalog-groups');
     },
-    onPreviewMode: function () {
-        this.$el.fadeOut(300);  
+    setPreviewMode: function() {
+        this.$el.fadeOut(300);
     },
-    onEditMode: function () {
+    setEditMode: function() {
+        this.$el.fadeIn(300);
+    },
+
+    onEditMode: function() {
         this.$el.fadeIn(300);
     },
     /**
      * Render menu
      * @returns {Object}
      */
-    render: function () {
+    render: function() {
         var data = builder.storage.builderTemplates['builder-menu'];
         this.tpl = _.template(data);
         this.$el.html(this.tpl());
@@ -50,28 +54,28 @@ var BuilderMenuView = Backbone.View.extend({
     /**
      * Create menu (blocks, settings)
      */
-    create: function () {
+    create: function() {
         this.createGroups();
         this.createBlocks();
     },
     /**
      * Create groups blocks
      */
-    createGroups: function () {
+    createGroups: function() {
         var menuGroupsView = new BuilderMenuGroupsView();
         this.addView(menuGroupsView, 0);
     },
     /**
      * Create blocks menu
      */
-    createBlocks: function () {
+    createBlocks: function() {
         var blocksPreviewView = new BuilderMenuBlocksPreviewView();
         this.addView(blocksPreviewView, 90);
     },
     /**
      * Resize menu
      */
-    resize: function () {
+    resize: function() {
         this.$el.css({
             height: jQuery(window).height() - 70,
             top: 70
@@ -82,7 +86,7 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {Integer} id
      * @param {Boolean} back Rotate back
      */
-    rotate: function (id, back) {
+    rotate: function(id, back) {
         if (this.currentRotateId == id)
             return;
 
@@ -117,12 +121,12 @@ var BuilderMenuView = Backbone.View.extend({
 
         // rotate cube menu
         this.$el.find('.card-main')
-                .removeClass(function (index, css) {
-                    return (css.match(/\bside-\S+/g) || []).join(' ');
-                })
-                .addClass(this.currentSide)
-                .children()
-                .removeClass('active');
+            .removeClass(function(index, css) {
+                return (css.match(/\bside-\S+/g) || []).join(' ');
+            })
+            .addClass(this.currentSide)
+            .children()
+            .removeClass('active');
 
         // add active class
         side.addClass('active');
@@ -133,15 +137,15 @@ var BuilderMenuView = Backbone.View.extend({
      * Rotate menu back
      * Not used
      */
-    back: function () {
+    back: function() {
         var tmp = this.backSide;
 
         // rotate cube menu
         this.$el.find('.card-main')
-                .removeClass(function (index, css) {
-                    return (css.match(/\bside-\S+/g) || []).join(' ');
-                })
-                .addClass(this.backSide);
+            .removeClass(function(index, css) {
+                return (css.match(/\bside-\S+/g) || []).join(' ');
+            })
+            .addClass(this.backSide);
 
         // Set back side
         this.backSide = this.currentSide;
@@ -154,16 +158,14 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {Object} BackboneView  View from render
      * @param {String} side Side cube
      */
-    addView: function (BackboneView, side) {
+    addView: function(BackboneView, side) {
         jQuery('#side-' + side).append(BackboneView.el);
     },
     /**
      * Delete view from settingsViewStorage
      * @param {String} view id
      */
-    delView: function (id) {
+    delView: function(id) {
         this.settingsViewStorage[id].dispose();
     }
 });
-
-
