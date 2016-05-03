@@ -23,7 +23,7 @@ var BuilderViewportView = Backbone.View.extend(
                 // this.pageModel.on("block_add", function (model, afterId) {
                 //     self.addBlock(new BlockView({model: model}), afterId);
                 // });
-                
+
                 // builder.on('start_edit_block', this.onEditStart.bind(this));
                 // builder.on('stop_edit_block', this.onEditStop.bind(this));
                 // builder.on('set_preview_mode', this.onPreviewMode.bind(this));
@@ -180,8 +180,6 @@ var BuilderViewportView = Backbone.View.extend(
 
                 var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable), jQuery(cover)];
 
-                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable)];
-
                 if (afterBlockId && afterBlockId > 0) {
                     //Add controll buttons
                     var $block = jQuery('<div class="content-block content-fade" data-model-id="' + blockView.model.id + '"></div>');
@@ -334,7 +332,7 @@ var BuilderViewportView = Backbone.View.extend(
 //                        '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
 //                        '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
 //                iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
-                
+
                 //Animation scrolling to the bottom of the block's container
                 if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
                     var trident = !!navigator.userAgent.match(/Trident\/7.0/);
@@ -352,7 +350,7 @@ var BuilderViewportView = Backbone.View.extend(
                     // add new block
                     builder.addNewBlock(templateId, afterId);
                 }
-                
+
 //
 //                builder.storage.getTemplate(templateId, function (err, template) {
 //                    self.getDefaultSettings(templateId, function (err, settings) {
