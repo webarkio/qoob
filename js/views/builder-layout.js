@@ -80,4 +80,12 @@ var BuilderLayout = Backbone.View.extend(
             this.viewPort.setDeviceMode(mode);
             //            this.resize();
         },
+        startEditBlock: function(blockId){
+            this.toolbar.startEditBlock(blockId);
+            this.menu.startEditBlock(blockId);
+            this.viewPort.startEditBlock(blockId);
+        },
+        stopEditBlock: function(){
+            this.viewPort.stopEditBlock();
+        }
     });

@@ -23,7 +23,7 @@ var BuilderUtils = {
      */
     createModel: function (settings) {
         settings.id = parseInt(_.uniqueId());
-        var model = new Backbone.Model();
+        var model = new BlockModel();
 
         var newSettings = {};
 
@@ -62,5 +62,23 @@ var BuilderUtils = {
             });
         }
         return collection;
-    }
+    },
+            /**
+         * Get default settings
+         *
+         * @param {integer} templateId
+         */
+        getDefaultSettings: function(items, templateId) {
+            // get config from storage builderData
+            //builder.storage.builderData.items
+            var values={};
+            var settings = _.findWhere(items, { id: templateId }).settings;
+            for (var i = 0; i < settings.length; i++) {
+                values[settings[i].name] = settings[i].default;
+            }
+            values.template = templateId;
+
+            return values;
+        },
+
 };

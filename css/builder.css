@@ -534,11 +534,7 @@
 }
 
 @media (max-width: 1200px) {
-    #builder-toolbar .screen-size.pc,
-    .screen-size.tablet-vertical,
-    .screen-size.phone-vertical,
-    .screen-size.tablet-horizontal,
-    .screen-size.phone-horizontal {
+    #builder-toolbar .device-mode-button {
         display: none;
     }
 }

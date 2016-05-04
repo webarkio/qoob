@@ -6,7 +6,7 @@
 var BuilderMenuView = Backbone.View.extend({
     id: "builder-menu",
     currentId: 'catalog-groups',
-//    settingsViewStorage: {},
+    //    settingsViewStorage: {},
     /**
      * View menu
      * @class BuilderMenuView
@@ -16,8 +16,16 @@ var BuilderMenuView = Backbone.View.extend({
     initialize: function(options) {
         this.controller = options.controller;
         this.storage = options.storage;
-        // builder.on('start_edit_block', this.onEditStart.bind(this));
-        // builder.on('stop_edit_block', this.onEditStop.bind(this));
+        this.model.on("block_add", this.addSettings.bind(this));
+    },
+    addSettings: function(model) {
+        var item = _.findWhere(this.storage.builderData.items, { id: model.get('template') });
+        this.addView(new BuilderMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
+        // Add devices field
+        // if (!_.findWhere(settings, { label: "Visible Devices" })) {
+        //     settings.push(self.devicesSettings());
+        // }
+
     },
     /**
      * Render menu
@@ -28,10 +36,37 @@ var BuilderMenuView = Backbone.View.extend({
         this.addView(new BuilderMenuGroupsView({ storage: this.storage }), 0);
         var groups = this.storage.builderData.groups;
         for (var i = 0; i < groups.length; i++) {
-            this.addView(new BuilderMenuBlocksPreviewView({ id: 'group-' + groups[i].id, storage: this.storage, group: groups[i] }), 90);
+            this.addView(new BuilderMenuBlocksPreviewView({
+                id: 'group-' + groups[i].id,
+                storage: this.storage,
+                controller: this.controller,
+                group: groups[i]
+            }), 90);
         }
+        this.draggable();
 
         return this;
+    },
+
+    draggable: function() {
+        this.$el.find('.preview-block').draggable({
+            appendTo: "body",
+            helper: "clone",
+            iframeFix: true,
+            iframeScroll: true,
+            scrollSensitivity: 50,
+            scrollSpeed: 10,
+            start: function(event, ui) {
+                jQuery('.droppable').show();
+            },
+            stop: function(event, ui) {
+                jQuery('.droppable').hide();
+                // Remove empty div for mobile
+                if (jQuery('#builder-viewport').find('div').length > 0) {
+                    jQuery('#builder-viewport').find('div').remove();
+                }
+            }
+        });
     },
 
     setPreviewMode: function() {
@@ -46,10 +81,14 @@ var BuilderMenuView = Backbone.View.extend({
     showIndex: function() {
         this.rotate('catalog-groups');
     },
+    startEditBlock: function(blockId) {
+        this.rotate('settings-block-' + blockId);
+    },
+
     /**
      * Resize menu
      */
-    resize: function() {
+        resize: function() {
         this.$el.css({
             height: jQuery(window).height() - 70,
             top: 70
@@ -103,7 +142,7 @@ var BuilderMenuView = Backbone.View.extend({
 
         // add active class
         newSide.addClass('active');
-        
+
         // set current rotate id
         this.currentId = id;
 

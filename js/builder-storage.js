@@ -104,9 +104,11 @@ BuilderStorage.prototype.getModel = function(id) {
  * @param {Number} id modelId
  */
 BuilderStorage.prototype.getBlockView = function(id) {
-    return _.findWhere(this.blockViewData, {
-        id: id
-    });
+    for (var i = 0; i < this.blockViewData.length; i++) {
+        if(this.blockViewData[i].model.id==id){
+            return  this.blockViewData[i];
+        }
+    };
 };
 
 /**
@@ -177,7 +179,7 @@ BuilderStorage.prototype.loadPageData = function(cb) {
  */
 BuilderStorage.prototype.getTemplate = function(templateId, cb) {
     var self = this;
-
+    //FIXME
     if (this.templates.length > 0 && _.findWhere(this.templates, {
             id: templateId
         })) {

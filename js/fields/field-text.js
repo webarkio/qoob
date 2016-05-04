@@ -12,11 +12,9 @@ Fields.text = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
-        var self = this;
-        builder.storage.getBuilderTemplate('field-text', function(err, data){
-            self.textTpl = _.template(data);
-        });
+    initialize: function (options) {
+        this.storage=options.storage;
+        this.settings=options.settings;
     },
     /**
      * Event change input
@@ -31,7 +29,7 @@ Fields.text = Backbone.View.extend(
      * @returns {String}
      */
     getValue: function () {
-        return this.model.get(this.config.name) || this.config.default;
+        return this.model.get(this.settings.name) || this.settings.default;
     },
 
     /**
@@ -40,15 +38,16 @@ Fields.text = Backbone.View.extend(
      */
     render: function () {
         var htmldata = {
-            "label" : this.config.label,
-            "name" : this.config.name,
+            "label" : this.settings.label,
+            "name" : this.settings.name,
             "value" : this.getValue(),
-            "placeholder" : this.config.placeholder
+            "placeholder" : this.settings.placeholder
         }
+        this.$el.html(_.template(this.storage.builderTemplates['field-text'])(htmldata));
 
-        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.textTpl( htmldata ));
-        }
+        // if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
+        //     this.$el.html(this.textTpl( htmldata ));
+        // }
 
         return this;
     }

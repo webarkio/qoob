@@ -7,6 +7,12 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
     /** @lends BuilderMenuGroupsView.prototype */
     {
         className: 'catalog-templates menu-block',
+        events:{
+            'click .preview-block': 'clickPreviewBlock'
+        },
+        clickPreviewBlock: function(evt){
+            this.controller.addNewBlock(evt.currentTarget.id.replace('preview-block-',''));
+        },
 
         /**
          * View menu groups
@@ -15,6 +21,7 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
          * @constructs
          */
         initialize: function(options) {
+            this.controller = options.controller;
             this.storage = options.storage;
             this.group = options.group;
         },

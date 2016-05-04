@@ -307,15 +307,12 @@ html.active-js {
 }
 
 /* Active Scrolling */
-#builder-blocks .content-block {
+
+#builder-blocks .content-block-outer {
     position: relative;
 }
 
-#builder-blocks .content-block .control-block-button {
-    display: none;
-}
-
-#builder-blocks .content-block .no-active-overlay {
+.content-block-outer .overlay {
     position: absolute;
     display: block;
     top: 0px;
@@ -326,26 +323,23 @@ html.active-js {
     z-index: 9999;
 }
 
-#builder-blocks .content-block .no-active-overlay:hover {
+.content-block-outer .overlay:hover {
     background: #fff;
     opacity: .4;
     cursor: pointer;
 }
-
-#builder-blocks .content-block.active .control-block-button {
-    display: block;
+.content-block-outer .overlay.active {
+    display: none;
 }
-
-#builder-blocks .content-block.active .no-active-overlay:hover {
-    background: none;
-}
-
-#builder-blocks .content-block.no-active .no-active-overlay {
+.content-block-outer .overlay.no-active {
     background: #000;
     opacity: .7;
-    z-index: 999;
+}
+.content-block-outer .overlay.no-active:hover {
+    background: #000;
+    opacity: .4;
 }
 
-#builder-blocks .content-block.no-active .no-active-overlay:hover {
-    opacity: .4;
+#builder-blocks.preview .overlay{
+    display:none;
 }

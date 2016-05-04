@@ -28,6 +28,8 @@ function Builder(options) {
     });
 
     this.controller.setLayout(this.builderLayout);
+    this.controller.setPageModel(this.pageModel);
+    this.controller.setStorage(this.storage);
 
 }
 
@@ -72,15 +74,7 @@ Builder.prototype.autosavePageData = function() {
 };
 
 
-Builder.prototype.addNewBlock = function(templateId, afterId) {
-    var values = this.builderLayout.viewPort.getDefaultSettings(templateId, afterId);
-    this.addBlock(values, afterId);
-};
 
-Builder.prototype.addBlock = function(values, afterId) {
-    var model = BuilderUtils.createModel(values);
-    this.pageModel.addBlock(model, afterId);
-};
 
 /**
  * Activate page builder
@@ -107,6 +101,14 @@ console.log(2);
                 
 
                 self.builderLayout.viewPort.onLoad(function() {
+
+                    self.builderLayout.viewPort.createDefaultDroppable();
+
+                    for (var i = 0; i < pageData.blocks.length; i++) {
+                        var model = BuilderUtils.createModel(pageData.blocks[i]);
+                        self.pageModel.addBlock(model);
+                    }
+
                 	console.log("viewportloaded");
                 	self.loader.sub();
                 	return;
@@ -114,11 +116,8 @@ console.log(2);
                     //                        self.loader.add(pageData.length);
                     //                    }
 
-                    // Create groups/previews
-                    self.builderLayout.menu.create();
-
                     // Create default droppable zone
-                    self.builderLayout.viewPort.createDefaultDroppable();
+                    
 
                     self.pageModel.load();
 

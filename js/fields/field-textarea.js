@@ -12,11 +12,9 @@ Fields.textarea = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
-        var self = this;
-        builder.storage.getBuilderTemplate('field-textarea', function(err, data){
-            self.textareaTpl = _.template(data);
-        });
+    initialize: function (options) {
+        this.storage=options.storage;
+        this.settings=options.settings;
     },
     /**
      * Event change textarea
@@ -31,7 +29,7 @@ Fields.textarea = Backbone.View.extend(
      * @returns {String}
      */
     getValue: function () {
-        return this.model.get(this.config.name) || this.config.default;
+        return this.model.get(this.settings.name) || this.settings.default;
     },
 
     /**
@@ -40,15 +38,15 @@ Fields.textarea = Backbone.View.extend(
      */
     render: function () {
         var htmldata = {
-            "label" : this.config.label,
-            "name" : this.config.name,
+            "label" : this.settings.label,
+            "name" : this.settings.name,
             "value" : this.getValue(),
             "textareaId" : _.uniqueId('textarea')
         }
-
-        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.textareaTpl( htmldata ));
-        }
+        this.$el.html(_.template(this.storage.builderTemplates['field-textarea'])(htmldata));
+        // if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
+        //     this.$el.html(this.textareaTpl( htmldata ));
+        // }
         
         return this;
     }

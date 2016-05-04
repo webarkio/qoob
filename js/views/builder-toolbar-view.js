@@ -73,6 +73,9 @@ var BuilderToolbarView = Backbone.View.extend(
         	this.controller.setAutoSave(evt.target.checked);
         },
 
+        startEditBlock: function(blockId){
+            this.logoRotation('side-270');
+        },
         /**
          * Logo rotation
          * @param {Integer} side
