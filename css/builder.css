@@ -426,9 +426,6 @@
     background-image: url(../img/phone_horizontal_hover.png);
 }
 
-#builder-toolbar .edit-control-button .arrow-btn {
-    background-image: url(../img/arrow.png);
-}
 
 #builder-toolbar .edit-control-button .settings {
     background-image: url(../img/settingstop.png);
@@ -437,7 +434,11 @@
 #builder-toolbar .edit-control-button .settings.active {
     background-image: url(../img/settings_hover.png);
 }
-#builder>.arrow-btn.active {
+#builder-toolbar .preview-mode-button {
+    background-image: url(../img/arrow.png);
+}
+
+#builder .edit-mode-button {
     cursor: pointer;
     width: 70px;
     height: 70px;
@@ -447,7 +448,7 @@
     padding: 0;
     position: absolute;
     top: 0;
-    right: 17px;
+    right: 0px;
     z-index: 999999;
     background: #444444 url(../img/arrow.png) no-repeat center center;
     -webkit-transform: rotate(-180deg);
@@ -456,8 +457,8 @@
     -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
 }
-#builder-toolbar .edit-control-button .arrow-btn:hover,
-#builder>.arrow-btn:hover {
+#builder-toolbar .preview-mode-button:hover,
+#builder .edit-mode-button:hover {
     background-image: url(../img/arrow_hover.png);
 }
 

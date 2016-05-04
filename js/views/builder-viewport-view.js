@@ -19,14 +19,15 @@ var BuilderViewportView = Backbone.View.extend(
             initialize: function () {
                 var self = this;
                 this.pageModel = this.model.pageModel;
-                this.pageModel.on("block_add", function (model, afterId) {
-                    self.addBlock(new BlockView({model: model}), afterId);
-                });
-                
-                builder.on('start_edit_block', this.onEditStart.bind(this));
-                builder.on('stop_edit_block', this.onEditStop.bind(this));
-                builder.on('set_preview_mode', this.onPreviewMode.bind(this));
-                builder.on('set_edit_mode', this.onEditMode.bind(this));
+                this.previewMode= false;
+                // this.pageModel.on("block_add", function (model, afterId) {
+                //     self.addBlock(new BlockView({model: model}), afterId);
+                // });
+
+                // builder.on('start_edit_block', this.onEditStart.bind(this));
+                // builder.on('stop_edit_block', this.onEditStop.bind(this));
+                // builder.on('set_preview_mode', this.onPreviewMode.bind(this));
+                // builder.on('set_edit_mode', this.onEditMode.bind(this));
             },
             /**
              * Shows edit buttons, shadowing other blocks
@@ -45,19 +46,7 @@ var BuilderViewportView = Backbone.View.extend(
                 var iframe = this.getWindowIframe();
                 iframe.jQuery('.content-block').removeClass('active').removeClass('no-active');
             },
-            onPreviewMode: function () {
-                var iframe = this.getWindowIframe();
-                this.resize();
-                this.resizeIframe();
-                var width = (iframe.jQuery('#builder-iframe').width() - iframe.jQuery('#builder-iframe').contents().width());
-                var triggeredEvent = 'set_edit_mode';
-                iframe.jQuery('#builder').prepend('<button class="arrow-btn hide-builder active" type="button" onclick="parent.builder.trigger(' + triggeredEvent + '); return false;" style="display:none; right: ' + width + 'px"></button>');
-                iframe.jQuery('#builder>.hide-builder').fadeIn(300);
-            },
-            onEditMode: function () {
-                var iframe = this.getWindowIframe();
-                //TODO: resize toolbar, activate all edit click and hover effects  
-            },
+
             /**
              * Render menu
              * @returns {Object}
@@ -190,8 +179,6 @@ var BuilderViewportView = Backbone.View.extend(
                 var cover = '<div onclick="parent.builder.builderLayout.viewPort.startEditBlock(' + blockView.model.id + ');" class="no-active-overlay"></div>';
 
                 var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable), jQuery(cover)];
-
-                var fullBlock = [jQuery(controlButtons), blockView.render().el, jQuery(droppable)];
 
                 if (afterBlockId && afterBlockId > 0) {
                     //Add controll buttons
@@ -345,7 +332,7 @@ var BuilderViewportView = Backbone.View.extend(
 //                        '<div class="wait-block"><div class="clock"><div class="minutes-container"><div class="minutes"></div></div>' +
 //                        '<div class="seconds-container"><div class="seconds"></div></div></div><span>Please wait</span></div></div></div>';
 //                iframe.jQuery('#builder-blocks').after(iframe.jQuery(droppable));
-                
+
                 //Animation scrolling to the bottom of the block's container
                 if (iframe.jQuery('#builder-blocks .content-block:last-child').get(0)) {
                     var trident = !!navigator.userAgent.match(/Trident\/7.0/);
@@ -363,7 +350,7 @@ var BuilderViewportView = Backbone.View.extend(
                     // add new block
                     builder.addNewBlock(templateId, afterId);
                 }
-                
+
 //
 //                builder.storage.getTemplate(templateId, function (err, template) {
 //                    self.getDefaultSettings(templateId, function (err, settings) {
@@ -437,35 +424,31 @@ var BuilderViewportView = Backbone.View.extend(
                 // Start create
                 loop(0);
             },
+            setPreviewMode:function(){
+                this.previewMode=true;
+            },
+            setEditMode:function(){
+                this.previewMode=false;
+            },
+
             /**
              * Resize builder content
              */
             resize: function () {
-                var hideBuilder = {
-                    'height': (jQuery('.hide-builder').hasClass('active') ? 0 : 70),
-                    'width': (jQuery('.hide-builder').hasClass('active') ? 0 : 258)
+                var size = {
+                    'height': (this.previewMode ? 0 : 70),
+                    'width': (this.previewMode ? 0 : 258)
                 };
 
                 jQuery('#builder-content').stop().animate({
-                    height: jQuery(window).height() - hideBuilder.height,
-                    top: hideBuilder.height,
-                    width: jQuery(window).width() - hideBuilder.width,
-                    left: hideBuilder.width
+                    height: jQuery(window).height() - size.height,
+                    top: size.height,
+                    width: jQuery(window).width() - size.width,
+                    left: size.width
                 });
-            },
-            /**
-             * Resize iframe
-             */
-            resizeIframe: function () {
-                // Set size iframe
-                var hideBuilder = (jQuery('.hide-builder').hasClass('active') ? 0 : 70);
 
-                var height = jQuery(window).height() - hideBuilder,
-                        width;
-
-                width = this.$el.hasClass('pc') ? '100%' : jQuery('#builder-iframe').width();
-
-                this.$el.find('#builder-iframe').height(height).width(width);
+                //Iframe resize
+                this.$el.find('#builder-iframe').height(jQuery(window).height() - size.height).width(this.$el.hasClass('pc') ? '100%' : jQuery('#builder-iframe').width());
             },
             /**
              * Get array model ids blocks
