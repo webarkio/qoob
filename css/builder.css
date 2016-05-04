@@ -361,7 +361,7 @@
     margin: 0 -1px -1px -1px;
 }
 
-#builder-toolbar .edit-control-button .save {
+#builder-toolbar .edit-control-button .save-button {
     color: #fff;
     font-family: 'OpenSans-Regular';
     font-size: 16px;
@@ -462,12 +462,12 @@
     background-image: url(../img/arrow_hover.png);
 }
 
-#builder-toolbar .edit-control-button .exit-btn {
+#builder-toolbar .edit-control-button .exit-button {
     color: #c9c9c9;
     font-family: 'OpenSans-Regular';
     font-size: 16px;
 }
-#builder-toolbar .edit-control-button .exit-btn:hover {
+#builder-toolbar .edit-control-button .exit-button:hover {
     color: #2bc0e4;
 }
 
@@ -708,7 +708,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #builder-viewport {
     background-color: #fff;
-    z-index: 999;
+    position: absolute;
+    vertical-align: top;
+    z-index: 99998;    
 }
 
 #builder-viewport.tablet-vertical,
@@ -776,12 +778,6 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 .visible-block a.no-active {
     background: #b2b2b2;
-}
-
-#builder-content {
-    position: absolute;
-    vertical-align: top;
-    z-index: 99998;
 }
 
 ul.catalog-list {

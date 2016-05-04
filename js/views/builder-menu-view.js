@@ -5,72 +5,46 @@
  */
 var BuilderMenuView = Backbone.View.extend({
     id: "builder-menu",
-    tpl: '',
-    tagName: 'div',
-    builder: null,
-    currentSide: 'side-0',
-    backSide: null,
-    currentRotateId: null,
-    settingsViewStorage: {},
+    currentId: 'catalog-groups',
+//    settingsViewStorage: {},
     /**
      * View menu
      * @class BuilderMenuView
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function(pageModel) {
+    initialize: function(options) {
+        this.controller = options.controller;
+        this.storage = options.storage;
         // builder.on('start_edit_block', this.onEditStart.bind(this));
         // builder.on('stop_edit_block', this.onEditStop.bind(this));
-        // builder.on('set_preview_mode', this.onPreviewMode.bind(this));
-        // builder.on('set_edit_mode', this.onEditMode.bind(this));
-        this.pageModel = pageModel;
-    },
-    onEditStart: function(blockId) {
-        this.rotate('settings-block-' + blockId);
-    },
-    onEditStop: function() {
-        this.rotate('catalog-groups');
-    },
-    setPreviewMode: function() {
-        this.$el.fadeOut(300);
-    },
-    setEditMode: function() {
-        this.$el.fadeIn(300);
-    },
-
-    onEditMode: function() {
-        this.$el.fadeIn(300);
     },
     /**
      * Render menu
      * @returns {Object}
      */
     render: function() {
-        var data = builder.storage.builderTemplates['builder-menu'];
-        this.tpl = _.template(data);
-        this.$el.html(this.tpl());
+        this.$el.html(_.template(this.storage.builderTemplates['builder-menu'])());
+        this.addView(new BuilderMenuGroupsView({ storage: this.storage }), 0);
+        var groups = this.storage.builderData.groups;
+        for (var i = 0; i < groups.length; i++) {
+            this.addView(new BuilderMenuBlocksPreviewView({ id: 'group-' + groups[i].id, storage: this.storage, group: groups[i] }), 90);
+        }
+
         return this;
     },
-    /**
-     * Create menu (blocks, settings)
-     */
-    create: function() {
-        this.createGroups();
-        this.createBlocks();
+
+    setPreviewMode: function() {
+        this.$el.fadeOut(300);
     },
-    /**
-     * Create groups blocks
-     */
-    createGroups: function() {
-        var menuGroupsView = new BuilderMenuGroupsView();
-        this.addView(menuGroupsView, 0);
+    setEditMode: function() {
+        this.$el.fadeIn(300);
     },
-    /**
-     * Create blocks menu
-     */
-    createBlocks: function() {
-        var blocksPreviewView = new BuilderMenuBlocksPreviewView();
-        this.addView(blocksPreviewView, 90);
+    showGroup: function(group) {
+        this.rotate('group-' + group);
+    },
+    showIndex: function() {
+        this.rotate('catalog-groups');
     },
     /**
      * Resize menu
@@ -82,57 +56,72 @@ var BuilderMenuView = Backbone.View.extend({
         });
     },
     /**
+     * Add view to side cube
+     * @param {Object} BackboneView  View from render
+     * @param {String} side Side cube
+     */
+    addView: function(view, side) {
+        this.$el.find('#side-' + side).append(view.render().el);
+    },
+    /**
      * Menu rotation
      * @param {Integer} id
      * @param {Boolean} back Rotate back
      */
-    rotate: function(id, back) {
-        if (this.currentRotateId == id)
+    rotate: function(id) {
+        if (this.currentId == id)
             return;
 
-        // set current rotate id
-        this.currentRotateId = id;
-
-        // if rotate back
-        back = typeof back !== 'undefined' ? back : false;
-
         // current block for id
-        var element = jQuery('#' + id);
+        var currentElement = this.$el.find('#' + this.currentId);
+        var newElement = this.$el.find('#' + id);
 
         // get block side
-        var side = element.closest('div[id^="side-"]');
-        var sideId = element.closest('div[id^="side-"]').prop('id');
+        var currentSide = currentElement.closest('div[id^="side-"]');
+        var newSide = newElement.closest('div[id^="side-"]');
 
-        // Set back side
-        this.backSide = this.currentSide;
-
-        if (this.currentSide == sideId) {
-            sideId += ' side-full-rotation';
+        var addedClass = newSide.prop('id');
+        if (currentSide == newSide) {
+            addedClass += ' side-full-rotation';
         }
 
-        // Set current side
-        this.currentSide = sideId;
-
         // hide all blocks side
-        side.find('.menu-block').hide();
+        this.$el.find('.menu-block').hide();
 
         // show current block menu
-        element.show();
+        currentElement.show();
+        newElement.show();
 
         // rotate cube menu
         this.$el.find('.card-main')
             .removeClass(function(index, css) {
                 return (css.match(/\bside-\S+/g) || []).join(' ');
             })
-            .addClass(this.currentSide)
+            .addClass(addedClass)
             .children()
             .removeClass('active');
 
         // add active class
-        side.addClass('active');
+        newSide.addClass('active');
+        
+        // set current rotate id
+        this.currentId = id;
 
-        builder.builderLayout.toolbar.logoRotation(this.currentSide);
     },
+
+
+
+    onEditStart: function(blockId) {
+        this.rotate('settings-block-' + blockId);
+    },
+    onEditStop: function() {
+        this.rotate('catalog-groups');
+    },
+
+    onEditMode: function() {
+        this.$el.fadeIn(300);
+    },
+
     /**
      * Rotate menu back
      * Not used
@@ -154,18 +143,11 @@ var BuilderMenuView = Backbone.View.extend({
         this.currentSide = tmp;
     },
     /**
-     * Add view to side cube
-     * @param {Object} BackboneView  View from render
-     * @param {String} side Side cube
-     */
-    addView: function(BackboneView, side) {
-        jQuery('#side-' + side).append(BackboneView.el);
-    },
-    /**
      * Delete view from settingsViewStorage
      * @param {String} view id
      */
     delView: function(id) {
         this.settingsViewStorage[id].dispose();
     }
+
 });

@@ -86,6 +86,7 @@ Builder.prototype.addBlock = function(values, afterId) {
  * Activate page builder
  */
 Builder.prototype.activate = function() {
+    Backbone.history.start({pushState: false});
 	console.log(1);
     var self = this;
     this.loader.add(1);

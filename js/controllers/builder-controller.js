@@ -1,72 +1,37 @@
  var BuilderController = Backbone.Router.extend({
 
-
      routes: {
-         "help": "help", // #help
-         "search/:query": "search", // #search/kiwis
-         "search/:query/p:page": "search" // #search/kiwis/p7
+        "index":"index",
+         "groups/:group": "showGroup", // #groups/name
      },
-
-     help: function() {
-
+     index:function(){
+        this.layout.menu.showIndex();
+        this.layout.toolbar.logoRotation('side-0');
      },
-
-     search: function(query, page) {
-
+     showGroup: function(group) {
+         this.layout.menu.showGroup(group);
+         this.layout.toolbar.logoRotation('side-90');
      },
      setLayout: function(layout) {
          this.layout = layout;
      },
      setPreviewMode: function() {
-		this.layout.setPreviewMode();
+         this.layout.setPreviewMode();
      },
      setEditMode: function() {
-     	this.layout.setEditMode();
+         this.layout.setEditMode();
      },
-     setScreenMode: function(mode){
-     	console.log("SET MODE");
-     	console.log(mode);
-            // jQuery('.screen-size').removeClass('active');
-            // jQuery(elem).addClass('active');
+     setDeviceMode: function(mode) {
+         this.layout.setDeviceMode(mode);
+     },
+     setAutoSave: function(autosave) {
 
-                size = {};
-
-            switch (mode) {
-                case 'pc':
-                    size = {
-                        'width': '100%'
-                    };
-                    break;
-                case 'tablet-vertical':
-                    size = {
-                        'width': '768px'
-                    };
-                    break;
-                case 'phone-vertical':
-                    size = {
-                        'width': '375px'
-                    };
-                    break;
-                case 'tablet-horizontal':
-                    size = {
-                        'width': '1024px'
-                    };
-                    break;
-                case 'phone-horizontal':
-                    size = {
-                        'width': '667px'
-                    };
-                    break;
-            }
-
-            jQuery('#builder-viewport iframe').stop().animate({
-                width: size.width
-            });
-
-            var class_remove = jQuery('#builder-viewport').attr('class');
-            jQuery('#builder-viewport').removeClass(class_remove).addClass(current);     	
+     },
+     save: function() {
+         console.log('SAVE');
+     },
+     exit: function() {
+         console.log('EXIT');
      }
-
-
 
  });

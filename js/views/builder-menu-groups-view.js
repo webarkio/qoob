@@ -7,32 +7,16 @@ var BuilderMenuGroupsView = Backbone.View.extend(
 /** @lends BuilderMenuGroupsView.prototype */{
     tagName: "ul",
     className: "catalog-list",
-    tpl : null,
-
-    /**
-     * Set setting's id
-     * @class BuilderMenuSettingsView
-     * @augments Backbone.View
-     * @constructs
-     */
-    attributes : function () {
-        return {
-            id : "catalog-groups"
-        };
-    },
-    
+    id:"catalog-groups",
+   
     /**
      * View menu groups
      * @class BuilderMenuGroupsView
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
-        var self = this;
-        builder.storage.getBuilderTemplate('buildermenu-groups', function(err, data){
-            self.tpl = _.template(data);
-            self.render();
-        });
+    initialize: function (options) {
+        this.storage=options.storage;
     },
     /**
      * Render menu groups
@@ -40,9 +24,11 @@ var BuilderMenuGroupsView = Backbone.View.extend(
      */
     render: function () {
       var data = {
-        "groups_arr" : _.sortBy(builder.storage.builderData.groups, 'position') // FIXME getBuilderData
-      }  
-      this.$el.html(this.tpl(data));
+        "groups_arr" : _.sortBy(this.storage.builderData.groups, 'position')
+      };
+
+      this.$el.html(_.template(this.storage.builderTemplates['buildermenu-groups'])(data));
+
       return this;
     }
 });

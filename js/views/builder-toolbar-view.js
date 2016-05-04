@@ -14,7 +14,10 @@ var BuilderToolbarView = Backbone.View.extend(
         },
         events: {
             'click .preview-mode-button': 'clickPreviewMode',
-            'click .screen-mode-button': 'clickScreenMode'
+            'click .device-mode-button': 'clickDeviceMode',
+            'click .exit-button': 'clickExit',
+            'click .save-button': 'clickSave',
+            'click .autosave-checkbox': 'clickAutosave'
         },
         /**
          * View toolbar
@@ -40,6 +43,11 @@ var BuilderToolbarView = Backbone.View.extend(
         setEditMode: function() {
             this.$el.fadeIn(300);
         },
+        setDeviceMode: function(mode) {
+            this.$el.find('.device-mode-button').removeClass('active');
+            this.$el.find('.device-mode-button[name=' + mode + ']').addClass('active');
+        },
+
         /**
          * Resize toolbar
          */
@@ -52,8 +60,17 @@ var BuilderToolbarView = Backbone.View.extend(
         clickPreviewMode: function() {
             this.controller.setPreviewMode();
         },
-        clickScreenMode: function(evt){
-            this.controller.setScreenMode(evt.target.name);
+        clickDeviceMode: function(evt){
+            this.controller.setDeviceMode(evt.target.name);
+        },
+        clickExit:function(){
+        	this.controller.exit();
+        },
+        clickSave:function(){
+			this.controller.save();
+        },
+        clickAutosave: function(evt){
+        	this.controller.setAutoSave(evt.target.checked);
         },
 
         /**
@@ -68,50 +85,5 @@ var BuilderToolbarView = Backbone.View.extend(
                 })
                 .addClass(side);
         },
-        /**
-         * Buttons screen size
-         */
-        screenSize: function(elem) {
-            jQuery('.screen-size').removeClass('active');
-            jQuery(elem).addClass('active');
 
-            var classes = jQuery(elem).attr('class').split(' '),
-                current = classes[1],
-                size = {};
-
-            switch (current) {
-                case 'pc':
-                    size = {
-                        'width': '100%'
-                    };
-                    break;
-                case 'tablet-vertical':
-                    size = {
-                        'width': '768px'
-                    };
-                    break;
-                case 'phone-vertical':
-                    size = {
-                        'width': '375px'
-                    };
-                    break;
-                case 'tablet-horizontal':
-                    size = {
-                        'width': '1024px'
-                    };
-                    break;
-                case 'phone-horizontal':
-                    size = {
-                        'width': '667px'
-                    };
-                    break;
-            }
-
-            jQuery('#builder-viewport iframe').stop().animate({
-                width: size.width
-            });
-
-            var class_remove = jQuery('#builder-viewport').attr('class');
-            jQuery('#builder-viewport').removeClass(class_remove).addClass(current);
-        }
     });

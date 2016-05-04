@@ -3,7 +3,7 @@
         <% var group = groups_arr[i]; %>
         <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
         <li>
-        	<a href="#<%= group_id %>" onclick="builder.builderLayout.menu.rotate('group-<%= group_id %>');return false;">
+        	<a href="#groups/<%= group_id %>">
         	<% if (group.label){ %> 
         		<%= group.label %> 
         	<% } else { %> 

@@ -1,44 +1,16 @@
-<% for (var i = 0; i < groups.length; i++) { %>
-        <% var group = groups[i];%>
-        <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
-       <div id="group-<%= group_id %>" class="catalog-templates menu-block">
-            <div class="backward">
-            <a href="#" onclick="builder.builderLayout.menu.rotate('catalog-groups'); return false;">
-                <% if(group.label){ %> 
-                    <%= group.label %> 
-                <% }else{ %> 
-                    <%= group.id %> 
-                <% } %>
-            </a>
-            </div>
-            <div class="preview-blocks">
-            <% for (var k = 0; k < items.length; k++) { %>
-               <% if (items[k].config.groups == group.id) { %>
-                    <div id="preview-block-<%= items[k].id %>" class="preview-block" onclick="builder.builderLayout.viewPort.clickBlockAdd(this.id); return false;">
-                        <img src="<%= items[k].url + (items[k].config.blockPreviewUrl ? items[k].config.blockPreviewUrl : builder.options.blockPreviewUrl) %>">
-                    </div>
-               <% } %>
-            <% } %>
-            </div>
-        </div>
+<div class="backward">
+<a href="#index">
+    <% if(group.label){ %> 
+        <%= group.label %> 
+    <% }else{ %> 
+        <%= group.id %> 
+    <% } %>
+</a>
+</div>
+<div class="preview-blocks">
+<% for (var k = 0; k < items.length; k++) { %>
+    <div id="preview-block-<%= items[k].id %>" class="preview-block" onclick="builder.builderLayout.viewPort.clickBlockAdd(this.id); return false;">
+        <img src="<%= items[k].url + (items[k].blockPreviewUrl ? items[k].blockPreviewUrl : builder.options.blockPreviewUrl) %>">
+    </div>
 <% } %>
-<script>
-    jQuery('.preview-block').draggable({
-        appendTo: "body",
-        helper: "clone",
-        iframeFix: true,
-        iframeScroll: true,
-        scrollSensitivity: 50,
-        scrollSpeed: 10,
-        start: function (event, ui) {
-            jQuery('.droppable').show();
-        },
-        stop: function (event, ui) {
-            jQuery('.droppable').hide();
-            // Remove empty div for mobile
-            if (jQuery('#builder-viewport').find('div').length > 0) {
-                jQuery('#builder-viewport').find('div').remove();
-            }
-        }
-    });
-</script>
+</div>

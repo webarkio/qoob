@@ -6,7 +6,8 @@
 var BuilderLayout = Backbone.View.extend(
     /** @lends BuilderView.prototype */
     {
-        tpl: null,
+        tagName: 'div',
+        id: 'builder',
         /**
          * View buider
          * @class BuilderView
@@ -42,16 +43,15 @@ var BuilderLayout = Backbone.View.extend(
          * @returns {Object}
          */
         render: function() {
-            this.tpl = _.template(this.storage.builderTemplates['builder']);
+
             //FIXME: this.storage => this.model
-            this.$el.html(this.tpl({
-                "postId": this.storage.pageId
-            }));
-            this.$el.find('#builder').append(this.toolbar.render().el);
-            this.$el.find('#builder').append(this.editModeButton.render().el);
+            this.$el.html([this.toolbar.render().el, this.editModeButton.render().el, this.menu.render().el, this.viewPort.render().el]);
             this.editModeButton.hide();
-            this.$el.find('#builder').append(this.menu.render().el);
-            this.$el.find('#builder-content').append(this.viewPort.render().el);
+            // this.$el.find('#builder').append(this.toolbar.render().el);
+            // this.$el.find('#builder').append(this.editModeButton.render().el);
+            
+            // this.$el.find('#builder').append(this.menu.render().el);
+            // this.$el.find('#builder-content').append(this.viewPort.render().el);
 
             return this;
         },
@@ -74,6 +74,10 @@ var BuilderLayout = Backbone.View.extend(
             this.menu.setEditMode();
             this.viewPort.setEditMode();
             this.resize();
-        }
-
+        },
+        setDeviceMode: function(mode) {
+            this.toolbar.setDeviceMode(mode);
+            this.viewPort.setDeviceMode(mode);
+            //            this.resize();
+        },
     });
