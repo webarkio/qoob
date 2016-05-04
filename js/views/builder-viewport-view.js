@@ -38,7 +38,6 @@ var BuilderViewportView = Backbone.View.extend(
                 var iframe = this.getWindowIframe();
                 iframe.jQuery('.content-block').removeClass('active').addClass('no-active');
                 iframe.jQuery('.content-block[data-model-id="' + blockId + '"]').removeClass('no-active').addClass('active');
-
             },
             /**
              * Unshadowing all blocks, hidding current block's edit button
