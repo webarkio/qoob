@@ -18,7 +18,7 @@ function Builder(options) {
     this.storage = options.storage;
     this.loader = new BuilderLoader(this);
     this.pageModel = new PageModel();
-    this.builderLayout = new BuilderLayout({"pageModel": this.pageModel});
+    
 }
 
 /*
@@ -91,7 +91,7 @@ Builder.prototype.activate = function () {
     jQuery(window).resize(function () {
         self.makeLayoutSize();
     });
-
+    this.builderLayout = new BuilderLayout({"pageModel": this.pageModel});
     this.storage.getBuilderTemplate('builder', function (err, data) {
         self.storage.getBuilderData(function (err, builderData) {
             self.storage.getPageData(function (err, pageData) {
@@ -99,9 +99,6 @@ Builder.prototype.activate = function () {
                 jQuery('body').prepend(self.builderLayout.el);
 
                 self.builderLayout.viewPort.onLoad(function () {
-//                    if (pageData.length > 0) {
-//                        self.loader.add(pageData.length);
-//                    }
 
                     // Create groups/previews
                     self.builderLayout.menu.create();
