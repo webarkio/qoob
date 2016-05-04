@@ -38,7 +38,6 @@ var BuilderViewportView = Backbone.View.extend(
             return this;
         },
 
-
         /**
          * Shows edit buttons, shadowing other blocks
          * @param {integer} blockId
