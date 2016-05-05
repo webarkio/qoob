@@ -9,10 +9,9 @@ var BuilderViewportView = Backbone.View.extend(
         id: "builder-viewport",
         deviceMode: "pc",
         previewMode: false,
-        iframeLoaded: false,
-        iframeLoadedFunctions: [],
         blocksCounter: 0,
         blockViews: [],
+
         /**
          * View menu
          * @class BuilderMenuView
@@ -23,11 +22,6 @@ var BuilderViewportView = Backbone.View.extend(
             this.controller = options.controller;
             this.storage = options.storage;
             this.model.on("block_add", this.addBlock.bind(this));
-            // builder.on('start_edit_block', this.onEditStart.bind(this));
-            // builder.on('stop_edit_block', this.onEditStop.bind(this));
-        },
-        getDefaultTemplateAdapter: function() {
-            return 'hbs';
         },
         /**
          * Render menu
@@ -35,9 +29,12 @@ var BuilderViewportView = Backbone.View.extend(
          */
         render: function() {
             this.$el.html(_.template(this.storage.builderTemplates['builder-viewport'])({ "postId": this.storage.pageId }));
+            this.$el.find('#builder-iframe').on('load', this.iframeLoaded.bind(this));
             return this;
         },
-
+        iframeLoaded: function() {
+            this.trigger('iframe_loaded');
+        },
         /**
          * Shows edit buttons, shadowing other blocks
          * @param {integer} blockId
@@ -110,41 +107,7 @@ var BuilderViewportView = Backbone.View.extend(
             }, 1000);
 
         },
-        onLoad: function(func) {
-            if (this.iframeLoaded) {
-                func();
-            } else {
-                this.iframeLoadedFunctions.push(func);
-            }
-        },
-        triggerLoad: function() {
-            this.iframeLoaded = true;
-            while (this.iframeLoadedFunctions.length > 0) {
-                this.iframeLoadedFunctions.shift()();
-            }
-        },
-        /**
-         * Devices settings
-         * @returns object field devices
-         */
-        devicesSettings: function() {
-            return {
-                "name": "devices",
-                "label": "Visible Devices",
-                "type": "devices",
-                "settings": [{
-                    "name": "desktop",
-                    "label": "Desktop"
-                }, {
-                    "name": "tablet",
-                    "label": "Tablet"
-                }, {
-                    "name": "mobile",
-                    "label": "Mobile"
-                }],
-                "default": ""
-            }
-        },
+
         /**
          * Get BlockView by id
          * @param {Number} id modelId
@@ -199,12 +162,12 @@ var BuilderViewportView = Backbone.View.extend(
                     }
                 });
             }
-
+            console.log(beforeBlockId);
             //Attach element to DOM
             if (beforeBlockId > 0) {
                 iframe.jQuery('#outer-block-' + beforeBlockId).before(blockWrapper.render().el);
             } else {
-                iframe.jQuery('#droppable-0').before(blockWrapper.render().el);
+                iframe.jQuery('#builder-blocks').append(blockWrapper.render().el);
             }
 
 
@@ -258,38 +221,38 @@ var BuilderViewportView = Backbone.View.extend(
 
             builder.trigger('stop_edit_block');
         },
-        /**
-         * Create droppable event by id
-         * 
-         * @param {integer} blockId
-         */
-        droppable: function(blockId) {
-            var iframe = this.getIframeContents();
-            var self = this;
-            iframe.find('#droppable-' + blockId).droppable({
-                activeClass: "ui-droppable-active",
-                hoverClass: "ui-droppable-hover",
-                tolerance: "pointer",
-                drop: function(event, ui) {
-                    var dropElement = jQuery(this);
-                    //get template id
-                    var templateId = ui.draggable.attr("id").replace("preview-block-", "");
-                    //get after id
-                    var beforeId = dropElement.attr("id").replace("droppable-", "");
-                    // add new block
-                    self.controller.addNewBlock(templateId, beforeId);
-                }
-            });
-        },
-        /**
-         * Create default droppable in iframe
-         */
-        createDefaultDroppable: function() {
-            var iframe = this.getWindowIframe();
-            var droppable = _.template(this.storage.builderTemplates['block-droppable'])({ "blockId": 0 });
-            iframe.jQuery('#builder-blocks').append(iframe.jQuery(droppable));
-            this.droppable('0');
-        },
+        // /**
+        //  * Create droppable event by id
+        //  * 
+        //  * @param {integer} blockId
+        //  */
+        // droppable: function(blockId) {
+        //     var iframe = this.getIframeContents();
+        //     var self = this;
+        //     iframe.find('#droppable-' + blockId).droppable({
+        //         activeClass: "ui-droppable-active",
+        //         hoverClass: "ui-droppable-hover",
+        //         tolerance: "pointer",
+        //         drop: function(event, ui) {
+        //             var dropElement = jQuery(this);
+        //             //get template id
+        //             var templateId = ui.draggable.attr("id").replace("preview-block-", "");
+        //             //get after id
+        //             var beforeId = dropElement.attr("id").replace("droppable-", "");
+        //             // add new block
+        //             self.controller.addNewBlock(templateId, beforeId);
+        //         }
+        //     });
+        // },
+        // /**
+        //  * Create default droppable in iframe
+        //  */
+        // createDefaultDroppable: function() {
+        //     var iframe = this.getWindowIframe();
+        //     var droppable = _.template(this.storage.builderTemplates['block-droppable'])({ "blockId": 0 });
+        //     iframe.jQuery('#builder-blocks').append(iframe.jQuery(droppable));
+        //     this.droppable('0');
+        // },
 
 
 
@@ -328,5 +291,27 @@ var BuilderViewportView = Backbone.View.extend(
             for (var i = 0; i < devices.length; i++) {
                 block.addClass('visible-' + devices[i]);
             }
-        }
+        },
+                /**
+         * Devices settings
+         * @returns object field devices
+         */
+        devicesSettings: function() {
+            return {
+                "name": "devices",
+                "label": "Visible Devices",
+                "type": "devices",
+                "settings": [{
+                    "name": "desktop",
+                    "label": "Desktop"
+                }, {
+                    "name": "tablet",
+                    "label": "Tablet"
+                }, {
+                    "name": "mobile",
+                    "label": "Mobile"
+                }],
+                "default": ""
+            }
+        },
     });

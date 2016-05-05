@@ -7,27 +7,27 @@
  */
 //module.exports.Builder = Builder;
 function Builder(options) {
-    //Apply events to treggier
-    _.extend(this, Backbone.Events);
+
+    this.loader = new BuilderLoader(this);
+
     this.options = {
         blockTemplateAdapter: 'hbs',
         blockPreviewUrl: "preview.png"
     };
     _.extend(this.options, options);
-    delete this.options.storage;
-    this.storage = options.storage;
-    this.loader = new BuilderLoader(this);
-    this.pageModel = new PageModel();
 
+    this.storage = options.storage;
     this.controller = new BuilderController();
 
-    this.builderLayout = new BuilderLayout({
+    this.pageModel = new PageModel();
+
+    this.layout = new BuilderLayout({
         "model": this.pageModel,
         "storage": this.storage,
         "controller": this.controller
     });
 
-    this.controller.setLayout(this.builderLayout);
+    this.controller.setLayout(this.layout);
     this.controller.setPageModel(this.pageModel);
     this.controller.setStorage(this.storage);
 }
@@ -37,7 +37,7 @@ function Builder(options) {
  * @param integer pageId id of the page
  * @returns string URL
  */
-Builder.prototype.getIframePageUrl = function (pageId) {
+Builder.prototype.getIframePageUrl = function(pageId) {
     return this.driver.getIframePageUrl(pageId);
 };
 
@@ -46,10 +46,10 @@ Builder.prototype.getIframePageUrl = function (pageId) {
  * DEPRECATED
  * Out of the Builder
  */
-Builder.prototype.exit = function () {
+Builder.prototype.exit = function() {
     var self = this;
     if (jQuery('.checkbox-sb input').prop("checked")) {
-        this.builderLayout.viewPort.save(function (err, state) {
+        this.layout.viewPort.save(function(err, state) {
             self.storage.driver.exit(self.storage.pageId);
         });
     } else {
@@ -61,14 +61,14 @@ Builder.prototype.exit = function () {
  * DEPRECATED
  * Autosave page data for interval
  */
-Builder.prototype.autosavePageData = function () {
+Builder.prototype.autosavePageData = function() {
     var self = this;
     if (jQuery('.checkbox-sb input').prop("checked")) {
-        var intervalId = setInterval(function () {
+        var intervalId = setInterval(function() {
             if (!jQuery('.checkbox-sb input').prop("checked")) {
                 clearInterval(intervalId);
             } else {
-                self.builderLayout.viewPort.save();
+                self.layout.viewPort.save();
             }
         }, 60000);
     }
@@ -80,63 +80,50 @@ Builder.prototype.autosavePageData = function () {
 /**
  * Activate page builder
  */
-Builder.prototype.activate = function () {
-    
-    var self = this;
-    this.loader.add(1);
-    //Creating and appending builder layout
-    jQuery(window).resize(function () {
-        self.builderLayout.resize()
-    });
-    this.storage.loadBuilderTemplates(function (err, builderTemplates) {
-        self.storage.loadBuilderData(function (err, builderData) {
-            self.storage.loadPageData(function (err, pageData) {
+Builder.prototype.activate = function() {
 
-                jQuery('body').prepend(self.builderLayout.render().el);
-                self.builderLayout.resize();
-                
-                self.builderLayout.viewPort.once('blocks_loaded', function () {
-                    Backbone.history.start({pushState: false});
+    var self = this;
+    this.loader.add(4);
+    //Creating and appending builder layout
+    jQuery(window).resize(function() {
+        self.layout.resize()
+    });
+    //Start loading data
+    this.storage.loadBuilderTemplates(function(err, builderTemplates) {
+        self.loader.sub();
+        self.storage.loadBuilderData(function(err, builderData) {
+            self.loader.sub();
+            self.storage.loadPageData(function(err, pageData) {
+                self.loader.sub();
+
+
+                //If blocks loaded to viewPort
+                self.layout.viewPort.once('blocks_loaded', function() {
+                    Backbone.history.start({ pushState: false });
                     self.loader.sub();
                 });
-                
-                self.builderLayout.viewPort.onLoad(function () {
 
-                    self.builderLayout.viewPort.createDefaultDroppable();
+                //If iframe ready to load blocks
+                self.layout.viewPort.once('iframe_loaded', function() {
 
+                    //self.layout.viewPort.createDefaultDroppable();
+
+                    //Start loading blocks
                     if (pageData && pageData.blocks) {
                         self.controller.load(pageData.blocks);
-                    }else{
-                        Backbone.history.start({pushState: false});
+                    } else {
+                        Backbone.history.start({ pushState: false });
+                        //Skip counter for blocks
+                        self.layout.viewPort.blocksCounter = null;
                         self.loader.sub();
                     }
 
-//                    for (var i = 0; i < pageData.blocks.length; i++) {
-//                        var model = BuilderUtils.createModel(pageData.blocks[i]);
-//                        self.pageModel.addBlock(model);
-//                    }
-
-
-
-                    
-                    return;
-                    //                    if (pageData.length > 0) {
-                    //                        self.loader.add(pageData.length);
-                    //                    }
-
-                    // Create default droppable zone
-
-
-
-
-                    // Autosave
-                    //self.autosavePageData();
-
-                    // self.builderLayout.viewPort.create(pageData);
-
-                    //self.loader.sub();
-
                 });
+
+                //Render layout
+                jQuery('body').prepend(self.layout.render().el);
+                self.layout.resize();
+
             });
         });
     });
