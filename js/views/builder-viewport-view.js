@@ -11,6 +11,7 @@ var BuilderViewportView = Backbone.View.extend(
         previewMode: false,
         iframeLoaded: false,
         iframeLoadedFunctions: [],
+        blocksCounter: 0,
         /**
          * View menu
          * @class BuilderMenuView
@@ -21,7 +22,6 @@ var BuilderViewportView = Backbone.View.extend(
             this.controller = options.controller;
             this.storage = options.storage;
             this.model.on("block_add", this.addBlock.bind(this));
-
             // builder.on('start_edit_block', this.onEditStart.bind(this));
             // builder.on('stop_edit_block', this.onEditStop.bind(this));
         },
@@ -144,11 +144,15 @@ var BuilderViewportView = Backbone.View.extend(
          * @param {integer} afterBlockId
          */
         addBlock: function(model, beforeBlockId) {
-            var self = this;
-            var iframe = this.getWindowIframe();
-            var item = _.findWhere(this.storage.builderData.items, {id: model.get('template')});
-            var tplAdapterType = item.blockTemplateAdapter || this.getDefaultTemplateAdapter();//"hbs"
-            var tplAdapter = BuilderExtensions.templating[tplAdapterType];
+            var self = this,
+                iframe = this.getWindowIframe(),
+                item = _.findWhere(this.storage.builderData.items, {id: model.get('template')}),
+                tplAdapterType = item.blockTemplateAdapter || this.getDefaultTemplateAdapter(),
+                tplAdapter = BuilderExtensions.templating[tplAdapterType];
+                
+            //Counting the amount of blocks to trigger 'pageLoad' event
+            (--this.blocksCounter === 0) ? this.trigger('page_loaded') : this.blocksCounter--;
+
             this.storage.getTemplate(model.get('template'), function(err, template){
                 var blockWrapper = new BlockWrapperView({ 
                     id:'outer-block-'+model.id, 

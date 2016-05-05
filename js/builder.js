@@ -30,7 +30,6 @@ function Builder(options) {
     this.controller.setLayout(this.builderLayout);
     this.controller.setPageModel(this.pageModel);
     this.controller.setStorage(this.storage);
-
 }
 
 /*
@@ -80,41 +79,39 @@ Builder.prototype.autosavePageData = function () {
  * Activate page builder
  */
 Builder.prototype.activate = function () {
-    Backbone.history.start({pushState: false});
-    console.log(1);
+    
     var self = this;
     this.loader.add(1);
     //Creating and appending builder layout
     jQuery(window).resize(function () {
         self.builderLayout.resize()
     });
-    console.log(2);
     this.storage.loadBuilderTemplates(function (err, builderTemplates) {
-        console.log(3);
         self.storage.loadBuilderData(function (err, builderData) {
-            console.log(4);
             self.storage.loadPageData(function (err, pageData) {
-                console.log("render");
                 self.builderLayout.render();
                 jQuery('body').prepend(self.builderLayout.el);
                 self.builderLayout.resize();
-
-
+                
+                self.builderLayout.viewPort.once('page_loaded', function () {
+                    Backbone.history.start({pushState: false});
+                });
+                
                 self.builderLayout.viewPort.onLoad(function () {
 
                     self.builderLayout.viewPort.createDefaultDroppable();
-                    
+
                     if (pageData && pageData.blocks) {
                         self.controller.load(pageData.blocks);
                     }
-                    
+
 //                    for (var i = 0; i < pageData.blocks.length; i++) {
 //                        var model = BuilderUtils.createModel(pageData.blocks[i]);
 //                        self.pageModel.addBlock(model);
 //                    }
 
 
-                    console.log("viewportloaded");
+
                     self.loader.sub();
                     return;
                     //                    if (pageData.length > 0) {
@@ -124,7 +121,7 @@ Builder.prototype.activate = function () {
                     // Create default droppable zone
 
 
-                    
+
 
                     // Autosave
                     self.autosavePageData();

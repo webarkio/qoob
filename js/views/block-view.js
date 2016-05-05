@@ -18,8 +18,11 @@ var BlockView = Backbone.View.extend({
         this.listenTo(this.model, 'change', this.render);
     },
     render: function () {
-        this.html=this.template(this.model.toJSON());
+        
         this.storage.addBlockView(this);
+        this.html=this.template(this.model.toJSON());
+        //Adding pleasewait block to html
+        //this.html = this.storage.builderTemplates['block-pleasewait'];
         this.$el.html(this.html);
 
 

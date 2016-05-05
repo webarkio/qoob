@@ -121,8 +121,8 @@ Fields.image = Backbone.View.extend(
                             "name": this.settings.name,
                             "images": this.settings.images,
                             "value": this.getValue()
-                        }
-                        console.log(this);
+                        };
+                        
                         if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
                             this.$el.html(this.imageTpl(htmldata));
                         }

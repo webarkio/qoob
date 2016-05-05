@@ -66,16 +66,24 @@ var BuilderController = Backbone.Router.extend({
         this.navigate('index', {trigger: true});
     },
     load: function (blocks) {
+        this.layout.viewPort.blocksCounter = blocks.length;
         this.pageModel.load(blocks);
     },
     setInnerSettingsView: function (view) {
-        //Add view to the cube side
-        this.layout.menu.addView(view, 270);
-        //Rotate to this side
-        this.layout.menu.rotate(view.$el.prop('id'));
-        //Store view
+        //Creating storage for views
         this.layout.menu.settingsViewStorage = this.layout.menu.settingsViewStorage || [];
-        this.layout.menu.settingsViewStorage[view.$el.prop('id')] = view;
+        var name = view.$el.prop('id');
+        //Add view to the cube side
+        if(!!this.layout.menu.settingsViewStorage[name]) {
+            this.layout.menu.delView(name);
+        }
+        this.layout.menu.addView(view, 270);
+        this.layout.menu.rotate(name);
+        this.layout.menu.settingsViewStorage[name] = view;
         
+    },
+    deleteInnerSettingsView: function (name) {
+        delete this.layout.menu.settingsViewStorage[name];
+        this.layout.menu.delView(name);
     }
 });
