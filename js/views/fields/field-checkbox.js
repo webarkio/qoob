@@ -54,8 +54,8 @@ Fields.checkbox = Backbone.View.extend(
      */
     render: function () {
         var htmldata = {
-            "label" : this.config.label,
-            "name" : this.config.name,
+            "label" : this.settings.label,
+            "name" : this.settings.name,
             "status" : (this.checked() ? "status-on" : ""),
             "checked" : (this.checked()  ? "checked" : "")
         }
