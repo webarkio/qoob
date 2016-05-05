@@ -12,11 +12,9 @@ Fields.checkbox = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
-        var self = this;
-        builder.storage.getBuilderTemplate('field-checkbox', function(err, data){
-            self.checkboxTpl = _.template(data);
-        });
+    initialize: function (options) {
+        this.storage=options.storage;
+        this.settings=options.settings;
     },
     /**
      * Event change input
@@ -61,8 +59,7 @@ Fields.checkbox = Backbone.View.extend(
             "status" : (this.checked() ? "status-on" : ""),
             "checked" : (this.checked()  ? "checked" : "")
         }
-
-        this.$el.html(this.checkboxTpl( htmldata ));
+        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox'])(htmldata));
         return this;
     }
 });

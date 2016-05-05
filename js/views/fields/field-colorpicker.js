@@ -14,11 +14,9 @@ Fields.colorpicker = Backbone.View.extend(
              * @augments Backbone.View
              * @constructs
              */
-            initialize: function () {
-                var self = this;
-                builder.storage.getBuilderTemplate('field-colorpicker', function(err, data){
-                    self.colorPickerTpl = _.template(data);
-                });
+            initialize: function (options) {
+                this.storage=options.storage;
+                this.settings=options.settings;
             },
             /**
              * Event change colorpicker
@@ -76,9 +74,7 @@ Fields.colorpicker = Backbone.View.extend(
                     "arr_colors" : jQuery.inArray(this.getValue(), this.config.colors),
                     "colors" : this.config.colors,
                 }
-                if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-                    this.$el.html(this.colorPickerTpl( htmldata ));
-                }
+                this.$el.html(_.template(this.storage.builderTemplates['field-colorpicker'])(htmldata));
                 return this;
             }
         });
