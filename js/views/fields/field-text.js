@@ -13,8 +13,8 @@ Fields.text = Backbone.View.extend(
      * @constructs
      */
     initialize: function (options) {
-        this.storage=options.storage;
-        this.settings=options.settings;
+        this.storage = options.storage;
+        this.settings = options.settings;
     },
     /**
      * Event change input

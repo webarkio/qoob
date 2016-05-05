@@ -474,6 +474,8 @@ var BuilderViewportView = Backbone.View.extend(
             }
         },
         /**
+         * DEPRECATED
+         * 
          * Get array model ids blocks
          * @returns {Array|getSort.blocks_ids}
          */

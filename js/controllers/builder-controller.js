@@ -65,7 +65,7 @@ var BuilderController = Backbone.Router.extend({
         this.layout.stopEditBlock();
         this.navigate('index', {trigger: true});
     },
-    load: function (blocks) {
+    load: function(blocks) {
         this.pageModel.load(blocks);
     }
 });

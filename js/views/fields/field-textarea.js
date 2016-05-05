@@ -13,8 +13,8 @@ Fields.textarea = Backbone.View.extend(
      * @constructs
      */
     initialize: function (options) {
-        this.storage=options.storage;
-        this.settings=options.settings;
+        this.storage = options.storage;
+        this.settings = options.settings;
     },
     /**
      * Event change textarea
@@ -31,7 +31,6 @@ Fields.textarea = Backbone.View.extend(
     getValue: function () {
         return this.model.get(this.settings.name) || this.settings.default;
     },
-
     /**
      * Render filed textarea
      * @returns {Object}
@@ -42,7 +41,8 @@ Fields.textarea = Backbone.View.extend(
             "name" : this.settings.name,
             "value" : this.getValue(),
             "textareaId" : _.uniqueId('textarea')
-        }
+        };
+        
         this.$el.html(_.template(this.storage.builderTemplates['field-textarea'])(htmldata));
         // if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
         //     this.$el.html(this.textareaTpl( htmldata ));
