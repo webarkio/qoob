@@ -30,11 +30,34 @@ var BuilderController = Backbone.Router.extend({
     setDeviceMode: function (mode) {
         this.layout.setDeviceMode(mode);
     },
+    /**
+     * Autosave page data for interval
+     * @param {Boolean} autosave
+     */
     setAutoSave: function (autosave) {
+        this.autosave = autosave;
 
+        var self = this;
+        if (this.autosave) {
+            var intervalId = setInterval(function () {
+                if (this.autosave) {
+                    self.save();
+                } else {
+                    clearInterval(intervalId);
+                }
+            }, 60000);
+        }
     },
-    save: function () {
-        console.log("SAVE");
+    /**
+     * Save page data
+     * @param {createBlockCallback} cb - A callback to run.
+     */
+    save: function (cb) {
+        var self = this;
+        
+        // show clock autosave
+        this.layout.toolbar.showAutosave();
+        
         var json = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var html = '';
         var blocks = this.pageModel.get('blocks').models;
@@ -45,15 +68,25 @@ var BuilderController = Backbone.Router.extend({
         }
         ;
         this.storage.save(json, html, function (err, status) {
-            console.log(arguments);
+            // hide clock autosave
+            self.layout.toolbar.hideAutosave();            
+            // Make sure the callback is a function​
+            if (typeof cb === "function") {
+                // Call it, since we have confirmed it is callable​
+                cb(err, status);
+            }
         });
     },
+    /**
+     * Out of the Builder
+     */
     exit: function () {
-        console.log('EXIT');
         var self = this;
-        if (jQuery('.checkbox-sb input').prop("checked")) {
-            this.builderLayout.viewPort.save(function (err, state) {
-                self.storage.driver.exit(self.storage.pageId);
+        if (this.autosave) {
+            this.save(function (err, status) {
+                if (status) {
+                    self.storage.driver.exit(self.storage.pageId);
+                }
             });
         } else {
             this.storage.driver.exit(this.storage.pageId);
@@ -73,7 +106,7 @@ var BuilderController = Backbone.Router.extend({
         this.layout.stopEditBlock();
         this.navigate('index', {trigger: true});
     },
-    load: function(blocks) {
+    load: function (blocks) {
         this.pageModel.load(blocks);
     },
     setInnerSettingsView: function (view) {
@@ -84,6 +117,6 @@ var BuilderController = Backbone.Router.extend({
         //Store view
         this.layout.menu.settingsViewStorage = this.layout.menu.settingsViewStorage || [];
         this.layout.menu.settingsViewStorage[view.$el.prop('id')] = view;
-        
+
     }
 });

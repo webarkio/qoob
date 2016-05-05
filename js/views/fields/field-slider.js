@@ -12,11 +12,9 @@ Fields.slider = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
-        var self = this;
-        builder.storage.getBuilderTemplate('field-slider', function(err, data){
-            self.sliderTpl = _.template(data);
-        });
+    initialize: function (options) {
+        this.storage = options.storage;
+        this.settings = options.settings;
     },
     /**
      * Event change input
@@ -31,7 +29,7 @@ Fields.slider = Backbone.View.extend(
      * @returns {String}
      */
     getValue: function () {
-        return this.model.get(this.config.name) || this.config.default;
+        return this.model.get(this.settings.name) || this.settings.default;
     },
     /**
      * Render filed slider
@@ -41,11 +39,12 @@ Fields.slider = Backbone.View.extend(
         var htmldata = {
             "sliderId" : _.uniqueId('slider'),
             "sizeId" : _.uniqueId('size'),
-            "label" : this.config.label,
-            "name" : this.config.name,
+            "label" : this.settings.label,
+            "name" : this.settings.name,
             "value" : this.getValue()
-        }
-        this.$el.html(this.sliderTpl( htmldata ));
+        };
+//        this.$el.html(this.sliderTpl( htmldata ));
+        this.$el.html(_.template(this.storage.builderTemplates['field-slider'])(htmldata));
         return this;
     }
 });

@@ -392,36 +392,6 @@ var BuilderViewportView = Backbone.View.extend(
             //                    });
             //                });
         },
-        /**
-         * DEPRECATED
-         * 
-         * Create blocks
-         * 
-         * @param {Array} data
-         */
-        create: function(data) {
-            var self = this;
-
-            self.createDefaultDroppable();
-
-            function loop(i) {
-                if (i < data.length) {
-                    builder.storage.getTemplate(data[i].get('template'), function(err, template) {
-                        self.createBlock(data[i], template, function(err, block) {
-                            self.createSettings(block.model, function(err, view) {
-                                builder.builderLayout.menu.addView(view, 270);
-                                self.addBlock(block);
-                                builder.loader.sub();
-                                loop(i + 1);
-                            });
-                        });
-                    });
-                }
-            }
-
-            // Start create
-            loop(0);
-        },
         setPreviewMode: function() {
             this.previewMode = true;
             this.getIframeContents().find('#builder-blocks').addClass('preview');
@@ -489,39 +459,6 @@ var BuilderViewportView = Backbone.View.extend(
             });
 
             return blocks_ids;
-        },
-        /**
-         * Save page data
-         * @param {createBlockCallback} cb - A callback to run.
-         */
-        save: function(cb) {
-            var self = this,
-                html = '',
-                json = [];
-
-            // postion blocks on page
-            var sort = this.getSort();
-
-            builder.loader.showAutosave();
-
-            for (var i = 0; i < sort.length; i++) {
-                for (var j = 0; j < builder.storage.blockViewData.length; j++) {
-                    if (sort[i] == builder.storage.blockViewData[j].model.id) {
-                        html += builder.storage.blockViewData[j].render_template;
-                        json.push(JSON.parse(JSON.stringify(builder.storage.blockViewData[j].model)));
-                    }
-                }
-            }
-
-            builder.storage.save(json, html, function(err, state) {
-                builder.loader.hideAutosave();
-                // Make sure the callback is a function​
-                if (typeof cb === "function") {
-                    // Call it, since we have confirmed it is callable​
-                    cb(err, state);
-                }
-
-            });
         },
         getIframe: function() {
             return this.$el.find('#builder-iframe');

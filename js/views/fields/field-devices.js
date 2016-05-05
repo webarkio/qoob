@@ -13,6 +13,7 @@ Fields.devices = Backbone.View.extend(
      * @constructs
      */
     initialize: function (options) {
+        this.controller = options.controller;
         this.storage = options.storage;
         this.settings = options.settings;
     },
@@ -38,7 +39,7 @@ Fields.devices = Backbone.View.extend(
         input.val(active);
         this.model.set(this.config.name, active.join(','));
         
-        builder.builderLayout.viewPort.visibilityBlocks(this.model.id, active);
+        this.controller.layout.viewPort.visibilityBlocks(this.model.id, active);
     },
     /**
      * Get value field devices

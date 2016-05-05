@@ -14,7 +14,7 @@ var FieldsView = Backbone.View.extend(
      * @constructs
      */
     initialize: function (options) {
-        this.storage=options.storage;
+        this.storage = options.storage;
         this.settings = options.settings;
         this.controller = options.controller;
     },
@@ -29,7 +29,6 @@ var FieldsView = Backbone.View.extend(
             input.settings = this.settings[i];
             res.push(input.render().el);
         }
-        console.log(res);
         this.$el.html(res);
         
         return this;

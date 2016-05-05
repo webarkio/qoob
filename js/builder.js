@@ -59,6 +59,7 @@ Builder.prototype.exit = function () {
 };
 
 /**
+ * DEPRECATED
  * Autosave page data for interval
  */
 Builder.prototype.autosavePageData = function () {

@@ -64,13 +64,13 @@ var BuilderToolbarView = Backbone.View.extend(
             this.controller.setDeviceMode(evt.target.name);
         },
         clickExit:function(){
-        	this.controller.exit();
+            this.controller.exit();
         },
         clickSave:function(){
-			this.controller.save();
+            this.controller.save();
         },
         clickAutosave: function(evt){
-        	this.controller.setAutoSave(evt.target.checked);
+            this.controller.setAutoSave(evt.target.checked);
         },
 
         startEditBlock: function(blockId){
@@ -88,5 +88,18 @@ var BuilderToolbarView = Backbone.View.extend(
                 })
                 .addClass(side);
         },
-
+        /**
+         * Show loader autosave
+         */
+        showAutosave: function () {
+            this.$el.find('.save-button span.text').hide();
+            this.$el.find('.save-button .clock').css('display', 'block');
+        },
+        /**
+         * Hide loader autosave
+         */
+        hideAutosave: function () {
+            this.$el.find('.save-button .clock').css('display', '');
+            this.$el.find('.save-button span.text').show();
+        }
     });
