@@ -6,52 +6,36 @@
 var BlockView = Backbone.View.extend({
     tagName: "div",
     className: "content-block-inner",
-    renderedTemplate:'',
-    // attributes:function(){
-    //     return {
-    //         id: 'block-inner-'+this.model.id
-    //     }
-    // },
-    initialize: function (options) {
-        this.template = options.template;//compiled template
+    /**
+     * Saved HTML template before it was added to DOM
+     * @type {String}
+     */
+    renderedTemplate: null,
+    /**
+     * @param  {Object}
+     * @return {[type]}
+     */
+    initialize: function(options) {
         this.storage = options.storage;
         this.listenTo(this.model, 'change', this.render);
     },
-    render: function () {
-        
-        this.storage.addBlockView(this);
-        this.html=this.template(this.model.toJSON());
-        //Adding pleasewait block to html
-        //this.html = this.storage.builderTemplates['block-pleasewait'];
-        this.$el.html(this.html);
-
-
-//        var iframe = builder.builderLayout.viewPort.getWindowIframe();
-        //iframe.jQuery(this.$el).html(this.renderTemplate);
-//        this.afterRender();
-//            self.trigger('afterRender');
-
-        // add BlockView to storage
-//        builder.storage.addBlockView(this);
-
-        // loader page -1
-  //      builder.loader.sub();
-
-        // when added block hide loader
-    //    builder.loader.hideWaitBlock();
-    
+    render: function() {
+        var self = this;
+        //Start loading template for block
+        this.storage.getBlockTemplate(self.model.get('template'), function(err, template){
+            var config = self.storage.getBlockConfig(self.model.get('template'));
+            var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
+            var tplAdapter = BuilderExtensions.templating[tplAdapterType];
+            self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
+            self.$el.html(self.renderedTemplate);
+            self.trigger('loaded');
+        });
         return this;
     },
     /**
-     * Trigger change builder blocks after render
-     */
-    // afterRender: function () {
-    //     builder.builderLayout.viewPort.triggerBuilderBlock();
-    // },
-    /**
      * Remove view
      */
-    dispose: function () {
+    dispose: function() {
         // same as this.$el.remove();
         this.remove();
 
@@ -64,5 +48,3 @@ var BlockView = Backbone.View.extend({
         this.model.off(null, null, this);
     }
 });
-
-    

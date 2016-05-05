@@ -91,12 +91,13 @@ Builder.prototype.activate = function () {
     this.storage.loadBuilderTemplates(function (err, builderTemplates) {
         self.storage.loadBuilderData(function (err, builderData) {
             self.storage.loadPageData(function (err, pageData) {
-                self.builderLayout.render();
-                jQuery('body').prepend(self.builderLayout.el);
+
+                jQuery('body').prepend(self.builderLayout.render().el);
                 self.builderLayout.resize();
                 
-                self.builderLayout.viewPort.once('page_loaded', function () {
+                self.builderLayout.viewPort.once('blocks_loaded', function () {
                     Backbone.history.start({pushState: false});
+                    self.loader.sub();
                 });
                 
                 self.builderLayout.viewPort.onLoad(function () {
@@ -105,6 +106,9 @@ Builder.prototype.activate = function () {
 
                     if (pageData && pageData.blocks) {
                         self.controller.load(pageData.blocks);
+                    }else{
+                        Backbone.history.start({pushState: false});
+                        self.loader.sub();
                     }
 
 //                    for (var i = 0; i < pageData.blocks.length; i++) {
@@ -114,7 +118,7 @@ Builder.prototype.activate = function () {
 
 
 
-                    self.loader.sub();
+                    
                     return;
                     //                    if (pageData.length > 0) {
                     //                        self.loader.add(pageData.length);
@@ -126,11 +130,11 @@ Builder.prototype.activate = function () {
 
 
                     // Autosave
-                    self.autosavePageData();
+                    //self.autosavePageData();
 
                     // self.builderLayout.viewPort.create(pageData);
 
-                    self.loader.sub();
+                    //self.loader.sub();
 
                 });
             });
