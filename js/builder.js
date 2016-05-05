@@ -90,7 +90,6 @@ Builder.prototype.activate = function() {
     this.storage.loadBuilderTemplates(function(err, builderTemplates) {
         self.storage.loadBuilderData(function(err, builderData) {
             self.storage.loadPageData(function(err, pageData) {
-                console.log("render");
                 self.builderLayout.render();
                 jQuery('body').prepend(self.builderLayout.el);
                 self.builderLayout.resize();
@@ -99,7 +98,7 @@ Builder.prototype.activate = function() {
                 self.builderLayout.viewPort.onLoad(function() {
 
                     self.builderLayout.viewPort.createDefaultDroppable();
-
+                    console.log(pageData);
                     for (var i = 0; i < pageData.blocks.length; i++) {
                         var model = BuilderUtils.createModel(pageData.blocks[i]);
                         self.pageModel.addBlock(model);
