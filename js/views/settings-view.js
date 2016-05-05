@@ -45,6 +45,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 model: this.model,
                 storage: this.storage,
                 settings: this.config.settings,
+                controller: this.controller,
                 className: 'settings-block settings-scroll'
             });
             this.$el.html(_.template(this.storage.builderTemplates['buildermenu-settings'])(this.config)).append(settingsBlock.render().el);
