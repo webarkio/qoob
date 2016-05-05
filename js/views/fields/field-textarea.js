@@ -44,10 +44,6 @@ Fields.textarea = Backbone.View.extend(
         };
         
         this.$el.html(_.template(this.storage.builderTemplates['field-textarea'])(htmldata));
-        // if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
-        //     this.$el.html(this.textareaTpl( htmldata ));
-        // }
-        
         return this;
     }
 });
