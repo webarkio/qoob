@@ -54,22 +54,6 @@ BuilderLoader.prototype.hide = function (count) {
 };
 
 /**
- * Show loader autosave
- */
-BuilderLoader.prototype.showAutosave = function () {
-    jQuery('.save span.text').hide();
-    jQuery('.save .clock').css('display', 'block');
-};
-
-/**
- * Hide loader autosave
- */
-BuilderLoader.prototype.hideAutosave = function () {
-    jQuery('.save .clock').css('display', '');
-    jQuery('.save span.text').show();
-};
-
-/**
  * Block added 
  */
 BuilderLoader.prototype.hideWaitBlock = function () {

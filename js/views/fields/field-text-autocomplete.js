@@ -13,11 +13,9 @@ Fields.text_autocomplete = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
-        var self = this;
-        builder.storage.getBuilderTemplate('field-text-autocomplete', function(err, data){
-            self.textAutocompletTpl = _.template(data);
-        });
+    initialize: function (options) {
+        this.storage = options.storage;
+        this.settings = options.settings;
     },
     /**
      * Event change input
@@ -32,7 +30,7 @@ Fields.text_autocomplete = Backbone.View.extend(
      * @returns {String}
      */
     getValue: function () {
-        return this.model.get(this.config.name) || this.config.default;
+        return this.model.get(this.settings.name) || this.settings.default;
     },
     /**
      * Get unique id
@@ -47,16 +45,18 @@ Fields.text_autocomplete = Backbone.View.extend(
      */
     render: function () {
         var htmldata = {
-            "label" : this.config.label,
-            "name" : this.config.name,
+            "label" : this.settings.label,
+            "name" : this.settings.name,
             "value" : this.getValue(),
-            "placeholder" : this.config.placeholder,
+            "placeholder" : this.settings.placeholder,
             "uniqueId" : this.getUniqueId()
-        }
+        };
+        
+        this.$el.html(_.template(this.storage.builderTemplates['field-text-autocomplete'])(htmldata));
 
-        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.textAutocompletTpl( htmldata ));
-        }
+//        if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
+//            this.$el.html(this.textAutocompletTpl( htmldata ));
+//        }
         return this;
     }
 });

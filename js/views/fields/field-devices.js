@@ -12,11 +12,10 @@ Fields.devices = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function () {
-        var self = this;
-        builder.storage.getBuilderTemplate('field-devices', function(err, data){
-            self.devicesTpl = _.template(data);
-        });
+    initialize: function (options) {
+        this.controller = options.controller;
+        this.storage = options.storage;
+        this.settings = options.settings;
     },
     /**
      * Event change input
@@ -40,7 +39,7 @@ Fields.devices = Backbone.View.extend(
         input.val(active);
         this.model.set(this.config.name, active.join(','));
         
-        builder.builderLayout.viewPort.visibilityBlocks(this.model.id, active);
+        this.controller.layout.viewPort.visibilityBlocks(this.model.id, active);
     },
     /**
      * Get value field devices
@@ -48,23 +47,6 @@ Fields.devices = Backbone.View.extend(
      */
     getValue: function () {
         return this.model.get(this.config.name) || this.config.default;
-    },
-    /**
-     * Create filed devices
-     * @returns {String}
-     */
-    create: function () {
-        var devices = this.getValue();
-        var settings = this.config.settings;
-             
-        var devices_elem = '';
-        for (var i = 0; i < settings.length; i++) {
-            devices_elem += '<a href="#" class="btn ' + (devices.indexOf(settings[i].name) != -1 ? 'no-active' : '') + '" data-device="' + settings[i].name + '">' + settings[i].label + '</a>';
-        }
-
-        return '<div class="title">' + this.config.label + '</div>' +
-                '<div class="visible-block btn-group">' + devices_elem + '</div>' +
-                '<input type="hidden" name="' + this.config.name + '" value="' + devices + '">';
     },
     /**
      * Render filed devices
@@ -76,10 +58,13 @@ Fields.devices = Backbone.View.extend(
             "devices" : this.getValue(),
             "label" : this.config.label,
             "name" : this.config.name
-        }
-        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-            this.$el.html(this.create());
-        }
+        };
+        
+        this.$el.html(_.template(this.storage.builderTemplates['field-devices'])(htmldata));
+        
+//        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
+//            this.$el.html(this.create());
+//        }
         return this;
     }
 });

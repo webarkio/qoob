@@ -41,10 +41,10 @@ Fields.checkbox = Backbone.View.extend(
      * @returns {String}
      */
     checked: function () {        
-        if (this.model.get(this.config.name)) {
-            return this.getBool(this.model.get(this.config.name));
+        if (this.model.get(this.settings.name)) {
+            return this.getBool(this.model.get(this.settings.name));
         } else {
-            return this.getBool(this.config.default);
+            return this.getBool(this.settings.default);
         }
     },
 

@@ -30,11 +30,34 @@ var BuilderController = Backbone.Router.extend({
     setDeviceMode: function (mode) {
         this.layout.setDeviceMode(mode);
     },
+    /**
+     * Autosave page data for interval
+     * @param {Boolean} autosave
+     */
     setAutoSave: function (autosave) {
+        this.autosave = autosave;
 
+        var self = this;
+        if (this.autosave) {
+            var intervalId = setInterval(function () {
+                if (this.autosave) {
+                    self.save();
+                } else {
+                    clearInterval(intervalId);
+                }
+            }, 60000);
+        }
     },
-    save: function () {
-        console.log("SAVE");
+    /**
+     * Save page data
+     * @param {createBlockCallback} cb - A callback to run.
+     */
+    save: function (cb) {
+        var self = this;
+        
+        // show clock autosave
+        this.layout.toolbar.showAutosave();
+        
         var json = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var html = '';
         var blocks = this.pageModel.get('blocks').models;
@@ -45,11 +68,29 @@ var BuilderController = Backbone.Router.extend({
         }
         ;
         this.storage.save(json, html, function (err, status) {
-            console.log(arguments);
+            // hide clock autosave
+            self.layout.toolbar.hideAutosave();            
+            // Make sure the callback is a function​
+            if (typeof cb === "function") {
+                // Call it, since we have confirmed it is callable​
+                cb(err, status);
+            }
         });
     },
+    /**
+     * Out of the Builder
+     */
     exit: function () {
-        console.log('EXIT');
+        var self = this;
+        if (this.autosave) {
+            this.save(function (err, status) {
+                if (status) {
+                    self.storage.driver.exit(self.storage.pageId);
+                }
+            });
+        } else {
+            this.storage.driver.exit(this.storage.pageId);
+        }
     },
     addNewBlock: function (templateId, afterId) {
         this.addBlock(BuilderUtils.getDefaultSettings(this.storage.builderData.items, templateId), afterId);
@@ -80,7 +121,7 @@ var BuilderController = Backbone.Router.extend({
         this.layout.menu.addView(view, 270);
         this.layout.menu.rotate(name);
         this.layout.menu.settingsViewStorage[name] = view;
-        
+
     },
     deleteInnerSettingsView: function (name) {
         delete this.layout.menu.settingsViewStorage[name];
