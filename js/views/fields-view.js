@@ -16,6 +16,7 @@ var FieldsView = Backbone.View.extend(
     initialize: function (options) {
         this.storage=options.storage;
         this.settings = options.settings;
+        this.controller = options.controller;
     },
     /**
      * Render settings
@@ -24,7 +25,7 @@ var FieldsView = Backbone.View.extend(
     render: function () {
         var res = [];
         for (var i = 0; i < this.settings.length; i++) {
-            var input = new Fields[this.settings[i].type]({model: this.model, storage: this.storage, settings: this.settings});
+            var input = new Fields[this.settings[i].type]({model: this.model, storage: this.storage, settings: this.settings, controller: this.controller});
             input.settings = this.settings[i];
             res.push(input.render().el);
         }

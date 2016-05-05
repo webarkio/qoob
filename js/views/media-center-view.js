@@ -31,17 +31,14 @@ var MediaCenterView = Backbone.View.extend(
      * @augments Backbone.View
      * @constructs
      */
-    initialize: function (data) {
-        this.parentId = data.parentId;
-        this.curSrc = data.curSrc; 
-        this.blockId = data.blockId; 
-        this.assets = data.assets;
-       // field-accordion-item-flip-view
-        var self = this;
-        var self = this;
-        builder.storage.getBuilderTemplate('field-image-setting', function(err, data){
-            self.tpl = _.template(data);
-        });
+    initialize: function (options) {
+        this.parentId = options.parentId;
+        this.curSrc = options.curSrc; 
+        this.blockId = options.blockId; 
+        this.assets = options.assets;
+        this.storage = options.storage;
+        this.tpl = _.template(this.storage.builderTemplates['field-image-setting']);
+        
         this.render();
     },
     /**

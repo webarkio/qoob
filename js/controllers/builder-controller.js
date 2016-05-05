@@ -67,5 +67,15 @@ var BuilderController = Backbone.Router.extend({
     },
     load: function (blocks) {
         this.pageModel.load(blocks);
+    },
+    setInnerSettingsView: function (view) {
+        //Add view to the cube side
+        this.layout.menu.addView(view, 270);
+        //Rotate to this side
+        this.layout.menu.rotate(view.$el.prop('id'));
+        //Store view
+        this.layout.menu.settingsViewStorage = this.layout.menu.settingsViewStorage || [];
+        this.layout.menu.settingsViewStorage[view.$el.prop('id')] = view;
+        
     }
 });

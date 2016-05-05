@@ -242,8 +242,8 @@ BuilderStorage.prototype.getAssets = function() {
         var bd = this.builderData;
         var items = bd.items;
         for (var i = 0, lng = items.length; i < lng; i++) {
-            if (!!items[i].config.assets) {
-                assets.push(items[i].config.assets);
+            if (!!items[i].assets) {
+                assets.push(items[i].assets);
             }
         }
         return assets;
