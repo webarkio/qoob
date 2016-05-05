@@ -38,7 +38,7 @@ function Builder(options) {
  * @param integer pageId id of the page
  * @returns string URL
  */
-Builder.prototype.getIframePageUrl = function(pageId) {
+Builder.prototype.getIframePageUrl = function (pageId) {
     return this.driver.getIframePageUrl(pageId);
 };
 
@@ -46,10 +46,10 @@ Builder.prototype.getIframePageUrl = function(pageId) {
 /**
  * Out of the Builder
  */
-Builder.prototype.exit = function() {
+Builder.prototype.exit = function () {
     var self = this;
     if (jQuery('.checkbox-sb input').prop("checked")) {
-        this.builderLayout.viewPort.save(function(err, state) {
+        this.builderLayout.viewPort.save(function (err, state) {
             self.storage.driver.exit(self.storage.pageId);
         });
     } else {
@@ -60,10 +60,10 @@ Builder.prototype.exit = function() {
 /**
  * Autosave page data for interval
  */
-Builder.prototype.autosavePageData = function() {
+Builder.prototype.autosavePageData = function () {
     var self = this;
     if (jQuery('.checkbox-sb input').prop("checked")) {
-        var intervalId = setInterval(function() {
+        var intervalId = setInterval(function () {
             if (!jQuery('.checkbox-sb input').prop("checked")) {
                 clearInterval(intervalId);
             } else {
@@ -79,40 +79,52 @@ Builder.prototype.autosavePageData = function() {
 /**
  * Activate page builder
  */
-Builder.prototype.activate = function() {
+Builder.prototype.activate = function () {
     Backbone.history.start({pushState: false});
+    console.log(1);
     var self = this;
     this.loader.add(1);
     //Creating and appending builder layout
-    jQuery(window).resize(function() {
+    jQuery(window).resize(function () {
         self.builderLayout.resize()
     });
-    this.storage.loadBuilderTemplates(function(err, builderTemplates) {
-        self.storage.loadBuilderData(function(err, builderData) {
-            self.storage.loadPageData(function(err, pageData) {
+    console.log(2);
+    this.storage.loadBuilderTemplates(function (err, builderTemplates) {
+        console.log(3);
+        self.storage.loadBuilderData(function (err, builderData) {
+            console.log(4);
+            self.storage.loadPageData(function (err, pageData) {
+                console.log("render");
                 self.builderLayout.render();
                 jQuery('body').prepend(self.builderLayout.el);
                 self.builderLayout.resize();
-                
 
-                self.builderLayout.viewPort.onLoad(function() {
+
+                self.builderLayout.viewPort.onLoad(function () {
 
                     self.builderLayout.viewPort.createDefaultDroppable();
-                    console.log(pageData);
-                    for (var i = 0; i < pageData.blocks.length; i++) {
-                        var model = BuilderUtils.createModel(pageData.blocks[i]);
-                        self.pageModel.addBlock(model);
+                    
+                    if (pageData && pageData.blocks) {
+                        self.controller.load(pageData.blocks);
                     }
-                	self.loader.sub();
-                	return;
+                    
+//                    for (var i = 0; i < pageData.blocks.length; i++) {
+//                        var model = BuilderUtils.createModel(pageData.blocks[i]);
+//                        self.pageModel.addBlock(model);
+//                    }
+
+
+                    console.log("viewportloaded");
+                    self.loader.sub();
+                    return;
                     //                    if (pageData.length > 0) {
                     //                        self.loader.add(pageData.length);
                     //                    }
 
                     // Create default droppable zone
-                    
 
-                    self.pageModel.load();
+
+                    
 
                     // Autosave
                     self.autosavePageData();
