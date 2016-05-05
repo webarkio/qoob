@@ -44,6 +44,7 @@ Builder.prototype.getIframePageUrl = function (pageId) {
 
 
 /**
+ * DEPRECATED
  * Out of the Builder
  */
 Builder.prototype.exit = function () {

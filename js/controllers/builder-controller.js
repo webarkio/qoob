@@ -50,6 +50,14 @@ var BuilderController = Backbone.Router.extend({
     },
     exit: function () {
         console.log('EXIT');
+        var self = this;
+        if (jQuery('.checkbox-sb input').prop("checked")) {
+            this.builderLayout.viewPort.save(function (err, state) {
+                self.storage.driver.exit(self.storage.pageId);
+            });
+        } else {
+            this.storage.driver.exit(this.storage.pageId);
+        }
     },
     addNewBlock: function (templateId, afterId) {
         this.addBlock(BuilderUtils.getDefaultSettings(this.storage.builderData.items, templateId), afterId);
