@@ -14,11 +14,9 @@ Fields.colorpicker = Backbone.View.extend(
              * @augments Backbone.View
              * @constructs
              */
-            initialize: function () {
-                var self = this;
-                builder.storage.getBuilderTemplate('field-colorpicker', function(err, data){
-                    self.colorPickerTpl = _.template(data);
-                });
+            initialize: function (options) {
+                this.storage=options.storage;
+                this.settings=options.settings;
             },
             /**
              * Event change colorpicker
@@ -33,7 +31,7 @@ Fields.colorpicker = Backbone.View.extend(
              * @returns {String}
              */
             getValue: function () {
-                return this.model.get(this.config.name) || this.config.default;
+                return this.model.get(this.settings.name) || this.settings.default;
             },
             /**
              * Change color with colorpicker
@@ -70,15 +68,13 @@ Fields.colorpicker = Backbone.View.extend(
              */
             render: function () {
                 var htmldata = {
-                    "label" : this.config.label,
-                    "name" : this.config.name,
+                    "label" : this.settings.label,
+                    "name" : this.settings.name,
                     "value" : this.getValue(),
-                    "arr_colors" : jQuery.inArray(this.getValue(), this.config.colors),
-                    "colors" : this.config.colors,
+                    "arr_colors" : jQuery.inArray(this.getValue(), this.settings.colors),
+                    "colors" : this.settings.colors,
                 }
-                if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-                    this.$el.html(this.colorPickerTpl( htmldata ));
-                }
+                this.$el.html(_.template(this.storage.builderTemplates['field-colorpicker'])(htmldata));
                 return this;
             }
         });

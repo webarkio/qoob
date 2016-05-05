@@ -15,11 +15,9 @@ Fields.select = Backbone.View.extend(
          * @augments Backbone.View
          * @constructs
          */
-        initialize: function() {
-            var self = this;
-            builder.storage.getBuilderTemplate('field-select', function(err, data){
-                self.selectTpl = _.template(data);
-            });
+        initialize: function(options) {
+            this.storage=options.storage;
+            this.settings=options.settings;
         },
         /**
          * Event change colorpicker
@@ -54,13 +52,15 @@ Fields.select = Backbone.View.extend(
          */
         render: function() {
             var htmldata = {
-                "label": this.config.label,
-                "name": this.config.name,
-                "current": this.model.get(this.config.name) || this.config.default,
-                "options": this.config.options,
-                "visible_color": this.config.visible_color
+                "label": this.settings.label,
+                "name": this.settings.name,
+                "current": this.model.get(this.settings.name) || this.settings.default,
+                "options": this.settings.options,
+                "visible_color": this.settings.visible_color
             }
-            this.$el.html(this.selectTpl(htmldata));
+            
+            this.$el.html(_.template(this.storage.builderTemplates['field-select'])(htmldata));
+//            this.$el.html(this.selectTpl(htmldata));
             return this;
         }
     });
