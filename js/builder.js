@@ -81,18 +81,14 @@ Builder.prototype.autosavePageData = function() {
  */
 Builder.prototype.activate = function() {
     Backbone.history.start({pushState: false});
-	console.log(1);
     var self = this;
     this.loader.add(1);
     //Creating and appending builder layout
     jQuery(window).resize(function() {
         self.builderLayout.resize()
     });
-console.log(2);
     this.storage.loadBuilderTemplates(function(err, builderTemplates) {
-    	console.log(3);
         self.storage.loadBuilderData(function(err, builderData) {
-        	console.log(4);
             self.storage.loadPageData(function(err, pageData) {
                 console.log("render");
                 self.builderLayout.render();
@@ -108,8 +104,6 @@ console.log(2);
                         var model = BuilderUtils.createModel(pageData.blocks[i]);
                         self.pageModel.addBlock(model);
                     }
-
-                	console.log("viewportloaded");
                 	self.loader.sub();
                 	return;
                     //                    if (pageData.length > 0) {
