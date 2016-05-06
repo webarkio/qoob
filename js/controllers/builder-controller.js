@@ -56,7 +56,7 @@ var BuilderController = Backbone.Router.extend({
         var self = this;
         
         // show clock autosave
-        this.layout.toolbar.showAutosave();
+        this.layout.toolbar.showSaveLoader();
         
         var json = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var html = '';
@@ -70,7 +70,7 @@ var BuilderController = Backbone.Router.extend({
 
         this.storage.save(json, html, function (err, status) {
             // hide clock autosave
-            self.layout.toolbar.hideAutosave();            
+            self.layout.toolbar.hideSaveLoader();            
             // Make sure the callback is a function​
             if (typeof cb === "function") {
                 // Call it, since we have confirmed it is callable​

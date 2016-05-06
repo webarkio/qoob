@@ -94,14 +94,14 @@ var BuilderToolbarView = Backbone.View.extend(
         /**
          * Show loader autosave
          */
-        showAutosave: function () {
+        showSaveLoader: function () {
             this.$el.find('.save-button span.text').hide();
             this.$el.find('.save-button .clock').css('display', 'block');
         },
         /**
          * Hide loader autosave
          */
-        hideAutosave: function () {
+        hideSaveLoader: function () {
             this.$el.find('.save-button .clock').css('display', '');
             this.$el.find('.save-button span.text').show();
         }

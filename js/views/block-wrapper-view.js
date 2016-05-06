@@ -23,7 +23,6 @@ var BlockWrapperView = Backbone.View.extend({
     render: function() {
         var self = this;
         this.innerBlock.once('loaded', function(){
-            var data = {};
             var droppable = _.template(self.storage.builderTemplates['block-droppable'])({ "blockId": self.model.id });
             var overlay = _.template(self.storage.builderTemplates['block-overlay'])({ "blockId": self.model.id });
             
@@ -40,23 +39,23 @@ var BlockWrapperView = Backbone.View.extend({
     clickStartEditBlock: function(evt) {
         this.controller.navigate('edit/' + this.model.id, { trigger: true });
     },
-        droppable: function() {
-            var self = this;
-            this.$el.find('#droppable-' + self.model.id).droppable({
-                activeClass: "ui-droppable-active",
-                hoverClass: "ui-droppable-hover",
-                tolerance: "pointer",
-                drop: function(event, ui) {
-                    var dropElement = jQuery(this);
-                    //get template id
-                    var templateId = ui.draggable.attr("id").replace("preview-block-", "");
-                    //get after id
-                    var beforeId = dropElement.attr("id").replace("droppable-", "");
-                    // add new block
-                    self.controller.addNewBlock(templateId, beforeId);
-                }
-            });
-        },
+    droppable: function() {
+        var self = this;
+        this.$el.find('#droppable-' + self.model.id).droppable({
+            activeClass: "ui-droppable-active",
+            hoverClass: "ui-droppable-hover",
+            tolerance: "pointer",
+            drop: function(event, ui) {
+                var dropElement = jQuery(this);
+                //get template id
+                var templateId = ui.draggable.attr("id").replace("preview-block-", "");
+                //get after id
+                var beforeId = dropElement.attr("id").replace("droppable-", "");
+                // add new block
+                self.controller.addNewBlock(templateId, beforeId);
+            }
+        });
+    },
     /**
      * Remove view
      */
