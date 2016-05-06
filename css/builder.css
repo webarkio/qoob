@@ -1039,7 +1039,8 @@ ul.catalog-list li a:hover {
 
 /* Edit forms */
 .settings-block {
-    padding: 70px 0 0 4px;
+    margin-top: 5px;
+    padding: 0px 0 0 4px;
     overflow: auto !important;
     height: 100%;
     background-color: #444444;
@@ -1728,6 +1729,7 @@ body.builder-editor {
 #inner-settings-image .filtered-images img {
     width: 100%;
     height: auto;
+    box-sizing: border-box;
 }
 #inner-settings-image .img-select {
     background: #00c1e6;
