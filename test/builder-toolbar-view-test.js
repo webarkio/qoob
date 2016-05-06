@@ -4,7 +4,8 @@ var mockTemplate = "<div class=\"logo\"></div>TOOLBAR HTML TEMPLATE" +
     "<a href=\"#\" class=\"save-button\">save</a>" +
     "<a href=\"#\" class=\"exit-button\">exit</a>" +
     "<a href=\"#\" class=\"preview-mode-button\">Preview</a>" +
-    "<a href=\"#\" class=\"device-mode-button\" name=\"pc\">PC device mode</a>";
+    "<a href=\"#\" class=\"device-mode-button\" name=\"pc\">PC device mode</a>"+
+    "<input type=\"checkbox\" class=\"autosave-checkbox\">";
 
 
 var mockStorage = {
@@ -167,3 +168,20 @@ QUnit.test("clickExit", function(assert) {
     });
     toolbar.render().$el.find('.exit-button').trigger('click');
 });
+
+QUnit.test("clickAutosave", function(assert) {
+	var checked = true;
+    var toolbar = new BuilderToolbarView({
+        storage: mockStorage,
+        controller: {
+            setAutoSave: function(checked) {
+                assert.ok(checked);
+                checked=!checked;
+            }
+        }
+    });
+    toolbar.render().$el.find('.autosave-checkbox').trigger('click');
+    toolbar.render().$el.find('.autosave-checkbox').trigger('click');
+    toolbar.render().$el.find('.autosave-checkbox').trigger('click');
+});
+
