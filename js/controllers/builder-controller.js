@@ -63,10 +63,11 @@ var BuilderController = Backbone.Router.extend({
         var blocks = this.pageModel.get('blocks').models;
         for (var i = 0; i < blocks.length; i++) {
             var blockModel = blocks[i];
-            var blockView = this.storage.getBlockView(blockModel.id); //new BlockView({model:blockModel, storage: this.storage});
-            html += blockView.html;
+            var blockView = this.layout.viewPort.getBlockView(blockModel.id);
+            html += blockView.innerBlock.renderedTemplate;
         }
-        ;
+        console.log(html);
+
         this.storage.save(json, html, function (err, status) {
             // hide clock autosave
             self.layout.toolbar.hideAutosave();            
@@ -98,16 +99,17 @@ var BuilderController = Backbone.Router.extend({
     addBlock: function (values, afterId) {
         var model = BuilderUtils.createModel(values);
         this.pageModel.addBlock(model, afterId);
+        this.layout.viewPort.scrollTo(model.id);
     },
     startEditBlock: function (blockId) {
         this.layout.startEditBlock(blockId);
+        this.layout.viewPort.scrollTo(blockId);
     },
     stopEditBlock: function () {
         this.layout.stopEditBlock();
         this.navigate('index', {trigger: true});
     },
     load: function (blocks) {
-        this.layout.viewPort.blocksCounter = blocks.length;
         this.pageModel.load(blocks);
     },
     setInnerSettingsView: function (view) {

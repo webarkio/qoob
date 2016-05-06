@@ -6,29 +6,57 @@
 var BlockWrapperView = Backbone.View.extend({
     tagName: "div",
     className: "content-block-outer",
-    events:{
+    events: {
         'click .overlay': 'clickStartEditBlock'
+    },
+    attributes: function() {
+        return {
+            'id': 'outer-block-' + this.model.id
+        };
     },
 
     initialize: function(options) {
         this.storage = options.storage;
         this.controller = options.controller;
-        this.innerBlock = new BlockView({ model: this.model, storage:this.storage, controller: this.controller });
+        this.innerBlock = new BlockView({ model: this.model, storage: this.storage });
     },
     render: function() {
-        var data = {};
-        var droppable = _.template(this.storage.builderTemplates['block-droppable'])({ "blockId": this.model.id });
-        var overlay = _.template(this.storage.builderTemplates['block-overlay'])({ "blockId": this.model.id });
+        var self = this;
+        this.innerBlock.once('loaded', function(){
+            var data = {};
+            var droppable = _.template(self.storage.builderTemplates['block-droppable'])({ "blockId": self.model.id });
+            var overlay = _.template(self.storage.builderTemplates['block-overlay'])({ "blockId": self.model.id });
+            
+            self.$el.html([droppable, overlay, self.innerBlock.el]);
+            self.droppable();
+            self.trigger('loaded');
+        });
+        //Add 'please wait' template while loading
+        this.$el.html(_.template(this.storage.getBuilderTemplate('block-pleasewait'))());
         
-        //_.template(this.storage.builderTemplates['block-wrapper'])(data)
-        this.$el.html([droppable, overlay, this.innerBlock.render().el]);
+        this.innerBlock.render();
         return this;
     },
-    clickStartEditBlock: function(evt){
-        this.controller.navigate('edit/'+this.model.id, {trigger: true});
-        //startEditBlock(this.model.id);
+    clickStartEditBlock: function(evt) {
+        this.controller.navigate('edit/' + this.model.id, { trigger: true });
     },
-
+        droppable: function() {
+            var self = this;
+            this.$el.find('#droppable-' + self.model.id).droppable({
+                activeClass: "ui-droppable-active",
+                hoverClass: "ui-droppable-hover",
+                tolerance: "pointer",
+                drop: function(event, ui) {
+                    var dropElement = jQuery(this);
+                    //get template id
+                    var templateId = ui.draggable.attr("id").replace("preview-block-", "");
+                    //get after id
+                    var beforeId = dropElement.attr("id").replace("droppable-", "");
+                    // add new block
+                    self.controller.addNewBlock(templateId, beforeId);
+                }
+            });
+        },
     /**
      * Remove view
      */
