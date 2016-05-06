@@ -28,6 +28,7 @@ QUnit.test("initialize", function(assert) {
         storage: 1,
         controller: 2
     });
+    
     assert.equal(toolbar.storage, 1);
     assert.equal(toolbar.controller, 2);
 });
@@ -36,6 +37,7 @@ QUnit.test("render", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage
     });
+
     assert.equal(mockTemplate, toolbar.render().$el.html());
 });
 
@@ -43,6 +45,7 @@ QUnit.test("resize", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage
     });
+
     assert.equal(toolbar.render().resize().$el.width(), window.innerWidth);
 });
 
@@ -65,8 +68,8 @@ QUnit.test("setPreviewMode", function(assert) {
     });
 
     $('body').append(toolbar.render().$el);
-    toolbar.setPreviewMode();
     assert.equal(toolbar.$el.css('display'), 'block');
+    toolbar.setPreviewMode();
     _.delay(function() {
         assert.equal(toolbar.$el.css('display'), 'none');
         toolbar.$el.remove();
@@ -82,9 +85,8 @@ QUnit.test("setEditMode", function(assert) {
     });
 
     $('body').append(toolbar.render().$el);
-    toolbar.setPreviewMode();
     assert.equal(toolbar.$el.css('display'), 'block');
-
+    toolbar.setPreviewMode();
     _.delay(function() {
         assert.equal(toolbar.$el.css('display'), 'none');
         toolbar.setEditMode();
@@ -113,6 +115,7 @@ QUnit.test("startEditBlock", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage
     });
+
     assert.ok(!toolbar.$el.find('.logo').hasClass('side-270'));
     toolbar.render().startEditBlock();
     assert.ok(toolbar.$el.find('.logo').hasClass('side-270'));
@@ -142,6 +145,7 @@ QUnit.test("clickDeviceMode", function(assert) {
             }
         }
     });
+
     toolbar.render().$el.find('.device-mode-button').trigger('click');
 });
 
@@ -154,6 +158,7 @@ QUnit.test("clickSave", function(assert) {
             }
         }
     });
+
     toolbar.render().$el.find('.save-button').trigger('click');
 });
 
@@ -166,6 +171,7 @@ QUnit.test("clickExit", function(assert) {
             }
         }
     });
+
     toolbar.render().$el.find('.exit-button').trigger('click');
 });
 
@@ -180,6 +186,7 @@ QUnit.test("clickAutosave", function(assert) {
             }
         }
     });
+
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
