@@ -6,6 +6,7 @@ var mockStorage = {
             return testTemplate;
         }
     }
+
 };
 
 QUnit.module("BuilderToolbarView");
@@ -21,6 +22,11 @@ QUnit.test("attributes", function(assert) {
     assert.equal(toolbar.el.id, 'builder-toolbar');
 });
 
+// QUnit.test("initialize", function(assert) {
+//     var toolbar = new BuilderToolbarView({});
+//     assert.equal(toolbar.mockStorage, '<div id="builder-toolbar"></div>');
+// });
+
 QUnit.test("render", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage
@@ -28,6 +34,43 @@ QUnit.test("render", function(assert) {
 
     assert.equal(testTemplate, toolbar.render().$el.html());
 
+    });
+
+
+QUnit.test("clickPreviewMode", function(assert) {
+    var toolbar = new BuilderToolbarView({
+        storage: mockStorage,
+        controller: {
+            setPreviewMode: function() {
+                assert.ok(true);
+            }
+        }
+    });
+    toolbar.clickPreviewMode();
+});
+
+QUnit.test("clickDeviceMode", function(assert) {
+    var toolbar = new BuilderToolbarView({
+        storage: mockStorage,
+        controller: {
+            setDeviceMode: function() {
+                assert.ok(true);
+            }
+        }
+    });
+    toolbar.clickDeviceMode();
+});
+
+QUnit.test("clickExit", function(assert) {
+    var toolbar = new BuilderToolbarView({
+        storage: mockStorage,
+        controller: {
+            exit: function() {
+                assert.ok(true);
+            }
+        }
+    });
+    toolbar.clickExit();
 });
 
 QUnit.test("clickSave", function(assert) {
@@ -40,6 +83,8 @@ QUnit.test("clickSave", function(assert) {
         }
     });
     toolbar.render().$el.find('.save-button').trigger('click');
+    //console.log(toolbar.render().$el.find('.save-button'));
+    //toolbar.render().$el.find('.save-button').trigger('click');
 });
 
 QUnit.test("clickExit", function(assert) {
