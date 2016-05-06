@@ -3,6 +3,9 @@
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
+ if (typeof module !== 'undefined' && module.exports) {
+     var Backbone = require('backbone');
+}
 var BuilderToolbarView = Backbone.View.extend(
     /** @lends BuilderMenuGroupsView.prototype */
     {
@@ -34,7 +37,7 @@ var BuilderToolbarView = Backbone.View.extend(
          * @returns {Object}
          */
         render: function() {
-            this.$el.html(_.template(this.storage.builderTemplates['builder-toolbar'])());
+            this.$el.html(_.template(this.storage.getBuilderTemplate('builder-toolbar'))());
             return this;
         },
         setPreviewMode: function() {
@@ -103,3 +106,7 @@ var BuilderToolbarView = Backbone.View.extend(
             this.$el.find('.save-button span.text').show();
         }
     });
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = BuilderToolbarView;
+}
