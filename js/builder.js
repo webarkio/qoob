@@ -32,51 +32,6 @@ function Builder(options) {
     this.controller.setStorage(this.storage);
 }
 
-/*
- * Getting driver page id for iframe
- * @param integer pageId id of the page
- * @returns string URL
- */
-Builder.prototype.getIframePageUrl = function(pageId) {
-    return this.driver.getIframePageUrl(pageId);
-};
-
-
-/**
- * DEPRECATED
- * Out of the Builder
- */
-Builder.prototype.exit = function() {
-    var self = this;
-    if (jQuery('.checkbox-sb input').prop("checked")) {
-        this.layout.viewPort.save(function(err, state) {
-            self.storage.driver.exit(self.storage.pageId);
-        });
-    } else {
-        this.storage.driver.exit(this.storage.pageId);
-    }
-};
-
-/**
- * DEPRECATED
- * Autosave page data for interval
- */
-Builder.prototype.autosavePageData = function() {
-    var self = this;
-    if (jQuery('.checkbox-sb input').prop("checked")) {
-        var intervalId = setInterval(function() {
-            if (!jQuery('.checkbox-sb input').prop("checked")) {
-                clearInterval(intervalId);
-            } else {
-                self.layout.viewPort.save();
-            }
-        }, 60000);
-    }
-};
-
-
-
-
 /**
  * Activate page builder
  */
@@ -86,7 +41,7 @@ Builder.prototype.activate = function() {
     this.loader.add(4);
     //Creating and appending builder layout
     jQuery(window).resize(function() {
-        self.layout.resize()
+        self.layout.resize();
     });
     //Start loading data
     this.storage.loadBuilderTemplates(function(err, builderTemplates) {
