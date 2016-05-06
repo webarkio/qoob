@@ -1,4 +1,4 @@
-var testTemplate = "TOOLBAR HTML TEMPLATE";
+var testTemplate = "TOOLBAR HTML TEMPLATE <a href=\"#\" class=\"save-button\">save</a><a href=\"#\" class=\"exit-button\">exit</a>";
 
 var mockStorage = {
     getBuilderTemplate: function(templateName) {
@@ -26,11 +26,9 @@ QUnit.test("render", function(assert) {
         storage: mockStorage
     });
 
-    toolbar.render();
-    assert.equal(testTemplate, toolbar.$el.html());
+    assert.equal(testTemplate, toolbar.render().$el.html());
 
 });
-
 
 QUnit.test("clickSave", function(assert) {
     var toolbar = new BuilderToolbarView({
@@ -41,5 +39,17 @@ QUnit.test("clickSave", function(assert) {
             }
         }
     });
-    toolbar.clickSave();
+    toolbar.render().$el.find('.save-button').trigger('click');
+});
+
+QUnit.test("clickExit", function(assert) {
+    var toolbar = new BuilderToolbarView({
+        storage: mockStorage,
+        controller: {
+            exit: function() {
+                assert.ok(true);
+            }
+        }
+    });
+    toolbar.render().$el.find('.exit-button').trigger('click');
 });
