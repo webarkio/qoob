@@ -1,4 +1,9 @@
-var testTemplate = "TOOLBAR HTML TEMPLATE <a href=\"#\" class=\"save-button\">save</a><a href=\"#\" class=\"exit-button\">exit</a>";
+var testTemplate = "TOOLBAR HTML TEMPLATE"+ 
+"<a href=\"#\" class=\"save-button\">save</a>"+
+"<a href=\"#\" class=\"exit-button\">exit</a>"+
+"<a href=\"#\" class=\"preview-mode-button\">Preview</a>"+
+"<a href=\"#\" class=\"device-mode-button\" name=\"pc\">PC device mode</a>";
+
 
 var mockStorage = {
     getBuilderTemplate: function(templateName) {
@@ -46,31 +51,21 @@ QUnit.test("clickPreviewMode", function(assert) {
             }
         }
     });
-    toolbar.clickPreviewMode();
+
+    toolbar.render().$el.find('.preview-mode-button').trigger('click');
 });
 
 QUnit.test("clickDeviceMode", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage,
         controller: {
-            setDeviceMode: function() {
+            setDeviceMode: function(mode) {
+            	assert.equal(mode, 'pc');
                 assert.ok(true);
             }
         }
     });
-    toolbar.clickDeviceMode();
-});
-
-QUnit.test("clickExit", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage,
-        controller: {
-            exit: function() {
-                assert.ok(true);
-            }
-        }
-    });
-    toolbar.clickExit();
+    toolbar.render().$el.find('.device-mode-button').trigger('click');
 });
 
 QUnit.test("clickSave", function(assert) {
@@ -83,8 +78,6 @@ QUnit.test("clickSave", function(assert) {
         }
     });
     toolbar.render().$el.find('.save-button').trigger('click');
-    //console.log(toolbar.render().$el.find('.save-button'));
-    //toolbar.render().$el.find('.save-button').trigger('click');
 });
 
 QUnit.test("clickExit", function(assert) {
