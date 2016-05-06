@@ -6,7 +6,7 @@
 var BlockView = Backbone.View.extend({
     tagName: "div",
     className: "content-block-inner",
-    renderedTemplate:'',
+    renderedTemplate: '',
     // attributes:function(){
     //     return {
     //         id: 'block-inner-'+this.model.id
@@ -15,15 +15,24 @@ var BlockView = Backbone.View.extend({
     initialize: function (options) {
         this.template = options.template;//compiled template
         this.storage = options.storage;
+        this.controller = options.controller;
         this.listenTo(this.model, 'change', this.render);
     },
     render: function () {
-        
-        this.storage.addBlockView(this);
-        this.html=this.template(this.model.toJSON());
-        //Adding pleasewait block to html
-        //this.html = this.storage.builderTemplates['block-pleasewait'];
-        this.$el.html(this.html);
+        var self = this,
+                item = _.findWhere(this.storage.builderData.items, {id: this.model.get('template')}),
+                tplAdapterType = item.blockTemplateAdapter || this.controller.layout.viewPort.getDefaultTemplateAdapter(),
+                tplAdapter = BuilderExtensions.templating[tplAdapterType];
+       
+        this.$el.html(this.storage.builderTemplates['block-pleasewait']);
+
+        this.storage.getTemplate(this.model.get('template'), function (err, template) {
+            var template = tplAdapter(template);
+            
+            self.$el.html(template(self.model.toJSON()));
+            self.storage.addBlockView(self);
+            
+        });
 
 
 //        var iframe = builder.builderLayout.viewPort.getWindowIframe();
@@ -35,11 +44,11 @@ var BlockView = Backbone.View.extend({
 //        builder.storage.addBlockView(this);
 
         // loader page -1
-  //      builder.loader.sub();
+        //      builder.loader.sub();
 
         // when added block hide loader
-    //    builder.loader.hideWaitBlock();
-    
+        //    builder.loader.hideWaitBlock();
+
         return this;
     },
     /**

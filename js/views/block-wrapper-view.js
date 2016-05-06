@@ -13,13 +13,13 @@ var BlockWrapperView = Backbone.View.extend({
     initialize: function(options) {
         this.storage = options.storage;
         this.controller = options.controller;
-        this.innerBlock = new BlockView({template: options.innerTemplate, model: this.model, storage:this.storage });
+        this.innerBlock = new BlockView({ model: this.model, storage:this.storage, controller: this.controller });
     },
     render: function() {
         var data = {};
         var droppable = _.template(this.storage.builderTemplates['block-droppable'])({ "blockId": this.model.id });
         var overlay = _.template(this.storage.builderTemplates['block-overlay'])({ "blockId": this.model.id });
-
+        
         //_.template(this.storage.builderTemplates['block-wrapper'])(data)
         this.$el.html([droppable, overlay, this.innerBlock.render().el]);
         return this;
