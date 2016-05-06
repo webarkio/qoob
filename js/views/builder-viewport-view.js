@@ -28,7 +28,10 @@ var BuilderViewportView = Backbone.View.extend(
          * @returns {Object}
          */
         render: function() {
-            this.$el.html(_.template(this.storage.builderTemplates['builder-viewport'])({ "postId": this.storage.pageId }));
+            // Getting driver page id for iframe
+            var url = this.storage.driver.getIframePageUrl(this.storage.pageId);
+            
+            this.$el.html(_.template(this.storage.builderTemplates['builder-viewport'])({ "url": url }));
             this.$el.find('#builder-iframe').on('load', this.iframeLoaded.bind(this));
             return this;
         },
