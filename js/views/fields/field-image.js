@@ -11,7 +11,7 @@ Fields.image = Backbone.View.extend(
                     imageTpl: null,
                     events: {
                         'change input': 'changeInput',
-                        'click input': 'imageUpload',
+                        'click .btn-upload.btn-builder': 'imageUpload',
                         'click .cross-delete': 'deleteImage',
                         'click .other-photo': 'changeImage'
                     },
@@ -50,9 +50,9 @@ Fields.image = Backbone.View.extend(
                      * @param {Object} evt
                      */
                     imageUpload: function (evt) {
-                        var assets = builder.storage.getAssets();
+                        var assets = this.storage.getAssets();
                         var curSrc = jQuery(evt.target).siblings('.edit-image').find('img').attr('src');
-
+                        
                         window.selectFieldImage = function (src) {
                             var img = jQuery(evt.target).prev().find('img');
                             if (src) {
@@ -69,6 +69,7 @@ Fields.image = Backbone.View.extend(
 
                         var mediaCenter = new MediaCenterView({
                             "model": this.model,
+                            "controller": this.controller,
                             "parentId": this.model.owner_id,
                             "storage": this.storage,
                             "curSrc": curSrc,
