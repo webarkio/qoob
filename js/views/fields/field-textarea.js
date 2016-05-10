@@ -2,7 +2,6 @@ var Fields = Fields || {};
 Fields.textarea = Backbone.View.extend(
 /** @lends Fields.textarea.prototype */{
     className: "settings-item",
-    texareaTpl: null,
     events: {
         'change textarea': 'changeTextarea'
     },

@@ -2,7 +2,6 @@ var Fields = Fields || {};
 Fields.text = Backbone.View.extend(
 /** @lends Fields.text.prototype */{
     className: "settings-item",
-    textTpl: null,
     events: {
         'keyup input': 'changeInput'
     },
@@ -42,13 +41,9 @@ Fields.text = Backbone.View.extend(
             "name" : this.settings.name,
             "value" : this.getValue(),
             "placeholder" : this.settings.placeholder
-        }
+        };
+        
         this.$el.html(_.template(this.storage.builderTemplates['field-text'])(htmldata));
-
-        // if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
-        //     this.$el.html(this.textTpl( htmldata ));
-        // }
-
         return this;
     }
 });

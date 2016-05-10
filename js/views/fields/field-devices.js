@@ -2,7 +2,6 @@ var Fields = Fields || {};
 Fields.devices = Backbone.View.extend(
 /** @lends Fields.devices.prototype */{
     className: "settings-item",
-    devicesTpl: null,
     events: {
         'click .btn-group a': 'clickDevice'
     },
@@ -61,10 +60,6 @@ Fields.devices = Backbone.View.extend(
         };
         
         this.$el.html(_.template(this.storage.builderTemplates['field-devices'])(htmldata));
-        
-//        if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
-//            this.$el.html(this.create());
-//        }
         return this;
     }
 });

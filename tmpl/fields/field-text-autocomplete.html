@@ -3,6 +3,11 @@ jQuery("#<%= uniqueId %>").autocomplete({
     source: function(request, callback) {
         var searchParam = request.term;
         init(searchParam, callback);
+    },
+    select: function( event, ui ) {
+       if ($(this).text() == ui.item.value.state) {
+            $(this).attr('selected', 'selected');
+        }
     }
 });
 
