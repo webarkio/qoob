@@ -1131,7 +1131,7 @@ ul.catalog-list li a:hover {
 .settings-item {
     margin-bottom: 42px;
     clear: both;
-    width: 100%;
+    /*width: 100%;*/
     position: relative;
 }
 
@@ -1165,8 +1165,8 @@ ul.catalog-list li a:hover {
 }
 
 .settings-item .title .preview_img img {
-    width: 52px;
-    height: 52px;
+    width: 37px;
+    height: 37px;
 }
 
 .settings-item .title .text {
@@ -1208,13 +1208,31 @@ ul.catalog-list li a:hover {
 }
 
 .settings-accordion + .settings-accordion {
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 .settings-accordion .title_accordion {
-    background: #fff;
-    padding: 3px;
+    background: #606163;
+    padding: 0;
     margin: 0;
+    border-radius: 3px;
+}
+.settings-accordion .title_accordion .arrow-elem {
+    background: url('../img/arrow_accordion.png') no-repeat center;
+    display: block;
+    width: 23px;
+    height: 43px;
+    float: right;
+    margin-right: 5px;
+    transform: rotate(180deg);
+    transition: transform 0.5s ease-out 0.5s;
+}
+.settings-accordion .title_accordion[aria-expanded="true"] .arrow-elem {
+    transform: rotate(0deg);
+}
+.settings-accordion .title_accordion[aria-expanded="true"] {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .settings-accordion .title_accordion.inner-settings-true + .settings-block {
@@ -1222,22 +1240,23 @@ ul.catalog-list li a:hover {
 }
 
 .settings-accordion .title_accordion .text {
-    color:#6f6f6f;
-    font-size: 16px;
+    color:#fff;
+    font-size: 13px;
     font-weight: normal;
-    margin-top: 18px;
-    line-height: 19px;
+    line-height: 42px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 95px;
     text-transform: capitalize;
+    font-family: "robotoregular";
+    margin-left: 11px;
 }
 .settings-accordion .title_accordion .preview_img {
     float: left;
     margin-right: 15px;
-    width: 52px;
-    height: 52px;
+    width: 37px;
+    height: 37px;
 }
 
 .settings-accordion .settings-item {
@@ -1249,17 +1268,23 @@ ul.catalog-list li a:hover {
 .settings-accordion .settings-block {
     margin-left: 0;
     overflow: hidden;
-    height: inherit;
-    width: 89.2% !important;
+    width: 96.1% !important;
     padding-top: 20px;
     background: #6f6f6f;
-    padding: 0 13px;
+    padding: 0 5px;
+    margin-top: 2px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
-
 .settings-accordion .settings-block .cross-delete {
-    display: none;
+    height: 25px;
+    width: 104%;
+    margin-left: -5px;
+    background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
 }
-
+.settings-accordion .settings-block .cross-delete:hover {
+    cursor: pointer;
+}
 .settings-accordion .settings-block .settings-item:first-child {
     margin-top: 20px;
 }
@@ -1269,16 +1294,17 @@ ul.catalog-list li a:hover {
 }
 
 .drag-elem {
-    background: url(../img/drag.png) no-repeat;
-    width: 34px;
-    height: 34px;
-    margin-top: 14px;
+    background: url(../img/icon-draggable.png) no-repeat center center;
+    width: 19px;
+    height: 43px;
     margin-right: 0;
     display: inline-block;
-    float: right;
-    background-size: 25px 25px;
+    float: left;
+    background-color: #8b8b8b;
 }
-
+.drag-elem:hover {
+    cursor: move;
+}
 .add-block {
     color: #00c1e6;
     padding: 20px 0;
