@@ -118,12 +118,11 @@ var BuilderController = Backbone.Router.extend({
         var name = view.$el.prop('id');
         //Add view to the cube side
         if(!!this.layout.menu.settingsViewStorage[name]) {
-            this.layout.menu.delView(name);
+            this.deleteInnerSettingsView(name);
         }
         this.layout.menu.addView(view, 270);
         this.layout.menu.rotate(name);
         this.layout.menu.settingsViewStorage[name] = view;
-
     },
     deleteInnerSettingsView: function (name) {
         delete this.layout.menu.settingsViewStorage[name];
