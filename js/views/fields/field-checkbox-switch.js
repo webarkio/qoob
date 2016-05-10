@@ -1,9 +1,9 @@
 var Fields = Fields || {};
-Fields.checkbox = Backbone.View.extend(
+Fields.checkbox_switch = Backbone.View.extend(
 /** @lends Fields.checkbox.prototype */{
     className: "settings-item",
     events: {
-        'change input': 'changeInput'
+        'change input': 'changeSwitch'
     },
     /**
      * View field checkbox
@@ -19,12 +19,9 @@ Fields.checkbox = Backbone.View.extend(
      * Event change input
      * @param {Object} evt
      */
-    changeInput: function (evt) {
+    changeSwitch: function (evt) {
         var target = jQuery(evt.target);
         this.model.set(target.attr('name'), (target[0].checked == false ? 0 : 1));
-
-        var elem = target.parents('.checkbox-switcher').next('.status').find('span');
-        elem.toggleClass('status-on');
     },
     /**
      * Get boolean value
@@ -47,6 +44,13 @@ Fields.checkbox = Backbone.View.extend(
         }
     },
     /**
+     * Get unique id
+     * @returns {String}
+     */
+    getUniqueId: function () {
+        return this.uniqueId = this.uniqueId || _.uniqueId('checkbox-switch-');
+    },
+    /**
      * Render filed checkbox
      * @returns {Object}
      */
@@ -54,11 +58,11 @@ Fields.checkbox = Backbone.View.extend(
         var htmldata = {
             "label" : this.settings.label,
             "name" : this.settings.name,
-            "status" : (this.checked() ? "status-on" : ""),
+            "uniqueId" : this.getUniqueId(),
             "checked" : (this.checked()  ? "checked" : "")
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox-switch'])(htmldata));
         return this;
     }
 });

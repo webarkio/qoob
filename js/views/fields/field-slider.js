@@ -2,7 +2,6 @@ var Fields = Fields || {};
 Fields.slider = Backbone.View.extend(
 /** @lends Fields.slider.prototype */{
     className: "settings-item",
-    sliderTpl: null,
     events: {
         'change input': 'changeInput'
     },
@@ -43,7 +42,7 @@ Fields.slider = Backbone.View.extend(
             "name" : this.settings.name,
             "value" : this.getValue()
         };
-//        this.$el.html(this.sliderTpl( htmldata ));
+        
         this.$el.html(_.template(this.storage.builderTemplates['field-slider'])(htmldata));
         return this;
     }
