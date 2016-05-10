@@ -61,9 +61,10 @@ Fields.accordion = Backbone.View.extend(
 
                 var self = this,
                         values = this.getValue(),
-                        settings = this.settigns.settings,
+                        settings = this.settings.settings,
                         settingsParams = [],
-                        data = [];
+                        data = [],
+                        newModel;
 
                 for (var i in settings) {
                     settingsParams.push({'name': settings[i].name, 'default': settings[i].default});
@@ -72,19 +73,19 @@ Fields.accordion = Backbone.View.extend(
                 for (var i = 0; i < settingsParams.length; i++) {
                     data[settingsParams[i].name] = settingsParams[i].default;
                 }
-
-                values.add(BuilderUtils.createModel(data));
+                newModel = BuilderUtils.createModel(data);
+                values.add(newModel);
                 var item = new Fields[this.classNameItem]({
-                    model: BuilderUtils.createModel(data),
-                    settings: this.settings,
+                    model: newModel,
+                    settings: settings,
                     storage: this.storage,
                     controller: this.controller
                 });
 
-                this.model.listenTo(item.model, "change", function () {
-                    this.trigger('change');
-                    self.changePosition();
-                });
+//                this.model.listenTo(item.model, "change", function () {
+//                    this.trigger('change');
+//                    self.changePosition();
+//                });
 
                 item.model.set('order', (values.models ? values.models.length - 1 : 0));
 
@@ -99,27 +100,26 @@ Fields.accordion = Backbone.View.extend(
             render: function () {
                 var values = this.getValue(),
                         settings = this.settings.settings,
-                        items = [],
-                        valueModels = values.models;
+                        items = [];
                 // sort accordion settings
-                valueModels = _.sortBy(valueModels, function (model) {
+                values.models = _.sortBy(values.models, function (model) {
                     return model.get('order');
                 });
                 this.classNameItem = (this.settings.viewType === undefined || this.settings.viewType === "expand") ? 'accordion_item_expand' : 'accordion_item_flip';
 
-                for (var i = 0; i < valueModels.length; i++) {
+                for (var i = 0; i < values.models.length; i++) {
                     var item = new Fields[this.classNameItem]({
-                        model: valueModels[i],
-                        settings: this.settings,
+                        model: values.models[i],
+                        settings: settings,
                         storage: this.storage,
                         controller: this.controller
                     });
-                    
-                    this.model.listenTo(item.model, "change", function () {
-                        this.trigger('change');
-                        this.changePosition();
-                    });
-                    
+
+//                    this.model.listenTo(item.model, "change", function () {
+//                        this.trigger('change');
+//                        this.changePosition();
+//                    });
+
                     items.push(item.render().el);
                 }
 
@@ -130,8 +130,57 @@ Fields.accordion = Backbone.View.extend(
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
-                    this.$el.html(this.accordionTpl(htmldata)).find('#' + this.getUniqueId()).append(items);
+                    this.$el.html(this.tpl(htmldata)).find('#' + this.getUniqueId()).append(items);
+                    this.sortableInit();
                 }
+
                 return this;
+            },
+            sortableInit: function () {
+                var self = this,
+                        id = this.getUniqueId();
+
+                this.$el.find("#" + id).accordion({
+                    header: "> div > h3.inner-settings-expand",
+                    collapsible: true
+                }).sortable({
+                    items: ".settings-accordion",
+                    revert: false,
+                    axis: "y",
+                    //handle: "h3",
+                    //scroll: true,
+                    start: function (event, ui) {
+                        self.controller.layout.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");
+                        if (self.$(this).find(".tinyMCE").length) {
+                            self.$(this).find(".tinyMCE").each(function () {
+                                try {
+                                    tinymce.execCommand("mceRemoveEditor", false, self.$(this).attr("id"));
+                                } catch (e) {
+                                }
+                            });
+                        }
+                    },
+                    sort: function (event, ui) {
+                    },
+                    stop: function (event, ui) {
+                        ui.item.trigger("drop", ui.item.index());
+                        // IE doesn't register the blur when sorting
+                        // so trigger focusout handlers to remove .ui-state-focus
+                        ui.item.children("h3").triggerHandler("focusout");
+                        // Refresh accordion to handle new order
+                        self.$(this).accordion("refresh");
+                        self.controller.layout.viewPort.getIframeContents().find(".droppable").removeAttr("style");
+                        // Refresh tinyMCE
+                        if (self.$(this).find(".tinyMCE").length) {
+                            self.$(this).find(".tinyMCE").each(function () {
+                                try {
+                                    tinymce.execCommand("mceAddEditor", true, self.$(this).attr("id"));
+                                } catch (e) {
+                                }
+                            });
+                        }
+                    }
+                });
+
             }
         });

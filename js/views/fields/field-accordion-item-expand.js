@@ -29,7 +29,9 @@ Fields.accordion_item_expand = Backbone.View.extend(
                 var items = [],
                         settingsView = new FieldsView({
                             model: this.model,
-                            settings: this.settigns
+                            settings: this.settings,
+                            storage: this.storage,
+                            controller: this.controller
                         }),
                         htmldata = {
                             "image": settingsView.model.get('image'),
@@ -44,7 +46,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
                 items.push(this.tpl(htmldata));
                 items.push(settingsView.render().el);
 
-                if (typeof (this.config.show) == "undefined" || this.config.show(this.model)) {
+                if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
                     this.$el.html(items);
                 }
                 return this;

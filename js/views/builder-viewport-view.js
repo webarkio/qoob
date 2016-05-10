@@ -165,7 +165,6 @@ var BuilderViewportView = Backbone.View.extend(
                     }
                 });
             }
-            console.log(beforeBlockId);
             //Attach element to DOM
             if (beforeBlockId > 0) {
                 iframe.jQuery('#outer-block-' + beforeBlockId).before(blockWrapper.render().el);

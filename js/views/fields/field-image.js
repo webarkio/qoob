@@ -85,8 +85,8 @@ Fields.image = Backbone.View.extend(
                      * @param {type} evt
                      */
                     deleteImage: function (evt) {
-                        jQuery(evt.target).hide();
-                        var item = jQuery(evt.target).parents('.settings-item');
+                        this.$(evt.target).hide();
+                        var item = this.$(evt.target).parents('.settings-item');
                         var name = item.find('input').prop('name');
                         item.find('.edit-image > img').attr('src', '');
                         item.find('.edit-image').hide();
@@ -100,7 +100,7 @@ Fields.image = Backbone.View.extend(
                      * @param {Object} evt
                      */
                     changeImage: function (evt) {
-                        var elem = jQuery(evt.currentTarget);
+                        var elem = this.$(evt.currentTarget);
                         this.$el.find('.other-photo').removeClass('active');
                         elem.addClass('active');
                         this.$el.find('.edit-image img').attr('src', elem.find('img').attr('src'));

@@ -121,7 +121,6 @@ var BuilderMenuView = Backbone.View.extend({
         var addedClass = newSide.prop('id');
         
         if (currentSide.prop('id') == newSide.prop('id')) {
-            console.log('full_rotated');
             addedClass += ' side-full-rotation';
         }
 
