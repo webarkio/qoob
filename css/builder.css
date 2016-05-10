@@ -1874,6 +1874,7 @@ body.builder-editor {
 #inner-settings-image .filtered-images img {
     width: 100%;
     height: auto;
+    box-sizing: border-box;
 }
 #inner-settings-image .img-select {
     background: #00c1e6;

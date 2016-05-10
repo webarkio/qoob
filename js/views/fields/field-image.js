@@ -11,7 +11,7 @@ Fields.image = Backbone.View.extend(
                     imageTpl: null,
                     events: {
                         'change input': 'changeInput',
-                        'click input': 'imageUpload',
+                        'click .btn-upload.btn-builder': 'imageUpload',
                         'click .cross-delete': 'deleteImage',
                         'click .other-photo': 'changeImage'
                     },
@@ -50,9 +50,9 @@ Fields.image = Backbone.View.extend(
                      * @param {Object} evt
                      */
                     imageUpload: function (evt) {
-                        var assets = builder.storage.getAssets();
+                        var assets = this.storage.getAssets();
                         var curSrc = jQuery(evt.target).siblings('.edit-image').find('img').attr('src');
-
+                        
                         window.selectFieldImage = function (src) {
                             var img = jQuery(evt.target).prev().find('img');
                             if (src) {
@@ -69,6 +69,7 @@ Fields.image = Backbone.View.extend(
 
                         var mediaCenter = new MediaCenterView({
                             "model": this.model,
+                            "controller": this.controller,
                             "parentId": this.model.owner_id,
                             "storage": this.storage,
                             "curSrc": curSrc,
@@ -84,8 +85,8 @@ Fields.image = Backbone.View.extend(
                      * @param {type} evt
                      */
                     deleteImage: function (evt) {
-                        jQuery(evt.target).hide();
-                        var item = jQuery(evt.target).parents('.settings-item');
+                        this.$(evt.target).hide();
+                        var item = this.$(evt.target).parents('.settings-item');
                         var name = item.find('input').prop('name');
                         item.find('.edit-image > img').attr('src', '');
                         item.find('.edit-image').hide();
@@ -99,7 +100,7 @@ Fields.image = Backbone.View.extend(
                      * @param {Object} evt
                      */
                     changeImage: function (evt) {
-                        var elem = jQuery(evt.currentTarget);
+                        var elem = this.$(evt.currentTarget);
                         this.$el.find('.other-photo').removeClass('active');
                         elem.addClass('active');
                         this.$el.find('.edit-image img').attr('src', elem.find('img').attr('src'));

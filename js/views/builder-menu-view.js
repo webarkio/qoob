@@ -118,9 +118,9 @@ var BuilderMenuView = Backbone.View.extend({
         // get block side
         var currentSide = currentElement.closest('div[id^="side-"]');
         var newSide = newElement.closest('div[id^="side-"]');
-
         var addedClass = newSide.prop('id');
-        if (currentSide == newSide) {
+        
+        if (currentSide.prop('id') == newSide.prop('id')) {
             addedClass += ' side-full-rotation';
         }
 
@@ -128,7 +128,7 @@ var BuilderMenuView = Backbone.View.extend({
         this.$el.find('.menu-block').hide();
 
         // show current block menu
-        currentElement.show();
+        currentElement.hide();
         newElement.show();
 
         // rotate cube menu
