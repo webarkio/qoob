@@ -6,7 +6,7 @@
 var AccordionFlipView = Backbone.View.extend(
         /** @lends BuilderView.prototype */{
             tagName: "div",
-            className: "settings menu-block",
+            className: "settings menu-block accordion-item",
             tpl: null,
             parentId: null,
             /**
@@ -50,7 +50,7 @@ var AccordionFlipView = Backbone.View.extend(
                     controller: this.controller
                 });
                 this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
-                this.$el.append(settingsView.render().el);
+                this.$el.append(settingsView.render().$el.append('<div class="cross-delete accordion-flip"></div>'));
                 return this;
             },
             /**

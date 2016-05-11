@@ -1144,7 +1144,9 @@ ul.catalog-list li a:hover {
     display: block;
     margin-bottom: 90px;
 }
-
+.settings.accordion-item .settings-block:after {
+    margin-bottom: 57px;
+}
 .ui-accordion-content.settings-block:after {
     margin-bottom: 0;
 }
@@ -1288,6 +1290,13 @@ ul.catalog-list li a:hover {
 .settings-accordion .settings-block .cross-delete:hover {
     cursor: pointer;
 }
+.cross-delete.accordion-flip {
+    background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
+    height: 48px;
+    width: 246px;
+    z-index: 2;
+    border-radius: 3px;
+}
 .settings-accordion .settings-block .settings-item:first-child {
     margin-top: 20px;
 }
@@ -1321,10 +1330,6 @@ ul.catalog-list li a:hover {
 .add-block:hover {
     cursor: pointer;
 }
-.ui-accordion-content-active {
-    height: inherit !important;
-}
-
 .ui-sortable-helper, .ui-sortable-helper * {
     cursor: all-scroll !important;
 }
