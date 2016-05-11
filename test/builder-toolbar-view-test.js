@@ -37,7 +37,8 @@ QUnit.test("render", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage
     });
-
+           
+    console.log(toolbar);
     assert.equal(mockTemplate, toolbar.render().$el.html());
 });
 
@@ -122,6 +123,10 @@ QUnit.test("startEditBlock", function(assert) {
 
 });
 
+//Show loader autosave
+
+//Hide loader autosave
+
 QUnit.test("clickPreviewMode", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage,
@@ -191,4 +196,6 @@ QUnit.test("clickAutosave", function(assert) {
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
 });
+
+
 
