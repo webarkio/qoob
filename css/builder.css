@@ -1281,9 +1281,9 @@ ul.catalog-list li a:hover {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 }
-.settings-accordion .settings-block .cross-delete {
+.settings-accordion .settings-block .cross-delete.expand {
     height: 25px;
-    width: 104%;
+    width: 245px;
     margin-left: -5px;
     background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
 }
