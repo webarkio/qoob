@@ -36,13 +36,21 @@ var AccordionFlipView = Backbone.View.extend(
                 this.controller = options.controller;
                 this.parentId = options.parentId;
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-view']);
+                this.render();
             },
             /**
              * Render builder view
              * @returns {Object}
              */
             render: function () {
+                var settingsView = new FieldsView({
+                    model: this.model,
+                    settings: this.settings,
+                    storage: this.storage,
+                    controller: this.controller
+                });
                 this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
+                this.$el.append(settingsView.render().el);
                 return this;
             },
             /**

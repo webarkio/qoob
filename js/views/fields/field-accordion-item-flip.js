@@ -30,10 +30,13 @@ Fields.accordion_item_flip = Backbone.View.extend(
              * @returns {Object}
              */
             showSettings: function (evt) {
-                var viewSet = {model: this.model, settings: this.settings, storage: this.storage, controller: this.controller},
-                settingsView = new FieldsView(viewSet),
-                        flipView = new AccordionFlipView(Object.assign(viewSet, {parentId: this.model.owner_id}));
-                flipView.render().$el.append(settingsView.render().el);
+                var flipView = new AccordionFlipView({
+                    model: this.model,
+                    settings: this.settings,
+                    storage: this.storage,
+                    controller: this.controller,
+                    parentId: this.model.owner_id
+                });
                 this.controller.setInnerSettingsView(flipView);
             },
             /**
