@@ -133,8 +133,9 @@ Fields.accordion = Backbone.View.extend(
 
                 this.$el.find("#" + id).accordion({
                     header: "> div > h3.inner-settings-expand",
-                    animate: 200,
+                    animate: 500,
                     collapsible: true,
+                    heightStyle: 'content',
                 }).sortable({
                     items: ".settings-accordion",
                     revert: false,
