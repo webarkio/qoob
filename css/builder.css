@@ -828,13 +828,47 @@ label.checkbox-sb [type=checkbox]:checked + span {
     outline: none;
 }
 
+.visible-block {
+    width: 100%;
+}
+
 .visible-block a {
-    padding: 5px 14.5px;
-    color: white;
-    background: #00c1e6;
-    border-radius: 2px;
+    padding: 17px 0;
+    color: #fff;
+    background: #606163;
     text-decoration: inherit;
 }
+
+.visible-block.btn-group>.btn {
+    width: 33%;
+    border: 0;
+    box-shadow: none;
+    text-shadow: none;
+    font-size: 13px;
+}
+
+.visible-block.btn-group>.btn:first-child {
+    -webkit-border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    -webkit-border-top-left-radius: 2px;
+    border-top-left-radius: 2px;
+    -moz-border-radius-bottomleft: 2px;
+    -moz-border-radius-topleft: 2px;
+}
+
+.visible-block.btn-group>.btn:last-child {
+    -webkit-border-top-right-radius: 2px;
+    border-top-right-radius: 2px;
+    -webkit-border-bottom-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    -moz-border-radius-topright: 2px;
+    -moz-border-radius-bottomright: 2px;
+}
+
+.visible-block.btn-group>.btn+.btn {
+    margin-left: 2px;
+}
+
 .visible-block a:focus {
     box-shadow: none;
 }
@@ -842,7 +876,8 @@ label.checkbox-sb [type=checkbox]:checked + span {
     margin-left: 5px;
 }
 .visible-block a.no-active {
-    background: #b2b2b2;
+    color: #fff;
+    background: #00c1e6;
 }
 
 ul.catalog-list {
@@ -1413,10 +1448,20 @@ ul.catalog-list li a:hover {
 
 .settings-item .select .dropdown-menu {
     margin: 3px 0 0;
+    border-radius: 2px;
+    background: none;
+    border: 0;
+    box-shadow: none;
+}
+
+.settings-item .select .dropdown-menu li {
+    margin: 0;
 }
 
 .settings-item .select .dropdown-menu li a {
     color: #5a5b5e;
+    background-color: #fff;
+    padding: 11px 0 11px 22px;
 }
 
 .settings-item .select.bootstrap-select.btn-group .dropdown-menu li a:hover {
@@ -1427,8 +1472,23 @@ ul.catalog-list li a:hover {
 
 .settings-item .select.bootstrap-select.btn-group .dropdown-menu li.selected a {
     background-image: none;
-    background-color: #9ea0a5;
+    background-color: #606163;
     background-repeat: no-repeat;
+    color: #fff;
+}
+
+.settings-item .select.bootstrap-select.btn-group .dropdown-menu li:first-child a {
+    -webkit-border-top-left-radius: 2px;
+    border-top-left-radius: 2px;
+    -webkit-border-top-right-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.settings-item .select.bootstrap-select.btn-group .dropdown-menu li:last-child a {
+    -webkit-border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    -webkit-border-bottom-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 
 .settings-item .input-text {
@@ -1666,11 +1726,6 @@ input[type="text"]#datepicker {
     border-radius: 2px;
 }
 
-.settings-item .other-photos {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
 .settings-item .other-photos div {
     overflow: hidden;
     height: 50px;
@@ -1697,36 +1752,46 @@ input[type="text"]#datepicker {
 }
 
 .settings-item .other-colors {
-    margin-bottom: 10px;
     display: inline-block;
+    font-size: 0;
+    vertical-align: top;
 }
 
 .settings-item .other-color {
-    overflow: hidden;
-    height: 50px;
-    width: 50px;
-    border: 1px solid #fff;
-    cursor: pointer;
     display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
     vertical-align: middle;
-    margin-left: 6px;
+    text-align: center;
+    margin: 0 0 0 5px;
+    font-size: 0;
 }
 
-.settings-item .other-colors div:first-child {
-    margin-left: 3px;
+.settings-item .other-color span {
+    display: block;
+    overflow: hidden;
+    height: 29px;
+    width: 29px;
+    border: 1px solid #fff;
+    border-radius: 2px;
 }
 
 .settings-item .other-color.active {
-    border-width: 4px;
-    height: 44px;
-    width: 44px;
+    border: solid 3px #2bc0e4;
+    border-radius: 2px;
+}
+
+.settings-item .other-color.active span {
+    border-radius: 0;
+    height: 23px;
+    width: 23px;
 }
 
 .settings-item .other-color.change-color {
-    display: inline-block;
     background: url(../img/colorpicker.png) 100%;
-    width: 52px;
-    height:52px;
+    width: 31px;
+    height:31px;
+    margin: 0 0 0 1px;
 }
 
 .settings-item button.other-color:focus {
@@ -1750,6 +1815,41 @@ input[type="text"]#datepicker {
     border: none;
     background: transparent url(../img/slider_handle.png) no-repeat center center;
 }
+
+.settings-autocomplete {
+    background: none;
+    box-shadow: none;
+    border: 0;
+    margin-top: 3px;
+}
+
+.settings-autocomplete li {
+    color: #5a5b5e;
+    background-color: #fff;
+    padding: 11px 0 11px 22px;
+}
+
+.settings-autocomplete li:hover {
+    background-color: #9ea0a5;
+}
+
+.settings-autocomplete li:first-child {
+    background-color: #606163;
+    color: #fff;
+    margin-top: 3px;
+    -webkit-border-top-left-radius: 2px;
+    border-top-left-radius: 2px;
+    -webkit-border-top-right-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.settings-autocomplete li:last-child {
+    -webkit-border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    -webkit-border-bottom-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
 
 /*! jQuery UI - v1.11.4 - 2015-10-29
 * http://jqueryui.com

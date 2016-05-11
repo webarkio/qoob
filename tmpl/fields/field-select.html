@@ -1,6 +1,6 @@
 <div class="title"><%= label %></div>
 <% if(visible_color === undefined || visible_color === false){ %>
-	<select class="selectpicker select" name="<%= name %>" data-size="4">
+	<select class="selectpicker show-tick select" name="<%= name %>" data-size="4" data-width="100%">
 		<% _.each( options, function( option ){ %>
 			<option <% if ( current === option.id ){ %> selected <% } %> value='<%- option.id %>'>
 				<%- option.val %>
@@ -10,15 +10,13 @@
 <% }else { %>
 	<div class="other-colors">
 		<% _.each( options, function( option ){ %>
-			<div id="<%-option.id %>" class="other-color theme-colors <% if ( current === option.id ){ %> active <% } %>" style="background: <%- option.colorimage %>"><span></span>
+			<div id="<%-option.id %>" class="other-color theme-colors <% if ( current === option.id ){ %>active<% } %>">
+				<span style="background: <%- option.colorimage %>"></span>
 			</div>
 		<% }); %>
 	</div>
 	<input type="hidden" name="<%= name %>" value="">
 <%}%>
 <script type="text/javascript">
-jQuery('.selectpicker').selectpicker({
-  showTick: true,
-  width: '100%'
-});
+jQuery('.selectpicker').selectpicker();
 </script>
