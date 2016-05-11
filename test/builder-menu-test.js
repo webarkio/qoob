@@ -12,15 +12,9 @@ var mockTemplateMenu = "<div id=\"card\">" +
 "</div></div></div>";
 
 var mockStorageMenu = {
-    builderTemplates: function([templateName]) {
-        if (templateName == 'builder-menu') {
-            return mockTemplateMenu;
-          
-        }
-    }
+    builderTemplates: {'builder-menu':mockTemplateMenu, 'buildermenu-groups':""},
+    builderData: {'groups': []}
 };
-
-//var builderTemplates = 'builder-menu';
 
 //============START TEST===============
 QUnit.test("initialize", function(assert) {
@@ -50,9 +44,8 @@ QUnit.test("render", function(assert) {
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
-           console.log(menu);
-           console.log(menu.render());
-           assert.equal(mockTemplateMenu, menu.render().$el.html());
+           
+        assert.equal(mockTemplateMenu, menu.render().$el);
 
 });
 

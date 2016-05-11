@@ -37,8 +37,7 @@ QUnit.test("render", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage
     });
-           
-    console.log(toolbar);
+
     assert.equal(mockTemplate, toolbar.render().$el.html());
 });
 
