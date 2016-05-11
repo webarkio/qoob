@@ -22,8 +22,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
                 this.controller = options.controller;
                 this.$el.attr('data-model-id', this.model.id);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip']);
-                this.accordionItemFrontSettingTpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-setting']);
-
+                this.parentId = options.parentId || this.model.owner_id;
             },
             /**
              * Show accordion item's settings
@@ -35,7 +34,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
                     settings: this.settings,
                     storage: this.storage,
                     controller: this.controller,
-                    parentId: this.model.owner_id
+                    parentId: this.parentId
                 });
                 this.controller.setInnerSettingsView(flipView);
             },

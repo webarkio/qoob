@@ -79,7 +79,8 @@ Fields.accordion = Backbone.View.extend(
                     model: newModel,
                     settings: settings,
                     storage: this.storage,
-                    controller: this.controller
+                    controller: this.controller,
+                    parentId: this.model.id
                 });
 
                 item.model.set('order', (values.models ? values.models.length - 1 : 0));

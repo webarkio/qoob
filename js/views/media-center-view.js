@@ -161,7 +161,7 @@ var MediaCenterView = Backbone.View.extend(
              */
             dispose: function () {
                 // same as this.$el.remove();
-                this.remove();
+                this.$el.remove();
                 // unbind events that are
                 // set on this view
                 this.off();

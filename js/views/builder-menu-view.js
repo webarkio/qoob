@@ -186,7 +186,9 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {String} view id
      */
     delView: function(id) {
-        this.settingsViewStorage[id].dispose();
+        if(this.settingsViewStorage && this.settingsViewStorage[id]) {
+            this.settingsViewStorage[id].dispose();
+        }   
     }
 
 });

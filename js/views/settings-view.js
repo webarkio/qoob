@@ -61,7 +61,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
             // }
 
             // same as this.$el.remove();
-            this.remove();
+            this.$el.remove();
 
             // unbind events that are
             // set on this view

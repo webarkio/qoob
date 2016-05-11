@@ -34,9 +34,8 @@ var AccordionFlipView = Backbone.View.extend(
                 this.storage = options.storage;
                 this.settings = options.settings;
                 this.controller = options.controller;
-                this.parentId = options.parentId;
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-view']);
-                this.render();
+                this.parentId = options.parentId;
             },
             /**
              * Render builder view
@@ -58,7 +57,7 @@ var AccordionFlipView = Backbone.View.extend(
              */
             dispose: function () {
                 // same as this.$el.remove();
-                this.remove();
+                this.$el.remove();
                 // unbind events that are
                 // set on this view
                 this.off();
