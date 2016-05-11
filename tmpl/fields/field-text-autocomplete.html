@@ -1,15 +1,17 @@
 <script type="text/javascript">
 jQuery("#<%= uniqueId %>").autocomplete({
-    source: function(request, callback) {
+    source: function(request, callback) {        
         var searchParam = request.term;
         init(searchParam, callback);
     },
-    select: function( event, ui ) {
-       if ($(this).text() == ui.item.value.state) {
-            $(this).attr('selected', 'selected');
-        }
-    }
-});
+}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        //Ul custom class here
+        ul.addClass('settings-autocomplete');
+        return jQuery( "<li>" )
+            .attr( "data-value", item.value )
+            .append( item.label )
+            .appendTo( ul );
+        };;
 
 function init(query, callback) {
     var response = [];

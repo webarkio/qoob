@@ -25,7 +25,7 @@ Fields.devices = Backbone.View.extend(
         var target = jQuery(evt.currentTarget);
         target.toggleClass('no-active');
 
-        var input = this.$el.find('input[name="'+this.config.name+'"]');        
+        var input = this.$el.find('input[name="'+this.settings.name+'"]');        
         var devices = this.$el.find('.btn-group a');
         
         var active = [];
@@ -36,7 +36,7 @@ Fields.devices = Backbone.View.extend(
         }
 
         input.val(active);
-        this.model.set(this.config.name, active.join(','));
+        this.model.set(this.settings.name, active.join(','));
         
         this.controller.layout.viewPort.visibilityBlocks(this.model.id, active);
     },
@@ -45,7 +45,7 @@ Fields.devices = Backbone.View.extend(
      * @returns {String}
      */
     getValue: function () {
-        return this.model.get(this.config.name) || this.config.default;
+        return this.model.get(this.settings.name) || this.settings.default;
     },
     /**
      * Render filed devices
@@ -53,10 +53,10 @@ Fields.devices = Backbone.View.extend(
      */
     render: function () {
         var htmldata = {
-            "settings" : this.config.settings,
+            "settings" : this.settings.settings,
             "devices" : this.getValue(),
-            "label" : this.config.label,
-            "name" : this.config.name
+            "label" : this.settings.label,
+            "name" : this.settings.name
         };
         
         this.$el.html(_.template(this.storage.builderTemplates['field-devices'])(htmldata));
