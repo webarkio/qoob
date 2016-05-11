@@ -82,11 +82,6 @@ Fields.accordion = Backbone.View.extend(
                     controller: this.controller
                 });
 
-//                this.model.listenTo(item.model, "change", function () {
-//                    this.trigger('change');
-//                    self.changePosition();
-//                });
-
                 item.model.set('order', (values.models ? values.models.length - 1 : 0));
 
                 this.$el.find("#" + this.getUniqueId()).append(item.render().el);
@@ -115,11 +110,6 @@ Fields.accordion = Backbone.View.extend(
                         controller: this.controller
                     });
 
-//                    this.model.listenTo(item.model, "change", function () {
-//                        this.trigger('change');
-//                        this.changePosition();
-//                    });
-
                     items.push(item.render().el);
                 }
 
@@ -142,7 +132,9 @@ Fields.accordion = Backbone.View.extend(
 
                 this.$el.find("#" + id).accordion({
                     header: "> div > h3.inner-settings-expand",
-                    collapsible: true
+                    animate: 500,
+                    collapsible: true,
+                    heightStyle: 'content',
                 }).sortable({
                     items: ".settings-accordion",
                     revert: false,
