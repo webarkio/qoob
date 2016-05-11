@@ -1227,6 +1227,9 @@ ul.catalog-list li a:hover {
     transform: rotate(180deg);
     transition: transform 0.5s ease-out 0.5s;
 }
+.settings-accordion .title_accordion.inner-settings-flip .arrow-elem {
+    transform: rotate(90deg);
+}
 .settings-accordion .title_accordion[aria-expanded="true"] .arrow-elem {
     transform: rotate(0deg);
 }
@@ -1254,7 +1257,7 @@ ul.catalog-list li a:hover {
 }
 .settings-accordion .title_accordion .preview_img {
     float: left;
-    margin-right: 15px;
+    margin: 3px 0px 3px 3px;
     width: 37px;
     height: 37px;
 }
@@ -1307,11 +1310,12 @@ ul.catalog-list li a:hover {
 }
 .add-block {
     color: #00c1e6;
-    padding: 20px 0;
+    padding: 11px 0;
     text-align: center;
-    border: 1px dashed #fff;
-    width: 99%;
+    border: 2px dashed #9fa1a7;
+    width: 98%;
     margin-top: 7px;
+    font-size: 13px;
 }
 
 .add-block:hover {
