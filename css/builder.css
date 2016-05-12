@@ -1179,6 +1179,9 @@ ul.catalog-list li a:hover {
     display: block;
     margin-bottom: 90px;
 }
+.settings-accordion .settings-block:after {
+    display: none;
+}
 .settings.accordion-item .settings-block:after {
     margin-bottom: 57px;
 }
@@ -1315,6 +1318,7 @@ ul.catalog-list li a:hover {
     margin-top: 2px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    overflow: hidden !important; /*hide scroll when expand accordion item*/
 }
 .settings-accordion .settings-block .cross-delete.expand {
     height: 25px;
