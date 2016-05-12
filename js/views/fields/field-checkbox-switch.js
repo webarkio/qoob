@@ -62,7 +62,7 @@ Fields.checkbox_switch = Backbone.View.extend(
             "checked" : (this.checked()  ? "checked" : "")
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox-switch'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox-switch-preview'])(htmldata));
         return this;
     }
 });

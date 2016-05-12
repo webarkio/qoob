@@ -73,7 +73,7 @@ Fields.colorpicker = Backbone.View.extend(
             "colors" : this.settings.colors
         };
 
-        this.$el.html(_.template(this.storage.builderTemplates['field-colorpicker'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-colorpicker-preview'])(htmldata));
         return this;
     }
 });

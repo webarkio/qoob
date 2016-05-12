@@ -12,7 +12,7 @@ var mockTemplateMenu = "<div id=\"card\">" +
 "</div></div></div>";
 
 var mockStorageMenu = {
-    builderTemplates: {'builder-menu':mockTemplateMenu, 'buildermenu-groups':""},
+    builderTemplates: {'builder-menu':mockTemplateMenu, 'menu-groups-preview':""},
     builderData: {'groups': []}
 };
 

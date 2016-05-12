@@ -10,7 +10,7 @@ var mockTemplate = "<div class=\"logo\"></div>TOOLBAR HTML TEMPLATE" +
 
 var mockStorage = {
     getBuilderTemplate: function(templateName) {
-        if (templateName == 'builder-toolbar') {
+        if (templateName == 'builder-toolbar-preview') {
             return mockTemplate;
         }
     }
