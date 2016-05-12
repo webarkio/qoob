@@ -19,18 +19,18 @@ describe('BuilderLoader', function() {
     });
 
     it('#add', function() {
-        builderLoader.add();
+        builderLoader.addStep();
         assert.equal(builderLoader.left, 1);
-        builderLoader.add();
+        builderLoader.addStep();
         assert.equal(builderLoader.left, 2);
-        builderLoader.add(2);
+        builderLoader.addStep(2);
         assert.equal(builderLoader.left, 4);
     });
 
     it('#sub', function() {
-        builderLoader.sub(0);
+        builderLoader.step(0);
         assert.equal(builderLoader.left, 3);
-        builderLoader.sub(1);
+        builderLoader.step(1);
         assert.equal(builderLoader.left, 2);
     });
 

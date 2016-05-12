@@ -20,6 +20,16 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'robotomedium';
+    src: url('../fonts/roboto/Roboto-Medium.eot');
+    src: url('../fonts/roboto/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/roboto/Roboto-Medium.woff') format('woff'),
+        url('../fonts/roboto/Roboto-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     @font-face {
         font-family: "robotobold";
@@ -55,15 +65,72 @@
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(117,117,117,0.4);
 }
-
+/*LOADER*/
 #loader-wrapper {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(43,192,228, 1);
+    background: #fff;
     z-index: 100500;
+}
+
+#loader-wrapper .loading-panel {
+    position: relative;
+    text-align: center;
+}
+
+#loader-wrapper .qoob-preview-img {
+    margin-top: 185px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 106px;
+    height: 106px;
+    background: url('../img/qoob-preloader.png');
+}
+
+#loader-wrapper .progress {
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 102px;
+    margin-bottom: 100px;
+    margin-left: 10%;
+    margin-right: 10%;
+    box-shadow: none;
+    background: #E2E5E9;
+}
+
+#loader-wrapper .progress-bar {
+    height: 10px;
+    background: #2DC0E4;
+}
+
+#loader-wrapper .sr-only {
+    display: inline-block;
+    margin-top: 27px;
+    font-family: 'robotomedium';
+    font-size: 14px;
+    color: #2DC0E4;
+}
+
+#loader-wrapper .tip-panel {
+    border: 1px solid #E2E5E9;
+    padding: 105px;
+    text-align: center;
+    border-radius: 10px;
+    margin-left: 15%;
+    margin-right: 15%;
+    font-family: 'robotoregular';
+    font-size: 18px;
+    color: #C1C4C8;
+    line-height: 29px;
+}
+
+#loader-wrapper .tip-header {
+    display: block;
+    margin-bottom: 10px;
+    color: #2DC0E4;
 }
 
 #loader-wrapper h1 {
@@ -134,7 +201,7 @@
 #loader .seconds-container {
     animation: rotate 0.4s infinite linear;
 }
-
+/*END PRELOADER*/
 #builder {
     width: 100%;
 }
