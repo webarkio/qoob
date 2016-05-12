@@ -59,7 +59,7 @@ Fields.devices = Backbone.View.extend(
             "name" : this.settings.name
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-devices'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-devices-preview'])(htmldata));
         return this;
     }
 });

@@ -20,7 +20,7 @@ Fields.accordion = Backbone.View.extend(
                 this.settings = options.settings;
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.builderTemplates['field-accordion']);
+                this.tpl = _.template(this.storage.builderTemplates['field-accordion-preview']);
             },
             /**
              * Change position blocks accordion

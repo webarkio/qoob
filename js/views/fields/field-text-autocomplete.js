@@ -51,7 +51,7 @@ Fields.text_autocomplete = Backbone.View.extend(
             "uniqueId" : this.getUniqueId()
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-text-autocomplete'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-text-autocomplete-preview'])(htmldata));
         return this;
     }
 });

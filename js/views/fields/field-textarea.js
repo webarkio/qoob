@@ -42,7 +42,7 @@ Fields.textarea = Backbone.View.extend(
             "textareaId" : _.uniqueId('textarea')
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-textarea'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-textarea-preview'])(htmldata));
         return this;
     }
 });
