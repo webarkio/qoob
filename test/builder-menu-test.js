@@ -26,7 +26,7 @@ var mockTemplateMenuResalt =
 "</div>";
 
 var mockStorageMenu = {
-    builderTemplates: {'builder-menu':mockTemplateMenu, 'buildermenu-groups':"<li><a href=\"#video\"></a></li>"},
+    builderTemplates: {'builder-menu-preview':mockTemplateMenu, 'menu-groups-preview':"<li><a href=\"#video\"></a></li>"},
     builderData: {'groups': []}
 };
 
