@@ -34,7 +34,7 @@ var BuilderToolbarView = Backbone.View.extend({
      * @returns {Object}
      */
     render: function() {
-        this.$el.html(_.template(this.storage.getBuilderTemplate('builder-toolbar'))());
+        this.$el.html(_.template(this.storage.getBuilderTemplate('builder-toolbar-preview'))());
         return this;
     },
     /**

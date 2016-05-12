@@ -48,7 +48,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 controller: this.controller,
                 className: 'settings-block settings-scroll'
             });
-            this.$el.html(_.template(this.storage.builderTemplates['buildermenu-settings'])(this.config)).append(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).append(settingsBlock.render().el);
 
             return this;
         },
@@ -61,7 +61,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
             // }
 
             // same as this.$el.remove();
-            this.remove();
+            this.$el.remove();
 
             // unbind events that are
             // set on this view

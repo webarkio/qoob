@@ -58,7 +58,7 @@ Fields.select = Backbone.View.extend(
             "visible_color": this.settings.visible_color
         };
 
-        this.$el.html(_.template(this.storage.builderTemplates['field-select'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-select-preview'])(htmldata));
         return this;
     }
 });

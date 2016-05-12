@@ -43,7 +43,7 @@ Fields.slider = Backbone.View.extend(
             "value" : this.getValue()
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-slider'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-slider-preview'])(htmldata));
         return this;
     }
 });
