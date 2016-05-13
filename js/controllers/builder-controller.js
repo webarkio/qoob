@@ -127,5 +127,8 @@ var BuilderController = Backbone.Router.extend({
     deleteInnerSettingsView: function (name) {
         this.layout.menu.delView(name);
         delete this.layout.menu.settingsViewStorage[name];
+    },
+    deleteBlock: function (model) {
+        this.pageModel.deleteBlock(model);
     }
 });

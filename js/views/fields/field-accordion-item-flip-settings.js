@@ -21,7 +21,8 @@ var AccordionFlipView = Backbone.View.extend(
                 };
             },
             events: {
-                'click .backward-accordion': 'backward'
+                'click .backward-accordion': 'backward',
+                'click .delete-item-accordion': 'deleteItemSettings'
             },
             /**
              * View buider
@@ -49,8 +50,12 @@ var AccordionFlipView = Backbone.View.extend(
                     controller: this.controller
                 });
                 this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
-                this.$el.append(settingsView.render().$el.append('<div class="cross-delete accordion-flip"></div>'));
+                this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
+            },
+            deleteItemSettings: function () {
+                // this.backward();
+                // this.dispose();
             },
             /**
              * Remove view

@@ -6,7 +6,7 @@
 var BuilderMenuView = Backbone.View.extend({
     id: "builder-menu",
     currentId: 'catalog-groups',
-    //    settingsViewStorage: {},
+    menuViews: [],
     /**
      * View menu
      * @class BuilderMenuView
@@ -17,6 +17,7 @@ var BuilderMenuView = Backbone.View.extend({
         this.controller = options.controller;
         this.storage = options.storage;
         this.model.on("block_add", this.addSettings.bind(this));
+        this.model.on("block_delete", this.deleteSettings.bind(this));
     },
     addSettings: function(model) {
         var item = _.findWhere(this.storage.builderData.items, { id: model.get('template') });
@@ -100,7 +101,19 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {String} side Side cube
      */
     addView: function(view, side) {
+        this.menuViews.push(view);
         this.$el.find('#side-' + side).append(view.render().el);
+    },
+    /**
+     * Get SettingsView by id
+     * @param {Number} id modelId
+     */
+    getSettingsView: function(id) {
+        for (var i = 0; i < this.menuViews.length; i++) {
+            if (this.menuViews[i].model && this.menuViews[i].model.id == id) {
+                return this.menuViews[i];
+            }
+        };
     },
     /**
      * Menu rotation
@@ -147,9 +160,6 @@ var BuilderMenuView = Backbone.View.extend({
         this.currentId = id;
 
     },
-
-
-
     onEditStart: function(blockId) {
         this.rotate('settings-block-' + blockId);
     },
@@ -189,6 +199,11 @@ var BuilderMenuView = Backbone.View.extend({
         if(this.settingsViewStorage && this.settingsViewStorage[id]) {
             this.settingsViewStorage[id].dispose();
         }   
+    },
+    deleteSettings: function(modelId) {
+        this.showIndex();
+        var settings = this.getSettingsView(modelId);
+        settings.dispose();
     }
 
 });
