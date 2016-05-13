@@ -45,6 +45,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 model: this.model,
                 storage: this.storage,
                 settings: this.config.settings,
+                defaults: this.config.defaults,
                 controller: this.controller,
                 className: 'settings-block settings-scroll'
             });

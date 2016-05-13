@@ -3,11 +3,9 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var AccordionFlipView = Backbone.View.extend(
+var AccordionFlipView = FieldView.extend(
         /** @lends BuilderView.prototype */{
-            tagName: "div",
             className: "settings menu-block accordion-item",
-            tpl: null,
             parentId: null,
             /**
              * Set setting's id
@@ -30,10 +28,7 @@ var AccordionFlipView = Backbone.View.extend(
              * @constructs
              */
             initialize: function (options) {
-                this.model = options.model;
-                this.storage = options.storage;
-                this.settings = options.settings;
-                this.controller = options.controller;
+                FieldView.prototype.initialize.call(this, options);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-view-preview']);
                 this.parentId = options.parentId;
             },
@@ -45,6 +40,7 @@ var AccordionFlipView = Backbone.View.extend(
                 var settingsView = new FieldsView({
                     model: this.model,
                     settings: this.settings,
+                    defaults: this.defaults,
                     storage: this.storage,
                     controller: this.controller
                 });

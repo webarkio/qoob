@@ -1,9 +1,7 @@
 var Fields = Fields || {};
-Fields.accordion_item_flip = Backbone.View.extend(
+Fields.accordion_item_flip = FieldView.extend(
         /** @lends Fields.accordion_item_front.prototype */{
             className: "settings-item settings-accordion",
-            tpl: null,
-            accordionItemFrontSettingTpl: null,
             events: {
                 'click .cross-delete': 'deleteModel',
                 'click .title_accordion.inner-settings-flip': 'showSettings',
@@ -16,10 +14,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
              * @constructs
              */
             initialize: function (options) {
-                this.model = options.model;
-                this.storage = options.storage;
-                this.settings = options.settings;
-                this.controller = options.controller;
+                FieldView.prototype.initialize.call(this, options);
                 this.$el.attr('data-model-id', this.model.id);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-preview']);
                 this.parentId = options.parentId || this.model.owner_id;
@@ -32,6 +27,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
                 var flipView = new AccordionFlipView({
                     model: this.model,
                     settings: this.settings,
+                    defaults: this.defaults,
                     storage: this.storage,
                     controller: this.controller,
                     parentId: this.parentId
@@ -47,6 +43,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
                         settingsView = new FieldsView({
                             model: this.model,
                             settings: this.settings,
+                            defaults: this.defaults,
                             storage: this.storage,
                             controller: this.controller
                         }),

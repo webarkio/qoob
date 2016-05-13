@@ -1,19 +1,8 @@
 var Fields = Fields || {};
-Fields.slider = Backbone.View.extend(
+Fields.slider = FieldView.extend(
 /** @lends Fields.slider.prototype */{
-    className: "settings-item",
     events: {
         'change input': 'changeInput'
-    },
-    /**
-     * View field slider
-     * @class Fields.slider
-     * @augments Backbone.View
-     * @constructs
-     */
-    initialize: function (options) {
-        this.storage = options.storage;
-        this.settings = options.settings;
     },
     /**
      * Event change input
@@ -22,13 +11,6 @@ Fields.slider = Backbone.View.extend(
     changeInput: function (evt) {
         var target = jQuery(evt.target);
         this.model.set(target.attr('name'), target.val());
-    },
-    /**
-     * Get value field slider
-     * @returns {String}
-     */
-    getValue: function () {
-        return this.model.get(this.settings.name) || this.settings.default;
     },
     /**
      * Render filed slider
