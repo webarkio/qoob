@@ -1,5 +1,13 @@
 QUnit.module("BuilderMenuView");
 
+var View = Backbone.View.extend({
+    render: function() {
+        return this;
+    }
+});
+
+var view = new View({ id: 'builder-menu' });
+
 var mockTemplateMenu =
     "<div id=\"card\">" +
     "<div class=\"card-wrap\">" +
@@ -125,29 +133,45 @@ QUnit.test("resize", function(assert) {
     assert.equal(menu.$el.css('top'), '70px');
 });
 
-//QUnit.test("addView", function(assert) {
-//    var menu = new BuilderMenuView({model: new Backbone.Model(),
-//        storage: mockStorageMenu
-//    });
-//           
-//           menu.render().addView('<div>view</div>','90');
-//           assert.ok(menu.$el.find('.#side-90').hasClass('active'));
-//           
-//});
+QUnit.test("addView", function(assert) {
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
+
+    menu.render().addView(view, '90');
+    assert.ok(menu.$el.find('#side-90').hasClass('active'));
+
+});
 
 QUnit.test("rotate", function(assert) {
     var menu = new BuilderMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
-    menu.render().rotate('side-0');
-    assert.equal(menu.id, 'builder-menu');
-    assert.ok(menu.$el.find('.card-main').hasClass('side-0'));
-    menu.rotate('side-90');
-    assert.ok(!menu.$el.find('.card-main').hasClass('side-0'));
+    menu.render().rotate('catalog-groups');
+    assert.ok(menu.$el.find('#side-0').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-90').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-180').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-270').hasClass('active'));
 });
 
 //onEditStart
+QUnit.test("onEditStart", function(assert) {
+    var done = assert.async();
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
+    menu.render().addView(view, 180);
+    menu.render().onEditStart(5);
+    menu.render().rotate('settings-block-5');
+    assert.ok(!menu.$el.find('#side-0').hasClass('active'));
+    assert.ok(menu.$el.find('#side-90').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-180').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-270').hasClass('active'));
+
+});
 
 //onEditStop
 
@@ -176,7 +200,7 @@ QUnit.test("back", function(assert) {
     var menu = new BuilderMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
-    });  
+    });
     menu.render().rotate('side-270');
     assert.ok(menu.$el.find('.card-main').hasClass('side-270'));
     menu.back();
