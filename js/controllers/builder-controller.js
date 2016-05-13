@@ -66,8 +66,7 @@ var BuilderController = Backbone.Router.extend({
             var blockView = this.layout.viewPort.getBlockView(blockModel.id);
             html += blockView.innerBlock.renderedTemplate;
         }
-        console.log(html);
-
+        
         this.storage.save(json, html, function (err, status) {
             // hide clock autosave
             self.layout.toolbar.hideSaveLoader();            

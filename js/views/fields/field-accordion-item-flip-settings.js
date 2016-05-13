@@ -22,7 +22,7 @@ var AccordionFlipView = Backbone.View.extend(
             },
             events: {
                 'click .backward-accordion': 'backward',
-                'click .delete-item-accordion': 'deleteItemSettings'
+                'click .delete-item-accordion': 'deleteInnerSettings'
             },
             /**
              * View buider
@@ -49,13 +49,17 @@ var AccordionFlipView = Backbone.View.extend(
                     storage: this.storage,
                     controller: this.controller
                 });
+
                 this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
                 this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
             },
-            deleteItemSettings: function () {
+            deleteInnerSettings: function () {
+                var name = this.$el.prop('id');
                 this.backward();
-                this.dispose();
+                this.model.trigger('delete_model', this);
+                this.controller.deleteInnerSettingsView(name);
+                
             },
             /**
              * Remove view

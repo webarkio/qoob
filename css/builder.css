@@ -811,7 +811,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
     overflow: hidden;
     height: 70px;
     width: 258px;
-    z-index: 2;
+    z-index: 5;
 }
 
 #builder-menu .backward a {
@@ -1149,14 +1149,8 @@ ul.catalog-list li a:hover {
 .settings-blocks {
     padding: 70px 0 0 0;
     overflow: auto !important;
-    height: 100%;
+    height: calc(100% - 135px);
     background-color: #444444;
-}
-
-.settings-blocks:after {
-    content: '';
-    display: block;
-    margin-bottom: 90px;
 }
 
 .settings-block {
@@ -1372,6 +1366,36 @@ ul.catalog-list li a:hover {
 
 .add-block:hover {
     cursor: pointer;
+}
+
+.delete-drop-zone.ui-droppable {
+    overflow: hidden;
+    background-color: #9fa1a7;
+    cursor: pointer;
+    margin: 0;
+    height: 48px;
+    /* width: 246px; */
+    z-index: 2;
+    border-radius: 3px;
+}
+
+.delete-drop-zone span {
+    display: block;
+    color: #fff;
+    font-size: 13px;
+    padding: 14px 0;
+    background: #9fa1a7 url(../img/basket_delete.png) no-repeat 178px center;
+}
+
+.add-block + .delete-drop-zone {
+    display: none;
+}
+.is-droppable + .add-block {
+    display: none;
+}
+.is-droppable + .add-block + .delete-drop-zone {
+    display: block;
+    visibility: visible;
 }
 .ui-sortable-helper, .ui-sortable-helper * {
     cursor: all-scroll !important;
@@ -1859,13 +1883,19 @@ input[type="text"]#datepicker {
 }
 
 .settings .delete-button {
+    position: absolute;
+    bottom: 5px;
     cursor: pointer;
     margin: 0 4px 0 4px;
     background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
     height: 48px;
-    width: 246px;
+    width: 248px;
     z-index: 2;
     border-radius: 3px;
+}
+
+.settings .settings-item .delete-button {
+    margin: 7px 0 0 0;
 }
 
 /*! jQuery UI - v1.11.4 - 2015-10-29
@@ -2204,7 +2234,7 @@ html.active-js {
     visibility: hidden;
     margin-top: -75px;
     z-index: 999;
-    font-family: 'OpenSans-Regular';
+    font-family: 'robotoregular';
     font-size: 16px;
     color: #ffffff;
     text-align: center;

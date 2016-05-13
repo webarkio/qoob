@@ -3,9 +3,8 @@ Fields.accordion_item_flip = Backbone.View.extend(
         /** @lends Fields.accordion_item_front.prototype */{
             className: "settings-item settings-accordion",
             tpl: null,
-            accordionItemFrontSettingTpl: null,
             events: {
-                'click .cross-delete': 'deleteModel',
+                // 'click .cross-delete': 'deleteModel',
                 'click .title_accordion.inner-settings-flip': 'showSettings',
             },
             /**
@@ -23,6 +22,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
                 this.$el.attr('data-model-id', this.model.id);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-preview']);
                 this.parentId = options.parentId || this.model.owner_id;
+                this.model.on("delete_model", this.deleteModel.bind(this));
             },
             /**
              * Show accordion item's settings
@@ -71,8 +71,7 @@ Fields.accordion_item_flip = Backbone.View.extend(
              * Removes the view from the DOM and unbinds all events.
              * @param {Object} e
              */
-            deleteModel: function (e) {
-                e.preventDefault();
+            deleteModel: function () {
                 this.model.stopListening();
                 this.model.trigger('destroy', this.model, this.model.collection);
                 this.remove();

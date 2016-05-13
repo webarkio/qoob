@@ -2,7 +2,6 @@ var Fields = Fields || {};
 Fields.accordion_item_expand = Backbone.View.extend(
         /** @lends Fields.accordion_item.prototype */{
             className: "settings-item settings-accordion",
-            accordionItemTpl: null,
             events: {
                 'click .cross-delete': 'deleteModel'
             },
