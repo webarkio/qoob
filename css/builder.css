@@ -43,6 +43,10 @@
     }
 }
 
+body {
+    font-size: 13px;
+}
+
 /* Let's get this party started */
 ::-webkit-scrollbar {
     width: 4px;
@@ -874,7 +878,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
     overflow: hidden;
     height: 70px;
     width: 258px;
-    z-index: 2;
+    z-index: 5;
 }
 
 #builder-menu .backward a {
@@ -1051,122 +1055,122 @@ ul.catalog-list li a:hover {
 
 #card .side-0>#side-0 {
     overflow: auto;
-    -webkit-transform: rotateY(0deg) translate3D(0,0,9.9em);
-    transform: rotateY(0deg) translate3D(0,0,9.9em); /* set tranlateZ value to 1/2 cube height to bring it closer to screen, creating 3D effect */
+    -webkit-transform: rotateY(0deg) translate3D(0,0,8.1rem);
+    transform: rotateY(0deg) translate3D(0,0,8.1rem); /* set tranlateZ value to 1/2 cube height to bring it closer to screen, creating 3D effect */
     z-index: 10;
 }
 
 #card .side-0>#side-90 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
-    transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-90deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-0>#side-180 {
-    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.9em);
-    transform: rotateY(-180deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-180deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-0>#side-270 {
-    -webkit-transform: rotateY(90deg) translate3D(0,0,9.9em);
-    transform: rotateY(90deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(90deg) translate3D(0,0,8.1rem);
+    transform: rotateY(90deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-90>#side-0 {
-    -webkit-transform: rotateY(90deg) translate3D(0,0,9.9em);
-    transform: rotateY(90deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(90deg) translate3D(0,0,8.1rem);
+    transform: rotateY(90deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-90>#side-90 {
-    -webkit-transform: rotateY(0deg) translate3D(0,0,9.9em);
-    transform: rotateY(0deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(0deg) translate3D(0,0,8.1rem);
+    transform: rotateY(0deg) translate3D(0,0,8.1rem);
     z-index: 10;
 }
 
 #card .side-90>#side-180 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
-    transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-90deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-90>#side-270 {
-    -webkit-transform: rotateY(180deg) translate3D(0,0,9.9em);
-    transform: rotateY(180deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(180deg) translate3D(0,0,8.1rem);
+    transform: rotateY(180deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-180>#side-0 {
-    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.9em);
-    transform: rotateY(-180deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-180deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-180>#side-90 {
-    -webkit-transform: rotateY(-270deg) translate3D(0,0,9.9em);
-    transform: rotateY(-270deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-270deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-270deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-180>#side-180 {
-    -webkit-transform: rotateY(-360deg) translate3D(0,0,9.9em);
-    transform: rotateY(-360deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-360deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-360deg) translate3D(0,0,8.1rem);
     z-index: 10;
 }
 
 #card .side-180>#side-270 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
-    transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-90deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-270>#side-0 {
-    -webkit-transform: rotateY(-90deg) translate3D(0,0,9.9em);
-    transform: rotateY(-90deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-90deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-90deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-270>#side-90 {
-    -webkit-transform: rotateY(-180deg) translate3D(0,0,9.9em);
-    transform: rotateY(-180deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-180deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-180deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-270>#side-180 {
-    -webkit-transform: rotateY(-270deg) translate3D(0,0,9.9em);
-    transform: rotateY(-270deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(-270deg) translate3D(0,0,8.1rem);
+    transform: rotateY(-270deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-270>#side-270 {
-    -webkit-transform: rotateY(0deg) translate3D(0,0,9.9em);
-    transform: rotateY(0deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(0deg) translate3D(0,0,8.1rem);
+    transform: rotateY(0deg) translate3D(0,0,8.1rem);
     z-index: 10;
 }
 
 #card .side-270.side-full-rotation>#side-0 {
-    -webkit-transform: rotateY(270deg) translate3D(0,0,9.9em);
-    transform: rotateY(270deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(270deg) translate3D(0,0,8.1rem);
+    transform: rotateY(270deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-270.side-full-rotation>#side-90 {
-    -webkit-transform: rotateY(180deg) translate3D(0,0,9.9em);
-    transform: rotateY(180deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(180deg) translate3D(0,0,8.1rem);
+    transform: rotateY(180deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-270.side-full-rotation>#side-180 {
-    -webkit-transform: rotateY(90deg) translate3D(0,0,9.9em);
-    transform: rotateY(90deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(90deg) translate3D(0,0,8.1rem);
+    transform: rotateY(90deg) translate3D(0,0,8.1rem);
     z-index: 1;
 }
 
 #card .side-270.side-full-rotation>#side-270 {
-    -webkit-transform: rotateY(360deg) translate3D(0,0,9.9em);
-    transform: rotateY(360deg) translate3D(0,0,9.9em);
+    -webkit-transform: rotateY(360deg) translate3D(0,0,8.1rem);
+    transform: rotateY(360deg) translate3D(0,0,8.1rem);
     z-index: 10;
 }
 
@@ -1209,11 +1213,16 @@ ul.catalog-list li a:hover {
 }
 
 /* Edit forms */
-.settings-block {
-    padding: 70px 4px 0 4px;
+.settings-blocks {
+    padding: 70px 0 0 0;
     overflow: auto !important;
-    height: 100%;
+    height: calc(100% - 135px);
     background-color: #444444;
+}
+
+.settings-block {
+    overflow: hidden;
+    padding: 0 4px 0 4px;
 }
 .settings-block input, .settings-block select {
     margin: 0;
@@ -1241,11 +1250,6 @@ ul.catalog-list li a:hover {
     margin-top: 42px;
 }
 
-.settings-block:after {
-    content: '';
-    display: block;
-    margin-bottom: 90px;
-}
 .settings-accordion .settings-block:after {
     display: none;
 }
@@ -1396,13 +1400,7 @@ ul.catalog-list li a:hover {
 .settings-accordion .settings-block .cross-delete:hover {
     cursor: pointer;
 }
-.cross-delete.accordion-flip {
-    background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
-    height: 48px;
-    width: 246px;
-    z-index: 2;
-    border-radius: 3px;
-}
+
 .settings-accordion .settings-block .settings-item:first-child {
     margin-top: 20px;
 }
@@ -1435,6 +1433,36 @@ ul.catalog-list li a:hover {
 
 .add-block:hover {
     cursor: pointer;
+}
+
+.delete-drop-zone.ui-droppable {
+    overflow: hidden;
+    background-color: #9fa1a7;
+    cursor: pointer;
+    margin: 0;
+    height: 48px;
+    /* width: 246px; */
+    z-index: 2;
+    border-radius: 3px;
+}
+
+.delete-drop-zone span {
+    display: block;
+    color: #fff;
+    font-size: 13px;
+    padding: 14px 0;
+    background: #9fa1a7 url(../img/basket_delete.png) no-repeat 178px center;
+}
+
+.add-block + .delete-drop-zone {
+    display: none;
+}
+.is-droppable + .add-block {
+    display: none;
+}
+.is-droppable + .add-block + .delete-drop-zone {
+    display: block;
+    visibility: visible;
 }
 .ui-sortable-helper, .ui-sortable-helper * {
     cursor: all-scroll !important;
@@ -1921,6 +1949,21 @@ input[type="text"]#datepicker {
     border-bottom-right-radius: 2px;
 }
 
+.settings .delete-button {
+    position: absolute;
+    bottom: 5px;
+    cursor: pointer;
+    margin: 0 4px 0 4px;
+    background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
+    height: 48px;
+    width: 248px;
+    z-index: 2;
+    border-radius: 3px;
+}
+
+.settings .settings-item .delete-button {
+    margin: 7px 0 0 0;
+}
 
 /*! jQuery UI - v1.11.4 - 2015-10-29
 * http://jqueryui.com
@@ -2258,7 +2301,7 @@ html.active-js {
     visibility: hidden;
     margin-top: -75px;
     z-index: 999;
-    font-family: 'OpenSans-Regular';
+    font-family: 'robotoregular';
     font-size: 16px;
     color: #ffffff;
     text-align: center;

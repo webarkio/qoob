@@ -167,8 +167,8 @@ BuilderStorage.prototype.getBlockTemplate = function(templateId, cb) {
                 id: templateId,
                 template: template
             });
-            _.delay(cb, 5000, err, template);
-            //cb(null, item.template);
+            // _.delay(cb, 5000, err, template);
+            cb(null, template);
         });
     }
 };

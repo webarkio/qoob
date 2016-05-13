@@ -22,6 +22,7 @@ var BuilderViewportView = Backbone.View.extend(
             this.controller = options.controller;
             this.storage = options.storage;
             this.model.on("block_add", this.addBlock.bind(this));
+            this.model.on("block_delete", this.deleteBlock.bind(this));
         },
         /**
          * Render menu
@@ -200,7 +201,11 @@ var BuilderViewportView = Backbone.View.extend(
          * 
          * @param {Integer} blockId
          */
-        removeBlock: function(blockId) {
+        deleteBlock: function(modelId) {
+            var block = this.getBlockView(modelId);
+            block.dispose();
+        
+        /*
             var alert = confirm("Are you sure you want to delete the block?");
             if (!alert) {
                 return false;
@@ -222,6 +227,7 @@ var BuilderViewportView = Backbone.View.extend(
             }, 1000);
 
             builder.trigger('stop_edit_block');
+        */
         },
         getIframe: function() {
             return this.$el.find('#builder-iframe');

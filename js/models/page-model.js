@@ -12,6 +12,10 @@ var PageModel = Backbone.Model.extend({
         }
         this.trigger('block_add', model, afterBlockId);
     },
+    deleteBlock: function (model) {
+        this.trigger('block_delete', model.id);
+        this.get('blocks').remove(model);
+    },
     load: function (blocks) {
         for (var i = 0; i < blocks.length; i++) {
             var model = BuilderUtils.createModel(blocks[i]);

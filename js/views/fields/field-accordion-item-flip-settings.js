@@ -19,7 +19,8 @@ var AccordionFlipView = FieldView.extend(
                 };
             },
             events: {
-                'click .backward-accordion': 'backward'
+                'click .backward-accordion': 'backward',
+                'click .delete-item-accordion': 'deleteInnerSettings'
             },
             /**
              * View buider
@@ -44,9 +45,17 @@ var AccordionFlipView = FieldView.extend(
                     storage: this.storage,
                     controller: this.controller
                 });
+
                 this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
-                this.$el.append(settingsView.render().$el.append('<div class="cross-delete accordion-flip"></div>'));
+                this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
+            },
+            deleteInnerSettings: function () {
+                var name = this.$el.prop('id');
+                this.backward();
+                this.model.trigger('delete_model', this);
+                this.controller.deleteInnerSettingsView(name);
+                
             },
             /**
              * Remove view

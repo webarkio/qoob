@@ -9,8 +9,10 @@ var BuilderMenuSettingsView = Backbone.View.extend(
         tagName: "div",
         className: "settings menu-block",
         config: null,
-        events:{
-            'click .back': 'clickBack'
+        events: {
+            'click .back': 'clickBack',
+            'click .delete-block': 'clickDelete'
+
         },
         /**
          * Set setting's id
@@ -47,20 +49,19 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 settings: this.config.settings,
                 defaults: this.config.defaults,
                 controller: this.controller,
-                className: 'settings-block settings-scroll'
+                className: 'settings-block'
             });
-            this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).append(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
 
             return this;
         },
         clickBack: function(){
             this.controller.stopEditBlock();
         },
+        clickDelete: function() {
+            this.controller.deleteBlock(this.model);
+        },
         dispose: function() {
-            // if (this.$el.css('display') != 'none') {
-            //     builder.builderLayout.menu.rotate('catalog-groups');
-            // }
-
             // same as this.$el.remove();
             this.$el.remove();
 

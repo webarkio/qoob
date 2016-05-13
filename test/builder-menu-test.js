@@ -1,42 +1,63 @@
 QUnit.module("BuilderMenuView");
 
-var mockTemplateMenu = "<div id=\"card\">" +
-"<div class=\"card-wrap\">" +
-"<div class=\"card-main side-0\">"+
-"<div id=\"side-0\" class=\"active\"></div>"+
-"<div id=\"catalog-groups\" class=\"catalog-list\">"+
-"<a href=\"#video\">Video</a></div>"+
-"<div id=\"side-90\"></div>"+
-"<div id=\"side-180\"></div>"+
-"<div id=\"side-270\"></div>"+
-"</div></div></div>";
+var View = Backbone.View.extend({
+    render: function() {
+        return this;
+    }
+});
+
+var view = new View({ id: 'builder-menu' });
+
+var mockTemplateMenu =
+    "<div id=\"card\">" +
+    "<div class=\"card-wrap\">" +
+    "<div class=\"card-main side-0\">" +
+    "<div id=\"side-0\" class=\"active\"></div>" +
+    "<div id=\"side-90\"></div>" +
+    "<div id=\"side-180\"></div>" +
+    "<div id=\"side-270\"></div>" +
+    "</div>" +
+    "</div>" +
+    "</div>";
+
+var mockTemplateMenuResalt =
+    "<div id=\"card\">" +
+    "<div class=\"card-wrap\">" +
+    "<div class=\"card-main side-0\">" +
+    "<div id=\"side-0\" class=\"active\">" +
+    "<ul id=\"catalog-groups\" class=\"catalog-list\"><li><a href=\"#video\"></a></li></ul></div>" +
+    "<div id=\"side-90\"></div>" +
+    "<div id=\"side-180\"></div>" +
+    "<div id=\"side-270\"></div>" +
+    "</div>" +
+    "</div>" +
+    "</div>";
 
 var mockStorageMenu = {
-    builderTemplates: {'builder-menu':mockTemplateMenu, 'menu-groups-preview':""},
-    builderData: {'groups': []}
+    builderTemplates: { 'builder-menu-preview': mockTemplateMenu, 'menu-groups-preview': "<li><a href=\"#video\"></a></li>" },
+    builderData: { 'groups': [] }
 };
 
 //============START TEST===============
 QUnit.test("initialize", function(assert) {
-        
-    var menu = new BuilderMenuView({model: new Backbone.Model(),
+
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
         storage: 1,
         controller: 2
     });
-    
     assert.equal(menu.storage, 1);
     assert.equal(menu.controller, 2);
 });
 
 //addSettings
-
 //QUnit.test("addSettings", function(assert) {
 //
 //    var menu = new BuilderMenuView({model: new Backbone.Model(),
 //        storage: mockStorageMenu
-//                                          });
+//    });
 //
-//    assert.equal(menu.addView, 1);
+//    assert.equal(menu.addSettings(), 1);
 //});
 
 QUnit.test("render", function(assert) {
@@ -44,20 +65,27 @@ QUnit.test("render", function(assert) {
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
-           
-        assert.equal(mockTemplateMenu, menu.render().$el);
-
+    assert.equal(mockTemplateMenuResalt, menu.render().$el.html());
 });
 
 //draggable
+//QUnit.test("draggable", function(assert) {
+//    var menu = new BuilderMenuView({model: new Backbone.Model(),
+//        storage: mockStorageMenu
+//    });
+//    menu.render().draggable();
+//    console.log(menu.$el.find('.preview-block'));
+//
+//});
 
 QUnit.test("setPreviewMode", function(assert) {
     var done = assert.async();
-    var menu = new BuilderMenuView({model: new Backbone.Model(),
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
         storage: mockStorageMenu
-                                   
+
     });
-    $('body').append(menu.$el);
+    $('body').append(menu.render().$el);
     assert.equal(menu.$el.css('display'), 'block');
     menu.setPreviewMode();
     _.delay(function() {
@@ -65,16 +93,16 @@ QUnit.test("setPreviewMode", function(assert) {
         menu.$el.remove();
         done();
     }, 500);
-
 });
 
 QUnit.test("setEditMode", function(assert) {
     var done = assert.async();
-    var menu = new BuilderMenuView({model: new Backbone.Model(),
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
         storage: mockStorageMenu
     });
 
-    $('body').append(menu.$el);
+    $('body').append(menu.render().$el);
     assert.equal(menu.$el.css('display'), 'block');
     menu.setPreviewMode();
     _.delay(function() {
@@ -86,7 +114,6 @@ QUnit.test("setEditMode", function(assert) {
             done();
         }, 500);
     }, 500);
-
 });
 
 //showGroup
@@ -96,12 +123,87 @@ QUnit.test("setEditMode", function(assert) {
 //startEditBlock
 
 QUnit.test("resize", function(assert) {
-    var menu = new BuilderMenuView({model: new Backbone.Model(),
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
         storage: mockStorageMenu
-        });
-        console.log(menu.render().resize('310'));
-    assert.equal(menu.resize().top, jQuery(window).height() - 70);
+    });
+    var h = jQuery(window).height() - 70;
+    menu.render().resize();
+    assert.equal(menu.$el.css('height'), (h + 'px'));
+    assert.equal(menu.$el.css('top'), '70px');
 });
 
+QUnit.test("addView", function(assert) {
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
 
+    menu.render().addView(view, '90');
+    assert.ok(menu.$el.find('#side-90').hasClass('active'));
 
+});
+
+QUnit.test("rotate", function(assert) {
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
+    menu.render().rotate('catalog-groups');
+    assert.ok(menu.$el.find('#side-0').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-90').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-180').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-270').hasClass('active'));
+});
+
+//onEditStart
+QUnit.test("onEditStart", function(assert) {
+    var done = assert.async();
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
+    menu.render().addView(view, 180);
+    menu.render().onEditStart(5);
+    menu.render().rotate('settings-block-5');
+    assert.ok(!menu.$el.find('#side-0').hasClass('active'));
+    assert.ok(menu.$el.find('#side-90').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-180').hasClass('active'));
+    assert.ok(!menu.$el.find('#side-270').hasClass('active'));
+
+});
+
+//onEditStop
+
+QUnit.test("onEditMode", function(assert) {
+    var done = assert.async();
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
+
+    $('body').append(menu.render().$el);
+    assert.equal(menu.$el.css('display'), 'block');
+    menu.onEditMode();
+    _.delay(function() {
+        assert.equal(menu.$el.css('display'), 'block');
+        menu.onEditMode();
+        _.delay(function() {
+            assert.equal(menu.$el.css('display'), 'block');
+            menu.$el.remove();
+            done();
+        }, 500);
+    }, 500);
+});
+
+QUnit.test("back", function(assert) {
+    var menu = new BuilderMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
+    menu.render().rotate('side-270');
+    assert.ok(menu.$el.find('.card-main').hasClass('side-270'));
+    menu.back();
+    assert.ok(menu.$el.find('.card-main'));
+});
+//delView

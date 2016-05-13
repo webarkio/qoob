@@ -66,8 +66,7 @@ var BuilderController = Backbone.Router.extend({
             var blockView = this.layout.viewPort.getBlockView(blockModel.id);
             html += blockView.innerBlock.renderedTemplate;
         }
-        console.log(html);
-
+        
         this.storage.save(json, html, function (err, status) {
             // hide clock autosave
             self.layout.toolbar.hideSaveLoader();            
@@ -127,5 +126,8 @@ var BuilderController = Backbone.Router.extend({
     deleteInnerSettingsView: function (name) {
         this.layout.menu.delView(name);
         delete this.layout.menu.settingsViewStorage[name];
+    },
+    deleteBlock: function (model) {
+        this.pageModel.deleteBlock(model);
     }
 });

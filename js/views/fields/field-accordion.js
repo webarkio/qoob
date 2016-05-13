@@ -3,9 +3,10 @@ Fields.accordion = FieldView.extend(
         /** @lends Fields.accordion.prototype */{
             uniqueId: null,
             classNameItem: "",
+            accordionMenuViews: [],
             events: {
                 'click .add-block': 'addNewItem',
-                'drop': 'changePosition'
+                'drop .accordion': 'changePosition'
             },
             /**
              * View field accordion
@@ -75,6 +76,8 @@ Fields.accordion = FieldView.extend(
 
                 item.model.set('order', (values.models ? values.models.length - 1 : 0));
 
+                this.accordionMenuViews.push(item);
+
                 this.$el.find("#" + this.getUniqueId()).append(item.render().el);
                 this.$el.find("#" + this.getUniqueId()).accordion("refresh");
                 values.trigger('change');
@@ -102,6 +105,8 @@ Fields.accordion = FieldView.extend(
                         storage: this.storage,
                         controller: this.controller
                     });
+
+                    this.accordionMenuViews.push(item);
 
                     items.push(item.render().el);
                 }
@@ -132,6 +137,7 @@ Fields.accordion = FieldView.extend(
                     items: ".settings-accordion",
                     revert: false,
                     axis: "y",
+                    connectWith: "#drop-" + id,
                     //handle: "h3",
                     //scroll: true,
                     start: function (event, ui) {
@@ -144,10 +150,10 @@ Fields.accordion = FieldView.extend(
                                 }
                             });
                         }
-                    },
-                    sort: function (event, ui) {
+                        jQuery(this).addClass('is-droppable');
                     },
                     stop: function (event, ui) {
+                        jQuery(this).removeClass('is-droppable');
                         ui.item.trigger("drop", ui.item.index());
                         // IE doesn't register the blur when sorting
                         // so trigger focusout handlers to remove .ui-state-focus
@@ -167,5 +173,23 @@ Fields.accordion = FieldView.extend(
                     }
                 });
 
+                this.$el.find("#drop-" + id).droppable({
+                    drop: function (event, ui) {
+                        var modelId = ui.draggable.data('model-id');
+                        var model = self.getAccordionMenuViews(modelId);
+                        model.deleteModel();
+                    }
+                });
+            },
+            /**
+             * Get sccordionMenuViews by id
+             * @param {Number} id modelId
+             */
+            getAccordionMenuViews: function(id) {
+                for (var i = 0; i < this.accordionMenuViews.length; i++) {
+                    if (this.accordionMenuViews[i].model && this.accordionMenuViews[i].model.id == id) {
+                        return this.accordionMenuViews[i];
+                    }
+                };
             }
         });
