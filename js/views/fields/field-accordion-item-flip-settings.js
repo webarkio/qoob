@@ -54,8 +54,8 @@ var AccordionFlipView = Backbone.View.extend(
                 return this;
             },
             deleteItemSettings: function () {
-                // this.backward();
-                // this.dispose();
+                this.backward();
+                this.dispose();
             },
             /**
              * Remove view
