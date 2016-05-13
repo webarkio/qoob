@@ -50,7 +50,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 controller: this.controller,
                 className: 'settings-block'
             });
-            this.$el.html(_.template(this.storage.builderTemplates['buildermenu-settings'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
 
             return this;
         },
@@ -62,7 +62,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
         },
         dispose: function() {
             // same as this.$el.remove();
-            this.remove();
+            this.$el.remove();
 
             // unbind events that are
             // set on this view

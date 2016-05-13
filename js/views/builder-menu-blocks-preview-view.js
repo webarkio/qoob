@@ -36,7 +36,7 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
                 "items": _.where(this.storage.builderData.items, {groups:this.group.id})  //FIXME: moveto utils
             };
 
-            this.$el.html(_.template(this.storage.builderTemplates['buildermenu-blocks-preview'])(data));
+            this.$el.html(_.template(this.storage.builderTemplates['menu-blocks-preview'])(data));
 
             return this;
         }

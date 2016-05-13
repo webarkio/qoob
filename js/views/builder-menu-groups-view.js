@@ -27,7 +27,7 @@ var BuilderMenuGroupsView = Backbone.View.extend(
         "groups_arr" : _.sortBy(this.storage.builderData.groups, 'position')
       };
 
-      this.$el.html(_.template(this.storage.builderTemplates['buildermenu-groups'])(data));
+      this.$el.html(_.template(this.storage.builderTemplates['menu-groups-preview'])(data));
 
       return this;
     }

@@ -43,7 +43,7 @@ Fields.text = Backbone.View.extend(
             "placeholder" : this.settings.placeholder
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-text'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-text-preview'])(htmldata));
         return this;
     }
 });

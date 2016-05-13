@@ -27,8 +27,8 @@ Fields.image = Backbone.View.extend(
                         this.model = options.model;
                         this.settings = options.settings;
                         this.controller = options.controller;
-                        this.imageSettingTpl = _.template(this.storage.builderTemplates['field-image-setting']);
-                        this.imageTpl = _.template(this.storage.builderTemplates['field-image']);
+                        this.imageSettingTpl = _.template(this.storage.builderTemplates['field-image-setting-preview']);
+                        this.imageTpl = _.template(this.storage.builderTemplates['field-image-preview']);
                     },
                     /**
                      * Event change input

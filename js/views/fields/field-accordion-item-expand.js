@@ -19,7 +19,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
                 this.storage = options.storage;
                 this.controller = options.controller;
                 this.$el.attr('data-model-id', this.model.id);
-                this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-expand']);
+                this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-expand-preview']);
             },
             /**
              * Render filed accordion_item
@@ -44,7 +44,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
                 });
 
                 items.push(this.tpl(htmldata));
-                items.push(settingsView.render().$el.append('<div class="cross-delete"></div>'));
+                items.push(settingsView.render().$el.append('<div class="cross-delete expand"></div>'));
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
                     this.$el.html(items);

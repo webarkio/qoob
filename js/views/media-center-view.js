@@ -35,7 +35,7 @@ var MediaCenterView = Backbone.View.extend(
             initialize: function (options) {
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.builderTemplates['field-image-setting']);
+                this.tpl = _.template(this.storage.builderTemplates['field-image-setting-preview']);
                 this.parentId = options.parentId;
                 this.blockId = options.blockId;
                 this.backId = "settings-block-" + this.model.id;
@@ -161,7 +161,7 @@ var MediaCenterView = Backbone.View.extend(
              */
             dispose: function () {
                 // same as this.$el.remove();
-                this.remove();
+                this.$el.remove();
                 // unbind events that are
                 // set on this view
                 this.off();

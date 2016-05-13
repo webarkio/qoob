@@ -33,7 +33,7 @@ var BuilderMenuView = Backbone.View.extend({
      * @returns {Object}
      */
     render: function() {
-        this.$el.html(_.template(this.storage.builderTemplates['builder-menu'])());
+        this.$el.html(_.template(this.storage.builderTemplates['builder-menu-preview'])());
         this.addView(new BuilderMenuGroupsView({ storage: this.storage }), 0);
         var groups = this.storage.builderData.groups;
         for (var i = 0; i < groups.length; i++) {
@@ -196,7 +196,9 @@ var BuilderMenuView = Backbone.View.extend({
      * @param {String} view id
      */
     delView: function(id) {
-        this.settingsViewStorage[id].dispose();
+        if(this.settingsViewStorage && this.settingsViewStorage[id]) {
+            this.settingsViewStorage[id].dispose();
+        }   
     },
     deleteSettings: function(modelId) {
         this.showIndex();

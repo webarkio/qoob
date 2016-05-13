@@ -58,7 +58,7 @@ Fields.checkbox = Backbone.View.extend(
             "checked" : (this.checked()  ? "checked" : "")
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox'])(htmldata));
+        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox-preview'])(htmldata));
         return this;
     }
 });

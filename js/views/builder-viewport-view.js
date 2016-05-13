@@ -32,7 +32,7 @@ var BuilderViewportView = Backbone.View.extend(
             // Getting driver page id for iframe
             var url = this.storage.driver.getIframePageUrl(this.storage.pageId);
             
-            this.$el.html(_.template(this.storage.builderTemplates['builder-viewport'])({ "url": url }));
+            this.$el.html(_.template(this.storage.builderTemplates['builder-viewport-preview'])({ "url": url }));
             this.$el.find('#builder-iframe').on('load', this.iframeLoaded.bind(this));
             return this;
         },
@@ -229,41 +229,6 @@ var BuilderViewportView = Backbone.View.extend(
             builder.trigger('stop_edit_block');
         */
         },
-        // /**
-        //  * Create droppable event by id
-        //  * 
-        //  * @param {integer} blockId
-        //  */
-        // droppable: function(blockId) {
-        //     var iframe = this.getIframeContents();
-        //     var self = this;
-        //     iframe.find('#droppable-' + blockId).droppable({
-        //         activeClass: "ui-droppable-active",
-        //         hoverClass: "ui-droppable-hover",
-        //         tolerance: "pointer",
-        //         drop: function(event, ui) {
-        //             var dropElement = jQuery(this);
-        //             //get template id
-        //             var templateId = ui.draggable.attr("id").replace("preview-block-", "");
-        //             //get after id
-        //             var beforeId = dropElement.attr("id").replace("droppable-", "");
-        //             // add new block
-        //             self.controller.addNewBlock(templateId, beforeId);
-        //         }
-        //     });
-        // },
-        // /**
-        //  * Create default droppable in iframe
-        //  */
-        // createDefaultDroppable: function() {
-        //     var iframe = this.getWindowIframe();
-        //     var droppable = _.template(this.storage.builderTemplates['block-droppable'])({ "blockId": 0 });
-        //     iframe.jQuery('#builder-blocks').append(iframe.jQuery(droppable));
-        //     this.droppable('0');
-        // },
-
-
-
         getIframe: function() {
             return this.$el.find('#builder-iframe');
         },

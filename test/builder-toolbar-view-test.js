@@ -10,7 +10,7 @@ var mockTemplate = "<div class=\"logo\"></div>TOOLBAR HTML TEMPLATE" +
 
 var mockStorage = {
     getBuilderTemplate: function(templateName) {
-        if (templateName == 'builder-toolbar') {
+        if (templateName == 'builder-toolbar-preview') {
             return mockTemplate;
         }
     }
@@ -37,8 +37,7 @@ QUnit.test("render", function(assert) {
     var toolbar = new BuilderToolbarView({
         storage: mockStorage
     });
-           
-    console.log(toolbar);
+
     assert.equal(mockTemplate, toolbar.render().$el.html());
 });
 
