@@ -140,6 +140,7 @@ Fields.accordion = Backbone.View.extend(
                     items: ".settings-accordion",
                     revert: false,
                     axis: "y",
+                    handle: ".drag-elem",
                     //handle: "h3",
                     //scroll: true,
                     start: function (event, ui) {
