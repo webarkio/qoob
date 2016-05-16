@@ -246,24 +246,5 @@ var BuilderViewportView = Backbone.View.extend(
          */
         getWindowIframe: function() {
             return window.frames["builder-iframe"];
-        },
-        /**
-         * Change devices display
-         */
-        visibilityBlocks: function(blockId, devices) {
-            var iframe = this.getIframeContents();
-
-            var block = iframe.find("[data-model-id='" + blockId + "']");
-
-            block.removeClass(function(index, classes) {
-                var regex = /^visible-/;
-                return classes.split(/\s+/).filter(function(c) {
-                    return regex.test(c);
-                }).join(' ');
-            });
-
-            for (var i = 0; i < devices.length; i++) {
-                block.addClass('visible-' + devices[i]);
-            }
         }
     });
