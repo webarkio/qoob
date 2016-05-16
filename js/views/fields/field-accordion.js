@@ -64,7 +64,6 @@ Fields.accordion = FieldView.extend(
 
                 newModel = BuilderUtils.createModel(data);
                 values.add(newModel);
-                
                 var item = new Fields[this.classNameItem]({
                     model: newModel,
                     settings: settings,
@@ -80,6 +79,7 @@ Fields.accordion = FieldView.extend(
 
                 this.$el.find("#" + this.getUniqueId()).append(item.render().el);
                 this.$el.find("#" + this.getUniqueId()).accordion("refresh");
+                // item.model.trigger('change');
                 values.trigger('change');
             },
             /**
@@ -101,7 +101,7 @@ Fields.accordion = FieldView.extend(
                     var item = new Fields[this.classNameItem]({
                         model: values.models[i],
                         settings: settings,
-                        defaults: this.defaults[i],
+                        defaults: this.defaults[i] || this.defaults[0],
                         storage: this.storage,
                         controller: this.controller
                     });
@@ -139,7 +139,6 @@ Fields.accordion = FieldView.extend(
                     axis: "y",
                     handle: ".drag-elem",
                     connectWith: "#drop-" + id,
-                    //handle: "h3",
                     //scroll: true,
                     start: function (event, ui) {
                         self.controller.layout.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");

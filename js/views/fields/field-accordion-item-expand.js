@@ -52,8 +52,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
              * Removes the view from the DOM and unbinds all events.
              * @param {Object} e
              */
-            deleteModel: function (e) {
-                e.preventDefault();
+            deleteModel: function () {
                 this.model.stopListening();
                 this.model.trigger('destroy', this.model, this.model.collection);
                 this.remove();
