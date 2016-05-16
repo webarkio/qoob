@@ -47,11 +47,12 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 model: this.model,
                 storage: this.storage,
                 settings: this.config.settings,
+                defaults: this.config.defaults,
                 controller: this.controller,
                 className: 'settings-block'
             });
             this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
-
+            
             return this;
         },
         clickBack: function(){

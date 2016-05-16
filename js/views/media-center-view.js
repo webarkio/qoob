@@ -5,9 +5,7 @@
  */
 var MediaCenterView = Backbone.View.extend(
         /** @lends BuilderView.prototype */{
-            tagName: "div",
             className: "settings menu-block",
-            tpl: null,
             parentId: null,
             events: {
                 'click .backward-image': 'backward',

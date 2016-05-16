@@ -1,19 +1,8 @@
 var Fields = Fields || {};
-Fields.checkbox_switch = Backbone.View.extend(
+Fields.checkbox_switch = FieldView.extend(
 /** @lends Fields.checkbox.prototype */{
-    className: "settings-item",
     events: {
         'change input': 'changeSwitch'
-    },
-    /**
-     * View field checkbox
-     * @class Fields.checkbox
-     * @augments Backbone.View
-     * @constructs
-     */
-    initialize: function (options) {
-        this.storage = options.storage;
-        this.settings = options.settings;
     },
     /**
      * Event change input

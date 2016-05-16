@@ -1,13 +1,12 @@
 var Fields = Fields || {};
-Fields.accordion = Backbone.View.extend(
+Fields.accordion = FieldView.extend(
         /** @lends Fields.accordion.prototype */{
-            className: "settings-item",
             uniqueId: null,
-            tpl: null,
             classNameItem: "",
+            accordionMenuViews: [],
             events: {
                 'click .add-block': 'addNewItem',
-                'drop': 'changePosition'
+                'drop .accordion': 'changePosition'
             },
             /**
              * View field accordion
@@ -16,10 +15,7 @@ Fields.accordion = Backbone.View.extend(
              * @constructs
              */
             initialize: function (options) {
-                this.model = options.model;
-                this.settings = options.settings;
-                this.storage = options.storage;
-                this.controller = options.controller;
+                FieldView.prototype.initialize.call(this, options);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-preview']);
             },
             /**
@@ -39,13 +35,6 @@ Fields.accordion = Backbone.View.extend(
                 });
             },
             /**
-             * Get value field accordion
-             * @returns {String}
-             */
-            getValue: function () {
-                return this.model.get(this.settings.name) || this.settings.default;
-            },
-            /**
              * Get unique id
              * @returns {String}
              */
@@ -58,35 +47,39 @@ Fields.accordion = Backbone.View.extend(
              */
             addNewItem: function (e) {
                 e.preventDefault();
-
-                var self = this,
-                        values = this.getValue(),
+                var values = this.getValue(),
                         settings = this.settings.settings,
+                        defaults = this.defaults[0],
                         settingsParams = [],
                         data = [],
                         newModel;
 
                 for (var i in settings) {
-                    settingsParams.push({'name': settings[i].name, 'default': settings[i].default});
+                    settingsParams.push({'name': settings[i].name, 'default': defaults[settings[i].name]});
                 }
 
                 for (var i = 0; i < settingsParams.length; i++) {
                     data[settingsParams[i].name] = settingsParams[i].default;
                 }
+
                 newModel = BuilderUtils.createModel(data);
                 values.add(newModel);
                 var item = new Fields[this.classNameItem]({
                     model: newModel,
                     settings: settings,
                     storage: this.storage,
+                    defaults: defaults,
                     controller: this.controller,
                     parentId: this.model.id
                 });
 
                 item.model.set('order', (values.models ? values.models.length - 1 : 0));
 
+                this.accordionMenuViews.push(item);
+
                 this.$el.find("#" + this.getUniqueId()).append(item.render().el);
                 this.$el.find("#" + this.getUniqueId()).accordion("refresh");
+                // item.model.trigger('change');
                 values.trigger('change');
             },
             /**
@@ -101,15 +94,19 @@ Fields.accordion = Backbone.View.extend(
                 values.models = _.sortBy(values.models, function (model) {
                     return model.get('order');
                 });
+                
                 this.classNameItem = (this.settings.viewType === undefined || this.settings.viewType === "expand") ? 'accordion_item_expand' : 'accordion_item_flip';
-
+ 
                 for (var i = 0; i < values.models.length; i++) {
                     var item = new Fields[this.classNameItem]({
                         model: values.models[i],
                         settings: settings,
+                        defaults: this.defaults[i] || this.defaults[0],
                         storage: this.storage,
                         controller: this.controller
                     });
+
+                    this.accordionMenuViews.push(item);
 
                     items.push(item.render().el);
                 }
@@ -140,7 +137,8 @@ Fields.accordion = Backbone.View.extend(
                     items: ".settings-accordion",
                     revert: false,
                     axis: "y",
-                    //handle: "h3",
+                    handle: ".drag-elem",
+                    connectWith: "#drop-" + id,
                     //scroll: true,
                     start: function (event, ui) {
                         self.controller.layout.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");
@@ -152,10 +150,10 @@ Fields.accordion = Backbone.View.extend(
                                 }
                             });
                         }
-                    },
-                    sort: function (event, ui) {
+                        jQuery(this).addClass('is-droppable');
                     },
                     stop: function (event, ui) {
+                        jQuery(this).removeClass('is-droppable');
                         ui.item.trigger("drop", ui.item.index());
                         // IE doesn't register the blur when sorting
                         // so trigger focusout handlers to remove .ui-state-focus
@@ -175,5 +173,23 @@ Fields.accordion = Backbone.View.extend(
                     }
                 });
 
+                this.$el.find("#drop-" + id).droppable({
+                    drop: function (event, ui) {
+                        var modelId = ui.draggable.data('model-id');
+                        var model = self.getAccordionMenuViews(modelId);
+                        model.deleteModel();
+                    }
+                });
+            },
+            /**
+             * Get sccordionMenuViews by id
+             * @param {Number} id modelId
+             */
+            getAccordionMenuViews: function(id) {
+                for (var i = 0; i < this.accordionMenuViews.length; i++) {
+                    if (this.accordionMenuViews[i].model && this.accordionMenuViews[i].model.id == id) {
+                        return this.accordionMenuViews[i];
+                    }
+                };
             }
         });

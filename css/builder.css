@@ -20,6 +20,16 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'robotomedium';
+    src: url('../fonts/roboto/Roboto-Medium.eot');
+    src: url('../fonts/roboto/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/roboto/Roboto-Medium.woff') format('woff'),
+        url('../fonts/roboto/Roboto-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     @font-face {
         font-family: "robotobold";
@@ -59,15 +69,72 @@ body {
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(117,117,117,0.4);
 }
-
+/*LOADER*/
 #loader-wrapper {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(43,192,228, 1);
+    background: #fff;
     z-index: 100500;
+}
+
+#loader-wrapper .loading-panel {
+    position: relative;
+    text-align: center;
+}
+
+#loader-wrapper .qoob-preview-img {
+    margin-top: 185px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 106px;
+    height: 106px;
+    background: url('../img/qoob-preloader.png');
+}
+
+#loader-wrapper .progress {
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 102px;
+    margin-bottom: 100px;
+    margin-left: 10%;
+    margin-right: 10%;
+    box-shadow: none;
+    background: #E2E5E9;
+}
+
+#loader-wrapper .progress-bar {
+    height: 10px;
+    background: #2DC0E4;
+}
+
+#loader-wrapper .sr-only {
+    display: inline-block;
+    margin-top: 27px;
+    font-family: 'robotomedium';
+    font-size: 14px;
+    color: #2DC0E4;
+}
+
+#loader-wrapper .tip-panel {
+    border: 1px solid #E2E5E9;
+    padding: 105px;
+    text-align: center;
+    border-radius: 10px;
+    margin-left: 15%;
+    margin-right: 15%;
+    font-family: 'robotoregular';
+    font-size: 18px;
+    color: #C1C4C8;
+    line-height: 29px;
+}
+
+#loader-wrapper .tip-header {
+    display: block;
+    margin-bottom: 10px;
+    color: #2DC0E4;
 }
 
 #loader-wrapper h1 {
@@ -138,7 +205,7 @@ body {
 #loader .seconds-container {
     animation: rotate 0.4s infinite linear;
 }
-
+/*END PRELOADER*/
 #builder {
     width: 100%;
 }
@@ -811,7 +878,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
     overflow: hidden;
     height: 70px;
     width: 258px;
-    z-index: 2;
+    z-index: 5;
 }
 
 #builder-menu .backward a {
@@ -837,7 +904,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 .visible-block a {
-    padding: 17px 0;
+    padding: 13px 0;
     color: #fff;
     background: #606163;
     text-decoration: inherit;
@@ -1149,14 +1216,8 @@ ul.catalog-list li a:hover {
 .settings-blocks {
     padding: 70px 0 0 0;
     overflow: auto !important;
-    height: 100%;
+    height: calc(100% - 125px);
     background-color: #444444;
-}
-
-.settings-blocks:after {
-    content: '';
-    display: block;
-    margin-bottom: 90px;
 }
 
 .settings-block {
@@ -1372,6 +1433,36 @@ ul.catalog-list li a:hover {
 
 .add-block:hover {
     cursor: pointer;
+}
+
+.delete-drop-zone.ui-droppable {
+    overflow: hidden;
+    background-color: #9fa1a7;
+    cursor: pointer;
+    margin: 0;
+    height: 48px;
+    /* width: 246px; */
+    z-index: 2;
+    border-radius: 3px;
+}
+
+.delete-drop-zone span {
+    display: block;
+    color: #fff;
+    font-size: 13px;
+    padding: 14px 0;
+    background: #9fa1a7 url(../img/basket_delete.png) no-repeat 178px center;
+}
+
+.add-block + .delete-drop-zone {
+    display: none;
+}
+.is-droppable + .add-block {
+    display: none;
+}
+.is-droppable + .add-block + .delete-drop-zone {
+    display: block;
+    visibility: visible;
 }
 .ui-sortable-helper, .ui-sortable-helper * {
     cursor: all-scroll !important;
@@ -1859,13 +1950,19 @@ input[type="text"]#datepicker {
 }
 
 .settings .delete-button {
+    position: absolute;
+    bottom: 5px;
     cursor: pointer;
     margin: 0 4px 0 4px;
     background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
     height: 48px;
-    width: 246px;
+    width: 248px;
     z-index: 2;
     border-radius: 3px;
+}
+
+.settings .settings-item .delete-button {
+    margin: 7px 0 0 0;
 }
 
 /*! jQuery UI - v1.11.4 - 2015-10-29
@@ -2204,7 +2301,7 @@ html.active-js {
     visibility: hidden;
     margin-top: -75px;
     z-index: 999;
-    font-family: 'OpenSans-Regular';
+    font-family: 'robotoregular';
     font-size: 16px;
     color: #ffffff;
     text-align: center;

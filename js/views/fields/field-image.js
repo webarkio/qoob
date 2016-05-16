@@ -3,12 +3,8 @@ var Fields = Fields || {};
 /**
  * View field image
  */
-Fields.image = Backbone.View.extend(
-        /** @lends Fields.image.prototype */
-                {
-                    className: "settings-item",
-                    imageSettingTpl: null,
-                    imageTpl: null,
+Fields.image = FieldView.extend(
+        /** @lends Fields.image.prototype */{
                     events: {
                         'change input': 'changeInput',
                         'click .btn-upload.btn-builder': 'imageUpload',
@@ -22,13 +18,8 @@ Fields.image = Backbone.View.extend(
                      * @constructs
                      */
                     initialize: function (options) {
-                        var self = this;
-                        this.storage = options.storage;
-                        this.model = options.model;
-                        this.settings = options.settings;
-                        this.controller = options.controller;
-                        this.imageSettingTpl = _.template(this.storage.builderTemplates['field-image-setting-preview']);
-                        this.imageTpl = _.template(this.storage.builderTemplates['field-image-preview']);
+                        FieldView.prototype.initialize.call(this, options);
+                        this.tpl = _.template(this.storage.builderTemplates['field-image-preview']);
                     },
                     /**
                      * Event change input
@@ -37,13 +28,6 @@ Fields.image = Backbone.View.extend(
                     changeInput: function (evt) {
                         var target = jQuery(evt.target);
                         this.model.set(target.attr('name'), target.prev().find('img').attr('src'));
-                    },
-                    /**
-                     * Get value field image
-                     * @returns {String}
-                     */
-                    getValue: function () {
-                        return this.model.get(this.settings.name) || this.settings.default;
                     },
                     /**
                      * Image upload
@@ -125,7 +109,7 @@ Fields.image = Backbone.View.extend(
                         };
                         
                         if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
-                            this.$el.html(this.imageTpl(htmldata));
+                            this.$el.html(this.tpl(htmldata));
                         }
                         return this;
                     }

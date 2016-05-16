@@ -202,14 +202,15 @@ var BuilderViewportView = Backbone.View.extend(
          * @param {Integer} blockId
          */
         deleteBlock: function(modelId) {
-            var block = this.getBlockView(modelId);
-            block.dispose();
-        
-        /*
             var alert = confirm("Are you sure you want to delete the block?");
             if (!alert) {
                 return false;
             }
+
+            var block = this.getBlockView(modelId);
+            block.dispose();
+        
+        /*
 
             var iframe = this.getWindowIframe();
 
@@ -245,46 +246,5 @@ var BuilderViewportView = Backbone.View.extend(
          */
         getWindowIframe: function() {
             return window.frames["builder-iframe"];
-        },
-        /**
-         * Change devices display
-         */
-        visibilityBlocks: function(blockId, devices) {
-            var iframe = this.getIframeContents();
-
-            var block = iframe.find("[data-model-id='" + blockId + "']");
-
-            block.removeClass(function(index, classes) {
-                var regex = /^visible-/;
-                return classes.split(/\s+/).filter(function(c) {
-                    return regex.test(c);
-                }).join(' ');
-            });
-
-            for (var i = 0; i < devices.length; i++) {
-                block.addClass('visible-' + devices[i]);
-            }
-        },
-                /**
-         * Devices settings
-         * @returns object field devices
-         */
-        devicesSettings: function() {
-            return {
-                "name": "devices",
-                "label": "Visible Devices",
-                "type": "devices",
-                "settings": [{
-                    "name": "desktop",
-                    "label": "Desktop"
-                }, {
-                    "name": "tablet",
-                    "label": "Tablet"
-                }, {
-                    "name": "mobile",
-                    "label": "Mobile"
-                }],
-                "default": ""
-            }
-        },
+        }
     });

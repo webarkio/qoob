@@ -3,11 +3,9 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var AccordionFlipView = Backbone.View.extend(
+var AccordionFlipView = FieldView.extend(
         /** @lends BuilderView.prototype */{
-            tagName: "div",
             className: "settings menu-block accordion-item",
-            tpl: null,
             parentId: null,
             /**
              * Set setting's id
@@ -22,7 +20,7 @@ var AccordionFlipView = Backbone.View.extend(
             },
             events: {
                 'click .backward-accordion': 'backward',
-                'click .delete-item-accordion': 'deleteItemSettings'
+                'click .delete-item-accordion': 'deleteInnerSettings'
             },
             /**
              * View buider
@@ -31,10 +29,7 @@ var AccordionFlipView = Backbone.View.extend(
              * @constructs
              */
             initialize: function (options) {
-                this.model = options.model;
-                this.storage = options.storage;
-                this.settings = options.settings;
-                this.controller = options.controller;
+                FieldView.prototype.initialize.call(this, options);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-view-preview']);
                 this.parentId = options.parentId;
             },
@@ -46,16 +41,21 @@ var AccordionFlipView = Backbone.View.extend(
                 var settingsView = new FieldsView({
                     model: this.model,
                     settings: this.settings,
+                    defaults: this.defaults,
                     storage: this.storage,
                     controller: this.controller
                 });
+
                 this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
                 this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
             },
-            deleteItemSettings: function () {
-                // this.backward();
-                // this.dispose();
+            deleteInnerSettings: function () {
+                var name = this.$el.prop('id');
+                this.backward();
+                this.model.trigger('delete_model', this);
+                this.controller.deleteInnerSettingsView(name);
+                
             },
             /**
              * Remove view
