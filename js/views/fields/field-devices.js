@@ -14,7 +14,28 @@ Fields.devices = Backbone.View.extend(
     initialize: function (options) {
         this.controller = options.controller;
         this.storage = options.storage;
-        this.settings = options.settings;
+    },
+    /**
+     * Devices settings
+     * @returns object field devices
+     */
+    settings: function () {
+        return {
+            "name": "devices",
+            "label": "Visible Devices",
+            "type": "devices",
+            "settings": [{
+                "name": "desktop",
+                "label": "Desktop"
+            }, {
+                "name": "tablet",
+                "label": "Tablet"
+            }, {
+                "name": "mobile",
+                "label": "Mobile"
+            }],
+            "default": ""
+        }
     },
     /**
      * Event change input
@@ -25,7 +46,7 @@ Fields.devices = Backbone.View.extend(
         var target = jQuery(evt.currentTarget);
         target.toggleClass('no-active');
 
-        var input = this.$el.find('input[name="'+this.settings.name+'"]');        
+        var input = this.$el.find('input[name="'+this.settings().name+'"]');        
         var devices = this.$el.find('.btn-group a');
         
         var active = [];
@@ -36,7 +57,7 @@ Fields.devices = Backbone.View.extend(
         }
 
         input.val(active);
-        this.model.set(this.settings.name, active.join(','));
+        this.model.set(this.settings().name, active.join(','));
         
         this.controller.layout.viewPort.visibilityBlocks(this.model.id, active);
     },
@@ -45,7 +66,7 @@ Fields.devices = Backbone.View.extend(
      * @returns {String}
      */
     getValue: function () {
-        return this.model.get(this.settings.name) || this.settings.default;
+        return this.model.get(this.settings().name) || this.settings().default;
     },
     /**
      * Render filed devices
@@ -53,12 +74,12 @@ Fields.devices = Backbone.View.extend(
      */
     render: function () {
         var htmldata = {
-            "settings" : this.settings.settings,
+            "settings" : this.settings().settings,
             "devices" : this.getValue(),
-            "label" : this.settings.label,
-            "name" : this.settings.name
+            "label" : this.settings().label,
+            "name" : this.settings().name
         };
-        
+
         this.$el.html(_.template(this.storage.builderTemplates['field-devices-preview'])(htmldata));
         return this;
     }

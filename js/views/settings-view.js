@@ -52,6 +52,11 @@ var BuilderMenuSettingsView = Backbone.View.extend(
             });
             this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
 
+
+            // add devices field from all settings
+            var devices = new Fields['devices']({model: this.model, storage: this.storage, controller: this.controller});
+            this.$el.find('.settings-block').append(devices.render().el);
+            
             return this;
         },
         clickBack: function(){

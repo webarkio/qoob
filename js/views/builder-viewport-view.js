@@ -202,14 +202,15 @@ var BuilderViewportView = Backbone.View.extend(
          * @param {Integer} blockId
          */
         deleteBlock: function(modelId) {
-            var block = this.getBlockView(modelId);
-            block.dispose();
-        
-        /*
             var alert = confirm("Are you sure you want to delete the block?");
             if (!alert) {
                 return false;
             }
+
+            var block = this.getBlockView(modelId);
+            block.dispose();
+        
+        /*
 
             var iframe = this.getWindowIframe();
 
@@ -264,27 +265,5 @@ var BuilderViewportView = Backbone.View.extend(
             for (var i = 0; i < devices.length; i++) {
                 block.addClass('visible-' + devices[i]);
             }
-        },
-                /**
-         * Devices settings
-         * @returns object field devices
-         */
-        devicesSettings: function() {
-            return {
-                "name": "devices",
-                "label": "Visible Devices",
-                "type": "devices",
-                "settings": [{
-                    "name": "desktop",
-                    "label": "Desktop"
-                }, {
-                    "name": "tablet",
-                    "label": "Tablet"
-                }, {
-                    "name": "mobile",
-                    "label": "Mobile"
-                }],
-                "default": ""
-            }
-        },
+        }
     });
