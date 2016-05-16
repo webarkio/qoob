@@ -899,58 +899,6 @@ label.checkbox-sb [type=checkbox]:checked + span {
     outline: none;
 }
 
-.visible-block {
-    width: 100%;
-}
-
-.visible-block a {
-    padding: 13px 0;
-    color: #fff;
-    background: #606163;
-    text-decoration: inherit;
-}
-
-.visible-block.btn-group>.btn {
-    width: 33%;
-    border: 0;
-    box-shadow: none;
-    text-shadow: none;
-    font-size: 13px;
-}
-
-.visible-block.btn-group>.btn:first-child {
-    -webkit-border-bottom-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-    -webkit-border-top-left-radius: 2px;
-    border-top-left-radius: 2px;
-    -moz-border-radius-bottomleft: 2px;
-    -moz-border-radius-topleft: 2px;
-}
-
-.visible-block.btn-group>.btn:last-child {
-    -webkit-border-top-right-radius: 2px;
-    border-top-right-radius: 2px;
-    -webkit-border-bottom-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    -moz-border-radius-topright: 2px;
-    -moz-border-radius-bottomright: 2px;
-}
-
-.visible-block.btn-group>.btn+.btn {
-    margin-left: 2px;
-}
-
-.visible-block a:focus {
-    box-shadow: none;
-}
-.visible-block a + a {
-    margin-left: 5px;
-}
-.visible-block a.no-active {
-    color: #fff;
-    background: #00c1e6;
-}
-
 ul.catalog-list {
     /*height: calc(100% - 100px);*/
     height: calc(100%);
