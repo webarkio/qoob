@@ -904,7 +904,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 .visible-block a {
-    padding: 17px 0;
+    padding: 13px 0;
     color: #fff;
     background: #606163;
     text-decoration: inherit;
@@ -1216,7 +1216,7 @@ ul.catalog-list li a:hover {
 .settings-blocks {
     padding: 70px 0 0 0;
     overflow: auto !important;
-    height: calc(100% - 135px);
+    height: calc(100% - 125px);
     background-color: #444444;
 }
 
