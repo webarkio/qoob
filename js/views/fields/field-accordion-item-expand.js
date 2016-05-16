@@ -2,7 +2,6 @@ var Fields = Fields || {};
 Fields.accordion_item_expand = Backbone.View.extend(
         /** @lends Fields.accordion_item.prototype */{
             className: "settings-item settings-accordion",
-            accordionItemTpl: null,
             events: {
                 'click .cross-delete': 'deleteModel'
             },
@@ -14,10 +13,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
              * @constructs
              */
             initialize: function (options) {
-                this.model = options.model;
-                this.settings = options.settings;
-                this.storage = options.storage;
-                this.controller = options.controller;
+                FieldView.prototype.initialize.call(this, options);
                 this.$el.attr('data-model-id', this.model.id);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-expand-preview']);
             },
@@ -30,6 +26,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
                         settingsView = new FieldsView({
                             model: this.model,
                             settings: this.settings,
+                            defaults: this.defaults,
                             storage: this.storage,
                             controller: this.controller
                         }),

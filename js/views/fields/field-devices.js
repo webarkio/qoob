@@ -1,20 +1,8 @@
 var Fields = Fields || {};
-Fields.devices = Backbone.View.extend(
+Fields.devices = FieldView.extend(
 /** @lends Fields.devices.prototype */{
-    className: "settings-item",
     events: {
         'click .btn-group a': 'clickDevice'
-    },
-    /**
-     * View field devices
-     * @class Fields.devices
-     * @augments Backbone.View
-     * @constructs
-     */
-    initialize: function (options) {
-        this.controller = options.controller;
-        this.storage = options.storage;
-        this.settings = options.settings;
     },
     /**
      * Event change input
@@ -39,13 +27,6 @@ Fields.devices = Backbone.View.extend(
         this.model.set(this.settings.name, active.join(','));
         
         this.controller.layout.viewPort.visibilityBlocks(this.model.id, active);
-    },
-    /**
-     * Get value field devices
-     * @returns {String}
-     */
-    getValue: function () {
-        return this.model.get(this.settings.name) || this.settings.default;
     },
     /**
      * Render filed devices
