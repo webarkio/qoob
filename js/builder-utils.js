@@ -11,7 +11,7 @@ var BuilderUtils = {
      * @param {Object} args filter params
      * @returns {Object}
      */
-    findItems: function (data, args) {
+    findItems: function(data, args) {
         var result;
         return result;
     },
@@ -21,7 +21,7 @@ var BuilderUtils = {
      * @param {Object} settings
      * @returns {Backbone.Model|BuilderUtils.prototype.createModel.model}
      */
-    createModel: function (settings) {
+    createModel: function(settings) {
         settings.id = parseInt(_.uniqueId());
         var model = new BlockModel();
 
@@ -30,11 +30,11 @@ var BuilderUtils = {
         for (var i in settings) {
             if (_.isArray(settings[i])) {
                 newSettings[i] = this.createCollection(settings[i]);
-                model.listenTo(newSettings[i], "change", function () {
+                model.listenTo(newSettings[i], "change", function() {
                     this.trigger('change', this);
                 });
 
-                newSettings[i].forEach(function (model, index) {
+                newSettings[i].forEach(function(model, index) {
                     model.owner_id = settings.id;
                 });
             } else {
@@ -51,34 +51,34 @@ var BuilderUtils = {
      * @param {Object} settings
      * @returns {BuilderUtils.prototype.createCollection.collection|Backbone.Collection}
      */
-    createCollection: function (settings) {
+    createCollection: function(settings) {
         var collection = new Backbone.Collection();
 
         for (var i = 0; i < settings.length; i++) {
             var model = this.createModel(settings[i]);
             collection.add(model);
-            collection.listenTo(model, 'change', function () {
+            collection.listenTo(model, 'change', function() {
                 this.trigger('change', this);
             });
         }
         return collection;
     },
-            /**
-         * Get default settings
-         *
-         * @param {integer} templateId
-         */
-        getDefaultSettings: function(items, templateId) {
-            // get config from storage builderData
-            //builder.storage.builderData.items
-            var values={};
-            var settings = _.findWhere(items, { id: templateId }).settings;
-            for (var i = 0; i < settings.length; i++) {
-                values[settings[i].name] = settings[i].default;
-            }
-            values.template = templateId;
+    /**
+     * Get default settings
+     *
+     * @param {integer} templateId
+     */
+    getDefaultSettings: function(items, templateId) {
+        // get config from storage builderData
+        //builder.storage.builderData.items
+        var values = {};
+        var settings = _.findWhere(items, { id: templateId }).settings;
+        for (var i = 0; i < settings.length; i++) {
+            values[settings[i].name] = settings[i].default;
+        }
+        values.template = templateId;
 
-            return values;
-        },
+        return values;
+    },
 
 };

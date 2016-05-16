@@ -1,19 +1,8 @@
 var Fields = Fields || {};
-Fields.textarea = Backbone.View.extend(
+Fields.textarea = FieldView.extend(
 /** @lends Fields.textarea.prototype */{
-    className: "settings-item",
     events: {
         'change textarea': 'changeTextarea'
-    },
-    /**
-     * View field textarea
-     * @class Fields.textarea
-     * @augments Backbone.View
-     * @constructs
-     */
-    initialize: function (options) {
-        this.storage = options.storage;
-        this.settings = options.settings;
     },
     /**
      * Event change textarea
@@ -22,13 +11,6 @@ Fields.textarea = Backbone.View.extend(
     changeTextarea: function (evt) {
         var target = jQuery(evt.target);
         this.model.set(target.attr('name'), target.val());
-    },
-    /**
-     * Get value field textarea
-     * @returns {String}
-     */
-    getValue: function () {
-        return this.model.get(this.settings.name) || this.settings.default;
     },
     /**
      * Render filed textarea
@@ -41,7 +23,6 @@ Fields.textarea = Backbone.View.extend(
             "value" : this.getValue(),
             "textareaId" : _.uniqueId('textarea')
         };
-        
         this.$el.html(_.template(this.storage.builderTemplates['field-textarea-preview'])(htmldata));
         return this;
     }

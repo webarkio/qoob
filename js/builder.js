@@ -38,24 +38,24 @@ function Builder(options) {
 Builder.prototype.activate = function() {
 
     var self = this;
-    this.loader.add(4);
+    this.loader.addStep(4);
     //Creating and appending builder layout
     jQuery(window).resize(function() {
         self.layout.resize();
     });
     //Start loading data
     this.storage.loadBuilderTemplates(function(err, builderTemplates) {
-        self.loader.sub();
+        self.loader.step();
         self.storage.loadBuilderData(function(err, builderData) {
-            self.loader.sub();
+            self.loader.step();
             self.storage.loadPageData(function(err, pageData) {
-                self.loader.sub();
+                self.loader.step();
 
 
                 //If blocks loaded to viewPort
                 self.layout.viewPort.once('blocks_loaded', function() {
                     Backbone.history.start({ pushState: false });
-                    self.loader.sub();
+                    self.loader.step();
                 });
 
                 //If iframe ready to load blocks
@@ -70,7 +70,7 @@ Builder.prototype.activate = function() {
                         Backbone.history.start({ pushState: false });
                         //Skip counter for blocks
                         self.layout.viewPort.blocksCounter = null;
-                        self.loader.sub();
+                        self.loader.step();
                     }
 
                 });

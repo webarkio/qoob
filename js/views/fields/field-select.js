@@ -1,22 +1,10 @@
 var Fields = Fields || {};
-Fields.select = Backbone.View.extend(
-/** @lends Fields.select.prototype */
-{
-    className: "settings-item",
+Fields.select = FieldView.extend(
+/** @lends Fields.select.prototype */{
     events: {
         'change select': 'changeSelect',
         'change input': 'changeInput',
         'click .theme-colors': 'changeColor',
-    },
-    /**
-     * View field select
-     * @class Fields.select
-     * @augments Backbone.View
-     * @constructs
-     */
-    initialize: function(options) {
-        this.storage=options.storage;
-        this.settings=options.settings;
     },
     /**
      * Event change colorpicker

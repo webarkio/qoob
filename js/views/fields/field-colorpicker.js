@@ -1,21 +1,10 @@
 var Fields = Fields || {};
-Fields.colorpicker = Backbone.View.extend(
+Fields.colorpicker = FieldView.extend(
 /** @lends Fields.colorpicker.prototype */{
-    className: "settings-item",
     events: {
         'change input': 'changeInput',
         'click .theme-colors': 'changeColor',
         'click .change-color': 'changeColorPicker'
-    },
-    /**
-     * View field colorpicker
-     * @class Fields.colorpicker
-     * @augments Backbone.View
-     * @constructs
-     */
-    initialize: function (options) {
-        this.storage=options.storage;
-        this.settings=options.settings;
     },
     /**
      * Event change colorpicker
@@ -24,13 +13,6 @@ Fields.colorpicker = Backbone.View.extend(
     changeInput: function (evt) {
         var target = jQuery(evt.target);
         this.model.set(target.attr('name'), target.parent().find('.active').css('background-color'));
-    },
-    /**
-     * Get value field colorpicker
-     * @returns {String}
-     */
-    getValue: function () {
-        return this.model.get(this.settings.name) || this.settings.default;
     },
     /**
      * Change color with colorpicker

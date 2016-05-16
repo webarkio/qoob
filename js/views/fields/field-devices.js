@@ -1,7 +1,6 @@
 var Fields = Fields || {};
-Fields.devices = Backbone.View.extend(
+Fields.devices = FieldView.extend(
 /** @lends Fields.devices.prototype */{
-    className: "settings-item",
     events: {
         'click .btn-group a': 'clickDevice'
     },
