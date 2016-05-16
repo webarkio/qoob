@@ -69,21 +69,19 @@ QUnit.test("render", function(assert) {
 });
 
 //draggable
-QUnit.test("draggable", function(assert) {
-    var menu = new BuilderMenuView({
-        model: new Backbone.Model(),
-        storage: mockStorageMenu
-    });
+// QUnit.test("draggable", function(assert) {
+//     var menu = new BuilderMenuView({
+//         model: new Backbone.Model(),
+//         storage: mockStorageMenu
+//     });
 
-    $('body').append(menu.render().$el);
-    assert.ok(!menu.$el.find('#side-90').hasClass('active'));
+//     $('body').append(menu.render().$el);
+//     assert.ok(!menu.$el.find('#side-90').hasClass('active'));
+//     var view = new View({ id: "preview-blocks" });
+//     menu.addView(view, 90)
+//     assert.ok(menu.$el.find('.preview-block').draggable());
 
-    var view = new View({	id:"preview-blocks"});
-menu.addView(view, 90);
-console.log(menu.$el.find('.preview-block'));
-    assert.ok(menu.$el.find('.preview-block').draggable());
-
-});
+// });
 
 QUnit.test("setPreviewMode", function(assert) {
     var done = assert.async();
