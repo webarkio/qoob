@@ -11,8 +11,9 @@ var BuilderMenuSettingsView = Backbone.View.extend(
         config: null,
         events: {
             'click .back': 'clickBack',
-            'click .delete-block': 'clickDelete'
-
+            'click .delete-block': 'clickDelete',
+            'click .movedown': 'clickMoveDown',
+            'click .moveup': 'clickMoveUp'
         },
         /**
          * Set setting's id
@@ -32,7 +33,6 @@ var BuilderMenuSettingsView = Backbone.View.extend(
          * @constructs
          */
         initialize: function(options) {
-            var self = this;
             this.config = options.config;
             this.storage = options.storage;
             this.controller = options.controller;
@@ -42,7 +42,6 @@ var BuilderMenuSettingsView = Backbone.View.extend(
          * @returns {Object}
          */
         render: function() {
-
             var settingsBlock = new FieldsView({
                 model: this.model,
                 storage: this.storage,
@@ -58,8 +57,29 @@ var BuilderMenuSettingsView = Backbone.View.extend(
         clickBack: function(){
             this.controller.stopEditBlock();
         },
+        /**
+         * Click button remove block
+         * @returns {Boolean}
+         */
         clickDelete: function() {
+            var alert = confirm("Are you sure you want to delete the block?");
+            if (!alert) {
+                return false;
+            }
+            
             this.controller.deleteBlock(this.model);
+        },
+        /**
+         * Click move block down
+         */
+        clickMoveDown: function() {
+            this.controller.moveDownBlock(this.model);
+        },
+        /**
+         * Click move block up
+         */
+        clickMoveUp: function() {
+            this.controller.moveUpBlock(this.model);
         },
         dispose: function() {
             // same as this.$el.remove();

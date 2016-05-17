@@ -22,11 +22,6 @@ var BuilderMenuView = Backbone.View.extend({
     addSettings: function(model) {
         var item = _.findWhere(this.storage.builderData.items, { id: model.get('template') });
         this.addView(new BuilderMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
-        // Add devices field
-        // if (!_.findWhere(settings, { label: "Visible Devices" })) {
-        //     settings.push(self.devicesSettings());
-        // }
-
     },
     /**
      * Render menu
@@ -132,9 +127,13 @@ var BuilderMenuView = Backbone.View.extend({
         var currentSide = currentElement.closest('div[id^="side-"]');
         var newSide = newElement.closest('div[id^="side-"]');
         var addedClass = newSide.prop('id');
-        
-        if (currentSide.prop('id') == newSide.prop('id')) {
-            addedClass += ' side-full-rotation';
+
+        if(this.$el.find('.card-main').hasClass('side-full-rotation')) {
+            this.$el.find('.card-main').removeClass('side-full-rotation');
+        }else{
+            if (currentSide.prop('id') == newSide.prop('id')) {
+                addedClass += ' side-full-rotation';
+            }
         }
 
         // hide all blocks side
@@ -148,7 +147,7 @@ var BuilderMenuView = Backbone.View.extend({
         this.$el.find('.card-main')
             .removeClass(function(index, css) {
                 return (css.match(/\bside-\S+/g) || []).join(' ');
-            })
+            }).removeClass('side-full-rotation')
             .addClass(addedClass)
             .children()
             .removeClass('active');
@@ -201,9 +200,9 @@ var BuilderMenuView = Backbone.View.extend({
         }   
     },
     deleteSettings: function(modelId) {
-        this.showIndex();
+        this.controller.stopEditBlock();
+        
         var settings = this.getSettingsView(modelId);
         settings.dispose();
     }
-
 });

@@ -2,10 +2,17 @@
     <div class="backward">
         <a class="backward-image" href="#">Back</a>
     </div>
-    <input class="input-text img-search" type="text" placeholder="Filter">
-    <select class="img-pack">
-        <option selected value="all">all</option>
-    </select>
+    <div class="img-url-group">
+        <input class="input-text img-url" type="text" placeholder="Image url" />
+        <i class="img-url-select"></i>
+    </div>
+    <div class="img-filter-group">
+        <input class="input-text img-search" type="text" placeholder="Tags">
+        <select class="img-pack">
+            <option selected value="all">all</option>
+        </select>
+    </div>
+    <div class="clearfix"></div>
     <div class="settings-block">
         <div class="filtered-images"> 
            <%  for (var i = 0; i < assets.length; i++) {
@@ -18,5 +25,6 @@
                     }
                 } %>
         </div>
+        <div class="delete-image"></div>
     </div>
 </div>

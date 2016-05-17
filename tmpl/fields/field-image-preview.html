@@ -2,10 +2,8 @@
     <div class="text">
         <%= label %>
     </div>
-    <div class="cross-delete">
-        <a href="#"></a>
-    </div>
 </div>
+<div class="edit-image <% if (value === 'empty')  { %><%= value %><% } %>"><img src="<%= value %>" /></div>
 <% if(images) { %>
     <div class="other-photos">
         <%   for (var i = 0; i < images.length; i++) { %>
@@ -15,5 +13,4 @@
         <%}%>
     </div>
 <%}%>
-<div class="edit-image"><img src="<%= value %>" /></div>
 <input name="<%= name %>" class="btn-upload btn-builder" type="button" value="Media Center" />
