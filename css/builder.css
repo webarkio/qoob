@@ -205,6 +205,21 @@ body {
 #loader .seconds-container {
     animation: rotate 0.4s infinite linear;
 }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #loader-wrapper .tip-panel {
+        padding: 50px;
+    }
+
+    #loader-wrapper .progress {
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+
+    #loader-wrapper .qoob-preview-img {
+        margin-top: 150px;
+    }
+}
 /*END PRELOADER*/
 #builder {
     width: 100%;
