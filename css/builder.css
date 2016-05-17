@@ -2107,6 +2107,10 @@ body.builder-editor {
 }
 
 /*Field image*/
+.settings-block .filtered-images {
+    margin-top: 40px;
+}
+
 .inner-settings{
     height: 100%;
 }
@@ -2116,21 +2120,61 @@ body.builder-editor {
     margin-top: 75px;
 }
 
-#inner-settings-image .img-search {
-    width: 152px;
+#inner-settings-image .img-url-group,
+#inner-settings-image .img-filter-group{
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#inner-settings-image .img-url {
+    float: left;
+    width: 201px;
     height: 43px;
-    margin-left: 4px;
-    margin-bottom: 4px;
-    margin-top: 40px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     padding-left: 20px;
     color: #454545;
     box-shadow: none;
     border: none;
+    margin-top: 40px;
+    margin-bottom: 0px;
 }
 
-#inner-settings-image .img-search:focus {
+#inner-settings-image .img-url-select {
+    float: right;
+    width: 43px;
+    height: 43px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: #9EA1A7;
+    background-image: url('../img/img_url_select.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+#inner-settings-image .img-url-select:hover {
+    opacity: .7;
+}
+
+#inner-settings-image .img-search {
+    width: 152px;
+    height: 43px;
+    float: left;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding-left: 20px;
+    color: #454545;
+    box-shadow: none;
+    border: none;
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+
+#inner-settings-image .img-search:focus,
+#inner-settings-image .img-url:focus {
     box-shadow: none;
 }
 
@@ -2138,6 +2182,10 @@ body.builder-editor {
     cursor: pointer;
     box-sizing: border-box;
     margin-top: 5px;
+}
+
+#inner-settings-image .filtered-images .ajax-image:first-child {
+    margin-top: 0px;
 }
 
 #inner-settings-image .filtered-images .ajax-image.chosen {
@@ -2180,12 +2228,11 @@ body.builder-editor {
 }
 
 #inner-settings-image .img-pack {
-    display: inline-block;
-    width: 94px;
+    display: block;
+    float: right;
+    width: 92px;
     height: 43px;
-    margin-top: 36px;
-    position: relative;
-    left: -4px;
+    margin-top: 40px;
 }
 
 #inner-settings-image .img-pack > .btn {
@@ -2203,7 +2250,7 @@ body.builder-editor {
 
 #inner-settings-image .img-pack > .btn:focus {
     box-shadow: none !important;
-    outline: none;
+    outline: none !important;
 }
 
 #inner-settings-image .img-pack .dropdown-menu {
@@ -2247,11 +2294,11 @@ body.builder-editor {
     width: 23px;
     height: 43px;
     float: right;
-    margin-right: 5px;
+    margin-right: -3px;
     transform: rotate(180deg);
     transition: transform 0.5s ease-out 0.2s;
     border: none;
-    top: 5%;
+    top: 8%;
 }
 
 #inner-settings-image .img-pack.open > .btn .caret {

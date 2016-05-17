@@ -18,6 +18,7 @@ Fields.image = FieldView.extend(
              */
             initialize: function (options) {
                 FieldView.prototype.initialize.call(this, options);
+                this.tags = options.settings.tags || null;
                 this.tpl = _.template(this.storage.builderTemplates['field-image-preview']);
             },
             /**
@@ -34,7 +35,7 @@ Fields.image = FieldView.extend(
              */
             imageUpload: function (evt) {
                 var assets = this.storage.getAssets();
-                
+
                 window.selectFieldImage = function (src) {
                     if (src) {
                         this.$el.find('.edit-image').find('img').attr('src', src);
@@ -49,12 +50,13 @@ Fields.image = FieldView.extend(
                 }.bind(this);
 
                 var mediaCenter = new MediaCenterView({
-                    "model": this.model,
-                    "controller": this.controller,
-                    "parentId": this.model.owner_id,
-                    "storage": this.storage,
-                    "curSrc": this.$el.find('.edit-image').find('img').attr('src'),
-                    "assets": assets
+                    model: this.model,
+                    controller: this.controller,
+                    parentId: this.model.owner_id,
+                    storage: this.storage,
+                    curSrc: this.$el.find('.edit-image').find('img').attr('src'),
+                    assets: assets,
+                    tags: this.tags
                 });
 
                 this.controller.setInnerSettingsView(mediaCenter);
