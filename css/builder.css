@@ -900,8 +900,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 ul.catalog-list {
-    /*height: calc(100% - 100px);*/
-    height: calc(100%);
+    height: 100%;
     margin: 0;
     z-index: 1;
 }
@@ -1913,6 +1912,48 @@ input[type="text"]#datepicker {
     margin: 7px 0 0 0;
 }
 
+.settings-blocks .block-button {
+    margin: 0 4px 0 4px;
+}
+
+.block-button .delete-button-small,
+.block-button .button-moveup,
+.block-button .button-movedown {
+    position: absolute;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 3px;
+    bottom: 5px;
+}
+
+.block-button span {
+    display: block;
+    padding: 11px 0 0 22px;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'robotoregular';
+}
+
+.settings .delete-button-small {
+    background: #9ea0a5 url(../img/basket_delete.png) no-repeat center center;
+    height: 43px;
+    width: 44px;
+}
+
+.settings .button-moveup {    
+    background: #9ea0a5 url(../img/move_up.png) no-repeat 70px center;
+    height: 43px;
+    width: 100px;
+    right: 4px;
+}
+
+.settings .button-movedown {
+    background: #9ea0a5 url(../img/move_down.png) no-repeat 70px center;
+    height: 43px;
+    width: 100px;
+    left: 51px;
+}
+
 /*! jQuery UI - v1.11.4 - 2015-10-29
 * http://jqueryui.com
 * Includes: core.css, draggable.css
@@ -2131,7 +2172,6 @@ body.builder-editor {
     }
 }
 
-
 @-webkit-keyframes scaleDown {
     from { }
     to {
@@ -2156,76 +2196,17 @@ html.active-js {
     overflow-y: hidden;
 }
 
-.control-block-button {
-    position: absolute;
-    /*display: none;*/
-    margin-top: 44px;
-    right: 0;
-    z-index: 99999;
-}
-
-.control-block-button a {
-    display: inline-block;
-    height: 31px;
-    width: 31px;
-    margin-right: 8px;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    background-color: #C9C9C9;
-    background-repeat: no-repeat;
-    background-position: center center;
-    outline: none;
-}
-
-.control-block-button a:last-child {
-    margin-right: 19px;
-}
-
-.control-block-button a:hover {
-    background-color: #A0A0A0;
-}
-
-.control-block-button a.remove {
-    background-color: #D61616;
-    background-image: url(../img/cross.png);
-}
-
-.control-block-button a.remove:hover {
-    background-color: #970D0D;
-}
-
-.control-block-button a.edit {
-    background-image: url(../img/pencil.png);
-}
-
-.control-block-button a.list-up {
-    background-image: url(../img/arrow_up_move.png);
-}
-
-.control-block-button a.list-down {
-    background-image: url(../img/arrow_down_move.png);
-}
-
-.control-block-button.hidden-button {
-    display: none;
-}
-
 #builder-blocks {
     position: relative;
     min-height: 200px;
 }
 
-.content-block:first-child {
-    margin-top: -75px;
-}
-
-.content-block.content-fade  {
+.content-block-outer.content-show  {
     -webkit-animation: scaleUp .7s ease both;
     animation: scaleUp .7s ease both;
 }
 
-.content-block.content-hide  {
+.content-block-outer.content-hide  {
     -webkit-animation: scaleDown .7s ease both;
     animation: scaleDown .7s ease both;
 }
