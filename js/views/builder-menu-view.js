@@ -127,9 +127,13 @@ var BuilderMenuView = Backbone.View.extend({
         var currentSide = currentElement.closest('div[id^="side-"]');
         var newSide = newElement.closest('div[id^="side-"]');
         var addedClass = newSide.prop('id');
-        
-        if (currentSide.prop('id') == newSide.prop('id')) {
-            addedClass += ' side-full-rotation';
+
+        if(this.$el.find('.card-main').hasClass('side-full-rotation')) {
+            this.$el.find('.card-main').removeClass('side-full-rotation');
+        }else{
+            if (currentSide.prop('id') == newSide.prop('id')) {
+                addedClass += ' side-full-rotation';
+            }
         }
 
         // hide all blocks side
@@ -143,7 +147,7 @@ var BuilderMenuView = Backbone.View.extend({
         this.$el.find('.card-main')
             .removeClass(function(index, css) {
                 return (css.match(/\bside-\S+/g) || []).join(' ');
-            })
+            }).removeClass('side-full-rotation')
             .addClass(addedClass)
             .children()
             .removeClass('active');

@@ -10,8 +10,10 @@ var MediaCenterView = Backbone.View.extend(
             events: {
                 'click .backward-image': 'backward',
                 'click #inner-settings-image .ajax-image': 'choseImage',
+                'click #inner-settings-image .ajax-image.chosen': 'unchoseImage',
                 'keyup #inner-settings-image .img-search': 'searchFilter',
-                'change #inner-settings-image .img-pack': 'categoryChange'
+                'change #inner-settings-image .img-pack': 'categoryChange',
+                'click .delete-image': 'deleteImage'
             },
             /**
              * Set setting's id
@@ -70,10 +72,25 @@ var MediaCenterView = Backbone.View.extend(
              * @returns {undefined}
              */
             choseImage: function (evt) {
-                var chosen = this.$el.find('.chosen').find('img');
                 this.$el.find('.ajax-image').removeClass('chosen');
                 evt.currentTarget.classList.add('chosen');
                 window.selectFieldImage(evt.target.getAttribute('src'));
+            },
+            /**
+             * Unset the chosen image and returning to the default one
+             */
+            unchoseImage: function (evt) {
+                this.$el.find('.ajax-image').removeClass('chosen');
+                evt.currentTarget.classList.remove('chosen');
+                window.selectFieldImage(this.curSrc);
+            },
+            /**
+             * Delete image
+             * @param {type} evt
+             */
+            deleteImage: function (evt) {
+                window.selectFieldImage('empty');
+                this.controller.layout.menu.rotate(this.backId);
             },
             /**
              * Keyup event for filtering images in search input

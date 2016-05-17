@@ -61,8 +61,8 @@ Fields.accordion = FieldView.extend(
                 for (var i = 0; i < settingsParams.length; i++) {
                     data[settingsParams[i].name] = settingsParams[i].default;
                 }
-
                 newModel = BuilderUtils.createModel(data);
+                newModel.owner_id = this.model.id;
                 values.add(newModel);
                 var item = new Fields[this.classNameItem]({
                     model: newModel,
@@ -72,7 +72,6 @@ Fields.accordion = FieldView.extend(
                     controller: this.controller,
                     parentId: this.model.id
                 });
-
                 item.model.set('order', (values.models ? values.models.length - 1 : 0));
 
                 this.accordionMenuViews.push(item);
@@ -96,7 +95,6 @@ Fields.accordion = FieldView.extend(
                 });
                 
                 this.classNameItem = (this.settings.viewType === undefined || this.settings.viewType === "expand") ? 'accordion_item_expand' : 'accordion_item_flip';
- 
                 for (var i = 0; i < values.models.length; i++) {
                     var item = new Fields[this.classNameItem]({
                         model: values.models[i],
