@@ -34,7 +34,7 @@ var mockTemplateMenuResalt =
     "</div>";
 
 var mockStorageMenu = {
-    builderTemplates: { 'builder-menu-preview': mockTemplateMenu, 'menu-groups-preview': "<li><a href=\"#video\"></a></li>" },
+    builderTemplates: { 'builder-menu-preview': mockTemplateMenu, 'menu-groups-preview': "<li><a href=\"#video\"></a></li>", 'menu-settings-preview':'' },
     builderData: { 'groups': [] }
 };
 
@@ -53,10 +53,13 @@ QUnit.test("initialize", function(assert) {
 //addSettings
 // QUnit.test("addSettings", function(assert) {
 //     var menu = new BuilderMenuView({
-//         model: new Backbone.Model(),
+//         model: new Backbone.Model({
+//             tagName: "div",
+//             className: "settings menu-block"
+//         }),
 //         storage: mockStorageMenu
 //     });
-//     console.log(menu.addSettings());
+//     console.log(menu.render().$el);
 //     assert.ok(menu.addSettings());
 // });
 
@@ -77,9 +80,8 @@ QUnit.test("render", function(assert) {
 
 //     $('body').append(menu.render().$el);
 //     assert.ok(!menu.$el.find('#side-90').hasClass('active'));
-//     var view = new View({ id: "preview-blocks" });
-//     menu.addView(view, 90)
 //     assert.ok(menu.$el.find('.preview-block').draggable());
+//     console.log(menu.$el.find('.preview-block').draggable());
 
 // });
 

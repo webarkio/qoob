@@ -104,7 +104,7 @@ var BuilderViewportView = Backbone.View.extend(
                 this.getIframe().width("100%");
             }
         },
-        scrollTo: function(blockId) {
+        scrollTo: function(blockId) {           
             //Scroll to new block
             this.getWindowIframe().jQuery('body').animate({
                 scrollTop: this.getBlockView(blockId).$el.offset().top
@@ -126,11 +126,12 @@ var BuilderViewportView = Backbone.View.extend(
          * @param {Number} id modelId
          */
         delBlockView: function(id) {
-            this.blockViews = this.blockViews.filter(function(item) {
-                if (item.model.id === id) {
-                    item.dispose();
+            for (var i = 0; i < this.blockViews.length; i++) {
+                if (this.blockViews[i].model.id == id) {
+                    this.blockViews[i].dispose();
+                    this.blockViews.splice(i, 1);
                 }
-            });
+            };
         },
         /**
          * Add block
