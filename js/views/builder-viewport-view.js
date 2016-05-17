@@ -11,7 +11,6 @@ var BuilderViewportView = Backbone.View.extend(
         previewMode: false,
         blocksCounter: 0,
         blockViews: [],
-
         /**
          * View menu
          * @class BuilderMenuView
@@ -22,7 +21,9 @@ var BuilderViewportView = Backbone.View.extend(
             this.controller = options.controller;
             this.storage = options.storage;
             this.model.on("block_add", this.addBlock.bind(this));
-            this.model.on("block_delete", this.deleteBlock.bind(this));
+            this.model.on("block_delete", this.delBlockView.bind(this));
+            this.model.on("block_moveup", this.moveUpBlockView.bind(this));
+            this.model.on("block_movedown", this.moveDownBlockView.bind(this));
         },
         /**
          * Render menu
@@ -51,7 +52,6 @@ var BuilderViewportView = Backbone.View.extend(
         stopEditBlock: function() {
             var iframe = this.getWindowIframe();
             iframe.jQuery('.overlay').removeClass('active').removeClass('no-active');
-
         },
         setPreviewMode: function() {
             this.previewMode = true;
@@ -109,9 +109,7 @@ var BuilderViewportView = Backbone.View.extend(
             this.getWindowIframe().jQuery('body').animate({
                 scrollTop: this.getBlockView(blockId).$el.offset().top
             }, 1000);
-
         },
-
         /**
          * Get BlockView by id
          * @param {Number} id modelId
@@ -131,10 +129,7 @@ var BuilderViewportView = Backbone.View.extend(
             this.blockViews = this.blockViews.filter(function(item) {
                 if (item.model.id === id) {
                     item.dispose();
-                    //FIXME: why false?
-                    return false;
                 }
-                return true;
             });
         },
         /**
@@ -173,12 +168,6 @@ var BuilderViewportView = Backbone.View.extend(
                 iframe.jQuery('#builder-blocks').append(blockWrapper.render().el);
             }
 
-
-            // default visible block
-            // if (blockView.model.get('devices')) {
-            //     this.visibilityBlocks(blockView.model.id, blockView.model.get('devices').split(','));
-            // }
-
             // setting block height
             //            builder.builderLayout.menu.resize();
 
@@ -194,41 +183,6 @@ var BuilderViewportView = Backbone.View.extend(
             // Trigger change builder blocks for theme
             var iframe = this.getWindowIframe();
             iframe.jQuery('#builder-blocks').trigger('change');
-        },
-
-        /**
-         * Remove block by id
-         * 
-         * @param {Integer} blockId
-         */
-        deleteBlock: function(modelId) {
-            var alert = confirm("Are you sure you want to delete the block?");
-            if (!alert) {
-                return false;
-            }
-
-            var block = this.getBlockView(modelId);
-            block.dispose();
-        
-        /*
-
-            var iframe = this.getWindowIframe();
-
-            // add class when delete block
-            iframe.jQuery('div[data-model-id="' + blockId + '"]').addClass('content-hide');
-
-            // remove from storage and DOM
-            builder.storage.delModel(blockId);
-            builder.storage.delBlockView(blockId);
-            builder.storage.delSettingsView(blockId);
-
-            // remove container block
-            setTimeout(function() {
-                iframe.jQuery('div[data-model-id="' + blockId + '"]').remove();
-            }, 1000);
-
-            builder.trigger('stop_edit_block');
-        */
         },
         getIframe: function() {
             return this.$el.find('#builder-iframe');
@@ -246,5 +200,13 @@ var BuilderViewportView = Backbone.View.extend(
          */
         getWindowIframe: function() {
             return window.frames["builder-iframe"];
+        },
+        moveUpBlockView: function (modelId) {
+            var currrentView = this.getBlockView(modelId);
+            currrentView.$el.after(currrentView.$el.prev());
+        },
+        moveDownBlockView: function (modelId) {
+            var currrentView = this.getBlockView(modelId);
+            currrentView.$el.before(currrentView.$el.next());
         }
     });

@@ -22,11 +22,6 @@ var BuilderMenuView = Backbone.View.extend({
     addSettings: function(model) {
         var item = _.findWhere(this.storage.builderData.items, { id: model.get('template') });
         this.addView(new BuilderMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
-        // Add devices field
-        // if (!_.findWhere(settings, { label: "Visible Devices" })) {
-        //     settings.push(self.devicesSettings());
-        // }
-
     },
     /**
      * Render menu
@@ -205,9 +200,9 @@ var BuilderMenuView = Backbone.View.extend({
         }   
     },
     deleteSettings: function(modelId) {
-        this.showIndex();
+        this.controller.stopEditBlock();
+        
         var settings = this.getSettingsView(modelId);
         settings.dispose();
     }
-
 });
