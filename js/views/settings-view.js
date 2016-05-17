@@ -52,7 +52,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 className: 'settings-block'
             });
             this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
-
+            
             return this;
         },
         clickBack: function(){

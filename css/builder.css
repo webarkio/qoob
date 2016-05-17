@@ -883,16 +883,16 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #builder-menu .backward a {
     visibility: visible;
+    text-align: center;
     display: block;
     width: 258px;
     height: 70px;
-    padding-left: 60px;
     color: #ffffff;
     font-size: 16px;
     line-height: 70px;
     font-family: 'robotobold';
     text-decoration: none;
-    background: #b2b2b2 url(../img/backward.png) no-repeat 27px center;
+    background: #b2b2b2 url(../img/backward.png) no-repeat 91px center;
 }
 
 #builder-menu .backward a:focus {
@@ -904,7 +904,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 .visible-block a {
-    padding: 17px 0;
+    padding: 13px 0;
     color: #fff;
     background: #606163;
     text-decoration: inherit;
@@ -1216,7 +1216,7 @@ ul.catalog-list li a:hover {
 .settings-blocks {
     padding: 70px 0 0 0;
     overflow: auto !important;
-    height: calc(100% - 135px);
+    height: calc(100% - 125px);
     background-color: #444444;
 }
 
@@ -1283,29 +1283,7 @@ ul.catalog-list li a:hover {
 .settings-item .title .text {
     display: inline-block;
 }
-.settings-item .title .cross-delete {
-    display: inline-block;
-    position: absolute;
-    right: -11px;
-    top: 3px;
-    cursor: pointer;
-}
-.btn-builder {
-    border: none;
-    width: 100%;
-    font-size: 16px;
-}
-.btn-upload {
-    background: #00c1e6;
-    padding: 9px 0;
-    color: #fff;
-    border-radius: 2px;
-}
 
-.btn-upload:hover {
-    cursor: pointer;
-    opacity: .9;
-}
 
 /* accordion */
 .settings-accordion {
@@ -1393,7 +1371,7 @@ ul.catalog-list li a:hover {
 }
 .settings-accordion .settings-block .cross-delete.expand {
     height: 25px;
-    width: 245px;
+    width: 250px;
     margin-left: -5px;
     background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
 }
@@ -1757,6 +1735,10 @@ input[type="text"]#datepicker {
     background: transparent url(../img/pencil_edit.png) no-repeat left center;
 }
 
+.settings-item .btn-upload {
+    display: none;
+}
+
 .settings-item .edit-image,
 .settings-item .edit-icon {
     width: 100%;
@@ -1766,9 +1748,10 @@ input[type="text"]#datepicker {
 }
 .settings-item .edit-image {
     width: 100%;
-    height: 150px;
+    height: 156px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 .settings-item .edit-image img {
     width: 100%;
@@ -1782,11 +1765,24 @@ input[type="text"]#datepicker {
     padding: 28px 0;
 }
 
+.settings-item .edit-image.empty {
+    border: 3px dashed #8B8B8B;
+    box-sizing: border-box;
+    background: url('../img/empty-image-plus.png') center center no-repeat;
+}
+
+.settings-item .edit-image.empty:hover {
+    opacity: .7;
+}
+
+.settings-item .edit-image.empty img {
+    display: none;
+}
+
 .settings-item .edit-icon img {
     text-align: center;
 }
 
-.edit-image .cross-delete,
 .settings-item .edit-icon .cross-delete {
     position: absolute;
     height: 10px;
@@ -1803,7 +1799,6 @@ input[type="text"]#datepicker {
     background: transparent url(../img/cross_delete.png) no-repeat right top;
 }
 
-.settings-item .edit-image .cross-delete a,
 .settings-item .edit-icon .cross-delete a {
     display: block;
     height: 10px;
@@ -1827,13 +1822,15 @@ input[type="text"]#datepicker {
 
 .settings-item .other-photos div {
     overflow: hidden;
-    height: 50px;
-    width: 60px;
+    height: 58px;
+    width: 58px;
+    border: 2px solid #fff;
+    box-sizing: border-box;
     background-color: #fff;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
-    margin-left: 14px;
+    margin-left: 26px;
     padding: 2px;
 }
 
@@ -1842,12 +1839,11 @@ input[type="text"]#datepicker {
 }
 
 .settings-item .other-photos div:first-child {
-    margin-left: 0;
+    margin-left: 5px;
 }
 
 .settings-item .other-photos div.active {
-    -webkit-filter: brightness(50%);
-    filter: brightness(50%);
+    border-color: #2bc0e4;
 }
 
 .settings-item .other-colors {
@@ -1959,6 +1955,20 @@ input[type="text"]#datepicker {
     width: 248px;
     z-index: 2;
     border-radius: 3px;
+}
+
+.settings .delete-image {
+    position: relative;
+    cursor: pointer;
+    height: 43px;
+    width: 246px;
+    margin: 5px 0 5px 0;
+    background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
+    border-radius: 3px;
+}
+
+.settings .delete-image:hover {
+    opacity: .8;
 }
 
 .settings .settings-item .delete-button {
@@ -2103,21 +2113,45 @@ body.builder-editor {
 
 #inner-settings-image {
     height: 100%;
-    padding-top: 75px;
+    margin-top: 75px;
 }
 
 #inner-settings-image .img-search {
-    width: 57%;
-    margin-left: 3px;
-    height: 37px;
+    width: 152px;
+    height: 43px;
+    margin-left: 4px;
+    margin-bottom: 4px;
+    margin-top: 40px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding-left: 20px;
+    color: #454545;
+    box-shadow: none;
+    border: none;
+}
+
+#inner-settings-image .img-search:focus {
+    box-shadow: none;
 }
 
 #inner-settings-image .filtered-images .ajax-image {
     cursor: pointer;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+#inner-settings-image .filtered-images .ajax-image.chosen {
+    border: 5px solid #2bc0e4; 
+    border-radius: 4px;
+}
+
+#inner-settings-image .filtered-images .ajax-image img {
+    border-radius: 4px;
 }
 
 #inner-settings-image .filtered-images .ajax-image.chosen img {
-    border: 2px solid #2bc0e4;
+    border: 2px solid #fff;
+    border-radius: 0px;
 }
 
 #inner-settings-image .filtered-images img {
@@ -2147,9 +2181,81 @@ body.builder-editor {
 
 #inner-settings-image .img-pack {
     display: inline-block;
-    width: 38%;
-    height: 37px;
-    margin-top: -2px;
+    width: 94px;
+    height: 43px;
+    margin-top: 36px;
+    position: relative;
+    left: -4px;
+}
+
+#inner-settings-image .img-pack > .btn {
+    height: 43px;
+    border: none;
+    background-image: none;
+    background: #9EA1A7;
+    color: #595B5E;
+    text-shadow: none;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    box-shadow: none !important;
+    outline: none;
+}
+
+#inner-settings-image .img-pack > .btn:focus {
+    box-shadow: none !important;
+    outline: none;
+}
+
+#inner-settings-image .img-pack .dropdown-menu {
+    left: -152px;
+    right: 0px;
+    top: 105%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-clip: initial;
+    box-shadow: none;
+    border: none;
+}
+
+#inner-settings-image .img-pack .dropdown-menu li {
+    margin-bottom: 0px;
+}
+
+#inner-settings-image .img-pack .dropdown-menu li.selected {
+    background: #5F6163;
+}
+
+#inner-settings-image .img-pack .dropdown-menu li a {
+    font-size: 13px;
+    height: 31px;
+    line-height: 31px;
+    color: #595B5E;
+}
+
+#inner-settings-image .img-pack .dropdown-menu li.selected a {
+    color: #fff;
+}
+
+#inner-settings-image .img-pack .dropdown-menu li a:hover {
+    background: #9EA1A7;
+    background-image: none;
+}
+
+#inner-settings-image .img-pack > .btn .caret {
+    background: url('../img/arrow_accordion.png') no-repeat center;
+    display: block;
+    width: 23px;
+    height: 43px;
+    float: right;
+    margin-right: 5px;
+    transform: rotate(180deg);
+    transition: transform 0.5s ease-out 0.2s;
+    border: none;
+    top: 5%;
+}
+
+#inner-settings-image .img-pack.open > .btn .caret {
+    transform: rotate(0deg);
 }
 
 #inner-settings-image .not-in-pack {
@@ -2471,4 +2577,8 @@ html.active-js {
 
 #builder-blocks.preview .overlay {
     display:none;
+}
+
+#settings-block-media {
+    overflow: auto;
 }
