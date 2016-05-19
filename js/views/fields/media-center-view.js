@@ -40,7 +40,7 @@ var MediaCenterView = Backbone.View.extend(
                 this.tpl = _.template(this.storage.builderTemplates['field-image-setting-preview']);
                 this.parentId = options.parentId;
                 this.blockId = options.blockId;
-                this.backId = "settings-block-" + this.model.id;
+                this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
                 this.curSrc = options.curSrc;
                 this.assets = options.assets;
                 this.tags = options.tags;

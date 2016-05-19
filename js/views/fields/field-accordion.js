@@ -78,7 +78,6 @@ Fields.accordion = FieldView.extend(
 
                 this.$el.find("#" + this.getUniqueId()).append(item.render().el);
                 this.$el.find("#" + this.getUniqueId()).accordion("refresh");
-                // item.model.trigger('change');
                 values.trigger('change');
             },
             /**

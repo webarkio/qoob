@@ -2440,19 +2440,18 @@ html.active-js {
     margin-top: -1px;
 }
 .ui-droppable {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 75px;
     /*display: none;*/
     visibility: hidden;
-    margin-top: -75px;
+    margin-top: 0;
     z-index: 999;
     font-family: 'robotoregular';
     font-size: 16px;
     color: #ffffff;
     text-align: center;
     background-color: rgba(178, 178, 178, 0.8);
-    /*margin-bottom: -15px;*/
 }
 
 .ui-droppable i.plus {

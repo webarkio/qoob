@@ -18,6 +18,7 @@ Fields.image = FieldView.extend(
              */
             initialize: function (options) {
                 FieldView.prototype.initialize.call(this, options);
+                this.parentId = options.parentId;
                 this.tags = options.settings.tags || null;
                 this.tpl = _.template(this.storage.builderTemplates['field-image-preview']);
             },
@@ -54,7 +55,7 @@ Fields.image = FieldView.extend(
                 var mediaCenter = new MediaCenterView({
                     model: this.model,
                     controller: this.controller,
-                    parentId: this.model.owner_id,
+                    parentId: this.parentId,
                     storage: this.storage,
                     curSrc: this.$el.find('.edit-image').find('img').attr('src'),
                     assets: assets,
