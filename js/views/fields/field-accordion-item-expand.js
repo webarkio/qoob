@@ -28,13 +28,13 @@ Fields.accordion_item_expand = Backbone.View.extend(
                             settings: this.settings,
                             defaults: this.defaults,
                             storage: this.storage,
-                            controller: this.controller
+                            controller: this.controller,
+                            parentId: this.model.owner_id
                         }),
                         htmldata = {
                             "image": settingsView.model.get('image'),
                             "title": settingsView.model.get('title')
                         };
-
                 this.listenTo(this.model, 'change', function () {
                     this.$el.find("h3 span.text").first().html(this.model.get('title'));
                     this.$el.find("h3 span.preview_img img").first().prop('src', this.model.get('image'));
