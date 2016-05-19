@@ -43,7 +43,8 @@ var AccordionFlipView = FieldView.extend(
                     settings: this.settings,
                     defaults: this.defaults,
                     storage: this.storage,
-                    controller: this.controller
+                    controller: this.controller,
+                    parentId: this.model.id
                 });
                 this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
                 this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
@@ -69,7 +70,6 @@ var AccordionFlipView = FieldView.extend(
                 this.model.off(null, null, this);
             },
             backward: function () {
-                console.log(this.model.owner_id);
                 this.controller.layout.menu.rotate("settings-block-" + this.parentId);
             }
         });
