@@ -4,8 +4,9 @@ var mockTemplate = "<div class=\"logo\"></div>TOOLBAR HTML TEMPLATE" +
     "<a href=\"#\" class=\"save-button\">save</a>" +
     "<a href=\"#\" class=\"exit-button\">exit</a>" +
     "<a href=\"#\" class=\"preview-mode-button\">Preview</a>" +
-    "<a href=\"#\" class=\"device-mode-button\" name=\"pc\">PC device mode</a>"+
+    "<a href=\"#\" class=\"device-mode-button\" name=\"pc\">PC device mode</a>" +
     "<input type=\"checkbox\" class=\"autosave-checkbox\">";
+
 
 
 var mockStorage = {
@@ -28,7 +29,7 @@ QUnit.test("initialize", function(assert) {
         storage: 1,
         controller: 2
     });
-    
+
     assert.equal(toolbar.storage, 1);
     assert.equal(toolbar.controller, 2);
 });
@@ -123,6 +124,17 @@ QUnit.test("startEditBlock", function(assert) {
 });
 
 //Show loader autosave
+// QUnit.test("showSaveLoader", function(assert) {
+
+//     var toolbar = new BuilderToolbarView({
+//         storage: mockStorage
+//     });
+//     setTimeout(function() {
+//         toolbar.render().showSaveLoader();
+//     }, 5000);
+//     assert.equal(toolbar.$el.find('.save-button .clock').css('display'), 'block');
+//     assert.equal(toolbar.$el.find('.save-button span.text').css('display'), 'none');
+// });
 
 //Hide loader autosave
 
@@ -180,13 +192,13 @@ QUnit.test("clickExit", function(assert) {
 });
 
 QUnit.test("clickAutosave", function(assert) {
-	var checked = true;
+    var checked = true;
     var toolbar = new BuilderToolbarView({
         storage: mockStorage,
         controller: {
             setAutoSave: function(checked) {
                 assert.ok(checked);
-                checked=!checked;
+                checked = !checked;
             }
         }
     });
@@ -195,6 +207,3 @@ QUnit.test("clickAutosave", function(assert) {
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
 });
-
-
-

@@ -899,15 +899,27 @@ label.checkbox-sb [type=checkbox]:checked + span {
 #builder-menu .backward a {
     visibility: visible;
     text-align: center;
-    display: block;
+    display: table-cell;
     width: 258px;
     height: 70px;
     color: #ffffff;
     font-size: 16px;
-    line-height: 70px;
+    /*line-height: 70px;*/
     font-family: 'robotobold';
     text-decoration: none;
-    background: #b2b2b2 url(../img/backward.png) no-repeat 91px center;
+    background: #b2b2b2;
+    vertical-align: middle;
+}
+#builder-menu .backward a span {
+    position: relative;
+}
+#builder-menu .backward a span:before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 12px;
+    background: url(../img/backward.png) center center;
+    margin-right: 5px;
 }
 
 #builder-menu .backward a:focus {
