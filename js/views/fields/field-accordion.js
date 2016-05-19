@@ -68,9 +68,7 @@ Fields.accordion = FieldView.extend(
                 }
                 newModel = BuilderUtils.createModel(data);
                 newModel.owner_id = this.model.id;
-                
-//                console.log(values);
-                
+                                
                 values.add(newModel);
                 newModel.on("remove_item", this.removeItem.bind(this));
                 var item = new Fields[this.classNameItem]({
