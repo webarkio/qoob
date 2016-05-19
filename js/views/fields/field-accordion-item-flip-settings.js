@@ -69,6 +69,7 @@ var AccordionFlipView = FieldView.extend(
                 this.model.off(null, null, this);
             },
             backward: function () {
+                console.log(this.model.owner_id);
                 this.controller.layout.menu.rotate("settings-block-" + this.parentId);
             }
         });

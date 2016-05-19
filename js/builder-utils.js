@@ -26,7 +26,6 @@ var BuilderUtils = {
         var model = new BlockModel();
 
         var newSettings = {};
-
         for (var i in settings) {
             if (_.isArray(settings[i])) {
                 newSettings[i] = this.createCollection(settings[i]);
@@ -73,8 +72,9 @@ var BuilderUtils = {
         //builder.storage.builderData.items
         var values = {};
         var settings = _.findWhere(items, { id: templateId }).settings;
+        var defaults = (_.findWhere(items, { id: templateId }).defaults);
         for (var i = 0; i < settings.length; i++) {
-            values[settings[i].name] = settings[i].default;
+            values[settings[i].name] = defaults[settings[i].name];
         }
         values.template = templateId;
 
