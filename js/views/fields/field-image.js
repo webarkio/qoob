@@ -41,6 +41,8 @@ Fields.image = FieldView.extend(
                         this.$el.find('.edit-image').find('img').attr('src', src);
                         if (src === 'empty') {
                             this.$el.find('.edit-image').addClass('empty');
+                        } else {
+                            this.$el.find('.edit-image').removeClass('empty');
                         }
                         this.$el.find('input').trigger("change");
                         if (this.$el.find('.other-photos').length) {
@@ -56,7 +58,7 @@ Fields.image = FieldView.extend(
                     storage: this.storage,
                     curSrc: this.$el.find('.edit-image').find('img').attr('src'),
                     assets: assets,
-                    tags: this.tags
+                    tags: this.tags ? this.tags.join(', ') : ''
                 });
 
                 this.controller.setInnerSettingsView(mediaCenter);
