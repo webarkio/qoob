@@ -73,7 +73,7 @@ Fields.accordion_item_flip = FieldView.extend(
                 this.model.stopListening();
                 this.model.trigger('destroy', this.model, this.model.collection);
                 this.remove();
-                this.model.trigger('change');
+                this.model.trigger('remove_item');
             }
         });
 
