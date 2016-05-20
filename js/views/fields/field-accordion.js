@@ -139,7 +139,8 @@ Fields.accordion = FieldView.extend(
                     header: "> div > h3.inner-settings-expand",
                     animate: 500,
                     collapsible: true,
-                    heightStyle: 'content',
+                    active: false,
+                    heightStyle: 'content'
                 }).sortable({
                     items: ".settings-accordion",
                     revert: false,

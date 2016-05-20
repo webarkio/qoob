@@ -1270,6 +1270,10 @@ ul.catalog-list li a:hover {
     cursor: pointer;
 }
 
+.settings-accordion .title_accordion:focus {
+    outline: none;
+}
+
 .settings-accordion + .settings-accordion {
     margin-top: 4px;
 }
