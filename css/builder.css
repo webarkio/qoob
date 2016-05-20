@@ -2509,8 +2509,7 @@ html.active-js {
     vertical-align: middle;
 }
 
-.ui-droppable .dropp-block,
-.ui-droppable .wait-block {
+.ui-droppable .dropp-block {
     cursor: default;
     line-height: 68px;
     height: 70px;
@@ -2538,24 +2537,16 @@ html.active-js {
     margin-top: -10px;
 }
 
-.ui-droppable.active-wait {
+.wait-block {
+    cursor: default;
     visibility: visible;
     background-color: #2bc0e4;
-    font-family: 'OpenSans-Bold';
+    color: #fff;
+    font-family: 'robotobold';
     font-size: 18px;
-}
-
-.ui-droppable.active-wait .dropp-block {
-    display: none;
-}
-
-.ui-droppable .wait-block {
-    display: none;
-    line-height: 70px;
-}
-
-.ui-droppable.active-wait .wait-block {
-    display: block;
+    line-height: 68px;
+    height: 70px;
+    text-align: center;
 }
 
 .wait-block .clock {
@@ -2580,8 +2571,8 @@ html.active-js {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 2px;
-    height: 2px;
+    width: 3px;
+    height: 3px;
     z-index: 10;
     border-radius: 50%;
 }
@@ -2595,7 +2586,8 @@ html.active-js {
     left: 0;
 }
 
-.wait-block .minutes {
+.wait-block .minutes,
+.wait-block .seconds {
     background: #2bc0e4;
     height: 15px;
     left: 47%;
@@ -2605,12 +2597,6 @@ html.active-js {
 }
 
 .wait-block .seconds {
-    background: #2bc0e4;
-    height: 15px;
-    left: 47%;
-    position: absolute;
-    top: 14%;
-    width: 3px;
     z-index: 8;
 }
 
