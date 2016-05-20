@@ -71,6 +71,9 @@ Builder.prototype.activate = function() {
                         //Skip counter for blocks
                         self.layout.viewPort.blocksCounter = null;
                         self.loader.step();
+                        
+                        // if first start page
+                        self.layout.viewPort.createBlankBlock();
                     }
 
                 });
