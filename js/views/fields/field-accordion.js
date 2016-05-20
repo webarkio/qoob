@@ -18,6 +18,11 @@ Fields.accordion = FieldView.extend(
                 FieldView.prototype.initialize.call(this, options);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-preview']);
             },
+            removeItem: function() {
+                var values = this.getValue();
+                values.trigger('change');
+                this.changePosition();
+            },
             /**
              * Change position blocks accordion
              * @param {Object} event
@@ -63,7 +68,9 @@ Fields.accordion = FieldView.extend(
                 }
                 newModel = BuilderUtils.createModel(data);
                 newModel.owner_id = this.model.id;
+                                
                 values.add(newModel);
+                newModel.on("remove_item", this.removeItem.bind(this));
                 var item = new Fields[this.classNameItem]({
                     model: newModel,
                     settings: settings,
@@ -106,6 +113,9 @@ Fields.accordion = FieldView.extend(
                     this.accordionMenuViews.push(item);
 
                     items.push(item.render().el);
+                    
+                    // listen trigger when remove item
+                    values.models[i].on("remove_item", this.removeItem.bind(this));
                 }
 
                 var htmldata = {
