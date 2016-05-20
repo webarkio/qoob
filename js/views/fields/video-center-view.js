@@ -13,7 +13,8 @@ var VideoCenterView = Backbone.View.extend(
                 'click #inner-settings-video .ajax-video.chosen': 'unselectVideo',
                 'keyup #inner-settings-video .video-search': 'searchFilter',
                 'change #inner-settings-video .video-pack': 'categoryChange',
-                'click .delete-video': 'deleteVideo'
+                'click .delete-video': 'deleteVideo',
+                'click .video-url-select' : 'selectCustomVideo'
             },
             /**
              * Set setting's id
@@ -38,8 +39,7 @@ var VideoCenterView = Backbone.View.extend(
                 this.tpl = _.template(this.storage.builderTemplates['field-video-setting-preview']);
                 this.parentId = options.parentId;
                 this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
-                this.cleanCurSrc = options.curSrc;
-                this.curSrc = Fields.video.prototype.videoUrl(options.curSrc);
+                this.curSrc = options.curSrc;
                 this.assets = options.assets;
                 this.tags = options.tags;
             },
@@ -194,5 +194,14 @@ var VideoCenterView = Backbone.View.extend(
                 }
 
                 this.$el.find('.video-search').trigger('keyup');
+            },
+            /**
+             * Upload video by inserted link
+             * @param {type} evt
+             * @returns {undefined}
+             */
+            selectCustomVideo: function (evt) {
+                this.$el.find('.ajax-video chosen').removeClass('chosen');
+                window.selectFieldVideo(this.$(evt.currentTarget).siblings()[0].value || this.curSrc);
             }
         });
