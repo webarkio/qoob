@@ -26,7 +26,7 @@ Fields.video = FieldView.extend(
              * @param {Object} evt
              */
             changeInput: function (evt) {
-                this.model.set(this.$(evt.target).attr('name'), this.$el.find('.other-video.active iframe').attr('data-clean-src'));
+                this.model.set(this.$(evt.target).attr('name'), this.$el.find('.edit-video iframe').attr('data-clean-src'));
             },
             /**
              * Image upload
@@ -35,12 +35,16 @@ Fields.video = FieldView.extend(
             videoUpload: function (evt) {
                 var assets = this.storage.getAssets();
 
-                window.selectFieldVideo = function (src) {
-                    if (src) {
-                        this.$el.find('.edit-video').find('iframe').attr('src', src);
-                        if (src === 'empty') {
-                            this.$el.find('.edit-video').addClass('empty');
+                window.selectFieldVideo = function (cleanSrc) {
+                    if (cleanSrc) {
+                        var src;
+                        if (cleanSrc === 'empty') {
+                            src = cleanSrc;
+                            this.$el.find('.edit-video').addClass(cleanSrc);
+                        } else {
+                            src = this.videoUrl(cleanSrc);
                         }
+                        this.$el.find('.edit-video iframe').attr({'src': src, 'data-clean-src': cleanSrc});
                         this.$el.find('input').trigger("change");
                         if (this.$el.find('.other-videos').length) {
                             this.$el.find('.other-video').removeClass('active');
@@ -86,7 +90,7 @@ Fields.video = FieldView.extend(
                     videos: this.settings.videos.map(function (video) {
                         return this.videoUrl(video);
                     }.bind(this)),
-                    value: this.videoUrl(this.getValue())
+                    value: this.getValue() === 'empty' ? this.getValue() : this.videoUrl(this.getValue())
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {

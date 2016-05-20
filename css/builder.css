@@ -1749,6 +1749,10 @@ input[type="text"]#datepicker {
     background: url('../img/empty-image-plus.png') center center no-repeat;
 }
 
+.settings-item .edit-video.empty .video-overlay {
+    background: none;
+}
+
 .settings-item .edit-image.empty:hover,
 .settings-item .edit-video.empty:hover {
     opacity: .7;
@@ -1824,7 +1828,8 @@ input[type="text"]#datepicker {
     position: relative;
 }
 
-.settings-item .video-overlay {
+.settings-item .video-overlay,
+.filtered-videos .video-overlay {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -1968,7 +1973,8 @@ input[type="text"]#datepicker {
     border-radius: 3px;
 }
 
-.settings .delete-image {
+.settings .delete-image,
+.settings .delete-video {
     position: relative;
     cursor: pointer;
     height: 43px;
@@ -1976,6 +1982,8 @@ input[type="text"]#datepicker {
     margin: 5px 0 5px 0;
     background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
     border-radius: 3px;
+    position: absolute;
+    bottom: 0px;
 }
 
 .settings .delete-image:hover {
@@ -2160,7 +2168,8 @@ body.builder-editor {
 }
 
 /*Field image*/
-.settings-block .filtered-images {
+.settings-block .filtered-images,
+.settings-block .filtered-videos {
     margin-top: 40px;
 }
 
@@ -2168,13 +2177,15 @@ body.builder-editor {
     height: 100%;
 }
 
-#inner-settings-image {
+#inner-settings-image,
+#inner-settings-video {
     height: 100%;
     margin-top: 75px;
 }
 
 #inner-settings-image .img-url-group,
-#inner-settings-image .img-filter-group{
+#inner-settings-image .img-filter-group,
+#inner-settings-video .video-filter-group {
     display: block;
     margin-left: 5px;
     margin-right: 5px;
@@ -2212,7 +2223,8 @@ body.builder-editor {
     opacity: .7;
 }
 
-#inner-settings-image .img-search {
+#inner-settings-image .img-search,
+#inner-settings-video .video-search {
     width: 152px;
     height: 43px;
     float: left;
@@ -2227,35 +2239,51 @@ body.builder-editor {
 }
 
 #inner-settings-image .img-search:focus,
-#inner-settings-image .img-url:focus {
+#inner-settings-image .img-url:focus,
+#inner-settings-video .video-search:focus {
     box-shadow: none;
 }
 
-#inner-settings-image .filtered-images .ajax-image {
+#inner-settings-image .filtered-images .ajax-image,
+#inner-settings-video .filtered-videos .ajax-video {
     cursor: pointer;
     box-sizing: border-box;
     margin-top: 5px;
 }
 
-#inner-settings-image .filtered-images .ajax-image:first-child {
+#inner-settings-video .filtered-videos .ajax-video {
+    position: relative;
+    height: 170px;
+}
+
+#inner-settings-image .filtered-images .ajax-image:first-child,
+#inner-settings-video .filtered-videos .ajax-video:first-child {
     margin-top: 0px;
 }
 
-#inner-settings-image .filtered-images .ajax-image.chosen {
+#inner-settings-image .filtered-images .ajax-image.chosen,
+#inner-settings-video .filtered-videos .ajax-video.chosen {
     border: 5px solid #2bc0e4; 
     border-radius: 4px;
 }
 
-#inner-settings-image .filtered-images .ajax-image img {
+#inner-settings-image .filtered-images .ajax-image img,
+#inner-settings-video .filtered-videos .ajax-video iframe {
     border-radius: 4px;
 }
 
-#inner-settings-image .filtered-images .ajax-image.chosen img {
+#inner-settings-video .filtered-videos .ajax-video iframe {
+    height: 100%;
+}
+
+#inner-settings-image .filtered-images .ajax-image.chosen img,
+#inner-settings-video .filtered-videos .ajax-video.chosen iframe {
     border: 2px solid #fff;
     border-radius: 0px;
 }
 
-#inner-settings-image .filtered-images img {
+#inner-settings-image .filtered-images img,
+#inner-settings-video .filtered-videos iframe {
     width: 100%;
     height: auto;
     box-sizing: border-box;
@@ -2280,7 +2308,8 @@ body.builder-editor {
     cursor: auto;
 }
 
-#inner-settings-image .img-pack {
+#inner-settings-image .img-pack,
+#inner-settings-video .video-pack {
     display: block;
     float: right;
     width: 92px;
@@ -2288,7 +2317,8 @@ body.builder-editor {
     margin-top: 40px;
 }
 
-#inner-settings-image .img-pack > .btn {
+#inner-settings-image .img-pack > .btn,
+#inner-settings-video .video-pack > .btn {
     height: 43px;
     border: none;
     background-image: none;
@@ -2301,12 +2331,14 @@ body.builder-editor {
     outline: none;
 }
 
-#inner-settings-image .img-pack > .btn:focus {
+#inner-settings-image .img-pack > .btn:focus,
+#inner-settings-video .video-pack > .btn:focus {
     box-shadow: none !important;
     outline: none !important;
 }
 
-#inner-settings-image .img-pack .dropdown-menu {
+#inner-settings-image .img-pack .dropdown-menu,
+#inner-settings-video .video-pack .dropdown-menu {
     left: -152px;
     right: 0px;
     top: 105%;
@@ -2315,33 +2347,40 @@ body.builder-editor {
     background-clip: initial;
     box-shadow: none;
     border: none;
+    z-index: 999999999999999999999;
 }
 
-#inner-settings-image .img-pack .dropdown-menu li {
+#inner-settings-image .img-pack .dropdown-menu li,
+#inner-settings-video .video-pack .dropdown-menu li {
     margin-bottom: 0px;
 }
 
-#inner-settings-image .img-pack .dropdown-menu li.selected {
+#inner-settings-image .img-pack .dropdown-menu li.selected,
+#inner-settings-video .video-pack .dropdown-menu li.selected {
     background: #5F6163;
 }
 
-#inner-settings-image .img-pack .dropdown-menu li a {
+#inner-settings-image .img-pack .dropdown-menu li a,
+#inner-settings-video .video-pack .dropdown-menu li a {
     font-size: 13px;
     height: 31px;
     line-height: 31px;
     color: #595B5E;
 }
 
-#inner-settings-image .img-pack .dropdown-menu li.selected a {
+#inner-settings-image .img-pack .dropdown-menu li.selected a,
+#inner-settings-video .video-pack .dropdown-menu li.selected a{
     color: #fff;
 }
 
-#inner-settings-image .img-pack .dropdown-menu li a:hover {
+#inner-settings-image .img-pack .dropdown-menu li a:hover,
+#inner-settings-video .video-pack .dropdown-menu li a:hover {
     background: #9EA1A7;
     background-image: none;
 }
 
-#inner-settings-image .img-pack > .btn .caret {
+#inner-settings-image .img-pack > .btn .caret,
+#inner-settings-video .video-pack > .btn .caret {
     background: url('../img/arrow_accordion.png') no-repeat center;
     display: block;
     width: 23px;
@@ -2354,11 +2393,13 @@ body.builder-editor {
     top: 8%;
 }
 
-#inner-settings-image .img-pack.open > .btn .caret {
+#inner-settings-image .img-pack.open > .btn .caret,
+#inner-settings-video .video-pack.open > .btn .caret {
     transform: rotate(0deg);
 }
 
-#inner-settings-image .not-in-pack {
+#inner-settings-image .not-in-pack,
+#inner-settings-video .not-in-pack {
     display: none!important;
 }
 
