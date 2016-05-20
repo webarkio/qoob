@@ -2185,13 +2185,15 @@ body.builder-editor {
 
 #inner-settings-image .img-url-group,
 #inner-settings-image .img-filter-group,
-#inner-settings-video .video-filter-group {
+#inner-settings-video .video-filter-group,
+#inner-settings-video .video-url-group {
     display: block;
     margin-left: 5px;
     margin-right: 5px;
 }
 
-#inner-settings-image .img-url {
+#inner-settings-image .img-url,
+#inner-settings-video .video-url {
     float: left;
     width: 201px;
     height: 43px;
@@ -2205,7 +2207,8 @@ body.builder-editor {
     margin-bottom: 0px;
 }
 
-#inner-settings-image .img-url-select {
+#inner-settings-image .img-url-select,
+#inner-settings-video .video-url-select {
     float: right;
     width: 43px;
     height: 43px;
@@ -2219,7 +2222,8 @@ body.builder-editor {
     cursor: pointer;
 }
 
-#inner-settings-image .img-url-select:hover {
+#inner-settings-image .img-url-select:hover,
+#inner-settings-video .video-url-select:hover {
     opacity: .7;
 }
 

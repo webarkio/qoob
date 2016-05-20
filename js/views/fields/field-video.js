@@ -75,6 +75,7 @@ Fields.video = FieldView.extend(
                 this.$el.find('.other-video').removeClass('active');
                 elem.addClass('active');
                 this.$el.find('.edit-video iframe').attr({'src': elem.find('iframe').attr('src'), 'data-clean-src': elem.find('iframe').attr('data-clean-src')});
+                this.$el.find('.edit-video').removeClass('empty');
                 this.$el.find('input').trigger("change");
             },
             /**
