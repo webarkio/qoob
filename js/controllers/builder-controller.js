@@ -39,7 +39,6 @@ var BuilderController = Backbone.Router.extend({
 
         var self = this;
         if (this.autosave) {
-            console.log(0);
             var intervalId = setInterval(function () {
                 if (self.autosave) {
                     self.save();

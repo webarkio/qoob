@@ -3,14 +3,18 @@ var PageModel = Backbone.Model.extend({
         //FIXME: add page id
         this.set('blocks', new Backbone.Collection());
     },
-    addBlock: function (model, afterBlockId) {
-        afterBlockId = afterBlockId || null;
-        if (afterBlockId) {
-            this.get('blocks').models.splice(afterBlockId, 0, model);
+    addBlock: function (model, beforeBlockId) {
+        beforeBlockId = beforeBlockId || null;
+
+        if (beforeBlockId) {
+            var beforeModel = this.get('blocks').get(beforeBlockId);
+            var index = this.get('blocks').indexOf(beforeModel);
+            this.get('blocks').add(model, {at: index});
         } else {
-            this.get('blocks').add(model);
+            this.get('blocks').add(model, {at: this.get('blocks').length + 1});
         }
-        this.trigger('block_add', model, afterBlockId);
+
+        this.trigger('block_add', model, beforeBlockId);
     },
     deleteBlock: function (model) {
         this.trigger('block_delete', model.id);
@@ -24,7 +28,7 @@ var PageModel = Backbone.Model.extend({
     },
     moveUp: function (model) {
         var index = this.get('blocks').indexOf(model);
-        
+
         if (index > 0) {
             this.swap(index, index - 1);
             this.trigger('block_moveup', model.id);
@@ -32,7 +36,7 @@ var PageModel = Backbone.Model.extend({
     },
     moveDown: function (model) {
         var index = this.get('blocks').indexOf(model);
-    
+
         if (index < this.get('blocks').models.length) {
             this.swap(index, index + 1);
             this.trigger('block_movedown', model.id);
