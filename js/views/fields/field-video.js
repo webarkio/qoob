@@ -18,6 +18,7 @@ Fields.video = FieldView.extend(
              */
             initialize: function (options) {
                 FieldView.prototype.initialize.call(this, options);
+                this.parentId = options.parentId;
                 this.tags = options.settings.tags || null;
                 this.tpl = _.template(this.storage.builderTemplates['field-video-preview']);
             },
