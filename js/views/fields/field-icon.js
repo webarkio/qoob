@@ -35,9 +35,9 @@ Fields.icon = FieldView.extend(
              */
             iconUpload: function (evt) {
 
-                window.selectFieldIcon = function (classes) {
+                window.selectFieldIcon = function (classes, tags) {
                     if (classes) {
-                        this.$el.find('.edit-icon-preview span').attr('class', classes);
+                        this.$el.find('.edit-icon-preview span').attr({'class': classes, 'data-icon-tags': (!!tags ? tags : '')});
                         if (classes === 'empty') {
                             this.$el.find('.edit-icon-preview').addClass('empty');
                         } else {

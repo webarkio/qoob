@@ -43,6 +43,7 @@ Fields.video = FieldView.extend(
                             src = cleanSrc;
                             this.$el.find('.edit-video').addClass(cleanSrc);
                         } else {
+                            this.$el.find('.edit-video').removeClass('empty');
                             src = this.videoUrl(cleanSrc);
                         }
                         this.$el.find('.edit-video iframe').attr({'src': src, 'data-clean-src': cleanSrc});
@@ -98,7 +99,7 @@ Fields.video = FieldView.extend(
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
                     this.$el.html(this.tpl(htmldata));
                 }
-
+                
                 return this;
             },
             /**

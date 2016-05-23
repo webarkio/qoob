@@ -895,7 +895,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
     overflow: hidden;
     height: 70px;
     width: 258px;
-    z-index: 5;
+    z-index: 99999999999;
 }
 
 #builder-menu .backward a {
@@ -1992,6 +1992,7 @@ input[type="text"]#datepicker {
     border-radius: 3px;
     position: absolute;
     bottom: 0px;
+    z-index: 99999999999;
 }
 
 .settings .delete-image:hover,
@@ -2182,6 +2183,7 @@ body.builder-editor {
 .settings-block .filtered-videos,
 .settings-block .filtered-icons {
     margin-top: 40px;
+    margin-bottom: 56px;
 }
 
 .inner-settings{

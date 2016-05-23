@@ -102,7 +102,7 @@ var IconCenterView = Backbone.View.extend(
             selectIcon: function (evt) {
                 this.$el.find('.ajax-icon').removeClass('chosen');
                 evt.currentTarget.classList.add('chosen');
-                window.selectFieldIcon(evt.target.getAttribute('class'));
+                window.selectFieldIcon(evt.target.getAttribute('class'), evt.target.getAttribute('data-icon-tags'));
             },
             /**
              * Unset the chosen icon and returning to the default one
@@ -110,7 +110,7 @@ var IconCenterView = Backbone.View.extend(
             unselectIcon: function (evt) {
                 this.$el.find('.ajax-icon').removeClass('chosen');
                 evt.currentTarget.classList.remove('chosen');
-                window.selectFieldIcon(this.icon.classes);
+                window.selectFieldIcon(this.icon.classes, this.icon.tags);
             },
             /**
              * Delete icon

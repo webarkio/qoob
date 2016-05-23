@@ -27,8 +27,7 @@ Fields.image = FieldView.extend(
              * @param {Object} evt
              */
             changeInput: function (evt) {
-                var target = this.$(evt.target);
-                this.model.set(target.attr('name'), target.prev().find('img').attr('src'));
+                this.model.set(this.$(evt.target).attr('name'), this.$('.edit-image img').attr('src'));
             },
             /**
              * Image upload
