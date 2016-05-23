@@ -1,0 +1,17 @@
+<div class="title">
+    <div class="text">
+        <%= label %>
+    </div>
+</div>
+<div class="edit-video <% if (value === 'empty')  { %><%= value %><% } %>"><iframe data-clean-src="<%= valueClean %>" src="<%= value %>"></iframe><div class="video-overlay"></div></div>
+<% if(videos) { %>
+    <div class="other-videos">
+        <%   for (var i = 0; i < videos.length; i++) { %>
+            <div class="other-video <% if(videos[i] == value){ %> active <%}%>">
+                <iframe data-clean-src="<%= videosClean[i] %>" src="<%= videos[i] %>" frameborder="0"></iframe>
+                <div class="video-overlay"></div>
+            </div>
+        <%}%>
+    </div>
+<%}%>
+<input name="<%= name %>" class="btn-upload btn-builder" type="button"/>

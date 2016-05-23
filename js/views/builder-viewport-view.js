@@ -169,8 +169,10 @@ var BuilderViewportView = Backbone.View.extend(
                 iframe.jQuery('#builder-blocks').append(blockWrapper.render().el);
             }
             
-            // setting block height
-            //            builder.builderLayout.menu.resize();
+            // hide block blank when add block
+            if (iframe.jQuery('#builder-blocks').find('.block-blank:visible').length > 0) {
+                iframe.jQuery('#builder-blocks').find('.block-blank').hide();
+            }
 
             // Trigger change
             //            this.triggerBuilderBlock();
@@ -209,5 +211,12 @@ var BuilderViewportView = Backbone.View.extend(
         moveDownBlockView: function (modelId) {
             var currrentView = this.getBlockView(modelId);
             currrentView.$el.before(currrentView.$el.next());
+        },
+        /**
+         * First block if pageData is empty
+         */
+        createBlankBlock: function() {
+            var iframe = this.getWindowIframe();
+            iframe.jQuery('#builder-blocks').append(_.template(this.storage.builderTemplates['block-default-blank'])());
         }
     });

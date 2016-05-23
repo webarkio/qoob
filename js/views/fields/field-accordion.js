@@ -18,6 +18,11 @@ Fields.accordion = FieldView.extend(
                 FieldView.prototype.initialize.call(this, options);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-preview']);
             },
+            removeItem: function() {
+                var values = this.getValue();
+                values.trigger('change');
+                this.changePosition();
+            },
             /**
              * Change position blocks accordion
              * @param {Object} event
@@ -31,7 +36,10 @@ Fields.accordion = FieldView.extend(
                 blocks.each(function (index, listItem) {
                     var dataId = self.$(listItem).data('model-id'),
                             model = values.get(dataId);
-                    model.set('order', self.$(listItem).index() - 1);
+
+                    if (model) {
+                        model.set('order', self.$(listItem).index() - 1);
+                    }
                 });
             },
             /**
@@ -63,7 +71,9 @@ Fields.accordion = FieldView.extend(
                 }
                 newModel = BuilderUtils.createModel(data);
                 newModel.owner_id = this.model.id;
+                                
                 values.add(newModel);
+                newModel.on("remove_item", this.removeItem.bind(this));
                 var item = new Fields[this.classNameItem]({
                     model: newModel,
                     settings: settings,
@@ -106,6 +116,9 @@ Fields.accordion = FieldView.extend(
                     this.accordionMenuViews.push(item);
 
                     items.push(item.render().el);
+                    
+                    // listen trigger when remove item
+                    values.models[i].on("remove_item", this.removeItem.bind(this));
                 }
 
                 var htmldata = {
@@ -129,7 +142,8 @@ Fields.accordion = FieldView.extend(
                     header: "> div > h3.inner-settings-expand",
                     animate: 500,
                     collapsible: true,
-                    heightStyle: 'content',
+                    active: false,
+                    heightStyle: 'content'
                 }).sortable({
                     items: ".settings-accordion",
                     revert: false,

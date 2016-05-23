@@ -1,0 +1,27 @@
+<div id="inner-settings-video" class="inner-settings">
+    <div class="backward">
+        <a class="backward-image" href="#"><span>Back</span></a>
+    </div>
+    <div class="video-url-group">
+        <input class="input-text video-url" type="text" placeholder="Video url" />
+        <i class="video-url-select"></i>
+    </div>
+    <div class="video-filter-group">
+        <input class="input-text video-search" type="text" placeholder="Tags">
+        <select class="video-pack">
+            <option selected value="all">all</option>
+        </select>
+    </div>
+    <div class="clearfix"></div>
+    <div class="settings-block">
+        <div class="filtered-videos"> 
+           <%  for (var i = 0; i < videos.length; i++) { %>
+                        <div class="ajax-video" data-video-pack="<%if(videos[i].pack) {%><%=videos[i].pack%><%} else {%><%='default'%><% } %>" data-video-tags="<% if( videos[i].tags ){ %><%=videos[i].tags.join(', ')%><% } %>">
+                                <iframe data-clean-src="<%= videos[i].valueClean %>" src="<%= videos[i].value %>"></iframe>
+                                <div class="video-overlay"></div>
+                            </div>
+               <% } %>
+        </div>
+        <div class="delete-video"></div>
+    </div>
+</div>
