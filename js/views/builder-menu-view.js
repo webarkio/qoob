@@ -57,10 +57,6 @@ var BuilderMenuView = Backbone.View.extend({
             },
             stop: function(event, ui) {
                 jQuery('.droppable').hide();
-                // Remove empty div for mobile
-                if (jQuery('#builder-viewport').find('div').length > 0) {
-                    jQuery('#builder-viewport').find('div').remove();
-                }
             }
         });
     },
