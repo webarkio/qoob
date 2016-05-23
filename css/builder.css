@@ -2186,7 +2186,7 @@ body.builder-editor {
 #inner-settings-image,
 #inner-settings-video {
     height: 100%;
-    margin-top: 75px;
+    margin-top: 70px;
 }
 
 #inner-settings-image .img-url-group,
@@ -2201,7 +2201,7 @@ body.builder-editor {
 #inner-settings-image .img-url,
 #inner-settings-video .video-url {
     float: left;
-    width: 201px;
+    width: calc(100% - 43px);
     height: 43px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -2235,7 +2235,7 @@ body.builder-editor {
 
 #inner-settings-image .img-search,
 #inner-settings-video .video-search {
-    width: 152px;
+    width: calc(100% - 92px);
     height: 43px;
     float: left;
     border-top-right-radius: 0px;
