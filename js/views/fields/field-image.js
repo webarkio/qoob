@@ -51,7 +51,7 @@ Fields.image = FieldView.extend(
                     }
                 }.bind(this);
 
-                var mediaCenter = new MediaCenterView({
+                var mediaCenter = new ImageCenterView({
                     model: this.model,
                     controller: this.controller,
                     parentId: this.parentId,

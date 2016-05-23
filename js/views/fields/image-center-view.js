@@ -3,7 +3,7 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var MediaCenterView = Backbone.View.extend(
+var ImageCenterView = Backbone.View.extend(
         /** @lends BuilderView.prototype */{
             className: "settings menu-block",
             parentId: null,
