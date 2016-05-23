@@ -1825,6 +1825,14 @@ input[type="text"]#datepicker {
     padding: 2px;
 }
 
+@-moz-document url-prefix() {
+    .settings-item .other-photos div,
+    .settings-item .other-videos .other-video {
+        height: 55px;
+        width: 55px;
+    }
+}
+
 .settings-item .other-videos .other-video {
     padding: 0px;
     margin-left: 2px;
@@ -2166,7 +2174,7 @@ body.builder-editor {
 #builder-iframe {
     margin: 0 auto;
     display: block;
-   /* position: initial !important;*/
+    /* position: initial !important;*/
 }
 
 .ui-draggable-dragging {
