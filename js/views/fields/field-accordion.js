@@ -36,7 +36,10 @@ Fields.accordion = FieldView.extend(
                 blocks.each(function (index, listItem) {
                     var dataId = self.$(listItem).data('model-id'),
                             model = values.get(dataId);
-                    model.set('order', self.$(listItem).index() - 1);
+
+                    if (model) {
+                        model.set('order', self.$(listItem).index() - 1);
+                    }
                 });
             },
             /**
