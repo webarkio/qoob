@@ -859,7 +859,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #builder-viewport {
     background-color: #fff;
-    position: absolute;
+    /*position: absolute;*/
+    position: relative;
+    float: right;
     vertical-align: top;
     z-index: 99998;
 }
@@ -1270,6 +1272,10 @@ ul.catalog-list li a:hover {
     cursor: pointer;
 }
 
+.settings-accordion .title_accordion:focus {
+    outline: none;
+}
+
 .settings-accordion + .settings-accordion {
     margin-top: 4px;
 }
@@ -1543,10 +1549,10 @@ ul.catalog-list li a:hover {
 }
 
 .settings-item .input-text {
-    height: 21px;
+    height: auto;
     width: 100%;
-    line-height: 17px;
-    padding: 15px 20px;
+    line-height: 20px;
+    padding: 5px 20px;
     border: none;
     background-color: #fff;
     font-size: 13px;
@@ -2164,7 +2170,7 @@ body.builder-editor {
 #builder-iframe {
     margin: 0 auto;
     display: block;
-    position: initial !important;
+   /* position: initial !important;*/
 }
 
 .ui-draggable-dragging {
@@ -2186,7 +2192,7 @@ body.builder-editor {
 #inner-settings-video,
 #inner-settings-icon {
     height: 100%;
-    margin-top: 75px;
+    margin-top: 70px;
 }
 
 #inner-settings-image .img-url-group,
@@ -2207,7 +2213,7 @@ body.builder-editor {
 #inner-settings-image .img-url,
 #inner-settings-video .video-url {
     float: left;
-    width: 201px;
+    width: calc(100% - 43px);
     height: 43px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -2242,7 +2248,7 @@ body.builder-editor {
 #inner-settings-image .img-search,
 #inner-settings-video .video-search,
 #inner-settings-icon .icon-search {
-    width: 152px;
+    width: calc(100% - 92px);
     height: 43px;
     float: left;
     border-top-right-radius: 0px;
@@ -2543,8 +2549,7 @@ html.active-js {
     vertical-align: middle;
 }
 
-.ui-droppable .dropp-block,
-.ui-droppable .wait-block {
+.ui-droppable .dropp-block {
     cursor: default;
     line-height: 68px;
     height: 70px;
@@ -2572,24 +2577,16 @@ html.active-js {
     margin-top: -10px;
 }
 
-.ui-droppable.active-wait {
+.wait-block {
+    cursor: default;
     visibility: visible;
     background-color: #2bc0e4;
-    font-family: 'OpenSans-Bold';
+    color: #fff;
+    font-family: 'robotobold';
     font-size: 18px;
-}
-
-.ui-droppable.active-wait .dropp-block {
-    display: none;
-}
-
-.ui-droppable .wait-block {
-    display: none;
-    line-height: 70px;
-}
-
-.ui-droppable.active-wait .wait-block {
-    display: block;
+    line-height: 68px;
+    height: 70px;
+    text-align: center;
 }
 
 .wait-block .clock {
@@ -2614,8 +2611,8 @@ html.active-js {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 2px;
-    height: 2px;
+    width: 3px;
+    height: 3px;
     z-index: 10;
     border-radius: 50%;
 }
@@ -2629,7 +2626,8 @@ html.active-js {
     left: 0;
 }
 
-.wait-block .minutes {
+.wait-block .minutes,
+.wait-block .seconds {
     background: #2bc0e4;
     height: 15px;
     left: 47%;
@@ -2639,12 +2637,6 @@ html.active-js {
 }
 
 .wait-block .seconds {
-    background: #2bc0e4;
-    height: 15px;
-    left: 47%;
-    position: absolute;
-    top: 14%;
-    width: 3px;
     z-index: 8;
 }
 

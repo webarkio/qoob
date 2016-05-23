@@ -100,7 +100,5 @@ var BuilderToolbarView = Backbone.View.extend({
     },
     clickAutosave: function(evt) {
         this.controller.setAutoSave(evt.target.checked);
-    },
-
-
+    }
 });

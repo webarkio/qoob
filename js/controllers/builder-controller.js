@@ -40,7 +40,7 @@ var BuilderController = Backbone.Router.extend({
         var self = this;
         if (this.autosave) {
             var intervalId = setInterval(function () {
-                if (this.autosave) {
+                if (self.autosave) {
                     self.save();
                 } else {
                     clearInterval(intervalId);
@@ -84,9 +84,7 @@ var BuilderController = Backbone.Router.extend({
         var self = this;
         if (this.autosave) {
             this.save(function (err, status) {
-                if (status) {
-                    self.storage.driver.exit(self.storage.pageId);
-                }
+                self.storage.driver.exit(self.storage.pageId);
             });
         } else {
             this.storage.driver.exit(this.storage.pageId);
@@ -99,6 +97,10 @@ var BuilderController = Backbone.Router.extend({
         var model = BuilderUtils.createModel(values);
         this.pageModel.addBlock(model, afterId);
         this.layout.viewPort.scrollTo(model.id);
+        // Remove empty div for mobile
+        if (jQuery('#builder-viewport').find('div').length > 0) {
+            jQuery('#builder-viewport').find('div').remove();
+        }
     },
     startEditBlock: function (blockId) {
         this.layout.startEditBlock(blockId);

@@ -36,7 +36,10 @@ Fields.accordion = FieldView.extend(
                 blocks.each(function (index, listItem) {
                     var dataId = self.$(listItem).data('model-id'),
                             model = values.get(dataId);
-                    model.set('order', self.$(listItem).index() - 1);
+
+                    if (model) {
+                        model.set('order', self.$(listItem).index() - 1);
+                    }
                 });
             },
             /**
@@ -139,7 +142,8 @@ Fields.accordion = FieldView.extend(
                     header: "> div > h3.inner-settings-expand",
                     animate: 500,
                     collapsible: true,
-                    heightStyle: 'content',
+                    active: false,
+                    heightStyle: 'content'
                 }).sortable({
                     items: ".settings-accordion",
                     revert: false,
