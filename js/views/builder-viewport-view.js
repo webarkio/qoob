@@ -93,9 +93,9 @@ var BuilderViewportView = Backbone.View.extend(
 
             this.$el.stop().animate({
                 height: jQuery(window).height() - size.height,
-                marginTop: size.height,
+                top: size.height,
                 width: jQuery(window).width() - size.width,
-                marginLeft: size.width
+                left: size.width
             });
 
             //Iframe resize

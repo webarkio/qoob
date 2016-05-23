@@ -859,9 +859,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #builder-viewport {
     background-color: #fff;
-    /*position: absolute;*/
-    position: relative;
-    float: right;
+    position: absolute;
+    /*position: relative;
+    float: right;*/
     vertical-align: top;
     z-index: 99998;
 }
