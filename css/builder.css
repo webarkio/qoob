@@ -1547,10 +1547,10 @@ ul.catalog-list li a:hover {
 }
 
 .settings-item .input-text {
-    height: 21px;
+    height: auto;
     width: 100%;
-    line-height: 17px;
-    padding: 15px 20px;
+    line-height: 20px;
+    padding: 5px 20px;
     border: none;
     background-color: #fff;
     font-size: 13px;
