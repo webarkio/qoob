@@ -50,7 +50,7 @@ var BuilderMenuView = Backbone.View.extend({
             helper: "clone",
             iframeFix: true,
             iframeScroll: true,
-            scrollSensitivity: 50,
+            scrollSensitivity: 100,
             scrollSpeed: 10,
             start: function(event, ui) {
                 jQuery('.droppable').show();
