@@ -84,9 +84,7 @@ var BuilderController = Backbone.Router.extend({
         var self = this;
         if (this.autosave) {
             this.save(function (err, status) {
-                if (status) {
-                    self.storage.driver.exit(self.storage.pageId);
-                }
+                self.storage.driver.exit(self.storage.pageId);
             });
         } else {
             this.storage.driver.exit(this.storage.pageId);
