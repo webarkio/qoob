@@ -1,0 +1,24 @@
+<div id="inner-settings-icon" class="inner-settings">
+    <div class="backward">
+        <a class="backward-icon" href="#"><span>Back</span></a>
+    </div>
+    <div class="icon-filter-group">
+        <input class="input-text icon-search" type="text" placeholder="Tags">
+        <select class="icon-pack">
+            <option selected value="all">all</option>
+        </select>
+    </div>
+    <div class="clearfix"></div>
+    <div class="settings-block">
+        <div class="filtered-icons"> 
+           <%  for (var i in icons) {
+                    for (var j = 0, libLength = icons[i].length; j < libLength; j++) {  %>
+                        <div class="ajax-icon" data-icon-pack="<%= i %>">
+                            <span  data-icon-tags="<%= icons[i][j].tags %>" class="<%= icons[i][j].classes %>"></span> 
+                        </div>
+                 <% }
+                } %>
+        </div>
+        <div class="delete-icon"></div>
+    </div>
+</div>
