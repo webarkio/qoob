@@ -859,7 +859,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #builder-viewport {
     background-color: #fff;
-    position: absolute;
+    /*position: absolute;*/
+    position: relative;
+    float: right;
     vertical-align: top;
     z-index: 99998;
 }
@@ -2164,7 +2166,7 @@ body.builder-editor {
 #builder-iframe {
     margin: 0 auto;
     display: block;
-    position: initial !important;
+   /* position: initial !important;*/
 }
 
 .ui-draggable-dragging {

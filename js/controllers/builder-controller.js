@@ -99,6 +99,10 @@ var BuilderController = Backbone.Router.extend({
         var model = BuilderUtils.createModel(values);
         this.pageModel.addBlock(model, afterId);
         this.layout.viewPort.scrollTo(model.id);
+        // Remove empty div for mobile
+        if (jQuery('#builder-viewport').find('div').length > 0) {
+            jQuery('#builder-viewport').find('div').remove();
+        }
     },
     startEditBlock: function (blockId) {
         this.layout.startEditBlock(blockId);

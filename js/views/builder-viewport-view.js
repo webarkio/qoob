@@ -93,9 +93,9 @@ var BuilderViewportView = Backbone.View.extend(
 
             this.$el.stop().animate({
                 height: jQuery(window).height() - size.height,
-                top: size.height,
+                marginTop: size.height,
                 width: jQuery(window).width() - size.width,
-                left: size.width
+                marginLeft: size.width
             });
 
             //Iframe resize
@@ -106,7 +106,7 @@ var BuilderViewportView = Backbone.View.extend(
         },
         scrollTo: function(blockId) {           
             //Scroll to new block
-            this.getWindowIframe().jQuery('body').animate({
+            this.getWindowIframe().jQuery('html, body').animate({
                 scrollTop: this.getBlockView(blockId).$el.offset().top
             }, 1000);
         },
