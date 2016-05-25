@@ -85,14 +85,20 @@ Fields.video = FieldView.extend(
              * @returns {Object}
              */
             render: function () {
+                var videos = [];
+
+                if(this.settings.videos) {
+                    videos = this.settings.videos.map(function (video) {
+                        return this.videoUrl(video);
+                    }.bind(this));
+                }
+
                 var htmldata = {
                     label: this.settings.label,
                     name: this.settings.name,
                     videosClean: this.settings.videos,
                     valueClean: this.getValue(),
-                    videos: this.settings.videos.map(function (video) {
-                        return this.videoUrl(video);
-                    }.bind(this)),
+                    videos: videos,
                     value: this.getValue() === 'empty' ? this.getValue() : this.videoUrl(this.getValue())
                 };
 
