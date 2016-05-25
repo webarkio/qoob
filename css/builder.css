@@ -1827,14 +1827,6 @@ input[type="text"]#datepicker {
     padding: 2px;
 }
 
-@-moz-document url-prefix() {
-    .settings-item .other-photos div,
-    .settings-item .other-videos .other-video {
-        height: 55px;
-        width: 55px;
-    }
-}
-
 .settings-item .other-videos .other-video {
     padding: 0px;
 }
@@ -1995,11 +1987,8 @@ input[type="text"]#datepicker {
     cursor: pointer;
     height: 43px;
     width: 246px;
-    margin: 5px 0 5px 0;
     background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
     border-radius: 3px;
-    position: absolute;
-    bottom: 0px;
     z-index: 99999999999;
 }
 
@@ -2009,6 +1998,17 @@ input[type="text"]#datepicker {
     opacity: .8;
 }
 
+.settings .delete-button-container {
+    position: absolute;
+    cursor: pointer;
+    height: 43px;
+    width: 246px;
+    padding: 0 0 5px 0;
+    background: #444444;
+    position: absolute;
+    bottom: 0px;
+    z-index: 99999999999;
+}
 .settings .settings-item .delete-button {
     margin: 7px 0 0 0;
 }
@@ -2801,4 +2801,35 @@ html.active-js {
     line-height: 30px;
     cursor: pointer;
     margin-top: 33px;
+}
+
+/*Firefox fixes*/
+@-moz-document url-prefix() {
+    .settings-item .other-photos div,
+    .settings-item .other-videos .other-video {
+        height: 55px;
+        width: 55px;
+    }
+    
+    .filtered-icons .ajax-icon {
+        width: 55px;
+    }
+    
+    .settings .delete-button-container {
+        width: 237px;
+    }
+    
+    .settings .delete-image,
+    .settings .delete-video,
+    .settings .delete-icon {
+        width: 232px;
+    }
+    
+    .edit-icon-preview {
+        width: 103px;
+    }
+    
+    .other-icons {
+        width: 126px;
+    }
 }
