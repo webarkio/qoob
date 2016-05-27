@@ -17,7 +17,7 @@ var BlockWrapperView = Backbone.View.extend({
     initialize: function (options) {
         this.storage = options.storage;
         this.controller = options.controller;
-        this.innerBlock = new BlockView({model: this.model, storage: this.storage});
+        this.innerBlock = new BlockView({model: this.model, storage: this.storage, controller: this.controller});
     },
     render: function () {
         var self = this;
