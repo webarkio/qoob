@@ -98,6 +98,7 @@ Fields.accordion = FieldView.extend(
                 var values = this.getValue(),
                         settings = this.settings.settings,
                         items = [];
+
                 // sort accordion settings
                 values.models = _.sortBy(values.models, function (model) {
                     return model.get('order');

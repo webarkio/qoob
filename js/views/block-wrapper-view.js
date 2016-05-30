@@ -17,7 +17,7 @@ var BlockWrapperView = Backbone.View.extend({
     initialize: function (options) {
         this.storage = options.storage;
         this.controller = options.controller;
-        this.innerBlock = new BlockView({model: this.model, storage: this.storage});
+        this.innerBlock = new BlockView({model: this.model, storage: this.storage, controller: this.controller});
     },
     render: function () {
         var self = this;
@@ -26,7 +26,8 @@ var BlockWrapperView = Backbone.View.extend({
             var overlay = _.template(self.storage.builderTemplates['block-overlay-preview'])({"blockId": self.model.id});
 
             self.$el.addClass('content-show');
-            self.$el.html([droppable, overlay, self.innerBlock.el]);
+            self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
+            // self.$el.html([droppable, overlay, self.innerBlock.el]);
             self.droppable();
             self.trigger('loaded');
         });

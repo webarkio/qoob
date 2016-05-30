@@ -1,6 +1,6 @@
 <div class="title"><%= label %></div>
 <% if(visible_color === undefined || visible_color === false){ %>
-	<select class="selectpicker show-tick select" name="<%= name %>" data-size="4" data-width="100%">
+	<select class="selectpicker select" name="<%= name %>" data-size="4" data-width="100%">
 		<% _.each( options, function( option ){ %>
 			<option <% if ( current === option.id ){ %> selected <% } %> value='<%- option.id %>'>
 				<%- option.val %>

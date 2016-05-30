@@ -1,0 +1,796 @@
+@font-face {
+    font-family: 'open-iconic';
+    src: url('fonts/open-iconic.eot?54101537');
+    src: url('fonts/open-iconic.eot?54101537#iefix') format('embedded-opentype'),
+    url('fonts/open-iconic.woff?54101537') format('woff'),
+    url('fonts/open-iconic.ttf?54101537') format('truetype'),
+    url('fonts/open-iconic.svg?54101537#open-iconic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="oi-"]:before, [class*=" oi-"]:before {
+    font-family: "open-iconic";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: 0;
+    text-align: center;
+
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+
+    /* fix buttons height, for twitter bootstrap */
+    line-height: inherit;
+
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    margin-left: 0;
+
+    /* you can be more comfortable with increased icons size */
+    /* font-size: 120%; */
+
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.oi-dial:before {
+    content: '\e800';
+}
+
+/* '' */
+.oi-pilcrow:before {
+    content: '\e801';
+}
+
+/* '' */
+.oi-at:before {
+    content: '\e802';
+}
+
+/* '' */
+.oi-hash:before {
+    content: '\e803';
+}
+
+/* '' */
+.oi-key-inv:before {
+    content: '\e804';
+}
+
+/* '' */
+.oi-key:before {
+    content: '\e805';
+}
+
+/* '' */
+.oi-chart-pie-alt:before {
+    content: '\e806';
+}
+
+/* '' */
+.oi-chart-pie:before {
+    content: '\e807';
+}
+
+/* '' */
+.oi-chart-bar:before {
+    content: '\e808';
+}
+
+/* '' */
+.oi-umbrella:before {
+    content: '\e809';
+}
+
+/* '' */
+.oi-moon-inv:before {
+    content: '\e80a';
+}
+
+/* '' */
+.oi-mobile:before {
+    content: '\e80b';
+}
+
+/* '' */
+.oi-cd:before {
+    content: '\e80c';
+}
+
+/* '' */
+.oi-split:before {
+    content: '\e80d';
+}
+
+/* '' */
+.oi-exchange:before {
+    content: '\e80e';
+}
+
+/* '' */
+.oi-block:before {
+    content: '\e80f';
+}
+
+/* '' */
+.oi-resize-full:before {
+    content: '\e810';
+}
+
+/* '' */
+.oi-article-alt:before {
+    content: '\e811';
+}
+
+/* '' */
+.oi-article:before {
+    content: '\e812';
+}
+
+/* '' */
+.oi-pencil-alt:before {
+    content: '\e813';
+}
+
+/* '' */
+.oi-undo:before {
+    content: '\e814';
+}
+
+/* '' */
+.oi-attach:before {
+    content: '\e815';
+}
+
+/* '' */
+.oi-link:before {
+    content: '\e816';
+}
+
+/* '' */
+.oi-search:before {
+    content: '\e817';
+}
+
+/* '' */
+.oi-mail:before {
+    content: '\e818';
+}
+
+/* '' */
+.oi-heart:before {
+    content: '\e819';
+}
+
+/* '' */
+.oi-comment:before {
+    content: '\e81a';
+}
+
+/* '' */
+.oi-resize-full-alt:before {
+    content: '\e81b';
+}
+
+/* '' */
+.oi-lock:before {
+    content: '\e81c';
+}
+
+/* '' */
+.oi-book-open:before {
+    content: '\e81d';
+}
+
+/* '' */
+.oi-arrow-curved:before {
+    content: '\e81e';
+}
+
+/* '' */
+.oi-equalizer:before {
+    content: '\e81f';
+}
+
+/* '' */
+.oi-heart-empty:before {
+    content: '\e820';
+}
+
+/* '' */
+.oi-lock-empty:before {
+    content: '\e821';
+}
+
+/* '' */
+.oi-comment-inv:before {
+    content: '\e822';
+}
+
+/* '' */
+.oi-folder:before {
+    content: '\e823';
+}
+
+/* '' */
+.oi-resize-small:before {
+    content: '\e824';
+}
+
+/* '' */
+.oi-play:before {
+    content: '\e825';
+}
+
+/* '' */
+.oi-cursor:before {
+    content: '\e826';
+}
+
+/* '' */
+.oi-aperture:before {
+    content: '\e827';
+}
+
+/* '' */
+.oi-play-circle2:before {
+    content: '\e828';
+}
+
+/* '' */
+.oi-resize-small-alt:before {
+    content: '\e829';
+}
+
+/* '' */
+.oi-folder-empty:before {
+    content: '\e82a';
+}
+
+/* '' */
+.oi-comment-alt:before {
+    content: '\e82b';
+}
+
+/* '' */
+.oi-lock-open:before {
+    content: '\e82c';
+}
+
+/* '' */
+.oi-star:before {
+    content: '\e82d';
+}
+
+/* '' */
+.oi-user:before {
+    content: '\e82e';
+}
+
+/* '' */
+.oi-lock-open-empty:before {
+    content: '\e82f';
+}
+
+/* '' */
+.oi-box:before {
+    content: '\e830';
+}
+
+/* '' */
+.oi-resize-vertical:before {
+    content: '\e831';
+}
+
+/* '' */
+.oi-stop:before {
+    content: '\e832';
+}
+
+/* '' */
+.oi-aperture-alt:before {
+    content: '\e833';
+}
+
+/* '' */
+.oi-book:before {
+    content: '\e834';
+}
+
+/* '' */
+.oi-steering-wheel:before {
+    content: '\e835';
+}
+
+/* '' */
+.oi-pause:before {
+    content: '\e836';
+}
+
+/* '' */
+.oi-to-start:before {
+    content: '\e837';
+}
+
+/* '' */
+.oi-move:before {
+    content: '\e838';
+}
+
+/* '' */
+.oi-resize-horizontal:before {
+    content: '\e839';
+}
+
+/* '' */
+.oi-rss-alt:before {
+    content: '\e83a';
+}
+
+/* '' */
+.oi-comment-alt2:before {
+    content: '\e83b';
+}
+
+/* '' */
+.oi-rss:before {
+    content: '\e83c';
+}
+
+/* '' */
+.oi-comment-inv-alt:before {
+    content: '\e83d';
+}
+
+/* '' */
+.oi-comment-inv-alt2:before {
+    content: '\e83e';
+}
+
+/* '' */
+.oi-eye:before {
+    content: '\e83f';
+}
+
+/* '' */
+.oi-pin:before {
+    content: '\e840';
+}
+
+/* '' */
+.oi-video:before {
+    content: '\e841';
+}
+
+/* '' */
+.oi-picture:before {
+    content: '\e842';
+}
+
+/* '' */
+.oi-camera:before {
+    content: '\e843';
+}
+
+/* '' */
+.oi-tag:before {
+    content: '\e844';
+}
+
+/* '' */
+.oi-chat:before {
+    content: '\e845';
+}
+
+/* '' */
+.oi-cog:before {
+    content: '\e846';
+}
+
+/* '' */
+.oi-popup:before {
+    content: '\e847';
+}
+
+/* '' */
+.oi-to-end:before {
+    content: '\e848';
+}
+
+/* '' */
+.oi-book-alt:before {
+    content: '\e849';
+}
+
+/* '' */
+.oi-brush:before {
+    content: '\e84a';
+}
+
+/* '' */
+.oi-eject:before {
+    content: '\e84b';
+}
+
+/* '' */
+.oi-down:before {
+    content: '\e84c';
+}
+
+/* '' */
+.oi-wrench:before {
+    content: '\e84d';
+}
+
+/* '' */
+.oi-chat-inv:before {
+    content: '\e84e';
+}
+
+/* '' */
+.oi-tag-empty:before {
+    content: '\e84f';
+}
+
+/* '' */
+.oi-ok:before {
+    content: '\e850';
+}
+
+/* '' */
+.oi-ok-circle:before {
+    content: '\e851';
+}
+
+/* '' */
+.oi-download:before {
+    content: '\e852';
+}
+
+/* '' */
+.oi-location:before {
+    content: '\e853';
+}
+
+/* '' */
+.oi-share:before {
+    content: '\e854';
+}
+
+/* '' */
+.oi-left:before {
+    content: '\e855';
+}
+
+/* '' */
+.oi-target:before {
+    content: '\e856';
+}
+
+/* '' */
+.oi-brush-alt:before {
+    content: '\e857';
+}
+
+/* '' */
+.oi-cancel:before {
+    content: '\e858';
+}
+
+/* '' */
+.oi-upload:before {
+    content: '\e859';
+}
+
+/* '' */
+.oi-location-inv:before {
+    content: '\e85a';
+}
+
+/* '' */
+.oi-calendar:before {
+    content: '\e85b';
+}
+
+/* '' */
+.oi-right:before {
+    content: '\e85c';
+}
+
+/* '' */
+.oi-signal:before {
+    content: '\e85d';
+}
+
+/* '' */
+.oi-eyedropper:before {
+    content: '\e85e';
+}
+
+/* '' */
+.oi-layers:before {
+    content: '\e85f';
+}
+
+/* '' */
+.oi-award:before {
+    content: '\e860';
+}
+
+/* '' */
+.oi-up:before {
+    content: '\e861';
+}
+
+/* '' */
+.oi-calendar-inv:before {
+    content: '\e862';
+}
+
+/* '' */
+.oi-location-alt:before {
+    content: '\e863';
+}
+
+/* '' */
+.oi-download-cloud:before {
+    content: '\e864';
+}
+
+/* '' */
+.oi-cancel-circle:before {
+    content: '\e865';
+}
+
+/* '' */
+.oi-plus:before {
+    content: '\e866';
+}
+
+/* '' */
+.oi-upload-cloud:before {
+    content: '\e867';
+}
+
+/* '' */
+.oi-compass:before {
+    content: '\e868';
+}
+
+/* '' */
+.oi-calendar-alt:before {
+    content: '\e869';
+}
+
+/* '' */
+.oi-down-circle:before {
+    content: '\e86a';
+}
+
+/* '' */
+.oi-award-empty:before {
+    content: '\e86b';
+}
+
+/* '' */
+.oi-layers-alt:before {
+    content: '\e86c';
+}
+
+/* '' */
+.oi-sun:before {
+    content: '\e86d';
+}
+
+/* '' */
+.oi-list:before {
+    content: '\e86e';
+}
+
+/* '' */
+.oi-left-circle:before {
+    content: '\e86f';
+}
+
+/* '' */
+.oi-mic:before {
+    content: '\e870';
+}
+
+/* '' */
+.oi-trash:before {
+    content: '\e871';
+}
+
+/* '' */
+.oi-quote-left:before {
+    content: '\e872';
+}
+
+/* '' */
+.oi-plus-circle:before {
+    content: '\e873';
+}
+
+/* '' */
+.oi-minus:before {
+    content: '\e874';
+}
+
+/* '' */
+.oi-quote-right:before {
+    content: '\e875';
+}
+
+/* '' */
+.oi-trash-empty:before {
+    content: '\e876';
+}
+
+/* '' */
+.oi-volume-off:before {
+    content: '\e877';
+}
+
+/* '' */
+.oi-right-circle:before {
+    content: '\e878';
+}
+
+/* '' */
+.oi-list-nested:before {
+    content: '\e879';
+}
+
+/* '' */
+.oi-sun-inv:before {
+    content: '\e87a';
+}
+
+/* '' */
+.oi-bat-empty:before {
+    content: '\e87b';
+}
+
+/* '' */
+.oi-up-circle:before {
+    content: '\e87c';
+}
+
+/* '' */
+.oi-volume-up:before {
+    content: '\e87d';
+}
+
+/* '' */
+.oi-doc:before {
+    content: '\e87e';
+}
+
+/* '' */
+.oi-quote-left-alt:before {
+    content: '\e87f';
+}
+
+/* '' */
+.oi-minus-circle:before {
+    content: '\e880';
+}
+
+/* '' */
+.oi-cloud:before {
+    content: '\e881';
+}
+
+/* '' */
+.oi-rain:before {
+    content: '\e882';
+}
+
+/* '' */
+.oi-bat-half:before {
+    content: '\e883';
+}
+
+/* '' */
+.oi-cw:before {
+    content: '\e884';
+}
+
+/* '' */
+.oi-headphones:before {
+    content: '\e885';
+}
+
+/* '' */
+.oi-doc-inv:before {
+    content: '\e886';
+}
+
+/* '' */
+.oi-quote-right-alt:before {
+    content: '\e887';
+}
+
+/* '' */
+.oi-help:before {
+    content: '\e888';
+}
+
+/* '' */
+.oi-info:before {
+    content: '\e889';
+}
+
+/* '' */
+.oi-pencil:before {
+    content: '\e88a';
+}
+
+/* '' */
+.oi-doc-alt:before {
+    content: '\e88b';
+}
+
+/* '' */
+.oi-clock:before {
+    content: '\e88c';
+}
+
+/* '' */
+.oi-loop:before {
+    content: '\e88d';
+}
+
+/* '' */
+.oi-bat-full:before {
+    content: '\e88e';
+}
+
+/* '' */
+.oi-flash:before {
+    content: '\e88f';
+}
+
+/* '' */
+.oi-moon:before {
+    content: '\e890';
+}
+
+/* '' */
+.oi-bat-charge:before {
+    content: '\e891';
+}
+
+/* '' */
+.oi-loop-alt:before {
+    content: '\e892';
+}
+
+/* '' */
+.oi-lamp:before {
+    content: '\e893';
+}
+
+/* '' */
+.oi-doc-inv-alt:before {
+    content: '\e894';
+}
+
+/* '' */
+.oi-pencil-neg:before {
+    content: '\e895';
+}
+
+/* '' */
+.oi-home:before {
+    content: '\e896';
+}
+
+/* '' */

@@ -1748,6 +1748,10 @@ input[type="text"]#datepicker {
     padding: 28px 0;
 }
 
+.settings-item.settings-accordion .edit-icon-preview {
+    width: 107px;
+}
+
 .settings-item .edit-image.empty,
 .settings-item .edit-video.empty,
 .settings-item .edit-icon-preview.empty {
@@ -2831,5 +2835,9 @@ html.active-js {
     
     .other-icons {
         width: 126px;
+    }
+
+    .settings-item.settings-accordion .edit-icon-preview {
+        width: 95px;
     }
 }

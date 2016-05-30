@@ -17,6 +17,7 @@ var BlockView = Backbone.View.extend({
      */
     initialize: function(options) {
         this.storage = options.storage;
+        this.controller = options.controller;
         this.listenTo(this.model, 'change', this.render);
     },
     render: function() {
@@ -27,7 +28,8 @@ var BlockView = Backbone.View.extend({
             var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
             var tplAdapter = BuilderExtensions.templating[tplAdapterType];
             self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
-            self.$el.html(self.renderedTemplate);
+            // self.$el.html(self.renderedTemplate);
+            self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
             self.trigger('loaded');
         });
         return this;
