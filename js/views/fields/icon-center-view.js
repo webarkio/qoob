@@ -63,7 +63,7 @@ var IconCenterView = Backbone.View.extend(
                 var packs = [];
 
                 for (var i in this.icons) {
-                    var pack = i || 'all';
+                    var pack = this.icons[i].classes.split(' ')[0] || 'all';
                     if (!_.contains(packs, pack)) {
                         packs.push(pack);
                         this.$el.find('.icon-pack').append('<option value="' + pack + '">' + pack + '</option>');

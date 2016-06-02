@@ -19,8 +19,23 @@ Fields.icon = FieldView.extend(
             initialize: function (options) {
                 FieldView.prototype.initialize.call(this, options);
                 this.parentId = options.parentId;
-                this.icons = this.storage.builderData.icons;
-                this.tpl = _.template(this.storage.builderTemplates['field-icon-preview']);
+                
+                var assets = this.storage.getAssets(),
+                        icons = [];
+                //Get all icons from assets
+                for (var i = 0, asLen = assets.length; i < asLen; i++) {
+                    for (var j = 0, aLen = assets[i].length; j < aLen; j++) {
+                        if (assets[i][j].type === 'icon') {
+                            icons.push({
+                                classes: assets[i][j].classes,
+                                tags: assets[i][j].tags
+                            });
+                        }
+                    }
+                }
+                
+                this.icons = icons;
+                this.tpl = _.template(this.storage.builderTemplates['field-icon-preview']);         
             },
             /**
              * Event change input
@@ -100,17 +115,6 @@ Fields.icon = FieldView.extend(
              * @returns {Object} Iconobject
              */
             findByClasses: function(classes) {
-                var icon,
-                        curLibName = classes.split(' ')[0];
-                
-                for(var i in this.icons) {
-                    var libName = this.icons[i][0].classes.split(' ')[0];
-                    if(curLibName !== libName) {
-                        continue;
-                    }
-                    icon = _.findWhere(this.icons[i], {"classes": classes});
-                }
-                
-                return icon;
+                return _.findWhere(this.icons, {"classes": classes});
             }
         });
