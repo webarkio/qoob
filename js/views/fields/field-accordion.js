@@ -149,6 +149,7 @@ Fields.accordion = FieldView.extend(
                     items: ".settings-accordion",
                     revert: false,
                     axis: "y",
+                    helper : 'clone',
                     handle: ".drag-elem",
                     connectWith: "#drop-" + id,
                     //scroll: true,
