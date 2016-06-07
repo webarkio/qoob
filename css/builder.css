@@ -1414,6 +1414,7 @@ ul.catalog-list li a:hover {
 
 .add-block + .delete-drop-zone {
     display: none;
+    position: relative;
 }
 .is-droppable + .add-block {
     display: none;

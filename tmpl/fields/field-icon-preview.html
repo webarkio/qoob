@@ -3,14 +3,16 @@
         <%= label %>
     </div>
 </div>
-<div class="edit-icon-preview <% if (!icon.classes && icon === 'empty')  { %><%= icon %><% } %>"><span data-icon-tags="<%= icon.tags %>" class="<%= icon.classes %>"></span></div>
-<% if(icons) { %>
-    <div class="other-icons">
-        <%   for (var i = 0; i < icons.length; i++) { %>
-            <div class="other-icon <% if(icons[i].classes == icon.classes){ %> active <%}%>">
-                <span data-icon-tags="<%= icons[i].tags %>" class="<%= icons[i].classes %>">
-            </div>
-        <%}%>
-    </div>
-<%}%>
+<div class="clearfix">
+    <div class="edit-icon-preview <% if (!icon.classes && icon === 'empty')  { %><%= icon %><% } %>"><span data-icon-tags="<%= icon.tags %>" class="<%= icon.classes %>"></span></div>
+    <% if(icons) { %>
+        <div class="other-icons">
+            <%   for (var i = 0; i < icons.length; i++) { %>
+                <div class="other-icon <% if(icons[i].classes == icon.classes){ %> active <%}%>">
+                    <span data-icon-tags="<%= icons[i].tags %>" class="<%= icons[i].classes %>">
+                </div>
+            <%}%>
+        </div>
+    <%}%>
+</div>
 <input name="<%= name %>" class="btn-upload btn-builder" type="button"/>
