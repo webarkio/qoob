@@ -5,7 +5,6 @@ Fields.accordion = FieldView.extend(
             classNameItem: "",
             accordionMenuViews: [],
             events: {
-                'click .add-block': 'addNewItem',
                 'drop .accordion': 'changePosition'
             },
             /**
@@ -18,7 +17,16 @@ Fields.accordion = FieldView.extend(
                 FieldView.prototype.initialize.call(this, options);
                 this.tpl = _.template(this.storage.builderTemplates['field-accordion-preview']);
             },
-            removeItem: function() {
+            /**
+             * On accordion remove deleting binded events 
+             * and triggering basic remove funcction
+             * 
+             */
+            remove: function () {
+                this.$el.find('#' + this.uniqueId).next('.add-block').off("click", this.addNewItem);
+                Backbone.View.prototype.remove.apply(this, arguments);
+            },
+            removeItem: function () {
                 var values = this.getValue();
                 values.trigger('change');
                 this.changePosition();
@@ -132,6 +140,9 @@ Fields.accordion = FieldView.extend(
                     this.$el.html(this.tpl(htmldata)).find('#' + this.getUniqueId()).append(items);
                     this.sortableInit();
                 }
+                // AddNewItem func on clicking button
+                // we added this handler dynamiclly to prevent bubbling it to inner accordions
+                this.$el.find('#' + this.uniqueId).next('.add-block').on('click', this.addNewItem.bind(this));
 
                 return this;
             },
