@@ -43,6 +43,7 @@ var ImageCenterView = Backbone.View.extend(
                 this.curSrc = options.curSrc;
                 this.assets = options.assets;
                 this.tags = options.tags;
+                this.hideDeleteButton = options.hideDeleteButton;
             },
             /**
              * Render builder view
@@ -52,7 +53,8 @@ var ImageCenterView = Backbone.View.extend(
                 //Creating layout
                 this.$el.html(this.tpl({
                     curSrc: this.curSrc,
-                    assets: this.assets
+                    assets: this.assets,
+                    hideDeleteButton: this.hideDeleteButton
                 }));
 
                 this.afterRender();
