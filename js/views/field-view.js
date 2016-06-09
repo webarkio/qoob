@@ -17,7 +17,7 @@ var FieldView = Backbone.View.extend({
      * @returns {String}
      */
     getValue: function () {
-        if (!this.model.get(this.settings.name)) {
+        if (typeof(this.model.get(this.settings.name))==="undefined") {
             var defaultVal = _.isArray(this.defaults) ? BuilderUtils.createCollection(this.defaults) : this.defaults;
             this.model.set(this.settings.name, defaultVal);
         }
