@@ -14,13 +14,20 @@
     </div>
     <div class="clearfix"></div>
     <div class="settings-block">
-        <div class="filtered-videos"> 
-           <%  for (var i = 0; i < videos.length; i++) { %>
-                        <div class="ajax-video" data-video-pack="<%if(videos[i].pack) {%><%=videos[i].pack%><%} else {%><%='default'%><% } %>" data-video-tags="<% if( videos[i].tags ){ %><%=videos[i].tags.join(', ')%><% } %>">
-                                <iframe data-clean-src="<%= videos[i].valueClean %>" src="<%= videos[i].value %>"></iframe>
-                                <div class="video-overlay"></div>
-                            </div>
-               <% } %>
+        <div class="filtered-videos">
+            <%  for (var i = 0; i < videos.length; i++) { %>
+                <div data-src="<%= videos[i].value %>" class="ajax-video" data-video-pack="<%if(videos[i].pack) {%><%=videos[i].pack%><%} else {%><%='default'%><% } %>" data-video-tags="<% if( videos[i].tags ){ %><%=videos[i].tags.join(', ')%><% } %>">
+                    <% if (videos[i].title !== '') { %> 
+                    <div class="video-title">
+                        <h4><%= videos[i].title %></h4>
+                    </div>
+                    <% } %>
+                    <% if (videos[i].preview !== '') { %> 
+                    <div class="video-preview" style="background: url('<%= videos[i].preview %>') center center no-repeat; background-size: cover;"></div>
+                    <% } %>
+                    <div class="video-overlay"></div>
+                </div>
+                <% } %>
         </div>
         <div class="delete-button-container">
             <div class="delete-video"></div>
