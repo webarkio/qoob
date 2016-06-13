@@ -198,6 +198,7 @@ Fields.accordion = FieldView.extend(
                 });
 
                 this.$el.find("#drop-" + id).droppable({
+                    hoverClass: "ui-state-hover",
                     drop: function (event, ui) {
                         var modelId = ui.draggable.data('model-id');
                         var model = self.getAccordionMenuViews(modelId);
