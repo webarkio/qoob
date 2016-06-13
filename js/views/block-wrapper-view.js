@@ -30,6 +30,9 @@ var BlockWrapperView = Backbone.View.extend({
             // self.$el.html([droppable, overlay, self.innerBlock.el]);
             self.droppable();
             self.trigger('loaded');
+
+            // set focus on iframe
+            self.controller.layout.viewPort.getWindowIframe().focus();
         });
         //Add 'please wait' template while loading
         this.$el.html(_.template(this.storage.getBuilderTemplate('block-pleasewait-preview'))());
