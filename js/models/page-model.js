@@ -22,7 +22,7 @@ var PageModel = Backbone.Model.extend({
     },
     load: function (blocks) {
         for (var i = 0; i < blocks.length; i++) {
-            var model = BuilderUtils.createModel(blocks[i]);
+            var model = QoobUtils.createModel(blocks[i]);
             this.addBlock(model);
         }
     },

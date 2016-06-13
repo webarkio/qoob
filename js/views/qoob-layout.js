@@ -1,45 +1,45 @@
 /**
- * Create buidler view
+ * Create qoob view
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BuilderLayout = Backbone.View.extend(
-    /** @lends BuilderView.prototype */
+var QoobLayout = Backbone.View.extend(
+    /** @lends QoobLayout.prototype */
     {
         tagName: 'div',
-        id: 'builder',
+        id: 'qoob',
         /**
-         * View buider
-         * @class BuilderView
+         * View qoob
+         * @class QoobLayout
          * @augments Backbone.View
          * @constructs
          */
         initialize: function(options) {
             this.storage = options.storage;
             this.controller = options.controller;
-            this.menu = new BuilderMenuView({
+            this.menu = new QoobMenuView({
                 "model": this.model,
                 "storage": this.storage,
                 "controller": this.controller
             });
-            this.toolbar = new BuilderToolbarView({
+            this.toolbar = new QoobToolbarView({
                 "model": this.model,
                 "storage": this.storage,
                 "controller": this.controller
             });
-            this.editModeButton = new BuilderEditModeButtonView({
+            this.editModeButton = new QoobEditModeButtonView({
                 "model": this.model,
                 "storage": this.storage,
                 "controller": this.controller
             });
-            this.viewPort = new BuilderViewportView({
+            this.viewPort = new QoobViewportView({
                 "model": this.model,
                 "storage": this.storage,
                 "controller": this.controller
             });
         },
         /**
-         * Render builder view
+         * Render qoob view
          * @returns {Object}
          */
         render: function() {

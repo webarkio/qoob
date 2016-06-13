@@ -23,7 +23,7 @@ Fields.textarea = FieldView.extend(
             "value" : this.getValue(),
             "textareaId" : _.uniqueId('textarea')
         };
-        this.$el.html(_.template(this.storage.builderTemplates['field-textarea-preview'])(htmldata));
+        this.$el.html(_.template(this.storage.qoobTemplates['field-textarea-preview'])(htmldata));
         return this;
     }
 });

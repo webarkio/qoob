@@ -1,7 +1,7 @@
-var BuilderExtensions = BuilderExtensions || {};
-BuilderExtensions.templating = BuilderExtensions.templating || [];
+var QoobExtensions = QoobExtensions || {};
+QoobExtensions.templating = QoobExtensions.templating || [];
 
-BuilderExtensions.templating['handlebars'] = BuilderExtensions.templating['hbs'] = function(template) {
+QoobExtensions.templating['handlebars'] = QoobExtensions.templating['hbs'] = function(template) {
     var compiledTemplate = Handlebars.compile(template);
     return function(data) {
         return compiledTemplate(data);

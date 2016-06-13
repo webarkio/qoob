@@ -1,17 +1,17 @@
 /**
- * Create view for toolbar in builder layout
+ * Create view for toolbar in qoob layout
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BuilderEditModeButtonView = Backbone.View.extend({
+var QoobEditModeButtonView = Backbone.View.extend({
     tagName:'button',
     className:'edit-mode-button',
     events: {
         'click': 'clickEditMode'
     },
     /**
-     * View toolbar
-     * @class BuilderToolbarView
+     * View QoobEditModeButton
+     * @class QoobEditModeButtonView
      * @augments Backbone.View
      * @constructs
      */

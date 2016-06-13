@@ -46,7 +46,7 @@ Fields.select = FieldView.extend(
             "visible_color": this.settings.visible_color
         };
 
-        this.$el.html(_.template(this.storage.builderTemplates['field-select-preview'])(htmldata));
+        this.$el.html(_.template(this.storage.qoobTemplates['field-select-preview'])(htmldata));
         return this;
     }
 });

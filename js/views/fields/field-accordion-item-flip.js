@@ -16,7 +16,7 @@ Fields.accordion_item_flip = FieldView.extend(
             initialize: function (options) {
                 FieldView.prototype.initialize.call(this, options);
                 this.$el.attr('data-model-id', this.model.id);
-                this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-accordion-item-flip-preview']);
                 this.parentId = options.parentId || this.model.owner_id;
                 this.model.on("delete_model", this.deleteModel.bind(this));
             },

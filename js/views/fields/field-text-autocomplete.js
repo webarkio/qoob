@@ -32,7 +32,7 @@ Fields.text_autocomplete = FieldView.extend(
             "placeholder" : this.settings.placeholder,
             "uniqueId" : this.getUniqueId()
         };
-        this.$el.html(_.template(this.storage.builderTemplates['field-text-autocomplete-preview'])(htmldata));
+        this.$el.html(_.template(this.storage.qoobTemplates['field-text-autocomplete-preview'])(htmldata));
         return this;
     }
 });

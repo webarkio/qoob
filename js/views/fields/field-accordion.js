@@ -15,7 +15,7 @@ Fields.accordion = FieldView.extend(
              */
             initialize: function (options) {
                 FieldView.prototype.initialize.call(this, options);
-                this.tpl = _.template(this.storage.builderTemplates['field-accordion-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-accordion-preview']);
             },
             /**
              * On accordion remove deleting binded events 
@@ -77,7 +77,7 @@ Fields.accordion = FieldView.extend(
                 for (var i = 0; i < settingsParams.length; i++) {
                     data[settingsParams[i].name] = settingsParams[i].default;
                 }
-                newModel = BuilderUtils.createModel(data);
+                newModel = QoobUtils.createModel(data);
                 newModel.owner_id = this.model.id;
                                 
                 values.add(newModel);

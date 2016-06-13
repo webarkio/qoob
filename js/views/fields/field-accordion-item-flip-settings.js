@@ -1,10 +1,10 @@
 /**
- * Create buidler view 
+ * Create accordion item flip view 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
 var AccordionFlipView = FieldView.extend(
-        /** @lends BuilderView.prototype */{
+        /** @lends AccordionFlipView.prototype */{
             className: "settings menu-block accordion-item",
             parentId: null,
             /**
@@ -23,18 +23,18 @@ var AccordionFlipView = FieldView.extend(
                 'click .delete-item-accordion': 'deleteInnerSettings'
             },
             /**
-             * View buider
-             * @class BuilderView
+             * View accordion item flip
+             * @class AccordionFlipView
              * @augments Backbone.View
              * @constructs
              */
             initialize: function (options) {
                 FieldView.prototype.initialize.call(this, options);
-                this.tpl = _.template(this.storage.builderTemplates['field-accordion-item-flip-view-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-accordion-item-flip-view-preview']);
                 this.parentId = options.parentId;
             },
             /**
-             * Render builder view
+             * Render accordion item flip view
              * @returns {Object}
              */
             render: function () {

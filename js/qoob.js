@@ -1,14 +1,14 @@
 /**
- * Initialize page builder
+ * Initialize page qoob
  *
  * @version 0.0.1
- * @class  Builder
+ * @class  Qoob
  * @param {Object} options [current page id and {Object} data]
  */
-//module.exports.Builder = Builder;
-function Builder(options) {
+//module.exports.Qoob = Qoob;
+function Qoob(options) {
 
-    this.loader = new BuilderLoader(this);
+    this.loader = new QoobLoader(this);
 
     this.options = {
         blockTemplateAdapter: 'hbs',
@@ -17,11 +17,11 @@ function Builder(options) {
     _.extend(this.options, options);
 
     this.storage = options.storage;
-    this.controller = new BuilderController();
+    this.controller = new QoobController();
 
     this.pageModel = new PageModel();
 
-    this.layout = new BuilderLayout({
+    this.layout = new QoobLayout({
         "model": this.pageModel,
         "storage": this.storage,
         "controller": this.controller
@@ -33,20 +33,20 @@ function Builder(options) {
 }
 
 /**
- * Activate page builder
+ * Activate page qoob
  */
-Builder.prototype.activate = function() {
+Qoob.prototype.activate = function() {
 
     var self = this;
     this.loader.addStep(4);
-    //Creating and appending builder layout
+    //Creating and appending qoob layout
     jQuery(window).resize(function() {
         self.layout.resize();
     });
     //Start loading data
-    this.storage.loadBuilderTemplates(function(err, builderTemplates) {
+    this.storage.loadQoobTemplates(function(err, qoobTemplates) {
         self.loader.step();
-        self.storage.loadBuilderData(function(err, builderData) {
+        self.storage.loadQoobData(function(err, qoobData) {
             self.loader.step();
             self.storage.loadPageData(function(err, pageData) {
                 self.loader.step();

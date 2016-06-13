@@ -1,19 +1,19 @@
 /**
- * Create view for viewport in builder layout
+ * Create view for viewport in qoob layout
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BuilderViewportView = Backbone.View.extend(
-    /** @lends BuilderMenuGroupsView.prototype */
+var QoobViewportView = Backbone.View.extend(
+    /** @lends QoobViewportView.prototype */
     {
-        id: "builder-viewport",
+        id: "qoob-viewport",
         deviceMode: "pc",
         previewMode: false,
         blocksCounter: 0,
         blockViews: [],
         /**
          * View menu
-         * @class BuilderMenuView
+         * @class QoobViewportView
          * @augments Backbone.View
          * @constructs
          */
@@ -33,8 +33,8 @@ var BuilderViewportView = Backbone.View.extend(
             // Getting driver page id for iframe
             var url = this.storage.driver.getIframePageUrl(this.storage.pageId);
             
-            this.$el.html(_.template(this.storage.builderTemplates['builder-viewport-preview'])({ "url": url }));
-            this.$el.find('#builder-iframe').on('load', this.iframeLoaded.bind(this));
+            this.$el.html(_.template(this.storage.qoobTemplates['qoob-viewport-preview'])({ "url": url }));
+            this.$el.find('#qoob-iframe').on('load', this.iframeLoaded.bind(this));
             return this;
         },
         iframeLoaded: function() {
@@ -55,11 +55,11 @@ var BuilderViewportView = Backbone.View.extend(
         },
         setPreviewMode: function() {
             this.previewMode = true;
-            this.getIframeContents().find('#builder-blocks').addClass('preview');
+            this.getIframeContents().find('#qoob-blocks').addClass('preview');
         },
         setEditMode: function() {
             this.previewMode = false;
-            this.getIframeContents().find('#builder-blocks').removeClass('preview');
+            this.getIframeContents().find('#qoob-blocks').removeClass('preview');
         },
         setDeviceMode: function(mode) {
             this.deviceMode = mode;
@@ -83,7 +83,7 @@ var BuilderViewportView = Backbone.View.extend(
             this.getIframe().stop().animate(size[mode]);
         },
         /**
-         * Resize builder content
+         * Resize qoob content
          */
         resize: function() {
             var size = {
@@ -166,29 +166,29 @@ var BuilderViewportView = Backbone.View.extend(
             if (beforeBlockId > 0) {
                 iframe.jQuery('#outer-block-' + beforeBlockId).before(blockWrapper.render().el);
             } else {
-                iframe.jQuery('#builder-blocks').append(blockWrapper.render().el);
+                iframe.jQuery('#qoob-blocks').append(blockWrapper.render().el);
             }
             
             // hide block blank when add block
-            if (iframe.jQuery('#builder-blocks').find('.block-blank:visible').length > 0) {
-                iframe.jQuery('#builder-blocks').find('.block-blank').hide();
+            if (iframe.jQuery('#qoob-blocks').find('.block-blank:visible').length > 0) {
+                iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
             }
 
             // Trigger change
-            //            this.triggerBuilderBlock();
+            //            this.triggerQoobBlock();
         },
 
         /**
          * Create event change for iframe
          * @returns {Event} change
          */
-        triggerBuilderBlock: function() {
-            // Trigger change builder blocks for theme
+        triggerQoobBlock: function() {
+            // Trigger change qoob blocks for theme
             var iframe = this.getWindowIframe();
-            iframe.jQuery('#builder-blocks').trigger('change');
+            iframe.jQuery('#qoob-blocks').trigger('change');
         },
         getIframe: function() {
-            return this.$el.find('#builder-iframe');
+            return this.$el.find('#qoob-iframe');
         },
         /**
          * Get iframe contents
@@ -202,7 +202,7 @@ var BuilderViewportView = Backbone.View.extend(
          * @returns {DOMElement}
          */
         getWindowIframe: function() {
-            return window.frames["builder-iframe"];
+            return window.frames["qoob-iframe"];
         },
         moveUpBlockView: function (modelId) {
             var currrentView = this.getBlockView(modelId);
@@ -219,6 +219,6 @@ var BuilderViewportView = Backbone.View.extend(
          */
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('#builder-blocks').append(_.template(this.storage.builderTemplates['block-default-blank'])());
+            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])());
         }
     });

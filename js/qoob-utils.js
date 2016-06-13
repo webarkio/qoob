@@ -1,10 +1,10 @@
 /**
- * Utils for builder
+ * Utils for qoob
  *
  * @version 0.0.1
- * @class  BuilderUtils
+ * @class  QoobUtils
  */
-var BuilderUtils = {
+var QoobUtils = {
     /**
      * Find items for params
      * @param {Array} data
@@ -19,7 +19,7 @@ var BuilderUtils = {
      * Create Backbone.Model for settings
      *
      * @param {Object} settings
-     * @returns {Backbone.Model|BuilderUtils.prototype.createModel.model}
+     * @returns {Backbone.Model|QoobUtils.prototype.createModel.model}
      */
     createModel: function(settings) {
         settings.id = parseInt(_.uniqueId());
@@ -48,7 +48,7 @@ var BuilderUtils = {
      * Create collection when nested field is array
      *
      * @param {Object} settings
-     * @returns {BuilderUtils.prototype.createCollection.collection|Backbone.Collection}
+     * @returns {QoobUtils.prototype.createCollection.collection|Backbone.Collection}
      */
     createCollection: function(settings) {
         var collection = new Backbone.Collection();
@@ -68,8 +68,8 @@ var BuilderUtils = {
      * @param {integer} templateId
      */
     getDefaultSettings: function(items, templateId) {
-        // get config from storage builderData
-        //builder.storage.builderData.items
+        // get config from storage qoobData
+        //qoob.storage.qoobData.items
         var values = {};
         var settings = _.findWhere(items, { id: templateId }).settings;
         var defaults = (_.findWhere(items, { id: templateId }).defaults);

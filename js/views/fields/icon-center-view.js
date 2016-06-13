@@ -1,10 +1,10 @@
 /**
- * Create buidler view 
+ * Create IconCenterView view 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
 var IconCenterView = Backbone.View.extend(
-        /** @lends BuilderView.prototype */{
+        /** @lends IconCenterView.prototype */{
             className: "settings menu-block",
             parentId: null,
             events: {
@@ -27,22 +27,22 @@ var IconCenterView = Backbone.View.extend(
                 };
             },
             /**
-             * View buider
-             * @class BuilderView
+             * View IconCenter
+             * @class IconCenterView
              * @augments Backbone.View
              * @constructs
              */
             initialize: function (options) {
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.builderTemplates['field-icon-setting-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-icon-setting-preview']);
                 this.parentId = options.parentId;
                 this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
                 this.icons = options.icons;
                 this.icon = options.icon;
             },
             /**
-             * Render builder view
+             * Render IconCenter view
              * @returns {Object}
              */
             render: function () {

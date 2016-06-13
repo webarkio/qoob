@@ -1,15 +1,15 @@
 /**
- * Create view for menu in builder layout
+ * Create view for menu in qoob layout
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BuilderMenuView = Backbone.View.extend({
-    id: "builder-menu",
+var QoobMenuView = Backbone.View.extend({
+    id: "qoob-menu",
     currentId: 'catalog-groups',
     menuViews: [],
     /**
      * View menu
-     * @class BuilderMenuView
+     * @class QoobMenuView
      * @augments Backbone.View
      * @constructs
      */
@@ -20,19 +20,19 @@ var BuilderMenuView = Backbone.View.extend({
         this.model.on("block_delete", this.deleteSettings.bind(this));
     },
     addSettings: function(model) {
-        var item = _.findWhere(this.storage.builderData.items, { id: model.get('template') });
-        this.addView(new BuilderMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
+        var item = _.findWhere(this.storage.qoobData.items, { id: model.get('template') });
+        this.addView(new QoobMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
     },
     /**
      * Render menu
      * @returns {Object}
      */
     render: function() {
-        this.$el.html(_.template(this.storage.builderTemplates['builder-menu-preview'])());
-        this.addView(new BuilderMenuGroupsView({ storage: this.storage }), 0);
-        var groups = this.storage.builderData.groups;
+        this.$el.html(_.template(this.storage.qoobTemplates['qoob-menu-preview'])());
+        this.addView(new QoobMenuGroupsView({ storage: this.storage }), 0);
+        var groups = this.storage.qoobData.groups;
         for (var i = 0; i < groups.length; i++) {
-            this.addView(new BuilderMenuBlocksPreviewView({
+            this.addView(new QoobMenuBlocksPreviewView({
                 id: 'group-' + groups[i].id,
                 storage: this.storage,
                 controller: this.controller,
