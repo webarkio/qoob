@@ -207,10 +207,12 @@ var BuilderViewportView = Backbone.View.extend(
         moveUpBlockView: function (modelId) {
             var currrentView = this.getBlockView(modelId);
             currrentView.$el.after(currrentView.$el.prev());
+            this.scrollTo(modelId);
         },
         moveDownBlockView: function (modelId) {
             var currrentView = this.getBlockView(modelId);
             currrentView.$el.before(currrentView.$el.next());
+            this.scrollTo(modelId);
         },
         /**
          * First block if pageData is empty
