@@ -27,7 +27,7 @@ Fields.video = FieldView.extend(
              * @param {Object} evt
              */
             changeInput: function (evt) {
-                this.model.set(this.$(evt.target).attr('name'), this.$el.find('.edit-video iframe').attr('data-clean-src'));
+                this.model.set(this.$(evt.target).attr('name'), this.$el.find('.edit-video').attr('data-src'));
             },
             /**
              * Image upload
@@ -36,17 +36,14 @@ Fields.video = FieldView.extend(
             videoUpload: function (evt) {
                 var assets = this.storage.getAssets();
 
-                window.selectFieldVideo = function (cleanSrc) {
-                    if (cleanSrc) {
-                        var src;
-                        if (cleanSrc === 'empty') {
-                            src = cleanSrc;
-                            this.$el.find('.edit-video').addClass(cleanSrc);
+                window.selectFieldVideo = function (src) {
+                    if (src) {
+                        if (src === 'empty') {
+                            this.$el.find('.edit-video').addClass(src);
                         } else {
                             this.$el.find('.edit-video').removeClass('empty');
-                            src = this.videoUrl(cleanSrc);
                         }
-                        this.$el.find('.edit-video iframe').attr({'src': src, 'data-clean-src': cleanSrc});
+                        this.$el.find('.edit-video').attr('data-src', src);
                         this.$el.find('input').trigger("change");
                         if (this.$el.find('.other-videos').length) {
                             this.$el.find('.other-video').removeClass('active');
@@ -59,7 +56,7 @@ Fields.video = FieldView.extend(
                     controller: this.controller,
                     parentId: this.model.owner_id,
                     storage: this.storage,
-                    curSrc: this.$el.find('.edit-video').find('iframe').attr('data-clean-src'),
+                    curSrc: this.$el.find('.edit-video').attr('data-src'),
                     assets: assets,
                     tags: this.tags
                 });
@@ -76,7 +73,7 @@ Fields.video = FieldView.extend(
                 var elem = this.$(evt.currentTarget);
                 this.$el.find('.other-video').removeClass('active');
                 elem.addClass('active');
-                this.$el.find('.edit-video iframe').attr({'src': elem.find('iframe').attr('src'), 'data-clean-src': elem.find('iframe').attr('data-clean-src')});
+                this.$el.find('.edit-video').attr('data-src', elem.attr('data-src'));
                 this.$el.find('.edit-video').removeClass('empty');
                 this.$el.find('input').trigger("change");
             },
@@ -85,21 +82,11 @@ Fields.video = FieldView.extend(
              * @returns {Object}
              */
             render: function () {
-                var videos = [];
-
-                if(this.settings.videos) {
-                    videos = this.settings.videos.map(function (video) {
-                        return this.videoUrl(video);
-                    }.bind(this));
-                }
-
                 var htmldata = {
                     label: this.settings.label,
                     name: this.settings.name,
-                    videosClean: this.settings.videos,
-                    valueClean: this.getValue(),
-                    videos: videos,
-                    value: this.getValue() === 'empty' ? this.getValue() : this.videoUrl(this.getValue())
+                    videos: this.settings.videos,
+                    value: this.getValue()
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -107,28 +94,5 @@ Fields.video = FieldView.extend(
                 }
                 
                 return this;
-            },
-            /**
-             * Create acceptable url for video link
-             * @param {type} url Video share link
-             * @returns {String} Acceptable url for iframe
-             */
-            videoUrl: function (url) {
-                if (url) {
-                    var url_split = url.split(/[/]/);
-                    var id_video = url.substr(url.indexOf('=') + 1, url.length);
-
-                    var typeVideo = "";
-                    if (url_split[2] == 'youtu.be') {
-                        typeVideo = "//www.youtube.com/embed/" + url_split[url_split.length - 1];
-                    } else if (url_split[2] == 'www.youtube.com') {
-                        typeVideo = "//www.youtube.com/embed/" + id_video;
-                    } else {
-                        typeVideo = "//player.vimeo.com/video/" + url_split[url_split.length - 1];
-                        typeVideo = typeVideo + "?color=ffffff&title=0&portrait=0";
-                    }
-                    url = typeVideo;
-                }
-                return url;
             }
         });

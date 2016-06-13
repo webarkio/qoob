@@ -58,7 +58,8 @@ Fields.image = FieldView.extend(
                     storage: this.storage,
                     curSrc: this.$el.find('.edit-image').find('img').attr('src'),
                     assets: assets,
-                    tags: this.tags ? this.tags.join(', ') : ''
+                    tags: this.tags ? this.tags.join(', ') : '',
+                    hideDeleteButton: this.settings.hideDeleteButton
                 });
 
                 this.controller.setInnerSettingsView(mediaCenter);
