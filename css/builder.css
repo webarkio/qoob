@@ -1851,7 +1851,7 @@ input[type="text"]#datepicker {
 }
 
 .settings-item .other-video {
-    background: #000;
+    background: #000 !important;
     padding: 0px;
     position: relative;
 }
@@ -1865,6 +1865,10 @@ input[type="text"]#datepicker {
     bottom :0px;
     z-index: 9999;
     background: url('../img/video_play_btn.png') center center no-repeat;
+}
+
+.settings-item .other-video .video-overlay {
+    background-size: 40%;
 }
 
 .settings-item .other-photos img,

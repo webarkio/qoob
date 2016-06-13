@@ -67,7 +67,6 @@ var VideoCenterView = Backbone.View.extend(
                     }
                 }
             }
-            console.log(videos);
             //Cashing videos
             this.videos = videos;
             //Creating layout

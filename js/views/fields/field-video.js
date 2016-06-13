@@ -85,7 +85,7 @@ Fields.video = FieldView.extend(
                 var htmldata = {
                     label: this.settings.label,
                     name: this.settings.name,
-                    videos: this.settings.videos,
+                    videos: this.settings.presets,
                     value: this.getValue()
                 };
 

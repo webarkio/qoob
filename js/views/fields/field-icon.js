@@ -98,7 +98,7 @@ Fields.icon = FieldView.extend(
                 var htmldata = {
                     label: this.settings.label,
                     name: this.settings.name,
-                    icons: _.map(this.settings.icons, function (val) {
+                    icons: _.map(this.settings.presets, function (val) {
                         return this.findByClasses(val);
                     }.bind(this)),
                     icon: this.findByClasses(this.getValue()) || this.getValue()
