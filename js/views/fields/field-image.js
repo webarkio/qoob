@@ -85,7 +85,7 @@ Fields.image = FieldView.extend(
                 var htmldata = {
                     "label": this.settings.label,
                     "name": this.settings.name,
-                    "images": this.settings.images,
+                    "images": this.settings.presets,
                     "value": this.getValue()
                 };
 

@@ -7,7 +7,10 @@
 <% if(videos) { %>
     <div class="other-videos">
         <%   for (var i = 0; i < videos.length; i++) { %>
-            <div data-src="<%= videos[i] %>" class="other-video <% if(videos[i] == value){ %> active <%}%>">
+            <div data-src="<%= videos[i] %>" class="other-video <% if(videos[i].url == value){ %> active <%}%>">
+                <% if (videos[i].preview !== '') { %> 
+                    <div class="video-preview" style="background: url('<%= videos[i].preview %>') center center no-repeat; background-size: cover;"></div>
+                <% } %>
                 <div class="video-overlay"></div>
             </div>
         <%}%>
