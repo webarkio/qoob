@@ -55,7 +55,7 @@ Fields.colorpicker = FieldView.extend(
             "colors" : this.settings.colors
         };
 
-        this.$el.html(_.template(this.storage.builderTemplates['field-colorpicker-preview'])(htmldata));
+        this.$el.html(_.template(this.storage.qoobTemplates['field-colorpicker-preview'])(htmldata));
         return this;
     }
 });

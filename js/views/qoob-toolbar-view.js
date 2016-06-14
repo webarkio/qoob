@@ -1,11 +1,11 @@
 /**
- * Create view for toolbar in builder layout
+ * Create view for toolbar in qoob layout
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
 
-var BuilderToolbarView = Backbone.View.extend({
-    /** @lends BuilderMenuGroupsView.prototype */
+var QoobToolbarView = Backbone.View.extend({
+    /** @lends QoobToolbarView.prototype */
     tagName: 'div',
     events: {
         'click .preview-mode-button': 'clickPreviewMode',
@@ -16,12 +16,12 @@ var BuilderToolbarView = Backbone.View.extend({
     },
     attributes: function() {
         return {
-            id: "builder-toolbar"
+            id: "qoob-toolbar"
         };
     },
     /**
      * View toolbar
-     * @class BuilderToolbarView
+     * @class QoobToolbarView
      * @augments Backbone.View
      * @constructs
      */
@@ -34,7 +34,7 @@ var BuilderToolbarView = Backbone.View.extend({
      * @returns {Object}
      */
     render: function() {
-        this.$el.html(_.template(this.storage.getBuilderTemplate('builder-toolbar-preview'))());
+        this.$el.html(_.template(this.storage.getQoobTemplate('qoob-toolbar-preview'))());
         return this;
     },
     /**

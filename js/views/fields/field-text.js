@@ -23,7 +23,7 @@ Fields.text = FieldView.extend(
             "value" : this.getValue(),
             "placeholder" : this.settings.placeholder
         };
-        this.$el.html(_.template(this.storage.builderTemplates['field-text-preview'])(htmldata));
+        this.$el.html(_.template(this.storage.qoobTemplates['field-text-preview'])(htmldata));
         return this;
     }
 });

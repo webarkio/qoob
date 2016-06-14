@@ -3,8 +3,8 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BuilderMenuBlocksPreviewView = Backbone.View.extend(
-    /** @lends BuilderMenuGroupsView.prototype */
+var QoobMenuBlocksPreviewView = Backbone.View.extend(
+    /** @lends QoobMenuGroupsView.prototype */
     {
         className: 'catalog-templates menu-block',
         events:{
@@ -16,7 +16,7 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
 
         /**
          * View menu groups
-         * @class BuilderMenuGroupsView
+         * @class QoobMenuGroupsView
          * @augments Backbone.View
          * @constructs
          */
@@ -33,10 +33,10 @@ var BuilderMenuBlocksPreviewView = Backbone.View.extend(
         render: function() {
             var data = {
                 "group": this.group,
-                "items": _.where(this.storage.builderData.items, {groups:this.group.id})  //FIXME: moveto utils
+                "items": _.where(this.storage.qoobData.items, {groups:this.group.id})  //FIXME: moveto utils
             };
 
-            this.$el.html(_.template(this.storage.builderTemplates['menu-blocks-preview'])(data));
+            this.$el.html(_.template(this.storage.qoobTemplates['menu-blocks-preview'])(data));
 
             return this;
         }

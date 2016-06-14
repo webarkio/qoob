@@ -4,7 +4,7 @@
  * @type @exp;Backbone@pro;View@call;extend
  */
 var VideoCenterView = Backbone.View.extend(
-    /** @lends BuilderView.prototype */
+    /** @lends VideoCenterView.prototype */
     {
         className: "settings menu-block",
         parentId: null,
@@ -31,15 +31,15 @@ var VideoCenterView = Backbone.View.extend(
             };
         },
         /**
-         * View buider
-         * @class BuilderView
+         * View VideoCenter
+         * @class VideoCenterView
          * @augments Backbone.View
          * @constructs
          */
         initialize: function(options) {
             this.storage = options.storage;
             this.controller = options.controller;
-            this.tpl = _.template(this.storage.builderTemplates['field-video-setting-preview']);
+            this.tpl = _.template(this.storage.qoobTemplates['field-video-setting-preview']);
             this.parentId = options.parentId;
             this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
             this.curSrc = options.curSrc;
@@ -47,7 +47,7 @@ var VideoCenterView = Backbone.View.extend(
             this.tags = options.tags;
         },
         /**
-         * Render builder view
+         * Render VideoCenter view
          * @returns {Object}
          */
         render: function() {

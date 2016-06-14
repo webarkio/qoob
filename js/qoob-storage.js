@@ -1,14 +1,14 @@
 /**
- * Initialize builder storage
+ * Initialize qoob storage
  *
  * @param {Object} options
  * @version 0.0.1
- * @class  BuilderStorage
+ * @class  QoobStorage
  */
-function BuilderStorage(options) {
+function QoobStorage(options) {
     this.pageId = options.pageId || null;
-    this.builderTemplates = null;
-    this.builderData = null;
+    this.qoobTemplates = null;
+    this.qoobData = null;
     this.pageData = null;
     this.blockSettingsViewData = [];
     this.templates = [];
@@ -16,36 +16,36 @@ function BuilderStorage(options) {
 }
 
 /**
- * Load builder templates
- * @param {loadBuilderTemplatesCallback} cb
+ * Load qoob templates
+ * @param {loadQoobTemplatesCallback} cb
  */
-BuilderStorage.prototype.loadBuilderTemplates = function (cb) {
-    if (this.builderTemplates) {
-        cb(null, this.builderTemplates);
+QoobStorage.prototype.loadQoobTemplates = function (cb) {
+    if (this.qoobTemplates) {
+        cb(null, this.qoobTemplates);
     } else {
         var self = this;
-        self.driver.loadBuilderTemplates(function (err, builderTemplates) {
+        self.driver.loadQoobTemplates(function (err, qoobTemplates) {
             if (!err) {
-                self.builderTemplates = builderTemplates;
+                self.qoobTemplates = qoobTemplates;
             }
-            cb(err, self.builderTemplates);
+            cb(err, self.qoobTemplates);
         });
     }
 };
 /**
- * Get builder data from storage builderData
- * @param {getBuilderDataCallback} cb - A callback to run.
+ * Get qoob data from storage qoobData
+ * @param {getQoobDataCallback} cb - A callback to run.
  */
-BuilderStorage.prototype.loadBuilderData = function (cb) {
-    if (this.builderData) {
-        cb(null, this.builderData);
+QoobStorage.prototype.loadQoobData = function (cb) {
+    if (this.qoobData) {
+        cb(null, this.qoobData);
     } else {
         var self = this;
-        self.driver.loadBuilderData(function (err, builderData) {
+        self.driver.loadQoobData(function (err, qoobData) {
             if (!err) {
-                self.builderData = builderData;
+                self.qoobData = qoobData;
             }
-            cb(err, self.builderData);
+            cb(err, self.qoobData);
         });
     }
 };
@@ -54,7 +54,7 @@ BuilderStorage.prototype.loadBuilderData = function (cb) {
  * Get page data from storage models
  * @param {getPageDataCallback} cb - A callback to run.
  */
-BuilderStorage.prototype.loadPageData = function (cb) {
+QoobStorage.prototype.loadPageData = function (cb) {
     if (this.pageData) {
         cb(null, this.pageData);
     } else {
@@ -71,18 +71,18 @@ BuilderStorage.prototype.loadPageData = function (cb) {
 /**
  * 
  * @param {type} templateName
- * @returns {String} BuilderStorage.builderTemplates
+ * @returns {String} QoobStorage.qoobTemplates
  */
-BuilderStorage.prototype.getBuilderTemplate = function (templateName) {
-    return this.builderTemplates[templateName];
+QoobStorage.prototype.getQoobTemplate = function (templateName) {
+    return this.qoobTemplates[templateName];
 };
 
-BuilderStorage.prototype.getDefaultTemplateAdapter = function () {
+QoobStorage.prototype.getDefaultTemplateAdapter = function () {
     return 'hbs';
 };
 
-BuilderStorage.prototype.getBlockConfig = function (templateId) {
-    return _.findWhere(this.builderData.items, {id: templateId});
+QoobStorage.prototype.getBlockConfig = function (templateId) {
+    return _.findWhere(this.qoobData.items, {id: templateId});
 };
 
 /**
@@ -90,7 +90,7 @@ BuilderStorage.prototype.getBlockConfig = function (templateId) {
  * @param {Number} itemId
  * @param {getTemplateCallback} cb - A callback to run.
  */
-BuilderStorage.prototype.getBlockTemplate = function (templateId, cb) {
+QoobStorage.prototype.getBlockTemplate = function (templateId, cb) {
     var self = this;
     //FIXME
     if (this.templates.length > 0 && _.findWhere(this.templates, {
@@ -116,8 +116,8 @@ BuilderStorage.prototype.getBlockTemplate = function (templateId, cb) {
  * @param {Number} itemId
  * @param {getConfigCallback} cb - A callback to run.
  */
-BuilderStorage.prototype.getConfig = function (itemId, cb) {
-    var item = _.findWhere(this.builderData.items, {
+QoobStorage.prototype.getConfig = function (itemId, cb) {
+    var item = _.findWhere(this.qoobData.items, {
         id: itemId
     });
     var config = item.config;
@@ -125,12 +125,12 @@ BuilderStorage.prototype.getConfig = function (itemId, cb) {
 };
 
 /**
- * Save builder
+ * Save qoob
  * @param {Object} json PageData
  * @param {Sring} html DOM blocks
  * @param {saveCallback} cb - A callback to run.
  */
-BuilderStorage.prototype.save = function (json, html, cb) {
+QoobStorage.prototype.save = function (json, html, cb) {
     var data = {
         data: json,
         html: html
@@ -145,12 +145,12 @@ BuilderStorage.prototype.save = function (json, html, cb) {
  * Getting all assets from storage
  * @returns Array of assets
  */
-BuilderStorage.prototype.getAssets = function () {
+QoobStorage.prototype.getAssets = function () {
     var assets = [];
     var self = this;
 
-    if (!!this.builderData) {
-        var bd = this.builderData;
+    if (!!this.qoobData) {
+        var bd = this.qoobData;
         var items = bd.items;
         for (var i = 0, lng = items.length; i < lng; i++) {
             if (!!items[i].assets) {
@@ -159,8 +159,8 @@ BuilderStorage.prototype.getAssets = function () {
         }
         return assets;
     } else {
-        this.driver.loadBuilderData(function (err, builderdata) {
-            self.builderData = builderData;
+        this.driver.loadQoobData(function (err, qoobData) {
+            self.qoobData = qoobData;
             self.getAssets();
         });
     }

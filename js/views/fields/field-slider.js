@@ -25,7 +25,7 @@ Fields.slider = FieldView.extend(
             "value" : this.getValue()
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-slider-preview'])(htmldata));
+        this.$el.html(_.template(this.storage.qoobTemplates['field-slider-preview'])(htmldata));
         return this;
     }
 });

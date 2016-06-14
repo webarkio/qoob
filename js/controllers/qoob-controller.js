@@ -1,4 +1,4 @@
-var BuilderController = Backbone.Router.extend({
+var QoobController = Backbone.Router.extend({
     routes: {
         "index": "index",
         "groups/:group": "showGroup", // #groups/name
@@ -78,7 +78,7 @@ var BuilderController = Backbone.Router.extend({
         });
     },
     /**
-     * Out of the Builder
+     * Out of the Qoob
      */
     exit: function () {
         var self = this;
@@ -91,15 +91,15 @@ var BuilderController = Backbone.Router.extend({
         }
     },
     addNewBlock: function (templateId, afterId) {
-        this.addBlock(BuilderUtils.getDefaultSettings(this.storage.builderData.items, templateId), afterId);
+        this.addBlock(QoobUtils.getDefaultSettings(this.storage.qoobData.items, templateId), afterId);
     },
     addBlock: function (values, afterId) {
-        var model = BuilderUtils.createModel(values);
+        var model = QoobUtils.createModel(values);
         this.pageModel.addBlock(model, afterId);
         this.layout.viewPort.scrollTo(model.id);
         // Remove empty div for mobile
-        if (jQuery('#builder-viewport').find('div').length > 0) {
-            jQuery('#builder-viewport').find('div').remove();
+        if (jQuery('#qoob-viewport').find('div').length > 0) {
+            jQuery('#qoob-viewport').find('div').remove();
         }
     },
     startEditBlock: function (blockId) {

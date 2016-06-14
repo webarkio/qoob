@@ -20,7 +20,7 @@ Fields.video = FieldView.extend(
                 FieldView.prototype.initialize.call(this, options);
                 this.parentId = options.parentId;
                 this.tags = options.settings.tags || null;
-                this.tpl = _.template(this.storage.builderTemplates['field-video-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-video-preview']);
             },
             /**
              * Event change input

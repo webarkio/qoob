@@ -4,7 +4,7 @@
  * @type @exp;Backbone@pro;View@call;extend
  */
 var ImageCenterView = Backbone.View.extend(
-        /** @lends BuilderView.prototype */{
+        /** @lends ImageCenterView.prototype */{
             className: "settings menu-block",
             parentId: null,
             events: {
@@ -29,15 +29,15 @@ var ImageCenterView = Backbone.View.extend(
                 };
             },
             /**
-             * View buider
-             * @class BuilderView
+             * View ImageCenter
+             * @class ImageCenterView
              * @augments Backbone.View
              * @constructs
              */
             initialize: function (options) {
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.builderTemplates['field-image-setting-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-image-setting-preview']);
                 this.parentId = options.parentId;
                 this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
                 this.curSrc = options.curSrc;
@@ -46,7 +46,7 @@ var ImageCenterView = Backbone.View.extend(
                 this.hideDeleteButton = options.hideDeleteButton;
             },
             /**
-             * Render builder view
+             * Render ImageCenter view
              * @returns {Object}
              */
             render: function () {

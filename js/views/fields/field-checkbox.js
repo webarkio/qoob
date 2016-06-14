@@ -47,7 +47,7 @@ Fields.checkbox = FieldView.extend(
             "checked" : (this.checked()  ? "checked" : "")
         };
         
-        this.$el.html(_.template(this.storage.builderTemplates['field-checkbox-preview'])(htmldata));
+        this.$el.html(_.template(this.storage.qoobTemplates['field-checkbox-preview'])(htmldata));
         return this;
     }
 });

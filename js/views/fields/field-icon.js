@@ -35,7 +35,7 @@ Fields.icon = FieldView.extend(
                 }
                 
                 this.icons = icons;
-                this.tpl = _.template(this.storage.builderTemplates['field-icon-preview']);         
+                this.tpl = _.template(this.storage.qoobTemplates['field-icon-preview']);         
             },
             /**
              * Event change input

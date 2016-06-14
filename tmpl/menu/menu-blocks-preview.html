@@ -12,7 +12,7 @@
 <div class="preview-blocks">
 <% for (var k = 0; k < items.length; k++) { %>
     <div id="preview-block-<%= items[k].id %>" class="preview-block" >
-        <img src="<%= items[k].url + (items[k].blockPreviewUrl ? items[k].blockPreviewUrl : builder.options.blockPreviewUrl) %>">
+        <img src="<%= items[k].url + (items[k].blockPreviewUrl ? items[k].blockPreviewUrl : qoob.options.blockPreviewUrl) %>">
     </div>
 <% } %>
 </div>

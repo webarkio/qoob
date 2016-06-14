@@ -3,15 +3,15 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BuilderMenuGroupsView = Backbone.View.extend(
-/** @lends BuilderMenuGroupsView.prototype */{
+var QoobMenuGroupsView = Backbone.View.extend(
+/** @lends QoobMenuGroupsView.prototype */{
     tagName: "ul",
     className: "catalog-list",
     id:"catalog-groups",
    
     /**
      * View menu groups
-     * @class BuilderMenuGroupsView
+     * @class QoobMenuGroupsView
      * @augments Backbone.View
      * @constructs
      */
@@ -24,10 +24,10 @@ var BuilderMenuGroupsView = Backbone.View.extend(
      */
     render: function () {
       var data = {
-        "groups_arr" : _.sortBy(this.storage.builderData.groups, 'position')
+        "groups_arr" : _.sortBy(this.storage.qoobData.groups, 'position')
       };
 
-      this.$el.html(_.template(this.storage.builderTemplates['menu-groups-preview'])(data));
+      this.$el.html(_.template(this.storage.qoobTemplates['menu-groups-preview'])(data));
 
       return this;
     }

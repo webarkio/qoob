@@ -3,8 +3,8 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BuilderMenuSettingsView = Backbone.View.extend(
-    /** @lends BuilderMenuSettingsView.prototype */
+var QoobMenuSettingsView = Backbone.View.extend(
+    /** @lends QoobMenuSettingsView.prototype */
     {
         tagName: "div",
         className: "settings menu-block",
@@ -28,7 +28,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
         },
         /**
          * View settings
-         * @class BuilderMenuSettingsView
+         * @class QoobMenuSettingsView
          * @augments Backbone.View
          * @constructs
          */
@@ -50,7 +50,7 @@ var BuilderMenuSettingsView = Backbone.View.extend(
                 controller: this.controller,
                 className: 'settings-block'
             });
-            this.$el.html(_.template(this.storage.builderTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
             
             return this;
         },

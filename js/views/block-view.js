@@ -26,7 +26,7 @@ var BlockView = Backbone.View.extend({
         this.storage.getBlockTemplate(self.model.get('template'), function(err, template){
             var config = self.storage.getBlockConfig(self.model.get('template'));
             var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
-            var tplAdapter = BuilderExtensions.templating[tplAdapterType];
+            var tplAdapter = QoobExtensions.templating[tplAdapterType];
             self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
             // self.$el.html(self.renderedTemplate);
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
