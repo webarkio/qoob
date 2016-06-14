@@ -801,7 +801,7 @@ input[type=checkbox].onoffswitch-checkbox {
 }
 
 .autosave label.checkbox-sb {
-    padding-top: 29px;
+    padding-top: 27px;
 }
 
 label.checkbox-sb {
@@ -817,10 +817,8 @@ label.checkbox-sb em {
     vertical-align: top;
     margin: -1px 0 0 10px;
     color: #888d95;
-    font-family: 'robotoregular';
     font-size: 16px;
     font-style: normal;
-    font-weight: bold;
 }
 
 label.checkbox-sb span {
@@ -837,6 +835,10 @@ label.checkbox-sb span,
 label.checkbox-sb em {
     -moz-user-select: none;
     -webkit-user-select: none;
+}
+
+label.checkbox-sb em:hover {
+    opacity: 0.5;
 }
 
 label.checkbox-sb [type=checkbox]:checked + span {
@@ -917,7 +919,8 @@ ul.catalog-list li {
 }
 ul.catalog-list li a {
     display: block;
-    background: #525252 url(../img/menu-arrow-right.png) no-repeat 231px center;
+    position: relative;
+    background-color: #525252;
     padding: 29px 0 29px 27px;
     -webkit-transition-property: border,background,color;
     transition-property: border,background,color;
@@ -926,6 +929,18 @@ ul.catalog-list li a {
     -webkit-transition-timing-function: ease-in-out;
     transition-timing-function: ease-in-out;
 }
+ul.catalog-list li a:after {
+    content: "";
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    display: block;
+    width: 12px;
+    height: 22px;
+    background: transparent url(../img/arrow_accordion.png) no-repeat center center;
+    transform: rotate(90deg);
+}
+
 ul.catalog-list li a,
 ul.catalog-list li a:hover,
 ul.catalog-list li a:active,
@@ -936,9 +951,12 @@ ul.catalog-list li a:focus {
     color: #ffffff;
     box-shadow: none;
 }
-ul.catalog-list li a:hover {
-    background: #b2b2b2 url(../img/menu-arrow-right-hover.png) no-repeat 231px center;
+
+ul.catalog-list li a:hover:after {
+    background: transparent url(../img/backward.png) no-repeat center center;
+    transform: rotate(180deg);
 }
+
 #card {
     position: absolute;
     left: 0;
