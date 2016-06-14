@@ -1349,12 +1349,18 @@ ul.catalog-list li a:hover {
     border-bottom-right-radius: 3px;
     overflow: hidden !important; /*hide scroll when expand accordion item*/
 }
+
 .settings-accordion .settings-block .cross-delete.expand {
     height: 25px;
     width: 250px;
     margin-left: -5px;
     background: #9fa1a7 url(../img/basket_delete.png) no-repeat center center;
 }
+
+.settings-accordion .settings-block .settings-block .cross-delete.expand {
+    margin-left: -12px;
+}
+
 .settings-accordion .settings-block .cross-delete:hover {
     cursor: pointer;
 }
