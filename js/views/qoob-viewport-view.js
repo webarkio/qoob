@@ -39,6 +39,7 @@ var QoobViewportView = Backbone.View.extend(
         },
         iframeLoaded: function() {
             this.trigger('iframe_loaded');
+            this.getWindowIframe().onbeforeunload = function(){return false;};
         },
         /**
          * Shows edit buttons, shadowing other blocks
@@ -48,14 +49,16 @@ var QoobViewportView = Backbone.View.extend(
             var iframe = this.getWindowIframe();
             iframe.jQuery('.overlay').removeClass('active').addClass('no-active');
             iframe.jQuery('#outer-block-' + blockId).find('.overlay').removeClass('no-active').addClass('active');
+            iframe.jQuery('#outer-block-' + blockId).find('a').attr("onclick", "return false;");
         },
-        stopEditBlock: function() {
+        stopEditBlock: function(blockId) {
             var iframe = this.getWindowIframe();
             iframe.jQuery('.overlay').removeClass('active').removeClass('no-active');
         },
         setPreviewMode: function() {
             this.previewMode = true;
             this.getIframeContents().find('#qoob-blocks').addClass('preview');
+            this.getIframeContents().find('a').attr("onclick", "return false;");
         },
         setEditMode: function() {
             this.previewMode = false;
