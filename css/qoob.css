@@ -1335,7 +1335,7 @@ ul.catalog-list li a:hover:after {
 .settings-accordion .settings-block .cross-delete.expand {
     height: 25px;
     width: 250px;
-    margin-left: -5px;
+    margin-left: -8px;
     background-color: #9fa1a7;
     background-image: url(../img/basket_delete.png);
     background-repeat: no-repeat;
