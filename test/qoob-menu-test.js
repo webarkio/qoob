@@ -1,4 +1,4 @@
-QUnit.module("BuilderMenuView");
+QUnit.module("QoobMenuView");
 
 var View = Backbone.View.extend({
     tag: 'div',
@@ -34,14 +34,14 @@ var mockTemplateMenuResalt =
     "</div>";
 
 var mockStorageMenu = {
-    builderTemplates: { 'builder-menu-preview': mockTemplateMenu, 'menu-groups-preview': "<li><a href=\"#video\"></a></li>", 'menu-settings-preview':'' },
-    builderData: { 'groups': [] }
+    qoobTemplates: { 'qoob-menu-preview': mockTemplateMenu, 'menu-groups-preview': "<li><a href=\"#video\"></a></li>", 'menu-settings-preview':'' },
+    qoobData: { 'groups': [] }
 };
 
 //============START TEST===============
 QUnit.test("initialize", function(assert) {
 
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: 1,
         controller: 2
@@ -52,7 +52,7 @@ QUnit.test("initialize", function(assert) {
 
 //addSettings
 // QUnit.test("addSettings", function(assert) {
-//     var menu = new BuilderMenuView({
+//     var menu = new QoobMenuView({
 //         model: new Backbone.Model({
 //             tagName: "div",
 //             className: "settings menu-block"
@@ -64,7 +64,7 @@ QUnit.test("initialize", function(assert) {
 // });
 
 QUnit.test("render", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -73,7 +73,7 @@ QUnit.test("render", function(assert) {
 
 //draggable
 // QUnit.test("draggable", function(assert) {
-//     var menu = new BuilderMenuView({
+//     var menu = new QoobMenuView({
 //         model: new Backbone.Model(),
 //         storage: mockStorageMenu
 //     });
@@ -87,7 +87,7 @@ QUnit.test("render", function(assert) {
 
 QUnit.test("setPreviewMode", function(assert) {
     var done = assert.async();
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
 
@@ -104,7 +104,7 @@ QUnit.test("setPreviewMode", function(assert) {
 
 QUnit.test("setEditMode", function(assert) {
     var done = assert.async();
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -124,7 +124,7 @@ QUnit.test("setEditMode", function(assert) {
 });
 
 QUnit.test("showGroup", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -138,7 +138,7 @@ QUnit.test("showGroup", function(assert) {
 });
 
 QUnit.test("showIndex", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -153,7 +153,7 @@ QUnit.test("showIndex", function(assert) {
 });
 
 QUnit.test("startEditBlock", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -167,7 +167,7 @@ QUnit.test("startEditBlock", function(assert) {
 });
 
 QUnit.test("resize", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -178,7 +178,7 @@ QUnit.test("resize", function(assert) {
 });
 
 QUnit.test("addView", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -190,7 +190,7 @@ QUnit.test("addView", function(assert) {
 //getSettingsView
 
 QUnit.test("rotate", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -202,7 +202,7 @@ QUnit.test("rotate", function(assert) {
 });
 
 QUnit.test("onEditStart", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -216,7 +216,7 @@ QUnit.test("onEditStart", function(assert) {
 });
 
 QUnit.test("onEditStop", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -232,7 +232,7 @@ QUnit.test("onEditStop", function(assert) {
 
 QUnit.test("onEditMode", function(assert) {
     var done = assert.async();
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -252,7 +252,7 @@ QUnit.test("onEditMode", function(assert) {
 });
 
 QUnit.test("back", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
@@ -269,7 +269,7 @@ QUnit.test("back", function(assert) {
 });
 //delView
 QUnit.test("delView", function(assert) {
-    var menu = new BuilderMenuView({
+    var menu = new QoobMenuView({
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });

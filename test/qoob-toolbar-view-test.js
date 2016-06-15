@@ -1,6 +1,6 @@
-QUnit.module("BuilderToolbarView");
+QUnit.module("QoobToolbarView");
 
-var mockTemplate = "<div class=\"logo\"></div>TOOLBAR HTML TEMPLATE" +
+var mockToolbarTemplate = "<div class=\"logo\"></div>TOOLBAR HTML TEMPLATE" +
     "<a href=\"#\" class=\"save-button\">save</a>" +
     "<a href=\"#\" class=\"exit-button\">exit</a>" +
     "<a href=\"#\" class=\"preview-mode-button\">Preview</a>" +
@@ -9,10 +9,10 @@ var mockTemplate = "<div class=\"logo\"></div>TOOLBAR HTML TEMPLATE" +
 
 
 
-var mockStorage = {
-    getBuilderTemplate: function(templateName) {
-        if (templateName == 'builder-toolbar-preview') {
-            return mockTemplate;
+var mockToolbarStorage = {
+    getQoobTemplate: function(templateName) {
+        if (templateName == 'qoob-toolbar-preview') {
+            return mockToolbarTemplate;
         }
     }
 
@@ -20,12 +20,12 @@ var mockStorage = {
 
 //============START TEST===============
 QUnit.test("attributes", function(assert) {
-    var toolbar = new BuilderToolbarView({});
-    assert.equal(toolbar.el.id, 'builder-toolbar');
+    var toolbar = new QoobToolbarView({});
+    assert.equal(toolbar.el.id, 'qoob-toolbar');
 });
 
 QUnit.test("initialize", function(assert) {
-    var toolbar = new BuilderToolbarView({
+    var toolbar = new QoobToolbarView({
         storage: 1,
         controller: 2
     });
@@ -35,24 +35,24 @@ QUnit.test("initialize", function(assert) {
 });
 
 QUnit.test("render", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage
     });
 
-    assert.equal(mockTemplate, toolbar.render().$el.html());
+    assert.equal(mockToolbarTemplate, toolbar.render().$el.html());
 });
 
 QUnit.test("resize", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage
     });
 
     assert.equal(toolbar.render().resize().$el.width(), window.innerWidth);
 });
 
 QUnit.test("logoRotation", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage
     });
 
     toolbar.render().logoRotation('side-180');
@@ -64,8 +64,8 @@ QUnit.test("logoRotation", function(assert) {
 
 QUnit.test("setPreviewMode", function(assert) {
     var done = assert.async();
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage
     });
 
     $('body').append(toolbar.render().$el);
@@ -81,8 +81,8 @@ QUnit.test("setPreviewMode", function(assert) {
 
 QUnit.test("setEditMode", function(assert) {
     var done = assert.async();
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage
     });
 
     $('body').append(toolbar.render().$el);
@@ -101,8 +101,8 @@ QUnit.test("setEditMode", function(assert) {
 });
 
 QUnit.test("setDeviceMode", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage
     });
 
     toolbar.render().setDeviceMode('pc');
@@ -113,8 +113,8 @@ QUnit.test("setDeviceMode", function(assert) {
 });
 
 QUnit.test("startEditBlock", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage
     });
 
     assert.ok(!toolbar.$el.find('.logo').hasClass('side-270'));
@@ -126,8 +126,8 @@ QUnit.test("startEditBlock", function(assert) {
 //Show loader autosave
 // QUnit.test("showSaveLoader", function(assert) {
 
-//     var toolbar = new BuilderToolbarView({
-//         storage: mockStorage
+//     var toolbar = new QoobToolbarView({
+//         storage: mockToolbarStorage
 //     });
 //     setTimeout(function() {
 //         toolbar.render().showSaveLoader();
@@ -139,8 +139,8 @@ QUnit.test("startEditBlock", function(assert) {
 //Hide loader autosave
 
 QUnit.test("clickPreviewMode", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage,
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage,
         controller: {
             setPreviewMode: function() {
                 assert.ok(true);
@@ -152,8 +152,8 @@ QUnit.test("clickPreviewMode", function(assert) {
 });
 
 QUnit.test("clickDeviceMode", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage,
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage,
         controller: {
             setDeviceMode: function(mode) {
                 assert.equal(mode, 'pc');
@@ -166,8 +166,8 @@ QUnit.test("clickDeviceMode", function(assert) {
 });
 
 QUnit.test("clickSave", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage,
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage,
         controller: {
             save: function() {
                 assert.ok(true);
@@ -179,8 +179,8 @@ QUnit.test("clickSave", function(assert) {
 });
 
 QUnit.test("clickExit", function(assert) {
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage,
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage,
         controller: {
             exit: function() {
                 assert.ok(true);
@@ -193,8 +193,8 @@ QUnit.test("clickExit", function(assert) {
 
 QUnit.test("clickAutosave", function(assert) {
     var checked = true;
-    var toolbar = new BuilderToolbarView({
-        storage: mockStorage,
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage,
         controller: {
             setAutoSave: function(checked) {
                 assert.ok(checked);
