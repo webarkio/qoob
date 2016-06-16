@@ -29,7 +29,7 @@ function QoobLoader(qoob) {
  * 
  */
 QoobLoader.prototype.init = function () {
-    var rand = Math.random() * (this.tips.length),
+    var rand = Math.random() * (this.tips.length - 1),
             rand = rand.toFixed(),
             rand = parseInt(rand);
 
