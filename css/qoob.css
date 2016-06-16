@@ -80,6 +80,121 @@ body {
     z-index: 100500;
 }
 
+/* Cube spin */
+@-moz-keyframes spinningH {
+    from {
+        -moz-transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+        -moz-transform: rotateX(0deg) rotateY(360deg);
+    }
+}
+
+@-webkit-keyframes spinningH {
+    from {
+        -webkit-transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+        -webkit-transform: rotateX(0deg) rotateY(360deg);
+    }
+}
+
+@-o-keyframes spinningH {
+    from {
+        -o-transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+        -o-transform: rotateX(0deg) rotateY(360deg);
+    }
+}
+
+@-ms-keyframes spinningH {
+    from {
+        -ms-transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+        -ms-transform: rotateX(0deg) rotateY(360deg);
+    }
+}
+
+@keyframes spinningH {
+    from {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+        transform: rotateX(0deg) rotateY(360deg);
+    }
+}
+
+#loader-wrapper .cube-wrap {
+    height: 152px;
+    position: relative;
+    -webkit-perspective: 250;
+    -o-perspective: 250;
+    -ms-perspective: 250;
+    perspective: 250;
+    -webkit-perspective-origin: 50% 23px;
+    -o-perspective-origin: 50% 23px;
+    -ms-perspective-origin: 50% 23px;
+    perspective-origin: 50% 23px;
+}
+
+#loader-wrapper .cube {
+    position: relative;
+    margin: 0 auto;
+    width: 106px;
+    height: 106px;
+    transform-style: preserve-3d;
+    animation: spinningH 4s infinite linear;
+    transition: all 1s linear;
+}
+
+#loader-wrapper .cube div {
+    position: absolute;
+    width: 106px;
+    height: 106px;
+    display: block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #fff;
+    transition: all 1s linear;
+}
+
+#loader-wrapper .cube div.back {
+    background-image: url('../img/qoob_preload_2.png');
+    transform: translateZ(-53px) rotateY(180deg);
+}
+
+#loader-wrapper .cube div.right {
+    background-image: url('../img/qoob_preload_3.png');
+    transform: rotateY(-270deg) translateX(53px);
+    transform-origin: top right;
+}
+
+#loader-wrapper .cube div.left {
+    background-image: url('../img/qoob_preload_1.png');
+    transform: rotateY(270deg) translateX(-53px);
+    transform-origin: center left;
+}
+
+#loader-wrapper .cube div.top {
+    background-color: #156072;
+    transform: rotateX(-90deg) translateY(-53px);
+    transform-origin: top center;
+}
+
+#loader-wrapper .cube div.bottom {
+    background-color: #156072;
+    transform: rotateX(90deg) translateY(53px);
+    transform-origin: bottom center;
+}
+
+#loader-wrapper .cube div.front {
+    background-image: url('../img/qoob_preload_4.png');
+    transform: translateZ(53px);
+}
+
+/* Cube spin end*/
 #loader-wrapper .loader-inner-wrapper {
     position: relative;
     top: 50%;
@@ -89,14 +204,6 @@ body {
 #loader-wrapper .loading-panel {
     position: relative;
     text-align: center;
-}
-
-#loader-wrapper .qoob-preview-img {
-    margin-left: auto;
-    margin-right: auto;
-    width: 106px;
-    height: 106px;
-    background: url('../img/qoob-preloader.png');
 }
 
 #loader-wrapper .progress {

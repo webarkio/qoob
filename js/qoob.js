@@ -49,7 +49,7 @@ Qoob.prototype.activate = function() {
         self.storage.loadQoobData(function(err, qoobData) {
             self.loader.step();
             self.storage.loadPageData(function(err, pageData) {
-                self.loader.step();
+                //self.loader.step();
 
 
                 //If blocks loaded to viewPort
