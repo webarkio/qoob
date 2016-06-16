@@ -18,6 +18,9 @@ Fields.checkbox_switch = FieldView.extend(
      * @returns {Boolean}
      */
     getBool: function (val){ 
+        if(val == undefined) {
+            return false;
+        }
         var num = +val;
         return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0,'');
     },
@@ -50,7 +53,6 @@ Fields.checkbox_switch = FieldView.extend(
             "uniqueId" : this.getUniqueId(),
             "checked" : (this.checked()  ? "checked" : "")
         };
-        
         this.$el.html(_.template(this.storage.qoobTemplates['field-checkbox-switch-preview'])(htmldata));
         return this;
     }
