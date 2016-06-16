@@ -39,7 +39,6 @@ var QoobViewportView = Backbone.View.extend(
         },
         iframeLoaded: function() {
             this.trigger('iframe_loaded');
-            this.getWindowIframe().onbeforeunload = function(){return false;};
         },
         /**
          * Shows edit buttons, shadowing other blocks

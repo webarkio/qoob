@@ -60,6 +60,8 @@ Qoob.prototype.activate = function() {
 
                 //If iframe ready to load blocks
                 self.layout.viewPort.once('iframe_loaded', function() {
+                    self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
+
 
                     //self.layout.viewPort.createDefaultDroppable();
 
