@@ -52,8 +52,7 @@ var QoobMenuView = Backbone.View.extend({
             iframeScroll: true,
             scrollSensitivity: 100,
             scrollSpeed: 10,
-            revert:'invalid',
-            containment: "#qoob-viewport",
+            containment:'body',
             start: function(event, ui) {
                 jQuery('.droppable').show();
             },
