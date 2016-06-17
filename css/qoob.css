@@ -258,11 +258,19 @@ body {
     text-align: center;
     margin-top: 22px;
 }
+
 @media (max-width: 531px) {
     #loader-wrapper .panel {
         display: none;
     }
 }
+
+@media (max-width: 1366px) {
+    #loader-wrapper .panel {
+        padding: 40px;
+    }
+}
+
 #loader {
     margin: 0 auto;
     top: 45%;
