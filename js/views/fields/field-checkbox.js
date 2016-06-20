@@ -20,7 +20,10 @@ Fields.checkbox = FieldView.extend(
      * @param {String} val
      * @returns {Boolean}
      */
-    getBool: function (val){ 
+    getBool: function (val){
+        if(val == undefined) {
+            return false;
+        } 
         var num = +val;
         return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0,'');
     },
