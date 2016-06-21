@@ -1,11 +1,15 @@
 QUnit.module("QoobViewportView");
 
-var mockTemplate = "<iframe src=\"<%= url %>\" scrolling=\"auto\" name=\"qoob-iframe\" id=\"qoob-iframe\"></iframe>";
-var iframeUrl ="iframe.html";
+var mockTemplate = "<iframe src=\"<%= url %>\" scrolling=\"auto\" name=\"qoob-iframe\" id=\"qoob-iframe\" style=\"height: 488px; width: 768px;\"></iframe>";
+var iframeUrl = "iframe.html";
 
 var mockStorageViewport = {
-    qoobTemplates: { 'qoob-viewport-preview': mockTemplate},
-    driver: { getIframePageUrl:function(pageId){return iframeUrl;} }
+    qoobTemplates: { 'qoob-viewport-preview': mockTemplate },
+    driver: {
+        getIframePageUrl: function(pageId) {
+            return iframeUrl;
+        }
+    }
 };
 
 //============START TEST===============
@@ -38,12 +42,12 @@ QUnit.test("iframeLoaded", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
+    viewport.on('iframe_loaded', function() {
         assert.ok(true);
+        viewport.getWindowIframe();
         viewport.remove();
         done();
-
-    })
+    });
 
     $('body').append(viewport.render().$el);
 });
@@ -56,17 +60,16 @@ QUnit.test("startEditBlock", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
+    viewport.on('iframe_loaded', function() {
         //IFRAME CONTENT LOADED
         viewport.startEditBlock(6);
         //Get iframe content
         var iframe = viewport.getWindowIframe();
 
         assert.ok(iframe.jQuery('#outer-block-6').find('.overlay').hasClass('active'));
-        assert.ok(iframe.jQuery('#outer-block-1').find('.overlay').hasClass('active')==false);
+        assert.ok(iframe.jQuery('#outer-block-1').find('.overlay').hasClass('active') == false);
         viewport.remove();
         done();
-
     });
 
     $('body').append(viewport.render().$el);
@@ -79,19 +82,19 @@ QUnit.test("stopEditBlock", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
+    viewport.on('iframe_loaded', function() {
         //IFRAME CONTENT LOADED
         viewport.startEditBlock(6);
         //Get iframe content
         var iframe = viewport.getWindowIframe();
         assert.ok(iframe.jQuery('#outer-block-6').find('.overlay').hasClass('active'));
         viewport.stopEditBlock();
-        assert.ok(iframe.jQuery('#outer-block-6').find('.overlay').hasClass('active')==false);
+        assert.ok(iframe.jQuery('#outer-block-6').find('.overlay').hasClass('active') == false);
         viewport.remove();
         done();
 
     });
-    
+
     $('body').append(viewport.render().$el);
 });
 
@@ -102,14 +105,14 @@ QUnit.test("setPreviewMode", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
+    viewport.on('iframe_loaded', function() {
         viewport.setPreviewMode();
         assert.ok(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview'));
         viewport.remove();
         done();
 
     });
-    
+
     $('body').append(viewport.render().$el);
 
 });
@@ -121,14 +124,14 @@ QUnit.test("setEditMode", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
+    viewport.on('iframe_loaded', function() {
         viewport.setEditMode();
-        assert.ok(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview')==false);
+        assert.ok(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview') == false);
         viewport.remove();
         done();
 
     });
-    
+
     $('body').append(viewport.render().$el);
 
 });
@@ -140,19 +143,51 @@ QUnit.test("setDeviceMode", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
-        
-        viewport.setDeviceMode('phone-vertical');
-        assert.equal(viewport.getIframe().width(), '375px' );
-        
+    viewport.on('iframe_loaded', function() {
+
+        assert.equal(viewport.getIframe().width(), '768');
+        assert.equal(viewport.deviceMode, 'pc');
+        viewport.setDeviceMode('tablet-horizontal');
+        viewport.resize();
+       //? assert.equal(viewport.getIframe().width(), '1024');
+        assert.equal(viewport.deviceMode, 'tablet-horizontal');
         viewport.remove();
         done();
 
     });
-    
+
     $('body').append(viewport.render().$el);
 
 });
+
+QUnit.test("resize", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+
+        model: new Backbone.Model(),
+        storage: mockStorageViewport
+    });
+
+    viewport.on('iframe_loaded', function() {
+        var size = {
+            'height': (viewport.previewMode ? 0 : 70),
+            'width': (viewport.previewMode ? 0 : 258)
+        };
+        assert.equal(viewport.getIframe().height(), '488');
+        viewport.resize();
+        assert.notEqual(viewport.getIframe().height(), '488');
+        assert.equal(viewport.getIframe().height(), jQuery(window).height() - size.height);
+        viewport.remove();
+        done();
+    });
+
+    $('body').append(viewport.render().$el);
+});
+//scrollTo
+//getBlockView
+//delBlockView
+//addBlock
+
 
 QUnit.test("triggerQoobBlock", function(assert) {
     var done = assert.async();
@@ -161,21 +196,20 @@ QUnit.test("triggerQoobBlock", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
-        
-        viewport.triggerQoobBlock();
+    viewport.on('iframe_loaded', function() {
         var iframe = viewport.getWindowIframe();
         assert.ok(iframe.jQuery('#qoob-blocks').trigger('change'));
         viewport.remove();
         done();
 
     });
-    
+
     $('body').append(viewport.render().$el);
 
 
 });
 
+///?
 QUnit.test("getIframe", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
@@ -183,18 +217,18 @@ QUnit.test("getIframe", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
-        viewport.getIframe();
-        assert.ok(viewport.$el.find('#qoob-iframe'));
+    viewport.on('iframe_loaded', function() {
+        assert.deepEqual(viewport.$el.find('#qoob-iframe'), viewport.getIframe());
         viewport.remove();
         done();
 
     });
-    
+
     $('body').append(viewport.render().$el);
 
 });
 
+//?
 QUnit.test("getIframeContents", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
@@ -202,16 +236,57 @@ QUnit.test("getIframeContents", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function(){
-        viewport.getIframeContents();
-        assert.ok(viewport.getIframe());
+    viewport.on('iframe_loaded', function() {
+        assert.deepEqual(viewport.getIframe().contents(), viewport.getIframeContents());
         viewport.remove();
         done();
 
     });
-    
+
     $('body').append(viewport.render().$el);
 
 });
 
+//?
+QUnit.test("getWindowIframe", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport
+    });
 
+    viewport.on('iframe_loaded', function() {
+        viewport.getWindowIframe();
+        assert.equal(window.frames["qoob-iframe"], viewport.getWindowIframe());
+        viewport.remove();
+        done();
+
+    });
+
+    $('body').append(viewport.render().$el);
+
+});
+//moveUpBlockView
+//moveDownBlockView
+//createBlankBlock
+
+// QUnit.test("createBlankBlock", function(assert) {
+//     var done = assert.async();
+//     var viewport = new QoobViewportView({
+//         model: new Backbone.Model(),
+//         storage: mockStorageViewport
+//     });
+
+//     viewport.on('iframe_loaded', function(){
+
+//         viewport.createBlankBlock();
+//         var iframe = viewport.getWindowIframe();
+//         assert.ok(iframe.jQuery('#qoob-blocks').append(_.template(mockTemplate)()));
+//        // assert.equal(_.template(mockTemplate)(), viewport.render().$el.html());
+//         viewport.remove();
+//         done();
+//     });
+
+//     $('body').append(viewport.render().$el);
+
+// });
