@@ -28,11 +28,10 @@ var BlockView = Backbone.View.extend({
             var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
             var tplAdapter = QoobExtensions.templating[tplAdapterType];
             self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
-            // self.$el.html(self.renderedTemplate);
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
             self.trigger('loaded');
         });
-        return this;
+        return self;
     },
     /**
      * Remove view

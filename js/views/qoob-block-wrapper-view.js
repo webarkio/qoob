@@ -20,22 +20,22 @@ var BlockWrapperView = Backbone.View.extend({
         this.innerBlock = new BlockView({model: this.model, storage: this.storage, controller: this.controller});
     },
     render: function () {
-        var self = this;
+        var self = this;        
+        
         this.innerBlock.once('loaded', function () {
             var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id});
             var overlay = _.template(self.storage.qoobTemplates['block-overlay-preview'])({"blockId": self.model.id});
-
-            self.$el.addClass('content-show');
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
-            // self.$el.html([droppable, overlay, self.innerBlock.el]);
+            self.$el.addClass('content-show');
             self.droppable();
+
             self.trigger('loaded');
 
             // set focus on iframe
             self.controller.layout.viewPort.getWindowIframe().focus();
         });
         //Add 'please wait' template while loading
-        this.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))());
+        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))());
 
         this.innerBlock.render();
         return this;
@@ -65,10 +65,10 @@ var BlockWrapperView = Backbone.View.extend({
      */
     dispose: function () {
         var self = this;
-        
+
         // add animation when remove block
         var animationEnd = 'animationend AnimationEnd';
-        this.$el.addClass('content-hide').one(animationEnd, function(){
+        this.$el.addClass('content-hide').one(animationEnd, function () {
             // Removes a view from the DOM
             self.$el.remove();
 
