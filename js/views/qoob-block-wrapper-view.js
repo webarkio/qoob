@@ -5,7 +5,7 @@
  */
 var BlockWrapperView = Backbone.View.extend({
     tagName: "div",
-    className: "content-block-outer",
+//    className: "content-block-outer",
     events: {
         'click .overlay': 'clickStartEditBlock'
     },
@@ -26,7 +26,7 @@ var BlockWrapperView = Backbone.View.extend({
             var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id});
             var overlay = _.template(self.storage.qoobTemplates['block-overlay-preview'])({"blockId": self.model.id});
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
-            self.$el.addClass('content-show');
+            self.$el.addClass('content-show content-block-outer');
             self.droppable();
 
             self.trigger('loaded');
