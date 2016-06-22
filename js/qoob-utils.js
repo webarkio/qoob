@@ -81,7 +81,9 @@ var QoobUtils = {
         return values;
     },
     /**
-     * Encode JSON request, including empty arrays
+     * Encode JSON request string. Equal to jQuery.param method, but including empty arrays too.
+     *
+     * @param {string} a Request string
      */
     JSONParam: function(a) {
         var s = [],
