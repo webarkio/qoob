@@ -150,6 +150,9 @@ var QoobViewportView = Backbone.View.extend(
                 storage: this.storage,
                 controller: this.controller
             });
+            
+            //document fix 
+            blockWrapper.setElement(self.controller.layout.viewPort.getWindowIframe().jQuery('<div id="outer-block-' + model.id+'">'));
 
             this.blockViews.push(blockWrapper);
 
