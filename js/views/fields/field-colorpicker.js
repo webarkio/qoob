@@ -1,5 +1,5 @@
 var Fields = Fields || {};
-Fields.colorpicker = FieldView.extend(
+Fields.colorpicker = QoobFieldView.extend(
 /** @lends Fields.colorpicker.prototype */{
     events: {
         'change input': 'changeInput',

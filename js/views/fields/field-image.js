@@ -3,7 +3,7 @@ var Fields = Fields || {};
 /**
  * View field image
  */
-Fields.image = FieldView.extend(
+Fields.image = QoobFieldView.extend(
         /** @lends Fields.image.prototype */{
             events: {
                 'change input': 'changeInput',
@@ -17,7 +17,7 @@ Fields.image = FieldView.extend(
              * @constructs
              */
             initialize: function (options) {
-                FieldView.prototype.initialize.call(this, options);
+                QoobFieldView.prototype.initialize.call(this, options);
                 this.parentId = options.parentId;
                 this.tags = options.settings.tags || null;
                 this.tpl = _.template(this.storage.qoobTemplates['field-image-preview']);

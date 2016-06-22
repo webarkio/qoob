@@ -145,7 +145,7 @@ var QoobViewportView = Backbone.View.extend(
             var self = this;
             var iframe = this.getWindowIframe();
 
-            var blockWrapper = new BlockWrapperView({
+            var blockWrapper = new QoobBlockWrapperView({
                 model: model,
                 storage: this.storage,
                 controller: this.controller

@@ -3,7 +3,7 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var FieldView = Backbone.View.extend({
+var QoobFieldView = Backbone.View.extend({
     className: "settings-item",
     initialize: function (options) {
         this.model = options.model;
@@ -17,7 +17,7 @@ var FieldView = Backbone.View.extend({
      * @returns {String}
      */
     getValue: function () {
-        if (typeof(this.model.get(this.settings.name))==="undefined") {
+        if (typeof (this.model.get(this.settings.name)) === "undefined") {
             var defaultVal = _.isArray(this.defaults) ? QoobUtils.createCollection(this.defaults) : this.defaults;
             this.model.set(this.settings.name, defaultVal);
         }

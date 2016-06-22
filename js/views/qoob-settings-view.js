@@ -42,7 +42,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
          * @returns {Object}
          */
         render: function() {
-            var settingsBlock = new FieldsView({
+            var settingsBlock = new QoobFieldsView({
                 model: this.model,
                 storage: this.storage,
                 settings: this.config.settings,

@@ -1,5 +1,5 @@
 var Fields = Fields || {};
-Fields.accordion = FieldView.extend(
+Fields.accordion = QoobFieldView.extend(
     /** @lends Fields.accordion.prototype */
     {
         uniqueId: null,
@@ -15,7 +15,7 @@ Fields.accordion = FieldView.extend(
          * @constructs
          */
         initialize: function(options) {
-            FieldView.prototype.initialize.call(this, options);
+            QoobFieldView.prototype.initialize.call(this, options);
             this.tpl = _.template(this.storage.qoobTemplates['field-accordion-preview']);
         },
         /**

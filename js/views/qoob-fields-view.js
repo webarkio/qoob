@@ -3,8 +3,8 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var FieldsView = Backbone.View.extend(
-/** @lends FieldsView.prototype */{
+var QoobFieldsView = Backbone.View.extend(
+/** @lends QoobFieldsView.prototype */{
     tagName: "div",
     className: "settings-block",
     /**
