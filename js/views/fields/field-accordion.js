@@ -29,10 +29,6 @@ Fields.accordion = FieldView.extend(
         },
         removeItem: function() {
             var values = this.getValue();
-            if (values.length === 0) {
-                console.log(this.model.get(this.settings.name));
-                // this.model.set(this.settings.name, '');
-            }
             values.trigger('change');
             this.changePosition();
         },
@@ -82,15 +78,13 @@ Fields.accordion = FieldView.extend(
             for (var i = 0; i < settingsParams.length; i++) {
                 data[settingsParams[i].name] = settingsParams[i].default;
             }
+
             newModel = QoobUtils.createModel(data);
             newModel.owner_id = this.model.id;
-            
             values.add(newModel);
-            if(!(values.length > 0)) {
-                values.listenTo(newModel, 'change', function() {
-                    this.trigger('change', this);
-                });
-            }
+            values.listenTo(newModel, 'change', function() {
+                this.trigger('change', this);
+            });
             newModel.on("remove_item", this.removeItem.bind(this));
             var item = new Fields[this.classNameItem]({
                 model: newModel,
@@ -116,7 +110,6 @@ Fields.accordion = FieldView.extend(
             var values = this.getValue(),
                 settings = this.settings.settings,
                 items = [];
-
             // sort accordion settings
             values.models = _.sortBy(values.models, function(model) {
                 return model.get('order');
@@ -225,6 +218,6 @@ Fields.accordion = FieldView.extend(
                 if (this.accordionMenuViews[i].model && this.accordionMenuViews[i].model.id == id) {
                     return this.accordionMenuViews[i];
                 }
-            };
+            }
         }
     });

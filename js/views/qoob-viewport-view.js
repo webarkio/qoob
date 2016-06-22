@@ -32,7 +32,7 @@ var QoobViewportView = Backbone.View.extend(
         render: function() {
             // Getting driver page id for iframe
             var url = this.storage.driver.getIframePageUrl(this.storage.pageId);
-            
+
             this.$el.html(_.template(this.storage.qoobTemplates['qoob-viewport-preview'])({ "url": url }));
             this.$el.find('#qoob-iframe').on('load', this.iframeLoaded.bind(this));
             return this;
@@ -121,7 +121,7 @@ var QoobViewportView = Backbone.View.extend(
                 if (this.blockViews[i].model.id == id) {
                     return this.blockViews[i];
                 }
-            };
+            }
         },
         /**
          * Remove BlockView by id
@@ -133,7 +133,7 @@ var QoobViewportView = Backbone.View.extend(
                     this.blockViews[i].dispose();
                     this.blockViews.splice(i, 1);
                 }
-            };
+            }
         },
         /**
          * Add block
