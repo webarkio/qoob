@@ -185,7 +185,7 @@ QUnit.test("addView", function(assert) {
     var view = new View({ id: 'your-id' });
     assert.equal(menu.$el.find('#side-90').find('#your-id').length, 0);
     menu.render().addView(view, '90');
-    assert.ok(menu.$el.find('#side-90').find('#your-id'));
+    assert.equal(menu.$el.find('#side-90').find('#your-id').length, 1);
 });
 //getSettingsView
 
