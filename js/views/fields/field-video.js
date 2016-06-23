@@ -1,10 +1,10 @@
 var Fields = Fields || {};
 
 /**
- * View field image
+ * View field video
  */
-Fields.video = FieldView.extend(
-        /** @lends Fields.image.prototype */{
+Fields.video = QoobFieldView.extend(
+        /** @lends Fields.video.prototype */{
             events: {
                 'change input': 'changeInput',
                 'click .edit-video': 'videoUpload',
@@ -17,7 +17,7 @@ Fields.video = FieldView.extend(
              * @constructs
              */
             initialize: function (options) {
-                FieldView.prototype.initialize.call(this, options);
+                QoobFieldView.prototype.initialize.call(this, options);
                 this.parentId = options.parentId;
                 this.tags = options.settings.tags || null;
                 this.tpl = _.template(this.storage.qoobTemplates['field-video-preview']);

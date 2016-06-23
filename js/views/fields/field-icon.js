@@ -3,7 +3,7 @@ var Fields = Fields || {};
 /**
  * View field icon
  */
-Fields.icon = FieldView.extend(
+Fields.icon = QoobFieldView.extend(
         /** @lends Fields.icon.prototype */{
             events: {
                 'change input': 'changeInput',
@@ -17,7 +17,7 @@ Fields.icon = FieldView.extend(
              * @constructs
              */
             initialize: function (options) {
-                FieldView.prototype.initialize.call(this, options);
+                QoobFieldView.prototype.initialize.call(this, options);
                 this.parentId = options.parentId;
                 
                 var assets = this.storage.getAssets(),

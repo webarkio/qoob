@@ -1,5 +1,5 @@
 var Fields = Fields || {};
-Fields.select = FieldView.extend(
+Fields.select = QoobFieldView.extend(
 /** @lends Fields.select.prototype */{
     events: {
         'change select': 'changeSelect',

@@ -3,7 +3,7 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var AccordionFlipView = FieldView.extend(
+var AccordionFlipView = QoobFieldView.extend(
         /** @lends AccordionFlipView.prototype */{
             className: "settings menu-block accordion-item",
             parentId: null,
@@ -29,7 +29,7 @@ var AccordionFlipView = FieldView.extend(
              * @constructs
              */
             initialize: function (options) {
-                FieldView.prototype.initialize.call(this, options);
+                QoobFieldView.prototype.initialize.call(this, options);
                 this.tpl = _.template(this.storage.qoobTemplates['field-accordion-item-flip-view-preview']);
                 this.parentId = options.parentId;
             },
@@ -38,7 +38,7 @@ var AccordionFlipView = FieldView.extend(
              * @returns {Object}
              */
             render: function () {
-                var settingsView = new FieldsView({
+                var settingsView = new QoobFieldsView({
                     model: this.model,
                     settings: this.settings,
                     defaults: this.defaults,

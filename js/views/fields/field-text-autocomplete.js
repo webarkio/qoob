@@ -1,5 +1,5 @@
 var Fields = Fields || {};
-Fields.text_autocomplete = FieldView.extend(
+Fields.text_autocomplete = QoobFieldView.extend(
 /** @lends Fields.text_autocomplete.prototype */{
     uniqueId: null,
     events: {

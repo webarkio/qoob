@@ -1,5 +1,5 @@
 var Fields = Fields || {};
-Fields.slider = FieldView.extend(
+Fields.slider = QoobFieldView.extend(
 /** @lends Fields.slider.prototype */{
     events: {
         'change input': 'changeInput'

@@ -3,7 +3,7 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var BlockView = Backbone.View.extend({
+var QoobBlockView = Backbone.View.extend({
     tagName: "div",
     className: "content-block-inner",
     /**
