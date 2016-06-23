@@ -170,9 +170,9 @@ QUnit.test("hideSaveLoader", function(assert) {
     var toolbar = new QoobToolbarView({
         storage: mockToolbarStorage
     });
-    assert.equal(toolbar.$el.find('.save-button .clock').css('display'),undefined);
+    assert.equal(toolbar.$el.find('.save-button .clock').css('display'), undefined);
     toolbar.render().hideSaveLoader();
-    assert.equal(toolbar.$el.find('.save-button .clock').css('display'),"");
+    assert.equal(toolbar.$el.find('.save-button .clock').css('display'), "");
 });
 
 QUnit.test("clickPreviewMode", function(assert) {
@@ -188,19 +188,18 @@ QUnit.test("clickPreviewMode", function(assert) {
     toolbar.render().$el.find('.preview-mode-button').trigger('click');
 });
 
-// QUnit.test("clickDeviceMode", function(assert) {
-//     var toolbar = new QoobToolbarView({
-//         storage: mockToolbarStorage,
-//         controller: {
-//             setDeviceMode: function(name) {
-//                 assert.equal(name, 'pc');
-//                 assert.ok(true);
-//             }
-//         }
-//     });
+QUnit.test("clickDeviceMode", function(assert) {
+    var toolbar = new QoobToolbarView({
+        storage: mockToolbarStorage,
+        controller: {
+            setDeviceMode: function(name) {
+                assert.equal(name, 'phone-vertical');
+            }
+        }
+    });
 
-//     toolbar.render().$el.find('.device-mode-button').trigger('click');
-// });
+    toolbar.render().$el.find('.device-mode-button[name=phone-vertical]').trigger('click');
+});
 
 QUnit.test("clickSave", function(assert) {
     var toolbar = new QoobToolbarView({

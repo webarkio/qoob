@@ -15,7 +15,7 @@ var mockStorageViewport = {
 //============START TEST===============
 QUnit.test("initialize", function(assert) {
 
-    var viewport = new QoobMenuView({
+    var viewport = new QoobViewportView({
         model: new Backbone.Model(),
         storage: 1,
         controller: 2
