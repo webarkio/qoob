@@ -638,6 +638,11 @@ body {
 }
 #qoob-toolbar .preview-mode-button {
     background-image: url(../img/arrow.png);
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    transform: rotate(-180deg);
 }
 #qoob .edit-mode-button {
     cursor: pointer;
@@ -652,11 +657,6 @@ body {
     right: 0px;
     z-index: 999999;
     background: #444444 url(../img/arrow.png) no-repeat center center;
-    -webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    -o-transform: rotate(-180deg);
-    transform: rotate(-180deg);
 }
 #qoob-toolbar .preview-mode-button:hover,
 #qoob .edit-mode-button:hover {
@@ -946,9 +946,10 @@ label.checkbox-sb em {
 }
 
 label.checkbox-sb span {
-    height: 11px;
-    width: 11px;
-    border: 3px solid #ffffff;
+    height: 7px;
+    width: 7px;
+    border: 3px solid #fff;
+    background-color: #fff;
     display: inline-block;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -1044,7 +1045,7 @@ ul.catalog-list li {
 ul.catalog-list li a {
     display: block;
     position: relative;
-    background-color: #525252;
+    background-color: #606163;
     padding: 29px 0 29px 27px;
     -webkit-transition-property: border,background,color;
     transition-property: border,background,color;
@@ -1287,11 +1288,8 @@ ul.catalog-list li a:hover:after {
     width: 237px;
     background: #fff;
 }
-
 .catalog-templates {
-    background-color: #000;
     height: 100%;
-    /*overflow: visible;*/
 }
 
 /* Edit forms */
@@ -1314,7 +1312,7 @@ ul.catalog-list li a:hover:after {
     height: 100%;
     width: 100%;
     padding-top: 70px;
-    background-color: #000;
+    background-color: #444444;
 }
 
 .settings {
