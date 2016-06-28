@@ -1027,7 +1027,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
     font-size: 16px;
     font-family: 'robotobold';
     text-decoration: none;
-    background: #b2b2b2;
+    background: #9ea0a5;
     vertical-align: middle;
 }
 #qoob-menu .backward a span {
@@ -1043,6 +1043,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 #qoob-menu .backward a:focus {
     outline: none;
+}
+#qoob-menu .backward a:hover {
+    background-color: #606163;
 }
 ul.catalog-list {
     height: 100%;
@@ -1428,6 +1431,14 @@ ul.catalog-list li a:hover:after {
 .settings-accordion .title_accordion[aria-expanded="true"] .arrow-elem {
     background: url('../img/arrow_accordion_hover.png') no-repeat center;
     /*transform: rotate(0deg);*/
+}
+.settings-accordion .title_accordion:hover .arrow-elem {
+    background: url('../img/arrow_accordion_hover.png') no-repeat center;
+    transform: rotate(0deg);
+}
+.settings-accordion .title_accordion[aria-expanded="true"]:hover .arrow-elem {
+    background: url('../img/arrow_accordion_hover.png') no-repeat center;
+    transform: rotate(180deg);
 }
 .settings-accordion .title_accordion[aria-expanded="true"] {
     border-bottom-right-radius: 0;
