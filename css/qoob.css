@@ -1094,6 +1094,10 @@ ul.catalog-list li a:focus {
     box-shadow: none;
 }
 
+ul.catalog-list li a:hover {
+    background-color: #9ea0a5;
+}
+
 ul.catalog-list li a:hover:after {
     background: transparent url(../img/backward.png) no-repeat center center;
     transform: rotate(180deg);
@@ -1391,6 +1395,7 @@ ul.catalog-list li a:hover:after {
 
 .settings-accordion .title_accordion:hover {
     cursor: pointer;
+    background-color: #9ea0a5;
 }
 
 .settings-accordion .title_accordion:focus {
@@ -1415,13 +1420,14 @@ ul.catalog-list li a:hover:after {
     float: right;
     margin-right: 5px;
     transform: rotate(180deg);
-    transition: transform 0.5s ease-out 0.5s;
+    /*transition: transform 0.5s ease-out 0.5s;*/
 }
 .settings-accordion .title_accordion.inner-settings-flip .arrow-elem {
     transform: rotate(90deg);
 }
 .settings-accordion .title_accordion[aria-expanded="true"] .arrow-elem {
-    transform: rotate(0deg);
+    background: url('../img/arrow_accordion_hover.png') no-repeat center;
+    /*transform: rotate(0deg);*/
 }
 .settings-accordion .title_accordion[aria-expanded="true"] {
     border-bottom-right-radius: 0;
@@ -1480,24 +1486,19 @@ ul.catalog-list li a:hover:after {
     background-repeat: no-repeat;
     background-position: center center;
 }
-
 .settings-accordion .settings-block .settings-block .cross-delete.expand {
     margin-left: -12px;
 }
-
 .settings-accordion .settings-block .cross-delete:hover {
     cursor: pointer;
     background-image: url(../img/basket_delete_hover.png);
 }
-
 .settings-accordion .settings-block .settings-item:first-child {
     margin-top: 20px;
 }
-
 .without-title .settings-accordion .title_accordion .text {
     display: none;
 }
-
 .drag-elem {
     background: url(../img/icon-draggable.png) no-repeat center center;
     width: 19px;
@@ -1510,6 +1511,9 @@ ul.catalog-list li a:hover:after {
 .drag-elem:hover {
     cursor: move;
 }
+.settings-accordion .title_accordion:hover .drag-elem {
+    background-color: #e8e8e8;
+}
 .add-block {
     color: #00c1e6;
     padding: 11px 0;
@@ -1519,11 +1523,9 @@ ul.catalog-list li a:hover:after {
     margin-top: 7px;
     font-size: 13px;
 }
-
 .add-block:hover {
     cursor: pointer;
 }
-
 .delete-drop-zone.ui-droppable {
     overflow: hidden;
     background-color: #9fa1a7;
@@ -1534,7 +1536,6 @@ ul.catalog-list li a:hover:after {
     z-index: 2;
     border-radius: 3px;
 }
-
 .delete-drop-zone span {
     display: block;
     color: #fff;
@@ -1545,12 +1546,10 @@ ul.catalog-list li a:hover:after {
     background-repeat: no-repeat;
     background-position: 178px center;
 }
-
 .delete-drop-zone.ui-state-hover span {
     color: #606163;
     background-image: url(../img/basket_delete_hover.png);
 }
-
 .add-block + .delete-drop-zone {
     display: none;
     position: relative;
