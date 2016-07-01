@@ -35,7 +35,6 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend(
                 "group": this.group,
                 "items": _.where(this.storage.qoobData.items, {groups:this.group.id})  //FIXME: moveto utils
             };
-
             this.$el.html(_.template(this.storage.qoobTemplates['menu-blocks-preview'])(data));
 
             return this;
