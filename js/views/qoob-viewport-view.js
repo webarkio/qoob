@@ -178,16 +178,13 @@ var QoobViewportView = Backbone.View.extend(
             if (iframe.jQuery('#qoob-blocks').find('.block-blank:visible').length > 0) {
                 iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
             }
-
-            // Trigger change
-            //            this.triggerQoobBlock();
         },
 
         /**
          * Create event change for iframe
          * @returns {Event} change
          */
-        triggerQoobBlock: function() {
+        triggerIframe: function() {
             // Trigger change qoob blocks for theme
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').trigger('change');
