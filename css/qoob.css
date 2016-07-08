@@ -1305,7 +1305,6 @@ ul.catalog-list li a:hover:after {
     cursor:all-scroll;
     padding: 6px 0 0 8px;
     margin: 0 auto;
-    /*width: 260px;*/
 }
 .preview-block img {
     vertical-align: middle;
@@ -1325,7 +1324,6 @@ ul.catalog-list li a:hover:after {
 }
 
 .settings-block {
-    overflow: hidden;
     padding: 0 4px 0 4px;
 }
 .settings-block input, .settings-block select {
@@ -1346,7 +1344,6 @@ ul.catalog-list li a:hover:after {
 .settings-item {
     margin-bottom: 42px;
     clear: both;
-    /*width: 100%;*/
     position: relative;
 }
 

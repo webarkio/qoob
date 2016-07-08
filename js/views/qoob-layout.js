@@ -43,7 +43,6 @@ var QoobLayout = Backbone.View.extend(
          * @returns {Object}
          */
         render: function() {
-
             //FIXME: this.storage => this.model
             this.$el.html([this.toolbar.render().el, this.editModeButton.render().el, this.menu.render().el, this.viewPort.render().el]);
             this.editModeButton.hide();

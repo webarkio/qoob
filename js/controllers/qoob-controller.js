@@ -137,5 +137,8 @@ var QoobController = Backbone.Router.extend({
     },
     moveUpBlock: function (model) {
         this.pageModel.moveUp(model);
+    },
+    triggerIframe: function () {
+        this.layout.viewPort.triggerIframe();
     }
 });
