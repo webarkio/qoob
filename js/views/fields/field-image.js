@@ -37,8 +37,8 @@ Fields.image = QoobFieldView.extend(
                 var assets = this.storage.getAssets();
 
                 window.selectFieldImage = function (src) {
+                    this.$el.find('.edit-image').removeClass('empty');
                     if (!src) {
-                        this.$el.find('.edit-image').removeClass('empty');
                         this.$el.find('.edit-image').addClass('empty');
                     }
                     this.$el.find('.edit-image').find('img').attr('src', src);
