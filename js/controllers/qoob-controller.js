@@ -131,6 +131,7 @@ var QoobController = Backbone.Router.extend({
     },
     deleteBlock: function (model) {
         this.pageModel.deleteBlock(model);
+        this.triggerIframe();
     },
     moveDownBlock: function (model) {
         this.pageModel.moveDown(model);
