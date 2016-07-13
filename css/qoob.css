@@ -1385,6 +1385,9 @@ ul.catalog-list li a:hover:after {
     display: inline-block;
 }
 
+.settings-item .dropdown-backdrop {
+    position: static;
+}
 
 /* accordion */
 .settings-accordion {
