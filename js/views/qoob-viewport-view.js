@@ -38,6 +38,7 @@ var QoobViewportView = Backbone.View.extend(
             return this;
         },
         iframeLoaded: function() {
+            this.getWindowIframe().jQuery('a').attr('onclick', 'return false;');
             this.trigger('iframe_loaded');
         },
         /**
