@@ -88,9 +88,9 @@ var QoobMenuView = Backbone.View.extend({
         });
     },
     /**
-     * Add view to side cube
+     * Add view to side qoob
      * @param {Object} BackboneView  View from render
-     * @param {String} side Side cube
+     * @param {String} side Side qoob
      */
     addView: function(view, side) {
         this.menuViews.push(view);
@@ -140,7 +140,7 @@ var QoobMenuView = Backbone.View.extend({
         currentElement.hide();
         newElement.show();
 
-        // rotate cube menu
+        // rotate qoob menu
         this.$el.find('.card-main')
             .removeClass(function(index, css) {
                 return (css.match(/\bside-\S+/g) || []).join(' ');
@@ -174,7 +174,7 @@ var QoobMenuView = Backbone.View.extend({
     back: function() {
         var tmp = this.backSide;
 
-        // rotate cube menu
+        // rotate qoob menu
         this.$el.find('.card-main')
             .removeClass(function(index, css) {
                 return (css.match(/\bside-\S+/g) || []).join(' ');
