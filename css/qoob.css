@@ -2892,16 +2892,6 @@ html.active-js {
     display: none;
 }
 
-#qoob-blocks .block-blank:after,
-#qoob-blocks .block-blank:before {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    margin: 67px 0;
-    background: transparent url(../img/border_blank.png) repeat-x;
-}
 
 #qoob-blocks .block-blank:before {
     top: 0;
