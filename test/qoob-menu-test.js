@@ -71,19 +71,19 @@ QUnit.test("render", function(assert) {
     assert.equal(mockTemplateMenuResalt, menu.render().$el.html());
 });
 
-//draggable
-// QUnit.test("draggable", function(assert) {
-//     var menu = new QoobMenuView({
-//         model: new Backbone.Model(),
-//         storage: mockStorageMenu
-//     });
+QUnit.test("draggable", function(assert) {
+    var menu = new QoobMenuView({
+        model: new Backbone.Model(),
+        storage: mockStorageMenu
+    });
 
-//     $('body').append(menu.render().$el);
-//     assert.ok(!menu.$el.find('#side-90').hasClass('active'));
-//     assert.ok(menu.$el.find('.preview-block').draggable());
-//     console.log(menu.$el.find('.preview-block').draggable());
+    $('body').append(menu.render().$el);
+    $previewBlock=$('<div></div>').addClass('preview-block');
+    menu.$el.append($previewBlock);
+    menu.$el.find('.preview-block').draggable();
+    assert.ok(menu.$el.find('.preview-block').hasClass('ui-draggable'));
 
-// });
+});
 
 QUnit.test("setPreviewMode", function(assert) {
     var done = assert.async();
@@ -267,7 +267,7 @@ QUnit.test("back", function(assert) {
     assert.ok(menu.$el.find('#side-0').hasClass('active'));
     menu.$el.remove();
 });
-//delView
+
 QUnit.test("delView", function(assert) {
     var menu = new QoobMenuView({
         model: new Backbone.Model(),
