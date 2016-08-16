@@ -1,8 +1,8 @@
 QUnit.module("QoobToolbarView");
 
 var mockToolbarTemplate = "<div class=\"logo\">" +
-    "<div class=\"wrap-cube\">" +
-    "<div class=\"cube\">" +
+    "<div class=\"wrap-qoob\">" +
+    "<div class=\"qoob\">" +
     "<div class=\"side-0\"></div>" +
     "<div class=\"side-90\"></div>" +
     "<div class=\"side-180\"></div>" +

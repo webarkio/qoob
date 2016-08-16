@@ -66,7 +66,7 @@ Qoob.prototype.activate = function() {
                     //self.layout.viewPort.createDefaultDroppable();
 
                     //Start loading blocks
-                    if (pageData && pageData.blocks) {
+                    if (pageData && pageData.blocks.length > 0) {
                         self.controller.load(pageData.blocks);
                     } else {
                         Backbone.history.start({ pushState: false });

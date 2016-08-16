@@ -117,7 +117,7 @@ var QoobController = Backbone.Router.extend({
         //Creating storage for views
         this.layout.menu.settingsViewStorage = this.layout.menu.settingsViewStorage || [];
         var name = view.$el.prop('id');
-        //Add view to the cube side
+        //Add view to the qoob side
         if (!!this.layout.menu.settingsViewStorage[name]) {
             this.deleteInnerSettingsView(name);
         }
@@ -131,11 +131,15 @@ var QoobController = Backbone.Router.extend({
     },
     deleteBlock: function (model) {
         this.pageModel.deleteBlock(model);
+        this.triggerIframe();
     },
     moveDownBlock: function (model) {
         this.pageModel.moveDown(model);
     },
     moveUpBlock: function (model) {
         this.pageModel.moveUp(model);
+    },
+    triggerIframe: function () {
+        this.layout.viewPort.triggerIframe();
     }
 });

@@ -129,7 +129,7 @@ var ImageCenterView = Backbone.View.extend(
              * @param {type} evt
              */
             deleteImage: function (evt) {
-                window.selectFieldImage('empty');
+                window.selectFieldImage('');
                 this.controller.layout.menu.rotate(this.backId);
             },
             /**

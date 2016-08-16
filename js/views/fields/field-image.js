@@ -37,17 +37,14 @@ Fields.image = QoobFieldView.extend(
                 var assets = this.storage.getAssets();
 
                 window.selectFieldImage = function (src) {
-                    if (src) {
-                        this.$el.find('.edit-image').find('img').attr('src', src);
-                        if (src === 'empty') {
-                            this.$el.find('.edit-image').addClass('empty');
-                        } else {
-                            this.$el.find('.edit-image').removeClass('empty');
-                        }
-                        this.$el.find('input').trigger("change");
-                        if (this.$el.find('.other-photos').length) {
-                            this.$el.find('.other-photo').removeClass('active');
-                        }
+                    this.$el.find('.edit-image').removeClass('empty');
+                    if (!src) {
+                        this.$el.find('.edit-image').addClass('empty');
+                    }
+                    this.$el.find('.edit-image').find('img').attr('src', src);
+                    this.$el.find('input').trigger("change");
+                    if (this.$el.find('.other-photos').length) {
+                        this.$el.find('.other-photo').removeClass('active');
                     }
                 }.bind(this);
 

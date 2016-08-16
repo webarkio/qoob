@@ -38,6 +38,7 @@ var QoobViewportView = Backbone.View.extend(
             return this;
         },
         iframeLoaded: function() {
+            this.getWindowIframe().jQuery('a').attr('onclick', 'return false;');
             this.trigger('iframe_loaded');
         },
         /**
@@ -48,7 +49,6 @@ var QoobViewportView = Backbone.View.extend(
             var iframe = this.getWindowIframe();
             iframe.jQuery('.overlay').removeClass('active').addClass('no-active');
             iframe.jQuery('#outer-block-' + blockId).find('.overlay').removeClass('no-active').addClass('active');
-            iframe.jQuery('#outer-block-' + blockId).find('a').attr("onclick", "return false;");
         },
         stopEditBlock: function(blockId) {
             var iframe = this.getWindowIframe();
@@ -57,7 +57,6 @@ var QoobViewportView = Backbone.View.extend(
         setPreviewMode: function() {
             this.previewMode = true;
             this.getIframeContents().find('#qoob-blocks').addClass('preview');
-            this.getIframeContents().find('a').attr("onclick", "return false;");
         },
         setEditMode: function() {
             this.previewMode = false;
@@ -178,19 +177,17 @@ var QoobViewportView = Backbone.View.extend(
             if (iframe.jQuery('#qoob-blocks').find('.block-blank:visible').length > 0) {
                 iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
             }
-
-            // Trigger change
-            //            this.triggerQoobBlock();
         },
 
         /**
          * Create event change for iframe
          * @returns {Event} change
          */
-        triggerQoobBlock: function() {
+        triggerIframe: function() {
             // Trigger change qoob blocks for theme
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').trigger('change');
+            iframe.jQuery('a').attr('onclick', 'return false;');
         },
         getIframe: function() {
             return this.$el.find('#qoob-iframe');

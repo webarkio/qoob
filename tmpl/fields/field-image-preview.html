@@ -3,7 +3,7 @@
         <%= label %>
     </div>
 </div>
-<div class="edit-image <% if (value === 'empty')  { %><%= value %><% } %>"><img src="<%= value %>" /></div>
+<div class="edit-image <% if (value === '')  { %>empty<% } %>"><img src="<%= value %>" /></div>
 <% if(images) { %>
     <div class="other-photos">
         <%   for (var i = 0; i < images.length; i++) { %>

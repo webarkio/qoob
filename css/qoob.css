@@ -80,7 +80,7 @@ body {
     z-index: 100500;
 }
 
-/* Cube spin */
+/* qoob spin */
 @-moz-keyframes spinningH {
     from {
         -moz-transform: rotateX(0deg) rotateY(0deg);
@@ -126,7 +126,7 @@ body {
     }
 }
 
-#loader-wrapper .cube-wrap {
+#loader-wrapper .qoob-wrap {
     height: 152px;
     position: relative;
     -webkit-perspective: 250;
@@ -139,7 +139,7 @@ body {
     perspective-origin: 50% 23px;
 }
 
-#loader-wrapper .cube {
+#loader-wrapper .qoob {
     position: relative;
     margin: 0 auto;
     width: 106px;
@@ -149,7 +149,7 @@ body {
     transition: all 1s linear;
 }
 
-#loader-wrapper .cube div {
+#loader-wrapper .qoob div {
     position: absolute;
     width: 106px;
     height: 106px;
@@ -160,41 +160,41 @@ body {
     transition: all 1s linear;
 }
 
-#loader-wrapper .cube div.back {
+#loader-wrapper .qoob div.back {
     background-image: url('../img/qoob_preload_2.png');
     transform: translateZ(-53px) rotateY(180deg);
 }
 
-#loader-wrapper .cube div.right {
+#loader-wrapper .qoob div.right {
     background-image: url('../img/qoob_preload_3.png');
     transform: rotateY(-270deg) translateX(53px);
     transform-origin: top right;
 }
 
-#loader-wrapper .cube div.left {
+#loader-wrapper .qoob div.left {
     background-image: url('../img/qoob_preload_1.png');
     transform: rotateY(270deg) translateX(-53px);
     transform-origin: center left;
 }
 
-#loader-wrapper .cube div.top {
+#loader-wrapper .qoob div.top {
     background-color: #156072;
     transform: rotateX(-90deg) translateY(-53px);
     transform-origin: top center;
 }
 
-#loader-wrapper .cube div.bottom {
+#loader-wrapper .qoob div.bottom {
     background-color: #156072;
     transform: rotateX(90deg) translateY(53px);
     transform-origin: bottom center;
 }
 
-#loader-wrapper .cube div.front {
+#loader-wrapper .qoob div.front {
     background-image: url('../img/qoob_preload_4.png');
     transform: translateZ(53px);
 }
 
-/* Cube spin end*/
+/* qoob spin end*/
 #loader-wrapper .loader-inner-wrapper {
     position: relative;
     height: 668px;
@@ -380,13 +380,13 @@ body {
     margin: 17px 0 0 24px;
 }
 
-#qoob-toolbar .logo .wrap-cube,
+#qoob-toolbar .logo .wrap-qoob,
 #qoob-toolbar .logo .text {
     display: inline-block;
     vertical-align: middle;
 }
 
-#qoob-toolbar .logo .wrap-cube {
+#qoob-toolbar .logo .wrap-qoob {
     width: 36px;
     height: 36px;
     margin: 0 auto;
@@ -397,7 +397,7 @@ body {
     box-sizing: border-box;
 
 }
-#qoob-toolbar .logo .cube {
+#qoob-toolbar .logo .qoob {
     position: relative;
     width: 100%;
     height: 100%;
@@ -406,7 +406,7 @@ body {
     -webkit-transform: translate3D(0,0,-17.5px);
     transform: translate3D(0,0,-17.5px);
 }
-#qoob-toolbar .logo .cube div {
+#qoob-toolbar .logo .qoob div {
     position: absolute;
     height: 36px;
     width: 36px;
@@ -416,126 +416,126 @@ body {
     transition: all .5s ease;
 }
 
-#qoob-toolbar .logo .cube .side-0 {
+#qoob-toolbar .logo .qoob .side-0 {
     background: #000 url(../img/logo_one.png) no-repeat;
 }
-#qoob-toolbar .logo .cube .side-90 {
+#qoob-toolbar .logo .qoob .side-90 {
     background: #000 url(../img/logo_four.png) no-repeat;
 }
-#qoob-toolbar .logo .cube .side-180 {
+#qoob-toolbar .logo .qoob .side-180 {
     background: #000 url(../img/logo_three.png) no-repeat;
 }
-#qoob-toolbar .logo .cube .side-270 {
+#qoob-toolbar .logo .qoob .side-270 {
     background: #000 url(../img/logo_two.png) no-repeat;
 }
 
-#qoob-toolbar .logo.side-0 .cube .side-0 {
+#qoob-toolbar .logo.side-0 .qoob .side-0 {
     -webkit-transform: rotateY(0deg) translate3D(0,0,17.5px);
     transform: rotateY(0deg) translate3D(0,0,17.5px);
     z-index: 10;
 }
-#qoob-toolbar .logo.side-0 .cube .side-90 {
+#qoob-toolbar .logo.side-0 .qoob .side-90 {
     -webkit-transform: rotateY(-90deg) translate3D(0,0,17.5px);
     transform: rotateY(-90deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-0 .cube .side-180 {
+#qoob-toolbar .logo.side-0 .qoob .side-180 {
     -webkit-transform: rotateY(-180deg) translate3D(0,0,17.5px);
     transform: rotateY(-180deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-0 .cube .side-270 {
+#qoob-toolbar .logo.side-0 .qoob .side-270 {
     -webkit-transform: rotateY(-270deg) translate3D(0,0,17.5px);
     transform: rotateY(-270deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
 
-#qoob-toolbar .logo.side-90 .cube .side-0 {
+#qoob-toolbar .logo.side-90 .qoob .side-0 {
     -webkit-transform: rotateY(-90deg) translate3D(0,0,17.5px);
     transform: rotateY(-90deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-90 .cube .side-90 {
+#qoob-toolbar .logo.side-90 .qoob .side-90 {
     -webkit-transform: rotateY(-180deg) translate3D(0,0,17.5px);
     transform: rotateY(-180deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-90 .cube .side-180 {
+#qoob-toolbar .logo.side-90 .qoob .side-180 {
     -webkit-transform: rotateY(-270deg) translate3D(0,0,17.5px);
     transform: rotateY(-270deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-90 .cube .side-270 {
+#qoob-toolbar .logo.side-90 .qoob .side-270 {
     -webkit-transform: rotateY(-360deg) translate3D(0,0,17.5px);
     transform: rotateY(-360deg) translate3D(0,0,17.5px);
     z-index: 10;
 }
 
-#qoob-toolbar .logo.side-180 .cube .side-0  {
+#qoob-toolbar .logo.side-180 .qoob .side-0  {
     -webkit-transform: rotateY(180deg) translate3D(0,0,17.5px);
     transform: rotateY(180deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-180 .cube .side-90 {
+#qoob-toolbar .logo.side-180 .qoob .side-90 {
     -webkit-transform: rotateY(90deg) translate3D(0,0,17.5px);
     transform: rotateY(90deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-180 .cube .side-180 {
+#qoob-toolbar .logo.side-180 .qoob .side-180 {
     -webkit-transform: rotateY(0deg) translate3D(0,0,17.5px);
     transform: rotateY(0deg) translate3D(0,0,17.5px);
     z-index: 10;
 }
-#qoob-toolbar .logo.side-180 .cube .side-270 {
+#qoob-toolbar .logo.side-180 .qoob .side-270 {
     -webkit-transform: rotateY(270deg) translate3D(0,0,17.5px);
     transform: rotateY(270deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
 
-#qoob-toolbar .logo.side-270 .cube .side-0  {
+#qoob-toolbar .logo.side-270 .qoob .side-0  {
     -webkit-transform: rotateY(90deg) translate3D(0,0,17.5px);
     transform: rotateY(90deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-270 .cube .side-90 {
+#qoob-toolbar .logo.side-270 .qoob .side-90 {
     -webkit-transform: rotateY(0deg) translate3D(0,0,17.5px);
     transform: rotateY(0deg) translate3D(0,0,17.5px);
     z-index: 10;
 }
-#qoob-toolbar .logo.side-270 .cube .side-180 {
+#qoob-toolbar .logo.side-270 .qoob .side-180 {
     -webkit-transform: rotateY(-90deg) translate3D(0,0,17.5px);
     transform: rotateY(-90deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-270 .cube .side-270 {
+#qoob-toolbar .logo.side-270 .qoob .side-270 {
     -webkit-transform: rotateY(-180deg) translate3D(0,0,17.5px);
     transform: rotateY(-180deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
 
-#qoob-toolbar .logo.side-270.side-full-rotation .cube .side-0  {
+#qoob-toolbar .logo.side-270.side-full-rotation .qoob .side-0  {
     -webkit-transform: rotateY(-270deg) translate3D(0,0,17.5px);
     transform: rotateY(-270deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-270.side-full-rotation .cube .side-90 {
+#qoob-toolbar .logo.side-270.side-full-rotation .qoob .side-90 {
     -webkit-transform: rotateY(-360deg) translate3D(0,0,17.5px);
     transform: rotateY(-360deg) translate3D(0,0,17.5px);
     z-index: 10;
 }
-#qoob-toolbar .logo.side-270.side-full-rotation .cube .side-180 {
+#qoob-toolbar .logo.side-270.side-full-rotation .qoob .side-180 {
     -webkit-transform: rotateY(-450deg) translate3D(0,0,17.5px);
     transform: rotateY(-450deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
-#qoob-toolbar .logo.side-270.side-full-rotation .cube .side-270 {
+#qoob-toolbar .logo.side-270.side-full-rotation .qoob .side-270 {
     -webkit-transform: rotateY(-540deg) translate3D(0,0,17.5px);
     transform: rotateY(-540deg) translate3D(0,0,17.5px);
     z-index: 1;
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    #qoob-toolbar .logo .cube {
+    #qoob-toolbar .logo .qoob {
         perspective: 1000px;
     }
 }
@@ -1135,7 +1135,7 @@ ul.catalog-list li a:hover:after {
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d; /* IE 11 or below doesn't support this, so in IE, we need to add another "perspective" property here via IE specific media queries (see below) */
     -webkit-transform: translate3D(0,0,-9.7em);
-    transform: translate3D(0,0,-9.7em); /* move cube back by 1/2 cube height (translateZ) to undo each cube's side being moved forward by 1/2 cube height */
+    transform: translate3D(0,0,-9.7em);
 }
 
 #side-0,
@@ -1163,7 +1163,7 @@ ul.catalog-list li a:hover:after {
 #card .side-0>#side-0 {
     overflow: auto;
     -webkit-transform: rotateY(0deg) translate3D(0,0,8.1rem);
-    transform: rotateY(0deg) translate3D(0,0,8.1rem); /* set tranlateZ value to 1/2 cube height to bring it closer to screen, creating 3D effect */
+    transform: rotateY(0deg) translate3D(0,0,8.1rem);
     z-index: 10;
 }
 
@@ -1305,7 +1305,6 @@ ul.catalog-list li a:hover:after {
     cursor:all-scroll;
     padding: 6px 0 0 8px;
     margin: 0 auto;
-    /*width: 260px;*/
 }
 .preview-block img {
     vertical-align: middle;
@@ -1325,7 +1324,6 @@ ul.catalog-list li a:hover:after {
 }
 
 .settings-block {
-    overflow: hidden;
     padding: 0 4px 0 4px;
 }
 .settings-block input, .settings-block select {
@@ -1346,7 +1344,6 @@ ul.catalog-list li a:hover:after {
 .settings-item {
     margin-bottom: 42px;
     clear: both;
-    /*width: 100%;*/
     position: relative;
 }
 
@@ -1388,6 +1385,9 @@ ul.catalog-list li a:hover:after {
     display: inline-block;
 }
 
+.settings-item .dropdown-backdrop {
+    position: static;
+}
 
 /* accordion */
 .settings-accordion {
@@ -1810,7 +1810,7 @@ ul.catalog-list li a:hover:after {
 
 .settings-item .size {
     display: inline-block;
-    width: 30px;
+    width: 35px;
     height: 30px;
     margin-left: 11px;
     font-size: 13px;
@@ -2892,16 +2892,6 @@ html.active-js {
     display: none;
 }
 
-#qoob-blocks .block-blank:after,
-#qoob-blocks .block-blank:before {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    margin: 67px 0;
-    background: transparent url(../img/border_blank.png) repeat-x;
-}
 
 #qoob-blocks .block-blank:before {
     top: 0;

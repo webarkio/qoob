@@ -323,3 +323,17 @@ Handlebars.registerHelper('everyNth', function (context, every, options) {
 
     return ret;
 });
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Return global variable by name
+ * @function everyNth
+ * @memberof Handlebars.helpers
+ * @param {array} context - The data to sort.
+ * @param {key} every - The key to sort by.
+ * @returns {array}
+ */
+Handlebars.registerHelper('globalVar', function (varName) {
+    return window.ajax[varName];
+});
