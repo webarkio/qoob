@@ -32,8 +32,8 @@ QUnit.test("render", function(assert) {
     var menusettings = new QoobMenuSettingsView({
         model: new Backbone.Model(),
         storage: 1,
-        settings: 1,
-        defaults: 0,
+        settings: null,
+        defaults: null,
         controller: 2
     });
     assert.equal(mockTemplateMenuSettings, menusettings.render().$el.html());

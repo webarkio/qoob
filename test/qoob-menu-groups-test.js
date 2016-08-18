@@ -9,8 +9,7 @@ var View = Backbone.View.extend({
 });
 
 var mockTemplateMenuGroups =
-    "<ul><li><a href=\"#slider\"></a></li></ul>";
-
+    "<ul><li><a href=\"#groups/introduction\"></a></li></ul>";
 
 var mockStorageMenuGroups = {
     qoobTemplates: { 'menu-groups-preview': mockTemplateMenuGroups },
