@@ -10,9 +10,9 @@
  * @param {key} key - The key to sort by.
  * @returns {array}
  */
-Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
+Handlebars.registerHelper('each_with_sort', function(array, key, opts) {
     var s = '';
-    array = array.sort(function (a, b) {
+    array = array.sort(function(a, b) {
         a = a[key];
         b = b[key];
         if (a > b) {
@@ -25,8 +25,11 @@ Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
             return -1;
         }
     });
+
     for (var i = 0; i < array.length; i++) {
         array[i].index = i;
+        array[i].first = (i == 0) ? true : false;
+        array[i].last = (i == (array.length - 1)) ? true : false;
         s += opts.fn(array[i]);
     }
     return s;
@@ -43,13 +46,13 @@ Handlebars.registerHelper('each_with_sort', function (array, key, opts) {
  * @param {key} key - The key to sort by.
  * @returns {array}
  */
-Handlebars.registerHelper('each_with_sort_arrays', function (key, opts) {
+Handlebars.registerHelper('each_with_sort_arrays', function(key, opts) {
     var s = '';
     var arr = [];
     var tempArr = opts.hash;
 
     for (i in tempArr) {
-        tempArr[i].sort(function (a, b) {
+        tempArr[i].sort(function(a, b) {
             a = a[key];
             b = b[key];
             if (a > b) {
@@ -65,7 +68,7 @@ Handlebars.registerHelper('each_with_sort_arrays', function (key, opts) {
 
         arr.push.apply(arr, tempArr[i]);
     }
-    
+
     for (var i = 0; i < arr.length; i++) {
         arr[i].order = i;
         s += opts.fn(arr[i]);
@@ -81,19 +84,20 @@ Handlebars.registerHelper('each_with_sort_arrays', function (key, opts) {
  * @memberof Handlebars.helpers
  * @returns {array}
  */
-Handlebars.registerHelper('each_by_group', function (opts) {
-    var s = '', arr = [],
-            tempArr = opts.hash.array,
-            group = opts.hash.group;
-            
+Handlebars.registerHelper('each_by_group', function(opts) {
+    var s = '',
+        arr = [],
+        tempArr = opts.hash.array,
+        group = opts.hash.group;
+
     var arr = _.chain(tempArr)
-            .groupBy(function (obj) {
-                return obj[group];
-            })
-            .sortBy(function (v, k) {
-                return k;
-            })
-            .value();
+        .groupBy(function(obj) {
+            return obj[group];
+        })
+        .sortBy(function(v, k) {
+            return k;
+        })
+        .value();
 
     var result = [];
     for (var i = 0; i < arr.length; i++) {
@@ -119,13 +123,13 @@ Handlebars.registerHelper('each_by_group', function (opts) {
  * @param {array} opts - The data to sort.
  * @returns {array}
  */
-Handlebars.registerHelper('each_with_sort_arr', function (key, opts) {
+Handlebars.registerHelper('each_with_sort_arr', function(key, opts) {
     var s = '';
     var arr = [];
     var tempArr = opts.hash;
 
     for (i in tempArr) {
-        tempArr[i].sort(function (a, b) {
+        tempArr[i].sort(function(a, b) {
             a = a[key];
             b = b[key];
             if (a > b) {
@@ -156,9 +160,9 @@ Handlebars.registerHelper('each_with_sort_arr', function (key, opts) {
  * @memberof Handlebars.helpers
  * @returns {unresolved}
  */
-Handlebars.registerHelper('ifIsNthItem', function (options) {
+Handlebars.registerHelper('ifIsNthItem', function(options) {
     var index = this.index + 1,
-            nth = options.hash.nth;
+        nth = options.hash.nth;
 
     if (index % nth === 0) {
         return options.fn(this);
@@ -174,7 +178,7 @@ Handlebars.registerHelper('ifIsNthItem', function (options) {
  * @memberof Handlebars.helpers
  * @returns {Array}
  */
-Handlebars.registerHelper("splitString", function (context, options) {
+Handlebars.registerHelper("splitString", function(context, options) {
     if (context) {
         var ret = "";
         var tempArr = context.trim().split(options.hash["delimiter"]);
@@ -194,7 +198,7 @@ Handlebars.registerHelper("splitString", function (context, options) {
  * @memberof Handlebars.helpers
  * @returns {String}
  */
-Handlebars.registerHelper("videoUrl", function (url, full) {
+Handlebars.registerHelper("videoUrl", function(url, full) {
     if (url) {
         var url_split = url.split(/[/]/);
         var id_video = url.substr(url.indexOf('=') + 1, url.length);
@@ -236,7 +240,7 @@ Handlebars.registerHelper("videoUrl", function (url, full) {
  * @memberof Handlebars.helpers
  * @returns {Array}
  */
-Handlebars.registerHelper('for', function (n, options) {
+Handlebars.registerHelper('for', function(n, options) {
     var accum = '';
     for (var i = 0; i < n; ++i)
         accum += options.fn(i);
@@ -255,7 +259,7 @@ Handlebars.registerHelper('for', function (n, options) {
  * @memberof Handlebars.helpers
  * @returns {unresolved}
  */
-Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+Handlebars.registerHelper('ifCond', function(v1, operator, v2, options) {
 
     switch (operator) {
         case '==':
@@ -291,17 +295,19 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
  * @param {key} every - The key to sort by.
  * @returns {array}
  */
-Handlebars.registerHelper('everyNth', function (context, every, options) {
+Handlebars.registerHelper('everyNth', function(context, every, options) {
 
     if (options.hash.sort == 'sort') {
         var key = options.hash.key;
-        context = context.sort(function (a, b) {
-            var x = a[key], y = b[key];
+        context = context.sort(function(a, b) {
+            var x = a[key],
+                y = b[key];
             return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         });
     }
 
-    var fn = options.fn, inverse = options.inverse;
+    var fn = options.fn,
+        inverse = options.inverse;
     var ret = "";
     if (context && context.length > 0) {
         var counter = 0;
@@ -334,6 +340,6 @@ Handlebars.registerHelper('everyNth', function (context, every, options) {
  * @param {key} every - The key to sort by.
  * @returns {array}
  */
-Handlebars.registerHelper('globalVar', function (varName) {
+Handlebars.registerHelper('globalVar', function(varName) {
     return window.ajax[varName];
 });
