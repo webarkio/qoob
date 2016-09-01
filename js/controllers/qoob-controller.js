@@ -91,7 +91,7 @@ var QoobController = Backbone.Router.extend({
         }
     },
     addNewBlock: function (templateId, afterId) {
-        this.addBlock(QoobUtils.getDefaultSettings(this.storage.qoobData.items, templateId), afterId);
+        this.addBlock(QoobUtils.getDefaultSettings(this.storage.getBlocksByGroup(), templateId), afterId);
     },
     addBlock: function (values, afterId) {
         var model = QoobUtils.createModel(values);
@@ -141,5 +141,9 @@ var QoobController = Backbone.Router.extend({
     },
     triggerIframe: function () {
         this.layout.viewPort.triggerIframe();
+    },
+    changeLib: function (name) {
+        this.storage.currentLib = name;
+        this.layout.menu.hideLibsExcept(name);
     }
 });

@@ -20,7 +20,7 @@ var QoobMenuView = Backbone.View.extend({
         this.model.on("block_delete", this.deleteSettings.bind(this));
     },
     addSettings: function(model) {
-        var item = _.findWhere(this.storage.qoobData.items, { id: model.get('template') });
+        var item = _.findWhere(this.storage.getBlocksByGroup(), { name: model.get('template') });
         this.addView(new QoobMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
     },
     /**
@@ -29,8 +29,8 @@ var QoobMenuView = Backbone.View.extend({
      */
     render: function() {
         this.$el.html(_.template(this.storage.qoobTemplates['qoob-menu-preview'])());
-        this.addView(new QoobMenuGroupsView({ storage: this.storage }), 0);
-        var groups = this.storage.qoobData.groups;
+        var groups = this.storage.getGroups();
+        this.addView(new QoobMenuGroupsView({ storage: this.storage, groups: groups, controller: this.controller }), 0);
         for (var i = 0; i < groups.length; i++) {
             this.addView(new QoobMenuBlocksPreviewView({
                 id: 'group-' + groups[i].id,
@@ -201,5 +201,29 @@ var QoobMenuView = Backbone.View.extend({
         
         var settings = this.getSettingsView(modelId);
         settings.dispose();
+    },
+    /**
+     * Hide groups and blocks in menu those are not contained in selected lib.
+     * @param  {String} libName Lib name for which not to hide groups and blocks
+     */
+    hideLibsExcept: function(libName) {
+        var self = this,
+            groups = this.$el.find('#catalog-groups li'),
+            blocks = this.$el.find('.preview-block');
+        
+        groups.hide();
+        blocks.hide();
+
+        if (libName !== 'all') {
+            groups = groups.filter(function(index) {
+                return self.$(groups[index]).hasClass(libName);
+            });
+            blocks = blocks.filter(function(index) {
+                return self.$(blocks[index]).hasClass(libName);
+            }); 
+        }
+
+        groups.show();
+        blocks.show();
     }
 });
