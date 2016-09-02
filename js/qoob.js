@@ -49,43 +49,41 @@ Qoob.prototype.activate = function() {
         self.storage.driver.loadLibsInfo(function(err, qoobLibs) {
             self.loader.step();
             self.storage.joinLibs(qoobLibs.libs, function (err, qoobLibs) {
-                self.storage.joinLibsBlocksConfig(qoobLibs, function (err, qoobLibs) {
-                    self.storage.loadPageData(function(err, pageData) {
+                self.storage.loadPageData(function(err, pageData) {
+                    self.loader.step();
+
+                    //If blocks loaded to viewPort
+                    self.layout.viewPort.once('blocks_loaded', function() {
+                        Backbone.history.start({ pushState: false });
                         self.loader.step();
+                    });
 
-                        //If blocks loaded to viewPort
-                        self.layout.viewPort.once('blocks_loaded', function() {
+                    //If iframe ready to load blocks
+                    self.layout.viewPort.once('iframe_loaded', function() {
+                        self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
+
+
+                        //self.layout.viewPort.createDefaultDroppable();
+
+                        //Start loading blocks
+                        if (pageData && pageData.blocks.length > 0) {
+                            self.controller.load(pageData.blocks);
+                        } else {
                             Backbone.history.start({ pushState: false });
+                            //Skip counter for blocks
+                            self.layout.viewPort.blocksCounter = null;
                             self.loader.step();
-                        });
-
-                        //If iframe ready to load blocks
-                        self.layout.viewPort.once('iframe_loaded', function() {
-                            self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
-
-
-                            //self.layout.viewPort.createDefaultDroppable();
-
-                            //Start loading blocks
-                            if (pageData && pageData.blocks.length > 0) {
-                                self.controller.load(pageData.blocks);
-                            } else {
-                                Backbone.history.start({ pushState: false });
-                                //Skip counter for blocks
-                                self.layout.viewPort.blocksCounter = null;
-                                self.loader.step();
-                                
-                                // if first start page
-                                self.layout.viewPort.createBlankBlock();
-                            }
-
-                        });
-
-                        //Render layout
-                        jQuery('body').prepend(self.layout.render().el);
-                        self.layout.resize();
+                            
+                            // if first start page
+                            self.layout.viewPort.createBlankBlock();
+                        }
 
                     });
+
+                    //Render layout
+                    jQuery('body').prepend(self.layout.render().el);
+                    self.layout.resize();
+
                 }); 
             });
         });

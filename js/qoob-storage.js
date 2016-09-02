@@ -35,57 +35,57 @@ QoobStorage.prototype.loadQoobTemplates = function (cb) {
 };
 
 /**
- * Get lib.json files for qoobData and join them into one array
- * @param  {Array}   libs Array of libs [{"name": "libName", "url": "libUrl"}]
- * @param {Function} cb Callback function.
- */
-QoobStorage.prototype.joinLibs = function (libs, cb) {
-    if (!!libs) {
-        var libsJson = [];
-        for(var i = 0, j = 0; i < libs.length; i++) {
-            jQuery.getJSON(libs[i].url + '/lib.json', function(data) {
-                data.name = libs[j].name;
-                libsJson.push(data);
-                if (j == libs.length - 1) {
-                    cb(null, libsJson);
-                }
-                j++;
-            });
-        }
-    }
-};
-
-/**
  * Unmask urls of blocks and gather block's data by these urls. Then join these data into one array and put it into storage.
  * @param  {Array}   libsJson Array of lib.json files, previously gatherd.
  * @param  {Function} cb  Callback function.
  */
-QoobStorage.prototype.joinLibsBlocksConfig = function (libsJson, cb) {
-    var self = this;
-    for(var i = 0, y = 0; i < libsJson.length; i++) {
-        for(var j = 0, k = 0; j < libsJson[i].blocks.length; j++) {
-            var block = libsJson[i].blocks[j];
-            block.url = block.url.replace(/%theme_url%/, ajax.theme_url).replace(/%plugin_url%/, ajax.plugin_url);
-            jQuery.getJSON(block.url + 'config.json', function(data) {
-                data.name = libsJson[y].blocks[k].name;
-                data.url = libsJson[y].blocks[k].url;
-                data = self.parseBlockConfigMask(data, libsJson[y].blocks);
-                libsJson[y].blocks[k] = data;
-                k++;
-                if(k == libsJson[y].blocks.length) {
-                    if(y == libsJson.length -1) {
-                        self.qoobData = libsJson;
-                        cb(null, libsJson);
-                    }
-                    y++;
-                    k = 0;  
-                } 
-            });
+QoobStorage.prototype.joinLibs = function (libsJson, cb) {
+    var blockLoaded = jQuery.Deferred(),
+        self = this;
 
-        }
-    }
+    blockLoaded.done(function() {
+       self.deferredConfigLoad(libsJson, cb, 0, 0); 
+    });
+
+    blockLoaded.resolve();
 };
 
+/**
+ * Load block's config files and append it to lib in sequence
+ * @param  {Array}   libsJson Array of lib.json files, previously gatherd.
+ * @param  {Function} cb       Callback function.
+ * @param  {Number}   i        Iterator
+ * @param  {Number}   j        Iterator
+ */
+QoobStorage.prototype.deferredConfigLoad = function (libsJson, cb, i, j) {
+    var block = libsJson[i].blocks[j],
+        self = this;
+
+    block.url = block.url.replace(/%theme_url%/, ajax.theme_url).replace(/%plugin_url%/, ajax.plugin_url);
+    
+    jQuery.getJSON(block.url + 'config.json', function(data) {
+        data.name = libsJson[i].blocks[j].name;
+        data.url = libsJson[i].blocks[j].url;
+        data = self.parseBlockConfigMask(data, libsJson[i].blocks);
+        libsJson[i].blocks[j] = data;
+        j++;
+        if (j == libsJson[i].blocks.length) {
+            i++;
+            j = 0;
+            if (i == libsJson.length) {
+                self.qoobData = libsJson;
+                cb(null, libsJson);
+            }    
+        } 
+        if (i != libsJson.length && j != libsJson[i].blocks.length) {
+            var blockLoaded = jQuery.Deferred();
+            blockLoaded.done(function() {
+                self.deferredConfigLoad(libsJson, cb, i, j);
+            });
+            blockLoaded.resolve();
+        }
+    });
+};
 /**
  * Parsing config file of specified block and replacing masks
  * @param  {Object} block  Block object to parse
@@ -93,12 +93,10 @@ QoobStorage.prototype.joinLibsBlocksConfig = function (libsJson, cb) {
  * @return {Object}        Parsed block config
  */
 QoobStorage.prototype.parseBlockConfigMask = function (block, blocks) {
-    var themeUrl = ajax.theme_url;
-
     block = JSON.stringify(block).replace(/%theme_url%|%block_url%|%block_url\([^\)]+\)%/g, function(substr) {
         var mask = '';
         switch(substr) {
-            case '%theme_url%': mask = themeUrl;
+            case '%theme_url%': mask = ajax.theme_url;
                 break;
             case '%block_url%': mask = block.url;
                 break;
@@ -164,7 +162,7 @@ QoobStorage.prototype.getBlocksByGroup = function (group, libNames) {
     for (var i = 0; i < data.length; i++) {
         result = result.concat(data[i].blocks.filter(function(block) {
             block.lib = data[i].name;
-            return (!!group) ? (block.groups === group) : true;
+            return (!!group) ? (!!block.settings && block.groups === group) : (!!block.settings);
         }));
     } 
     
