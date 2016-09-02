@@ -41,19 +41,19 @@ QoobStorage.prototype.loadQoobTemplates = function (cb) {
  */
 QoobStorage.prototype.joinLibs = function (libsJson, cb) {
     var self = this,
-        req=[],
-        res=[];
-    
+        req = [],
+        res = [];
+
     for (var i = 0; i < libsJson.length; i++) {
         for (var j = 0; j < libsJson[i].blocks.length; j++) {
-        var proxy={
-            i:i,
-            j:j,
+        var proxy = {
+            i: i,
+            j: j,
             callback: function(data){
                 data.url = libsJson[this.i].blocks[this.j].url;
-                var block_data = QoobStorage.parseBlockConfigMask(data, libsJson[this.i].blocks);
-                block_data.name = libsJson[this.i].blocks[this.j].name;
-                libsJson[this.i].blocks[this.j] = block_data;
+                var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[this.i].blocks);
+                blockData.name = libsJson[this.i].blocks[this.j].name;
+                libsJson[this.i].blocks[this.j] = blockData;
             }
         };
         req.push(jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json'));
@@ -61,7 +61,7 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
         }
     }
 
-    jQuery.when.apply(jQuery, req).done(function(){
+    jQuery.when.apply(null, req).done(function(){
         var args = Array.prototype.slice.call(arguments);
         for (var i = 0; i < args.length; i++) {
             res[i].callback.apply(res[i], args[i]);
@@ -70,6 +70,7 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
         cb(null, libsJson);
     }).fail(function(){
         console.log('Fail');
+        console.log(arguments);
         //FIXME message
     });
 };
