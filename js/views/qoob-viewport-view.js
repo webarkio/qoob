@@ -189,8 +189,6 @@ var QoobViewportView = Backbone.View.extend(
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').trigger('change');
             iframe.jQuery('a').attr('onclick', 'return false;');
-            console.log( iframe.jQuery('#qoob-blocks').find('a.btn') );
-            console.log('-----------------');
         },
         getIframe: function() {
             return this.$el.find('#qoob-iframe');
