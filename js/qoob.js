@@ -54,6 +54,7 @@ Qoob.prototype.activate = function() {
 
                     //If blocks loaded to viewPort
                     self.layout.viewPort.once('blocks_loaded', function() {
+                        self.controller.triggerIframe();
                         Backbone.history.start({ pushState: false });
                         self.loader.step();
                     });
@@ -61,9 +62,6 @@ Qoob.prototype.activate = function() {
                     //If iframe ready to load blocks
                     self.layout.viewPort.once('iframe_loaded', function() {
                         self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
-
-
-                        //self.layout.viewPort.createDefaultDroppable();
 
                         //Start loading blocks
                         if (pageData && pageData.blocks.length > 0) {

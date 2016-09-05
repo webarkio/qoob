@@ -29,8 +29,8 @@ var QoobBlockView = Backbone.View.extend({
             var tplAdapter = QoobExtensions.templating[tplAdapterType];
             self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
-            self.controller.triggerIframe();
             self.trigger('loaded');
+            self.controller.triggerIframe();
         });
         return self;
     },

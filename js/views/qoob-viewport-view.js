@@ -38,8 +38,8 @@ var QoobViewportView = Backbone.View.extend(
             return this;
         },
         iframeLoaded: function() {
-            this.getWindowIframe().jQuery('a').attr('onclick', 'return false;');
             this.trigger('iframe_loaded');
+            this.triggerIframe();
         },
         /**
          * Shows edit buttons, shadowing other blocks
@@ -177,6 +177,7 @@ var QoobViewportView = Backbone.View.extend(
             if (iframe.jQuery('#qoob-blocks').find('.block-blank:visible').length > 0) {
                 iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
             }
+            this.triggerIframe();
         },
 
         /**
@@ -188,6 +189,8 @@ var QoobViewportView = Backbone.View.extend(
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').trigger('change');
             iframe.jQuery('a').attr('onclick', 'return false;');
+            console.log( iframe.jQuery('#qoob-blocks').find('a.btn') );
+            console.log('-----------------');
         },
         getIframe: function() {
             return this.$el.find('#qoob-iframe');
