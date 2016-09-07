@@ -23,6 +23,14 @@
             <input type="checkbox" class="autosave-checkbox"><span></span><em>Autosave</em>
         </label>
     </div>
+    <div class="form-group lib-select">
+        <select class="form-control" id="lib-select">
+            <option>all</option>
+            <% for (var i = 0; i < libs.length; i++) { %>
+            <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>><%= libs[i].name %></option>
+            <% } %>
+        </select>
+    </div>
     <div class="edit-control-button">
         <button class="save-button"><span class="text">Save</span>
             <span class="clock">

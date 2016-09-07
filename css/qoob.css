@@ -745,6 +745,17 @@ body {
     animation: rotate 0.3s infinite linear;
 }
 
+#qoob-toolbar .lib-select {
+    display: inline-block;
+}
+
+#lib-select {
+    width: 100px;
+    position: relative;
+    top: -25px;
+    right: 23px;
+}
+
 @media (max-width: 1200px) {
     #qoob-toolbar .device-mode-button {
         display: none;

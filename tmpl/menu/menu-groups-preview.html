@@ -1,11 +1,3 @@
-    <div class="form-group">
-        <select class="form-control" id="lib-select">
-            <option>all</option>
-            <% for (var i = 0; i < libs.length; i++) { %>
-            <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>><%= libs[i].name %></option>
-            <% } %>
-        </select>
-    </div>
     <% for (var i = 0; i < groups_arr.length; i++) { %>
         <% var group = groups_arr[i]; %>
         <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
