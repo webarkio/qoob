@@ -62,9 +62,8 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
     }
 
     jQuery.when.apply(null, req).done(function(){
-        var args = Array.prototype.slice.call(arguments);
-        for (var i = 0; i < args.length; i++) {
-            res[i].callback.apply(res[i], args[i]);
+        for (var i = 0; i < arguments.length; i++) {
+                res[i].callback.apply(res[i], arguments[i]);
         }
         self.qoobData = libsJson;
         cb(null, libsJson);
