@@ -18,11 +18,6 @@
     <div class="text"></div>
 </div>
 <div class="edit-control-bar">
-    <div class="autosave">
-        <label class="checkbox-sb">
-            <input type="checkbox" class="autosave-checkbox"><span></span><em>Autosave</em>
-        </label>
-    </div>
     <div class="form-group lib-select">
         <select class="form-control" id="lib-select">
             <option>all</option>
@@ -30,6 +25,11 @@
             <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>><%= libs[i].name %></option>
             <% } %>
         </select>
+    </div>
+    <div class="autosave">
+        <label class="checkbox-sb">
+            <input type="checkbox" class="autosave-checkbox"><span></span><em>Autosave</em>
+        </label>
     </div>
     <div class="edit-control-button">
         <button class="save-button"><span class="text">Save</span>
