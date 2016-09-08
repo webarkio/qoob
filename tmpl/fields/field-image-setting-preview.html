@@ -1,15 +1,15 @@
 <div id="inner-settings-image" class="inner-settings">
     <div class="backward">
-        <a class="backward-image" href="#"><span>Back</span></a>
+        <a class="backward-image" href="#"><span><%= back %></span></a>
     </div>
     <div class="img-url-group">
-        <input class="input-text img-url" type="text" placeholder="Image url" />
+        <input class="input-text img-url" type="text" placeholder="<%= image_url %>" />
         <i class="img-url-select"></i>
     </div>
     <div class="img-filter-group">
-        <input class="input-text img-search" type="text" placeholder="Tags">
+        <input class="input-text img-search" type="text" placeholder="<%= tags %>">
         <select class="img-pack">
-            <option selected value="all">all</option>
+            <option selected value="all"><%= all %></option>
         </select>
     </div>
     <div class="clearfix"></div>

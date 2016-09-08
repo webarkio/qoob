@@ -1,15 +1,15 @@
 <div id="inner-settings-video" class="inner-settings">
     <div class="backward">
-        <a class="backward-image" href="#"><span>Back</span></a>
+        <a class="backward-image" href="#"><span><%= back %></span></a>
     </div>
     <div class="video-url-group">
-        <input class="input-text video-url" type="text" placeholder="Video url" />
+        <input class="input-text video-url" type="text" placeholder="<%= video_url %>" />
         <i class="video-url-select"></i>
     </div>
     <div class="video-filter-group">
-        <input class="input-text video-search" type="text" placeholder="Tags">
+        <input class="input-text video-search" type="text" placeholder="<%= tags %>">
         <select class="video-pack">
-            <option selected value="all">all</option>
+            <option selected value="all"><%= all %></option>
         </select>
     </div>
     <div class="clearfix"></div>

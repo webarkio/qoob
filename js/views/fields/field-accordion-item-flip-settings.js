@@ -30,7 +30,7 @@ var AccordionFlipView = QoobFieldView.extend(
              */
             initialize: function (options) {
                 QoobFieldView.prototype.initialize.call(this, options);
-                this.tpl = _.template(this.storage.qoobTemplates['field-accordion-item-flip-view-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-accordion-item-flip-view-preview'])({'back': qoob_lng.menu.back});
                 this.parentId = options.parentId;
             },
             /**

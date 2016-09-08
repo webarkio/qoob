@@ -15,10 +15,10 @@ function QoobLoader(qoob) {
     this.$elem = jQuery('#loader-wrapper');
     this.precents = 0;
     this.tips = [
-        "You can add block both by dragging preview picture or by clicking on it.",
-        "You can view page in the preview mode by clicking the up-arrow in the up right corner of the screen.",
-        "While you are in preview mode - you can't reach block editting.",
-        "You can activate autosave of edited page by clicking 'Autosave' button in the toolbar in the top of your screen."
+        qoob_lng.tips.add_block_both_by_dragging,
+        qoob_lng.tips.view_page_in_the_preview_mode,
+        qoob_lng.tips.preview_mode_cant_reach_block_editting,
+        qoob_lng.tips.activate_autosave
     ];
     this.init();
 }

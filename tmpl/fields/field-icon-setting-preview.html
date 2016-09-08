@@ -1,20 +1,20 @@
 <div id="inner-settings-icon" class="inner-settings">
     <div class="backward">
-        <a class="backward-icon" href="#"><span>Back</span></a>
+        <a class="backward-icon" href="#"><span><%= back %></span></a>
     </div>
     <div class="icon-filter-group">
-        <input class="input-text icon-search" type="text" placeholder="Tags">
+        <input class="input-text icon-search" type="text" placeholder="<%= tags %>">
         <select class="icon-pack">
-            <option selected value="all">all</option>
+            <option selected value="all"><%= all %></option>
         </select>
     </div>
     <div class="clearfix"></div>
     <div class="settings-block">
         <div class="filtered-icons"> 
            <%  for (var i = 0, iLen = icons.length; i < iLen; i++) { %>
-                    <div class="ajax-icon" data-icon-pack="<%= icons[i].classes.split(' ')[0] %>">
-                        <span  data-icon-tags="<%= icons[i].tags %>" class="<%= icons[i].classes %>"></span> 
-                    </div>
+                <div class="ajax-icon" data-icon-pack="<%= icons[i].classes.split(' ')[0] %>">
+                    <span  data-icon-tags="<%= icons[i].tags %>" class="<%= icons[i].classes %>"></span> 
+                </div>
            <% } %>
         </div>
         <div class="delete-button-container">

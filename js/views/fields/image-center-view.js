@@ -37,7 +37,7 @@ var ImageCenterView = Backbone.View.extend(
             initialize: function (options) {
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.qoobTemplates['field-image-setting-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-image-setting-preview'])({'back': qoob_lng.menu.back, 'all': qoob_lng.fields.all, 'tags': qoob_lng.fields.tags, 'image_url': qoob_lng.fields.image_url});
                 this.parentId = options.parentId;
                 this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
                 this.curSrc = options.curSrc;
@@ -191,9 +191,9 @@ var ImageCenterView = Backbone.View.extend(
             imgUrlUpload: function () {
                 //Create media upload frame
                 var mcFrame = wp.media({
-                    title: 'Select or Upload Media Of Your Chosen Persuasion',
+                    title: qoob_lng.fields.media_title,
                     button: {
-                        text: 'Use this media'
+                        text: qoob_lng.fields.media_text_button
                     },
                     multiple: false  // Set to true to allow multiple files to be selected  
                 });

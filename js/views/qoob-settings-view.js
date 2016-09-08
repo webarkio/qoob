@@ -50,7 +50,8 @@ var QoobMenuSettingsView = Backbone.View.extend(
                 controller: this.controller,
                 className: 'settings-block'
             });
-            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])(this.config)).find('.settings-blocks').prepend(settingsBlock.render().el);
+            
+            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': qoob_lng.menu.back, 'move': qoob_lng.menu.move})).find('.settings-blocks').prepend(settingsBlock.render().el);
             
             return this;
         },
@@ -62,7 +63,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
          * @returns {Boolean}
          */
         clickDelete: function() {
-            var alert = confirm("Are you sure you want to delete the block?");
+            var alert = confirm(qoob_lng.confirm_delete_block);
             if (!alert) {
                 return false;
             }
