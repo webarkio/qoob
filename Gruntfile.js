@@ -25,34 +25,9 @@ module.exports = function(grunt) {
                 }
             }
         },
-        compress: {
-            stable: {
-                options: {
-                    archive: 'build/qoob_<%= pkg.version %>.zip'
-                },
-                expand: true,
-                src: [
-                    '**/*',
-                    '!tests/**',
-                    '!**/tests/**',
-                    '!node_modules/**',
-                    '!presentation/**',
-                    '!.git/**',
-                    '!build/**',
-                    '!docs/dest/**',
-                    '!docs/**',
-                    '!Gruntfile.js',
-                    '!package.json',
-                    '!assets/screenshots/**',
-                    '!**/package.json',
-                    '!jsdoc.json'
-                ],
-                dest: 'qoob/'
-            }
-        },
         shell: {
             gitpull: {
-                command: 'git pull'
+                command: 'git pull origin blocks_sources'
             },
             api: {
                 command: 'node node_modules/jsdoc/jsdoc.js -c jsdoc.json -d docs/dest/api -t docs/jsdoc/template/jaguar'
@@ -112,20 +87,16 @@ module.exports = function(grunt) {
             }
         }
     });
-    // Load concating js plugin
+
     grunt.loadNpmTasks('grunt-contrib-concat');
-    //Load the shell plugin
     grunt.loadNpmTasks('grunt-shell');
-    //Clean plugin
     grunt.loadNpmTasks('grunt-contrib-clean');
-    // Copy files
     grunt.loadNpmTasks('grunt-contrib-copy');
-    // load assemble
     grunt.loadNpmTasks('grunt-assemble');
 
-    //Build
-    grunt.registerTask('build', ['clean:build', 'shell:gitpull', 'concat', 'compress:stable']);
+    // Pull, concat js files, building docs
+    grunt.registerTask('build', ['shell:gitpull', 'concat', 'docs']);
 
-    //Deploy docs
+    // Deploy docs
     grunt.registerTask('docs', ['clean:docs', 'assemble', 'copy:style', 'copy:fonts', 'copy:js', 'copy:img', 'shell:api']);
 };
