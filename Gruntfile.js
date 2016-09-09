@@ -43,7 +43,7 @@ module.exports = function(grunt) {
                     'qoob/js/libs/jquery-ui-droppable-iframe.js', 'qoob/js/libs/jquery.wheelcolorpicker.js', 'qoob/js/models/**.js', 'qoob/js/views/**.js',
                     'qoob/js/views/fields/**.js', 'qoob/js/extensions/**.js', 'qoob/js/controllers/qoob-controller.js', 'qoob/js/**.js', 'assets/js/control-edit-page.js'
                 ],
-                dest: 'qoob/qoob.concated.js'
+                dest: 'qoob.concated.js'
             }
         },
         copy: {
