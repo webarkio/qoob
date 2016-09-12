@@ -62,7 +62,6 @@ Qoob.prototype.activate = function() {
                     //If iframe ready to load blocks
                     self.layout.viewPort.once('iframe_loaded', function() {
                         self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
-
                         //Start loading blocks
                         if (pageData && pageData.blocks.length > 0) {
                             self.controller.load(pageData.blocks);
@@ -75,6 +74,7 @@ Qoob.prototype.activate = function() {
                             // if first start page
                             self.layout.viewPort.createBlankBlock();
                         }
+                        jQuery('#lib-select').selectpicker();
 
                     });
 
