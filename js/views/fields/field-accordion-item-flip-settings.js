@@ -30,7 +30,7 @@ var AccordionFlipView = QoobFieldView.extend(
              */
             initialize: function (options) {
                 QoobFieldView.prototype.initialize.call(this, options);
-                this.tpl = _.template(this.storage.qoobTemplates['field-accordion-item-flip-view-preview'])({'back': qoob_lng.menu.back});
+                this.tpl = _.template(this.storage.qoobTemplates['field-accordion-item-flip-view-preview']);
                 this.parentId = options.parentId;
             },
             /**
@@ -46,7 +46,7 @@ var AccordionFlipView = QoobFieldView.extend(
                     controller: this.controller,
                     parentId: this.model.id
                 });
-                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
+                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': qoob_lng.menu.back}));
                 this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
             },
