@@ -35,7 +35,7 @@ var IconCenterView = Backbone.View.extend(
             initialize: function (options) {
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.qoobTemplates['field-icon-setting-preview'])({'back': qoob_lng.menu.back, 'all': qoob_lng.fields.all, 'tags': qoob_lng.fields.tags});
+                this.tpl = _.template(this.storage.qoobTemplates['field-icon-setting-preview']);
                 this.parentId = options.parentId;
                 this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
                 this.icons = options.icons;
@@ -48,7 +48,10 @@ var IconCenterView = Backbone.View.extend(
             render: function () {
                 //Creating layout
                 this.$el.html(this.tpl({
-                    icons: this.icons
+                    icons: this.icons,
+                    'back': qoob_lng.menu.back,
+                    'all': qoob_lng.fields.all,
+                    'tags': qoob_lng.fields.tags
                 }));
 
                 this.afterRender();
