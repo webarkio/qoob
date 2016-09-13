@@ -37,7 +37,7 @@ var ImageCenterView = Backbone.View.extend(
             initialize: function (options) {
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.qoobTemplates['field-image-setting-preview'])({'back': qoob_lng.menu.back, 'all': qoob_lng.fields.all, 'tags': qoob_lng.fields.tags, 'image_url': qoob_lng.fields.image_url});
+                this.tpl = _.template(this.storage.qoobTemplates['field-image-setting-preview']);
                 this.parentId = options.parentId;
                 this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
                 this.curSrc = options.curSrc;
@@ -54,7 +54,11 @@ var ImageCenterView = Backbone.View.extend(
                 this.$el.html(this.tpl({
                     curSrc: this.curSrc,
                     assets: this.assets,
-                    hideDeleteButton: this.hideDeleteButton
+                    hideDeleteButton: this.hideDeleteButton,
+                    'back': qoob_lng.menu.back,
+                    'all': qoob_lng.fields.all,
+                    'tags': qoob_lng.fields.tags,
+                    'image_url': qoob_lng.fields.image_url
                 }));
 
                 this.afterRender();
