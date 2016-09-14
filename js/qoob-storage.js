@@ -131,7 +131,7 @@ QoobStorage.prototype.getGroups = function (libNames) {
                 group.libs = [data[i].name];
                 result.push(group);
             } else {
-                result[index].libs.push();
+                result[index].libs.push(data[i].name);
             }
         });
     }
