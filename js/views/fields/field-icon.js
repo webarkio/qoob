@@ -22,6 +22,7 @@ Fields.icon = QoobFieldView.extend(
                 
                 var assets = this.storage.getAssets(),
                         icons = [];
+
                 //Get all icons from assets
                 for (var i = 0, asLen = assets.length; i < asLen; i++) {
                     for (var j = 0, aLen = assets[i].length; j < aLen; j++) {
@@ -107,6 +108,7 @@ Fields.icon = QoobFieldView.extend(
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
                     this.$el.html(this.tpl(htmldata));
                 }
+
                 return this;
             },
             /**

@@ -41,37 +41,45 @@ QoobStorage.prototype.loadQoobTemplates = function (cb) {
  */
 QoobStorage.prototype.joinLibs = function (libsJson, cb) {
     var self = this,
-        req = [],
-        res = [];
+        totalBlocksCount = 0,
+        currentBlocksCount = 0;
+
+    libsJson.map(function(blocks) {
+        if (blocks.blocks)
+            totalBlocksCount += blocks.blocks.length;
+    });
 
     for (var i = 0; i < libsJson.length; i++) {
         for (var j = 0; j < libsJson[i].blocks.length; j++) {
-        var proxy = {
-            i: i,
-            j: j,
-            callback: function(data){
-                data.url = libsJson[this.i].blocks[this.j].url;
-                var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[this.i].blocks);
-                blockData.name = libsJson[this.i].blocks[this.j].name;
-                libsJson[this.i].blocks[this.j] = blockData;
-            }
-        };
-        req.push(jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json'));
-        res.push(proxy);
+            var proxy = {
+                i: i,
+                j: j,
+                success: function(data){
+                    data.url = libsJson[this.i].blocks[this.j].url;
+                    var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[this.i].blocks);
+                    blockData.name = libsJson[this.i].blocks[this.j].name;
+                    libsJson[this.i].blocks[this.j] = blockData;
+                    currentBlocksCount++;
+                    if (currentBlocksCount === totalBlocksCount) {
+                        // Callback after all done
+                        self.qoobData = libsJson;
+                        cb(null, libsJson);
+                    }
+                },
+                fail: function(error) {
+                    console.log(error);
+                    currentBlocksCount++;
+                    if (currentBlocksCount === totalBlocksCount) {
+                        // Callback after all done
+                        self.qoobData = libsJson;
+                        cb(null, libsJson);
+                    }
+                }
+            };
+
+            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', proxy.success.bind(proxy)).fail(proxy.fail.bind(proxy));
         }
     }
-
-    jQuery.when.apply(null, req).done(function(){
-        for (var i = 0; i < arguments.length; i++) {
-                res[i].callback.apply(res[i], arguments[i]);
-        }
-        self.qoobData = libsJson;
-        cb(null, libsJson);
-    }).fail(function(){
-        console.log('Fail');
-        console.log(arguments);
-        //FIXME message
-    });
 };
 
 /**
@@ -268,14 +276,20 @@ QoobStorage.prototype.save = function (json, html, cb) {
  * Getting all assets from storage
  * @returns Array of assets
  */
-QoobStorage.prototype.getAssets = function () {
-    var assets = [];
+QoobStorage.prototype.getAssets = function (libNames) {
+    var assets = [],
+        data = this.qoobData;
 
-    if (!!this.qoobData) {
-        for (var i = 0, items = this.getBlocksByGroup(), lng = items.length; i < lng; i++) {
-            if (!!items[i].assets) {
-                assets.push(items[i].assets);
-            }
+    if (!!libNames) {
+        data = data.filter(function (lib) {
+            return libNames.indexOf(lib.name) !== -1;
+        });
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        for (var j = 0; j < data[i].blocks.length; j++) {
+            if (!!data[i].blocks[j].assets)
+                assets.push(data[i].blocks[j].assets);
         }
     }
 
