@@ -751,6 +751,10 @@ body {
     display: inline-block;
 }
 
+#qoob-toolbar .lib-select.single {
+    display: none;
+}
+
 #qoob-toolbar .lib-select .bootstrap-select {
     width: 155px;
     position: absolute;
