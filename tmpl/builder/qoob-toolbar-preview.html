@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="toolbar">
-    <title>Qoob test case</title>
-</head>
-<body>
 <div class="logo side-0">
     <div class="wrap-qoob">
         <div class="qoob">
@@ -28,17 +20,17 @@
     </div>
     <div class="autosave">
         <label class="checkbox-sb">
-            <input type="checkbox" class="autosave-checkbox"><span></span><em>Autosave</em>
+            <input type="checkbox" class="autosave-checkbox"><span></span><em><%= autosave %></em>
         </label>
     </div>
     <div class="edit-control-button">
-        <button class="save-button"><span class="text">Save</span>
+        <button class="save-button"><span class="text"><%= save %></span>
             <span class="clock">
                 <span class="minutes-container"><span class="minutes"></span></span>
             <span class="seconds-container"><span class="seconds"></span></span>
             </span>
         </button>
-        <button class="exit-button">Exit</button>
+        <button class="exit-button"><%= exit %></button>
         <button class="device-mode-button pc active" name="pc"></button>
         <button class="device-mode-button tablet-vertical" name="tablet-vertical"></button>
         <button class="device-mode-button phone-vertical" name="phone-vertical"></button>
@@ -47,5 +39,3 @@
         <button class="preview-mode-button"></button>
     </div>
 </div>
-</body>
-</html>

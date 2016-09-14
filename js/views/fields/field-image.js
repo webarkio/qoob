@@ -20,6 +20,7 @@ Fields.image = QoobFieldView.extend(
                 QoobFieldView.prototype.initialize.call(this, options);
                 this.parentId = options.parentId;
                 this.tags = options.settings.tags || null;
+
                 this.tpl = _.template(this.storage.qoobTemplates['field-image-preview']);
             },
             /**
@@ -83,7 +84,8 @@ Fields.image = QoobFieldView.extend(
                     "label": this.settings.label,
                     "name": this.settings.name,
                     "images": this.settings.presets,
-                    "value": this.getValue()
+                    "value": this.getValue(),
+                    'media_center': qoob_lng.fields.media_center
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {

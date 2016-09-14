@@ -35,7 +35,7 @@ var IconCenterView = Backbone.View.extend(
             initialize: function (options) {
                 this.storage = options.storage;
                 this.controller = options.controller;
-                this.tpl = _.template(this.storage.qoobTemplates['field-icon-setting-preview']);
+                this.tpl = _.template(this.storage.qoobTemplates['field-icon-setting-preview'])({'back': qoob_lng.menu.back, 'all': qoob_lng.fields.all, 'tags': qoob_lng.fields.tags});
                 this.parentId = options.parentId;
                 this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
                 this.icons = options.icons;

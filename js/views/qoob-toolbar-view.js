@@ -36,6 +36,9 @@ var QoobToolbarView = Backbone.View.extend({
      */
     render: function() {
         var data = {
+            "autosave": qoob_lng.autosave,
+            "save": qoob_lng.save,
+            "exit": qoob_lng.exit,
             "libs": this.storage.qoobData,
             "curLib": this.storage.currentLib
         };

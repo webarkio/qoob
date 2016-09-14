@@ -39,7 +39,7 @@ var VideoCenterView = Backbone.View.extend(
         initialize: function(options) {
             this.storage = options.storage;
             this.controller = options.controller;
-            this.tpl = _.template(this.storage.qoobTemplates['field-video-setting-preview']);
+            this.tpl = _.template(this.storage.qoobTemplates['field-video-setting-preview'])({'back': qoob_lng.menu.back, 'all': qoob_lng.fields.all, 'tags': qoob_lng.fields.tags, 'video_url': qoob_lng.fields.video_url});
             this.parentId = options.parentId;
             this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
             this.curSrc = options.curSrc;
@@ -213,9 +213,9 @@ var VideoCenterView = Backbone.View.extend(
         videoUrlUpload: function() {
             //Create media upload frame
             var mcFrame = wp.media({
-                title: 'Select or Upload Media Of Your Chosen Persuasion',
+                title: qoob_lng.fields.media_title,
                 button: {
-                    text: 'Use this media'
+                    text: qoob_lng.fields.media_text_button
                 },
                 multiple: false // Set to true to allow multiple files to be selected  
             });
@@ -230,7 +230,7 @@ var VideoCenterView = Backbone.View.extend(
                     if (format === 'mp4' || format === 'ogv'|| format === 'webm') {
                         this.$el.find('.video-url').val(url).trigger('change');
                     } else {
-                        alert('This file is not supposed to have correct format. Try another one.');
+                        alert(qoob_lng.fields.alert_error_format_file);
                     }
                 }
             }.bind(this));
