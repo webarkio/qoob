@@ -74,7 +74,7 @@ Fields.icon = QoobFieldView.extend(
                     icon: {classes: this.$el.find('.edit-icon-preview span').attr('class'), tags: this.$el.find('.edit-icon-preview span').attr('data-icon-tags')},
                     icons: this.icons
                 });
-
+                
                 this.controller.setInnerSettingsView(iconCenter);
 
                 return false;

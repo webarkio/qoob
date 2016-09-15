@@ -39,7 +39,7 @@ var VideoCenterView = Backbone.View.extend(
         initialize: function(options) {
             this.storage = options.storage;
             this.controller = options.controller;
-            this.tpl = _.template(this.storage.qoobTemplates['field-video-setting-preview'])({'back': qoob_lng.menu.back, 'all': qoob_lng.fields.all, 'tags': qoob_lng.fields.tags, 'video_url': qoob_lng.fields.video_url});
+            this.tpl = _.template(this.storage.qoobTemplates['field-video-setting-preview']);
             this.parentId = options.parentId;
             this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
             this.curSrc = options.curSrc;
@@ -71,7 +71,11 @@ var VideoCenterView = Backbone.View.extend(
             this.videos = videos;
             //Creating layout
             this.$el.html(this.tpl({
-                videos: videos
+                back: qoob_lng.menu.back,
+                all: qoob_lng.fields.all,
+                tags: qoob_lng.fields.tags,
+                video_url: qoob_lng.fields.video_url,
+                videos: this.videos
             }));
 
             this.afterRender();
