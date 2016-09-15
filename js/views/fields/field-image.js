@@ -35,7 +35,6 @@ Fields.image = QoobFieldView.extend(
              * @param {Object} evt
              */
             imageUpload: function (evt) {
-                var assets = this.storage.getAssets();
 
                 window.selectFieldImage = function (src) {
                     this.$el.find('.edit-image').removeClass('empty');
@@ -55,7 +54,7 @@ Fields.image = QoobFieldView.extend(
                     parentId: this.parentId,
                     storage: this.storage,
                     curSrc: this.$el.find('.edit-image').find('img').attr('src'),
-                    assets: assets,
+                    assets: this.storage.getAssets(),
                     tags: this.tags ? this.tags.join(', ') : '',
                     hideDeleteButton: this.settings.hideDeleteButton
                 });

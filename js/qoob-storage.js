@@ -13,6 +13,7 @@ function QoobStorage(options) {
     this.blockSettingsViewData = [];
     this.templates = [];
     this.driver = options.driver || new LocalDriver();
+    this.currentLib = 'all';
 }
 
 /**
@@ -32,22 +33,136 @@ QoobStorage.prototype.loadQoobTemplates = function (cb) {
         });
     }
 };
+
 /**
- * Get qoob data from storage qoobData
- * @param {getQoobDataCallback} cb - A callback to run.
+ * Unmask urls of blocks and gather block's data by these urls. Then join these data into one array and put it into storage.
+ * @param  {Array}   libsJson Array of lib.json files, previously gatherd.
+ * @param  {Function} cb  Callback function.
  */
-QoobStorage.prototype.loadQoobData = function (cb) {
-    if (this.qoobData) {
-        cb(null, this.qoobData);
-    } else {
-        var self = this;
-        self.driver.loadQoobData(function (err, qoobData) {
-            if (!err) {
-                self.qoobData = qoobData;
-            }
-            cb(err, self.qoobData);
+QoobStorage.prototype.joinLibs = function (libsJson, cb) {
+    var self = this,
+        totalBlocksCount = 0,
+        currentBlocksCount = 0;
+
+    libsJson.map(function(blocks) {
+        if (blocks.blocks)
+            totalBlocksCount += blocks.blocks.length;
+    });
+
+    for (var i = 0; i < libsJson.length; i++) {
+        for (var j = 0; j < libsJson[i].blocks.length; j++) {
+            var proxy = {
+                i: i,
+                j: j,
+                success: function(data){
+                    data.url = libsJson[this.i].blocks[this.j].url;
+                    var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[this.i].blocks);
+                    blockData.name = libsJson[this.i].blocks[this.j].name;
+                    libsJson[this.i].blocks[this.j] = blockData;
+                    currentBlocksCount++;
+                    if (currentBlocksCount === totalBlocksCount) {
+                        // Callback after all done
+                        self.qoobData = libsJson;
+                        cb(null, libsJson);
+                    }
+                },
+                fail: function(error) {
+                    console.log(error);
+                    currentBlocksCount++;
+                    if (currentBlocksCount === totalBlocksCount) {
+                        // Callback after all done
+                        self.qoobData = libsJson;
+                        cb(null, libsJson);
+                    }
+                }
+            };
+
+            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', proxy.success.bind(proxy)).fail(proxy.fail.bind(proxy));
+        }
+    }
+};
+
+/**
+ * Parsing config file of specified block and replacing masks
+ * @param  {Object} block  Block object to parse
+ * @param  {Array} blocks Array of all blocks
+ * @return {Object}        Parsed block config
+ */
+QoobStorage.parseBlockConfigMask = function (block, blocks) {
+    block = JSON.stringify(block).replace(/%theme_url%|%block_url%|%block_url\([^\)]+\)%/g, function(substr) {
+        var mask = '';
+        switch(substr) {
+            case '%theme_url%': mask = ajax.theme_url;
+                break;
+            case '%block_url%': mask = block.url;
+                break;
+            default:
+                var blockName = substr.replace(/%block_url\(|\)%/g, '');
+                if (mask = _.findWhere(blocks, {name: blockName}))
+                    mask = mask.url;
+                break;
+        }
+
+        return mask;
+    });
+
+    return JSON.parse(block);
+};
+
+/**
+ * Return all groups array or array of specified groups.
+ * @param  {Array} libNames Names of needed groups.
+ * @return {Array}          Specified groups.
+ */
+QoobStorage.prototype.getGroups = function (libNames) {
+    var result = [],
+        data = this.qoobData;
+
+    if (!!libNames) {
+        data = data.filter(function (lib) {
+            return libNames.indexOf(lib.name) !== -1;
         });
     }
+
+    for (var i = 0; i < data.length; i++) {
+        data[i].groups.map(function(group) {
+            var index = _.findIndex(result, {id: group.id}); 
+            if(index === -1) {
+                group.libs = [data[i].name];
+                result.push(group);
+            } else {
+                result[index].libs.push(data[i].name);
+            }
+        });
+    }
+
+    return result;
+};
+
+/**
+ * 
+ * @param  {String} group   Group name for which to find blocks.
+ * @param  {Array} libNames Names of needed groups.
+ * @return {Array}          Blocks array with blocks of specified group and libs.
+ */
+QoobStorage.prototype.getBlocksByGroup = function (group, libNames) {
+    var result = [],
+        data = this.qoobData;
+
+    if (!!libNames) {
+        data = data.filter(function (lib) {
+            return libNames.indexOf(lib.name) !== -1;
+        });
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        result = result.concat(data[i].blocks.filter(function(block) {
+            block.lib = data[i].name;
+            return (!!group) ? (!!block.settings && block.groups === group) : (!!block.settings);
+        }));
+    } 
+    
+    return result;
 };
 
 /**
@@ -82,7 +197,36 @@ QoobStorage.prototype.getDefaultTemplateAdapter = function () {
 };
 
 QoobStorage.prototype.getBlockConfig = function (templateId) {
-    return _.findWhere(this.qoobData.items, {id: templateId});
+    return _.findWhere(this.getBlocksByGroup(), {name: templateId});
+};
+
+/**
+ * Get template by name
+ * 
+ * @param {String} name Block's name.
+ * @param {Function} cb A callback to run.
+ */
+QoobStorage.prototype.loadTemplate = function(name, cb) {
+    var curBlock = _.findWhere(this.getBlocksByGroup(), {name: name}),
+        urlTemplate = curBlock.url + curBlock.template;
+
+    jQuery(document).ready(function($) {
+        if (ajax.logged_in && ajax.qoob == true) {
+            $.ajax({
+                url: urlTemplate,
+                type: 'GET',
+                cache: false,
+                dataType: 'html',
+                success: function(template) {
+                    if (template != '') {
+                        cb(null, template);
+                    } else {
+                        cb(false);
+                    }
+                }
+            });
+        }
+    });
 };
 
 /**
@@ -101,7 +245,7 @@ QoobStorage.prototype.getBlockTemplate = function (templateId, cb) {
         });
         cb(null, item.template);
     } else {
-        this.driver.loadTemplate(templateId, function (err, template) {
+        this.loadTemplate(templateId, function (err, template) {
             self.templates.push({
                 id: templateId,
                 template: template
@@ -109,19 +253,6 @@ QoobStorage.prototype.getBlockTemplate = function (templateId, cb) {
             cb(null, template);
         });
     }
-};
-
-/**
- * Get block config by itemId
- * @param {Number} itemId
- * @param {getConfigCallback} cb - A callback to run.
- */
-QoobStorage.prototype.getConfig = function (itemId, cb) {
-    var item = _.findWhere(this.qoobData.items, {
-        id: itemId
-    });
-    var config = item.config;
-    cb(null, config);
 };
 
 /**
@@ -145,23 +276,22 @@ QoobStorage.prototype.save = function (json, html, cb) {
  * Getting all assets from storage
  * @returns Array of assets
  */
-QoobStorage.prototype.getAssets = function () {
-    var assets = [];
-    var self = this;
+QoobStorage.prototype.getAssets = function (libNames) {
+    var assets = [],
+        data = this.qoobData;
 
-    if (!!this.qoobData) {
-        var bd = this.qoobData;
-        var items = bd.items;
-        for (var i = 0, lng = items.length; i < lng; i++) {
-            if (!!items[i].assets) {
-                assets.push(items[i].assets);
-            }
-        }
-        return assets;
-    } else {
-        this.driver.loadQoobData(function (err, qoobData) {
-            self.qoobData = qoobData;
-            self.getAssets();
+    if (!!libNames) {
+        data = data.filter(function (lib) {
+            return libNames.indexOf(lib.name) !== -1;
         });
     }
+
+    for (var i = 0; i < data.length; i++) {
+        for (var j = 0; j < data[i].blocks.length; j++) {
+            if (!!data[i].blocks[j].assets)
+                assets.push(data[i].blocks[j].assets);
+        }
+    }
+
+    return assets;
 };

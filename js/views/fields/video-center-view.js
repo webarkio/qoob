@@ -71,11 +71,11 @@ var VideoCenterView = Backbone.View.extend(
             this.videos = videos;
             //Creating layout
             this.$el.html(this.tpl({
-                videos: videos,
-                'back': qoob_lng.menu.back,
-                'all': qoob_lng.fields.all,
-                'tags': qoob_lng.fields.tags,
-                'video_url': qoob_lng.fields.video_url
+                back: qoob_lng.menu.back,
+                all: qoob_lng.fields.all,
+                tags: qoob_lng.fields.tags,
+                video_url: qoob_lng.fields.video_url,
+                videos: this.videos
             }));
 
             this.afterRender();

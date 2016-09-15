@@ -48,10 +48,10 @@ var IconCenterView = Backbone.View.extend(
             render: function () {
                 //Creating layout
                 this.$el.html(this.tpl({
-                    icons: this.icons,
-                    'back': qoob_lng.menu.back,
-                    'all': qoob_lng.fields.all,
-                    'tags': qoob_lng.fields.tags
+                    back: qoob_lng.menu.back,
+                    all: qoob_lng.fields.all,
+                    tags: qoob_lng.fields.tags,
+                    icons: this.icons
                 }));
 
                 this.afterRender();

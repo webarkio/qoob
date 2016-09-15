@@ -8,7 +8,6 @@ var QoobMenuGroupsView = Backbone.View.extend(
     tagName: "ul",
     className: "catalog-list",
     id:"catalog-groups",
-   
     /**
      * View menu groups
      * @class QoobMenuGroupsView
@@ -16,7 +15,9 @@ var QoobMenuGroupsView = Backbone.View.extend(
      * @constructs
      */
     initialize: function (options) {
-        this.storage=options.storage;
+        this.storage = options.storage;
+        this.groups = options.groups;
+        this.controller = options.controller;
     },
     /**
      * Render menu groups
@@ -24,7 +25,7 @@ var QoobMenuGroupsView = Backbone.View.extend(
      */
     render: function () {
       var data = {
-        "groups_arr" : _.sortBy(this.storage.qoobData.groups, 'position')
+        "groups_arr" : _.sortBy(this.groups, 'position')
       };
 
       this.$el.html(_.template(this.storage.qoobTemplates['menu-groups-preview'])(data));

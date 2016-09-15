@@ -55,10 +55,10 @@ var ImageCenterView = Backbone.View.extend(
                     curSrc: this.curSrc,
                     assets: this.assets,
                     hideDeleteButton: this.hideDeleteButton,
-                    'back': qoob_lng.menu.back,
-                    'all': qoob_lng.fields.all,
-                    'tags': qoob_lng.fields.tags,
-                    'image_url': qoob_lng.fields.image_url
+                    back: qoob_lng.menu.back,
+                    all: qoob_lng.fields.all,
+                    tags: qoob_lng.fields.tags,
+                    image_url: qoob_lng.fields.image_url
                 }));
 
                 this.afterRender();
