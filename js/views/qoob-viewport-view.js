@@ -178,7 +178,6 @@ var QoobViewportView = Backbone.View.extend(
                 iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
             }
         },
-
         /**
          * Create event change for iframe
          * @returns {Event} change

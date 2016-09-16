@@ -20,7 +20,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
         this.innerBlock = new QoobBlockView({model: this.model, storage: this.storage, controller: this.controller});
     },
     render: function () {
-        var self = this;        
+        var self = this;
         
         this.innerBlock.once('loaded', function () {
 
