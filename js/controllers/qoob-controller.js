@@ -96,7 +96,7 @@ var QoobController = Backbone.Router.extend({
     addBlock: function (values, afterId) {
         var model = QoobUtils.createModel(values);
         this.pageModel.addBlock(model, afterId);
-        this.layout.viewPort.scrollTo(model.id);
+        this.scrollTo(model.id);
         // Remove empty div for mobile
         if (jQuery('#qoob-viewport').find('div').length > 0) {
             jQuery('#qoob-viewport').find('div').remove();
@@ -104,7 +104,7 @@ var QoobController = Backbone.Router.extend({
     },
     startEditBlock: function (blockId) {
         this.layout.startEditBlock(blockId);
-        this.layout.viewPort.scrollTo(blockId);
+        this.scrollTo(blockId);
     },
     stopEditBlock: function () {
         this.layout.stopEditBlock();
@@ -145,5 +145,11 @@ var QoobController = Backbone.Router.extend({
     changeLib: function (name) {
         this.storage.currentLib = name;
         this.layout.menu.hideLibsExcept(name);
+    },
+    /**
+     * Scroll to block
+     */
+    scrollTo: function (modelId) {
+        this.layout.viewPort.scrollTo(modelId);
     }
 });

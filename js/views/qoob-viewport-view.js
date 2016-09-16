@@ -179,7 +179,6 @@ var QoobViewportView = Backbone.View.extend(
             }
             this.triggerIframe();
         },
-
         /**
          * Create event change for iframe
          * @returns {Event} change
