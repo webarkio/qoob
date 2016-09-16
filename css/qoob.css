@@ -2510,6 +2510,11 @@ body.qoob-editor {
     box-shadow: none;
 }
 
+#inner-settings-icon .icon-search,
+#inner-settings-icon .icon-pack {
+    background-image: none !important;
+}
+
 #inner-settings-image .filtered-images .ajax-image,
 #inner-settings-video .filtered-videos .ajax-video {
     cursor: pointer;
