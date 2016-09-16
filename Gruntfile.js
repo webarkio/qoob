@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         },
         shell: {
             gitpull: {
-                command: 'git pull origin blocks_sources'
+                command: 'git pull origin master'
             },
             api: {
                 command: 'node node_modules/jsdoc/jsdoc.js -c jsdoc.json -d docs/dest/api -t docs/jsdoc/template/jaguar'
