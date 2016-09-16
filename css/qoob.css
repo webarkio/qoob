@@ -562,6 +562,8 @@ body {
     position: absolute;
     top: 0;
     right: 0;
+    width: 100%;
+    text-align: right;
 }
 
 #qoob-toolbar .edit-control-button {
@@ -743,6 +745,77 @@ body {
 }
 #qoob-toolbar .seconds-container {
     animation: rotate 0.3s infinite linear;
+}
+
+#qoob-toolbar .lib-select {
+    display: inline-block;
+}
+
+#qoob-toolbar .lib-select.single {
+    display: none;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select {
+    width: 155px;
+    position: absolute;
+    top: 15px;
+    left: 258px;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select .btn {
+    background-color: #606163;
+    color: #fff;
+    border: 0px;
+    background-image: none;
+    box-shadow: none;
+    padding: 13px 20px;
+    font-size: 16px;
+    line-height: 16px;
+    text-shadow: none;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select .btn:focus {
+    outline: none !important;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select .dropdown-menu.open {
+    padding: 0;
+    text-align: left;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select li {
+    margin: 0;
+    padding: 13px 20px;
+    background-color: #606163;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select li:hover {
+    background-color: #2bc0e4;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select li a {
+    padding: 0;
+    font-size: 16px;
+    color: #fff;
+    background: none;
+    box-shadow: none;
+}
+
+#qoob-toolbar .lib-select .bootstrap-select .bs-caret {
+    display: inline-block;
+    position: relative;
+    right: 9px;
+    height: 8px;
+    width: 14px;
+    background-image: url('../img/arrow_select_down.png');
+}
+
+#qoob-toolbar .lib-select .bootstrap-select.open .bs-caret {
+    background-image: url('../img/arrow_select_up.png');
+}
+
+#qoob-toolbar .lib-select .bootstrap-select .caret {
+    display: none;
 }
 
 @media (max-width: 1200px) {

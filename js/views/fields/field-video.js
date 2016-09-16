@@ -60,7 +60,7 @@ Fields.video = QoobFieldView.extend(
                     assets: assets,
                     tags: this.tags
                 });
-
+                
                 this.controller.setInnerSettingsView(videoCenter);
 
                 return false;

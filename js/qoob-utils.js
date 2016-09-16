@@ -71,8 +71,8 @@ var QoobUtils = {
         // get config from storage qoobData
         //qoob.storage.qoobData.items
         var values = {};
-        var settings = _.findWhere(items, { id: templateId }).settings;
-        var defaults = (_.findWhere(items, { id: templateId }).defaults);
+        var settings = _.findWhere(items, { name: templateId }).settings;
+        var defaults = (_.findWhere(items, { name: templateId }).defaults);
         for (var i = 0; i < settings.length; i++) {
             values[settings[i].name] = defaults[settings[i].name];
         }

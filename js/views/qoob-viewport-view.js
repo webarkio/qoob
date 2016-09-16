@@ -38,8 +38,8 @@ var QoobViewportView = Backbone.View.extend(
             return this;
         },
         iframeLoaded: function() {
-            this.getWindowIframe().jQuery('a').attr('onclick', 'return false;');
             this.trigger('iframe_loaded');
+            this.triggerIframe();
         },
         /**
          * Shows edit buttons, shadowing other blocks
@@ -177,6 +177,7 @@ var QoobViewportView = Backbone.View.extend(
             if (iframe.jQuery('#qoob-blocks').find('.block-blank:visible').length > 0) {
                 iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
             }
+            this.triggerIframe();
         },
         /**
          * Create event change for iframe
