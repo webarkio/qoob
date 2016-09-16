@@ -38,10 +38,20 @@ module.exports = function(grunt) {
                 separator: ';\n'
             },
             dist: {
-                src: ['qoob/js/libs/bootstrap.min.js', 'qoob/js/libs/bootstrap-progressbar.js',
-                    'qoob/js/libs/bootstrap-select.min.js', 'qoob/js/libs/handlebars.js', 'qoob/js/libs/handlebars-helper.js',
-                    'qoob/js/libs/jquery-ui-droppable-iframe.js', 'qoob/js/libs/jquery.wheelcolorpicker.js', 'qoob/js/models/**.js', 'qoob/js/views/**.js',
-                    'qoob/js/views/fields/**.js', 'qoob/js/extensions/**.js', 'qoob/js/controllers/qoob-controller.js', 'qoob/js/**.js', 'assets/js/control-edit-page.js'
+                src: [
+                    'js/libs/bootstrap.min.js',
+                    'js/libs/bootstrap-progressbar.js',
+                    'js/libs/bootstrap-select.min.js',
+                    'js/libs/handlebars.js',
+                    'js/libs/handlebars-helper.js',
+                    'js/libs/jquery-ui-droppable-iframe.js',
+                    'js/libs/jquery.wheelcolorpicker.js',
+                    'js/models/**.js',
+                    'js/views/**.js',
+                    'js/views/fields/**.js',
+                    'js/extensions/**.js',
+                    'js/controllers/qoob-controller.js',
+                    'js/**.js'
                 ],
                 dest: 'qoob.concated.js'
             }
