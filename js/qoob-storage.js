@@ -166,6 +166,31 @@ QoobStorage.prototype.getBlocksByGroup = function (group, libNames) {
 };
 
 /**
+ * Get block or blocks array by specified params
+ * 
+ */
+QoobStorage.prototype.getBlock = function (name, lib) {
+    var block,
+        blocks = [];
+
+    this.qoobData.map(function(data) {
+        blocks = blocks.concat(data.blocks);
+    });
+
+    if (!name)
+        return blocks;
+
+    var searchObj = {name: name};
+
+    if (!!lib) 
+        searchObj.lib = lib;
+
+    block = _.findWhere(blocks, searchObj);
+
+    return block;
+};
+
+/**
  * Get page data from storage models
  * @param {getPageDataCallback} cb - A callback to run.
  */
@@ -206,8 +231,8 @@ QoobStorage.prototype.getBlockConfig = function (templateId) {
  * @param {String} name Block's name.
  * @param {Function} cb A callback to run.
  */
-QoobStorage.prototype.loadTemplate = function(name, cb) {
-    var curBlock = _.findWhere(this.getBlocksByGroup(), {name: name}),
+QoobStorage.prototype.loadTemplate = function(params, cb) {
+    var curBlock = this.getBlock(params.name, (!!params.lib ? params.lib : null)),
         urlTemplate = curBlock.url + curBlock.template;
 
     jQuery(document).ready(function($) {
@@ -234,20 +259,20 @@ QoobStorage.prototype.loadTemplate = function(name, cb) {
  * @param {Number} itemId
  * @param {getTemplateCallback} cb - A callback to run.
  */
-QoobStorage.prototype.getBlockTemplate = function (templateId, cb) {
-    var self = this;
+QoobStorage.prototype.getBlockTemplate = function (params, cb) {
+    var self = this,
+        searchObj = {name: params.name};
+    if (!!params.lib) {
+        searchObj.lib = params.lib;
+    }
     //FIXME
-    if (this.templates.length > 0 && _.findWhere(this.templates, {
-        id: templateId
-    })) {
-        var item = _.findWhere(this.templates, {
-            id: templateId
-        });
-        cb(null, item.template);
+    if (this.templates.length > 0 && _.findWhere(this.templates, searchObj)) {
+        cb(null, _.findWhere(this.templates, searchObj).template);
     } else {
-        this.loadTemplate(templateId, function (err, template) {
+        this.loadTemplate(params, function (err, template) {
             self.templates.push({
-                id: templateId,
+                id: params.name,
+                lib: params.lib,
                 template: template
             });
             cb(null, template);

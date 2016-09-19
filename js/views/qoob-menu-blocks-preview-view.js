@@ -11,7 +11,10 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend(
             'click .preview-block': 'clickPreviewBlock'
         },
         clickPreviewBlock: function(evt){
-            this.controller.addNewBlock(evt.currentTarget.id.replace('preview-block-',''));
+            var name = evt.currentTarget.id.replace('preview-block-',''),
+                lib = this.$(evt.currentTarget).data('lib');
+
+            this.controller.addNewBlock({name: name, lib: lib});
         },
 
         /**

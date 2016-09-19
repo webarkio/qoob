@@ -20,7 +20,7 @@ var QoobMenuView = Backbone.View.extend({
         this.model.on("block_delete", this.deleteSettings.bind(this));
     },
     addSettings: function(model) {
-        var item = _.findWhere(this.storage.getBlocksByGroup(), { name: model.get('template') });
+        var item = this.storage.getBlock(model.get('template'), model.get('lib'));
         this.addView(new QoobMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
     },
     /**
