@@ -1,7 +1,7 @@
 QUnit.module("QoobViewportView");
 
-var mockTemplate = "<iframe src=\"<%= url %>\" scrolling=\"auto\" name=\"qoob-iframe\" id=\"qoob-iframe\" style=\"height: 488px; width: 768px;\"></iframe>";
-var iframeUrl = "iframe.html";
+var mockTemplate = "<iframe src=\"<%= url %>\" scrolling=\"auto\" name=\"qoob-iframe\" id=\"qoob-iframe\" style=\"height: 488px; width: 768px;\"></iframe>",
+    iframeUrl = "iframe.html";
 
 var mockStorageViewport = {
     qoobTemplates: { 'qoob-viewport-preview': mockTemplate },
