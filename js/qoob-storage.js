@@ -49,37 +49,32 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
             totalBlocksCount += blocks.blocks.length;
     });
 
-    for (var i = 0; i < libsJson.length; i++) {
-        for (var j = 0; j < libsJson[i].blocks.length; j++) {
-            var proxy = {
-                i: i,
-                j: j,
-                success: function(data){
-                    data.url = libsJson[this.i].blocks[this.j].url;
-                    var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[this.i].blocks);
-                    blockData.name = libsJson[this.i].blocks[this.j].name;
-                    libsJson[this.i].blocks[this.j] = blockData;
-                    currentBlocksCount++;
-                    if (currentBlocksCount === totalBlocksCount) {
-                        // Callback after all done
-                        self.qoobData = libsJson;
-                        cb(null, libsJson);
-                    }
-                },
-                fail: function(error) {
-                    console.log(error);
-                    currentBlocksCount++;
-                    if (currentBlocksCount === totalBlocksCount) {
-                        // Callback after all done
-                        self.qoobData = libsJson;
-                        cb(null, libsJson);
-                    }
-                }
-            };
-
-            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', proxy.success.bind(proxy)).fail(proxy.fail.bind(proxy));
+    var success = function(i, j, data) {
+        data.url = libsJson[i].blocks[j].url;
+        var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[i].blocks);
+        blockData.name = libsJson[i].blocks[j].name;
+        libsJson[i].blocks[j] = blockData;
+        currentBlocksCount++;
+        if (currentBlocksCount === totalBlocksCount) {
+            // Callback after all done
+            self.qoobData = libsJson;
+            cb(null, libsJson);
         }
-    }
+    };
+
+    var fail = function(i, j, error) {
+        console.log(error);
+        currentBlocksCount++;
+        if (currentBlocksCount === totalBlocksCount) {
+            // Callback after all done
+            self.qoobData = libsJson;
+            cb(null, libsJson);
+        }
+    };
+
+    for (var i = 0; i < libsJson.length; i++)
+        for (var j = 0; j < libsJson[i].blocks.length; j++)
+            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
 };
 
 /**

@@ -9,7 +9,8 @@ var mockStorageViewport = {
         getIframePageUrl: function(pageId) {
             return iframeUrl;
         }
-    }
+    },
+    pageId: 1
 };
 
 //============START TEST===============

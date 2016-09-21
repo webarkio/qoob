@@ -40,7 +40,6 @@ var mockToolbarStorage = {
             return mockToolbarTemplate;
         }
     }
-
 };
 
 //============START TEST===============
