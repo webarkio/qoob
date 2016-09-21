@@ -2510,6 +2510,12 @@ body.qoob-editor {
     box-shadow: none;
 }
 
+#inner-settings-icon .icon-search,
+#inner-settings-icon .icon-search *,
+#inner-settings-icon .icon-filter-group {
+    background-image: none !important;
+}
+
 #inner-settings-image .filtered-images .ajax-image,
 #inner-settings-video .filtered-videos .ajax-video {
     cursor: pointer;
@@ -2602,7 +2608,7 @@ body.qoob-editor {
 
 #inner-settings-image .img-pack,
 #inner-settings-video .video-pack,
-#inner-settings-icon .icon-pack {
+#inner-settings-icon .pack-icon {
     display: block;
     float: right;
     width: 92px;
@@ -2612,7 +2618,7 @@ body.qoob-editor {
 
 #inner-settings-image .img-pack > .btn,
 #inner-settings-video .video-pack > .btn,
-#inner-settings-icon .icon-pack > .btn {
+#inner-settings-icon .pack-icon > .btn {
     height: 43px;
     border: none;
     background-image: none;
@@ -2627,14 +2633,14 @@ body.qoob-editor {
 
 #inner-settings-image .img-pack > .btn:focus,
 #inner-settings-video .video-pack > .btn:focus,
-#inner-settings-icon .icon-pack > .btn:focus {
+#inner-settings-icon .pack-icon > .btn:focus {
     box-shadow: none !important;
     outline: none !important;
 }
 
 #inner-settings-image .img-pack .dropdown-menu,
 #inner-settings-video .video-pack .dropdown-menu,
-#inner-settings-icon .icon-pack .dropdown-menu {
+#inner-settings-icon .pack-icon .dropdown-menu {
     left: -152px;
     right: 0px;
     top: 105%;
@@ -2648,19 +2654,19 @@ body.qoob-editor {
 
 #inner-settings-image .img-pack .dropdown-menu li,
 #inner-settings-video .video-pack .dropdown-menu li,
-#inner-settings-icon .icon-pack .dropdown-menu li {
+#inner-settings-icon .pack-icon .dropdown-menu li {
     margin-bottom: 0px;
 }
 
 #inner-settings-image .img-pack .dropdown-menu li.selected,
 #inner-settings-video .video-pack .dropdown-menu li.selected,
-#inner-settings-icon .icon-pack .dropdown-menu li.selected {
+#inner-settings-icon .pack-icon .dropdown-menu li.selected {
     background: #5F6163;
 }
 
 #inner-settings-image .img-pack .dropdown-menu li a,
 #inner-settings-video .video-pack .dropdown-menu li a,
-#inner-settings-icon .icon-pack .dropdown-menu li a {
+#inner-settings-icon .pack-icon .dropdown-menu li a {
     font-size: 13px;
     height: 31px;
     line-height: 31px;
@@ -2669,20 +2675,20 @@ body.qoob-editor {
 
 #inner-settings-image .img-pack .dropdown-menu li.selected a,
 #inner-settings-video .video-pack .dropdown-menu li.selected a,
-#inner-settings-icon .icon-pack .dropdown-menu li.selected a {
+#inner-settings-icon .pack-icon .dropdown-menu li.selected a {
     color: #fff;
 }
 
 #inner-settings-image .img-pack .dropdown-menu li a:hover,
 #inner-settings-video .video-pack .dropdown-menu li a:hover,
-#inner-settings-icon .icon-pack .dropdown-menu li a:hover {
+#inner-settings-icon .pack-icon .dropdown-menu li a:hover {
     background: #9EA1A7;
     background-image: none;
 }
 
 #inner-settings-image .img-pack > .btn .caret,
 #inner-settings-video .video-pack > .btn .caret,
-#inner-settings-icon .icon-pack > .btn .caret {
+#inner-settings-icon .pack-icon > .btn .caret {
     background: url('../img/arrow_accordion.png') no-repeat center;
     display: block;
     width: 23px;
@@ -2697,7 +2703,7 @@ body.qoob-editor {
 
 #inner-settings-image .img-pack.open > .btn .caret,
 #inner-settings-video .video-pack.open > .btn .caret,
-#inner-settings-icon .icon-pack.open > .btn .caret {
+#inner-settings-icon .pack-icon.open > .btn .caret {
     transform: rotate(0deg);
 }
 

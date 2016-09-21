@@ -90,13 +90,20 @@ var QoobController = Backbone.Router.extend({
             this.storage.driver.exit(this.storage.pageId);
         }
     },
-    addNewBlock: function (templateId, afterId) {
-        this.addBlock(QoobUtils.getDefaultSettings(this.storage.getBlocksByGroup(), templateId), afterId);
+    addNewBlock: function (blockParams, afterId) {
+        var block = this.storage.getBlock(blockParams.name, blockParams.lib),
+            params = QoobUtils.getDefaultSettings(block, block.name);
+        
+        params.lib = blockParams.lib;
+
+        this.addBlock(params, afterId);
     },
     addBlock: function (values, afterId) {
         var model = QoobUtils.createModel(values);
+
         this.pageModel.addBlock(model, afterId);
         this.scrollTo(model.id);
+
         // Remove empty div for mobile
         if (jQuery('#qoob-viewport').find('div').length > 0) {
             jQuery('#qoob-viewport').find('div').remove();

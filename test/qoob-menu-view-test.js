@@ -35,7 +35,10 @@ var mockTemplateMenuResalt =
 
 var mockStorageMenu = {
     qoobTemplates: { 'qoob-menu-preview': mockTemplateMenu, 'menu-groups-preview': "<li><a href=\"#video\"></a></li>", 'menu-settings-preview':'' },
-    qoobData: { 'groups': [] }
+    qoobData: { 'groups': [] },
+    getGroups: function() {
+        return this.qoobData.groups;
+    }
 };
 
 //============START TEST===============

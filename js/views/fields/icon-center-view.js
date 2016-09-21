@@ -12,7 +12,7 @@ var IconCenterView = Backbone.View.extend(
                 'click #inner-settings-icon .ajax-icon': 'selectIcon',
                 'click #inner-settings-icon .ajax-icon.chosen': 'unselectIcon',
                 'keyup #inner-settings-icon .icon-search': 'searchFilter',
-                'change #inner-settings-icon .icon-pack': 'categoryChange',
+                'change #inner-settings-icon .pack-icon': 'categoryChange',
                 'click .delete-icon': 'deleteIcon'
             },
             /**
@@ -69,7 +69,7 @@ var IconCenterView = Backbone.View.extend(
                     var pack = this.icons[i].classes.split(' ')[0] || 'all';
                     if (!_.contains(packs, pack)) {
                         packs.push(pack);
-                        this.$el.find('.icon-pack').append('<option value="' + pack + '">' + pack + '</option>');
+                        this.$el.find('.pack-icon').append('<option value="' + pack + '">' + pack + '</option>');
                     }
                 }
                 //Inserting tags if such existed
@@ -78,7 +78,7 @@ var IconCenterView = Backbone.View.extend(
                     this.$el.find('.icon-search').trigger('keyup');
                 }
                 //Initialize select picker
-                this.$('.icon-pack').selectpicker();
+                this.$('.pack-icon').selectpicker();
             },
             /**
              * Remove view
@@ -167,7 +167,7 @@ var IconCenterView = Backbone.View.extend(
 
                 if (pack !== 'all') {
                     iconsToFilter.each(function () {
-                        if (pack !== this.getAttribute('data-icon-pack')) {
+                        if (pack !== this.getAttribute('data-pack-icon')) {
                             this.classList.add('not-in-pack');
                         }
                     });
