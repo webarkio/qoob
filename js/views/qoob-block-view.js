@@ -33,10 +33,6 @@ var QoobBlockView = Backbone.View.extend({
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
             self.trigger('loaded');
             self.controller.triggerIframe();
-
-            if (event) {
-                self.controller.scrollTo(event.id);
-            }
         });
         return self;
     },
