@@ -38,8 +38,8 @@ var QoobViewportView = Backbone.View.extend(
             return this;
         },
         iframeLoaded: function() {
-            this.trigger('iframe_loaded');
             this.triggerIframe();
+            this.trigger('iframe_loaded');
         },
         /**
          * Shows edit buttons, shadowing other blocks
@@ -187,7 +187,7 @@ var QoobViewportView = Backbone.View.extend(
             // Trigger change qoob blocks for theme
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').trigger('change');
-            iframe.jQuery('a').attr('onclick', 'return false;');
+            iframe.jQuery('a, .btn').attr('onclick', 'return false;');
         },
         getIframe: function() {
             return this.$el.find('#qoob-iframe');

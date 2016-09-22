@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width">
     <title>Qoob test case</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.23.1.css">
+    <style>
+        body > div {
+            visibility: hidden;
+        }
+        #qunit, #qunit-fixture {
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,11 +35,13 @@
     <script type='text/javascript' src='../js/views/qoob-settings-view.js'></script>
     <script type='text/javascript' src='../js/views/qoob-fields-view.js'></script>
     <script type='text/javascript' src='../js/views/qoob-field-view.js'></script>
+    <script type='text/javascript' src='../js/views/fields/field-text.js'></script>
     <script type='text/javascript' src='../js/qoob-loader.js'></script>
+    <script type="text/javascript" src="qoob-globals.js"></script>
     <!-- TESTS -->
     <script src="qoob-toolbar-view-test.js"></script>
-    <script src="qoob-menu-test.js"></script>
-    <script src="qoob-menu-groups-test.js"></script>
+    <script src="qoob-menu-view-test.js"></script>
+    <script src="qoob-menu-groups-view-test.js"></script>
     <script src="qoob-viewport-view-test.js"></script>
     <script src="qoob-settings-view-test.js"></script>
     <script src="qoob-loader-test.js"></script>
@@ -39,5 +49,4 @@
     <script src="qoob-field-view-test.js"></script>
     <script src="qoob-fields-view-test.js"></script>
 </body>
-
 </html>

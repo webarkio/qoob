@@ -52,12 +52,14 @@ var QoobBlockWrapperView = Backbone.View.extend({
             tolerance: "pointer",
             drop: function (event, ui) {
                 var dropElement = jQuery(this);
-                //get template id
-                var templateId = ui.draggable.attr("id").replace("preview-block-", "");
+                //get block name
+                var blockName = ui.draggable.attr("id").replace("preview-block-", "");
                 //get after id
                 var beforeId = dropElement.attr("id").replace("droppable-", "");
+                // get lib
+                var blockLib = ui.draggable.data('lib');
                 // add new block
-                self.controller.addNewBlock(templateId, beforeId);
+                self.controller.addNewBlock({name: blockName, lib: blockLib}, beforeId);
             }
         });
     },

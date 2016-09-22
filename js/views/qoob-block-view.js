@@ -21,9 +21,11 @@ var QoobBlockView = Backbone.View.extend({
         this.listenTo(this.model, 'change', this.render);
     },
     render: function(event) {
-        var self = this;
+        var self = this,
+            params = {name: self.model.get('template'), lib: self.model.get('lib')}
+
         //Start loading template for block
-        this.storage.getBlockTemplate(self.model.get('template'), function(err, template){
+        this.storage.getBlockTemplate(params, function(err, template){
             var config = self.storage.getBlockConfig(self.model.get('template'));
             var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
             var tplAdapter = QoobExtensions.templating[tplAdapterType];
@@ -31,10 +33,6 @@ var QoobBlockView = Backbone.View.extend({
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
             self.trigger('loaded');
             self.controller.triggerIframe();
-
-            if (event) {
-                self.controller.scrollTo(event.id);
-            }
         });
         return self;
     },

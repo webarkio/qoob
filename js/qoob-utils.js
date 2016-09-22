@@ -65,18 +65,28 @@ var QoobUtils = {
     /**
      * Get default settings
      *
-     * @param {integer} templateId
+     * @param {String} blockName
      */
-    getDefaultSettings: function(items, templateId) {
+    getDefaultSettings: function(items, blockName) {
         // get config from storage qoobData
         //qoob.storage.qoobData.items
-        var values = {};
-        var settings = _.findWhere(items, { name: templateId }).settings;
-        var defaults = (_.findWhere(items, { name: templateId }).defaults);
+        var values = {},
+            settings = {},
+            defaults = {};
+
+        if(Array.isArray(items)) {
+            settings = _.findWhere(items, { name: blockName }).settings;
+            defaults = _.findWhere(items, { name: blockName }).defaults;
+        } else {
+            settings = items.settings;
+            defaults = items.defaults;
+        }
+        
         for (var i = 0; i < settings.length; i++) {
             values[settings[i].name] = defaults[settings[i].name];
         }
-        values.template = templateId;
+        
+        values.template = blockName;
 
         return values;
     }
