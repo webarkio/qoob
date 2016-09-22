@@ -63,6 +63,7 @@ var QoobViewportView = Backbone.View.extend(
             this.getIframeContents().find('#qoob-blocks').removeClass('preview');
         },
         setDeviceMode: function(mode) {
+            var self = this;
             this.deviceMode = mode;
             var size = {
                 'pc': {
@@ -81,7 +82,12 @@ var QoobViewportView = Backbone.View.extend(
                     'width': '667px'
                 }
             };
-            this.getIframe().stop().animate(size[mode]);
+            this.getIframe().stop().animate(size[mode], 500, function(){
+                currentRoute = self.controller.current();
+                if (currentRoute.route == 'startEditBlock') {
+                    self.controller.scrollTo(currentRoute.params[0]);
+                }
+            });
         },
         /**
          * Resize qoob content
@@ -187,7 +193,7 @@ var QoobViewportView = Backbone.View.extend(
             // Trigger change qoob blocks for theme
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').trigger('change');
-            iframe.jQuery('a, .btn').attr('onclick', 'return false;');
+            iframe.jQuery('a, .btn, input[type="submit"]').attr('onclick', 'return false;');
         },
         getIframe: function() {
             return this.$el.find('#qoob-iframe');
