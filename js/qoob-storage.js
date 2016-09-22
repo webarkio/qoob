@@ -266,7 +266,6 @@ QoobStorage.prototype.save = function (json, html, cb) {
         data: json,
         html: html
     };
-
     this.driver.savePageData(this.pageId, data, function (err, state) {
         cb(err, state);
     });
