@@ -29,11 +29,6 @@ var QoobController = Backbone.Router.extend({
     },
     setDeviceMode: function (mode) {
         this.layout.setDeviceMode(mode);
-
-        currentRoute = this.current();
-        if (currentRoute.route == 'startEditBlock') {
-            this.scrollTo(currentRoute.params[0]);
-        }
     },
     /**
      * Autosave page data for interval
