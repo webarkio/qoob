@@ -47,9 +47,9 @@ Qoob.prototype.activate = function() {
     //Start loading data
     this.storage.loadQoobTemplates(function(err, qoobTemplates) {
         self.storage.driver.loadQoobData(function(err, qoobData) {
-            self.storage.loadTranslations(qoobData.translations);
+            self.storage.addTranslations(qoobData.translations);
             self.loader.step();
-            self.storage.joinLibs(qoobData.libs, function (err, qoobLibs) {
+            self.storage.addLibs(qoobData.libs, function (err, qoobLibs) {
                 self.loader.step();
                 self.storage.loadPageData(function(err, pageData) {
                     self.loader.step();

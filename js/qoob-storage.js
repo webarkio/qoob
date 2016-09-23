@@ -39,7 +39,7 @@ QoobStorage.prototype.loadQoobTemplates = function (cb) {
  * @param  {Array}   libsJson Array of lib.json files, previously gatherd.
  * @param  {Function} cb  Callback function.
  */
-QoobStorage.prototype.joinLibs = function (libsJson, cb) {
+QoobStorage.prototype.addLibs = function (libsJson, cb) {
     var self = this,
         totalBlocksCount = 0,
         currentBlocksCount = 0;
@@ -320,7 +320,7 @@ QoobStorage.prototype.getAssets = function (libNames) {
  * Add translations to qoobData
  * @param  {Object} translations
  */
-QoobStorage.prototype.loadTranslations = function(translations) {
+QoobStorage.prototype.addTranslations = function(translations) {
     if (!translations)
         return;
 
