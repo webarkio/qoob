@@ -51,7 +51,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
                 className: 'settings-block'
             });
             
-            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': qoob_lng.menu.back, 'move': qoob_lng.menu.move})).find('.settings-blocks').prepend(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': this.storage.__('back', ''), 'move': this.storage.__('move', '')})).find('.settings-blocks').prepend(settingsBlock.render().el);
             
             return this;
         },
@@ -63,7 +63,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
          * @returns {Boolean}
          */
         clickDelete: function() {
-            var alert = confirm(qoob_lng.confirm_delete_block);
+            var alert = confirm(this.storage.__('confirm_delete_block', ''));
             if (!alert) {
                 return false;
             }

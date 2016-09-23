@@ -139,8 +139,8 @@ Fields.accordion = QoobFieldView.extend(
                 "label": this.settings.label,
                 "uniqueId": this.getUniqueId(),
                 "settings": settings,
-                'add_component': qoob_lng.fields.add_component,
-                'drag_to_delete': qoob_lng.fields.drag_to_delete
+                'add_component': this.storage.__('add_component', ''),
+                'drag_to_delete': this.storage.__('drag_to_delete', '')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {

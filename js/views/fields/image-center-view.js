@@ -55,10 +55,10 @@ var ImageCenterView = Backbone.View.extend(
                     curSrc: this.curSrc,
                     assets: this.assets,
                     hideDeleteButton: this.hideDeleteButton,
-                    back: qoob_lng.menu.back,
-                    all: qoob_lng.fields.all,
-                    tags: qoob_lng.fields.tags,
-                    image_url: qoob_lng.fields.image_url
+                    back: this.storage.__('back', ''),
+                    all: this.storage.__('all', ''),
+                    tags: this.storage.__('tags', ''),
+                    image_url: this.storage.__('image_url', '')
                 }));
 
                 this.afterRender();
@@ -195,9 +195,9 @@ var ImageCenterView = Backbone.View.extend(
             imgUrlUpload: function () {
                 //Create media upload frame
                 var mcFrame = wp.media({
-                    title: qoob_lng.fields.media_title,
+                    title: this.storage.__('media_title' ,''),
                     button: {
-                        text: qoob_lng.fields.media_text_button
+                        text: this.storage.__('media_text_button' ,'')
                     },
                     multiple: false  // Set to true to allow multiple files to be selected  
                 });

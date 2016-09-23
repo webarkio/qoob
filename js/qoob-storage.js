@@ -8,7 +8,7 @@
 function QoobStorage(options) {
     this.pageId = options.pageId || null;
     this.qoobTemplates = null;
-    this.qoobData = null;
+    this.qoobData = {};
     this.pageData = null;
     this.blockSettingsViewData = [];
     this.templates = [];
@@ -57,7 +57,7 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
         currentBlocksCount++;
         if (currentBlocksCount === totalBlocksCount) {
             // Callback after all done
-            self.qoobData = libsJson;
+            self.qoobData.libs = libsJson;
             cb(null, libsJson);
         }
     };
@@ -67,7 +67,7 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
         currentBlocksCount++;
         if (currentBlocksCount === totalBlocksCount) {
             // Callback after all done
-            self.qoobData = libsJson;
+            self.qoobData.libs = libsJson;
             cb(null, libsJson);
         }
     };
@@ -111,7 +111,7 @@ QoobStorage.parseBlockConfigMask = function (block, blocks) {
  */
 QoobStorage.prototype.getGroups = function (libNames) {
     var result = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -142,7 +142,7 @@ QoobStorage.prototype.getGroups = function (libNames) {
  */
 QoobStorage.prototype.getBlocksByGroup = function (group, libNames) {
     var result = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -168,7 +168,7 @@ QoobStorage.prototype.getBlock = function (name, lib) {
     var block,
         blocks = [];
 
-    this.qoobData.map(function(data) {
+    this.qoobData.libs.map(function(data) {
         blocks = blocks.concat(data.blocks);
     });
 
@@ -298,7 +298,7 @@ QoobStorage.prototype.save = function (json, html, cb) {
  */
 QoobStorage.prototype.getAssets = function (libNames) {
     var assets = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -314,4 +314,35 @@ QoobStorage.prototype.getAssets = function (libNames) {
     }
 
     return assets;
+};
+
+/**
+ * Add translations to qoobData
+ * @param  {Object} translations
+ */
+QoobStorage.prototype.loadTranslations = function(translations) {
+    if (!translations)
+        return;
+
+    this.qoobData.translations = translations;
+
+    return;
+};
+
+/**
+ * Get translation object from qoobData
+ * @return {Object} Translations
+ */
+QoobStorage.prototype.getTranslations = function() {
+    if(!this.qoobData.translations)
+        return;
+
+    return this.qoobData.translations;
+}; 
+
+QoobStorage.prototype.__ = function(title, defaultStr) {
+    if(!title)
+        return;
+
+    return (this.getTranslations()[title] || defaultStr);
 };

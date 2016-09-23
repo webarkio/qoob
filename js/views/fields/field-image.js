@@ -84,7 +84,7 @@ Fields.image = QoobFieldView.extend(
                     "name": this.settings.name,
                     "images": this.settings.presets,
                     "value": this.getValue(),
-                    'media_center': qoob_lng.fields.media_center
+                    'media_center': this.storage.__('media_center', '')
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
