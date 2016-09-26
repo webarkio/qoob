@@ -24,7 +24,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
         
         this.innerBlock.once('loaded', function () {
 
-            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": this.storage.__('block_droppable_preview', '')});
+            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": this.storage.__('block_droppable_preview', 'Drag here to creative new block')});
             var overlay = _.template(self.storage.qoobTemplates['block-overlay-preview'])({"blockId": self.model.id});
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
             self.$el.addClass('content-show content-block-outer');
@@ -36,7 +36,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
             self.controller.layout.viewPort.getWindowIframe().focus();
         });
         //Add 'please wait' template while loading
-        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": this.storage.__('block_pleasewait_preview', '')}));
+        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": this.storage.__('block_pleasewait_preview', 'Please wait')}));
 
         this.innerBlock.render();
         return this;

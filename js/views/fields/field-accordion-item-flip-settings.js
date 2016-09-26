@@ -46,7 +46,7 @@ var AccordionFlipView = QoobFieldView.extend(
                     controller: this.controller,
                     parentId: this.model.id
                 });
-                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': this.storage.__('back', '')}));
+                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': this.storage.__('back', 'Back')}));
                 this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
             },

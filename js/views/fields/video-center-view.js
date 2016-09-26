@@ -71,10 +71,10 @@ var VideoCenterView = Backbone.View.extend(
             this.videos = videos;
             //Creating layout
             this.$el.html(this.tpl({
-                back: this.storage.__('back' ,''),
-                all: this.storage.__('all' ,''),
-                tags: this.storage.__('tags' ,''),
-                video_url: this.storage.__('video_url' ,''),
+                back: this.storage.__('back' ,'Back'),
+                all: this.storage.__('all' ,'all'),
+                tags: this.storage.__('tags' ,'Tags'),
+                video_url: this.storage.__('video_url' ,'Video url'),
                 videos: this.videos
             }));
 
@@ -217,9 +217,9 @@ var VideoCenterView = Backbone.View.extend(
         videoUrlUpload: function() {
             //Create media upload frame
             var mcFrame = wp.media({
-                title: this.storage.__('media_title' ,''),
+                title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
                 button: {
-                    text: this.storage.__('media_text_button' ,'')
+                    text: this.storage.__('media_text_button' ,'Use this media')
                 },
                 multiple: false // Set to true to allow multiple files to be selected  
             });
@@ -234,7 +234,7 @@ var VideoCenterView = Backbone.View.extend(
                     if (format === 'mp4' || format === 'ogv'|| format === 'webm') {
                         this.$el.find('.video-url').val(url).trigger('change');
                     } else {
-                        alert(this.storage.__('alert_error_format_file' ,''));
+                        alert(this.storage.__('alert_error_format_file' ,'This file is not supposed to have correct format. Try another one.'));
                     }
                 }
             }.bind(this));

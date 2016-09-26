@@ -55,10 +55,10 @@ var ImageCenterView = Backbone.View.extend(
                     curSrc: this.curSrc,
                     assets: this.assets,
                     hideDeleteButton: this.hideDeleteButton,
-                    back: this.storage.__('back', ''),
-                    all: this.storage.__('all', ''),
-                    tags: this.storage.__('tags', ''),
-                    image_url: this.storage.__('image_url', '')
+                    back: this.storage.__('back', 'Back'),
+                    all: this.storage.__('all', 'all'),
+                    tags: this.storage.__('tags', 'Tags'),
+                    image_url: this.storage.__('image_url', 'Image url')
                 }));
 
                 this.afterRender();
@@ -195,9 +195,9 @@ var ImageCenterView = Backbone.View.extend(
             imgUrlUpload: function () {
                 //Create media upload frame
                 var mcFrame = wp.media({
-                    title: this.storage.__('media_title' ,''),
+                    title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
                     button: {
-                        text: this.storage.__('media_text_button' ,'')
+                        text: this.storage.__('media_text_button' ,'Use this media')
                     },
                     multiple: false  // Set to true to allow multiple files to be selected  
                 });
