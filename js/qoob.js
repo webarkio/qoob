@@ -8,6 +8,8 @@
 //module.exports.Qoob = Qoob;
 function Qoob(options) {
 
+    this.storage = options.storage;
+
     this.loader = new QoobLoader(this);
 
     this.options = {
@@ -16,7 +18,6 @@ function Qoob(options) {
     };
     _.extend(this.options, options);
 
-    this.storage = options.storage;
     this.controller = new QoobController();
 
     this.pageModel = new PageModel();
@@ -45,10 +46,11 @@ Qoob.prototype.activate = function() {
     });
     //Start loading data
     this.storage.loadQoobTemplates(function(err, qoobTemplates) {
-        self.loader.step();
-        self.storage.driver.loadLibsInfo(function(err, qoobLibs) {
+        self.storage.driver.loadQoobData(function(err, qoobData) {
+            self.storage.addTranslations(qoobData.translations);
             self.loader.step();
-            self.storage.joinLibs(qoobLibs.libs, function (err, qoobLibs) {
+            self.storage.addLibs(qoobData.libs, function (err, qoobLibs) {
+                self.loader.step();
                 self.storage.loadPageData(function(err, pageData) {
                     self.loader.step();
 
@@ -77,7 +79,6 @@ Qoob.prototype.activate = function() {
                         jQuery('#lib-select').selectpicker();
 
                     });
-
                     //Render layout
                     jQuery('body').prepend(self.layout.render().el);
                     self.layout.resize();
@@ -85,5 +86,6 @@ Qoob.prototype.activate = function() {
                 }); 
             });
         });
+        
     });
 };
