@@ -7838,7 +7838,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
         
         this.innerBlock.once('loaded', function () {
 
-            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": qoob_lng.block.block_droppable_preview});
+            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": this.storage.__('block_droppable_preview', '')});
             var overlay = _.template(self.storage.qoobTemplates['block-overlay-preview'])({"blockId": self.model.id});
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
             self.$el.addClass('content-show content-block-outer');
@@ -7850,7 +7850,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
             self.controller.layout.viewPort.getWindowIframe().focus();
         });
         //Add 'please wait' template while loading
-        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": qoob_lng.block.block_pleasewait_preview}));
+        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": this.storage.__('block_pleasewait_preview', '')}));
 
         this.innerBlock.render();
         return this;
@@ -8494,7 +8494,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
                 className: 'settings-block'
             });
             
-            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': qoob_lng.menu.back, 'move': qoob_lng.menu.move})).find('.settings-blocks').prepend(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': this.storage.__('back', ''), 'move': this.storage.__('move', '')})).find('.settings-blocks').prepend(settingsBlock.render().el);
             
             return this;
         },
@@ -8506,7 +8506,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
          * @returns {Boolean}
          */
         clickDelete: function() {
-            var alert = confirm(qoob_lng.confirm_delete_block);
+            var alert = confirm(this.storage.__('confirm_delete_block', ''));
             if (!alert) {
                 return false;
             }
@@ -8577,10 +8577,10 @@ var QoobToolbarView = Backbone.View.extend({
      */
     render: function() {
         var data = {
-            "autosave": qoob_lng.autosave,
-            "save": qoob_lng.save,
-            "exit": qoob_lng.exit,
-            "libs": this.storage.qoobData,
+            "autosave": this.storage.__('autosave', ''),
+            "save": this.storage.__('save', ''),
+            "exit": this.storage.__('exit', ''),
+            "libs": this.storage.qoobData.libs,
             "curLib": this.storage.currentLib
         };
         this.$el.html(_.template(this.storage.getQoobTemplate('qoob-toolbar-preview'))(data));
@@ -8884,7 +8884,7 @@ var QoobViewportView = Backbone.View.extend(
          */
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])({"text": qoob_lng.block.block_default_blank}));
+            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])({"text": this.storage.__('block_default_blank', '')}));
         }
     });
 ;
@@ -9247,8 +9247,8 @@ Fields.accordion = QoobFieldView.extend(
                 "label": this.settings.label,
                 "uniqueId": this.getUniqueId(),
                 "settings": settings,
-                'add_component': qoob_lng.fields.add_component,
-                'drag_to_delete': qoob_lng.fields.drag_to_delete
+                'add_component': this.storage.__('add_component', ''),
+                'drag_to_delete': this.storage.__('drag_to_delete', '')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -9719,7 +9719,7 @@ Fields.image = QoobFieldView.extend(
                     "name": this.settings.name,
                     "images": this.settings.presets,
                     "value": this.getValue(),
-                    'media_center': qoob_lng.fields.media_center
+                    'media_center': this.storage.__('media_center', '')
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -10058,9 +10058,9 @@ var IconCenterView = Backbone.View.extend(
             render: function () {
                 //Creating layout
                 this.$el.html(this.tpl({
-                    back: qoob_lng.menu.back,
-                    all: qoob_lng.fields.all,
-                    tags: qoob_lng.fields.tags,
+                    back: this.storage.__('back', ''),
+                    all: this.storage.__('all', ''),
+                    tags: this.storage.__('tags', ''),
                     icons: this.icons
                 }));
 
@@ -10243,10 +10243,10 @@ var ImageCenterView = Backbone.View.extend(
                     curSrc: this.curSrc,
                     assets: this.assets,
                     hideDeleteButton: this.hideDeleteButton,
-                    back: qoob_lng.menu.back,
-                    all: qoob_lng.fields.all,
-                    tags: qoob_lng.fields.tags,
-                    image_url: qoob_lng.fields.image_url
+                    back: this.storage.__('back', ''),
+                    all: this.storage.__('all', ''),
+                    tags: this.storage.__('tags', ''),
+                    image_url: this.storage.__('image_url', '')
                 }));
 
                 this.afterRender();
@@ -10383,9 +10383,9 @@ var ImageCenterView = Backbone.View.extend(
             imgUrlUpload: function () {
                 //Create media upload frame
                 var mcFrame = wp.media({
-                    title: qoob_lng.fields.media_title,
+                    title: this.storage.__('media_title' ,''),
                     button: {
-                        text: qoob_lng.fields.media_text_button
+                        text: this.storage.__('media_text_button' ,'')
                     },
                     multiple: false  // Set to true to allow multiple files to be selected  
                 });
@@ -10481,10 +10481,10 @@ var VideoCenterView = Backbone.View.extend(
             this.videos = videos;
             //Creating layout
             this.$el.html(this.tpl({
-                back: qoob_lng.menu.back,
-                all: qoob_lng.fields.all,
-                tags: qoob_lng.fields.tags,
-                video_url: qoob_lng.fields.video_url,
+                back: this.storage.__('back' ,''),
+                all: this.storage.__('all' ,''),
+                tags: this.storage.__('tags' ,''),
+                video_url: this.storage.__('video_url' ,''),
                 videos: this.videos
             }));
 
@@ -10627,9 +10627,9 @@ var VideoCenterView = Backbone.View.extend(
         videoUrlUpload: function() {
             //Create media upload frame
             var mcFrame = wp.media({
-                title: qoob_lng.fields.media_title,
+                title: this.storage.__('media_title' ,''),
                 button: {
-                    text: qoob_lng.fields.media_text_button
+                    text: this.storage.__('media_text_button' ,'')
                 },
                 multiple: false // Set to true to allow multiple files to be selected  
             });
@@ -10644,7 +10644,7 @@ var VideoCenterView = Backbone.View.extend(
                     if (format === 'mp4' || format === 'ogv'|| format === 'webm') {
                         this.$el.find('.video-url').val(url).trigger('change');
                     } else {
-                        alert(qoob_lng.fields.alert_error_format_file);
+                        alert(this.storage.__('alert_error_format_file' ,'');
                     }
                 }
             }.bind(this));
@@ -10887,13 +10887,7 @@ function QoobLoader(qoob) {
     this.shown = false;
     this.$elem = jQuery('#loader-wrapper');
     this.precents = 0;
-    this.tips = [
-        qoob_lng.tips.add_block_both_by_dragging,
-        qoob_lng.tips.view_page_in_the_preview_mode,
-        qoob_lng.tips.preview_mode_cant_reach_block_editting,
-        qoob_lng.tips.activate_autosave
-    ];
-    this.init();
+    this.tips = [];
 }
 
 /**
@@ -10902,6 +10896,13 @@ function QoobLoader(qoob) {
  * 
  */
 QoobLoader.prototype.init = function () {
+    this.tips = [
+        this.qoob.storage.__('add_block_both_by_dragging', ''),
+        this.qoob.storage.__('view_page_in_the_preview_mode', ''),
+        this.qoob.storage.__('preview_mode_cant_reach_block_editting', ''),
+        this.qoob.storage.__('activate_autosave', '')
+    ];
+
     var rand = Math.random() * (this.tips.length - 1),
             rand = rand.toFixed(),
             rand = parseInt(rand);
@@ -10914,6 +10915,7 @@ QoobLoader.prototype.init = function () {
  * @param {Integer} count
  */
 QoobLoader.prototype.addStep = function (count) {
+    this.total = count;
     this.left = this.left + (count || 1);
     if (this.left > 0 && !this.shown) {
         this.show();
@@ -10937,11 +10939,17 @@ QoobLoader.prototype.progressBarAnimate = function () {
  * @param {Integer} count
  */
 QoobLoader.prototype.step = function (count) {
+    if (this.left == this.total) {
+        this.init();
+    }
+
     if (this.precents < 100) {
         this.precents += 25;
         this.progressBarAnimate();
     }
+
     this.left = this.left - (count || 1);
+
     if (this.left === 0 && this.shown) {
         this.hide();
     }
@@ -10991,7 +10999,7 @@ if (typeof module !== 'undefined' && module.exports) {
 function QoobStorage(options) {
     this.pageId = options.pageId || null;
     this.qoobTemplates = null;
-    this.qoobData = null;
+    this.qoobData = {};
     this.pageData = null;
     this.blockSettingsViewData = [];
     this.templates = [];
@@ -11040,7 +11048,7 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
         currentBlocksCount++;
         if (currentBlocksCount === totalBlocksCount) {
             // Callback after all done
-            self.qoobData = libsJson;
+            self.qoobData.libs = libsJson;
             cb(null, libsJson);
         }
     };
@@ -11050,7 +11058,7 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
         currentBlocksCount++;
         if (currentBlocksCount === totalBlocksCount) {
             // Callback after all done
-            self.qoobData = libsJson;
+            self.qoobData.libs = libsJson;
             cb(null, libsJson);
         }
     };
@@ -11094,7 +11102,7 @@ QoobStorage.parseBlockConfigMask = function (block, blocks) {
  */
 QoobStorage.prototype.getGroups = function (libNames) {
     var result = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -11125,7 +11133,7 @@ QoobStorage.prototype.getGroups = function (libNames) {
  */
 QoobStorage.prototype.getBlocksByGroup = function (group, libNames) {
     var result = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -11151,7 +11159,7 @@ QoobStorage.prototype.getBlock = function (name, lib) {
     var block,
         blocks = [];
 
-    this.qoobData.map(function(data) {
+    this.qoobData.libs.map(function(data) {
         blocks = blocks.concat(data.blocks);
     });
 
@@ -11281,7 +11289,7 @@ QoobStorage.prototype.save = function (json, html, cb) {
  */
 QoobStorage.prototype.getAssets = function (libNames) {
     var assets = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -11297,6 +11305,37 @@ QoobStorage.prototype.getAssets = function (libNames) {
     }
 
     return assets;
+};
+
+/**
+ * Add translations to qoobData
+ * @param  {Object} translations
+ */
+QoobStorage.prototype.loadTranslations = function(translations) {
+    if (!translations)
+        return;
+
+    this.qoobData.translations = translations;
+
+    return;
+};
+
+/**
+ * Get translation object from qoobData
+ * @return {Object} Translations
+ */
+QoobStorage.prototype.getTranslations = function() {
+    if(!this.qoobData.translations)
+        return;
+
+    return this.qoobData.translations;
+}; 
+
+QoobStorage.prototype.__ = function(title, defaultStr) {
+    if(!title)
+        return;
+
+    return this.getTranslations()[title] ? this.getTranslations()[title] : defaultStr;
 };;
 /**
  * Utils for qoob
@@ -11402,6 +11441,8 @@ var QoobUtils = {
 //module.exports.Qoob = Qoob;
 function Qoob(options) {
 
+    this.storage = options.storage;
+
     this.loader = new QoobLoader(this);
 
     this.options = {
@@ -11410,7 +11451,6 @@ function Qoob(options) {
     };
     _.extend(this.options, options);
 
-    this.storage = options.storage;
     this.controller = new QoobController();
 
     this.pageModel = new PageModel();
@@ -11439,45 +11479,48 @@ Qoob.prototype.activate = function() {
     });
     //Start loading data
     this.storage.loadQoobTemplates(function(err, qoobTemplates) {
-        self.loader.step();
-        self.storage.driver.loadLibsInfo(function(err, qoobLibs) {
+        self.storage.driver.loadTranslations(function(err, qoobTranslations) {
+            self.storage.loadTranslations(qoobTranslations);
             self.loader.step();
-            self.storage.joinLibs(qoobLibs.libs, function (err, qoobLibs) {
-                self.storage.loadPageData(function(err, pageData) {
-                    self.loader.step();
-
-                    //If blocks loaded to viewPort
-                    self.layout.viewPort.once('blocks_loaded', function() {
-                        self.controller.triggerIframe();
-                        Backbone.history.start({ pushState: false });
+            self.storage.driver.loadLibsInfo(function(err, qoobLibs) {
+                self.loader.step();
+                self.storage.joinLibs(qoobLibs, function (err, qoobLibs) {
+                    self.storage.loadPageData(function(err, pageData) {
                         self.loader.step();
-                    });
 
-                    //If iframe ready to load blocks
-                    self.layout.viewPort.once('iframe_loaded', function() {
-                        self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
-                        //Start loading blocks
-                        if (pageData && pageData.blocks.length > 0) {
-                            self.controller.load(pageData.blocks);
-                        } else {
+                        //If blocks loaded to viewPort
+                        self.layout.viewPort.once('blocks_loaded', function() {
+                            self.controller.triggerIframe();
                             Backbone.history.start({ pushState: false });
-                            //Skip counter for blocks
-                            self.layout.viewPort.blocksCounter = null;
                             self.loader.step();
-                            
-                            // if first start page
-                            self.layout.viewPort.createBlankBlock();
-                        }
-                        jQuery('#lib-select').selectpicker();
+                        });
 
-                    });
+                        //If iframe ready to load blocks
+                        self.layout.viewPort.once('iframe_loaded', function() {
+                            self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
+                            //Start loading blocks
+                            if (pageData && pageData.blocks.length > 0) {
+                                self.controller.load(pageData.blocks);
+                            } else {
+                                Backbone.history.start({ pushState: false });
+                                //Skip counter for blocks
+                                self.layout.viewPort.blocksCounter = null;
+                                self.loader.step();
+                                
+                                // if first start page
+                                self.layout.viewPort.createBlankBlock();
+                            }
+                            jQuery('#lib-select').selectpicker();
 
-                    //Render layout
-                    jQuery('body').prepend(self.layout.render().el);
-                    self.layout.resize();
+                        });
+                        //Render layout
+                        jQuery('body').prepend(self.layout.render().el);
+                        self.layout.resize();
 
-                }); 
+                    }); 
+                });
             });
         });
+        
     });
 };
