@@ -7838,7 +7838,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
         
         this.innerBlock.once('loaded', function () {
 
-            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": this.storage.__('block_droppable_preview', '')});
+            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": this.storage.__('block_droppable_preview', 'Drag here to creative new block')});
             var overlay = _.template(self.storage.qoobTemplates['block-overlay-preview'])({"blockId": self.model.id});
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
             self.$el.addClass('content-show content-block-outer');
@@ -7850,7 +7850,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
             self.controller.layout.viewPort.getWindowIframe().focus();
         });
         //Add 'please wait' template while loading
-        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": this.storage.__('block_pleasewait_preview', '')}));
+        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": this.storage.__('block_pleasewait_preview', 'Please wait')}));
 
         this.innerBlock.render();
         return this;
@@ -8494,7 +8494,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
                 className: 'settings-block'
             });
             
-            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': this.storage.__('back', ''), 'move': this.storage.__('move', '')})).find('.settings-blocks').prepend(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move')})).find('.settings-blocks').prepend(settingsBlock.render().el);
             
             return this;
         },
@@ -8506,7 +8506,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
          * @returns {Boolean}
          */
         clickDelete: function() {
-            var alert = confirm(this.storage.__('confirm_delete_block', ''));
+            var alert = confirm(this.storage.__('confirm_delete_block', 'Are you sure you want to delete the block?'));
             if (!alert) {
                 return false;
             }
@@ -8577,9 +8577,9 @@ var QoobToolbarView = Backbone.View.extend({
      */
     render: function() {
         var data = {
-            "autosave": this.storage.__('autosave', ''),
-            "save": this.storage.__('save', ''),
-            "exit": this.storage.__('exit', ''),
+            "autosave": this.storage.__('autosave', 'Autosave'),
+            "save": this.storage.__('save', 'Save'),
+            "exit": this.storage.__('exit', 'Exit'),
             "libs": this.storage.qoobData.libs,
             "curLib": this.storage.currentLib
         };
@@ -8884,7 +8884,7 @@ var QoobViewportView = Backbone.View.extend(
          */
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])({"text": this.storage.__('block_default_blank', '')}));
+            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])({"text": this.storage.__('block_default_blank', 'First of all you need add block')}));
         }
     });
 ;
@@ -8997,7 +8997,7 @@ var AccordionFlipView = QoobFieldView.extend(
                     controller: this.controller,
                     parentId: this.model.id
                 });
-                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': qoob_lng.menu.back}));
+                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': this.storage.__('back', 'Back')}));
                 this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
             },
@@ -9247,8 +9247,8 @@ Fields.accordion = QoobFieldView.extend(
                 "label": this.settings.label,
                 "uniqueId": this.getUniqueId(),
                 "settings": settings,
-                'add_component': this.storage.__('add_component', ''),
-                'drag_to_delete': this.storage.__('drag_to_delete', '')
+                'add_component': this.storage.__('add_component', 'Add component'),
+                'drag_to_delete': this.storage.__('drag_to_delete', 'Drag to delete')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -9719,7 +9719,7 @@ Fields.image = QoobFieldView.extend(
                     "name": this.settings.name,
                     "images": this.settings.presets,
                     "value": this.getValue(),
-                    'media_center': this.storage.__('media_center', '')
+                    'media_center': this.storage.__('media_center', 'Media Center')
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -10058,9 +10058,9 @@ var IconCenterView = Backbone.View.extend(
             render: function () {
                 //Creating layout
                 this.$el.html(this.tpl({
-                    back: this.storage.__('back', ''),
-                    all: this.storage.__('all', ''),
-                    tags: this.storage.__('tags', ''),
+                    back: this.storage.__('back', 'Back'),
+                    all: this.storage.__('all', 'all'),
+                    tags: this.storage.__('tags', 'Tags'),
                     icons: this.icons
                 }));
 
@@ -10243,10 +10243,10 @@ var ImageCenterView = Backbone.View.extend(
                     curSrc: this.curSrc,
                     assets: this.assets,
                     hideDeleteButton: this.hideDeleteButton,
-                    back: this.storage.__('back', ''),
-                    all: this.storage.__('all', ''),
-                    tags: this.storage.__('tags', ''),
-                    image_url: this.storage.__('image_url', '')
+                    back: this.storage.__('back', 'Back'),
+                    all: this.storage.__('all', 'all'),
+                    tags: this.storage.__('tags', 'Tags'),
+                    image_url: this.storage.__('image_url', 'Image url')
                 }));
 
                 this.afterRender();
@@ -10383,9 +10383,9 @@ var ImageCenterView = Backbone.View.extend(
             imgUrlUpload: function () {
                 //Create media upload frame
                 var mcFrame = wp.media({
-                    title: this.storage.__('media_title' ,''),
+                    title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
                     button: {
-                        text: this.storage.__('media_text_button' ,'')
+                        text: this.storage.__('media_text_button' ,'Use this media')
                     },
                     multiple: false  // Set to true to allow multiple files to be selected  
                 });
@@ -10481,10 +10481,10 @@ var VideoCenterView = Backbone.View.extend(
             this.videos = videos;
             //Creating layout
             this.$el.html(this.tpl({
-                back: this.storage.__('back' ,''),
-                all: this.storage.__('all' ,''),
-                tags: this.storage.__('tags' ,''),
-                video_url: this.storage.__('video_url' ,''),
+                back: this.storage.__('back' ,'Back'),
+                all: this.storage.__('all' ,'all'),
+                tags: this.storage.__('tags' ,'Tags'),
+                video_url: this.storage.__('video_url' ,'Video url'),
                 videos: this.videos
             }));
 
@@ -10627,9 +10627,9 @@ var VideoCenterView = Backbone.View.extend(
         videoUrlUpload: function() {
             //Create media upload frame
             var mcFrame = wp.media({
-                title: this.storage.__('media_title' ,''),
+                title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
                 button: {
-                    text: this.storage.__('media_text_button' ,'')
+                    text: this.storage.__('media_text_button' ,'Use this media')
                 },
                 multiple: false // Set to true to allow multiple files to be selected  
             });
@@ -10644,7 +10644,7 @@ var VideoCenterView = Backbone.View.extend(
                     if (format === 'mp4' || format === 'ogv'|| format === 'webm') {
                         this.$el.find('.video-url').val(url).trigger('change');
                     } else {
-                        alert(this.storage.__('alert_error_format_file' ,'');
+                        alert(this.storage.__('alert_error_format_file' ,'This file is not supposed to have correct format. Try another one.'));
                     }
                 }
             }.bind(this));
@@ -10897,10 +10897,10 @@ function QoobLoader(qoob) {
  */
 QoobLoader.prototype.init = function () {
     this.tips = [
-        this.qoob.storage.__('add_block_both_by_dragging', ''),
-        this.qoob.storage.__('view_page_in_the_preview_mode', ''),
-        this.qoob.storage.__('preview_mode_cant_reach_block_editting', ''),
-        this.qoob.storage.__('activate_autosave', '')
+        this.qoob.storage.__('add_block_both_by_dragging', 'You can add block both by dragging preview picture or by clicking on it.'),
+        this.qoob.storage.__('view_page_in_the_preview_mode', 'You can view page in the preview mode by clicking the up-arrow in the up right corner of the screen.'),
+        this.qoob.storage.__('preview_mode_cant_reach_block_editting', "While you are in preview mode - you can't reach block editting."),
+        this.qoob.storage.__('activate_autosave', "You can activate autosave of edited page by clicking 'Autosave' button in the toolbar in the top of your screen.")
     ];
 
     var rand = Math.random() * (this.tips.length - 1),
@@ -11030,7 +11030,7 @@ QoobStorage.prototype.loadQoobTemplates = function (cb) {
  * @param  {Array}   libsJson Array of lib.json files, previously gatherd.
  * @param  {Function} cb  Callback function.
  */
-QoobStorage.prototype.joinLibs = function (libsJson, cb) {
+QoobStorage.prototype.addLibs = function (libsJson, cb) {
     var self = this,
         totalBlocksCount = 0,
         currentBlocksCount = 0;
@@ -11311,7 +11311,7 @@ QoobStorage.prototype.getAssets = function (libNames) {
  * Add translations to qoobData
  * @param  {Object} translations
  */
-QoobStorage.prototype.loadTranslations = function(translations) {
+QoobStorage.prototype.addTranslations = function(translations) {
     if (!translations)
         return;
 
@@ -11335,7 +11335,7 @@ QoobStorage.prototype.__ = function(title, defaultStr) {
     if(!title)
         return;
 
-    return this.getTranslations()[title] ? this.getTranslations()[title] : defaultStr;
+    return (this.getTranslations()[title] || defaultStr);
 };;
 /**
  * Utils for qoob
@@ -11479,46 +11479,44 @@ Qoob.prototype.activate = function() {
     });
     //Start loading data
     this.storage.loadQoobTemplates(function(err, qoobTemplates) {
-        self.storage.driver.loadTranslations(function(err, qoobTranslations) {
-            self.storage.loadTranslations(qoobTranslations);
+        self.storage.driver.loadQoobData(function(err, qoobData) {
+            self.storage.addTranslations(qoobData.translations);
             self.loader.step();
-            self.storage.driver.loadLibsInfo(function(err, qoobLibs) {
+            self.storage.addLibs(qoobData.libs, function (err, qoobLibs) {
                 self.loader.step();
-                self.storage.joinLibs(qoobLibs, function (err, qoobLibs) {
-                    self.storage.loadPageData(function(err, pageData) {
+                self.storage.loadPageData(function(err, pageData) {
+                    self.loader.step();
+
+                    //If blocks loaded to viewPort
+                    self.layout.viewPort.once('blocks_loaded', function() {
+                        self.controller.triggerIframe();
+                        Backbone.history.start({ pushState: false });
                         self.loader.step();
+                    });
 
-                        //If blocks loaded to viewPort
-                        self.layout.viewPort.once('blocks_loaded', function() {
-                            self.controller.triggerIframe();
+                    //If iframe ready to load blocks
+                    self.layout.viewPort.once('iframe_loaded', function() {
+                        self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
+                        //Start loading blocks
+                        if (pageData && pageData.blocks.length > 0) {
+                            self.controller.load(pageData.blocks);
+                        } else {
                             Backbone.history.start({ pushState: false });
+                            //Skip counter for blocks
+                            self.layout.viewPort.blocksCounter = null;
                             self.loader.step();
-                        });
+                            
+                            // if first start page
+                            self.layout.viewPort.createBlankBlock();
+                        }
+                        jQuery('#lib-select').selectpicker();
 
-                        //If iframe ready to load blocks
-                        self.layout.viewPort.once('iframe_loaded', function() {
-                            self.layout.viewPort.getWindowIframe().onbeforeunload = function(){return false;};
-                            //Start loading blocks
-                            if (pageData && pageData.blocks.length > 0) {
-                                self.controller.load(pageData.blocks);
-                            } else {
-                                Backbone.history.start({ pushState: false });
-                                //Skip counter for blocks
-                                self.layout.viewPort.blocksCounter = null;
-                                self.loader.step();
-                                
-                                // if first start page
-                                self.layout.viewPort.createBlankBlock();
-                            }
-                            jQuery('#lib-select').selectpicker();
+                    });
+                    //Render layout
+                    jQuery('body').prepend(self.layout.render().el);
+                    self.layout.resize();
 
-                        });
-                        //Render layout
-                        jQuery('body').prepend(self.layout.render().el);
-                        self.layout.resize();
-
-                    }); 
-                });
+                }); 
             });
         });
         
