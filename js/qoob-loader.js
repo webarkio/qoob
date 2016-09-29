@@ -14,13 +14,7 @@ function QoobLoader(qoob) {
     this.shown = false;
     this.$elem = jQuery('#loader-wrapper');
     this.precents = 0;
-    this.tips = [
-        qoob_lng.tips.add_block_both_by_dragging,
-        qoob_lng.tips.view_page_in_the_preview_mode,
-        qoob_lng.tips.preview_mode_cant_reach_block_editting,
-        qoob_lng.tips.activate_autosave
-    ];
-    this.init();
+    this.tips = [];
 }
 
 /**
@@ -29,6 +23,13 @@ function QoobLoader(qoob) {
  * 
  */
 QoobLoader.prototype.init = function () {
+    this.tips = [
+        this.qoob.storage.__('add_block_both_by_dragging', 'You can add block both by dragging preview picture or by clicking on it.'),
+        this.qoob.storage.__('view_page_in_the_preview_mode', 'You can view page in the preview mode by clicking the up-arrow in the up right corner of the screen.'),
+        this.qoob.storage.__('preview_mode_cant_reach_block_editting', "While you are in preview mode - you can't reach block editting."),
+        this.qoob.storage.__('activate_autosave', "You can activate autosave of edited page by clicking 'Autosave' button in the toolbar in the top of your screen.")
+    ];
+
     var rand = Math.random() * (this.tips.length - 1),
             rand = rand.toFixed(),
             rand = parseInt(rand);
@@ -41,6 +42,7 @@ QoobLoader.prototype.init = function () {
  * @param {Integer} count
  */
 QoobLoader.prototype.addStep = function (count) {
+    this.total = count;
     this.left = this.left + (count || 1);
     if (this.left > 0 && !this.shown) {
         this.show();
@@ -64,11 +66,17 @@ QoobLoader.prototype.progressBarAnimate = function () {
  * @param {Integer} count
  */
 QoobLoader.prototype.step = function (count) {
+    if (this.left == this.total) {
+        this.init();
+    }
+
     if (this.precents < 100) {
         this.precents += 25;
         this.progressBarAnimate();
     }
+
     this.left = this.left - (count || 1);
+
     if (this.left === 0 && this.shown) {
         this.hide();
     }

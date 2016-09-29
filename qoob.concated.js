@@ -7780,9 +7780,11 @@ var QoobBlockView = Backbone.View.extend({
         this.listenTo(this.model, 'change', this.render);
     },
     render: function(event) {
-        var self = this;
+        var self = this,
+            params = {name: self.model.get('template'), lib: self.model.get('lib')}
+
         //Start loading template for block
-        this.storage.getBlockTemplate(self.model.get('template'), function(err, template){
+        this.storage.getBlockTemplate(params, function(err, template){
             var config = self.storage.getBlockConfig(self.model.get('template'));
             var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
             var tplAdapter = QoobExtensions.templating[tplAdapterType];
@@ -7790,10 +7792,6 @@ var QoobBlockView = Backbone.View.extend({
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
             self.trigger('loaded');
             self.controller.triggerIframe();
-
-            if (event) {
-                self.controller.scrollTo(event.id);
-            }
         });
         return self;
     },
@@ -7840,7 +7838,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
         
         this.innerBlock.once('loaded', function () {
 
-            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": qoob_lng.block.block_droppable_preview});
+            var droppable = _.template(self.storage.qoobTemplates['block-droppable-preview'])({"blockId": self.model.id, "text": this.storage.__('block_droppable_preview', 'Drag here to creative new block')});
             var overlay = _.template(self.storage.qoobTemplates['block-overlay-preview'])({"blockId": self.model.id});
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
             self.$el.addClass('content-show content-block-outer');
@@ -7852,7 +7850,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
             self.controller.layout.viewPort.getWindowIframe().focus();
         });
         //Add 'please wait' template while loading
-        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": qoob_lng.block.block_pleasewait_preview}));
+        self.$el.html(_.template(this.storage.getQoobTemplate('block-pleasewait-preview'))({"text": this.storage.__('block_pleasewait_preview', 'Please wait')}));
 
         this.innerBlock.render();
         return this;
@@ -7868,12 +7866,14 @@ var QoobBlockWrapperView = Backbone.View.extend({
             tolerance: "pointer",
             drop: function (event, ui) {
                 var dropElement = jQuery(this);
-                //get template id
-                var templateId = ui.draggable.attr("id").replace("preview-block-", "");
+                //get block name
+                var blockName = ui.draggable.attr("id").replace("preview-block-", "");
                 //get after id
                 var beforeId = dropElement.attr("id").replace("droppable-", "");
+                // get lib
+                var blockLib = ui.draggable.data('lib');
                 // add new block
-                self.controller.addNewBlock(templateId, beforeId);
+                self.controller.addNewBlock({name: blockName, lib: blockLib}, beforeId);
             }
         });
     },
@@ -8142,7 +8142,10 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend(
             'click .preview-block': 'clickPreviewBlock'
         },
         clickPreviewBlock: function(evt){
-            this.controller.addNewBlock(evt.currentTarget.id.replace('preview-block-',''));
+            var name = evt.currentTarget.id.replace('preview-block-',''),
+                lib = this.$(evt.currentTarget).data('lib');
+
+            this.controller.addNewBlock({name: name, lib: lib});
         },
 
         /**
@@ -8230,7 +8233,7 @@ var QoobMenuView = Backbone.View.extend({
         this.model.on("block_delete", this.deleteSettings.bind(this));
     },
     addSettings: function(model) {
-        var item = _.findWhere(this.storage.getBlocksByGroup(), { name: model.get('template') });
+        var item = this.storage.getBlock(model.get('template'), model.get('lib'));
         this.addView(new QoobMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
     },
     /**
@@ -8491,7 +8494,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
                 className: 'settings-block'
             });
             
-            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': qoob_lng.menu.back, 'move': qoob_lng.menu.move})).find('.settings-blocks').prepend(settingsBlock.render().el);
+            this.$el.html(_.template(this.storage.qoobTemplates['menu-settings-preview'])({config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move')})).find('.settings-blocks').prepend(settingsBlock.render().el);
             
             return this;
         },
@@ -8503,7 +8506,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
          * @returns {Boolean}
          */
         clickDelete: function() {
-            var alert = confirm(qoob_lng.confirm_delete_block);
+            var alert = confirm(this.storage.__('confirm_delete_block', 'Are you sure you want to delete the block?'));
             if (!alert) {
                 return false;
             }
@@ -8574,10 +8577,10 @@ var QoobToolbarView = Backbone.View.extend({
      */
     render: function() {
         var data = {
-            "autosave": qoob_lng.autosave,
-            "save": qoob_lng.save,
-            "exit": qoob_lng.exit,
-            "libs": this.storage.qoobData,
+            "autosave": this.storage.__('autosave', 'Autosave'),
+            "save": this.storage.__('save', 'Save'),
+            "exit": this.storage.__('exit', 'Exit'),
+            "libs": this.storage.qoobData.libs,
             "curLib": this.storage.currentLib
         };
         this.$el.html(_.template(this.storage.getQoobTemplate('qoob-toolbar-preview'))(data));
@@ -8692,8 +8695,8 @@ var QoobViewportView = Backbone.View.extend(
             return this;
         },
         iframeLoaded: function() {
-            this.trigger('iframe_loaded');
             this.triggerIframe();
+            this.trigger('iframe_loaded');
         },
         /**
          * Shows edit buttons, shadowing other blocks
@@ -8717,6 +8720,7 @@ var QoobViewportView = Backbone.View.extend(
             this.getIframeContents().find('#qoob-blocks').removeClass('preview');
         },
         setDeviceMode: function(mode) {
+            var self = this;
             this.deviceMode = mode;
             var size = {
                 'pc': {
@@ -8735,7 +8739,12 @@ var QoobViewportView = Backbone.View.extend(
                     'width': '667px'
                 }
             };
-            this.getIframe().stop().animate(size[mode]);
+            this.getIframe().stop().animate(size[mode], 500, function(){
+                currentRoute = self.controller.current();
+                if (currentRoute.route == 'startEditBlock') {
+                    self.controller.scrollTo(currentRoute.params[0]);
+                }
+            });
         },
         /**
          * Resize qoob content
@@ -8841,7 +8850,7 @@ var QoobViewportView = Backbone.View.extend(
             // Trigger change qoob blocks for theme
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').trigger('change');
-            iframe.jQuery('a').attr('onclick', 'return false;');
+            iframe.jQuery('a, .btn, input[type="submit"]').attr('onclick', 'return false;');
         },
         getIframe: function() {
             return this.$el.find('#qoob-iframe');
@@ -8875,7 +8884,7 @@ var QoobViewportView = Backbone.View.extend(
          */
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])({"text": qoob_lng.block.block_default_blank}));
+            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])({"text": this.storage.__('block_default_blank', 'First of all you need add block')}));
         }
     });
 ;
@@ -8988,7 +8997,7 @@ var AccordionFlipView = QoobFieldView.extend(
                     controller: this.controller,
                     parentId: this.model.id
                 });
-                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': qoob_lng.menu.back}));
+                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': this.storage.__('back', 'Back')}));
                 this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
                 return this;
             },
@@ -9238,8 +9247,8 @@ Fields.accordion = QoobFieldView.extend(
                 "label": this.settings.label,
                 "uniqueId": this.getUniqueId(),
                 "settings": settings,
-                'add_component': qoob_lng.fields.add_component,
-                'drag_to_delete': qoob_lng.fields.drag_to_delete
+                'add_component': this.storage.__('add_component', 'Add component'),
+                'drag_to_delete': this.storage.__('drag_to_delete', 'Drag to delete')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -9710,7 +9719,7 @@ Fields.image = QoobFieldView.extend(
                     "name": this.settings.name,
                     "images": this.settings.presets,
                     "value": this.getValue(),
-                    'media_center': qoob_lng.fields.media_center
+                    'media_center': this.storage.__('media_center', 'Media Center')
                 };
 
                 if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -10049,9 +10058,9 @@ var IconCenterView = Backbone.View.extend(
             render: function () {
                 //Creating layout
                 this.$el.html(this.tpl({
-                    back: qoob_lng.menu.back,
-                    all: qoob_lng.fields.all,
-                    tags: qoob_lng.fields.tags,
+                    back: this.storage.__('back', 'Back'),
+                    all: this.storage.__('all', 'all'),
+                    tags: this.storage.__('tags', 'Tags'),
                     icons: this.icons
                 }));
 
@@ -10234,10 +10243,10 @@ var ImageCenterView = Backbone.View.extend(
                     curSrc: this.curSrc,
                     assets: this.assets,
                     hideDeleteButton: this.hideDeleteButton,
-                    back: qoob_lng.menu.back,
-                    all: qoob_lng.fields.all,
-                    tags: qoob_lng.fields.tags,
-                    image_url: qoob_lng.fields.image_url
+                    back: this.storage.__('back', 'Back'),
+                    all: this.storage.__('all', 'all'),
+                    tags: this.storage.__('tags', 'Tags'),
+                    image_url: this.storage.__('image_url', 'Image url')
                 }));
 
                 this.afterRender();
@@ -10374,9 +10383,9 @@ var ImageCenterView = Backbone.View.extend(
             imgUrlUpload: function () {
                 //Create media upload frame
                 var mcFrame = wp.media({
-                    title: qoob_lng.fields.media_title,
+                    title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
                     button: {
-                        text: qoob_lng.fields.media_text_button
+                        text: this.storage.__('media_text_button' ,'Use this media')
                     },
                     multiple: false  // Set to true to allow multiple files to be selected  
                 });
@@ -10472,10 +10481,10 @@ var VideoCenterView = Backbone.View.extend(
             this.videos = videos;
             //Creating layout
             this.$el.html(this.tpl({
-                back: qoob_lng.menu.back,
-                all: qoob_lng.fields.all,
-                tags: qoob_lng.fields.tags,
-                video_url: qoob_lng.fields.video_url,
+                back: this.storage.__('back' ,'Back'),
+                all: this.storage.__('all' ,'all'),
+                tags: this.storage.__('tags' ,'Tags'),
+                video_url: this.storage.__('video_url' ,'Video url'),
                 videos: this.videos
             }));
 
@@ -10618,9 +10627,9 @@ var VideoCenterView = Backbone.View.extend(
         videoUrlUpload: function() {
             //Create media upload frame
             var mcFrame = wp.media({
-                title: qoob_lng.fields.media_title,
+                title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
                 button: {
-                    text: qoob_lng.fields.media_text_button
+                    text: this.storage.__('media_text_button' ,'Use this media')
                 },
                 multiple: false // Set to true to allow multiple files to be selected  
             });
@@ -10635,7 +10644,7 @@ var VideoCenterView = Backbone.View.extend(
                     if (format === 'mp4' || format === 'ogv'|| format === 'webm') {
                         this.$el.find('.video-url').val(url).trigger('change');
                     } else {
-                        alert(qoob_lng.fields.alert_error_format_file);
+                        alert(this.storage.__('alert_error_format_file' ,'This file is not supposed to have correct format. Try another one.'));
                     }
                 }
             }.bind(this));
@@ -10764,13 +10773,20 @@ var QoobController = Backbone.Router.extend({
             this.storage.driver.exit(this.storage.pageId);
         }
     },
-    addNewBlock: function (templateId, afterId) {
-        this.addBlock(QoobUtils.getDefaultSettings(this.storage.getBlocksByGroup(), templateId), afterId);
+    addNewBlock: function (blockParams, afterId) {
+        var block = this.storage.getBlock(blockParams.name, blockParams.lib),
+            params = QoobUtils.getDefaultSettings(block, block.name);
+        
+        params.lib = blockParams.lib;
+
+        this.addBlock(params, afterId);
     },
     addBlock: function (values, afterId) {
         var model = QoobUtils.createModel(values);
+
         this.pageModel.addBlock(model, afterId);
         this.scrollTo(model.id);
+
         // Remove empty div for mobile
         if (jQuery('#qoob-viewport').find('div').length > 0) {
             jQuery('#qoob-viewport').find('div').remove();
@@ -10825,6 +10841,33 @@ var QoobController = Backbone.Router.extend({
      */
     scrollTo: function (modelId) {
         this.layout.viewPort.scrollTo(modelId);
+    },
+    /**
+     * Get current params from Backbone.history.fragment
+     */
+    current : function() {
+        var Router = this,
+        fragment = Backbone.history.fragment,
+        routes = _.pairs(Router.routes),
+        route = null, params = null, matched;
+
+        matched = _.find(routes, function(handler) {
+            route = _.isRegExp(handler[0]) ? handler[0] : Router._routeToRegExp(handler[0]);
+            return route.test(fragment);
+        });
+
+        if(matched) {
+            // NEW: Extracts the params using the internal
+            // function _extractParameters 
+            params = Router._extractParameters(route, fragment);
+            route = matched[1];
+        }
+
+        return {
+            route: route,
+            fragment: fragment,
+            params: params
+        };
     }
 });
 ;
@@ -10844,13 +10887,7 @@ function QoobLoader(qoob) {
     this.shown = false;
     this.$elem = jQuery('#loader-wrapper');
     this.precents = 0;
-    this.tips = [
-        qoob_lng.tips.add_block_both_by_dragging,
-        qoob_lng.tips.view_page_in_the_preview_mode,
-        qoob_lng.tips.preview_mode_cant_reach_block_editting,
-        qoob_lng.tips.activate_autosave
-    ];
-    this.init();
+    this.tips = [];
 }
 
 /**
@@ -10859,6 +10896,13 @@ function QoobLoader(qoob) {
  * 
  */
 QoobLoader.prototype.init = function () {
+    this.tips = [
+        this.qoob.storage.__('add_block_both_by_dragging', 'You can add block both by dragging preview picture or by clicking on it.'),
+        this.qoob.storage.__('view_page_in_the_preview_mode', 'You can view page in the preview mode by clicking the up-arrow in the up right corner of the screen.'),
+        this.qoob.storage.__('preview_mode_cant_reach_block_editting', "While you are in preview mode - you can't reach block editting."),
+        this.qoob.storage.__('activate_autosave', "You can activate autosave of edited page by clicking 'Autosave' button in the toolbar in the top of your screen.")
+    ];
+
     var rand = Math.random() * (this.tips.length - 1),
             rand = rand.toFixed(),
             rand = parseInt(rand);
@@ -10871,6 +10915,7 @@ QoobLoader.prototype.init = function () {
  * @param {Integer} count
  */
 QoobLoader.prototype.addStep = function (count) {
+    this.total = count;
     this.left = this.left + (count || 1);
     if (this.left > 0 && !this.shown) {
         this.show();
@@ -10894,11 +10939,17 @@ QoobLoader.prototype.progressBarAnimate = function () {
  * @param {Integer} count
  */
 QoobLoader.prototype.step = function (count) {
+    if (this.left == this.total) {
+        this.init();
+    }
+
     if (this.precents < 100) {
         this.precents += 25;
         this.progressBarAnimate();
     }
+
     this.left = this.left - (count || 1);
+
     if (this.left === 0 && this.shown) {
         this.hide();
     }
@@ -10948,7 +10999,7 @@ if (typeof module !== 'undefined' && module.exports) {
 function QoobStorage(options) {
     this.pageId = options.pageId || null;
     this.qoobTemplates = null;
-    this.qoobData = null;
+    this.qoobData = {};
     this.pageData = null;
     this.blockSettingsViewData = [];
     this.templates = [];
@@ -10979,7 +11030,7 @@ QoobStorage.prototype.loadQoobTemplates = function (cb) {
  * @param  {Array}   libsJson Array of lib.json files, previously gatherd.
  * @param  {Function} cb  Callback function.
  */
-QoobStorage.prototype.joinLibs = function (libsJson, cb) {
+QoobStorage.prototype.addLibs = function (libsJson, cb) {
     var self = this,
         totalBlocksCount = 0,
         currentBlocksCount = 0;
@@ -10989,37 +11040,32 @@ QoobStorage.prototype.joinLibs = function (libsJson, cb) {
             totalBlocksCount += blocks.blocks.length;
     });
 
-    for (var i = 0; i < libsJson.length; i++) {
-        for (var j = 0; j < libsJson[i].blocks.length; j++) {
-            var proxy = {
-                i: i,
-                j: j,
-                success: function(data){
-                    data.url = libsJson[this.i].blocks[this.j].url;
-                    var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[this.i].blocks);
-                    blockData.name = libsJson[this.i].blocks[this.j].name;
-                    libsJson[this.i].blocks[this.j] = blockData;
-                    currentBlocksCount++;
-                    if (currentBlocksCount === totalBlocksCount) {
-                        // Callback after all done
-                        self.qoobData = libsJson;
-                        cb(null, libsJson);
-                    }
-                },
-                fail: function(error) {
-                    console.log(error);
-                    currentBlocksCount++;
-                    if (currentBlocksCount === totalBlocksCount) {
-                        // Callback after all done
-                        self.qoobData = libsJson;
-                        cb(null, libsJson);
-                    }
-                }
-            };
-
-            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', proxy.success.bind(proxy)).fail(proxy.fail.bind(proxy));
+    var success = function(i, j, data) {
+        data.url = libsJson[i].blocks[j].url;
+        var blockData = QoobStorage.parseBlockConfigMask(data, libsJson[i].blocks);
+        blockData.name = libsJson[i].blocks[j].name;
+        libsJson[i].blocks[j] = blockData;
+        currentBlocksCount++;
+        if (currentBlocksCount === totalBlocksCount) {
+            // Callback after all done
+            self.qoobData.libs = libsJson;
+            cb(null, libsJson);
         }
-    }
+    };
+
+    var fail = function(i, j, error) {
+        console.log(error);
+        currentBlocksCount++;
+        if (currentBlocksCount === totalBlocksCount) {
+            // Callback after all done
+            self.qoobData.libs = libsJson;
+            cb(null, libsJson);
+        }
+    };
+
+    for (var i = 0; i < libsJson.length; i++)
+        for (var j = 0; j < libsJson[i].blocks.length; j++)
+            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
 };
 
 /**
@@ -11056,7 +11102,7 @@ QoobStorage.parseBlockConfigMask = function (block, blocks) {
  */
 QoobStorage.prototype.getGroups = function (libNames) {
     var result = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -11087,7 +11133,7 @@ QoobStorage.prototype.getGroups = function (libNames) {
  */
 QoobStorage.prototype.getBlocksByGroup = function (group, libNames) {
     var result = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -11103,6 +11149,31 @@ QoobStorage.prototype.getBlocksByGroup = function (group, libNames) {
     } 
     
     return result;
+};
+
+/**
+ * Get block or blocks array by specified params
+ * 
+ */
+QoobStorage.prototype.getBlock = function (name, lib) {
+    var block,
+        blocks = [];
+
+    this.qoobData.libs.map(function(data) {
+        blocks = blocks.concat(data.blocks);
+    });
+
+    if (!name)
+        return blocks;
+
+    var searchObj = {name: name};
+
+    if (!!lib) 
+        searchObj.lib = lib;
+
+    block = _.findWhere(blocks, searchObj);
+
+    return block;
 };
 
 /**
@@ -11146,8 +11217,8 @@ QoobStorage.prototype.getBlockConfig = function (templateId) {
  * @param {String} name Block's name.
  * @param {Function} cb A callback to run.
  */
-QoobStorage.prototype.loadTemplate = function(name, cb) {
-    var curBlock = _.findWhere(this.getBlocksByGroup(), {name: name}),
+QoobStorage.prototype.loadTemplate = function(params, cb) {
+    var curBlock = this.getBlock(params.name, (!!params.lib ? params.lib : null)),
         urlTemplate = curBlock.url + curBlock.template;
 
     jQuery(document).ready(function($) {
@@ -11174,20 +11245,20 @@ QoobStorage.prototype.loadTemplate = function(name, cb) {
  * @param {Number} itemId
  * @param {getTemplateCallback} cb - A callback to run.
  */
-QoobStorage.prototype.getBlockTemplate = function (templateId, cb) {
-    var self = this;
+QoobStorage.prototype.getBlockTemplate = function (params, cb) {
+    var self = this,
+        searchObj = {name: params.name};
+    if (!!params.lib) {
+        searchObj.lib = params.lib;
+    }
     //FIXME
-    if (this.templates.length > 0 && _.findWhere(this.templates, {
-        id: templateId
-    })) {
-        var item = _.findWhere(this.templates, {
-            id: templateId
-        });
-        cb(null, item.template);
+    if (this.templates.length > 0 && _.findWhere(this.templates, searchObj)) {
+        cb(null, _.findWhere(this.templates, searchObj).template);
     } else {
-        this.loadTemplate(templateId, function (err, template) {
+        this.loadTemplate(params, function (err, template) {
             self.templates.push({
-                id: templateId,
+                id: params.name,
+                lib: params.lib,
                 template: template
             });
             cb(null, template);
@@ -11218,7 +11289,7 @@ QoobStorage.prototype.save = function (json, html, cb) {
  */
 QoobStorage.prototype.getAssets = function (libNames) {
     var assets = [],
-        data = this.qoobData;
+        data = this.qoobData.libs;
 
     if (!!libNames) {
         data = data.filter(function (lib) {
@@ -11234,6 +11305,37 @@ QoobStorage.prototype.getAssets = function (libNames) {
     }
 
     return assets;
+};
+
+/**
+ * Add translations to qoobData
+ * @param  {Object} translations
+ */
+QoobStorage.prototype.addTranslations = function(translations) {
+    if (!translations)
+        return;
+
+    this.qoobData.translations = translations;
+
+    return;
+};
+
+/**
+ * Get translation object from qoobData
+ * @return {Object} Translations
+ */
+QoobStorage.prototype.getTranslations = function() {
+    if(!this.qoobData.translations)
+        return;
+
+    return this.qoobData.translations;
+}; 
+
+QoobStorage.prototype.__ = function(title, defaultStr) {
+    if(!title)
+        return;
+
+    return (this.getTranslations()[title] || defaultStr);
 };;
 /**
  * Utils for qoob
@@ -11302,18 +11404,28 @@ var QoobUtils = {
     /**
      * Get default settings
      *
-     * @param {integer} templateId
+     * @param {String} blockName
      */
-    getDefaultSettings: function(items, templateId) {
+    getDefaultSettings: function(items, blockName) {
         // get config from storage qoobData
         //qoob.storage.qoobData.items
-        var values = {};
-        var settings = _.findWhere(items, { name: templateId }).settings;
-        var defaults = (_.findWhere(items, { name: templateId }).defaults);
+        var values = {},
+            settings = {},
+            defaults = {};
+
+        if(Array.isArray(items)) {
+            settings = _.findWhere(items, { name: blockName }).settings;
+            defaults = _.findWhere(items, { name: blockName }).defaults;
+        } else {
+            settings = items.settings;
+            defaults = items.defaults;
+        }
+        
         for (var i = 0; i < settings.length; i++) {
             values[settings[i].name] = defaults[settings[i].name];
         }
-        values.template = templateId;
+        
+        values.template = blockName;
 
         return values;
     }
@@ -11329,6 +11441,8 @@ var QoobUtils = {
 //module.exports.Qoob = Qoob;
 function Qoob(options) {
 
+    this.storage = options.storage;
+
     this.loader = new QoobLoader(this);
 
     this.options = {
@@ -11337,7 +11451,6 @@ function Qoob(options) {
     };
     _.extend(this.options, options);
 
-    this.storage = options.storage;
     this.controller = new QoobController();
 
     this.pageModel = new PageModel();
@@ -11366,10 +11479,11 @@ Qoob.prototype.activate = function() {
     });
     //Start loading data
     this.storage.loadQoobTemplates(function(err, qoobTemplates) {
-        self.loader.step();
-        self.storage.driver.loadLibsInfo(function(err, qoobLibs) {
+        self.storage.driver.loadQoobData(function(err, qoobData) {
+            self.storage.addTranslations(qoobData.translations);
             self.loader.step();
-            self.storage.joinLibs(qoobLibs.libs, function (err, qoobLibs) {
+            self.storage.addLibs(qoobData.libs, function (err, qoobLibs) {
+                self.loader.step();
                 self.storage.loadPageData(function(err, pageData) {
                     self.loader.step();
 
@@ -11398,7 +11512,6 @@ Qoob.prototype.activate = function() {
                         jQuery('#lib-select').selectpicker();
 
                     });
-
                     //Render layout
                     jQuery('body').prepend(self.layout.render().el);
                     self.layout.resize();
@@ -11406,5 +11519,6 @@ Qoob.prototype.activate = function() {
                 }); 
             });
         });
+        
     });
 };
