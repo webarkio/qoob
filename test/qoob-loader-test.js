@@ -16,7 +16,7 @@ QUnit.test("addStep", function(assert) {
 
 QUnit.test("step", function(assert) {
     var done = assert.async();
-    qoobLoader.step(0);
+    qoobLoader.step();
     _.delay(function() {
             assert.equal(qoobLoader.left, 3);
             done();
@@ -26,7 +26,7 @@ QUnit.test("step", function(assert) {
 
 QUnit.test("show", function(assert) {
     var done = assert.async();
-    qoobLoader.show()
+    qoobLoader.show();
     assert.equal(qoobLoader.shown, true);
     qoobLoader.show(2);
     assert.equal(qoobLoader.shown, true);

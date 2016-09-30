@@ -13,6 +13,16 @@ var mockStorageViewport = {
     pageId: 1
 };
 
+var mockController = {
+    current: function() {
+        return {
+            route: false,
+            fragment: false,
+            params: false
+        };
+    }
+};
+
 //============START TEST===============
 QUnit.test("initialize", function(assert) {
 
@@ -141,7 +151,8 @@ QUnit.test("setDeviceMode", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
         model: new Backbone.Model(),
-        storage: mockStorageViewport
+        storage: mockStorageViewport,
+        controller: mockController
     });
 
     viewport.on('iframe_loaded', function() {
@@ -150,11 +161,9 @@ QUnit.test("setDeviceMode", function(assert) {
         assert.equal(viewport.deviceMode, 'pc');
         viewport.setDeviceMode('tablet-horizontal');
         viewport.resize();
-       //? assert.equal(viewport.getIframe().width(), '1024');
         assert.equal(viewport.deviceMode, 'tablet-horizontal');
         viewport.remove();
         done();
-
     });
 
     $('body').append(viewport.render().$el);
@@ -202,7 +211,6 @@ QUnit.test("triggerQoobBlock", function(assert) {
         assert.ok(iframe.jQuery('#qoob-blocks').trigger('change'));
         viewport.remove();
         done();
-
     });
 
     $('body').append(viewport.render().$el);
@@ -222,7 +230,6 @@ QUnit.test("getIframe", function(assert) {
         assert.deepEqual(viewport.$el.find('#qoob-iframe'), viewport.getIframe());
         viewport.remove();
         done();
-
     });
 
     $('body').append(viewport.render().$el);
