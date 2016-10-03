@@ -71,10 +71,14 @@ QoobStorage.prototype.addLibs = function (libsJson, cb) {
             cb(null, libsJson);
         }
     };
-
+    //Config url
     for (var i = 0; i < libsJson.length; i++)
         for (var j = 0; j < libsJson[i].blocks.length; j++)
-            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            if (!!libsJson[i].blocks[j].config_url) {
+                jQuery.getJSON(libsJson[i].blocks[j].config_url, success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            } else {
+                jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            }
 };
 
 /**
