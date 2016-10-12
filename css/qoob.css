@@ -785,7 +785,7 @@ body {
 
 #qoob-toolbar .lib-select .bootstrap-select li {
     margin: 0;
-    padding: 13px 20px;
+    padding: 0;
     background-color: #606163;
 }
 
@@ -794,7 +794,7 @@ body {
 }
 
 #qoob-toolbar .lib-select .bootstrap-select li a {
-    padding: 0;
+    padding: 13px 20px;
     font-size: 16px;
     color: #fff;
     background: none;
