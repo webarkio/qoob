@@ -173,13 +173,6 @@ Fields.accordion = QoobFieldView.extend(
                 //scroll: true,
                 start: function(event, ui) {
                     self.controller.layout.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");
-                    if (self.$(this).find(".tinyMCE").length) {
-                        self.$(this).find(".tinyMCE").each(function() {
-                            try {
-                                tinymce.execCommand("mceRemoveEditor", false, self.$(this).attr("id"));
-                            } catch (e) {}
-                        });
-                    }
                     jQuery(this).addClass('is-droppable');
                 },
                 stop: function(event, ui) {
@@ -191,10 +184,12 @@ Fields.accordion = QoobFieldView.extend(
                     // Refresh accordion to handle new order
                     self.$(this).accordion("refresh");
                     self.controller.layout.viewPort.getIframeContents().find(".droppable").removeAttr("style");
+
                     // Refresh tinyMCE
-                    if (self.$(this).find(".tinyMCE").length) {
-                        self.$(this).find(".tinyMCE").each(function() {
+                    if (self.$(this).find(".textarea_html").length) {
+                        self.$(this).find(".textarea_html").each(function() {
                             try {
+                                tinymce.execCommand("mceRemoveEditor", false, self.$(this).attr("id"));
                                 tinymce.execCommand("mceAddEditor", true, self.$(this).attr("id"));
                             } catch (e) {}
                         });
