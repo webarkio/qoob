@@ -45,6 +45,7 @@ var QoobMenuView = Backbone.View.extend({
     },
 
     draggable: function() {
+        var self = this;
         this.$el.find('.preview-block').draggable({
             appendTo: "body",
             helper: "clone",
@@ -55,9 +56,12 @@ var QoobMenuView = Backbone.View.extend({
             containment:'body',
             start: function(event, ui) {
                 jQuery('.droppable').show();
+                self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").hide();
+
             },
             stop: function(event, ui) {
                 jQuery('.droppable').hide();
+                self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").show();
             }
         });
     },

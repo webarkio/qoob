@@ -42,6 +42,9 @@ var mockStorageMenuSettings = {
         'menu-settings-preview': mockTemplateMenuSettings,
         '.settings-blocks': "<div class=\"settings-item\"><div class=\"title\">Header</div></div>", 
         'field-text-preview': '<div class="title"><%= label %></div><input class="input-text" type="text" name="<%= name %>" value="<%= value %>">'
+    },
+    __: function(s1, s2) {
+        return s1;
     }
 };
 

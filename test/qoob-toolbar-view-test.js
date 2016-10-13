@@ -39,6 +39,12 @@ var mockToolbarStorage = {
         if (templateName == 'qoob-toolbar-preview') {
             return mockToolbarTemplate;
         }
+    },
+    __: function(s1, s2) {
+        return s1;
+    },
+    qoobData: {
+        libs: []
     }
 };
 

@@ -71,10 +71,14 @@ QoobStorage.prototype.addLibs = function (libsJson, cb) {
             cb(null, libsJson);
         }
     };
-
+    //Config url
     for (var i = 0; i < libsJson.length; i++)
         for (var j = 0; j < libsJson[i].blocks.length; j++)
-            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            if (!!libsJson[i].blocks[j].config_url) {
+                jQuery.getJSON(libsJson[i].blocks[j].config_url, success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            } else {
+                jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            }
 };
 
 /**
@@ -84,15 +88,18 @@ QoobStorage.prototype.addLibs = function (libsJson, cb) {
  * @return {Object}        Parsed block config
  */
 QoobStorage.parseBlockConfigMask = function (block, blocks) {
-    block = JSON.stringify(block).replace(/%theme_url%|%block_url%|%block_url\([^\)]+\)%/g, function(substr) {
+    block = JSON.stringify(block).replace(/%theme_url%|%block_url%\/|%block_url%|%block_url\([^\)]+\)%\/|%block_url\([^\)]+\)%/g, function(substr) {
         var mask = '';
+        
         switch(substr) {
             case '%theme_url%': mask = ajax.theme_url;
+                break;
+            case '%block_url%/': mask = block.url;
                 break;
             case '%block_url%': mask = block.url;
                 break;
             default:
-                var blockName = substr.replace(/%block_url\(|\)%/g, '');
+                var blockName = substr.replace(/%block_url\(|\)%\/|%block_url\(|\)%/g, '');
                 if (mask = _.findWhere(blocks, {name: blockName}))
                     mask = mask.url;
                 break;
@@ -286,7 +293,6 @@ QoobStorage.prototype.save = function (json, html, cb) {
         data: json,
         html: html
     };
-
     this.driver.savePageData(this.pageId, data, function (err, state) {
         cb(err, state);
     });
