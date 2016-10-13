@@ -107,7 +107,8 @@ var ImageCenterView = Backbone.View.extend(
              * Returning to main block settings on clicking back button
              * @returns {undefined}
              */
-            backward: function () {
+            backward: function (e) {
+                e.preventDefault();
                 this.controller.layout.menu.rotate(this.backId);
             },
             /**
