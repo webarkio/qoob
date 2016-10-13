@@ -88,15 +88,18 @@ QoobStorage.prototype.addLibs = function (libsJson, cb) {
  * @return {Object}        Parsed block config
  */
 QoobStorage.parseBlockConfigMask = function (block, blocks) {
-    block = JSON.stringify(block).replace(/%theme_url%|%block_url%|%block_url\([^\)]+\)%/g, function(substr) {
+    block = JSON.stringify(block).replace(/%theme_url%|%block_url%\/|%block_url%|%block_url\([^\)]+\)%\/|%block_url\([^\)]+\)%/g, function(substr) {
         var mask = '';
+        
         switch(substr) {
             case '%theme_url%': mask = ajax.theme_url;
+                break;
+            case '%block_url%/': mask = block.url;
                 break;
             case '%block_url%': mask = block.url;
                 break;
             default:
-                var blockName = substr.replace(/%block_url\(|\)%/g, '');
+                var blockName = substr.replace(/%block_url\(|\)%\/|%block_url\(|\)%/g, '');
                 if (mask = _.findWhere(blocks, {name: blockName}))
                     mask = mask.url;
                 break;
