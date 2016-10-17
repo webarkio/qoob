@@ -8258,6 +8258,7 @@ var QoobMenuView = Backbone.View.extend({
     },
 
     draggable: function() {
+        var self = this;
         this.$el.find('.preview-block').draggable({
             appendTo: "body",
             helper: "clone",
@@ -8268,9 +8269,12 @@ var QoobMenuView = Backbone.View.extend({
             containment:'body',
             start: function(event, ui) {
                 jQuery('.droppable').show();
+                self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").hide();
+
             },
             stop: function(event, ui) {
                 jQuery('.droppable').hide();
+                self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").show();
             }
         });
     },
@@ -9020,7 +9024,8 @@ var AccordionFlipView = QoobFieldView.extend(
                 // made by this view
                 this.model.off(null, null, this);
             },
-            backward: function () {
+            backward: function (e) {
+                e.preventDefault();
                 this.controller.layout.menu.rotate("settings-block-" + this.parentId);
             }
         });
@@ -9281,13 +9286,6 @@ Fields.accordion = QoobFieldView.extend(
                 //scroll: true,
                 start: function(event, ui) {
                     self.controller.layout.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");
-                    if (self.$(this).find(".tinyMCE").length) {
-                        self.$(this).find(".tinyMCE").each(function() {
-                            try {
-                                tinymce.execCommand("mceRemoveEditor", false, self.$(this).attr("id"));
-                            } catch (e) {}
-                        });
-                    }
                     jQuery(this).addClass('is-droppable');
                 },
                 stop: function(event, ui) {
@@ -9299,10 +9297,12 @@ Fields.accordion = QoobFieldView.extend(
                     // Refresh accordion to handle new order
                     self.$(this).accordion("refresh");
                     self.controller.layout.viewPort.getIframeContents().find(".droppable").removeAttr("style");
+
                     // Refresh tinyMCE
-                    if (self.$(this).find(".tinyMCE").length) {
-                        self.$(this).find(".tinyMCE").each(function() {
+                    if (self.$(this).find(".textarea_html").length) {
+                        self.$(this).find(".textarea_html").each(function() {
                             try {
+                                tinymce.execCommand("mceRemoveEditor", false, self.$(this).attr("id"));
                                 tinymce.execCommand("mceAddEditor", true, self.$(this).attr("id"));
                             } catch (e) {}
                         });
@@ -10104,7 +10104,8 @@ var IconCenterView = Backbone.View.extend(
              * Returning to main block settings on clicking back button
              * @returns {undefined}
              */
-            backward: function () {
+            backward: function (e) {
+                e.preventDefault();
                 this.controller.layout.menu.rotate(this.backId);
             },
             /**
@@ -10295,7 +10296,8 @@ var ImageCenterView = Backbone.View.extend(
              * Returning to main block settings on clicking back button
              * @returns {undefined}
              */
-            backward: function () {
+            backward: function (e) {
+                e.preventDefault();
                 this.controller.layout.menu.rotate(this.backId);
             },
             /**
@@ -10530,7 +10532,8 @@ var VideoCenterView = Backbone.View.extend(
          * Returning to main block settings on clicking back button
          * @returns {undefined}
          */
-        backward: function() {
+        backward: function(e) {
+            e.preventDefault();
             this.controller.layout.menu.rotate(this.backId);
         },
         /**
@@ -11062,10 +11065,14 @@ QoobStorage.prototype.addLibs = function (libsJson, cb) {
             cb(null, libsJson);
         }
     };
-
+    //Config url
     for (var i = 0; i < libsJson.length; i++)
         for (var j = 0; j < libsJson[i].blocks.length; j++)
-            jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            if (!!libsJson[i].blocks[j].config_url) {
+                jQuery.getJSON(libsJson[i].blocks[j].config_url, success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            } else {
+                jQuery.getJSON(libsJson[i].blocks[j].url + 'config.json', success.bind(null, i, j)).fail(fail.bind(null, i, j));
+            }
 };
 
 /**
@@ -11075,15 +11082,18 @@ QoobStorage.prototype.addLibs = function (libsJson, cb) {
  * @return {Object}        Parsed block config
  */
 QoobStorage.parseBlockConfigMask = function (block, blocks) {
-    block = JSON.stringify(block).replace(/%theme_url%|%block_url%|%block_url\([^\)]+\)%/g, function(substr) {
+    block = JSON.stringify(block).replace(/%theme_url%|%block_url%\/|%block_url%|%block_url\([^\)]+\)%\/|%block_url\([^\)]+\)%/g, function(substr) {
         var mask = '';
+        
         switch(substr) {
             case '%theme_url%': mask = ajax.theme_url;
+                break;
+            case '%block_url%/': mask = block.url;
                 break;
             case '%block_url%': mask = block.url;
                 break;
             default:
-                var blockName = substr.replace(/%block_url\(|\)%/g, '');
+                var blockName = substr.replace(/%block_url\(|\)%\/|%block_url\(|\)%/g, '');
                 if (mask = _.findWhere(blocks, {name: blockName}))
                     mask = mask.url;
                 break;
@@ -11277,7 +11287,6 @@ QoobStorage.prototype.save = function (json, html, cb) {
         data: json,
         html: html
     };
-
     this.driver.savePageData(this.pageId, data, function (err, state) {
         cb(err, state);
     });
