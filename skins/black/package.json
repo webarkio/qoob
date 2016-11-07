@@ -1,0 +1,33 @@
+{
+  "name": "qoob_black_skin",
+  "version": "1.0.0",
+  "description": "qoob_black_skin",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxazan/qoob.git"
+  },
+  "keywords": [
+    "qoob",
+    "builder"
+  ],
+  "author": "Maksym Pomazan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxazan/qoob/issues"
+  },
+  "homepage": "https://github.com/maxazan/qoob#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "load-grunt-tasks": "^3.2.0"
+  }
+}
