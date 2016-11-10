@@ -108,6 +108,7 @@ Loader.prototype.emmit = function(event, args) {
 Loader.prototype.start = function() {
     this.isStarted = true;
     this.emmit('start', [this.queue]);
+    this.progress();
     this.loadNext();
 };
 

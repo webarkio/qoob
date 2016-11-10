@@ -228,6 +228,6 @@ var QoobViewportView = Backbone.View.extend(
          */
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.qoobTemplates['block-default-blank'])({"text": this.storage.__('block_default_blank', 'First of all you need add block')}));
+            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.getSkinTemplate('block-default-blank'))({"text": this.storage.__('block_default_blank', 'First of all you need add block')}));
         }
     });

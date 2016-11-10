@@ -116,23 +116,25 @@ Skin.prototype.activate = function(options) {
 
     //If iframe ready to load blocks
     self.layout.viewPort.once('iframe_loaded', function() {
-
+    
         var iframe = self.layout.viewPort.getWindowIframe();
         iframe.loader.once('loaded', function() {
+            console.log('qoob front css loaded');
             self.layout.viewPort.getWindowIframe().onbeforeunload = function() {
                 return false;
             };
             //Start loading blocks
+            console.log(self.storage.pageData);
             if (self.storage.pageData && self.storage.pageData.blocks.length > 0) {
                 self.controller.load(self.storage.pageData.blocks);
             } else {
+                console.log('empty');
                 Backbone.history.start({ pushState: false });
                 //Skip counter for blocks
                 self.layout.viewPort.blocksCounter = null;
-                self.loader.step();
-
                 // if first start page
                 self.layout.viewPort.createBlankBlock();
+                $('#loader-wrapper').remove();
             }
             //FIXME: delete selectpicker use onlu CSS
             jQuery('#lib-select').selectpicker();

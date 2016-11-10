@@ -18,7 +18,7 @@ function QoobStarter(options) {
     this.options = options;
     this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + window.location.pathname + (window.location.pathname.indexOf("/", window.location.pathname.length - "/".length) !== -1 ? '' : '/') + "qoob/qoob/";
     this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
-    this.options.skins = this.options.skins || {'black': this.options.qoobUrl + 'skins/black/skin.js' };
+    this.options.skins = this.options.skins || { 'black': this.options.qoobUrl + 'skins/black/skin.js' };
     this.options.debug = this.options.debug || false;
     this.options.mode = this.options.mode || "prod";
     this.options.skin = this.options.skin || "black";
@@ -67,9 +67,18 @@ QoobStarter.prototype.startStage2 = function() {
         console.log("Staring Stage 2");
 
     this.options.driver.loadLibrariesData(function(err, libs) {
-        
-        if (self.options.debug)
+
+        if (self.options.debug) {
             console.log("Libs config loaded");
+        }
+        if (err) {
+            console.error("Libraries have been not loaded from driver " + self.options.driver.constructor.name + "." + err);
+            return;
+        }
+        if (typeof(libs) == 'undefined') {
+            console.error("Libraries have been not loaded from driver " + self.options.driver.constructor.name + ". Check 'loadLibrariesData' method.");
+            return;
+        }
 
         self.loader.once('complete', function() {
             if (self.options.debug)
@@ -81,17 +90,33 @@ QoobStarter.prototype.startStage2 = function() {
         });
 
         for (var i in libs) {
-            var res = libs[i].res;
-            for (var j = 0; j < res.length; j++) {
-                if (res[j].backend && res[j].backend == true) {
-                    self.loader.add(res[j]);
+            if (libs[i].res) {
+                var res = libs[i].res;
+                for (var j = 0; j < res.length; j++) {
+                    if (res[j].backend && res[j].backend == true) {
+                        self.loader.add(res[j]);
+                    }
                 }
             }
 
             var blocks = libs[i].blocks;
+            var libUrl = libs[i].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
+
             for (var j in blocks) {
-                var config = blocks[j].config_url || blocks[j].url + "config.json";
-                self.loader.add({ "type": "json", "name": libs[i].name + "_" + blocks[j].name, "src": config });
+                blocks[j].url = blocks[j].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
+
+                if (blocks[j].url.indexOf("http://") !== 0 && blocks[j].url.indexOf("https://") !== 0) {
+                    blocks[j].url = libUrl + blocks[j].url;
+                }
+                if (blocks[j].config_url) {
+                    if (blocks[j].config_url.indexOf("http://") !== 0 && blocks[j].config_url.indexOf("https://") !== 0) {
+                        blocks[j].config_url = libUrl + blocks[j].config_url.replace(/^\/+/g, ''); //Trim slashes in the begining
+                    }
+                } else {
+                    blocks[j].config_url = blocks[j].url + "config.json";
+                }
+
+                self.loader.add({ "type": "json", "name": libs[i].name + "_" + blocks[j].name, "src": blocks[j].config_url });
             }
         }
     });
@@ -108,6 +133,7 @@ QoobStarter.prototype.startStage3 = function() {
             console.log("Page data loaded");
 
         self.options.pageData = data;
+
         self.startStage4();
 
     });
@@ -127,7 +153,7 @@ QoobStarter.prototype.startStage4 = function() {
         self.loader.once('complete', function() {
             window.qoob.activate(self.options);
         });
-        var skinPrefix = self.options.skins[self.options.skin].replace("skin.js","");
+        var skinPrefix = self.options.skins[self.options.skin].replace("skin.js", "");
         self.loader.add(window.qoob.assets[self.options.mode], { "prefix": skinPrefix });
         self.loader.add(window.qoob.assets["all"], { "prefix": skinPrefix });
     });

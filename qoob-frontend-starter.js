@@ -12,7 +12,16 @@ jQuery.holdReady(true);
 
 function QoobStarter(options) {
     var self = this;
-    var loaderSrc = "qoob/qoob/loader.js";
+
+    if (!(options.driver instanceof Object)) {
+        throw new Error('Driver parameter mast be set!');
+    }
+
+    this.options = options;    
+    this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + window.location.pathname + (window.location.pathname.indexOf("/", window.location.pathname.length - "/".length) !== -1 ? '' : '/') + "qoob/qoob/";
+    this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
+
+    var loaderSrc = this.options.qoobUrl + "loader.js";
     var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute('src', loaderSrc);
@@ -22,11 +31,11 @@ function QoobStarter(options) {
             window.loader.once('complete', function() {
 
                 if (window.parent.frames['qoob-iframe']) {
-                    $('#qoob-blocks').empty();
+                    jQuery('#qoob-blocks').empty();
                     window.parent.jQuery('#qoob-iframe').trigger('libraries_loaded');
                     //call ready to build block event
                 } else {}
-                $.holdReady(false);
+                jQuery.holdReady(false);
             });
             for (var i = 0; i < data.length; i++) {
                 if (data[i].res) {
