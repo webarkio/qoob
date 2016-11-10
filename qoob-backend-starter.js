@@ -90,17 +90,24 @@ QoobStarter.prototype.startStage2 = function() {
         });
 
         for (var i in libs) {
+
+            var libUrl = libs[i].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
+
             if (libs[i].res) {
                 var res = libs[i].res;
                 for (var j = 0; j < res.length; j++) {
                     if (res[j].backend && res[j].backend == true) {
+                        if (res[j].src.indexOf("http://") !== 0 && res[j].src.indexOf("https://") !== 0) {
+                            res[j].src = libUrl + res[j].src.replace(/^\/+/g, ''); //Trim slashes in the begining
+                        }
+
                         self.loader.add(res[j]);
                     }
                 }
             }
 
             var blocks = libs[i].blocks;
-            var libUrl = libs[i].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
+
 
             for (var j in blocks) {
                 blocks[j].url = blocks[j].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
