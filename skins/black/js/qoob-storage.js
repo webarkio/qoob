@@ -45,6 +45,10 @@ QoobStorage.prototype.getGroups = function(libName) {
     return _.sortBy(groups, "position");
 };
 
+QoobStorage.prototype.upload = function(cb) {
+	this.driver.upload(cb);
+};
+
 /**
  * 
  * @param  {String} group   Group name for which to find blocks.
@@ -70,31 +74,6 @@ QoobStorage.prototype.getBlocksByGroup = function(group, libNames) {
 
     return result;
 };
-
-/**
- * Get block or blocks array by specified params
- * 
- */
-// QoobStorage.prototype.getBlock = function(lib, name) {
-//     var block,
-//         blocks = [];
-
-//     this.librariesData.map(function(data) {
-//         blocks = blocks.concat(data.blocks);
-//     });
-
-//     if (!name)
-//         return blocks;
-
-//     var searchObj = { name: name };
-
-//     if (!!lib)
-//         searchObj.lib = lib;
-
-//     block = _.findWhere(blocks, searchObj);
-
-//     return block;
-// };
 
 /**
  * 
@@ -130,7 +109,7 @@ QoobStorage.prototype.getBlockTemplate = function(libName, blockName, cb) {
         var lib = _.findWhere(this.librariesData, {"name": libName});
         var block  = _.findWhere(lib.blocks, {"name": blockName});
         var urlTemplate = block.url + block.template;
-        $.ajax({
+        jQuery.ajax({
             url: urlTemplate,
             type: 'GET',
             cache: false,
@@ -168,4 +147,29 @@ QoobStorage.prototype.save = function(json, html, cb) {
 
 QoobStorage.prototype.__ = function(title, defValue) {
     return defValue;
+};
+
+
+/**
+ * Getting all assets from storage
+ * @returns Array of assets
+ */
+QoobStorage.prototype.getAssets = function (libNames) {
+    var assets = [],
+        data = this.librariesData;
+
+    if (!!libNames) {
+        data = data.filter(function (lib) {
+            return libNames.indexOf(lib.name) !== -1;
+        });
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        for (var j = 0; j < data[i].blocks.length; j++) {
+            if (!!data[i].blocks[j].assets)
+                assets.push(data[i].blocks[j].assets);
+        }
+    }
+
+    return assets;
 };

@@ -111,7 +111,7 @@ Skin.prototype.activate = function(options) {
     self.layout.viewPort.once('blocks_loaded', function() {
         self.controller.triggerIframe();
         Backbone.history.start({ pushState: false });
-        $('#loader-wrapper').remove();
+        jQuery('#loader-wrapper').remove();
     });
 
     //If iframe ready to load blocks
@@ -134,7 +134,7 @@ Skin.prototype.activate = function(options) {
                 self.layout.viewPort.blocksCounter = null;
                 // if first start page
                 self.layout.viewPort.createBlankBlock();
-                $('#loader-wrapper').remove();
+                jQuery('#loader-wrapper').remove();
             }
             //FIXME: delete selectpicker use onlu CSS
             jQuery('#lib-select').selectpicker();

@@ -16,6 +16,7 @@ function QoobStarter(options) {
     }
 
     this.options = options;
+    this.options.skip = options.skip || [];
     this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + window.location.pathname + (window.location.pathname.indexOf("/", window.location.pathname.length - "/".length) !== -1 ? '' : '/') + "qoob/qoob/";
     this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
     this.options.skins = this.options.skins || { 'black': this.options.qoobUrl + 'skins/black/skin.js' };
@@ -42,7 +43,9 @@ QoobStarter.prototype.startStage1 = function() {
 
         self.loader = new Loader();
         self.options.loader = self.loader;
-
+        for (var i = 0; i < self.options.skip.length; i++) {
+            self.loader.loaded[self.options.skip[i]]=1;
+        }
         self.loader.add([
             { "type": "js", "name": "jquery", "src": self.options.qoobUrl + "libs/jquery.min.js" },
             { "type": "js", "name": "underscore", "src": self.options.qoobUrl + "libs/underscore.min.js", "dep": ["jquery"] },
@@ -166,6 +169,10 @@ QoobStarter.prototype.startStage4 = function() {
     });
 
     self.loader.add({ "type": "js", "src": this.options.skins[this.options.skin], "name": "skin" });
+    if(self.options.driver.assets){
+        self.loader.add(self.options.driver.assets);
+    }
+
 
 }
 
