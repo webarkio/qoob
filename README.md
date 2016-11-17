@@ -1,5 +1,17 @@
-# Core of qoob
+# Core of Qoob Page Builder 2.0
 
-[WordPress version of qoob](https://github.com/webarkio/wp_qoob)
+Qoob is Realtime Frontend Page Builder of New Generation. Qoob can be integrated in any framework or CMS.
 
-[HTML version of qoob](https://github.com/webarkio/html_qoob)
+[Main site](http://webark.com/qoob/) 
+
+[Documentation](http://webark.com/qoob/docs/) 
+
+[DEMO](http://webark.com/qoob/demo/)
+
+This is not installable core of qoob. So you can install finished version of qoob from here:
+
+[HTML Version of Qoob](https://github.com/webarkio/html_qoob)
+
+[WordPress Version of Qoob](https://github.com/webarkio/wp_qoob)
+
+

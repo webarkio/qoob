@@ -71,10 +71,10 @@ var VideoCenterView = Backbone.View.extend(
             this.videos = videos;
             //Creating layout
             this.$el.html(this.tpl({
-                back: this.storage.__('back' ,'Back'),
-                all: this.storage.__('all' ,'all'),
-                tags: this.storage.__('tags' ,'Tags'),
-                video_url: this.storage.__('video_url' ,'Video url'),
+                back: this.storage.__('back', 'Back'),
+                all: this.storage.__('all', 'all'),
+                tags: this.storage.__('tags', 'Tags'),
+                video_url: this.storage.__('video_url', 'Video url'),
                 videos: this.videos
             }));
 
@@ -211,37 +211,28 @@ var VideoCenterView = Backbone.View.extend(
             this.$el.find('.ajax-video chosen').removeClass('chosen');
             window.selectFieldVideo(this.$(evt.currentTarget).siblings()[0].value || this.curSrc);
         },
-        /**
-         * Insert inputed url into the model and trigger change
-         * 
-         */
-        videoUrlUpload: function() {
-            //Create media upload frame
-            var mcFrame = wp.media({
-                title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
-                button: {
-                    text: this.storage.__('media_text_button' ,'Use this media')
-                },
-                multiple: false // Set to true to allow multiple files to be selected  
-            });
-            //On submit - save submitted url
-            mcFrame.on('select', function() {
-                // Get media attachment details from the frame state
-                var attachment = mcFrame.state().get('selection').first().toJSON();
-                if (attachment.url) {
-                    var url = attachment.url,
-                        format = url.substring(url.lastIndexOf('.') + 1, url.length);
 
-                    if (format === 'mp4' || format === 'ogv'|| format === 'webm') {
+        videoUrlUpload: function() {
+            var self = this;
+
+            this.storage.upload(function(err, url) {
+                if (err) {
+                    return;
+                } else {
+                    var format = url.substring(url.lastIndexOf('.') + 1, url.length);
+
+                    if (format === 'mp4' || format === 'ogv' || format === 'webm') {
                         this.$el.find('.video-url').val(url).trigger('change');
                     } else {
-                        alert(this.storage.__('alert_error_format_file' ,'This file is not supposed to have correct format. Try another one.'));
+                        alert(this.storage.__('alert_error_format_file', 'This file is not supposed to have correct format. Try another one.'));
                     }
+
+
                 }
-            }.bind(this));
-            //Open media frame
-            mcFrame.open();
+            });
+
         },
+
         /**
          * Check if input is not empty and update model.
          * Use default src if it's empty. 

@@ -95,11 +95,15 @@ var QoobController = Backbone.Router.extend({
 
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
-    addBlock: function (values, afterId) {
+    addBlock: function (values, afterId, scroll=true) {
         var model = QoobUtils.createModel(values);
 
         this.pageModel.addBlock(model, afterId);
-        this.scrollTo(model.id);
+        this.layout.viewPort.addBlock(model, afterId);
+        this.layout.menu.addSettings(model, afterId);
+        if(scroll){
+            this.scrollTo(model.id);
+        }
 
         // Remove empty div for mobile
         if (jQuery('#qoob-viewport').find('div').length > 0) {
@@ -115,7 +119,13 @@ var QoobController = Backbone.Router.extend({
         this.navigate('index', {trigger: true});
     },
     load: function (blocks) {
-        this.pageModel.load(blocks);
+
+        for (var i = 0; i < blocks.length; i++) {
+            this.addBlock(blocks[i], null, false);
+            // var model = QoobUtils.createModel(blocks[i]);
+            // this.pageModel.addBlock(model);
+            console.log('create model');
+        }
     },
     setInnerSettingsView: function (view) {
         //Creating storage for views
@@ -135,6 +145,8 @@ var QoobController = Backbone.Router.extend({
     },
     deleteBlock: function (model) {
         this.pageModel.deleteBlock(model);
+        this.layout.viewPort.delBlockView(model);
+        this.layout.menu.deleteSettings(model);
         this.triggerIframe();
     },
     moveDownBlock: function (model) {

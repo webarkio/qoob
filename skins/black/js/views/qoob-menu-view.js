@@ -16,8 +16,8 @@ var QoobMenuView = Backbone.View.extend({
     initialize: function(options) {
         this.controller = options.controller;
         this.storage = options.storage;
-        this.model.on("block_add", this.addSettings.bind(this));
-        this.model.on("block_delete", this.deleteSettings.bind(this));
+//        this.model.on("block_add", this.addSettings.bind(this));
+//        this.model.on("block_delete", this.deleteSettings.bind(this));
     },
     addSettings: function(model) {
         var item = this.storage.getBlockConfig(model.get('lib'), model.get('block'));
@@ -200,10 +200,10 @@ var QoobMenuView = Backbone.View.extend({
             this.settingsViewStorage[id].dispose();
         }   
     },
-    deleteSettings: function(modelId) {
+    deleteSettings: function(model) {
         this.controller.stopEditBlock();
         
-        var settings = this.getSettingsView(modelId);
+        var settings = this.getSettingsView(model.id);
         settings.dispose();
     },
     /**

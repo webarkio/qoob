@@ -6,6 +6,7 @@
  * @class  QoobStorage
  */
 function QoobStorage(options) {
+    this.loader = options.loader;
     this.driver = options.driver || new LocalDriver();
     this.skinTemplates = options.loader.loaded.skin_templates.data || null;
     this.librariesData = options.librariesData || {};
@@ -27,17 +28,17 @@ QoobStorage.prototype.getGroups = function(libName) {
 
     _.each(this.librariesData, function(lib) {
         if (libName == null || libName == lib.name) {
-            groups = _.reduce(lib.groups, function(res, group){
-                var findedGroup = _.findWhere(res, {"id": group.id});
-                if(findedGroup){
-                    findedGroup.position=(parseInt(findedGroup.position)+parseInt(group.position))/2;
+            groups = _.reduce(lib.groups, function(res, group) {
+                var findedGroup = _.findWhere(res, { "id": group.id });
+                if (findedGroup) {
+                    findedGroup.position = (parseInt(findedGroup.position) + parseInt(group.position)) / 2;
                     findedGroup.libs.push(lib.name);
-                }else{
-                    var resGroup=_.clone(group);
-                    resGroup.libs=[lib.name];
+                } else {
+                    var resGroup = _.clone(group);
+                    resGroup.libs = [lib.name];
                     res.push(resGroup);
                 }
-                return res; 
+                return res;
             }, groups);
         }
     });
@@ -46,7 +47,7 @@ QoobStorage.prototype.getGroups = function(libName) {
 };
 
 QoobStorage.prototype.upload = function(cb) {
-	this.driver.upload(cb);
+    this.driver.upload(cb);
 };
 
 /**
@@ -90,9 +91,9 @@ QoobStorage.prototype.getDefaultTemplateAdapter = function() {
 
 //FIXME
 QoobStorage.prototype.getBlockConfig = function(libName, blockName) {
-        var lib = _.findWhere(this.librariesData, {"name": libName});
-        var block  = _.findWhere(lib.blocks, {"name": blockName});
-        return block;
+    var lib = _.findWhere(this.librariesData, { "name": libName });
+    var block = _.findWhere(lib.blocks, { "name": blockName });
+    return block;
 };
 
 /**
@@ -103,27 +104,22 @@ QoobStorage.prototype.getBlockConfig = function(libName, blockName) {
  */
 QoobStorage.prototype.getBlockTemplate = function(libName, blockName, cb) {
     var self = this;
-    if(this.blockTemplates[libName+"_"+blockName]){
-        cb(null, this.blockTemplates[libName+"_"+blockName])
-    }else{
-        var lib = _.findWhere(this.librariesData, {"name": libName});
-        var block  = _.findWhere(lib.blocks, {"name": blockName});
+    if (this.blockTemplates[libName + "_" + blockName]) {
+        cb(null, this.blockTemplates[libName + "_" + blockName])
+    } else {
+        var lib = _.findWhere(this.librariesData, { "name": libName });
+        var block = _.findWhere(lib.blocks, { "name": blockName });
         var urlTemplate = block.url + block.template;
-        jQuery.ajax({
-            url: urlTemplate,
-            type: 'GET',
-            cache: false,
-            dataType: 'html',
-            success: function(template) {
-                if (template != '') {
-                    self.blockTemplates[libName+"_"+blockName] = template;
-                    cb(null, template);
-                } else {
-                    cb(false);
-                }
+        this.loader.add({
+            type: "data",
+            name: "block_" + libName + "_" + blockName,
+            src: urlTemplate,
+            onloaded: function(template) {
+                console.log('loaded');
+                self.blockTemplates[libName + "_" + blockName] = template;
+                cb(null, template);
             }
         });
-
     }
 
 };
@@ -154,12 +150,12 @@ QoobStorage.prototype.__ = function(title, defValue) {
  * Getting all assets from storage
  * @returns Array of assets
  */
-QoobStorage.prototype.getAssets = function (libNames) {
+QoobStorage.prototype.getAssets = function(libNames) {
     var assets = [],
         data = this.librariesData;
 
     if (!!libNames) {
-        data = data.filter(function (lib) {
+        data = data.filter(function(lib) {
             return libNames.indexOf(lib.name) !== -1;
         });
     }

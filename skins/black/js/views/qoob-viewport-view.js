@@ -20,8 +20,8 @@ var QoobViewportView = Backbone.View.extend(
         initialize: function(options) {
             this.controller = options.controller;
             this.storage = options.storage;
-            this.model.on("block_add", this.addBlock.bind(this));
-            this.model.on("block_delete", this.delBlockView.bind(this));
+            //this.model.on("block_add", this.addBlock.bind(this));
+//            this.model.on("block_delete", this.delBlockView.bind(this));
             this.model.on("block_moveup", this.moveUpBlockView.bind(this));
             this.model.on("block_movedown", this.moveDownBlockView.bind(this));
         },
@@ -133,9 +133,10 @@ var QoobViewportView = Backbone.View.extend(
          * Remove BlockView by id
          * @param {Number} id modelId
          */
-        delBlockView: function(id) {
+        delBlockView: function(model) {
+            var iframe = this.getWindowIframe();
             for (var i = 0; i < this.blockViews.length; i++) {
-                if (this.blockViews[i].model.id == id) {
+                if (this.blockViews[i].model.id == model.id) {
                     this.blockViews[i].dispose();
                     this.blockViews.splice(i, 1);
                 }
@@ -163,16 +164,15 @@ var QoobViewportView = Backbone.View.extend(
             this.blockViews.push(blockWrapper);
 
             //If event 'blocks_loaded' have not been triggered
-            if (this.blocksCounter !== null) {
-                this.blocksCounter++;
-                blockWrapper.once('loaded', function() {
-                    self.blocksCounter--;
-                    if (self.blocksCounter === 0) {
-                        self.trigger('blocks_loaded');
-                        self.blocksCounter = null;
-                    }
-                });
-            }
+            this.blocksCounter++;
+            blockWrapper.once('loaded', function() {
+                self.trigger('block_loaded');
+                self.blocksCounter--;
+                if (self.blocksCounter === 0) {
+                    self.trigger('blocks_loaded');
+                }
+            });
+
             //Attach element to DOM
             if (beforeBlockId > 0) {
                 iframe.jQuery('#outer-block-' + beforeBlockId).before(blockWrapper.render().el);
