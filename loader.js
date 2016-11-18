@@ -49,6 +49,7 @@ Loader.prototype.isDependencyLoaded = function(dep) {
 };
 
 Loader.prototype.add = function(obj, opt) {
+    var self = this;
 
     if (obj instanceof Array) {
         for (var i = 0; i < obj.length; i++) {
@@ -57,16 +58,25 @@ Loader.prototype.add = function(obj, opt) {
     } else {
         var options = opt || {};
         if (!this.isExists(obj.name)) {
-            //Do not add twice
-            if (!(obj.name in this.queue)) {
-                if (options.prefix) {
-                    obj.src = options.prefix + obj.src;
-                }
-                this.queue[obj.name] = obj;
-                this.emmit('added', [obj]);
-                this.progress();
-                if (this.isStarted) {
-                    this.loadNext();
+            if (options.prefix) {
+                obj.src = options.prefix + obj.src;
+            }
+            this.queue[obj.name] = obj;
+            this.emmit('added', [obj]);
+            this.progress();
+            if (this.isStarted) {
+                this.loadNext();
+            }
+        }else{
+            if(obj.onloaded){
+                if(obj.name in this.loaded){
+                    obj.onloaded(this.loaded[obj.name].data);
+                }else{
+                    this.on('loaded', function(objLoaded){
+                        if(objLoaded.name===obj.name){
+                            obj.onloaded(self.loaded[obj.name].data);
+                        }
+                    });
                 }
             }
         }

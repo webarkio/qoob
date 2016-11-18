@@ -9,8 +9,6 @@ Fields.textarea = QoobFieldView.extend(
      * @param {Object} evt
      */
     changeTextarea: function (evt, quill) {
-        console.log(quill.getContents());
-        console.log(quill.root.innerHTML);
         this.model.set(this.settings.name, quill.root.innerHTML);
     },
     /**
@@ -25,7 +23,6 @@ Fields.textarea = QoobFieldView.extend(
             "textareaId" : _.uniqueId('textarea')
         };
 
-        console.log(this.getValue());
         this.$el.html(_.template(this.storage.getSkinTemplate('field-textarea-preview'))(htmldata));
         return this;
     }
