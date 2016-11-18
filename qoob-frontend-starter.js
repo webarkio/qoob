@@ -46,13 +46,10 @@
                     if (libs[i].res) {
                         var res = libs[i].res;
                         for (var j = 0; j < res.length; j++) {
-                            if (res[j].backend && res[j].backend === true) {
-                                if (res[j].src.indexOf("http://") !== 0 && res[j].src.indexOf("https://") !== 0) {
-                                    res[j].src = libUrl + res[j].src.replace(/^\/+/g, ''); //Trim slashes in the begining
-                                }
-
-                                window.loader.add(res[j]);
+                            if (res[j].src.indexOf("http://") !== 0 && res[j].src.indexOf("https://") !== 0) {
+                                res[j].src = libUrl + res[j].src.replace(/^\/+/g, ''); //Trim slashes in the begining
                             }
+                            window.loader.add(res[j]);
                         }
                     }
                 }
