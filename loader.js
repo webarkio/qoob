@@ -48,14 +48,14 @@ Loader.prototype.isDependencyLoaded = function(dep) {
     return true;
 };
 
-Loader.prototype.add = function(obj, options) {
+Loader.prototype.add = function(obj, opt) {
 
     if (obj instanceof Array) {
         for (var i = 0; i < obj.length; i++) {
-            this.add(obj[i], options);
+            this.add(obj[i], opt);
         }
     } else {
-        var options = options || {};
+        var options = opt || {};
         if (!this.isExists(obj.name)) {
             //Do not add twice
             if (!(obj.name in this.queue)) {
@@ -64,6 +64,7 @@ Loader.prototype.add = function(obj, options) {
                 }
                 this.queue[obj.name] = obj;
                 this.emmit('added', [obj]);
+                this.progress();
                 if (this.isStarted) {
                     this.loadNext();
                 }
@@ -72,17 +73,27 @@ Loader.prototype.add = function(obj, options) {
     }
 };
 
+Loader.prototype.removeListener = Loader.prototype.off = function(event, listener) {
+    for (var i = 0; i < this.events[event].length; i++) {
+        if (this.events[event][i].listener == listener) {
+            this.events[event].splice(i, 1);
+            return;
+        }
+    }
+};
+
+
 Loader.prototype.on = function(event, callback) {
     this.events[event] = this.events[event] || [];
     this.events[event].push({ listener: callback, once: false });
-}
+};
 
 Loader.prototype.once = function(event, callback) {
     this.events[event] = this.events[event] || [];
     this.events[event].push({ listener: callback, once: true });
-}
+};
 
-Loader.prototype.emmit = function(event, args) {
+Loader.prototype.emmit = Loader.prototype.trigger = function(event, args) {
 
     if (this.events[event] && this.events[event].length > 0) {
         var listeners = this.events[event];
@@ -99,11 +110,11 @@ Loader.prototype.emmit = function(event, args) {
 
         this.events[event] = newListeners;
 
-        for (var i = 0; i < executeListeners.length; i++) {
+        for (i = 0; i < executeListeners.length; i++) {
             executeListeners[i].apply(executeListeners[i], args);
         }
     }
-}
+};
 
 Loader.prototype.start = function() {
     this.isStarted = true;
@@ -144,7 +155,7 @@ Loader.prototype._onLoadFail = function(name) {
 
 Loader.prototype.progress = function() {
     this.emmit('progress', [this.getCountQueue(), this.getCountLoading(), this.getCountLoaded(), this.getCountFailed()]);
-    if (this.getCountQueue() + this.getCountLoading() == 0) {
+    if (this.getCountQueue() + this.getCountLoading() === 0) {
         //        this.stop();
         this.emmit('complete', [this.loaded, this.failed]);
     } else {
@@ -178,8 +189,39 @@ Loader.prototype.startLoading = function(name) {
     if (obj.type == "css") {
         this.loadCSS(obj.src, function() { self._onLoaded(obj.name); }, function() { self._onLoadFail(obj.name); });
     }
+    if (obj.type == "data") {
+        this.loadData(obj.src,
+            function(data) {
+                obj.data = data;
+                if (obj.onloaded instanceof Function) {
+                    obj.onloaded(data);
+                }
+                self._onLoaded(obj.name);
+            },
+            function() {
+                self._onLoadFail(obj.name);
+            });
+    }
 
 };
+
+Loader.prototype.loadData = function(src, success, error) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                if (success)
+                    success(xhr.responseText);
+            } else {
+                if (error)
+                    error(xhr);
+            }
+        }
+    };
+    xhr.open("GET", src, true);
+    xhr.send();
+};
+
 Loader.prototype.loadJSON = function(src, success, error) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -195,7 +237,7 @@ Loader.prototype.loadJSON = function(src, success, error) {
     };
     xhr.open("GET", src, true);
     xhr.send();
-}
+};
 
 Loader.prototype.loadJS = function(src, success, error) {
     var script = document.createElement('script');

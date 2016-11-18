@@ -61,7 +61,7 @@ function Skin() {
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "css", "name": "qoob.css", "src": "css/qoob-frontend.css" },
+            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "css", "name": "bootstrap-select.min.css", "src": "css/bootstrap-select.min.css" },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
             { "type": "css", "name": "wheelcolorpicker.css", "src": "css/wheelcolorpicker.css" },
@@ -103,43 +103,50 @@ Skin.prototype.activate = function(options) {
     this.controller.setLayout(this.layout);
     this.controller.setPageModel(this.pageModel);
     this.controller.setStorage(this.storage);
+    
     //Creating and appending qoob layout
     jQuery(window).resize(function() {
         self.layout.resize();
     });
 
-    //If blocks loaded to viewPort
-    self.layout.viewPort.once('blocks_loaded', function() {
-        self.controller.triggerIframe();
-        Backbone.history.start({ pushState: false });
-        $('#loader-wrapper').remove();
+    Backbone.history.start({ pushState: false });
+
+    //Statr blocks loaded to viewPort
+    self.layout.viewPort.on('block_loaded', function() {
+//        console.log('+1');
+//        self.controller.triggerIframe();
+//        Backbone.history.start({ pushState: false });
+        //jQuery('#loader-wrapper').remove();
     });
 
-    //If iframe ready to load blocks
+    //If iframe ready to load blocks. All libraries css and js have already loaded to iframe
     self.layout.viewPort.once('iframe_loaded', function() {
     
         var iframe = self.layout.viewPort.getWindowIframe();
+        
+        //css is loaded to iframe
         iframe.loader.once('loaded', function() {
-            console.log('qoob front css loaded');
-            self.layout.viewPort.getWindowIframe().onbeforeunload = function() {
-                return false;
-            };
+            // self.layout.viewPort.getWindowIframe().onbeforeunload = function() {
+            //     return false;
+            // };
+            self.layout.viewPort.createBlankBlock();
             //Start loading blocks
-            console.log(self.storage.pageData);
             if (self.storage.pageData && self.storage.pageData.blocks.length > 0) {
+                //if have a blocks
                 self.controller.load(self.storage.pageData.blocks);
             } else {
-                console.log('empty');
-                Backbone.history.start({ pushState: false });
+                //if empty page
+                //console.log('empty');
                 //Skip counter for blocks
                 self.layout.viewPort.blocksCounter = null;
                 // if first start page
-                self.layout.viewPort.createBlankBlock();
-                $('#loader-wrapper').remove();
+                
+                //jQuery('#loader-wrapper').remove();
             }
             //FIXME: delete selectpicker use onlu CSS
             jQuery('#lib-select').selectpicker();
         });
+        //add css styles for overlay and drop zone
         iframe.loader.add({ "name": "frontend-qoob-css", "src": self.options.skinUrl + "css/qoob-frontend.css", "type": "css" })
 
         return;

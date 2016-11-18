@@ -1,48 +1,48 @@
 'use strict';
 module.exports = function(grunt) {
-    // load all tasks
-    require('load-grunt-tasks')(grunt, {
-        scope: 'devDependencies'
-    });
 
     // Project configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        clean: {
-            build: ['build/*']
-        },
         shell: {
             gitpull: {
-                command: 'git pull origin master'
+                command: 'git pull'
             }
         },
-        concat: {
-            options: {
-                separator: ';\n'
+        uglify: {
+            loader: {
+                files: {
+                    'loader.min.js': ['loader.js']
+                }
             },
-            dist: {
-                src: [
-                    'js/libs/handlebars.js',
-                    'js/libs/handlebars-helper.js',
-                    'js/libs/jquery-ui-droppable-iframe.js',
-                    'js/libs/bootstrap-select.min.js',
-                    'js/controllers/qoob-controller.js',
-                    'js/models/**.js',
-                    'js/views/**.js',
-                    'js/views/fields/**.js',
-                    'js/extensions/**.js',
-                    'js/**.js'
-                ],
-                dest: 'qoob.concated.js'
+            front: {
+                files: {
+                    'qoob-frontend-starter.min.js': ['qoob-frontend-starter.js']
+                }
+            },
+            back: {
+                files: {
+                    'qoob-backend-starter.min.js': ['qoob-backend-starter.js']
+                }
             }
+
+        },
+        jshint: {
+            loader: ['loader.js'],
+            front: ['qoob-frontend-starter.js'],
+            back: ['qoob-backend-starter.js']
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    //Load Tasks
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-//    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    // Pull, concat js files, building docs
-    grunt.registerTask('build', ['shell:gitpull', 'concat']);
+    //register Tasks
+    grunt.registerTask('loader', ['jshint:loader', 'uglify:loader']);
+    grunt.registerTask('front', ['jshint:front', 'uglify:front']);
+    grunt.registerTask('back', ['jshint:back', 'uglify:back']);
+    grunt.registerTask('build', ['shell:gitpull', 'loader', 'front', 'back']);
+    grunt.registerTask('default', ['build']);
 };

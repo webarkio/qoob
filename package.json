@@ -1,7 +1,7 @@
 {
   "name": "qoob",
-  "version": "1.0.0",
-  "description": "Core qoob scripts",
+  "version": "2.0.0",
+  "description": "Core of qoob builder",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxazan/qoob.git"
+    "url": "git+https://github.com/webarkio/qoob.git"
   },
   "keywords": [
     "qoob",
@@ -20,21 +20,14 @@
   "author": "Maksym Pomazan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maxazan/qoob/issues"
+    "url": "https://github.com/webarkio/qoob/issues"
   },
-  "homepage": "https://github.com/maxazan/qoob#readme",
+  "homepage": "https://github.com/webarkio/qoob#readme",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-cli": "^1.2.0",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-compress": "^0.13.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-shell": "^1.1.2",
-    "load-grunt-tasks": "^3.2.0"
-  },
-  "dependencies": {
-    "backbone": "^1.3.3",
-    "jquery": "^2.2.3",
-    "underscore": "^1.8.3"
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-shell": "^1.1.2"
   }
 }
