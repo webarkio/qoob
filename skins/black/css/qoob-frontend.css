@@ -2288,6 +2288,11 @@ input[type="text"]#datepicker {
     left: 51px;
 }
 
+.settings-item .ql-toolbar.ql-snow,
+.ql-container.ql-snow {
+    background-color: #fff;
+}
+
 /*! jQuery UI - v1.11.4 - 2015-10-29
 * http://jqueryui.com
 * Includes: core.css, draggable.css

@@ -1,17 +1,22 @@
 <div class="title"><%= label %></div>
-<textarea class="wpb-textarea visual_composer_tinymce content textarea_html wp-editor-area" id="<%= textareaId %>" rows="5" cols="27" name="<%= name %>"><%= value %></textarea>
+<div id="<%= textareaId %>"><%= value %></div>
 <script type="text/javascript">
-	tinymce.init({
-		menubar: "false",
-		toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist",
-		statusbar: false,
-		selector: "textarea#<%= textareaId %>",
-		setup: function (ed) {
-			ed.on("change keyup undo redo change init",function(e) {
-				var content = tinyMCE.get(ed.id).getContent();
-				var escapedClassName = ed.id.replace(/(\[|\])/g, "\\$&");
-				jQuery("#<%= textareaId %>").html(content).trigger("change");
-			});
-		}
+	var quill_<%= textareaId %> = new Quill('#<%= textareaId %>', {
+		modules: {
+			toolbar: [
+				['bold', 'italic', {
+					'list': 'ordered'
+				}, {
+					'list': 'bullet'
+				}, {
+					'align': []
+				}]
+			]
+		},
+		placeholder: '',
+		theme: 'snow'
+	});
+	quill_<%= textareaId %>.on('text-change', function() {
+		jQuery('#<%= textareaId %>').trigger('change', quill_<%= textareaId %>);
 	});
 </script>

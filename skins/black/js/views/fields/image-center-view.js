@@ -194,16 +194,22 @@ var ImageCenterView = Backbone.View.extend(
              * 
              */
             imgUrlUpload: function () {
-                var self = this;
-
-                this.storage.upload(function(err, url){
-                    if(err){
-                        return;
-                    }else{
-                        self.$el.find('.img-url').val(url || '').trigger('change');
-                    }
+                //Create media upload frame
+                var mcFrame = wp.media({
+                    title: this.storage.__('media_title' ,'Select or Upload Media Of Your Chosen Persuasion'),
+                    button: {
+                        text: this.storage.__('media_text_button' ,'Use this media')
+                    },
+                    multiple: false  // Set to true to allow multiple files to be selected  
                 });
-
+                //On submit - save submitted url
+                mcFrame.on('select', function () {
+                    // Get media attachment details from the frame state
+                    var attachment = mcFrame.state().get('selection').first().toJSON();         
+                    this.$el.find('.img-url').val(attachment.url || '').trigger('change');
+                }.bind(this));
+                //Open media frame
+                mcFrame.open();
             },
             /**
              * Check if input is not empty and update model.

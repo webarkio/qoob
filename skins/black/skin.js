@@ -59,7 +59,8 @@ function Skin() {
 
         ],
         "all": [
-            { "type": "js", "name": "tinymce", "src": "js/libs/tinymce/tinymce.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "quill", "src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
+            { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-frontend.css" },
             { "type": "css", "name": "bootstrap-select.min.css", "src": "css/bootstrap-select.min.css" },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
@@ -111,7 +112,7 @@ Skin.prototype.activate = function(options) {
     self.layout.viewPort.once('blocks_loaded', function() {
         self.controller.triggerIframe();
         Backbone.history.start({ pushState: false });
-        jQuery('#loader-wrapper').remove();
+        $('#loader-wrapper').remove();
     });
 
     //If iframe ready to load blocks
@@ -134,7 +135,7 @@ Skin.prototype.activate = function(options) {
                 self.layout.viewPort.blocksCounter = null;
                 // if first start page
                 self.layout.viewPort.createBlankBlock();
-                jQuery('#loader-wrapper').remove();
+                $('#loader-wrapper').remove();
             }
             //FIXME: delete selectpicker use onlu CSS
             jQuery('#lib-select').selectpicker();
