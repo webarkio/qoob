@@ -27,7 +27,8 @@ var VideoCenterView = Backbone.View.extend(
          */
         attributes: function() {
             return {
-                id: "settings-block-media"
+                id: "settings-block-media",
+                'data-side-id': 'settings-block-media'
             };
         },
         /**

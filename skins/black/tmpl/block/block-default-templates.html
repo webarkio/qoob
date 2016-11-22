@@ -1,0 +1,10 @@
+<% for (var k = 0; k < templates.length; k++) { %>
+	<div class="template" data-id="<%= templates[k].id %>">
+		<% if (templates[k].title) { %>
+			<div class=""><%= templates[k].title %></div>
+		<% } %>
+		<% if (templates[k].image) { %>
+			<img src="<%= templates[k].image %>" alt="">
+		<% } %>
+	</div>
+<% } %>

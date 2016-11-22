@@ -23,7 +23,8 @@ var QoobMenuSettingsView = Backbone.View.extend(
          */
         attributes: function() {
             return {
-                id: "settings-block-" + this.model.id
+                id: "settings-block-" + this.model.id,
+                'data-side-id': this.model.id
             };
         },
         /**

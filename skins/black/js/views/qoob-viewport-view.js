@@ -21,7 +21,7 @@ var QoobViewportView = Backbone.View.extend(
             this.controller = options.controller;
             this.storage = options.storage;
             //this.model.on("block_add", this.addBlock.bind(this));
-//            this.model.on("block_delete", this.delBlockView.bind(this));
+            //            this.model.on("block_delete", this.delBlockView.bind(this));
             this.model.on("block_moveup", this.moveUpBlockView.bind(this));
             this.model.on("block_movedown", this.moveDownBlockView.bind(this));
         },
@@ -32,12 +32,14 @@ var QoobViewportView = Backbone.View.extend(
         render: function() {
             // Getting driver page id for iframe
             var url = this.storage.driver.getIframePageUrl();
-            this.$el.html(_.template(this.storage.getSkinTemplate('qoob-viewport-preview'))({ "url": url }));
+            this.$el.html(_.template(this.storage.getSkinTemplate('qoob-viewport-preview'))({
+                "url": url
+            }));
             //this.$el.find('#qoob-iframe').on('load', this.iframeLoaded.bind(this));
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
         },
-        
+
         iframeLoaded: function() {
             this.trigger('iframe_loaded');
             this.triggerIframe();
@@ -83,7 +85,7 @@ var QoobViewportView = Backbone.View.extend(
                     'width': '667px'
                 }
             };
-            this.getIframe().stop().animate(size[mode], 500, function(){
+            this.getIframe().stop().animate(size[mode], 500, function() {
                 currentRoute = self.controller.current();
                 if (currentRoute.route == 'startEditBlock') {
                     self.controller.scrollTo(currentRoute.params[0]);
@@ -112,7 +114,7 @@ var QoobViewportView = Backbone.View.extend(
                 this.getIframe().width("100%");
             }
         },
-        scrollTo: function(blockId) {           
+        scrollTo: function(blockId) {
             //Scroll to new block
             this.getWindowIframe().jQuery('html, body').animate({
                 scrollTop: this.getBlockView(blockId).$el.offset().top
@@ -157,9 +159,9 @@ var QoobViewportView = Backbone.View.extend(
                 storage: this.storage,
                 controller: this.controller
             });
-            
+
             //document fix 
-            blockWrapper.setElement(self.controller.layout.viewPort.getWindowIframe().jQuery('<div id="outer-block-' + model.id+'">'));
+            blockWrapper.setElement(self.controller.layout.viewPort.getWindowIframe().jQuery('<div id="outer-block-' + model.id + '">'));
 
             this.blockViews.push(blockWrapper);
 
@@ -179,7 +181,7 @@ var QoobViewportView = Backbone.View.extend(
             } else {
                 iframe.jQuery('#qoob-blocks').append(blockWrapper.render().el);
             }
-            
+
             // hide block blank when add block
             if (iframe.jQuery('#qoob-blocks').find('.block-blank:visible').length > 0) {
                 iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
@@ -213,12 +215,12 @@ var QoobViewportView = Backbone.View.extend(
         getWindowIframe: function() {
             return window.frames["qoob-iframe"];
         },
-        moveUpBlockView: function (modelId) {
+        moveUpBlockView: function(modelId) {
             var currrentView = this.getBlockView(modelId);
             currrentView.$el.after(currrentView.$el.prev());
             this.scrollTo(modelId);
         },
-        moveDownBlockView: function (modelId) {
+        moveDownBlockView: function(modelId) {
             var currrentView = this.getBlockView(modelId);
             currrentView.$el.before(currrentView.$el.next());
             this.scrollTo(modelId);
@@ -228,6 +230,20 @@ var QoobViewportView = Backbone.View.extend(
          */
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.getSkinTemplate('block-default-blank'))({"text": this.storage.__('block_default_blank', 'First of all you need add block')}));
+            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.getSkinTemplate('block-default-blank'))({
+                "text": this.storage.__('block_default_blank', 'First of all you need add block')
+            }));
+        },
+        createDefaultTemplates: function(data) {
+            var self = this;
+            var iframe = this.getWindowIframe();
+
+            var defaultTemplates = new QoobDefaultTemplatesView({
+                storage: self.storage,
+                controller: this.controller,
+                templates: data
+            });
+
+            iframe.jQuery('#qoob-blocks').append(defaultTemplates.render().el);
         }
     });

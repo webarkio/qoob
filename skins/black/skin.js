@@ -27,10 +27,12 @@ function Skin() {
             { "type": "js", "name": "qoob-layout", "src": "js/views/qoob-layout.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-blocks-preview-view", "src": "js/views/qoob-menu-blocks-preview-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-groups-view", "src": "js/views/qoob-menu-groups-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-menu-save-template-view", "src": "js/views/qoob-menu-save-template-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-view", "src": "js/views/qoob-menu-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-settings-view", "src": "js/views/qoob-settings-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-toolbar-view", "src": "js/views/qoob-toolbar-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-viewport-view", "src": "js/views/qoob-viewport-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-default-templates-view", "src": "js/views/qoob-default-templates-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-accordion-item-expand", "src": "js/views/fields/field-accordion-item-expand.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-accordion-item-flip-settings", "src": "js/views/fields/field-accordion-item-flip-settings.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-accordion-item-flip", "src": "js/views/fields/field-accordion-item-flip.js", "dep": ["backbone"] },
@@ -109,7 +111,6 @@ Skin.prototype.activate = function(options) {
         self.layout.resize();
     });
 
-    Backbone.history.start({ pushState: false });
 
     //Statr blocks loaded to viewPort
     self.layout.viewPort.on('block_loaded', function() {
@@ -121,6 +122,8 @@ Skin.prototype.activate = function(options) {
 
     //If iframe ready to load blocks. All libraries css and js have already loaded to iframe
     self.layout.viewPort.once('iframe_loaded', function() {
+
+        Backbone.history.start({ pushState: false });
     
         var iframe = self.layout.viewPort.getWindowIframe();
         
@@ -130,15 +133,23 @@ Skin.prototype.activate = function(options) {
             //     return false;
             // };
             self.layout.viewPort.createBlankBlock();
+
+            // load default templates
+            self.storage.loadTemplates(function(error, data){
+                self.layout.viewPort.createDefaultTemplates(data);
+            });
+
             //Start loading blocks
             if (self.storage.pageData && self.storage.pageData.blocks.length > 0) {
                 //if have a blocks
                 self.controller.load(self.storage.pageData.blocks);
             } else {
+                //self.loader.trigger('progress');
                 //if empty page
                 //console.log('empty');
                 //Skip counter for blocks
                 self.layout.viewPort.blocksCounter = null;
+
                 // if first start page
                 
                 //jQuery('#loader-wrapper').remove();

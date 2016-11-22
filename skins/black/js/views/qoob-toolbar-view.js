@@ -13,7 +13,7 @@ var QoobToolbarView = Backbone.View.extend({
         'click .exit-button': 'clickExit',
         'click .save-button': 'clickSave',
         'click .autosave-checkbox': 'clickAutosave',
-        'change #lib-select': 'changeLib',
+        'change #lib-select': 'changeLib'
     },
     attributes: function() {
         return {

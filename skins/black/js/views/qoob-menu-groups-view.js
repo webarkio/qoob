@@ -8,6 +8,11 @@ var QoobMenuGroupsView = Backbone.View.extend(
     tagName: "ul",
     className: "catalog-list",
     id:"catalog-groups",
+    attributes: function() {
+        return {
+            'data-side-id': 'catalog-groups'
+        };
+    },
     /**
      * View menu groups
      * @class QoobMenuGroupsView

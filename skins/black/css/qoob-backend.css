@@ -295,9 +295,25 @@ textarea {
     margin: 0 2px -1px -1px;
     padding: 0;
     float: left;
+    text-shadow: none;
     background-color: #444444;
     background-repeat: no-repeat;
     background-position: center center;
+}
+
+#qoob-toolbar .edit-control-button .more-button {
+    float: left;
+    width: 70px;
+    height: 70px;
+    text-align: left;
+}
+
+#qoob-toolbar .edit-control-button .more-button button {
+    border-radius: 0;
+    color: #c9c9c9;
+    box-shadow: none;
+    border-right: solid 1px #000;
+    background-image: none;
 }
 
 #qoob-toolbar .edit-control-button button:last-child {
@@ -402,9 +418,14 @@ textarea {
     font-family: 'robotoregular';
     font-size: 16px;
 }
+
 #qoob-toolbar .edit-control-button .exit-button:hover {
     color: #2bc0e4;
 }
+
+
+
+
 #qoob-toolbar .clock {
     display: none;
     margin: 0 auto;
@@ -835,6 +856,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
 #qoob-menu .backward a:hover {
     background-color: #606163;
 }
+#qoob-menu .save-template {
+    height: 100%;
+}
 ul.catalog-list {
     height: 100%;
     margin: 0;
@@ -1110,6 +1134,14 @@ ul.catalog-list li a:hover:after {
     height: calc(100% - 125px);
     background-color: #444444;
 }
+
+.settings-blocks-full {
+    padding: 70px 0 0 0;
+    overflow: auto !important;
+    height: 100%;
+    background-color: #444444;
+}
+
 
 .settings-block {
     padding: 0 4px 0 4px;
@@ -1961,7 +1993,7 @@ input[type="text"]#datepicker {
     margin: 7px 0 0 0;
 }
 
-.settings-blocks .block-button {
+.settings .block-button {
     margin: 0 4px 0 4px;
 }
 
@@ -1981,6 +2013,16 @@ input[type="text"]#datepicker {
     color: #fff;
     font-size: 13px;
     font-family: 'robotoregular';
+}
+
+.block-button .button-save-template {
+    cursor: pointer;
+    background-color: #9ea0a5;
+    color: #fff;
+    padding: 14px 0;
+    width: 100%;
+    text-align: center;
+    border-radius: 3px;
 }
 
 .settings .delete-button-small {
@@ -2008,6 +2050,9 @@ input[type="text"]#datepicker {
     background-color: #fff;
 }
 
+.settings-item  .ql-editor {
+    min-height: 180px;
+}
 
 /*Field image*/
 .settings-block .filtered-images,
@@ -2305,48 +2350,6 @@ input[type="text"]#datepicker {
 }
 
 /*** IFRAME ***/
-@-webkit-keyframes rotate {
-    100% {
-        transform: rotateZ(360deg);
-    }
-}
-
-@keyframes rotate {
-    100% {
-        transform: rotateZ(360deg);
-    }
-}
-
-@-webkit-keyframes scaleUp {
-    from {
-        opacity: 0;
-        -webkit-transform: scale(.5);
-    }
-}
-@keyframes scaleUp {
-    from {
-        opacity: 0;
-        -webkit-transform: scale(.5);
-        transform: scale(.5);
-    }
-}
-
-@-webkit-keyframes scaleDown {
-    from { }
-    to {
-        opacity: 0;
-        -webkit-transform: scale(.8);
-    }
-}
-@keyframes scaleDown {
-    from { }
-    to {
-        opacity: 0;
-        -webkit-transform: scale(.8);
-        transform: scale(.8);
-    }
-}
-
 html.active-js {
     margin-top: 0 !important;
 }
@@ -2355,27 +2358,10 @@ html.active-js {
     overflow-y: hidden;
 }
 
-
-
 #qoob-blocks {
     position: relative;
     min-height: 200px;
 }
-
-.content-block-outer.content-show  {
-    -webkit-animation: scaleUp .7s ease both;
-    animation: scaleUp .7s ease both;
-}
-
-.content-block-outer.content-hide  {
-    -webkit-animation: scaleDown .7s ease both;
-    animation: scaleDown .7s ease both;
-}
-
-.content-block-inner {
-    position: relative;
-}
-
 
 #settings-block-media {
     overflow: auto;

@@ -14,6 +14,7 @@ function QoobStorage(options) {
     this.blockSettingsViewData = [];
     this.blockTemplates = [];
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
+    this.templates = [];
     //    this.currentLib = 'all';
 }
 
@@ -29,7 +30,9 @@ QoobStorage.prototype.getGroups = function(libName) {
     _.each(this.librariesData, function(lib) {
         if (libName == null || libName == lib.name) {
             groups = _.reduce(lib.groups, function(res, group) {
-                var findedGroup = _.findWhere(res, { "id": group.id });
+                var findedGroup = _.findWhere(res, {
+                    "id": group.id
+                });
                 if (findedGroup) {
                     findedGroup.position = (parseInt(findedGroup.position) + parseInt(group.position)) / 2;
                     findedGroup.libs.push(lib.name);
@@ -91,8 +94,12 @@ QoobStorage.prototype.getDefaultTemplateAdapter = function() {
 
 //FIXME
 QoobStorage.prototype.getBlockConfig = function(libName, blockName) {
-    var lib = _.findWhere(this.librariesData, { "name": libName });
-    var block = _.findWhere(lib.blocks, { "name": blockName });
+    var lib = _.findWhere(this.librariesData, {
+        "name": libName
+    });
+    var block = _.findWhere(lib.blocks, {
+        "name": blockName
+    });
     return block;
 };
 
@@ -107,8 +114,12 @@ QoobStorage.prototype.getBlockTemplate = function(libName, blockName, cb) {
     if (this.blockTemplates[libName + "_" + blockName]) {
         cb(null, this.blockTemplates[libName + "_" + blockName])
     } else {
-        var lib = _.findWhere(this.librariesData, { "name": libName });
-        var block = _.findWhere(lib.blocks, { "name": blockName });
+        var lib = _.findWhere(this.librariesData, {
+            "name": libName
+        });
+        var block = _.findWhere(lib.blocks, {
+            "name": blockName
+        });
         var urlTemplate = block.url + block.template;
         this.loader.add({
             type: "data",
@@ -168,4 +179,11 @@ QoobStorage.prototype.getAssets = function(libNames) {
     }
 
     return assets;
+};
+
+
+QoobStorage.prototype.loadTemplates = function(cb) {
+    this.driver.loadTemplates(function(error, data){
+        cb(error, data);
+    });
 };

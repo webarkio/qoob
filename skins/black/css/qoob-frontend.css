@@ -230,12 +230,67 @@
     animation: rotate 0.3s infinite linear;
 }
 
+/* Animation add block and remove block */
+@-webkit-keyframes rotate {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+@-webkit-keyframes scaleUp {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+    }
+}
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        transform: scale(.5);
+    }
+}
+
+@-webkit-keyframes scaleDown {
+    from { }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.8);
+    }
+}
+@keyframes scaleDown {
+    from { }
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.8);
+        transform: scale(.8);
+    }
+}
+.content-block-outer.content-show  {
+    -webkit-animation: scaleUp .7s ease both;
+    animation: scaleUp .7s ease both;
+}
+
+.content-block-outer.content-hide  {
+    -webkit-animation: scaleDown .7s ease both;
+    animation: scaleDown .7s ease both;
+}
+
+.content-block-inner {
+    position: relative;
+}
+
 /* Overlay */
 
 #qoob-blocks .content-block-outer {
     position: relative;
 }
-
 .content-block-outer .overlay {
     position: absolute;
     display: block;
@@ -270,10 +325,12 @@
 
 /* Frontend Blank Block */
 #qoob-blocks .block-blank {
+    float: left;
     position: relative;
     background-color: #fff;
     height: 100%;
     min-height: 100%;
+    margin-left: 200px;
 }
 
 .content-block-outer + #qoob-blocks .block-blank {
@@ -290,7 +347,6 @@
 }
 
 #qoob-blocks .block-blank-inner {
-    margin: 0 auto;
     padding: 267px 0;
     width: 235px;
     font-size: 25px;
@@ -309,4 +365,9 @@
     background: transparent url(../img/blank_arrow_left.png) no-repeat;
 }
 
-
+#qoob-blocks .qoob-templates {
+    width: 250px;
+    float: left;
+    margin-left: 250px;
+    margin-top: 250px;
+}

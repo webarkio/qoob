@@ -39,6 +39,7 @@ var QoobMenuView = Backbone.View.extend({
                 group: groups[i]
             }), 90);
         }
+        this.addView(new QoobMenuSaveTemplateView({ storage: this.storage, controller: this.controller }), 180);
         this.draggable();
 
         return this;
@@ -79,17 +80,17 @@ var QoobMenuView = Backbone.View.extend({
         this.rotate('catalog-groups');
     },
     startEditBlock: function(blockId) {
-        this.rotate('settings-block-' + blockId);
+        this.rotate(blockId);
     },
 
     /**
      * Resize menu
      */
-        resize: function() {
-        this.$el.css({
-            height: jQuery(window).height() - 70,
-            top: 70
-        });
+    resize: function() {
+    this.$el.css({
+        height: jQuery(window).height() - 70,
+        top: 70
+    });
     },
     /**
      * Add view to side qoob
@@ -121,8 +122,9 @@ var QoobMenuView = Backbone.View.extend({
             return;
 
         // current block for id
-        var currentElement = this.$el.find('#' + this.currentId);
-        var newElement = this.$el.find('#' + id);
+
+        var currentElement = this.$el.find("[data-side-id='" + this.currentId + "']");
+        var newElement = this.$el.find("[data-side-id='" + id + "']");
 
         // get block side
         var currentSide = currentElement.closest('div[id^="side-"]');

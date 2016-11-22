@@ -7,16 +7,20 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend(
     /** @lends QoobMenuGroupsView.prototype */
     {
         className: 'catalog-templates menu-block',
-        events:{
+        events: {
             'click .preview-block': 'clickPreviewBlock'
         },
-        clickPreviewBlock: function(evt){
-            var name = evt.currentTarget.id.replace('preview-block-',''),
+        attributes: function() {
+            return {
+                'data-side-id': this.id
+            };
+        },
+        clickPreviewBlock: function(evt) {
+            var name = evt.currentTarget.id.replace('preview-block-', ''),
                 lib = this.$(evt.currentTarget).data('lib');
 
             this.controller.addNewBlock(lib, name);
         },
-
         /**
          * View menu groups
          * @class QoobMenuGroupsView
@@ -28,7 +32,6 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend(
             this.storage = options.storage;
             this.group = options.group;
         },
-
         /**
          * Render menu groups
          * @returns {Object}
@@ -36,7 +39,7 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend(
         render: function() {
             var data = {
                 "group": this.group,
-                "items": this.storage.getBlocksByGroup(this.group.id)  //FIXME: moveto utils
+                "items": this.storage.getBlocksByGroup(this.group.id) //FIXME: moveto utils
             };
 
             this.$el.html(_.template(this.storage.getSkinTemplate('menu-blocks-preview'))(data));

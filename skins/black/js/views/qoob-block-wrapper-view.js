@@ -71,6 +71,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
 
         // add animation when remove block
         var animationEnd = 'animationend AnimationEnd';
+
         this.$el.addClass('content-hide').one(animationEnd, function () {
             // Removes a view from the DOM
             self.$el.remove();

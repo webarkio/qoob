@@ -3,6 +3,7 @@ var QoobController = Backbone.Router.extend({
         "index": "index",
         "groups/:group": "showGroup", // #groups/name
         "edit/:blockId": "startEditBlock", // #groups/name
+        "more": "showMore"
     },
     index: function () {
         this.layout.menu.showIndex();
@@ -90,12 +91,17 @@ var QoobController = Backbone.Router.extend({
             this.storage.driver.exit(this.storage.pageId);
         }
     },
+    showMore: function() {
+        this.layout.menu.rotate('save-template');
+        this.layout.toolbar.logoRotation('side-90');
+    },
     addNewBlock: function (lib, block, afterId) {
         var blockConfig = this.storage.getBlockConfig(lib, block);
 
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
-    addBlock: function (values, afterId, scroll=true) {
+    addBlock: function (values, afterId, scroll) {
+    // addBlock: function (values, afterId, scroll=true) {
         var model = QoobUtils.createModel(values);
 
         this.pageModel.addBlock(model, afterId);
@@ -119,7 +125,6 @@ var QoobController = Backbone.Router.extend({
         this.navigate('index', {trigger: true});
     },
     load: function (blocks) {
-
         for (var i = 0; i < blocks.length; i++) {
             this.addBlock(blocks[i], null, false);
             // var model = QoobUtils.createModel(blocks[i]);
@@ -171,7 +176,7 @@ var QoobController = Backbone.Router.extend({
     /**
      * Get current params from Backbone.history.fragment
      */
-    current : function() {
+    current: function() {
         var Router = this,
         fragment = Backbone.history.fragment,
         routes = _.pairs(Router.routes),
@@ -194,5 +199,16 @@ var QoobController = Backbone.Router.extend({
             fragment: fragment,
             params: params
         };
+    },
+    /**
+     * Create template
+     */
+    createTemplate: function(templateInfo) {
+        var dataPage = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
+        var data = _.extend(templateInfo, dataPage);
+
+        this.storage.driver.createTemplate(data, function(err, status){
+            console.log(status);
+        });
     }
 });
