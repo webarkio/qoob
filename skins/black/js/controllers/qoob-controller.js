@@ -60,6 +60,7 @@ var QoobController = Backbone.Router.extend({
         this.layout.toolbar.showSaveLoader();
 
         var json = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
+        json.version = window.QoobVersion;
         var html = '';
         var blocks = this.pageModel.get('blocks').models;
         for (var i = 0; i < blocks.length; i++) {
@@ -100,7 +101,8 @@ var QoobController = Backbone.Router.extend({
 
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
-    addBlock: function(values, afterId, scroll) {
+    addBlock: function(values, afterId, scroll ) {
+        scroll = scroll || true;
         // addBlock: function (values, afterId, scroll=true) {
         var model = QoobUtils.createModel(values);
 
@@ -129,7 +131,7 @@ var QoobController = Backbone.Router.extend({
             this.layout.viewPort.trigger('blocks_loaded');
         } else {
             for (var i = 0; i < blocks.length; i++) {
-                this.addBlock(blocks[i], (i > 0 ? blocks[i - 1].id : null), false);
+                this.addBlock(blocks[i], null, false);
             }
         }
     },
