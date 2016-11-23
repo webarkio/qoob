@@ -50,12 +50,12 @@ var QoobViewportView = Backbone.View.extend(
          */
         startEditBlock: function(blockId) {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('.overlay').removeClass('active').addClass('no-active');
-            iframe.jQuery('#outer-block-' + blockId).find('.overlay').removeClass('no-active').addClass('active');
+            iframe.jQuery('.qoob-overlay').removeClass('active').addClass('no-active');
+            iframe.jQuery('#outer-block-' + blockId).find('.qoob-overlay').removeClass('no-active').addClass('active');
         },
         stopEditBlock: function(blockId) {
             var iframe = this.getWindowIframe();
-            iframe.jQuery('.overlay').removeClass('active').removeClass('no-active');
+            iframe.jQuery('.qoob-overlay').removeClass('active').removeClass('no-active');
         },
         setPreviewMode: function() {
             this.previewMode = true;

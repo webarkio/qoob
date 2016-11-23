@@ -77,8 +77,8 @@ QUnit.test("startEditBlock", function(assert) {
         //Get iframe content
         var iframe = viewport.getWindowIframe();
 
-        assert.ok(iframe.jQuery('#outer-block-6').find('.overlay').hasClass('active'));
-        assert.ok(iframe.jQuery('#outer-block-1').find('.overlay').hasClass('active') == false);
+        assert.ok(iframe.jQuery('#outer-block-6').find('.qoob-overlay').hasClass('active'));
+        assert.ok(iframe.jQuery('#outer-block-1').find('.qoob-overlay').hasClass('active') == false);
         viewport.remove();
         done();
     });
@@ -98,9 +98,9 @@ QUnit.test("stopEditBlock", function(assert) {
         viewport.startEditBlock(6);
         //Get iframe content
         var iframe = viewport.getWindowIframe();
-        assert.ok(iframe.jQuery('#outer-block-6').find('.overlay').hasClass('active'));
+        assert.ok(iframe.jQuery('#outer-block-6').find('.qoob-overlay').hasClass('active'));
         viewport.stopEditBlock();
-        assert.ok(iframe.jQuery('#outer-block-6').find('.overlay').hasClass('active') == false);
+        assert.ok(iframe.jQuery('#outer-block-6').find('.qoob-overlay').hasClass('active') == false);
         viewport.remove();
         done();
 

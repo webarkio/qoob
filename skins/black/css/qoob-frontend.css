@@ -291,7 +291,7 @@
 #qoob-blocks .content-block-outer {
     position: relative;
 }
-.content-block-outer .overlay {
+.content-block-outer .qoob-overlay {
     position: absolute;
     display: block;
     top: 0px;
@@ -301,25 +301,24 @@
     transition: all;
     z-index: 9999;
 }
-
-.content-block-outer .overlay:hover {
+.content-block-outer .qoob-overlay:hover {
     background: #fff;
     opacity: .4;
     cursor: pointer;
 }
-.content-block-outer .overlay.active {
+.content-block-outer .qoob-overlay.active {
     display: none;
 }
-.content-block-outer .overlay.no-active {
+.content-block-outer .qoob-overlay.no-active {
     background: #000;
     opacity: .7;
 }
-.content-block-outer .overlay.no-active:hover {
+.content-block-outer .qoob-overlay.no-active:hover {
     background: #000;
     opacity: .4;
 }
 
-#qoob-blocks.preview .overlay {
+#qoob-blocks.preview .qoob-overlay {
     display:none;
 }
 
@@ -370,4 +369,16 @@
     float: left;
     margin-left: 250px;
     margin-top: 250px;
+}
+
+/* Quill editor
+----------------------------------*/
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-justify {
+  text-align: justify;
+}
+.ql-align-right {
+  text-align: right;
 }

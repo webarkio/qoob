@@ -7,7 +7,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
     tagName: "div",
 //    className: "content-block-outer",
     events: {
-        'click .overlay': 'clickStartEditBlock'
+        'click .qoob-overlay': 'clickStartEditBlock'
     },
     attributes: function () {
         return {
