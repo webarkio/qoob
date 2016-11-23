@@ -5,42 +5,42 @@ var QoobController = Backbone.Router.extend({
         "edit/:blockId": "startEditBlock", // #groups/name
         "more": "showMore"
     },
-    index: function () {
+    index: function() {
         this.layout.menu.showIndex();
         this.layout.toolbar.logoRotation('side-0');
     },
-    showGroup: function (group) {
+    showGroup: function(group) {
         this.layout.menu.showGroup(group);
         this.layout.toolbar.logoRotation('side-90');
     },
-    setLayout: function (layout) {
+    setLayout: function(layout) {
         this.layout = layout;
     },
-    setPageModel: function (model) {
+    setPageModel: function(model) {
         this.pageModel = model;
     },
-    setStorage: function (storage) {
+    setStorage: function(storage) {
         this.storage = storage;
     },
-    setPreviewMode: function () {
+    setPreviewMode: function() {
         this.layout.setPreviewMode();
     },
-    setEditMode: function () {
+    setEditMode: function() {
         this.layout.setEditMode();
     },
-    setDeviceMode: function (mode) {
+    setDeviceMode: function(mode) {
         this.layout.setDeviceMode(mode);
     },
     /**
      * Autosave page data for interval
      * @param {Boolean} autosave
      */
-    setAutoSave: function (autosave) {
+    setAutoSave: function(autosave) {
         this.autosave = autosave;
 
         var self = this;
         if (this.autosave) {
-            var intervalId = setInterval(function () {
+            var intervalId = setInterval(function() {
                 if (self.autosave) {
                     self.save();
                 } else {
@@ -53,7 +53,7 @@ var QoobController = Backbone.Router.extend({
      * Save page data
      * @param {createBlockCallback} cb - A callback to run.
      */
-    save: function (cb) {
+    save: function(cb) {
         var self = this;
 
         // show clock autosave
@@ -68,7 +68,7 @@ var QoobController = Backbone.Router.extend({
             html += blockView.innerBlock.renderedTemplate;
         }
 
-        this.storage.save(json, html, function (err, status) {
+        this.storage.save(json, html, function(err, status) {
             // hide clock autosave
             self.layout.toolbar.hideSaveLoader();
             // Make sure the callback is a function​
@@ -81,10 +81,10 @@ var QoobController = Backbone.Router.extend({
     /**
      * Out of the Qoob
      */
-    exit: function () {
+    exit: function() {
         var self = this;
         if (this.autosave) {
-            this.save(function (err, status) {
+            this.save(function(err, status) {
                 self.storage.driver.exit(self.storage.pageId);
             });
         } else {
@@ -95,19 +95,19 @@ var QoobController = Backbone.Router.extend({
         this.layout.menu.rotate('save-template');
         this.layout.toolbar.logoRotation('side-90');
     },
-    addNewBlock: function (lib, block, afterId) {
+    addNewBlock: function(lib, block, afterId) {
         var blockConfig = this.storage.getBlockConfig(lib, block);
 
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
-    addBlock: function (values, afterId, scroll) {
-    // addBlock: function (values, afterId, scroll=true) {
+    addBlock: function(values, afterId, scroll) {
+        // addBlock: function (values, afterId, scroll=true) {
         var model = QoobUtils.createModel(values);
 
         this.pageModel.addBlock(model, afterId);
         this.layout.viewPort.addBlock(model, afterId);
         this.layout.menu.addSettings(model, afterId);
-        if(scroll){
+        if (scroll) {
             this.scrollTo(model.id);
         }
 
@@ -116,23 +116,24 @@ var QoobController = Backbone.Router.extend({
             jQuery('#qoob-viewport').find('div').remove();
         }
     },
-    startEditBlock: function (blockId) {
+    startEditBlock: function(blockId) {
         this.layout.startEditBlock(blockId);
         this.scrollTo(blockId);
     },
-    stopEditBlock: function () {
+    stopEditBlock: function() {
         this.layout.stopEditBlock();
-        this.navigate('index', {trigger: true});
+        this.navigate('index', { trigger: true });
     },
-    load: function (blocks) {
-        for (var i = 0; i < blocks.length; i++) {
-            this.addBlock(blocks[i], null, false);
-            // var model = QoobUtils.createModel(blocks[i]);
-            // this.pageModel.addBlock(model);
-            console.log('create model');
+    load: function(blocks) {
+        if (blocks.length == 0) {
+            this.layout.viewPort.trigger('blocks_loaded');
+        } else {
+            for (var i = 0; i < blocks.length; i++) {
+                this.addBlock(blocks[i], (i > 0 ? blocks[i - 1].id : null), false);
+            }
         }
     },
-    setInnerSettingsView: function (view) {
+    setInnerSettingsView: function(view) {
         //Creating storage for views
         this.layout.menu.settingsViewStorage = this.layout.menu.settingsViewStorage || [];
         var name = view.$el.prop('id');
@@ -144,33 +145,33 @@ var QoobController = Backbone.Router.extend({
         this.layout.menu.rotate(name);
         this.layout.menu.settingsViewStorage[name] = view;
     },
-    deleteInnerSettingsView: function (name) {
+    deleteInnerSettingsView: function(name) {
         this.layout.menu.delView(name);
         delete this.layout.menu.settingsViewStorage[name];
     },
-    deleteBlock: function (model) {
+    deleteBlock: function(model) {
         this.pageModel.deleteBlock(model);
         this.layout.viewPort.delBlockView(model);
         this.layout.menu.deleteSettings(model);
         this.triggerIframe();
     },
-    moveDownBlock: function (model) {
+    moveDownBlock: function(model) {
         this.pageModel.moveDown(model);
     },
-    moveUpBlock: function (model) {
+    moveUpBlock: function(model) {
         this.pageModel.moveUp(model);
     },
-    triggerIframe: function () {
+    triggerIframe: function() {
         this.layout.viewPort.triggerIframe();
     },
-    changeLib: function (name) {
+    changeLib: function(name) {
         this.storage.currentLib = name;
         this.layout.menu.hideLibsExcept(name);
     },
     /**
      * Scroll to block
      */
-    scrollTo: function (modelId) {
+    scrollTo: function(modelId) {
         this.layout.viewPort.scrollTo(modelId);
     },
     /**
@@ -178,16 +179,18 @@ var QoobController = Backbone.Router.extend({
      */
     current: function() {
         var Router = this,
-        fragment = Backbone.history.fragment,
-        routes = _.pairs(Router.routes),
-        route = null, params = null, matched;
+            fragment = Backbone.history.fragment,
+            routes = _.pairs(Router.routes),
+            route = null,
+            params = null,
+            matched;
 
         matched = _.find(routes, function(handler) {
             route = _.isRegExp(handler[0]) ? handler[0] : Router._routeToRegExp(handler[0]);
             return route.test(fragment);
         });
 
-        if(matched) {
+        if (matched) {
             // NEW: Extracts the params using the internal
             // function _extractParameters 
             params = Router._extractParameters(route, fragment);
@@ -207,7 +210,7 @@ var QoobController = Backbone.Router.extend({
         var dataPage = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var data = _.extend(templateInfo, dataPage);
 
-        this.storage.driver.createTemplate(data, function(err, status){
+        this.storage.driver.createTemplate(data, function(err, status) {
             console.log(status);
         });
     }

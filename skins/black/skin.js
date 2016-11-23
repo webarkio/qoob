@@ -112,12 +112,9 @@ Skin.prototype.activate = function(options) {
     });
 
 
-    //Statr blocks loaded to viewPort
-    self.layout.viewPort.on('block_loaded', function() {
-//        console.log('+1');
-//        self.controller.triggerIframe();
-//        Backbone.history.start({ pushState: false });
-        //jQuery('#loader-wrapper').remove();
+    //Blocks loaded to viewPort
+    self.layout.viewPort.on('blocks_loaded', function() {
+        self.loader.trigger('skin_loaded');
     });
 
     //If iframe ready to load blocks. All libraries css and js have already loaded to iframe
@@ -140,20 +137,8 @@ Skin.prototype.activate = function(options) {
             });
 
             //Start loading blocks
-            if (self.storage.pageData && self.storage.pageData.blocks.length > 0) {
-                //if have a blocks
-                self.controller.load(self.storage.pageData.blocks);
-            } else {
-                //self.loader.trigger('progress');
-                //if empty page
-                //console.log('empty');
-                //Skip counter for blocks
-                self.layout.viewPort.blocksCounter = null;
+            self.controller.load(self.storage.pageData.blocks);
 
-                // if first start page
-                
-                //jQuery('#loader-wrapper').remove();
-            }
             //FIXME: delete selectpicker use onlu CSS
             jQuery('#lib-select').selectpicker();
         });
@@ -161,8 +146,6 @@ Skin.prototype.activate = function(options) {
         iframe.loader.add({ "name": "frontend-qoob-css", "src": self.options.skinUrl + "css/qoob-frontend.css", "type": "css" })
 
         return;
-
-
 
     });
 

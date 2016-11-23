@@ -126,7 +126,6 @@ QoobStorage.prototype.getBlockTemplate = function(libName, blockName, cb) {
             name: "block_" + libName + "_" + blockName,
             src: urlTemplate,
             onloaded: function(template) {
-                console.log('loaded');
                 self.blockTemplates[libName + "_" + blockName] = template;
                 cb(null, template);
             }
