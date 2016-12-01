@@ -343,3 +343,22 @@ Handlebars.registerHelper('everyNth', function(context, every, options) {
 Handlebars.registerHelper('globalVar', function(varName) {
     return window.ajax[varName];
 });
+
+/**
+ * Handlebars helpers.
+ * @namespace Handlebars.helpers
+ * Return index
+ * @function math
+ * @memberof Handlebars.helpers
+ * @param {string} lvalue - The data to sort.
+ * @param {string} rvalue - The key to sort by.
+ * @returns {float}
+ */
+Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
+    lvalue = parseFloat(lvalue);
+    rvalue = parseFloat(rvalue);
+
+    return {
+        "+": lvalue + rvalue
+    }[operator];
+});

@@ -1339,7 +1339,9 @@ ul.catalog-list li a:hover:after {
     padding-bottom: 22px;
     margin-bottom: 0;
 }
-
+.settings-accordion .settings-accordion {
+    padding-bottom: 0 !important;
+}
 .settings-accordion .settings-block {
     margin-left: 0;
     overflow: hidden;
@@ -1774,7 +1776,9 @@ input[type="text"]#datepicker {
 .settings-item.settings-accordion .edit-icon-preview {
     width: 107px;
 }
-
+.settings-item.settings-accordion .settings-accordion .edit-icon-preview {
+    width: 100px;
+}
 .settings-item .edit-image.empty,
 .settings-item .edit-video.empty,
 .settings-item .edit-icon-preview.empty {

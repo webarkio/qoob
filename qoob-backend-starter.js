@@ -19,7 +19,7 @@
 
         this.options = options;
         this.options.skip = options.skip || [];
-        var pathname=window.location.pathname.replace(/\/.*?\.html$/g, '/');
+        var pathname = window.location.pathname.replace(/\/.*\..*?$/g, '/');
         this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + pathname + (pathname.indexOf("/", pathname.length - "/".length) !== -1 ? '' : '/') + "qoob/qoob/";
         this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
         this.options.skins = this.options.skins || { 'black': this.options.qoobUrl + 'skins/black/skin.js' };
@@ -42,12 +42,17 @@
         document.getElementById("qoob_loader_precent").innerHTML = progress;
         document.getElementById("qoob_loader_progressbar").style.width = progress + "%";
         if (progress == 100) {
-            this.loader.off('progress', this.loadingProgressListener);
-            jQuery('#loader-wrapper').fadeOut(1000, function() {
-                jQuery('#loader-wrapper').remove();
-            });
-
+            this.loadingComplete();
         }
+    };
+
+    QoobStarter.prototype.loadingComplete = function() {
+        document.getElementById("qoob_loader_precent").innerHTML = 100;
+        document.getElementById("qoob_loader_progressbar").style.width = "100%";
+        this.loader.off('progress', this.loadingProgressListener);
+        jQuery('#loader-wrapper').delay(100).fadeOut(1000, function() {
+            jQuery('#loader-wrapper').remove();
+        });
     };
 
     QoobStarter.prototype.startStage1 = function() {
@@ -56,9 +61,6 @@
         script.setAttribute('type', 'text/javascript');
         script.setAttribute('src', this.options.qoobUrl + "loader.min.js");
         script.onload = function() {
-
-            if (self.options.debug)
-                console.log("Staring Stage 1");
 
             self.loader = new Loader();
             self.loader.stage = 1;
@@ -92,14 +94,9 @@
         var self = this;
         self.loader.stage = 2;
         self.loader.stageLoaded = self.loader.getCountLoaded();
-        if (this.options.debug)
-            console.log("Staring Stage 2");
 
         this.options.driver.loadLibrariesData(function(err, libs) {
 
-            if (self.options.debug) {
-                console.log("Libs config loaded");
-            }
             if (err) {
                 console.error("Libraries have been not loaded from driver " + self.options.driver.constructor.name + "." + err);
                 return;
@@ -110,8 +107,6 @@
             }
 
             self.loader.once('complete', function() {
-                if (self.options.debug)
-                    console.log("Blocks configs loaded");
 
                 self.options.librariesData = self.parseBlockData(libs);
                 self.startStage3();
@@ -164,12 +159,7 @@
         var self = this;
         self.loader.stage = 3;
         self.loader.stageLoaded = self.loader.getCountLoaded();
-        if (this.options.debug)
-            console.log("Staring Stage 3");
         self.options.driver.loadPageData(function(err, data) {
-            if (self.options.debug)
-                console.log("Page data loaded");
-
             self.options.pageData = data;
 
             self.startStage4();
@@ -182,11 +172,6 @@
         var self = this;
         self.loader.stage = 4;
         self.loader.stageLoaded = self.loader.getCountLoaded();
-        if (this.options.debug) {
-            console.log("Staring Stage 4");
-            console.log("Staring loading skin " + this.options.skin);
-        }
-
         self.loader.once('complete', function() {
             window.qoob = new Skin();
             self.loader.stage = 5;
@@ -195,6 +180,9 @@
             self.loader.once('complete', function() {
                 self.loader.stage = 6;
                 self.loader.stageLoaded = self.loader.getCountLoaded();
+                self.loader.once('skin_loaded', function() {
+                    self.loadingComplete();
+                });
                 window.qoob.activate(self.options);
             });
             var skinPrefix = self.options.skins[self.options.skin].replace("skin.js", "");
@@ -235,6 +223,7 @@
             }
 
             findedLib = _.findWhere(libs, { name: libName.trim() });
+
             if (findedLib) {
                 findedBlock = _.findWhere(findedLib.blocks, { name: blockName });
                 if (findedBlock) {
@@ -306,4 +295,5 @@
     };
 
     window.QoobStarter = QoobStarter;
+    window.QoobVersion = "2.0.0";
 }());
