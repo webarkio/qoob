@@ -2,7 +2,7 @@ var Fields = Fields || {};
 Fields.colorpicker = QoobFieldView.extend(
 /** @lends Fields.colorpicker.prototype */{
     events: {
-        'change input': 'changeInput',
+        // 'change input': 'changeInput',
         'click .theme-colors': 'changeColor',
         'click .change-color': 'changeColorPicker'
     },
@@ -10,10 +10,10 @@ Fields.colorpicker = QoobFieldView.extend(
      * Event change colorpicker
      * @param {Object} evt
      */
-    changeInput: function (evt) {
-        var target = jQuery(evt.target);
-        this.model.set(target.attr('name'), target.parent().find('.active').css('background-color'));
-    },
+    // changeInput: function (evt) {
+    //     var target = jQuery(evt.target);
+
+    // },
     /**
      * Change color with colorpicker
      * @param {Object} evt
@@ -21,16 +21,38 @@ Fields.colorpicker = QoobFieldView.extend(
     changeColorPicker: function (evt) {
         var elem = jQuery(evt.currentTarget),
             name = elem.closest('.settings-item').find('input').prop('name'),
-            model = this.model;
+            model = this.model,
+            color;
         this.$el.find('.other-color').removeClass('active');
         elem.addClass('active');
-        if ((elem.css('background-color') != 'transparent') && (elem.css('background-color') != 'rgba(0, 0, 0, 0)')) {
-            model.set(name, elem.css('background-color'));
+
+        color = this.hexc(elem.css('background-color'));
+
+        if ((color != 'transparent') && (color != 'rgba(0, 0, 0, 0)')) {
+            
+            model.set(name, color);
         }
         elem.on('slidermove', function () {
             elem.addClass('active');
-            model.set(name, elem.css('background-color'));
+            model.set(name, color);
         });
+    },
+    /**
+     * Convert rgb to hex color
+     * @param {String} colorval
+     * @returns {String}
+     */
+    hexc: function (colorval) {
+        var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        delete(parts[0]);
+
+        for (var i = 1; i <= 3; ++i) {
+            parts[i] = parseInt(parts[i]).toString(16);
+            if (parts[i].length == 1) parts[i] = '0' + parts[i];
+        }
+        color = '#' + parts.join('');
+
+        return color;
     },
     /**
      * Change other image
@@ -38,9 +60,13 @@ Fields.colorpicker = QoobFieldView.extend(
      */
     changeColor: function (evt) {
         var elem = jQuery(evt.currentTarget);
+        var name = elem.closest('.settings-item').find('input').prop('name');
+
         this.$el.find('.other-color').removeClass('active');
         elem.addClass('active');
-        this.$el.find('input').trigger("change");
+
+        var color = this.hexc(elem.css('background-color'));
+        this.model.set(name, color);
     },
     /**
      * Render filed colorpicker

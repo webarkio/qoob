@@ -44,7 +44,14 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
         clickCreateTemplate: function(evt) {
             evt.preventDefault();
 
+            var sorted = _.sortBy(this.storage.defaultTemplatesCollection.models, function(obj) {
+                return obj.id;
+            });
+
+            var newId = sorted[sorted.length-1].id + 1;
+
             var dataView = {
+                'id': newId,
                 'title': this.settingsModel.get('title'),
                 'image': this.settingsModel.get('image')
             };

@@ -30,7 +30,6 @@ var QoobMenuGroupsView = Backbone.View.extend(
      */
     render: function () {
 
-console.log(this.groups);
       this.$el.html(_.template(this.storage.getSkinTemplate('menu-groups-preview'))({"groups_arr" : this.groups}));
 
       return this;

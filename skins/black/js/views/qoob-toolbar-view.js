@@ -38,9 +38,7 @@ var QoobToolbarView = Backbone.View.extend({
         var data = {
             "autosave": this.storage.__('autosave', 'Autosave'),
             "save": this.storage.__('save', 'Save'),
-            "exit": this.storage.__('exit', 'Exit'),
-            "libs": this.storage.librariesData,
-            "curLib": this.storage.currentLib
+            "exit": this.storage.__('exit', 'Exit')
         };
         this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
         

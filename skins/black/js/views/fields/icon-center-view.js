@@ -38,7 +38,7 @@ var IconCenterView = Backbone.View.extend(
                 this.controller = options.controller;
                 this.tpl = _.template(this.storage.getSkinTemplate('field-icon-setting-preview'));
                 this.parentId = options.parentId;
-                this.backId = (options.parentId === undefined) ? "settings-block-" + this.model.id : "settings-block-" + options.parentId;
+                this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
                 this.icons = options.icons;
                 this.icon = options.icon;
             },

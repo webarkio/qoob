@@ -10,14 +10,6 @@
     <div class="text"></div>
 </div>
 <div class="edit-control-bar">
-    <div class="<% if(!libs || libs.length === 1) { %>single<% } %> form-group lib-select">
-        <select class="form-control" id="lib-select">
-            <option>all</option>
-            <% for (var i = 0; i < libs.length; i++) { %>
-            <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>><%= libs[i].name %></option>
-            <% } %>
-        </select>
-    </div>
     <div class="autosave">
         <label class="checkbox-sb">
             <input type="checkbox" class="autosave-checkbox"><span></span><em><%= autosave %></em>
@@ -32,7 +24,7 @@
         </button>
         <button class="exit-button"><%= exit %></button>
         <div class="dropdown more-button">
-            <button class="btn btn-default dropdown-toggle" type="button" id="more" data-toggle="dropdown">More<span class="caret"></span></button>
+            <button class="btn btn-default dropdown-toggle" type="button" id="more" data-toggle="dropdown">More</button>
             <ul class="dropdown-menu" aria-labelledby="more">
                 <li><a class="save-template" tabindex="-1" href="#more">Save template</a></li>
                 <li><a tabindex="-1" href="#">Link 1</a></li>

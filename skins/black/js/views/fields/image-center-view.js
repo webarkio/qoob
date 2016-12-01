@@ -40,7 +40,6 @@ var ImageCenterView = Backbone.View.extend(
                 this.controller = options.controller;
                 this.tpl = _.template(this.storage.getSkinTemplate('field-image-setting-preview'));
                 this.parentId = options.parentId;
-                console.log(options.parentId);
                 this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
                 this.curSrc = options.curSrc;
                 this.assets = options.assets;

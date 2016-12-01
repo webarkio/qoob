@@ -14,7 +14,7 @@ function QoobStorage(options) {
     this.blockSettingsViewData = [];
     this.blockTemplates = [];
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
-    this.templates = [];
+    this.defaultTemplatesCollection = new Backbone.Collection();
     //    this.currentLib = 'all';
 }
 
@@ -54,7 +54,7 @@ QoobStorage.prototype.upload = function(cb) {
 };
 
 /**
- * 
+ *
  * @param  {String} group   Group name for which to find blocks.
  * @param  {Array} libNames Names of needed groups.
  * @return {Array}          Blocks array with blocks of specified group and libs.
@@ -80,7 +80,7 @@ QoobStorage.prototype.getBlocksByGroup = function(group, libNames) {
 };
 
 /**
- * 
+ *
  * @param {type} templateName
  * @returns {String} QoobStorage.skinTemplates
  */
@@ -105,7 +105,7 @@ QoobStorage.prototype.getBlockConfig = function(libName, blockName) {
 
 /**
  * Get template by name
- * 
+ *
  * @param {String} name Block's name.
  * @param {Function} cb A callback to run.
  */
@@ -126,13 +126,11 @@ QoobStorage.prototype.getBlockTemplate = function(libName, blockName, cb) {
             name: "block_" + libName + "_" + blockName,
             src: urlTemplate,
             onloaded: function(template) {
-                console.log('loaded');
                 self.blockTemplates[libName + "_" + blockName] = template;
                 cb(null, template);
             }
         });
     }
-
 };
 
 /**
@@ -181,9 +179,47 @@ QoobStorage.prototype.getAssets = function(libNames) {
     return assets;
 };
 
-
+/**
+ * Getting default templates
+ * @returns Array of templates
+ */
 QoobStorage.prototype.loadTemplates = function(cb) {
-    this.driver.loadTemplates(function(error, data){
-        cb(error, data);
+    var self = this;
+    this.driver.loadTemplates(function(error, data) {
+        if (data.length > 0) {
+            self.defaultTemplatesCollection.add(data);
+        }
+        cb(error);
+    });
+};
+
+/**
+ * Save new template
+ * @param template {Array}
+ * @returns callback {status}
+ */
+QoobStorage.prototype.createTemplate = function(template) {
+    this.defaultTemplatesCollection.add(template);
+
+    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, status) {
+        if (status) {
+            console.log('Done', status);
+        }
+    });
+};
+
+/**
+ * Remove template
+ * @param id {Number}
+ * @returns callback {status}
+ */
+QoobStorage.prototype.removeTemplate = function(id) {
+    var model = this.defaultTemplatesCollection.get(id);
+    this.defaultTemplatesCollection.remove(model);
+
+    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, status) {
+        if (status) {
+            console.log('Done', status);
+        }
     });
 };

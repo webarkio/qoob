@@ -26,16 +26,6 @@ body {
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'robotomedium';
-    src: url('../fonts/roboto/Roboto-Medium.eot');
-    src: url('../fonts/roboto/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/roboto/Roboto-Medium.woff') format('woff'),
-        url('../fonts/roboto/Roboto-Medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     @font-face {
         font-family: "robotobold";
@@ -316,6 +306,41 @@ textarea {
     background-image: none;
 }
 
+#qoob-toolbar .edit-control-button .more-button .dropdown-menu {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-top: 4px;
+}
+
+#qoob-toolbar .edit-control-button .more-button .dropdown-menu>li>a {
+    font-family: 'robotoregular';
+    color: #767676;
+    background-color: #444444;
+    padding: 11px 0 11px 21px;
+    font-size: 16px;
+}
+
+#qoob-toolbar .edit-control-button .more-button .dropdown-menu li:first-child>a {
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+#qoob-toolbar .edit-control-button .more-button .dropdown-menu li:last-child>a {
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+#qoob-toolbar .edit-control-button .more-button .dropdown-menu>li>a:hover, 
+#qoob-toolbar .edit-control-button .more-button .dropdown-menu>li>a:focus, 
+#qoob-toolbar .edit-control-button .more-button .dropdown-submenu:hover>a, 
+#qoob-toolbar .edit-control-button .more-button .dropdown-submenu:focus>a {
+    background: none;
+    background-color: #2bc0e4;
+    color: #fff;
+}
+
 #qoob-toolbar .edit-control-button button:last-child {
     margin: 0 -1px -1px -1px;
 }
@@ -481,77 +506,6 @@ textarea {
 }
 #qoob-toolbar .seconds-container {
     animation: rotate 0.3s infinite linear;
-}
-
-#qoob-toolbar .lib-select {
-    display: inline-block;
-}
-
-#qoob-toolbar .lib-select.single {
-    display: none;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select {
-    width: 155px;
-    position: absolute;
-    top: 15px;
-    left: 258px;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select .btn {
-    background-color: #606163;
-    color: #fff;
-    border: 0px;
-    background-image: none;
-    box-shadow: none;
-    padding: 13px 20px;
-    font-size: 16px;
-    line-height: 16px;
-    text-shadow: none;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select .btn:focus {
-    outline: none !important;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select .dropdown-menu.open {
-    padding: 0;
-    text-align: left;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select li {
-    margin: 0;
-    padding: 13px 20px;
-    background-color: #606163;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select li:hover {
-    background-color: #2bc0e4;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select li a {
-    padding: 0;
-    font-size: 16px;
-    color: #fff;
-    background: none;
-    box-shadow: none;
-}
-
-#qoob-toolbar .lib-select .bootstrap-select .bs-caret {
-    display: inline-block;
-    position: relative;
-    right: 9px;
-    height: 8px;
-    width: 14px;
-    background-image: url('../img/arrow_select_down.png');
-}
-
-#qoob-toolbar .lib-select .bootstrap-select.open .bs-caret {
-    background-image: url('../img/arrow_select_up.png');
-}
-
-#qoob-toolbar .lib-select .bootstrap-select .caret {
-    display: none;
 }
 
 @media (max-width: 1200px) {
@@ -803,6 +757,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 #qoob-iframe {
+    border: none;
     margin: 0 auto;
     display: block;
 }
@@ -859,6 +814,96 @@ label.checkbox-sb [type=checkbox]:checked + span {
 #qoob-menu .save-template {
     height: 100%;
 }
+
+#qoob-menu .lib-select {
+    margin: 9px 0 9px 4px;
+}
+
+#qoob-menu .lib-select.single {
+    display: none;
+}
+
+#qoob-menu .lib-select .bootstrap-select {
+    width: 154px;
+    display: inline-block;
+}
+
+#qoob-menu .lib-select .bootstrap-select .btn {
+    background-color: #606163;
+    color: #fff;
+    border: 0px;
+    background-image: none;
+    box-shadow: none;
+    padding: 13px 20px;
+    font-size: 16px;
+    line-height: 16px;
+    text-shadow: none;
+}
+
+#qoob-menu .lib-select .btn-manage {
+    background: transparent;
+    background-color: #606163;
+    box-shadow: none;
+    border: none;
+    color: #fff;
+    text-shadow: none;
+    width: 92px;
+    padding: 11px 0;
+    margin-left: 4px;
+    font-family: 'robotoregular';
+}
+
+#qoob-menu .lib-select .bootstrap-select .btn:focus {
+    outline: none !important;
+}
+
+#qoob-menu .lib-select .bootstrap-select .dropdown-menu.open {
+    padding: 0;
+    text-align: left;
+    border: none;
+    background: transparent;
+}
+
+#qoob-menu .lib-select .bootstrap-select.btn-group .dropdown-menu.inner {
+    background: transparent;
+}
+
+#qoob-menu .lib-select .bootstrap-select li {
+    margin: 0;
+    padding: 13px 20px;
+    background-color: #606163;
+}
+
+#qoob-menu .lib-select .bootstrap-select li:hover {
+    background-color: #2bc0e4;
+}
+
+#qoob-menu .lib-select .bootstrap-select li a {
+    padding: 0;
+    font-size: 16px;
+    color: #fff;
+    background: none;
+    box-shadow: none;
+    font-family: 'robotoregular';
+}
+
+#qoob-menu .lib-select .bootstrap-select .bs-caret {
+    display: inline-block;
+    position: relative;
+    right: 9px;
+    height: 8px;
+    width: 14px;
+    background-image: url('../img/arrow_select_down.png');
+}
+
+#qoob-menu .lib-select .bootstrap-select.open .bs-caret {
+    background-image: url('../img/arrow_select_up.png');
+}
+
+#qoob-menu .lib-select .bootstrap-select .caret {
+    display: none;
+}
+
 ul.catalog-list {
     height: 100%;
     margin: 0;
@@ -2051,7 +2096,7 @@ input[type="text"]#datepicker {
 }
 
 .settings-item  .ql-editor {
-    min-height: 180px;
+    height: 180px;
 }
 
 /*Field image*/

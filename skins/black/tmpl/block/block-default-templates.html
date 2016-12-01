@@ -1,10 +1,15 @@
+<div class="title-block"><%= text_part_one %> <span><%= text_part_two %></span></div>
 <% for (var k = 0; k < templates.length; k++) { %>
 	<div class="template" data-id="<%= templates[k].id %>">
-		<% if (templates[k].title) { %>
-			<div class=""><%= templates[k].title %></div>
-		<% } %>
 		<% if (templates[k].image) { %>
-			<img src="<%= templates[k].image %>" alt="">
+			<div class="image-bg">
+				<img src="<%= templates[k].image %>" alt="<%= templates[k].title %>">
+			</div>
 		<% } %>
+		<% if (templates[k].title) { %>
+			<div class="title"><%= templates[k].title %></div>
+		<% } %>
+		<a class="remove" data-id="<%= templates[k].id %>" href="#"></a>
 	</div>
+	
 <% } %>

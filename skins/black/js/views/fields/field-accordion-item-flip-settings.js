@@ -15,7 +15,8 @@ var AccordionFlipView = QoobFieldView.extend(
              */
             attributes: function () {
                 return {
-                    id: "settings-block-" + this.model.id
+                    id: "settings-block-" + this.model.id,
+                    'data-side-id': this.model.id
                 };
             },
             events: {
@@ -71,7 +72,7 @@ var AccordionFlipView = QoobFieldView.extend(
             },
             backward: function (e) {
                 e.preventDefault();
-                this.controller.layout.menu.rotate("settings-block-" + this.parentId);
+                this.controller.layout.menu.rotate(this.parentId);
             }
         });
 

@@ -28,6 +28,7 @@ function Skin() {
             { "type": "js", "name": "qoob-menu-blocks-preview-view", "src": "js/views/qoob-menu-blocks-preview-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-groups-view", "src": "js/views/qoob-menu-groups-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-save-template-view", "src": "js/views/qoob-menu-save-template-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-manage-libs-view", "src": "js/views/qoob-manage-libs-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-view", "src": "js/views/qoob-menu-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-settings-view", "src": "js/views/qoob-settings-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-toolbar-view", "src": "js/views/qoob-toolbar-view.js", "dep": ["backbone"] },
@@ -63,10 +64,10 @@ function Skin() {
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "css", "name": "bootstrap-select.min.css", "src": "css/bootstrap-select.min.css" },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
             { "type": "css", "name": "wheelcolorpicker.css", "src": "css/wheelcolorpicker.css" },
+            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
             { "type": "json", "name": "skin_translation", "src": "translation.json" }
         ]
@@ -112,12 +113,9 @@ Skin.prototype.activate = function(options) {
     });
 
 
-    //Statr blocks loaded to viewPort
-    self.layout.viewPort.on('block_loaded', function() {
-//        console.log('+1');
-//        self.controller.triggerIframe();
-//        Backbone.history.start({ pushState: false });
-        //jQuery('#loader-wrapper').remove();
+    //Blocks loaded to viewPort
+    self.layout.viewPort.on('blocks_loaded', function() {
+        self.loader.trigger('skin_loaded');
     });
 
     //If iframe ready to load blocks. All libraries css and js have already loaded to iframe
@@ -136,24 +134,12 @@ Skin.prototype.activate = function(options) {
 
             // load default templates
             self.storage.loadTemplates(function(error, data){
-                self.layout.viewPort.createDefaultTemplates(data);
+                self.layout.viewPort.createDefaultTemplates();
             });
 
             //Start loading blocks
-            if (self.storage.pageData && self.storage.pageData.blocks.length > 0) {
-                //if have a blocks
-                self.controller.load(self.storage.pageData.blocks);
-            } else {
-                //self.loader.trigger('progress');
-                //if empty page
-                //console.log('empty');
-                //Skip counter for blocks
-                self.layout.viewPort.blocksCounter = null;
+            self.controller.load(self.storage.pageData.blocks);
 
-                // if first start page
-                
-                //jQuery('#loader-wrapper').remove();
-            }
             //FIXME: delete selectpicker use onlu CSS
             jQuery('#lib-select').selectpicker();
         });
@@ -161,8 +147,6 @@ Skin.prototype.activate = function(options) {
         iframe.loader.add({ "name": "frontend-qoob-css", "src": self.options.skinUrl + "css/qoob-frontend.css", "type": "css" })
 
         return;
-
-
 
     });
 

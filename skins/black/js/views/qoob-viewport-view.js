@@ -143,6 +143,11 @@ var QoobViewportView = Backbone.View.extend(
                     this.blockViews.splice(i, 1);
                 }
             }
+
+            // change block blank and more templates when add block
+            if (this.blockViews.length == 0) {
+                this.controller.changeDefaultPage('show');
+            }
         },
         /**
          * Add block
@@ -182,10 +187,11 @@ var QoobViewportView = Backbone.View.extend(
                 iframe.jQuery('#qoob-blocks').append(blockWrapper.render().el);
             }
 
-            // hide block blank when add block
-            if (iframe.jQuery('#qoob-blocks').find('.block-blank:visible').length > 0) {
-                iframe.jQuery('#qoob-blocks').find('.block-blank').hide();
+            // change block blank and more templates when add block
+            if (this.blockViews.length > 0 && this.blockViews.length == 1) {
+                this.controller.changeDefaultPage('hide');
             }
+
             this.triggerIframe();
         },
         /**
@@ -231,19 +237,32 @@ var QoobViewportView = Backbone.View.extend(
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').append(_.template(this.storage.getSkinTemplate('block-default-blank'))({
-                "text": this.storage.__('block_default_blank', 'First of all you need add block')
+                "text_part_one": this.storage.__('block_default_blank_part_one', 'First of all you need'),
+                "text_part_two": this.storage.__('block_default_blank_part_two', 'add block')
             }));
         },
-        createDefaultTemplates: function(data) {
+        createDefaultTemplates: function() {
             var self = this;
             var iframe = this.getWindowIframe();
 
             var defaultTemplates = new QoobDefaultTemplatesView({
                 storage: self.storage,
-                controller: this.controller,
-                templates: data
+                controller: this.controller
             });
 
             iframe.jQuery('#qoob-blocks').append(defaultTemplates.render().el);
+        },
+        changeDefaultPage: function(event) {
+            var qoob_blocks = this.getWindowIframe().jQuery('#qoob-blocks');
+            if (event == 'hide') {
+                // hide block blank and qoob templates when add block
+                qoob_blocks.find('.block-blank').hide();    
+                qoob_blocks.find('.qoob-templates').hide();
+            }
+            if (event == 'show') {
+                // hide block blank and qoob templates when add block
+                qoob_blocks.find('.block-blank').show();
+                qoob_blocks.find('.qoob-templates').show();
+            }
         }
     });

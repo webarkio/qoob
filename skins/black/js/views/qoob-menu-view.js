@@ -16,21 +16,35 @@ var QoobMenuView = Backbone.View.extend({
     initialize: function(options) {
         this.controller = options.controller;
         this.storage = options.storage;
-//        this.model.on("block_add", this.addSettings.bind(this));
-//        this.model.on("block_delete", this.deleteSettings.bind(this));
+        //        this.model.on("block_add", this.addSettings.bind(this));
+        //        this.model.on("block_delete", this.deleteSettings.bind(this));
     },
     addSettings: function(model) {
         var item = this.storage.getBlockConfig(model.get('lib'), model.get('block'));
-        this.addView(new QoobMenuSettingsView({ "model": model, "config": item, "storage":this.storage, controller:this.controller }), 270);
+        this.addView(new QoobMenuSettingsView({
+            "model": model,
+            "config": item,
+            "storage": this.storage,
+            controller: this.controller
+        }), 270);
     },
     /**
      * Render menu
      * @returns {Object}
      */
     render: function() {
-        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-menu-preview'))());
+        var data = {
+            "libs": this.storage.librariesData,
+            "curLib": this.storage.currentLib,
+            "manage": this.storage.__('manage', 'Manage')
+        };
+        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-menu-preview'))(data));
         var groups = this.storage.getGroups();
-        this.addView(new QoobMenuGroupsView({ storage: this.storage, groups: groups, controller: this.controller }), 0);
+        this.addView(new QoobMenuGroupsView({
+            storage: this.storage,
+            groups: groups,
+            controller: this.controller
+        }), 0);
         for (var i = 0; i < groups.length; i++) {
             this.addView(new QoobMenuBlocksPreviewView({
                 id: 'group-' + groups[i].id,
@@ -39,7 +53,14 @@ var QoobMenuView = Backbone.View.extend({
                 group: groups[i]
             }), 90);
         }
-        this.addView(new QoobMenuSaveTemplateView({ storage: this.storage, controller: this.controller }), 180);
+        this.addView(new QoobMenuSaveTemplateView({
+            storage: this.storage,
+            controller: this.controller
+        }), 180);
+        this.addView(new QoobManageLibsView({
+            storage: this.storage,
+            controller: this.controller
+        }), 180);
         this.draggable();
 
         return this;
@@ -48,13 +69,13 @@ var QoobMenuView = Backbone.View.extend({
     draggable: function() {
         var self = this;
         this.$el.find('.preview-block').draggable({
-            appendTo: "body",
+            // appendTo: "body",
             helper: "clone",
             iframeFix: true,
             iframeScroll: true,
             scrollSensitivity: 100,
             scrollSpeed: 15,
-            containment:'body',
+            containment: 'body',
             start: function(event, ui) {
                 jQuery('.droppable').show();
                 self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").hide();
@@ -87,10 +108,10 @@ var QoobMenuView = Backbone.View.extend({
      * Resize menu
      */
     resize: function() {
-    this.$el.css({
-        height: jQuery(window).height() - 70,
-        top: 70
-    });
+        this.$el.css({
+            height: jQuery(window).height() - 70,
+            top: 70
+        });
     },
     /**
      * Add view to side qoob
@@ -131,9 +152,9 @@ var QoobMenuView = Backbone.View.extend({
         var newSide = newElement.closest('div[id^="side-"]');
         var addedClass = newSide.prop('id');
 
-        if(this.$el.find('.card-main').hasClass('side-full-rotation')) {
+        if (this.$el.find('.card-main').hasClass('side-full-rotation')) {
             this.$el.find('.card-main').removeClass('side-full-rotation');
-        }else{
+        } else {
             if (currentSide.prop('id') == newSide.prop('id')) {
                 addedClass += ' side-full-rotation';
             }
@@ -198,13 +219,13 @@ var QoobMenuView = Backbone.View.extend({
      * @param {String} view id
      */
     delView: function(id) {
-        if(this.settingsViewStorage && this.settingsViewStorage[id]) {
+        if (this.settingsViewStorage && this.settingsViewStorage[id]) {
             this.settingsViewStorage[id].dispose();
-        }   
+        }
     },
     deleteSettings: function(model) {
         this.controller.stopEditBlock();
-        
+
         var settings = this.getSettingsView(model.id);
         settings.dispose();
     },
@@ -216,7 +237,7 @@ var QoobMenuView = Backbone.View.extend({
         var self = this,
             groups = this.$el.find('#catalog-groups li'),
             blocks = this.$el.find('.preview-block');
-        
+
         groups.hide();
         blocks.hide();
 
@@ -226,7 +247,7 @@ var QoobMenuView = Backbone.View.extend({
             });
             blocks = blocks.filter(function(index) {
                 return self.$(blocks[index]).hasClass(libName);
-            }); 
+            });
         }
 
         groups.show();
