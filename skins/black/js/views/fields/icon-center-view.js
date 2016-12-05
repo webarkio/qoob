@@ -97,7 +97,7 @@ var IconCenterView = Backbone.View.extend(
              */
             backward: function (e) {
                 e.preventDefault();
-                this.controller.layout.menu.rotate(this.backId);
+                this.controller.layout.menu.rotateBackward(this.backId);
             },
             /**
              * Setting an icon by clicking it
@@ -123,7 +123,7 @@ var IconCenterView = Backbone.View.extend(
              */
             deleteIcon: function (evt) {
                 window.selectFieldIcon('empty');
-                this.controller.layout.menu.rotate(this.backId);
+                this.controller.layout.menu.rotateBackward(this.backId);
             },
             /**
              * Keyup event for filtering icons by tags in search input

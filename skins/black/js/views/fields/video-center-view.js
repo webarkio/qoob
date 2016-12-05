@@ -123,7 +123,7 @@ var VideoCenterView = Backbone.View.extend(
          */
         backward: function(e) {
             e.preventDefault();
-            this.controller.layout.menu.rotate(this.backId);
+            this.controller.layout.menu.rotateBackward(this.backId);
         },
         /**
          * Setting an image by clicking it
@@ -149,7 +149,7 @@ var VideoCenterView = Backbone.View.extend(
          */
         deleteVideo: function(evt) {
             window.selectFieldVideo('empty');
-            this.controller.layout.menu.rotate(this.backId);
+            this.controller.layout.menu.rotateBackward(this.backId);
         },
         /**
          * Keyup event for filtering images by tags in search input

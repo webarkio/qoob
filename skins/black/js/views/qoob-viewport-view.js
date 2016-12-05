@@ -242,15 +242,19 @@ var QoobViewportView = Backbone.View.extend(
             }));
         },
         createDefaultTemplates: function() {
-            var self = this;
             var iframe = this.getWindowIframe();
 
             var defaultTemplates = new QoobDefaultTemplatesView({
-                storage: self.storage,
+                storage: this.storage,
                 controller: this.controller
             });
 
             iframe.jQuery('#qoob-blocks').append(defaultTemplates.render().el);
+
+            this.storage.loadTemplates(function(error, data){
+                defaultTemplates.render();
+            });
+
         },
         changeDefaultPage: function(event) {
             var qoob_blocks = this.getWindowIframe().jQuery('#qoob-blocks');

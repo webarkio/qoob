@@ -133,9 +133,7 @@ Skin.prototype.activate = function(options) {
             self.layout.viewPort.createBlankBlock();
 
             // load default templates
-            self.storage.loadTemplates(function(error, data){
-                self.layout.viewPort.createDefaultTemplates();
-            });
+            self.layout.viewPort.createDefaultTemplates();
 
             //Start loading blocks
             self.controller.load(self.storage.pageData.blocks);

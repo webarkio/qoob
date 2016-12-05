@@ -5,8 +5,6 @@
  */
 var QoobMenuGroupsView = Backbone.View.extend(
 /** @lends QoobMenuGroupsView.prototype */{
-    tagName: "ul",
-    className: "catalog-list",
     id:"catalog-groups",
     attributes: function() {
         return {
@@ -29,8 +27,13 @@ var QoobMenuGroupsView = Backbone.View.extend(
      * @returns {Object}
      */
     render: function () {
-
-      this.$el.html(_.template(this.storage.getSkinTemplate('menu-groups-preview'))({"groups_arr" : this.groups}));
+    var data = {
+            "groups_arr" : this.groups,
+            "libs": this.storage.librariesData,
+            "curLib": this.storage.currentLib,
+            "manage": this.storage.__('manage', 'Manage')
+        };
+      this.$el.html(_.template(this.storage.getSkinTemplate('menu-groups-preview'))(data));
 
       return this;
     }

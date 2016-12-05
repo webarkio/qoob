@@ -94,11 +94,11 @@ var QoobController = Backbone.Router.extend({
         }
     },
     showMore: function() {
-        this.layout.menu.rotate('save-template');
+        this.layout.menu.rotateForward('save-template');
         this.layout.toolbar.logoRotation('side-90');
     },
     showManageLibs: function() {
-        this.layout.menu.rotate('manage-libs');
+        this.layout.menu.rotateForward('manage-libs');
         this.layout.toolbar.logoRotation('side-90');
     },
     addNewBlock: function(lib, block, afterId) {
@@ -149,7 +149,7 @@ var QoobController = Backbone.Router.extend({
             this.deleteInnerSettingsView(name);
         }
         this.layout.menu.addView(view, 270);
-        this.layout.menu.rotate(name);
+        this.layout.menu.rotateForward(name);
         this.layout.menu.settingsViewStorage[name] = view;
     },
     deleteInnerSettingsView: function(name) {

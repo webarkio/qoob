@@ -408,7 +408,10 @@
 }
 
 #qoob-blocks .block-blank-inner-text {
-    padding-top: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 #qoob-blocks .block-blank-inner-text .text-one {
@@ -427,7 +430,7 @@
     width: 50%;
     float: left;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #qoob-blocks .qoob-templates .title-block {

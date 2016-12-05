@@ -1,20 +1,7 @@
 <div id="card">
     <div class="card-wrap">
-        <div class="card-main side-0">
-            <div id="side-0" class="active">
-            	<div class="<% if(!libs || libs.length === 1) { %>single<% } %> form-group lib-select">
-			        <select class="form-control" id="lib-select">
-			            <option>all</option>
-			            <% for (var i = 0; i < libs.length; i++) { %>
-			            <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>><%= libs[i].name %></option>
-			            <% } %>
-			        </select>
-					<a href="#manage-libs" class="btn btn-manage"><%= manage %></a>
-			    </div>
-            </div>
-            <div id="side-90"></div>
-            <div id="side-180"></div>
-            <div id="side-270"></div>
+        <div class="card-main">
+            <div class="side current-screen"></div>
         </div>
     </div>
 </div>

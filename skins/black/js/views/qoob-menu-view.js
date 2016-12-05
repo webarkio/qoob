@@ -5,7 +5,7 @@
  */
 var QoobMenuView = Backbone.View.extend({
     id: "qoob-menu",
-    currentId: 'catalog-groups',
+    currentScreen: 'catalog-groups',
     menuViews: [],
     /**
      * View menu
@@ -33,34 +33,35 @@ var QoobMenuView = Backbone.View.extend({
      * @returns {Object}
      */
     render: function() {
-        var data = {
-            "libs": this.storage.librariesData,
-            "curLib": this.storage.currentLib,
-            "manage": this.storage.__('manage', 'Manage')
-        };
-        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-menu-preview'))(data));
+        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-menu-preview'))());
+
         var groups = this.storage.getGroups();
+
         this.addView(new QoobMenuGroupsView({
             storage: this.storage,
             groups: groups,
             controller: this.controller
-        }), 0);
+        }));
+
         for (var i = 0; i < groups.length; i++) {
             this.addView(new QoobMenuBlocksPreviewView({
                 id: 'group-' + groups[i].id,
                 storage: this.storage,
                 controller: this.controller,
                 group: groups[i]
-            }), 90);
+            }));
         }
+
         this.addView(new QoobMenuSaveTemplateView({
             storage: this.storage,
             controller: this.controller
-        }), 180);
+        }));
+
         this.addView(new QoobManageLibsView({
             storage: this.storage,
             controller: this.controller
-        }), 180);
+        }));
+
         this.draggable();
 
         return this;
@@ -69,7 +70,7 @@ var QoobMenuView = Backbone.View.extend({
     draggable: function() {
         var self = this;
         this.$el.find('.preview-block').draggable({
-            // appendTo: "body",
+            appendTo: "body",
             helper: "clone",
             iframeFix: true,
             iframeScroll: true,
@@ -95,13 +96,14 @@ var QoobMenuView = Backbone.View.extend({
         this.$el.fadeIn(300);
     },
     showGroup: function(group) {
-        this.rotate('group-' + group);
+        this.rotateForward('group-' + group);
+
     },
     showIndex: function() {
-        this.rotate('catalog-groups');
+        this.rotateBackward('catalog-groups');
     },
     startEditBlock: function(blockId) {
-        this.rotate(blockId);
+        this.rotateForward(blockId);
     },
 
     /**
@@ -116,11 +118,10 @@ var QoobMenuView = Backbone.View.extend({
     /**
      * Add view to side qoob
      * @param {Object} BackboneView  View from render
-     * @param {String} side Side qoob
      */
-    addView: function(view, side) {
+    addView: function(view) {
         this.menuViews.push(view);
-        this.$el.find('#side-' + side).append(view.render().el);
+        this.$el.find('.current-screen').append(view.render().el);
     },
     /**
      * Get SettingsView by id
@@ -135,53 +136,63 @@ var QoobMenuView = Backbone.View.extend({
     },
     /**
      * Menu rotation
-     * @param {Integer} id
-     * @param {Boolean} back Rotate back
+     * @param {Number} id
+     * @param {String} screen Class side
+     * @param {Number} deg number transform
      */
-    rotate: function(id) {
-        if (this.currentId == id)
-            return;
+    rotate: function(id, screen, deg) {
+        var self = this;
 
-        // current block for id
+        this.$el.find('#card').addClass('rotate');
 
-        var currentElement = this.$el.find("[data-side-id='" + this.currentId + "']");
-        var newElement = this.$el.find("[data-side-id='" + id + "']");
+        var findScreen = this.$el.find('[data-side-id="' + id + '"]');
 
-        // get block side
-        var currentSide = currentElement.closest('div[id^="side-"]');
-        var newSide = newElement.closest('div[id^="side-"]');
-        var addedClass = newSide.prop('id');
+        var cloneElement = this.$el.find('[data-side-id="' + id + '"]').clone();
 
-        if (this.$el.find('.card-main').hasClass('side-full-rotation')) {
-            this.$el.find('.card-main').removeClass('side-full-rotation');
-        } else {
-            if (currentSide.prop('id') == newSide.prop('id')) {
-                addedClass += ' side-full-rotation';
+        this.currentScreen = id;
+
+        this.$el.find('.card-main').prepend($('<div>', {
+            class: screen + ' side'
+        }).append(cloneElement.show()));
+
+        var elemRotate = this.$el.find('.card-main');
+
+        $({
+            deg: 0
+        }).animate({
+            deg: deg
+        }, {
+            easing: '',
+            duration: 250,
+            step: function(now) {
+                elemRotate.css({
+                    transform: 'rotateY(' + now + 'deg)'
+                });
+            },
+            complete: function() {
+                self.$el.find('[data-side-id]').hide(0, function() {
+                    findScreen.show(0, function() {
+                        elemRotate.removeAttr("style");
+                        self.$el.find('#card').removeClass('rotate');
+                        self.$el.find('.' + screen).remove();
+                    });
+                });
             }
-        }
-
-        // hide all blocks side
-        this.$el.find('.menu-block').hide();
-
-        // show current block menu
-        currentElement.hide();
-        newElement.show();
-
-        // rotate qoob menu
-        this.$el.find('.card-main')
-            .removeClass(function(index, css) {
-                return (css.match(/\bside-\S+/g) || []).join(' ');
-            }).removeClass('side-full-rotation')
-            .addClass(addedClass)
-            .children()
-            .removeClass('active');
-
-        // add active class
-        newSide.addClass('active');
-
-        // set current rotate id
-        this.currentId = id;
-
+        });
+    },
+    /**
+     * Menu rotation forward
+     * @param {Number} id
+     */
+    rotateForward: function(id) {
+        this.rotate(id, 'forward-screen', 90);
+    },
+    /**
+     * Menu rotation backward
+     * @param {Number} id
+     */
+    rotateBackward: function(id) {
+        this.rotate(id, 'backward-screen', -90);
     },
     onEditStart: function(blockId) {
         this.rotate('settings-block-' + blockId);
