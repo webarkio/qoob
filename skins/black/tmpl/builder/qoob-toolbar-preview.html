@@ -24,11 +24,9 @@
         </button>
         <button class="exit-button"><%= exit %></button>
         <div class="dropdown more-button">
-            <button class="btn btn-default dropdown-toggle" type="button" id="more" data-toggle="dropdown">More</button>
+            <button class="btn btn-default dropdown-toggle" type="button" id="more" data-toggle="dropdown"><%= more %> <i class="fa fa-caret-down" data-unicode="f0d7"></i></button>
             <ul class="dropdown-menu" aria-labelledby="more">
-                <li><a class="save-template" tabindex="-1" href="#more">Save template</a></li>
-                <li><a tabindex="-1" href="#">Link 1</a></li>
-                <li><a tabindex="-1" href="#">Link 2</a></li>
+                <li><a class="save-template" tabindex="-1" href="#more"><%= save_template %></a></li>
             </ul>
         </div>
         <button class="device-mode-button pc active" name="pc"></button>

@@ -1,11 +1,12 @@
 <div class="<% if(!libs || libs.length === 1) { %>single<% } %> form-group lib-select">
     <select class="form-control" id="lib-select">
-        <option>all</option>
+        <option><%= all_themes %></option>
         <% for (var i = 0; i < libs.length; i++) { %>
         <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>><%= libs[i].name %></option>
         <% } %>
+        <option data-divider="true"></option>
+        <option value="manage" class="manage-libs"><%= manage %></option>
     </select>
-    <a href="#manage-libs" class="btn btn-manage"><%= manage %></a>
 </div>
 <ul class="catalog-list">
     <% for (var i = 0; i < groups_arr.length; i++) { %>

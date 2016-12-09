@@ -1,6 +1,7 @@
 var QoobController = Backbone.Router.extend({
     routes: {
         "index": "index",
+        "": "index", // Empty hash-tag
         "groups/:group": "showGroup", // #groups/name
         "edit/:blockId": "startEditBlock", // #groups/name
         "more": "showMore",
@@ -98,6 +99,7 @@ var QoobController = Backbone.Router.extend({
         this.layout.toolbar.logoRotation('side-90');
     },
     showManageLibs: function() {
+        this.navigate('manage-libs');
         this.layout.menu.rotateForward('manage-libs');
         this.layout.toolbar.logoRotation('side-90');
     },

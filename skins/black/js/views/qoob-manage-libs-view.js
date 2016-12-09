@@ -31,6 +31,12 @@ var QoobManageLibsView = Backbone.View.extend(
          * @returns {Object}
          */
         render: function() {
+            var data = {
+                'back': this.storage.__('back', 'Back')
+            };
+            
+            this.$el.html(_.template(this.storage.getSkinTemplate('menu-manage-libs-preview'))(data));
+
             return this;
         }
     });

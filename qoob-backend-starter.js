@@ -106,13 +106,6 @@
                 return;
             }
 
-            self.loader.once('complete', function() {
-
-                self.options.librariesData = self.parseBlockData(libs);
-                self.startStage3();
-
-            });
-
             for (var i in libs) {
 
                 var libUrl = libs[i].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
@@ -150,10 +143,14 @@
                     self.loader.add({ "type": "json", "name": libs[i].name + "_" + blocks[k].name, "src": blocks[k].config_url });
                 }
             }
+
+            self.loader.once('complete', function() {
+                self.options.librariesData = self.parseBlockData(libs);
+                self.startStage3();
+
+            });
         });
     };
-
-
 
     QoobStarter.prototype.startStage3 = function() {
         var self = this;

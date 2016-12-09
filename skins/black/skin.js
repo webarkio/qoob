@@ -7,14 +7,12 @@
  */
 //module.exports.Qoob = Qoob;
 function Skin() {
-
     this.assets = {
         "dev": [
             { "type": "js", "name": "jquery-ui", "src": "js/libs/jquery-ui.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "bootstrap-progressbar", "src": "js/libs/bootstrap-progressbar.js", "dep": ["bootstrap"] },
-            { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
             { "type": "js", "name": "wheelcolorpicker", "src": "js/libs/jquery.wheelcolorpicker.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
             { "type": "js", "name": "block-model", "src": "js/models/block-model.js", "dep": ["backbone"] },
@@ -63,6 +61,7 @@ function Skin() {
         ],
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "css", "name": "bootstrap-select.min.css", "src": "css/bootstrap-select.min.css" },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
@@ -137,9 +136,6 @@ Skin.prototype.activate = function(options) {
 
             //Start loading blocks
             self.controller.load(self.storage.pageData.blocks);
-
-            //FIXME: delete selectpicker use onlu CSS
-            jQuery('#lib-select').selectpicker();
         });
         //add css styles for overlay and drop zone
         iframe.loader.add({ "name": "frontend-qoob-css", "src": self.options.skinUrl + "css/qoob-frontend.css", "type": "css" })

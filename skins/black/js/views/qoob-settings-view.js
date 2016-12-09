@@ -56,7 +56,8 @@ var QoobMenuSettingsView = Backbone.View.extend(
             
             return this;
         },
-        clickBack: function(){
+        clickBack: function(e){
+            e.preventDefault();
             this.controller.stopEditBlock();
         },
         /**

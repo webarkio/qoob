@@ -372,10 +372,9 @@
     float: left;
     position: relative;
     background-color: #fff;
-    height: 100vh;
-    width: 50%;
+    min-height: 136px;
+    width: 100%;
     padding: 10px;
-    
 }
 
 .content-block-outer + #qoob-blocks .block-blank {
@@ -414,13 +413,7 @@
     left: 50%;
 }
 
-#qoob-blocks .block-blank-inner-text .text-one {
-    font-family: 'robotolight';
-    font-size: 36px;
-    margin-bottom: 4px;
-}
-
-#qoob-blocks .block-blank-inner-text .text-two {
+#qoob-blocks .block-blank-inner-text .text {
     font-family: 'robotoblack';
     font-size: 36px;
 }

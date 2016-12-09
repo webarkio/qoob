@@ -7,6 +7,9 @@ var QoobMenuView = Backbone.View.extend({
     id: "qoob-menu",
     currentScreen: 'catalog-groups',
     menuViews: [],
+    events: {
+        'change #lib-select': 'changeLib'
+    },
     /**
      * View menu
      * @class QoobMenuView
@@ -63,6 +66,8 @@ var QoobMenuView = Backbone.View.extend({
         }));
 
         this.draggable();
+
+        this.$el.find('#lib-select').selectpicker();
 
         return this;
     },
@@ -263,5 +268,14 @@ var QoobMenuView = Backbone.View.extend({
 
         groups.show();
         blocks.show();
+    },
+    changeLib: function () {
+        if (this.$el.find('#lib-select').val() == 'manage') {
+            this.controller.showManageLibs();
+            this.$el.find('#lib-select [value="manage"]').prop('selected', false);
+            this.$el.find('#lib-select').selectpicker('refresh');
+        } else {
+            this.controller.changeLib(this.$el.find('#lib-select').val());
+        }
     }
 });

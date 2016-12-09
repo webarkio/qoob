@@ -12,8 +12,7 @@ var QoobToolbarView = Backbone.View.extend({
         'click .device-mode-button': 'clickDeviceMode',
         'click .exit-button': 'clickExit',
         'click .save-button': 'clickSave',
-        'click .autosave-checkbox': 'clickAutosave',
-        'change #lib-select': 'changeLib'
+        'click .autosave-checkbox': 'clickAutosave'
     },
     attributes: function() {
         return {
@@ -38,7 +37,9 @@ var QoobToolbarView = Backbone.View.extend({
         var data = {
             "autosave": this.storage.__('autosave', 'Autosave'),
             "save": this.storage.__('save', 'Save'),
-            "exit": this.storage.__('exit', 'Exit')
+            "exit": this.storage.__('exit', 'Exit'),
+            "more": this.storage.__('more', 'More'),
+            "save_template": this.storage.__('save_template', 'Save template'),
         };
         this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
         
@@ -107,8 +108,5 @@ var QoobToolbarView = Backbone.View.extend({
     },
     clickAutosave: function(evt) {
         this.controller.setAutoSave(evt.target.checked);
-    },
-    changeLib: function () {
-        this.controller.changeLib(this.$el.find('#lib-select').val());
     }
 });

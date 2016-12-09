@@ -283,6 +283,10 @@ textarea {
     background-image: none;
 }
 
+#qoob-toolbar .edit-control-button .more-button button .fa {
+    padding-left: 2px;
+}
+
 #qoob-toolbar .edit-control-button .more-button .dropdown-menu {
     background: transparent;
     border: none;
@@ -793,7 +797,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 #card .lib-select {
-    margin: 9px 0 9px 4px;
+    padding: 9px 0 9px 4px;
 }
 
 #card .lib-select.single {
@@ -801,7 +805,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 #card .lib-select .bootstrap-select {
-    width: 154px;
+    width: 250px;
     display: inline-block;
 }
 
@@ -811,27 +815,21 @@ label.checkbox-sb [type=checkbox]:checked + span {
     border: 0px;
     background-image: none;
     box-shadow: none;
-    padding: 13px 20px;
+    padding: 13px 22px;
     font-size: 16px;
     line-height: 16px;
     text-shadow: none;
 }
 
-#card .lib-select .btn-manage {
-    background: transparent;
-    background-color: #606163;
-    box-shadow: none;
-    border: none;
-    color: #fff;
-    text-shadow: none;
-    width: 92px;
-    padding: 11px 0;
-    margin-left: 4px;
-    font-family: 'robotoregular';
-}
-
 #card .lib-select .bootstrap-select .btn:focus {
     outline: none !important;
+}
+
+#card .lib-select .bootstrap-select .dropdown-menu {
+    position: relative;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 #card .lib-select .bootstrap-select .dropdown-menu.open {
@@ -847,7 +845,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #card .lib-select .bootstrap-select li {
     margin: 0;
-    padding: 13px 20px;
+    padding: 13px 22px;
     background-color: #606163;
 }
 
@@ -862,6 +860,14 @@ label.checkbox-sb [type=checkbox]:checked + span {
     background: none;
     box-shadow: none;
     font-family: 'robotoregular';
+}
+
+#card .lib-select .bootstrap-select li.divider {
+    padding: 0;
+    margin: 0;
+    background-color: #444444;
+    height: 2px;
+    border: none;
 }
 
 #card .lib-select .bootstrap-select .bs-caret {
@@ -882,8 +888,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 ul.catalog-list {
-    height: 100vh;
+    height: 100%;
     margin: 0;
+    padding-left: 4px;
     z-index: 1;
     list-style: none;
     overflow: hidden;
@@ -1001,6 +1008,7 @@ ul.catalog-list li a:hover:after {
 }
 
 #card .card-main .current-screen [data-side-id] {
+    height: 100%;
    display: none;
 }
 

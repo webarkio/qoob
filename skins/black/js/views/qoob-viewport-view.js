@@ -237,8 +237,7 @@ var QoobViewportView = Backbone.View.extend(
         createBlankBlock: function() {
             var iframe = this.getWindowIframe();
             iframe.jQuery('#qoob-blocks').append(_.template(this.storage.getSkinTemplate('block-default-blank'))({
-                "text_part_one": this.storage.__('block_default_blank_part_one', 'First of all you need'),
-                "text_part_two": this.storage.__('block_default_blank_part_two', 'add block')
+                "text_default_blank": this.storage.__('block_default_blank', "This is blank page, you can click on block preview to add block")
             }));
         },
         createDefaultTemplates: function() {
@@ -251,7 +250,7 @@ var QoobViewportView = Backbone.View.extend(
 
             iframe.jQuery('#qoob-blocks').append(defaultTemplates.render().el);
 
-            this.storage.loadTemplates(function(error, data){
+            this.storage.loadTemplates(function(error, data) {
                 defaultTemplates.render();
             });
 
@@ -260,7 +259,7 @@ var QoobViewportView = Backbone.View.extend(
             var qoob_blocks = this.getWindowIframe().jQuery('#qoob-blocks');
             if (event == 'hide') {
                 // hide block blank and qoob templates when add block
-                qoob_blocks.find('.block-blank').hide();    
+                qoob_blocks.find('.block-blank').hide();
                 qoob_blocks.find('.qoob-templates').hide();
             }
             if (event == 'show') {
