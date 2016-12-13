@@ -48,7 +48,7 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
                 return obj.id;
             });
 
-            var newId = sorted[sorted.length-1].id + 1;
+            var newId = sorted.length ? sorted[sorted.length-1].id + 1 : 1;
 
             var dataView = {
                 'id': newId,

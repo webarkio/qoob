@@ -1,15 +1,27 @@
-<div class="title-block"><%= text_part_one %> <span><%= text_part_two %></span></div>
-<% for (var k = 0; k < templates.length; k++) { %>
-	<div class="template" data-id="<%= templates[k].id %>">
-		<% if (templates[k].image) { %>
-			<div class="image-bg">
-				<img src="<%= templates[k].image %>" alt="<%= templates[k].title %>">
+ <div class="block-blank <% if (templates.length == 0) { %>full-page<% } %>">
+    <div class="block-blank-inner">
+    	<div class="block-blank-inner-text">
+	        <i class="fa fa-reply"></i>
+	        <div class="blank-text"><%= text_default_blank %></div>
+        </div>
+    </div>
+</div>
+
+ <% if (templates.length > 0) { %>
+	<div class="title-block"><%= block_default_templates_text %></div>
+	<div class="templates">
+		<% for (var k = 0; k < templates.length; k++) { %>
+			<div class="template" data-id="<%= templates[k].id %>">
+				<% if (templates[k].image) { %>
+					<div class="image-bg">
+						<img src="<%= templates[k].image %>" alt="<%= templates[k].title %>">
+					</div>
+				<% } %>
+				<% if (templates[k].title) { %>
+					<div class="title"><%= templates[k].title %></div>
+				<% } %>
+				<a class="remove" data-id="<%= templates[k].id %>" href="#"></a>
 			</div>
 		<% } %>
-		<% if (templates[k].title) { %>
-			<div class="title"><%= templates[k].title %></div>
-		<% } %>
-		<a class="remove" data-id="<%= templates[k].id %>" href="#"></a>
 	</div>
-	
 <% } %>

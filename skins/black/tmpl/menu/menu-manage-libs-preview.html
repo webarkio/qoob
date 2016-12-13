@@ -5,10 +5,36 @@
 	<div class="settings-block">
 		<div class="settings-item">
 			<div class="title">Add url library</div>
-			<input class="input-text" type="text" name="title" value="" placeholder="enter url library">
+			<div class="container-input-add">
+				<input class="input-url" type="text" name="url" value="" placeholder="enter url library">
+				<div class="add-item add-ibrary"><i class="fa fa-plus"></i></div>
+			</div>
 		</div>
 	</div>
-	<div class="block-button">
-		<div class="button-save-template add-ibrary">Add library</div>
+	<div class="settings-block libraries">
+		<div class="settings-item">
+			<div class="title">Libraries</div>
+
+			<% for (var i = 0; i < libraries.length; i++) { %>
+				<div class="library">
+					<div class="name-library">
+						<% if (libraries[i].name.length > 26) { %>
+							<%= libraries[i].name.substring(0, 26) %>...
+						<% } else { %>
+							<%= libraries[i].name %>
+						<% } %>
+					</div>
+					<div class="control-library">
+						<% if (libraries[i].url.substr(libraries[i].url.length - 4) == 'json') { %>
+							<a class="update-library" data-lib-name="<%= libraries[i].name %>" href="#"><i class="fa fa-refresh"></i></a>
+						<% } %>
+						<a class="remove-library" href="#"><i class="fa fa-trash"></i></a>
+					</div>
+				</div>
+			<% } %>
+		</div>
+		<div class="settings-item">
+			<div class="phrase-reload-page">You need to reload page</div>
+		</div>
 	</div>
 </div>

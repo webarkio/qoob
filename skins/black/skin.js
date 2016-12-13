@@ -129,10 +129,9 @@ Skin.prototype.activate = function(options) {
             // self.layout.viewPort.getWindowIframe().onbeforeunload = function() {
             //     return false;
             // };
-            self.layout.viewPort.createBlankBlock();
 
-            // load default templates
-            self.layout.viewPort.createDefaultTemplates();
+            //  load default templates
+            self.layout.viewPort.createBlankPage();
 
             //Start loading blocks
             self.controller.load(self.storage.pageData.blocks);

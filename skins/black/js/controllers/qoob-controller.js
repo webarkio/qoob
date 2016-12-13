@@ -108,7 +108,7 @@ var QoobController = Backbone.Router.extend({
 
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
-    addBlock: function(values, afterId, scroll ) {
+    addBlock: function(values, afterId, scroll) {
         scroll = scroll || true;
         // addBlock: function (values, afterId, scroll=true) {
         var model = QoobUtils.createModel(values);
@@ -131,7 +131,9 @@ var QoobController = Backbone.Router.extend({
     },
     stopEditBlock: function() {
         this.layout.stopEditBlock();
-        this.navigate('index', { trigger: true });
+        this.navigate('index', {
+            trigger: true
+        });
     },
     load: function(blocks) {
         if (blocks.length == 0) {
@@ -176,6 +178,72 @@ var QoobController = Backbone.Router.extend({
     changeLib: function(name) {
         this.storage.currentLib = name;
         this.layout.menu.hideLibsExcept(name);
+    },
+    /**
+     * Add new library
+     * @param url {String}
+     * @param {Function} cb A callback to run.
+     */
+    addLibrary: function(url, cb) {
+        var self = this;
+        this.storage.driver.getLibraryByUrl(url, function(error, dataLib) {
+            if (!error && _.isArray(dataLib)) {
+                var jsonLib = _.first(dataLib);
+                if (jsonLib.name.length > 0) {
+                    self.storage.driver.loadLibrariesData(function(error, libraries) {
+                        libraries.push(jsonLib);
+                        self.storage.driver.saveLibrariesData(libraries, function(error, state) {
+                            cb(error, state);
+                        });
+                    });
+                }
+            }
+        });
+    },
+    /**
+     * Update library
+     * @param name {String} name library
+     * @param url {String} url library
+     * @param {Function} cb A callback to run.
+     */
+    updateLibrary: function(name, url, cb) {
+        var self = this;
+        this.storage.driver.getLibraryByUrl(url, function(error, dataLib) {
+            if (!error && _.isArray(dataLib)) {
+                var jsonLib = _.first(dataLib);
+                if (jsonLib.name.length > 0) {
+                    self.storage.driver.loadLibrariesData(function(error, libraries) {
+                        libraries = _.without(libraries, _.findWhere(libraries, {
+                          name: name
+                        }));
+
+                        libraries.push(jsonLib);
+
+                        self.storage.driver.saveLibrariesData(libraries, function(error, state) {
+                            cb(error, state);
+                        });
+                    });
+                }
+            }
+        });
+    },
+    /**
+     * Remove library
+     * @param name {String} name library
+     * @param {Function} cb A callback to run.
+     */
+    removeLibrary: function(name, cb) {
+        var self = this;
+
+        this.storage.driver.loadLibrariesData(function(error, libraries) {
+            libraries = _.without(libraries, _.findWhere(libraries, {
+              name: name
+            }));
+
+            self.storage.driver.saveLibrariesData(libraries, function(error, state) {
+                cb(error, state);
+            });
+        });
     },
     /**
      * Scroll to block

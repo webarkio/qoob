@@ -232,15 +232,9 @@ var QoobViewportView = Backbone.View.extend(
             this.scrollTo(modelId);
         },
         /**
-         * First block if pageData is empty
+         * if pageData is empty
          */
-        createBlankBlock: function() {
-            var iframe = this.getWindowIframe();
-            iframe.jQuery('#qoob-blocks').append(_.template(this.storage.getSkinTemplate('block-default-blank'))({
-                "text_default_blank": this.storage.__('block_default_blank', "This is blank page, you can click on block preview to add block")
-            }));
-        },
-        createDefaultTemplates: function() {
+        createBlankPage: function() {
             var iframe = this.getWindowIframe();
 
             var defaultTemplates = new QoobDefaultTemplatesView({
@@ -251,20 +245,19 @@ var QoobViewportView = Backbone.View.extend(
             iframe.jQuery('#qoob-blocks').append(defaultTemplates.render().el);
 
             this.storage.loadTemplates(function(error, data) {
-                defaultTemplates.render();
+                if (data && data.length > 0) {
+                    defaultTemplates.render();
+                }
             });
-
         },
         changeDefaultPage: function(event) {
             var qoob_blocks = this.getWindowIframe().jQuery('#qoob-blocks');
             if (event == 'hide') {
                 // hide block blank and qoob templates when add block
-                qoob_blocks.find('.block-blank').hide();
                 qoob_blocks.find('.qoob-templates').hide();
             }
             if (event == 'show') {
                 // hide block blank and qoob templates when add block
-                qoob_blocks.find('.block-blank').show();
                 qoob_blocks.find('.qoob-templates').show();
             }
         }

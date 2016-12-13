@@ -19,9 +19,10 @@ var QoobDefaultTemplatesView = Backbone.View.extend({
     render: function() {
         this.$el.html(_.template(this.storage.getSkinTemplate('block-default-templates'))({
             "templates": this.storage.defaultTemplatesCollection.toJSON(),
-            "text_part_one": this.storage.__('block_default_templates_part_one', 'Choose one of'),
-            "text_part_two": this.storage.__('block_default_templates_part_two', 'templates')
+            "block_default_templates_text": this.storage.__('block_default_templates_text', 'Or you can choose one of templates'),
+            "text_default_blank": this.storage.__('block_default_blank', "This is blank page, you can click on block preview to add block")
         }));
+
         return this;
     },
     clickChoiceTemplateBlock: function(evt) {

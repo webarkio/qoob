@@ -1478,6 +1478,57 @@ ul.catalog-list li a:hover:after {
     color: #b2b2b2;
 }
 
+.settings-item .input-url {
+    float: left;
+    height: auto;
+    width: 200px;
+    line-height: 20px;
+    padding: 5px 20px;
+    border: none;
+    background-color: #fff;
+    font-size: 13px;
+    font-family: 'robotoregular';
+    color: #5a5b5e;
+    border-radius: 2px 0 0 2px;
+    outline: none;
+}
+
+.settings-item .input-url::-webkit-input-placeholder {
+    color: #b2b2b2;
+}
+
+.settings-item .input-url:-moz-placeholder {
+    color: #b2b2b2;
+    opacity: 1;
+}
+
+.settings-item .input-url::-moz-placeholder {
+    color: #b2b2b2;
+    opacity: 1;
+}
+
+.settings-item .input-url:-ms-input-placeholder {
+    color: #b2b2b2;
+}
+
+.settings-item .add-item {
+    float: left;
+    width: 50px;
+    height: 30px;
+    border-radius: 0 2px 2px 0;
+    background-color: #9ea0a5;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 33px;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.settings-item .container-input-add {
+    overflow: hidden;
+}
+
 .settings-item .textarea {
     border: 1px solid #fff;
     font-size: 13px;
@@ -1824,6 +1875,35 @@ input[type="text"]#datepicker {
 
 .settings-item button.other-color:focus {
     outline: none;
+}
+
+.settings-block.libraries .library {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.settings-block.libraries .name-library {
+    float: left;
+    color: #fff;
+}
+
+.settings-block.libraries .control-library {
+    float: right;
+    
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.settings-block.libraries .control-library i {
+    color: #fff;
+}
+
+.settings-block.libraries .control-library .update-library {
+    padding-right: 10px;
+}
+
+.settings-block.libraries .phrase-reload-page {
+    display: none;
 }
 
 .jQWCP-wWidget {

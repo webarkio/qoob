@@ -186,7 +186,7 @@ QoobStorage.prototype.getAssets = function(libNames) {
 QoobStorage.prototype.loadTemplates = function(cb) {
     var self = this;
     this.driver.loadTemplates(function(error, data) {
-        if (data.length > 0) {
+        if (data && data.length > 0) {
             self.defaultTemplatesCollection.add(data);
         }
         cb(error);
