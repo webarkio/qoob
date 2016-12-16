@@ -196,14 +196,14 @@ QoobStorage.prototype.loadTemplates = function(cb) {
 /**
  * Save new template
  * @param template {Array}
- * @returns callback {status}
+ * @returns callback {state}
  */
-QoobStorage.prototype.createTemplate = function(template) {
+QoobStorage.prototype.createTemplate = function(template, cb) {
     this.defaultTemplatesCollection.add(template);
 
-    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, status) {
-        if (status) {
-            console.log('Done', status);
+    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
+        if (state) {
+            cb(error, state);
         }
     });
 };
@@ -211,15 +211,33 @@ QoobStorage.prototype.createTemplate = function(template) {
 /**
  * Remove template
  * @param id {Number}
- * @returns callback {status}
+ * @returns callback {state}
  */
 QoobStorage.prototype.removeTemplate = function(id) {
     var model = this.defaultTemplatesCollection.get(id);
     this.defaultTemplatesCollection.remove(model);
 
-    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, status) {
-        if (status) {
-            console.log('Done', status);
+    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
+        if (state) {
+            console.log('Done', state);
         }
     });
 };
+
+/**
+ * Get library by url
+ * @param {String} url
+ * @param {getLibraryByUrlCallback} cb - A callback to run.
+ */
+QoobStorage.prototype.getLibraryByUrl = function(url, cb) {
+    $.ajax({
+        dataType: "json",
+        url: url,
+        error: function(jqXHR, textStatus, errorThrown) {
+            cb(textStatus);
+        },
+        success: function(data) {
+            cb(null, data);
+        }
+    });
+}

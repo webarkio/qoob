@@ -4,16 +4,16 @@
 <div class="settings-blocks-full">
 	<div class="settings-block">
 		<div class="settings-item">
-			<div class="title">Add url library</div>
+			<div class="title"><%= add_url_library %></div>
 			<div class="container-input-add">
-				<input class="input-url" type="text" name="url" value="" placeholder="enter url library">
+				<input class="input-url" type="text" name="url" value="" placeholder="<%= enter_url_library %>">
 				<div class="add-item add-ibrary"><i class="fa fa-plus"></i></div>
 			</div>
 		</div>
 	</div>
 	<div class="settings-block libraries">
 		<div class="settings-item">
-			<div class="title">Libraries</div>
+			<div class="title"><%= libraries_lng %></div>
 
 			<% for (var i = 0; i < libraries.length; i++) { %>
 				<div class="library">
@@ -34,7 +34,7 @@
 			<% } %>
 		</div>
 		<div class="settings-item">
-			<div class="phrase-reload-page">You need to reload page</div>
+			<div class="phrase-reload-page"><%= you_need_to %> <a class="reload-page" href=""><%= reload_page %></a></div>
 		</div>
 	</div>
 </div>

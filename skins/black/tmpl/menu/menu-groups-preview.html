@@ -2,7 +2,13 @@
     <select class="form-control" id="lib-select">
         <option><%= all_themes %></option>
         <% for (var i = 0; i < libs.length; i++) { %>
-        <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>><%= libs[i].name %></option>
+            <option <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
+                <% if (libs[i].name.length > 26) { %>
+                    <%= libs[i].name.substring(0, 26) %>...
+                <% } else { %>
+                    <%= libs[i].name %>
+                <% } %>
+            </option>
         <% } %>
         <option data-divider="true"></option>
         <option value="manage" class="manage-libs"><%= manage %></option>

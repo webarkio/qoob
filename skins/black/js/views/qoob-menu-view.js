@@ -150,9 +150,10 @@ var QoobMenuView = Backbone.View.extend({
 
         this.$el.find('#card').addClass('rotate');
 
-        var findScreen = this.$el.find('[data-side-id="' + id + '"]');
-
-        var cloneElement = this.$el.find('[data-side-id="' + id + '"]').clone();
+        var findScreen = this.$el.find('[data-side-id="' + id + '"]'),
+            cloneElement = this.$el.find('[data-side-id="' + id + '"]').clone(),
+            elemRotate = this.$el.find('.card-main'),
+            isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 
         this.currentScreen = id;
 
@@ -160,30 +161,36 @@ var QoobMenuView = Backbone.View.extend({
             class: screen + ' side'
         }).append(cloneElement.show()));
 
-        var elemRotate = this.$el.find('.card-main');
+        var rotateMethod = function() {
+            self.$el.find('[data-side-id]').hide(0, function() {
+                findScreen.show(0, function() {
+                    elemRotate.removeAttr("style");
+                    self.$el.find('#card').removeClass('rotate');
+                    self.$el.find('.' + screen).remove();
+                });
+            });
+        };
 
-        $({
-            deg: 0
-        }).animate({
-            deg: deg
-        }, {
-            easing: '',
-            duration: 250,
-            step: function(now) {
-                elemRotate.css({
-                    transform: 'rotateY(' + now + 'deg)'
-                });
-            },
-            complete: function() {
-                self.$el.find('[data-side-id]').hide(0, function() {
-                    findScreen.show(0, function() {
-                        elemRotate.removeAttr("style");
-                        self.$el.find('#card').removeClass('rotate');
-                        self.$el.find('.' + screen).remove();
+        if (!isIE11) {
+            $({
+                deg: 0
+            }).animate({
+                deg: deg
+            }, {
+                easing: '',
+                duration: 250,
+                step: function(now) {
+                    elemRotate.css({
+                        transform: 'rotateY(' + now + 'deg)'
                     });
-                });
-            }
-        });
+                },
+                complete: function() {
+                    rotateMethod();
+                }
+            });
+        } else {
+            rotateMethod();
+        }
     },
     /**
      * Menu rotation forward
@@ -269,7 +276,7 @@ var QoobMenuView = Backbone.View.extend({
         groups.show();
         blocks.show();
     },
-    changeLib: function () {
+    changeLib: function() {
         if (this.$el.find('#lib-select').val() == 'manage') {
             this.controller.showManageLibs();
             this.$el.find('#lib-select [value="manage"]').prop('selected', false);
@@ -277,5 +284,13 @@ var QoobMenuView = Backbone.View.extend({
         } else {
             this.controller.changeLib(this.$el.find('#lib-select').val());
         }
+    },
+    showOverlay: function() {
+        this.$el.prepend($('<div>', {
+            class: 'overlay-menu'
+        })).delay(10000).show();
+    },
+    hideOverlay: function() {
+        this.$el.find('.overlay-menu').remove();
     }
 });

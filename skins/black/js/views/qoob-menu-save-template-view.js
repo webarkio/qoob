@@ -43,7 +43,7 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
         },
         clickCreateTemplate: function(evt) {
             evt.preventDefault();
-
+            var self = this;
             var sorted = _.sortBy(this.storage.defaultTemplatesCollection.models, function(obj) {
                 return obj.id;
             });
@@ -56,7 +56,10 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
                 'image': this.settingsModel.get('image')
             };
 
-            this.controller.createTemplate(dataView);
+            this.controller.showMenuOverlay();
+            this.controller.createTemplate(dataView, function(error, state) {
+                self.controller.hideMenuOverlay();
+            });
         },
         /**
          * Render settings
@@ -66,7 +69,8 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
             var model = QoobUtils.createModel(this.config);
 
             var data = {
-                'back': this.storage.__('back', 'Back')
+                'back': this.storage.__('back', 'Back'),
+                'save_template': this.storage.__('save_template', 'Save template')
             };
 
             settingsView = new QoobFieldsView({

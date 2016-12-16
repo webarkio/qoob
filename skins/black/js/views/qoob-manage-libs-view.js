@@ -9,7 +9,8 @@ var QoobManageLibsView = Backbone.View.extend(
         events: {
             'click .add-ibrary': 'clickAddLibrary',
             'click .update-library': 'clickUpdateLibrary',
-            'click .remove-library': 'clickRemoveLibrary'
+            'click .remove-library': 'clickRemoveLibrary',
+            'click .reload-page': 'clickReloadPage'
         },
         id: "manage-libs",
         attributes: function() {
@@ -29,41 +30,52 @@ var QoobManageLibsView = Backbone.View.extend(
             this.storage = options.storage;
         },
         clickAddLibrary: function(evt) {
-            var url = this.$el.find('input[name="url"]').val();
+            var self = this,
+                url = this.$el.find('input[name="url"]').val();
+
+            this.controller.showMenuOverlay();
 
             if (url.length > 0) {
                 this.controller.addLibrary(url, function(state) {
                     self.showPhraseReload();
-                    console.log('You need reload page');
+                    self.controller.hideMenuOverlay();
                 });
             }
         },
         clickUpdateLibrary: function(evt) {
             evt.preventDefault();
-
-            var libraries = this.storage.librariesData;
+            var self = this,
+                elem = this.$(evt.currentTarget),
+                libraries = this.storage.librariesData;
 
             var findLib = _.find(libraries, function(item) {
                 return item.name == elem.data('lib-name');
             });
 
+            this.controller.showMenuOverlay();
+
             this.controller.updateLibrary(findLib.name, findLib.url, function(state) {
                 self.showPhraseReload();
-                console.log('You need reload page');
+                self.controller.hideMenuOverlay();
             });
         },
         clickRemoveLibrary: function(evt) {
             evt.preventDefault();
-            var self = this;
-            var elem = this.$(evt.currentTarget);
+            var self = this,
+                elem = this.$(evt.currentTarget);
+
+            this.controller.showMenuOverlay();
             this.controller.removeLibrary(elem.data('lib-name'), function(state) {
                 elem.parents('.library').remove();
                 self.showPhraseReload();
-                console.log('You need reload page');
+                self.controller.hideMenuOverlay();
             });
         },
         showPhraseReload: function() {
             this.$el.find('.phrase-reload-page').show();
+        },
+        clickReloadPage: function() {
+            location.reload();
         },
         /**
          * Render settings
@@ -72,6 +84,11 @@ var QoobManageLibsView = Backbone.View.extend(
         render: function() {
             var data = {
                 'back': this.storage.__('back', 'Back'),
+                'add_url_library': this.storage.__('add_url_library', 'Add url library'),
+                'enter_url_library': this.storage.__('enter_url_library', 'enter url library'),
+                'libraries_lng': this.storage.__('libraries', 'Libraries'),
+                'you_need_to': this.storage.__('you_need_to', 'You need to'),
+                'reload_page': this.storage.__('reload_page', 'reload page'),
                 'libraries': this.storage.librariesData
             };
 

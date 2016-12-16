@@ -186,7 +186,7 @@ var QoobController = Backbone.Router.extend({
      */
     addLibrary: function(url, cb) {
         var self = this;
-        this.storage.driver.getLibraryByUrl(url, function(error, dataLib) {
+        this.storage.getLibraryByUrl(url, function(error, dataLib) {
             if (!error && _.isArray(dataLib)) {
                 var jsonLib = _.first(dataLib);
                 if (jsonLib.name.length > 0) {
@@ -208,7 +208,7 @@ var QoobController = Backbone.Router.extend({
      */
     updateLibrary: function(name, url, cb) {
         var self = this;
-        this.storage.driver.getLibraryByUrl(url, function(error, dataLib) {
+        this.storage.getLibraryByUrl(url, function(error, dataLib) {
             if (!error && _.isArray(dataLib)) {
                 var jsonLib = _.first(dataLib);
                 if (jsonLib.name.length > 0) {
@@ -283,13 +283,15 @@ var QoobController = Backbone.Router.extend({
     /**
      * Create template
      */
-    createTemplate: function(templateInfo) {
+    createTemplate: function(templateInfo, cb) {
         var self = this;
         var dataPage = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var newTemplate = _.extend(templateInfo, dataPage);
 
         if (dataPage.blocks.length > 0) {
-            this.storage.createTemplate(newTemplate);
+            this.storage.createTemplate(newTemplate, function(error, state){
+                cb(error, status);
+            });
         }
     },
     /**
@@ -303,5 +305,17 @@ var QoobController = Backbone.Router.extend({
      */
     changeDefaultPage: function(event) {
         this.layout.viewPort.changeDefaultPage(event);
+    },
+    /**
+     * Show overlay on qoob menu
+     */
+    showMenuOverlay: function() {
+        this.layout.menu.showOverlay();
+    },
+    /**
+     * Hide overlay on qoob menu
+     */
+    hideMenuOverlay: function() {
+        this.layout.menu.hideOverlay();
     }
 });
