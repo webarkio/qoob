@@ -1246,6 +1246,7 @@ _:-ms-fullscreen,
 
 .settings-block {
     padding: 0 4px 0 4px;
+    overflow-x: hidden;
 }
 
 .settings-block input,
@@ -1584,6 +1585,10 @@ _:-ms-fullscreen,
     font-size: 13px;
 }
 
+.settings-item  .btn-group.open .btn.dropdown-toggle {
+    background-color: #606163;
+}
+
 .settings-item .select .btn,
 .settings-item .select .btn:hover,
 .settings-item .select .btn:focus,
@@ -1624,10 +1629,19 @@ _:-ms-fullscreen,
 
 .settings-item .select .dropdown-menu {
     margin: 3px 0 0;
+    padding: 0;
     border-radius: 2px;
     background: none;
+    background-color: #fff;
     border: 0;
-    box-shadow: none;
+    box-shadow: 0px 0px 9px 0px rgba(0, 2, 0, 0.5);
+    -moz-box-shadow: 0px 0px 9px 0px rgba(0, 2, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 9px 0px rgba(0, 2, 0, 0.5);
+}
+
+.settings-item .bootstrap-select.btn-group .dropdown-menu.inner {
+    background-color: #fff;
+    padding: 12px 0;
 }
 
 .settings-item .select .dropdown-menu li {
@@ -1636,11 +1650,11 @@ _:-ms-fullscreen,
 
 .settings-item .select .dropdown-menu li a {
     color: #5a5b5e;
-    background-color: #fff;
     padding: 11px 0 11px 22px;
 }
 
-.settings-item .select.bootstrap-select.btn-group .dropdown-menu li a:hover {
+.settings-item .select.bootstrap-select.btn-group .dropdown-menu li a:hover,
+.settings-item .select.bootstrap-select.btn-group .dropdown-menu li a:focus {
     background-image: none;
     background-color: #9ea0a5;
     background-repeat: no-repeat;
@@ -1651,20 +1665,6 @@ _:-ms-fullscreen,
     background-color: #606163;
     background-repeat: no-repeat;
     color: #fff;
-}
-
-.settings-item .select.bootstrap-select.btn-group .dropdown-menu li:first-child a {
-    -webkit-border-top-left-radius: 2px;
-    border-top-left-radius: 2px;
-    -webkit-border-top-right-radius: 2px;
-    border-top-right-radius: 2px;
-}
-
-.settings-item .select.bootstrap-select.btn-group .dropdown-menu li:last-child a {
-    -webkit-border-bottom-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-    -webkit-border-bottom-right-radius: 2px;
-    border-bottom-right-radius: 2px;
 }
 
 .settings-item .input-text {

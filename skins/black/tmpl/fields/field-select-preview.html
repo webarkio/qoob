@@ -1,9 +1,13 @@
 <div class="title"><%= label %></div>
 <% if(visible_color === undefined || visible_color === false){ %>
-	<select class="selectpicker select" name="<%= name %>" data-size="4" data-width="100%">
+	<select class="selectpicker select" name="<%= name %>" data-width="100%" data-dropup-auto="false">
 		<% _.each( options, function( option ){ %>
 			<option <% if ( current === option.id ){ %> selected <% } %> value='<%- option.id %>'>
-				<%- option.val %>
+				<% if (option.val.length > 35) { %>
+					<%= option.val.substring(0, 35) %>...
+				<% } else { %>
+					<%= option.val %>
+				<% } %>
 			</option>
 		<% }); %>
 	</select>
