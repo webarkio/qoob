@@ -258,7 +258,7 @@ var QoobMenuView = Backbone.View.extend({
      */
     hideLibsExcept: function(libName) {
         var self = this,
-            groups = this.$el.find('#catalog-groups li'),
+            groups = this.$el.find('ul.catalog-list li'),
             blocks = this.$el.find('.preview-block');
 
         groups.hide();
@@ -281,6 +281,7 @@ var QoobMenuView = Backbone.View.extend({
             this.controller.showManageLibs();
             this.$el.find('#lib-select [value="manage"]').prop('selected', false);
             this.$el.find('#lib-select').selectpicker('refresh');
+            this.controller.changeLib('all');
         } else {
             this.controller.changeLib(this.$el.find('#lib-select').val());
         }
