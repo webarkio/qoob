@@ -1066,7 +1066,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 }
 
 ul.catalog-list {
-    height: 100%;
+    height: calc(100% - 60px);
     margin: 0;
     padding-left: 4px;
     z-index: 1;
