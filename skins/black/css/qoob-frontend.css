@@ -389,6 +389,12 @@
     text-align: center;
 }
 
+@media (max-width: 480px) {
+    #qoob-blocks .block-blank-inner {
+        height: 245px;
+    }
+}
+
 #qoob-blocks .block-blank.full-page .block-blank-inner {
     height: calc(100% - 40px);
 }
@@ -441,7 +447,6 @@
 
 #qoob-blocks .qoob-templates .template {
     position: relative;
-    width: 17.3%;
     text-align: center;
     float: left;
     border-radius: 5px;
@@ -478,6 +483,49 @@
     top: 0;
     right: -14px;
     background: transparent url(../img/remove.png) no-repeat;
+}
+
+@media (min-width: 1200px) {
+    #qoob-blocks .qoob-templates .template {
+        width: 264px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    #qoob-blocks .qoob-templates .template {
+        width: 264px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #qoob-blocks .qoob-templates .template {
+        width: 43.6%;
+    }
+    #qoob-blocks .qoob-templates .template .image-bg {
+        width: 100%;
+    }
+}
+@media (max-width: 767px) {
+    #qoob-blocks .qoob-templates .template {
+        width: 42.5%;
+    }
+    #qoob-blocks .block-blank-inner-text .blank-text {
+        padding: 0 5px;
+    }
+    #qoob-blocks .qoob-templates .template .image-bg {
+        width: 100%;
+    }
+}
+@media (max-width: 480px) {
+    #qoob-blocks .qoob-templates {
+        background-color: #e6e6e6;
+        width: calc(100% - 20px);
+        margin: 20px 20px 0 20px;
+        padding: 30px 30px 0 30px;
+    }
+    #qoob-blocks .qoob-templates .template {
+        width: 89%;
+        float: none;
+    }
 }
 
 /* Quill editor

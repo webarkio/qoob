@@ -49,7 +49,7 @@ var QoobManageLibsView = Backbone.View.extend(
                 libraries = this.storage.librariesData;
 
             var findLib = _.find(libraries, function(item) {
-                return item.name == elem.data('lib-name');
+                return item.name == elem.parent().data('lib-name');
             });
 
             this.controller.showMenuOverlay();
@@ -65,7 +65,7 @@ var QoobManageLibsView = Backbone.View.extend(
                 elem = this.$(evt.currentTarget);
 
             this.controller.showMenuOverlay();
-            this.controller.removeLibrary(elem.data('lib-name'), function(state) {
+            this.controller.removeLibrary(elem.parent().data('lib-name'), function(state) {
                 elem.parents('.library').remove();
                 self.showPhraseReload();
                 self.controller.hideMenuOverlay();

@@ -24,9 +24,9 @@
 							<%= libraries[i].name %>
 						<% } %>
 					</div>
-					<div class="control-library">
+					<div class="control-library" data-lib-name="<%= libraries[i].name %>">
 						<% if (libraries[i].url.substr(libraries[i].url.length - 4) == 'json') { %>
-							<a class="update-library" data-lib-name="<%= libraries[i].name %>" href="#"><i class="fa fa-refresh"></i></a>
+							<a class="update-library" href="#"><i class="fa fa-refresh"></i></a>
 						<% } %>
 						<a class="remove-library" href="#"><i class="fa fa-trash"></i></a>
 					</div>

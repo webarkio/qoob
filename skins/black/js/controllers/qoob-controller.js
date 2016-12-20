@@ -235,10 +235,14 @@ var QoobController = Backbone.Router.extend({
     removeLibrary: function(name, cb) {
         var self = this;
 
+console.log(name);
+
         this.storage.driver.loadLibrariesData(function(error, libraries) {
             libraries = _.without(libraries, _.findWhere(libraries, {
               name: name
             }));
+
+            console.log(libraries);
 
             self.storage.driver.saveLibrariesData(libraries, function(error, state) {
                 cb(error, state);

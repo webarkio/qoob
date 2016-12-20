@@ -384,7 +384,7 @@ textarea {
 
 #qoob-toolbar .edit-control-button .more-button .dropdown-menu>li>a {
     font-family: 'robotoregular';
-    color: #767676;
+    color: #fff;
     background-color: #444444;
     padding: 11px 0 11px 21px;
     font-size: 16px;
@@ -1590,7 +1590,6 @@ _:-ms-fullscreen,
 }
 
 .settings-item .select .btn,
-.settings-item .select .btn:hover,
 .settings-item .select .btn:focus,
 .settings-item .select .btn:active,
 .settings-item .select .btn.active,
@@ -1599,6 +1598,10 @@ _:-ms-fullscreen,
     background-image: none;
     background-color: #606163;
     background-repeat: no-repeat;
+}
+
+.settings-item .select .btn:hover {
+    background-color: #9ea0a5;
 }
 
 .settings-item .bootstrap-select.select .dropdown-toggle:focus {
@@ -1624,7 +1627,8 @@ _:-ms-fullscreen,
 
 .settings-item .bootstrap-select.select.btn-group.open .dropdown-toggle .caret {
     border: 0;
-    background: transparent url(../img/arrow_select_up.png) no-repeat;
+    transform: rotate(180deg);
+    background: transparent url(../img/arrow_accordion_hover.png) no-repeat;
 }
 
 .settings-item .select .dropdown-menu {
@@ -1653,18 +1657,18 @@ _:-ms-fullscreen,
     padding: 11px 0 11px 22px;
 }
 
+.settings-item .select.bootstrap-select.btn-group .dropdown-menu li.selected a {
+    background-image: none;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    color: #606163;
+}
+
 .settings-item .select.bootstrap-select.btn-group .dropdown-menu li a:hover,
 .settings-item .select.bootstrap-select.btn-group .dropdown-menu li a:focus {
     background-image: none;
     background-color: #9ea0a5;
     background-repeat: no-repeat;
-}
-
-.settings-item .select.bootstrap-select.btn-group .dropdown-menu li.selected a {
-    background-image: none;
-    background-color: #606163;
-    background-repeat: no-repeat;
-    color: #fff;
 }
 
 .settings-item .input-text {
