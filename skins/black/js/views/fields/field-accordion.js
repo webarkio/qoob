@@ -5,6 +5,7 @@ Fields.accordion = QoobFieldView.extend(
         uniqueId: null,
         classNameItem: "",
         accordionMenuViews: [],
+        parentId: null,
         events: {
             'drop .accordion': 'changePosition'
         },
@@ -17,6 +18,7 @@ Fields.accordion = QoobFieldView.extend(
         initialize: function(options) {
             QoobFieldView.prototype.initialize.call(this, options);
             this.tpl = _.template(this.storage.getSkinTemplate('field-accordion-preview'));
+            this.parentId = options.parentId || this.model.id;
         },
         /**
          * On accordion remove deleting binded events 
@@ -92,7 +94,7 @@ Fields.accordion = QoobFieldView.extend(
                 storage: this.storage,
                 defaults: defaults,
                 controller: this.controller,
-                parentId: this.model.id
+                parentId: this.parentId
             });
             item.model.set('order', (values.models ? values.models.length - 1 : 0));
 
@@ -123,7 +125,8 @@ Fields.accordion = QoobFieldView.extend(
                         settings: settings,
                         defaults: this.defaults[i] || this.defaults[0],
                         storage: this.storage,
-                        controller: this.controller
+                        controller: this.controller,
+                        parentId: this.parentId
                     });
 
                     this.accordionMenuViews.push(item);

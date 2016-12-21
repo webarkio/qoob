@@ -5,6 +5,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
     events: {
         'click .cross-delete': 'deleteModel'
     },
+    parentId: null,
     /**
      * View field accordion item
      * needed for field accordion
@@ -16,6 +17,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
         QoobFieldView.prototype.initialize.call(this, options);
         this.$el.attr('data-model-id', this.model.id);
         this.tpl = _.template(this.storage.getSkinTemplate('field-accordion-item-expand-preview'));
+        this.parentId = options.parentId || this.model.owner_id;
     },
     /**
      * Render filed accordion_item
@@ -29,7 +31,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
                     defaults: this.defaults,
                     storage: this.storage,
                     controller: this.controller,
-                    parentId: this.model.owner_id
+                    parentId: this.parentId
                 }),
                 htmldata = {
                     "image": settingsView.model.get('image'),

@@ -41,6 +41,8 @@ var IconCenterView = Backbone.View.extend(
                 this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
                 this.icons = options.icons;
                 this.icon = options.icon;
+
+                console.log(this.backId);
             },
             /**
              * Render IconCenter view
