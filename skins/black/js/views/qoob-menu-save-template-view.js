@@ -44,6 +44,11 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
         clickCreateTemplate: function(evt) {
             evt.preventDefault();
             var self = this;
+
+            if (this.settingsModel.get('title') == '') {
+                return;
+            }
+
             var sorted = _.sortBy(this.storage.defaultTemplatesCollection.models, function(obj) {
                 return obj.id;
             });
@@ -56,7 +61,6 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
                 'image': this.settingsModel.get('image')
             };
 
-            this.controller.showMenuOverlay();
             this.controller.createTemplate(dataView, function(error, state) {
                 self.controller.hideMenuOverlay();
             });

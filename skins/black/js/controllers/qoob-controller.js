@@ -293,6 +293,7 @@ console.log(name);
         var newTemplate = _.extend(templateInfo, dataPage);
 
         if (dataPage.blocks.length > 0) {
+            this.showMenuOverlay();
             this.storage.createTemplate(newTemplate, function(error, state){
                 cb(error, status);
             });
