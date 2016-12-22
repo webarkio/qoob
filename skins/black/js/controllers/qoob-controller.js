@@ -9,6 +9,7 @@ var QoobController = Backbone.Router.extend({
     },
     index: function() {
         this.layout.menu.showIndex();
+        this.layout.stopEditBlock();
         this.layout.toolbar.logoRotation('side-0');
     },
     showGroup: function(group) {
@@ -97,6 +98,7 @@ var QoobController = Backbone.Router.extend({
     showMore: function() {
         this.layout.menu.rotateForward('save-template');
         this.layout.toolbar.logoRotation('side-90');
+        this.layout.stopEditBlock();
     },
     showManageLibs: function() {
         this.navigate('manage-libs');
