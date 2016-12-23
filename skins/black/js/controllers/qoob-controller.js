@@ -111,14 +111,15 @@ var QoobController = Backbone.Router.extend({
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
     addBlock: function(values, afterId, scroll) {
-        scroll = scroll || true;
-        // addBlock: function (values, afterId, scroll=true) {
+        scroll = (scroll == undefined) ? true : scroll;
+
         var model = QoobUtils.createModel(values);
 
         this.pageModel.addBlock(model, afterId);
         this.layout.viewPort.addBlock(model, afterId);
         this.layout.menu.addSettings(model, afterId);
         if (scroll) {
+            console.log('tut');
             this.scrollTo(model.id);
         }
 

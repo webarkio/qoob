@@ -1512,6 +1512,7 @@ _:-ms-fullscreen,
 
 .delete-drop-zone span {
     display: block;
+    text-align: center;
     color: #fff;
     font-size: 13px;
     padding: 14px 0;
