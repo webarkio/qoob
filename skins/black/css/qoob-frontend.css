@@ -380,6 +380,8 @@
 }
 
 #qoob-blocks .block-blank-inner {
+    position: relative;
+    overflow: hidden;
     height: 136px;
     border: dashed 2px #b2b2b2;
     font-size: 25px;

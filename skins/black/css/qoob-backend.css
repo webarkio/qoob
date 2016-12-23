@@ -1937,7 +1937,7 @@ input[type="text"]#datepicker {
 }
 
 .settings-item.settings-accordion .settings-accordion .edit-icon-preview {
-    width: 100px;
+    width: 50%;
 }
 
 .settings-item .edit-image.empty,
@@ -2226,7 +2226,6 @@ input[type="text"]#datepicker {
     width: 246px;
     padding: 0 0 5px 0;
     background: #444444;
-    position: absolute;
     bottom: 0px;
     z-index: 99999999999;
 }
@@ -2327,7 +2326,7 @@ input[type="text"]#datepicker {
 }
 
 #inner-settings-icon .icon-filter-group {
-    width: initial;
+    width: calc(100% - 10px);
     height: initial;
 }
 
@@ -2489,7 +2488,7 @@ input[type="text"]#datepicker {
 #inner-settings-video .video-pack,
 #inner-settings-icon .pack-icon {
     display: block;
-    float: right;
+    float: left;
     width: 92px;
     height: 43px;
     margin-top: 40px;
@@ -2636,14 +2635,15 @@ html.active-js {
 
 .other-icons {
     display: inline-block;
-    width: 127px;
+    width: calc(50% - 4px);
     float: right;
     text-align: center;
+    margin-left: 4px;
 }
 
 .other-icons .other-icon {
     display: inline-block;
-    width: 61px;
+    width: calc(50% - 2px);
     height: 57px;
     border: 2px solid #fff;
     box-sizing: border-box;
@@ -2653,6 +2653,10 @@ html.active-js {
     line-height: 57px;
     cursor: pointer;
     font-size: 25px;
+}
+
+.other-icons .other-icon:nth-child(odd) {
+    margin-right: 4px;
 }
 
 .filtered-icons .ajax-icon {
@@ -2666,6 +2670,26 @@ html.active-js {
     margin-top: 33px;
 }
 
+/* Edge */
+@supports (-ms-ime-align:auto) {
+    .settings .delete-button-container,
+    .settings .delete-image,
+    .settings .delete-video,
+    .settings .delete-icon {
+        width: 236px;
+    }
+}
+
+/* IE 11 */
+_:-ms-fullscreen, :root .#inner-settings-icon .icon-search {
+    width: calc(100% - 92px);
+}
+_:-ms-fullscreen, :root .settings .delete-button-container,
+_:-ms-fullscreen, :root .settings .delete-image,
+_:-ms-fullscreen, :root .settings .delete-video,
+_:-ms-fullscreen, :root .settings .delete-icon {
+    width: 234px;
+}
 
 /*Firefox fixes*/
 @-moz-document url-prefix() {
