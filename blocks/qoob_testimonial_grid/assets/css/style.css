@@ -1,0 +1,79 @@
+/*--------------------------------------------------------------
+## Testimonial grid
+--------------------------------------------------------------*/
+.testimonial-block.grid {
+    padding-bottom: 81px;
+}
+.testimonial-grid-item {
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+
+.testimonial-grid-item .person {
+    width: 10.7rem;
+    height: 10.7rem;
+    border: 2px solid #cbcbcb;
+    border-radius: 2px;
+    margin-top: 6px;
+}
+.testimonial-grid-item .testimonial-grid-item-text {
+    margin-top: 6px;
+}
+.testimonial-grid-item .testimonial-grid-item-text p {
+    color: #868686;
+    font-style: italic;
+    font-size: 1.6rem;
+}
+.testimonial-grid-item .testimonial-grid-item-text p:first-child {
+    text-indent: 33px;
+    position: relative;
+}
+.testimonial-grid-item .testimonial-grid-item-text p:first-child::before {
+    content: url(../images/quote.png);
+    position: absolute;
+    display: block;
+    width: 27px;
+    height: 18px;
+    top: 1px;
+    left: -32px;
+}
+.testimonial-grid-item .title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: "OpenSanse-Bold", sans-serif;
+}
+.testimonial-grid-item .company {
+    font-family: "OpenSanse-Light", sans-serif;
+    font-size: 1.6rem;
+    color: #484848;
+    font-style: italic;
+    text-transform: uppercase;
+    float: right;
+}
+.testimonial-grid-item dt {
+    float: left;
+}
+.testimonial-grid-item dd {
+    margin-left: 12.7rem;
+}
+@media (max-width: 800px) {
+    .testimonial-grid-item {
+        margin-left: 16px;
+    }
+}
+@media (max-width: 480px) {
+    .testimonial-grid-item {
+        margin-left: 21px;
+    }
+    .testimonial-grid-item dt,
+    .testimonial-grid-item .company{
+        float: none;
+    }
+    .testimonial-grid-item dd {
+        margin-left: 0;
+    }
+    .testimonial-grid-item .person {
+        margin-bottom: 10px;
+    }
+}

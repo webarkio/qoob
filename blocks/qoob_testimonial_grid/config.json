@@ -1,0 +1,80 @@
+{
+    "name": "",
+    "groups": "testimonial",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "header",
+        "label": "Header",
+        "type": "text"
+    }, {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea"
+    }, {
+        "name": "testimonial",
+        "label": "Video",
+        "type": "accordion",
+        "settings": [{
+            "name": "title",
+            "label": "Name",
+            "type": "text"
+        }, {
+            "name": "company",
+            "label": "Company",
+            "type": "text"
+        },{
+            "name": "text",
+            "label": "Testimonial",
+            "type": "textarea"
+        }, {
+            "name": "image",
+            "label": "Person",
+            "type": "image",
+            "tags": ["person"]
+        }]
+    }],
+    "defaults": {
+        "header": "Also you can use horisontal features form",
+        "description": "<p>You can change forms and all colors of the boxes whatever you want</p>",
+        "bg_row": "gray_row",
+        "testimonial": [{
+            "title": "JASON SCHOENIG",
+            "text": "<p>Cras ultricies ligula sed magna dictum porta. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.</p>",
+            "company" : "MARKIT STRATEGIES",
+            "image": "%block_url%/assets/img/person.jpg",
+            "order": 0
+        }, {
+            "title": "BRIAN MEERT",
+            "text": "<p>Cras ultricies ligula sed magna dictum porta. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. Quisque velit nisi, pretium ut lacinia in, elementum id enimortor eget felis porttitor volutpat.</p>",
+            "image": "%block_url%/assets/img/person1.jpg",
+             "company" : "TRANSCORR NATIONAL LOGISTICS",
+            "order": 1
+        }, {
+            "title": "Mari Javani",
+            "text": "<p>Cras ultricies ligula sed magna dictum porta. Quisque velit nisi, pretium ut lacinia in, elementum id enim. ivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.</p>",
+            "image": "%block_url%/assets/img/person2.jpg",
+             "company" : "MARKIT STRATEGIES",
+            "order": 2
+        }, {
+            "title": "Mari Javani",
+            "text": "<p>Cras ultricies ligula sed magna dictum porta. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur aliquet quam id dui posuere blandit. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Pellentesque in ipsum id orci porta dapibus.</p>",
+            "image": "%block_url%/assets/img/person3.jpg",
+             "company" : "MARKIT STRATEGIES",
+            "order": 3
+        },
+        {
+            "title": "Mari Javani",
+            "text": "<p>Cras ultricies ligula sed magna dictum porta. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur aliquet quam id dui posuere blandit. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Pellentesque in ipsum id orci porta dapibus.</p>",
+            "image": "%block_url%/assets/img/person4.jpg",
+             "company" : "MARKIT STRATEGIES",
+            "order": 4
+        },
+        {
+            "title": "Mari Javani",
+            "text": "<p>Cras ultricies ligula sed magna dictum porta. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur aliquet quam id dui posuere blandit. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Pellentesque in ipsum id orci porta dapibus.</p>",
+            "image": "%block_url%/assets/img/person5.jpg",
+             "company" : "MARKIT STRATEGIES",
+            "order": 5
+        }]
+    }
+}

@@ -1,0 +1,17 @@
+<div class="qoob-block qoob-map">
+    <div class="qb-container">
+          <div class="qoob-header">
+                {{#if header}}
+                    <h2 class="qoob-header__title  qoob-header__title_color_black">{{header}}</h2>
+                {{/if}}
+                {{#if description}}
+                    <div class="qoob-header__description qoob-header-map__description qoob-header__description_color_black">
+                       {{{description}}}
+                    </div>
+                {{/if}}
+           </div>
+    </div>
+     <div class="qoob-map__wrapper">
+            <iframe class="qoob-map__map" src="http://maps.google.com/maps?q={{ lat }},{{ lng }}&z={{ size }}&msa=0&ie=UTF8&t=m&amp;iwloc=near&amp;output=embed" allowfullscreen></iframe>
+        </div>
+</div>

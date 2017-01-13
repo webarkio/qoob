@@ -1,0 +1,14 @@
+{
+    "name": "",
+    "groups": "video",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "url",
+        "label": "Video",
+        "type": "video",
+        "tags": ["myVid"]
+    }],
+    "defaults": {
+        "url": "%block_url(assets)%/assets/videos/cube_girl.mp4"
+    }
+}

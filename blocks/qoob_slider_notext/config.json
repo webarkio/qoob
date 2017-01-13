@@ -1,0 +1,52 @@
+{
+    "name": "",
+    "groups": "slider",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "images",
+        "label": "Images",
+        "type": "accordion",
+        "settings": [{
+            "name": "title",
+            "label": "Title",
+            "type": "text"
+        }, {
+            "name": "image",
+            "label": "Image",
+            "type": "image",
+            "tags": ["bg"]
+        }]
+    }],
+    "assets": [{
+        "type": "image",
+        "src": "%block_url%/assets/img/slide1.jpg",
+        "tags": ["bg"]
+    }],
+    "defaults": {
+        "images": [{
+            "title": "slide 1",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "order": 0
+        }, {
+            "title": "slide 2",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "order": 1
+        }, {
+            "title": "slide 2",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "order": 2
+        }, {
+            "title": "slide 3",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "order": 3
+        }, {
+            "title": "slide 4",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "order": 4
+        }, {
+            "title": "slide 5",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "order": 5
+        }]
+    }
+}

@@ -1,0 +1,73 @@
+<div class="qoob-block qoob-cards qoob-cards_v2">
+        <div class="qb-container">
+            <div class="qoob-header">
+                {{#if header}}
+                    <h2 class="qoob-header__title qoob-header__title_color_black">{{header}}</h2>
+                {{/if}}
+                {{#if description}}
+                    <div class="qoob-header__description qoob-header__cards__description_v2 qoob-header__description_color_black">
+                       {{{description}}}
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <div class="qb-container">
+            {{#if cards.length}}
+                {{#each_with_sort cards "order"}}
+                    <div class="qb-column qb-1-3 qb-mobile-1-1 {{#ifIsNthItem nth=3}} qb-column-margin-none {{/ifIsNthItem}}">
+                        <div class="qoob-card qoob-card_v2">
+                            <div class="qoob-card__item qoob-card__item_{{type}}" style="border-color: {{border_color}};">
+                                    <div class="qoob-card__front" style="background-color: {{bg_color_front}};">
+                                        <div class="qoob-card__inner">
+                                        {{#if icon_front}}
+                                            <div class="qoob-card__icon"><span class="{{icon_front}}"></span></div>
+                                        {{/if}}
+                                        {{#if header_front}}
+                                            <div class="qoob-card__header"><h4 class="qoob-card__headertext qoob-card__headertext_v2">{{header_front}}</h4></div>
+                                        {{/if}}
+                                        {{#if description_front}}
+                                            <div class="qoob-card__description">{{{description_front}}}</div>
+                                        {{/if}}
+                                        </div>
+                                    </div>
+                                    <div class="qoob-card__back" style="background-color: {{bg_color_front}};">
+                                    <div class="qoob-card__inner">
+                                        {{#if icon_back}}
+                                            <div class="qoob-card__icon"><span class="{{icon_back}}"></span></div>
+                                        {{/if}}
+                                        {{#if header_back}}
+                                            <div class="qoob-card__header"><h4 class="qoob-card__headertext qoob-card__headertext_v2">{{header_back}}</h4></div>
+                                        {{/if}}
+                                        {{#if description_back}}
+                                            <div class="qoob-card__description">{{{description_back}}}</div>
+                                        {{/if}}
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each_with_sort}}
+            {{/if}}
+        </div>
+</div>
+
+<script>
+    jQuery( document ).ready(function() {
+        jQuery('.qoob-card__item').on('click', function() {
+            jQuery(this).toggleClass('qoob-card__item_flipped');
+        });
+
+        var borderWidth = parseInt(jQuery('.qoob-card__item').css("border-width"));
+
+        jQuery('.qoob-card__inner').each(function(){
+            jQuery(this).parents('.qoob-card').height(jQuery(this).outerHeight() + borderWidth * 2);
+        });
+    });
+    jQuery( window ).resize(function() {
+        jQuery('.qoob-card').height('');
+        var borderWidth = parseInt(jQuery('.qoob-card__item').css("border-width"));
+        jQuery('.qoob-card__inner').each(function(){
+            jQuery(this).parents('.qoob-card').height(jQuery(this).outerHeight() + borderWidth * 2);
+        });
+    });
+</script>

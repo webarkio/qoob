@@ -1,0 +1,68 @@
+{
+    "name": "",
+    "groups": "call_to_action",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "header",
+        "label": "Header",
+        "type": "text"
+    }, {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea"
+    }, {
+        "name": "action_text",
+        "label": "Action button text",
+        "type": "text"
+    }, 
+    {
+        "name": "action_hover",
+        "label": "Button hover effect",
+        "type": "select",
+        "options": [{
+            "id": "hdf",
+            "val": "fade in"
+        }, {
+            "id": "htb",
+            "val": "from top to bottom"
+        }, {
+            "id": "hrl",
+            "val": "from left to right"
+        },
+        {
+            "id": "hcs",
+            "val": "from center to left and right side"
+        },
+        {
+            "id": "hscs",
+            "val": "screw from center to left and right side"
+        },
+        {
+            "id": "hctb",
+            "val": "from center to top and bottom side"
+        }]
+    },
+    {
+        "name": "action_url",
+        "label": "Url for action button",
+        "type": "text"
+    },
+    {
+        "name": "bg_image_url",
+        "label": "Background image",
+        "type": "image"
+    }],
+    "assets": [{
+        "type": "image",
+        "src": "%block_url%/assets/img/call_to_action_bg.jpg",
+        "tags": ["bg"]
+    }],
+    "defaults": {
+        "header": "Call to action block",
+        "bg_image_url": "%block_url%/assets/img/call_to_action_bg.jpg",
+        "action_text": "Try now",
+        "action_hover" : "hdf",
+        "action_url": "http://qoob.it/",
+        "description": "<p>Hey! You can add  this block</p>"
+    }
+}

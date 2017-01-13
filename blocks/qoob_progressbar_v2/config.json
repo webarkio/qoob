@@ -1,0 +1,45 @@
+{
+    "name": "",
+    "groups": "progress_bar",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "header",
+        "label": "Header",
+        "type": "text"
+    }, {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea"
+    }, {
+        "name": "bars",
+        "label": "Progress bars",
+        "type": "accordion",
+        "settings": [{
+            "name": "title",
+            "label": "Title",
+            "type": "text"
+        },
+        {
+            "name": "progress",
+            "label": "Progress",
+             "type": "slider"
+        }]
+    }],
+    "defaults": {
+        "header": "Amazing progress bars",
+        "description": "<p>You can change forms and all colors of the boxes and background whatever you want</p>",
+        "bars": [{
+            "title" : "Сlients happiness",
+            "progress": "100",
+            "order": 0
+        },{
+            "title" : "Сlients happiness",
+            "progress": "62",
+            "order": 1
+        },{
+            "title" : "Сlients happiness",
+            "progress": "30",
+            "order": 2
+        }]
+    }
+}

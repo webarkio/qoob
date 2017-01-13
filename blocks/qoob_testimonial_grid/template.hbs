@@ -1,0 +1,36 @@
+<div class="qoob-block qoob-testimonial-grid">
+    <div class="qb-container">
+        <div class="qoob-header">
+            {{#if header}}
+                <h2 class="qoob-header__title qoob-header__title_color_black">{{header}}</h2>
+            {{/if}}
+            {{#if description}}
+                <div class="qoob-header__description qoob-header__description_color_black">
+                   {{{description}}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="qb-container">
+      {{#each_with_sort testimonial "order"}}
+            <div class="qb-column qb-1-2 qb-mobile-1-1 {{#ifIsNthItem nth=2}} qb-column-margin-none {{/ifIsNthItem}}">
+                    <dl class="qoob-testimonial-grid__item {{#if first}} qoob-testimonial-grid__item_first {{/if}}">
+                      <dt>
+                        {{#if image}}
+                          <img src="{{image}}" class="qoob-testimonial-grid__person">
+                        {{/if}}
+                      </dt>
+                       <dd class="qoob-testimonial-grid__content">
+                           <span class="qoob-testimonial-grid__content__title">{{title}}</span>
+                           <span class="qoob-testimonial-grid__content__company qoob-testimonial-grid__company_show_mobile">{{company}}</span>
+                           <div class="qoob-testimonial-grid__content__text">
+                                {{{text}}}
+                           </div>
+                           <span class="qoob-testimonial-grid__content__company qoob-testimonial-grid__company_hide_mobile">{{company}}</span>
+                       </dd>
+                    </dl>
+            </div> 
+            {{#ifIsNthItem nth=2}} <div class="clearfix"></div> {{/ifIsNthItem}}
+            {{/each_with_sort}}   
+    </div>
+</div>

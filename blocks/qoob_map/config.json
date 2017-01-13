@@ -1,0 +1,33 @@
+{
+    "name": "",
+    "groups": "other",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "header",
+        "label": "Header",
+        "type": "text"
+    },{
+        "name": "description",
+        "label": "Description",
+        "type": "textarea"
+    },{
+        "name": "lat",
+        "label": "Latitude",
+        "type": "text"
+    },{
+        "name": "lng",
+        "label": "Longitude",
+        "type": "text"
+    },{
+        "name": "size",
+        "label": "Size",
+        "type": "slider"
+    }],
+    "defaults" : {
+        "header": "Google maps",
+        "description": "<p>You can add google maps block for your website</p>",
+        "lat": "47.497912",
+        "lng": "19.04023499999994",
+        "size": "15"
+    }
+}

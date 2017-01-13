@@ -1,0 +1,2975 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("qoob_fonts/Roboto-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "RobotoBold";
+    src: url("qoob_fonts/Roboto-Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "RobotoLight";
+    src: url("qoob_fonts/Roboto-Light.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "RobotoThin";
+    src: url("qoob_fonts/Roboto-Thin.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "RobotoItalic";
+    src: url("qoob_fonts/Roboto-Italic.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+.qb-container {
+    max-width: 1140px;
+    margin: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.qb-container_nopadding {
+    padding: 0;
+}
+.qb-column {
+    float: left;
+    margin-right: 4%;
+}
+
+/*.qb-column.last, 
+.qb-column:last-of-type {
+    margin-right: 0;
+}*/
+
+.qb-column-margin-none {
+    margin-right: 0;
+}
+
+.qb-column.qb-1-2 {
+    width: 48%;
+}
+
+/*.qb-column.qb-1-2:nth-child(2n) {
+    margin-right: 0;
+}*/
+
+.qb-column.qb-1-3 {
+    width: 30.66666%;
+}
+
+.qb-column.qb-1-4 {
+    width: 22%;
+}
+
+.qoob-block {
+    overflow: auto;
+    padding-bottom: 100px;
+    padding-top: 89px;
+}
+
+.qoob-block__table {
+    display: table;
+    height: 100%;
+}
+
+.qoob-block__table-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.qoob-block_simple-bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: #b0c8d2;
+}
+
+
+/**
+* Qoob call to action
+**/
+
+.qoob-call-to-action {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: #b0c8d2;
+}
+
+.qoob-header__title {
+    font-size: 45px;
+    font-family: "RobotoBold";
+    text-align: center;
+    margin-top: 0;
+    line-height: 1.2;
+    margin-bottom: 11px;
+}
+
+.qoob-header__title_color_white,
+.qoob-header__description_color_white {
+    color: #fff;
+}
+
+.qoob-header__title_color_black,
+.qoob-header__description_color_black {
+    color: #272125;
+}
+
+.qoob-header__description {
+    text-align: center;
+    font-size: 20px;
+    font-family: "RobotoThin";
+    font-weight: 100;
+}
+
+.qoob-button {
+    text-align: center;
+}
+
+.qoob-button__button,
+.qoob-button__button:visited {
+    border: 2px solid #fff;
+    text-transform: uppercase;
+    color: #fff;
+    font-family: "RobotoBold";
+    font-weight: bold;
+    font-size: 20px;
+    padding: 15px 95px;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    display: inline-block;
+    z-index: 0;
+    border-radius: 5px;
+}
+
+.qoob-button__button:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.qoob-button__button:hover,
+.qoob-button__button:active,
+.qoob-button__button:focus {
+    color: #484848;
+    text-decoration: none;
+}
+
+.qoob-button__button:active,
+.qoob-button__button:focus {
+    background: #fff;
+}
+
+.qoob-button__button_htb:hover:after,
+.qoob-button__button_htb:active:after {
+    height: 100%;
+}
+
+.qoob-button__button_htb:after {
+    width: 100%;
+    height: 0;
+    top: 0;
+    left: 0;
+    background: #fff;
+}
+
+.qoob-button__button_hrl:hover:after,
+.qoob-button__button_hrl:active:after {
+    width: 100%;
+}
+
+.qoob-button__button_hrl:after {
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #fff;
+}
+
+.qoob-button__button_hdf:hover:after,
+.qoob-button__button_hdf:active:after {
+    opacity: 1;
+}
+
+.qoob-button__button_hdf:after {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #fff;
+    opacity: 0;
+}
+
+.qoob-button__button_hcs:hover:after,
+.qoob-button__button_hcs:active:after {
+    width: 90%;
+    opacity: 1;
+}
+
+.qoob-button__button_hcs:after {
+    /*hsc - from the center to the sides*/
+    width: 0;
+    height: 103%;
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    opacity: 0;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.qoob-button__button_hscs {
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.qoob-button__button_hscs:hover:after,
+.qoob-button__button_hscs:active:after {
+    height: 260%;
+    opacity: 1;
+}
+
+.qoob-button__button_hscs:after {
+    /*hscs - screw bg from the center to the left right sides*/
+    width: 100%;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    opacity: 0;
+    -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.qoob-button__button_hctb {
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.qoob-button__button_hctb:hover:after,
+.qoob-button__button_hctb:active:after {
+    height: 75%;
+    opacity: 1;
+}
+
+.qoob-button__button_hctb:after {
+    /*hscs - screw bg from the center to the top bottom sides*/
+    width: 101%;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    opacity: 0;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.qoob-cards {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: #b0c8d2;
+}
+.qoob-cards_v2 {
+    background-color: #fff;
+}
+.qoob-card {
+    width: 100%;
+    min-height: 300px;
+    margin-top: 8%;
+    position: relative;
+    -webkit-perspective: 800px;
+    -o-perspective: 800px;
+    perspective: 800px;
+}
+.qoob-card_v2 {
+    margin-top: 10px;
+    min-height: 258px;
+}
+.qoob-card__item {
+    width: 100%;
+    height: 100%;
+    border: 3px solid #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    -webkit-transition: -webkit-transform 1s;
+    transition: -webkit-transform 1s;
+    transition: transform 1s;
+    transition: transform 1s, -webkit-transform 1s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50%;
+}
+.qoob-card__item_v1,
+.qoob-card__item_v3 {
+    border: 10px solid;
+}
+.qoob-card__item_v2 {
+    border: 3px solid;
+}
+.qoob-card__item_v2 .qoob-card__front,
+.qoob-card__item_v2 .qoob-card__back {
+    border: 10px solid #fff;
+}
+.qoob-card__item_v3 .qoob-card__front,
+.qoob-card__item_v3 .qoob-card__back {
+    border: 3px solid #fff;
+}
+.qoob-card__front,
+.qoob-card__back {
+    display: table;
+    height: 100%;
+    width: 100%;
+    /*line-height: 260px;*/
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.qoob-card__front {
+    background: rgba(38, 39, 39, .8);
+}
+
+.qoob-card__back {
+    background: rgba(38, 39, 39, 1);
+    -webkit-transform: rotateY( 180deg);
+    transform: rotateY( 180deg);
+}
+
+.qoob-card__item_flipped {
+    -webkit-transform: rotateY( 180deg);
+    transform: rotateY( 180deg);
+}
+
+.qoob-card__item.qoob-card__item_flipped .qoob-card__front {
+    z-index: 1;
+}
+
+.qoob-card__inner {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 25px 25px 0 25px;
+}
+
+.qoob-card__icon {
+    width: 45px;
+    height: 45px;
+    font-size: 45px;
+    margin: auto;
+}
+
+.qoob-card__headertext {
+    color: #fff;
+    margin-bottom: 0;
+    font-family: "RobotoBold";
+    line-height: 1;
+    font-size: 30px;
+}
+
+.qoob-card__description {
+    font-size: 16px;
+    font-family: "Roboto";
+    font-weight: 300;
+}
+.qoob-card__description p {
+    line-height: 1.6;
+}
+
+/**
+* Qoob main
+**/
+
+.qoob-main__title {
+    font-size: 81px;
+    margin-bottom: 24px;
+}
+
+.qoob-main__description {
+    font-size: 30px;
+}
+
+.qoob-main__button {
+    margin-top: 94px;
+}
+
+.qoob-main_nobtn {
+    padding-top: 232px;
+    padding-bottom: 210px;
+}
+
+
+/*
+* Qoob text
+*/
+
+.qoob-text {
+    padding-bottom: 59px;
+}
+
+.qoob-text__title,
+.qoob-text__description {
+    text-align: left;
+}
+
+.qoob-text__description {
+    font-size: 16px;
+}
+
+.qoob-text__description p {
+    line-height: 24px;
+    font-family: "Roboto";
+}
+
+
+/*--------------------------------------------------------------
+## Qoob Testimonial grid
+--------------------------------------------------------------*/
+
+.qoob-testimonial-grid {
+    padding-bottom: 57px;
+}
+
+.qoob-testimonial-grid__item {
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+
+.qoob-testimonial-grid__person {
+    width: 10.7rem;
+    height: 10.7rem;
+    border: 2px solid #cbcbcb;
+    border-radius: 2px;
+    margin-top: 6px;
+}
+
+.qoob-testimonial-grid__content__text {
+    margin-top: 6px;
+}
+
+.qoob-testimonial-grid__content__text p {
+    color: #000;
+    font-family: "RobotoItalic", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.qoob-testimonial-grid__content__text p:first-child {
+    text-indent: 33px;
+    position: relative;
+}
+
+.qoob-testimonial-grid__content__text p:first-child::before {
+    content: url(qoob_testimonial_grid/assets/img/quote.png);
+    position: absolute;
+    display: block;
+    width: 27px;
+    height: 18px;
+    top: 1px;
+    left: -32px;
+}
+
+.qoob-testimonial-grid__content__title {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-family: "RobotoBold", sans-serif;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.qoob-testimonial-grid__content__company {
+    font-family: "RobotoItalic", sans-serif;
+    font-size: 16px;
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    float: right;
+}
+
+.qoob-testimonial-grid__item dt {
+    float: left;
+}
+
+.qoob-testimonial-grid__item dd {
+    margin-left: 12.7rem;
+}
+
+.qoob-testimonial-grid__company_show_mobile {
+    display: none;
+}
+
+.qoob-testimonial-grid__company_hide_mobile {
+    display: block;
+}
+
+
+/*--------------------------------------------------------------
+## Qoob feature
+--------------------------------------------------------------*/
+
+.qoob-feature {
+    padding-bottom: 30px;
+}
+.qoob-feature_list {
+    padding-bottom: 57px;
+}
+.qoob-feature_two-row {
+    padding-bottom: 35px;
+}
+.qoob-feature__icon {
+    width: 145px;
+    height: 145px;
+    background-color: #a8dadc;
+    margin: auto;
+    color: #fff;
+    font-size: 60px;
+    text-align: center;
+}
+
+.qoob-feature__iconel {
+    line-height: 145px !important;
+}
+
+.qoob-feature__icon_square {}
+
+.qoob-feature__icon_rounded {
+    border-radius: 20px;
+}
+
+.qoob-feature__icon_rhombus {
+    width: 110px;
+    height: 110px;
+    margin-top: 14px;
+    margin-bottom: 18px;
+    /* Rotate */
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.qoob-feature__icon_rhombus ~ .qoob-feature__itemheader > .qoob-feature__headertext {
+    margin-top: 36px;
+} 
+.qoob-feature__icon_circular {
+    border-radius: 50%;
+}
+
+.qoob-feature__icon_rhombus .qoob-feature__iconel {
+    -webkit-transform: rotate(46deg);
+    -ms-transform: rotate(46deg);
+    transform: rotate(46deg);
+    line-height: 108px !important;
+}
+.qoob-feature__headertext,
+.qoob-feature__description {
+    text-align: center;
+}
+
+.qoob-feature__headertext {
+    line-height: 1.4;
+    margin-bottom: 0;
+    margin-top: 15px;
+    font-family: "RobotoBold", sans-serif;
+}
+
+.qoob-feature__description {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+.qoob-feature__description_color_black {
+    color: #000;
+}
+.qoob-feature__description p {
+    line-height: 1.1;
+    font-family: "Roboto";
+    font-weight: 100;
+}
+
+.qoob-feature__header {
+    margin-bottom: 60px;
+}
+.qoob-feature__header_list {
+    margin-bottom: 65px;
+}
+ .qoob-feature__icon_hor {
+    margin: 0;
+    float: left;
+ }
+ .qoob-feature__wrap-content {
+    float: left;
+    width: -webkit-calc(100% - 145px);
+    width: calc(100% - 145px);
+    padding-left: 30px;
+ }
+ .qoob-feature__item_hor {
+    overflow: hidden;
+ }
+ .qoob-feature__headertext_hor {
+    font-family: "RobotoBold", sans-serif;
+    font-size: 30px;
+ }
+.qoob-feature__headertext_hor,
+.qoob-feature__description_hor {
+    text-align: left;
+ }
+.qoob-feature_hor {
+    padding-bottom: 70px;
+}
+
+.qoob-feature__icon_v1 {
+    width: 75px;
+    height: 75px;
+    background: transparent;
+    border: 2px solid #fff;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+.qoob-feature__icon_v1 .qoob-feature__iconel{
+    font-size: 25px;
+    line-height: 72px !important;
+    vertical-align: top;
+}
+.qoob-feature__icon_v2 {
+    width: 40px;
+    height: 40px;
+    background: #fff !important;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.qoob-feature__icon_v2 .qoob-feature__iconel {
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    display: block;
+}
+.qoob-feature__icon_v2 .qoob-feature__iconel,
+.qoob-feature__icon_v3 .qoob-feature__iconel {
+    font-size: 20px;
+    line-height: 40px !important;
+    vertical-align: top;
+    color: #f0a202;
+    font-weight: 700;
+}
+.qoob-feature-list__connector {
+    font-size: 40px;
+    left: 0;
+    right: -webkit-calc(100% - 75px);
+    right: calc(100% - 75px);
+    border-left: 2px solid #ffffff;
+    height: 100%;
+    top: 0.5em;
+        display: block;
+    position: absolute;
+    width: 0;
+    margin: 0 auto;
+    z-index: 1;
+}
+.qoob-feature-list__connector_v2 {
+    right: -webkit-calc(100% - 40px);
+    right: calc(100% - 40px);
+}
+.qoob-feature__icon_v3 {
+    width: 40px;
+    height: 40px;
+    background: #fff !important;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+    border-radius: 50%;
+}
+.qoob-feature-list__connector_v3 {
+    right: -webkit-calc(100% - 40px);
+    right: calc(100% - 40px);
+}
+.qoob-feature-list__headertext_v2,
+.qoob-feature-list__headertext_v3 {
+    margin-top: 0;
+}
+.qoob-feature-list_v2,
+.qoob-feature-list_v3 {
+    padding-top: 13px;
+}
+.qoob-feature-list__headertext {
+    color: #fff;
+    font-size: 30px;
+    text-align: left;
+    font-family: "RobotoBold", sans-serif;
+    margin-bottom: 2px;
+}
+.qoob-feature-list__description {
+    text-align: left; 
+}
+.qoob-feature-list__description p {
+    line-height: 1.2;
+    margin-bottom: 45px;
+}
+.qoob-feature-list__description_v1 p {
+    margin-bottom: 30px;
+}
+.qoob-feature-list__description_last p {
+    margin-bottom: 0;
+}
+
+.qoob-feature-list__item {
+    position: relative;
+    margin-bottom: 14px;
+}
+/*--------------------------------------------------------------
+## Qoob map
+--------------------------------------------------------------*/
+
+.qoob-map {
+    padding-bottom: 0;
+}
+
+.qoob-map__wrapper {
+    margin-top: 50px;
+}
+
+.qoob-map__map {
+    width: 100%;
+    height: 420px;
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+
+/*--------------------------------------------------------------
+## Qoob iconbox
+--------------------------------------------------------------*/
+
+.qoob-iconbox-block {
+    padding-bottom: 60px;
+}
+
+.qoob-iconbox {
+    margin-bottom: 40px;
+    border-radius: 5px;
+}
+
+.qoob-iconbox__item {
+    padding: 35px 60px 25px 60px;
+}
+
+.qoob-iconbox__icon {
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .2);
+    margin: 0 auto 27px auto;
+    text-align: center;
+}
+
+.qoob-iconbox__iconel {
+    color: #fff;
+    line-height: 145px !important;
+    font-size: 65px;
+}
+
+.qoob-iconbox__headertext {
+    color: #fff;
+    text-align: center;
+    font-family: "RobotoBold";
+    font-size: 30px;
+}
+
+.qoob-iconbox__description {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 100;
+    text-align: center;
+    font-family: "Roboto";
+}
+
+.qoob-iconbox__description p {
+    line-height: 1.2;
+}
+
+.qoob-iconbox-block__header {
+    margin-bottom: 48px;
+}
+
+
+/*--------------------------------------------------------------
+## Qoob slider
+--------------------------------------------------------------*/
+
+.qoob-block-slider {
+    padding: 0;
+}
+
+.qoob-block-slider .owl-theme .owl-controls {
+    position: absolute;
+    top: 50%;
+    margin-top: -42px !important;
+    width: 100%;
+}
+
+.qoob-block-slider .owl-theme .owl-nav {
+    margin: 0;
+}
+
+.qoob-block-slider .owl-carousel .owl-controls .owl-nav .owl-prev,
+.qoob-block-slider .owl-carousel .owl-controls .owl-nav .owl-next {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid #fff;
+    font-size: 60px;
+    line-height: 75px;
+    padding: 0;
+}
+
+.qoob-block-slider .owl-carousel .owl-controls .owl-nav .owl-prev:hover,
+.qoob-block-slider .owl-carousel .owl-controls .owl-nav .owl-next:hover {
+    background-color: rgba(255, 255, 255, .3);
+}
+
+.qoob-block-slider .owl-carousel .owl-controls .owl-nav .owl-prev {
+    margin: 0 0 0 50px;
+    float: left;
+}
+
+.qoob-block-slider .owl-carousel .owl-controls .owl-nav .owl-next {
+    margin: 0 50px 0 0;
+    float: right;
+}
+
+.qoob-block-slider .owl-theme .owl-dots .owl-dot span {
+    width: 16px;
+    height: 16px;
+    background-color: rgba(255, 255, 255, .5);
+    border: 2px solid #fff;
+    margin-bottom: 0;
+}
+
+.qoob-slider__item {
+    padding-top: 137px;
+    padding-bottom: 155px;
+    background-position: center center;
+    background-size: cover;
+}
+
+.qoob-slider__title {
+    font-size: 81px;
+    line-height: 1.2;
+}
+
+.qoob-slider__button {
+    margin-top: 35px;
+}
+
+.qoob-slider__item_notext {
+    min-height: 600px;
+}
+
+
+/*--------------------------------------------------------------
+## Qoob gallery
+--------------------------------------------------------------*/
+
+.qoob-block-gallery-zoom {
+    padding-bottom: 0;
+}
+
+.qoob-gallery__item {
+    margin-top: 47px;
+}
+
+.qoob-gallery__thumb {
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    width: 20%;
+    float: left;
+}
+
+.qoob-gallery__thumb img {
+    width: 100%;
+}
+
+.qoob-gallery__thumb.qoob-gallery__thumb_active {
+    width: 40%;
+}
+
+.qoob-gallery__thumb.qoob-gallery__thumb_right.qoob-gallery__thumb_active {
+    float: right;
+}
+
+
+/*--------------------------------------------------------------
+## Qoob prigress bar
+--------------------------------------------------------------*/
+
+.qoob-block-progress {
+    padding-bottom: 50px;
+}
+.qoob-block-progress_themegray {
+    background: #ababab;
+    padding-bottom: 73px;
+}
+.qoob-block-progress__header {
+    margin-bottom: 58px;
+}
+
+.qoob-progress {
+    font: 12px Arial, Tahoma, sans-serif;
+    position: relative;
+    overflow: hidden;
+    width: 60%;
+    margin: 0 auto 50px auto;
+}
+
+.qoob-progress progress {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    left: -777px;
+}
+.qoob-progress_themegray {
+    margin-bottom: 29px;
+}
+.qoob-progress__bar {
+    overflow: hidden;
+    background: #9a3b35;
+    width: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+}
+.qoob-progress__bar_themegray {
+    background: transparent;
+}
+.qoob-progress__value {
+    color: #fff;
+    display: block;
+    line-height: 21px;
+    overflow: hidden;
+}
+
+.qoob-progress__value:before {
+    float: right;
+    font-size: 16px;
+    line-height: 1;
+    padding-top: 5px;
+}
+
+.qoob-progress__value:after {
+    font-size: 20px;
+    float: left;
+    content: attr(data-title);
+}
+.qoob-progress__value_themegray:after {
+    padding-left:20px;
+}
+.qoob-progress__value:after,
+.qoob-progress__value:before {
+    font-weight: 600;
+}
+
+.qoob-progress__bg {
+    background: #d65148;
+    position: relative;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 11px;
+}
+.qoob-progress__bg_themegray {
+    background: #ababab;
+    height: 40px;
+    border: 2px solid #fff;
+    border-radius: 20px;
+}
+.qoob-progress__bg_themegray:after {
+    color: #6c6c6c;
+    font-size: 16px;
+    z-index: 999999;
+    display: block;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    line-height: 38px;
+    font-weight: bold;
+}
+.qoob-progress__bar {
+    -webkit-transition: width 5s;
+    /* Safari */
+    transition: width 5s;
+}
+
+.qoob-progress__bar:after {
+    background-size: 40px 40px;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.qoob-progress__bar_themegray:after {
+    border: 4px solid #ababab;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #ababab;
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+}
+.qoob-progress progress + .qoob-progress__value_themegray:before{
+    content: '' !important;
+}
+@-webkit-keyframes progress_bar {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -40px 0;
+    }
+}
+@keyframes progress_bar {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -40px 0;
+    }
+}
+
+.qoob-progress__bar {
+    -webkit-transition: width 1s linear;
+    transition: width 1s linear;
+}
+
+.qoob-progress__bar:after {
+    -webkit-animation: progress_bar 0.8s linear infinite;
+    animation: progress_bar 0.8s linear infinite;
+}
+
+.qoob-progress progress[value="0"] + .qoob-progress__value:before {
+    content: "0%";
+}
+
+.qoob-progress progress[value="0"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 0%;
+}
+
+.qoob-progress progress[value="1"] + .qoob-progress__value:before {
+    content: "1%";
+}
+
+.qoob-progress progress[value="1"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 1%;
+}
+
+.qoob-progress progress[value="2"] + .qoob-progress__value:before {
+    content: "2%";
+}
+
+.qoob-progress progress[value="2"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 2%;
+}
+
+.qoob-progress progress[value="3"] + .qoob-progress__value:before {
+    content: "3%";
+}
+
+.qoob-progress progress[value="3"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 3%;
+}
+
+.qoob-progress progress[value="4"] + .qoob-progress__value:before {
+    content: "4%";
+}
+
+.qoob-progress progress[value="4"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 4%;
+}
+
+.qoob-progress progress[value="5"] + .qoob-progress__value:before {
+    content: "5%";
+}
+
+.qoob-progress progress[value="5"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 5%;
+}
+
+.qoob-progress progress[value="6"] + .qoob-progress__value:before {
+    content: "6%";
+}
+
+.qoob-progress progress[value="6"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 6%;
+}
+
+.qoob-progress progress[value="7"] + .qoob-progress__value:before {
+    content: "7%";
+}
+
+.qoob-progress progress[value="7"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 7%;
+}
+
+.qoob-progress progress[value="8"] + .qoob-progress__value:before {
+    content: "8%";
+}
+
+.qoob-progress progress[value="8"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 8%;
+}
+
+.qoob-progress progress[value="9"] + .qoob-progress__value:before {
+    content: "9%";
+}
+
+.qoob-progress progress[value="9"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 9%;
+}
+
+.qoob-progress progress[value="10"] + .qoob-progress__value:before {
+    content: "10%";
+}
+
+.qoob-progress progress[value="10"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 10%;
+}
+
+.qoob-progress progress[value="11"] + .qoob-progress__value:before {
+    content: "11%";
+}
+
+.qoob-progress progress[value="11"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 11%;
+}
+
+.qoob-progress progress[value="12"] + .qoob-progress__value:before {
+    content: "12%";
+}
+
+.qoob-progress progress[value="12"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 12%;
+}
+
+.qoob-progress progress[value="13"] + .qoob-progress__value:before {
+    content: "13%";
+}
+
+.qoob-progress progress[value="13"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 13%;
+}
+
+.qoob-progress progress[value="14"] + .qoob-progress__value:before {
+    content: "14%";
+}
+
+.qoob-progress progress[value="14"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 14%;
+}
+
+.qoob-progress progress[value="15"] + .qoob-progress__value:before {
+    content: "15%";
+}
+
+.qoob-progress progress[value="15"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 15%;
+}
+
+.qoob-progress progress[value="16"] + .qoob-progress__value:before {
+    content: "16%";
+}
+
+.qoob-progress progress[value="16"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 16%;
+}
+
+.qoob-progress progress[value="17"] + .qoob-progress__value:before {
+    content: "17%";
+}
+
+.qoob-progress progress[value="17"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 17%;
+}
+
+.qoob-progress progress[value="18"] + .qoob-progress__value:before {
+    content: "18%";
+}
+
+.qoob-progress progress[value="18"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 18%;
+}
+
+.qoob-progress progress[value="19"] + .qoob-progress__value:before {
+    content: "19%";
+}
+
+.qoob-progress progress[value="19"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 19%;
+}
+
+.qoob-progress progress[value="20"] + .qoob-progress__value:before {
+    content: "20%";
+}
+
+.qoob-progress progress[value="20"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 20%;
+}
+
+.qoob-progress progress[value="21"] + .qoob-progress__value:before {
+    content: "21%";
+}
+
+.qoob-progress progress[value="21"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 21%;
+}
+
+.qoob-progress progress[value="22"] + .qoob-progress__value:before {
+    content: "22%";
+}
+
+.qoob-progress progress[value="22"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 22%;
+}
+
+.qoob-progress progress[value="23"] + .qoob-progress__value:before {
+    content: "23%";
+}
+
+.qoob-progress progress[value="23"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 23%;
+}
+
+.qoob-progress progress[value="24"] + .qoob-progress__value:before {
+    content: "24%";
+}
+
+.qoob-progress progress[value="24"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 24%;
+}
+
+.qoob-progress progress[value="25"] + .qoob-progress__value:before {
+    content: "25%";
+}
+
+.qoob-progress progress[value="25"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 25%;
+}
+
+.qoob-progress progress[value="26"] + .qoob-progress__value:before {
+    content: "26%";
+}
+
+.qoob-progress progress[value="26"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 26%;
+}
+
+.qoob-progress progress[value="27"] + .qoob-progress__value:before {
+    content: "27%";
+}
+
+.qoob-progress progress[value="27"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 27%;
+}
+
+.qoob-progress progress[value="28"] + .qoob-progress__value:before {
+    content: "28%";
+}
+
+.qoob-progress progress[value="28"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 28%;
+}
+
+.qoob-progress progress[value="29"] + .qoob-progress__value:before {
+    content: "29%";
+}
+
+.qoob-progress progress[value="29"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 29%;
+}
+
+.qoob-progress progress[value="30"] + .qoob-progress__value:before {
+    content: "30%";
+}
+
+.qoob-progress progress[value="30"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 30%;
+}
+
+.qoob-progress progress[value="31"] + .qoob-progress__value:before {
+    content: "31%";
+}
+
+.qoob-progress progress[value="31"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 31%;
+}
+
+.qoob-progress progress[value="32"] + .qoob-progress__value:before {
+    content: "32%";
+}
+
+.qoob-progress progress[value="32"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 32%;
+}
+
+.qoob-progress progress[value="33"] + .qoob-progress__value:before {
+    content: "33%";
+}
+
+.qoob-progress progress[value="33"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 33%;
+}
+
+.qoob-progress progress[value="34"] + .qoob-progress__value:before {
+    content: "34%";
+}
+
+.qoob-progress progress[value="34"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 34%;
+}
+
+.qoob-progress progress[value="35"] + .qoob-progress__value:before {
+    content: "35%";
+}
+
+.qoob-progress progress[value="35"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 35%;
+}
+
+.qoob-progress progress[value="36"] + .qoob-progress__value:before {
+    content: "36%";
+}
+
+.qoob-progress progress[value="36"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 36%;
+}
+
+.qoob-progress progress[value="37"] + .qoob-progress__value:before {
+    content: "37%";
+}
+
+.qoob-progress progress[value="37"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 37%;
+}
+
+.qoob-progress progress[value="38"] + .qoob-progress__value:before {
+    content: "38%";
+}
+
+.qoob-progress progress[value="38"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 38%;
+}
+
+.qoob-progress progress[value="39"] + .qoob-progress__value:before {
+    content: "39%";
+}
+
+.qoob-progress progress[value="39"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 39%;
+}
+
+.qoob-progress progress[value="40"] + .qoob-progress__value:before {
+    content: "40%";
+}
+
+.qoob-progress progress[value="40"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 40%;
+}
+
+.qoob-progress progress[value="41"] + .qoob-progress__value:before {
+    content: "41%";
+}
+
+.qoob-progress progress[value="41"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 41%;
+}
+
+.qoob-progress progress[value="42"] + .qoob-progress__value:before {
+    content: "42%";
+}
+
+.qoob-progress progress[value="42"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 42%;
+}
+
+.qoob-progress progress[value="43"] + .qoob-progress__value:before {
+    content: "43%";
+}
+
+.qoob-progress progress[value="43"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 43%;
+}
+
+.qoob-progress progress[value="44"] + .qoob-progress__value:before {
+    content: "44%";
+}
+
+.qoob-progress progress[value="44"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 44%;
+}
+
+.qoob-progress progress[value="45"] + .qoob-progress__value:before {
+    content: "45%";
+}
+
+.qoob-progress progress[value="45"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 45%;
+}
+
+.qoob-progress progress[value="46"] + .qoob-progress__value:before {
+    content: "46%";
+}
+
+.qoob-progress progress[value="46"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 46%;
+}
+
+.qoob-progress progress[value="47"] + .qoob-progress__value:before {
+    content: "47%";
+}
+
+.qoob-progress progress[value="47"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 47%;
+}
+
+.qoob-progress progress[value="48"] + .qoob-progress__value:before {
+    content: "48%";
+}
+
+.qoob-progress progress[value="48"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 48%;
+}
+
+.qoob-progress progress[value="49"] + .qoob-progress__value:before {
+    content: "49%";
+}
+
+.qoob-progress progress[value="49"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 49%;
+}
+
+.qoob-progress progress[value="50"] + .qoob-progress__value:before {
+    content: "50%";
+}
+
+.qoob-progress progress[value="50"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 50%;
+}
+
+.qoob-progress progress[value="51"] + .qoob-progress__value:before {
+    content: "51%";
+}
+
+.qoob-progress progress[value="51"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 51%;
+}
+
+.qoob-progress progress[value="52"] + .qoob-progress__value:before {
+    content: "52%";
+}
+
+.qoob-progress progress[value="52"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 52%;
+}
+
+.qoob-progress progress[value="53"] + .qoob-progress__value:before {
+    content: "53%";
+}
+
+.qoob-progress progress[value="53"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 53%;
+}
+
+.qoob-progress progress[value="54"] + .qoob-progress__value:before {
+    content: "54%";
+}
+
+.qoob-progress progress[value="54"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 54%;
+}
+
+.qoob-progress progress[value="55"] + .qoob-progress__value:before {
+    content: "55%";
+}
+
+.qoob-progress progress[value="55"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 55%;
+}
+
+.qoob-progress progress[value="56"] + .qoob-progress__value:before {
+    content: "56%";
+}
+
+.qoob-progress progress[value="56"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 56%;
+}
+
+.qoob-progress progress[value="57"] + .qoob-progress__value:before {
+    content: "57%";
+}
+
+.qoob-progress progress[value="57"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 57%;
+}
+
+.qoob-progress progress[value="58"] + .qoob-progress__value:before {
+    content: "58%";
+}
+
+.qoob-progress progress[value="58"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 58%;
+}
+
+.qoob-progress progress[value="59"] + .qoob-progress__value:before {
+    content: "59%";
+}
+
+.qoob-progress progress[value="59"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 59%;
+}
+
+.qoob-progress progress[value="60"] + .qoob-progress__value:before {
+    content: "60%";
+}
+
+.qoob-progress progress[value="60"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 60%;
+}
+
+.qoob-progress progress[value="61"] + .qoob-progress__value:before {
+    content: "61%";
+}
+
+.qoob-progress progress[value="61"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 61%;
+}
+
+.qoob-progress progress[value="62"] + .qoob-progress__value:before {
+    content: "62%";
+}
+
+.qoob-progress progress[value="62"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 62%;
+}
+
+.qoob-progress progress[value="63"] + .qoob-progress__value:before {
+    content: "63%";
+}
+
+.qoob-progress progress[value="63"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 63%;
+}
+
+.qoob-progress progress[value="64"] + .qoob-progress__value:before {
+    content: "64%";
+}
+
+.qoob-progress progress[value="64"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 64%;
+}
+
+.qoob-progress progress[value="65"] + .qoob-progress__value:before {
+    content: "65%";
+}
+
+.qoob-progress progress[value="65"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 65%;
+}
+
+.qoob-progress progress[value="66"] + .qoob-progress__value:before {
+    content: "66%";
+}
+
+.qoob-progress progress[value="66"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 66%;
+}
+
+.qoob-progress progress[value="67"] + .qoob-progress__value:before {
+    content: "67%";
+}
+
+.qoob-progress progress[value="67"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 67%;
+}
+
+.qoob-progress progress[value="68"] + .qoob-progress__value:before {
+    content: "68%";
+}
+
+.qoob-progress progress[value="68"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 68%;
+}
+
+.qoob-progress progress[value="69"] + .qoob-progress__value:before {
+    content: "69%";
+}
+
+.qoob-progress progress[value="69"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 69%;
+}
+
+.qoob-progress progress[value="70"] + .qoob-progress__value:before {
+    content: "70%";
+}
+
+.qoob-progress progress[value="70"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 70%;
+}
+
+.qoob-progress progress[value="71"] + .qoob-progress__value:before {
+    content: "71%";
+}
+
+.qoob-progress progress[value="71"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 71%;
+}
+
+.qoob-progress progress[value="72"] + .qoob-progress__value:before {
+    content: "72%";
+}
+
+.qoob-progress progress[value="72"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 72%;
+}
+
+.qoob-progress progress[value="73"] + .qoob-progress__value:before {
+    content: "73%";
+}
+
+.qoob-progress progress[value="73"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 73%;
+}
+
+.qoob-progress progress[value="74"] + .qoob-progress__value:before {
+    content: "74%";
+}
+
+.qoob-progress progress[value="74"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 74%;
+}
+
+.qoob-progress progress[value="75"] + .qoob-progress__value:before {
+    content: "75%";
+}
+
+.qoob-progress progress[value="75"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 75%;
+}
+
+.qoob-progress progress[value="76"] + .qoob-progress__value:before {
+    content: "76%";
+}
+
+.qoob-progress progress[value="76"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 76%;
+}
+
+.qoob-progress progress[value="77"] + .qoob-progress__value:before {
+    content: "77%";
+}
+
+.qoob-progress progress[value="77"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 77%;
+}
+
+.qoob-progress progress[value="78"] + .qoob-progress__value:before {
+    content: "78%";
+}
+
+.qoob-progress progress[value="78"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 78%;
+}
+
+.qoob-progress progress[value="79"] + .qoob-progress__value:before {
+    content: "79%";
+}
+
+.qoob-progress progress[value="79"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 79%;
+}
+
+.qoob-progress progress[value="80"] + .qoob-progress__value:before {
+    content: "80%";
+}
+
+.qoob-progress progress[value="80"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 80%;
+}
+
+.qoob-progress progress[value="81"] + .qoob-progress__value:before {
+    content: "81%";
+}
+
+.qoob-progress progress[value="81"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 81%;
+}
+
+.qoob-progress progress[value="82"] + .qoob-progress__value:before {
+    content: "82%";
+}
+
+.qoob-progress progress[value="82"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 82%;
+}
+
+.qoob-progress progress[value="83"] + .qoob-progress__value:before {
+    content: "83%";
+}
+
+.qoob-progress progress[value="83"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 83%;
+}
+
+.qoob-progress progress[value="84"] + .qoob-progress__value:before {
+    content: "84%";
+}
+
+.qoob-progress progress[value="84"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 84%;
+}
+
+.qoob-progress progress[value="85"] + .qoob-progress__value:before {
+    content: "85%";
+}
+
+.qoob-progress progress[value="85"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 85%;
+}
+
+.qoob-progress progress[value="86"] + .qoob-progress__value:before {
+    content: "86%";
+}
+
+.qoob-progress progress[value="86"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 86%;
+}
+
+.qoob-progress progress[value="87"] + .qoob-progress__value:before {
+    content: "87%";
+}
+
+.qoob-progress progress[value="87"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 87%;
+}
+
+.qoob-progress progress[value="88"] + .qoob-progress__value:before {
+    content: "88%";
+}
+
+.qoob-progress progress[value="88"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 88%;
+}
+
+.qoob-progress progress[value="89"] + .qoob-progress__value:before {
+    content: "89%";
+}
+
+.qoob-progress progress[value="89"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 89%;
+}
+
+.qoob-progress progress[value="90"] + .qoob-progress__value:before {
+    content: "90%";
+}
+
+.qoob-progress progress[value="90"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 90%;
+}
+
+.qoob-progress progress[value="91"] + .qoob-progress__value:before {
+    content: "91%";
+}
+
+.qoob-progress progress[value="91"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 91%;
+}
+
+.qoob-progress progress[value="92"] + .qoob-progress__value:before {
+    content: "92%";
+}
+
+.qoob-progress progress[value="92"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 92%;
+}
+
+.qoob-progress progress[value="93"] + .qoob-progress__value:before {
+    content: "93%";
+}
+
+.qoob-progress progress[value="93"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 93%;
+}
+
+.qoob-progress progress[value="94"] + .qoob-progress__value:before {
+    content: "94%";
+}
+
+.qoob-progress progress[value="94"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 94%;
+}
+
+.qoob-progress progress[value="95"] + .qoob-progress__value:before {
+    content: "95%";
+}
+
+.qoob-progress progress[value="95"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 95%;
+}
+
+.qoob-progress progress[value="96"] + .qoob-progress__value:before {
+    content: "96%";
+}
+
+.qoob-progress progress[value="96"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 96%;
+}
+
+.qoob-progress progress[value="97"] + .qoob-progress__value:before {
+    content: "97%";
+}
+
+.qoob-progress progress[value="97"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 97%;
+}
+
+.qoob-progress progress[value="98"] + .qoob-progress__value:before {
+    content: "98%";
+}
+
+.qoob-progress progress[value="98"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 98%;
+}
+
+.qoob-progress progress[value="99"] + .qoob-progress__value:before {
+    content: "99%";
+}
+
+.qoob-progress progress[value="99"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 99%;
+}
+
+.qoob-progress progress[value="100"] + .qoob-progress__value:before {
+    content: "100%";
+}
+
+.qoob-progress progress[value="100"] ~ .qoob-progress__bg .qoob-progress__bar {
+    width: 100%;
+}
+.qoob-progress progress[value="0"] ~ .qoob-progress__bg_themegray:after {
+    content: "0%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="1"] ~ .qoob-progress__bg_themegray:after {
+    content: "1%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="2"] ~ .qoob-progress__bg_themegray:after {
+    content: "2%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="3"] ~ .qoob-progress__bg_themegray:after {
+    content: "3%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="4"] ~ .qoob-progress__bg_themegray:after {
+    content: "4%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="5"] ~ .qoob-progress__bg_themegray:after {
+    content: "5%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="6"] ~ .qoob-progress__bg_themegray:after {
+    content: "6%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="7"] ~ .qoob-progress__bg_themegray:after {
+    content: "7%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="8"] ~ .qoob-progress__bg_themegray:after {
+    content: "8%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="9"] ~ .qoob-progress__bg_themegray:after {
+    content: "9%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="10"] ~ .qoob-progress__bg_themegray:after {
+    content: "10%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="11"] ~ .qoob-progress__bg_themegray:after {
+    content: "11%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="12"] ~ .qoob-progress__bg_themegray:after {
+    content: "12%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="13"] ~ .qoob-progress__bg_themegray:after {
+    content: "13%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="14"] ~ .qoob-progress__bg_themegray:after {
+    content: "14%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="15"] ~ .qoob-progress__bg_themegray:after {
+    content: "15%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="16"] ~ .qoob-progress__bg_themegray:after {
+    content: "16%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="17"] ~ .qoob-progress__bg_themegray:after {
+    content: "17%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="18"] ~ .qoob-progress__bg_themegray:after {
+    content: "18%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="19"] ~ .qoob-progress__bg_themegray:after {
+    content: "19%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="20"] ~ .qoob-progress__bg_themegray:after {
+    content: "20%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="21"] ~ .qoob-progress__bg_themegray:after {
+    content: "21%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="22"] ~ .qoob-progress__bg_themegray:after {
+    content: "22%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="23"] ~ .qoob-progress__bg_themegray:after {
+    content: "23%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="24"] ~ .qoob-progress__bg_themegray:after {
+    content: "24%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="25"] ~ .qoob-progress__bg_themegray:after {
+    content: "25%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="26"] ~ .qoob-progress__bg_themegray:after {
+    content: "26%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="27"] ~ .qoob-progress__bg_themegray:after {
+    content: "27%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="28"] ~ .qoob-progress__bg_themegray:after {
+    content: "28%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="29"] ~ .qoob-progress__bg_themegray:after {
+    content: "29%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="30"] ~ .qoob-progress__bg_themegray:after {
+    content: "30%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="31"] ~ .qoob-progress__bg_themegray:after {
+    content: "31%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="32"] ~ .qoob-progress__bg_themegray:after {
+    content: "32%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="33"] ~ .qoob-progress__bg_themegray:after {
+    content: "33%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="34"] ~ .qoob-progress__bg_themegray:after {
+    content: "34%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="35"] ~ .qoob-progress__bg_themegray:after {
+    content: "35%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="36"] ~ .qoob-progress__bg_themegray:after {
+    content: "36%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="37"] ~ .qoob-progress__bg_themegray:after {
+    content: "37%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="38"] ~ .qoob-progress__bg_themegray:after {
+    content: "38%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="39"] ~ .qoob-progress__bg_themegray:after {
+    content: "39%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="40"] ~ .qoob-progress__bg_themegray:after {
+    content: "40%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="41"] ~ .qoob-progress__bg_themegray:after {
+    content: "41%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="42"] ~ .qoob-progress__bg_themegray:after {
+    content: "42%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="43"] ~ .qoob-progress__bg_themegray:after {
+    content: "43%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="44"] ~ .qoob-progress__bg_themegray:after {
+    content: "44%";
+}
+
+.qoob-progress progress[value="45"] ~ .qoob-progress__bg_themegray:after {
+    content: "45%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="46"] ~ .qoob-progress__bg_themegray:after {
+    content: "46%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="47"] ~ .qoob-progress__bg_themegray:after {
+    content: "47%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="48"] ~ .qoob-progress__bg_themegray:after {
+    content: "48%";
+    color:#fff;
+}
+
+.qoob-progress progress[value="49"] ~ .qoob-progress__bg_themegray:after {
+    content: "49%";
+}
+
+.qoob-progress progress[value="50"] ~ .qoob-progress__bg_themegray:after {
+    content: "50%";
+}
+
+.qoob-progress progress[value="51"] ~ .qoob-progress__bg_themegray:after {
+    content: "51%";
+}
+
+.qoob-progress progress[value="52"] ~ .qoob-progress__bg_themegray:after {
+    content: "52%";
+}
+
+.qoob-progress progress[value="53"] ~ .qoob-progress__bg_themegray:after {
+    content: "53%";
+}
+
+.qoob-progress progress[value="54"] ~ .qoob-progress__bg_themegray:after {
+    content: "54%";
+}
+
+.qoob-progress progress[value="55"] ~ .qoob-progress__bg_themegray:after {
+    content: "55%";
+}
+
+.qoob-progress progress[value="56"] ~ .qoob-progress__bg_themegray:after {
+    content: "56%";
+}
+
+.qoob-progress progress[value="57"] ~ .qoob-progress__bg_themegray:after {
+    content: "57%";
+}
+
+.qoob-progress progress[value="58"] ~ .qoob-progress__bg_themegray:after {
+    content: "58%";
+}
+
+.qoob-progress progress[value="59"] ~ .qoob-progress__bg_themegray:after {
+    content: "59%";
+}
+
+.qoob-progress progress[value="60"] ~ .qoob-progress__bg_themegray:after {
+    content: "60%";
+}
+
+.qoob-progress progress[value="61"] ~ .qoob-progress__bg_themegray:after {
+    content: "61%";
+}
+
+.qoob-progress progress[value="62"] ~ .qoob-progress__bg_themegray:after {
+    content: "62%";
+}
+
+.qoob-progress progress[value="63"] ~ .qoob-progress__bg_themegray:after {
+    content: "63%";
+}
+
+.qoob-progress progress[value="64"] ~ .qoob-progress__bg_themegray:after {
+    content: "64%";
+}
+
+.qoob-progress progress[value="65"] ~ .qoob-progress__bg_themegray:after {
+    content: "65%";
+}
+
+.qoob-progress progress[value="66"] ~ .qoob-progress__bg_themegray:after {
+    content: "66%";
+}
+
+.qoob-progress progress[value="67"] ~ .qoob-progress__bg_themegray:after {
+    content: "67%";
+}
+
+.qoob-progress progress[value="68"] ~ .qoob-progress__bg_themegray:after {
+    content: "68%";
+}
+
+.qoob-progress progress[value="69"] ~ .qoob-progress__bg_themegray:after {
+    content: "69%";
+}
+
+.qoob-progress progress[value="70"] ~ .qoob-progress__bg_themegray:after {
+    content: "70%";
+}
+
+.qoob-progress progress[value="71"] ~ .qoob-progress__bg_themegray:after {
+    content: "71%";
+}
+
+.qoob-progress progress[value="72"] ~ .qoob-progress__bg_themegray:after {
+    content: "72%";
+}
+
+.qoob-progress progress[value="73"] ~ .qoob-progress__bg_themegray:after {
+    content: "73%";
+}
+
+.qoob-progress progress[value="74"] ~ .qoob-progress__bg_themegray:after {
+    content: "74%";
+}
+
+.qoob-progress progress[value="75"] ~ .qoob-progress__bg_themegray:after {
+    content: "75%";
+}
+
+.qoob-progress progress[value="76"] ~ .qoob-progress__bg_themegray:after {
+    content: "76%";
+}
+
+.qoob-progress progress[value="77"] ~ .qoob-progress__bg_themegray:after {
+    content: "77%";
+}
+
+.qoob-progress progress[value="78"] ~ .qoob-progress__bg_themegray:after {
+    content: "78%";
+}
+
+.qoob-progress progress[value="79"] ~ .qoob-progress__bg_themegray:after {
+    content: "79%";
+}
+
+.qoob-progress progress[value="80"] ~ .qoob-progress__bg_themegray:after {
+    content: "80%";
+}
+
+.qoob-progress progress[value="81"] ~ .qoob-progress__bg_themegray:after {
+    content: "81%";
+}
+
+.qoob-progress progress[value="82"] ~ .qoob-progress__bg_themegray:after {
+    content: "82%";
+}
+
+.qoob-progress progress[value="83"] ~ .qoob-progress__bg_themegray:after {
+    content: "83%";
+}
+
+.qoob-progress progress[value="84"] ~ .qoob-progress__bg_themegray:after {
+    content: "84%";
+}
+
+.qoob-progress progress[value="85"] ~ .qoob-progress__bg_themegray:after {
+    content: "85%";
+}
+
+.qoob-progress progress[value="86"] ~ .qoob-progress__bg_themegray:after {
+    content: "86%";
+}
+
+.qoob-progress progress[value="87"] ~ .qoob-progress__bg_themegray:after {
+    content: "87%";
+}
+
+.qoob-progress progress[value="88"] ~ .qoob-progress__bg_themegray:after {
+    content: "88%";
+}
+
+.qoob-progress progress[value="89"] ~ .qoob-progress__bg_themegray:after {
+    content: "89%";
+}
+
+.qoob-progress progress[value="90"] ~ .qoob-progress__bg_themegray:after {
+    content: "90%";
+}
+
+.qoob-progress progress[value="91"] ~ .qoob-progress__bg_themegray:after {
+    content: "91%";
+}
+
+.qoob-progress progress[value="92"] ~ .qoob-progress__bg_themegray:after {
+    content: "92%";
+}
+
+.qoob-progress progress[value="93"] ~ .qoob-progress__bg_themegray:after {
+    content: "93%";
+}
+
+.qoob-progress progress[value="94"] ~ .qoob-progress__bg_themegray:after {
+    content: "94%";
+}
+
+.qoob-progress progress[value="95"] ~ .qoob-progress__bg_themegray:after {
+    content: "95%";
+}
+
+.qoob-progress progress[value="96"] ~ .qoob-progress__bg_themegray:after {
+    content: "96%";
+}
+
+.qoob-progress progress[value="97"] ~ .qoob-progress__bg_themegray:after {
+    content: "97%";
+}
+
+.qoob-progress progress[value="98"] ~ .qoob-progress__bg_themegray:after {
+    content: "98%";
+}
+
+.qoob-progress progress[value="99"] ~ .qoob-progress__bg_themegray:after {
+    content: "99%";
+}
+
+.qoob-progress progress[value="100"] ~ .qoob-progress__bg_themegray:after {
+    content: "100%";
+}
+/*--------------------------------------------------------------
+## Qoob testimonial
+--------------------------------------------------------------*/
+.qoob-block-testimonial {
+    padding-bottom: 96px;
+}
+.qoob-testimonial-slider__img {
+    width: 150px;
+    height: 150px;
+    border-radius: 75rem;
+    border: 5px solid #efefef;
+    background-position: center;
+    margin: 25px auto 0 auto;
+}
+.qoob-testimonial-slider__content,
+.qoob-testimonial-slider__title {
+    text-align: center;
+    color: #272125;
+}
+.qoob-testimonial-slider__content p {
+    line-height: 1.2;
+    font-weight: 600;
+    font-size: 16px;
+}
+.qoob-block-testimonial .owl-theme .owl-dots .owl-dot span {
+    width: 15px;
+    height: 15px;
+    margin: 0 0 0 7px;
+    background: #c5c5c5;
+    border-radius: 0;
+    display: block;
+}
+.qoob-block-testimonial .owl-theme .owl-dots .owl-dot.active span {
+    background: #484848;
+}
+.qoob-block-testimonial .owl-theme .owl-nav {
+    margin-top: 0;
+}
+.qoob-block-testimonial .owl-theme .owl-controls {
+    margin-top: 26px;
+    text-align: center;
+}
+/*--------------------------------------------------------------
+## Qoob video
+--------------------------------------------------------------*/
+.qoob-block-video video {
+    display: block;
+}
+.qoob-block-video__container_v2 {
+    margin-top: 48px;
+}
+.qoob-block-video__container_grid {
+    float: left;
+    width: 50%;
+}
+.qoob-block-video__container_grid video {
+    display: block;
+}
+@media screen and (max-width: 1024px) {
+    .qb-container_nopadding {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .qoob-main__title {
+        font-size: 60px;
+    }
+    .qoob-iconbox__item {
+        padding: 22px 20px 11px 20px;
+    }
+    .qoob-gallery__thumb {
+        width: 25%;
+    }
+    .qoob-gallery__thumb.qoob-gallery__thumb_active {
+        width: 50%;
+    }
+    .qb-column.qb-table-1-1 {
+        width: 100%;
+        margin-right: 0;
+    }
+    .qoob-feature__icon_v1 {
+        width: 60px;
+        height: 60px;
+        margin-right: 17px;
+    }
+    .qoob-feature__icon_v2 {
+        width: 42px;
+        height: 42px;
+        margin-left: 9px;
+        margin-right: 25px;
+    }
+    .qoob-feature__icon_v3 {
+        margin-left: 17px;
+    }
+    .qoob-feature__icon_v1 .qoob-feature__iconel {
+        font-size: 20px;
+        line-height: 55px !important;
+    }
+    .qoob-feature-list__connector {
+        right: calc(100% - 40px);
+    }
+    .qoob-feature-list__connector_v1 {
+        right: calc(100% - 60px);
+    }
+    .qoob-feature-list__connector_v2 {
+        right: calc(100% - 59px);
+    }
+    .qoob-feature-list__connector_v3 {
+        right: calc(100% - 73px);
+    }
+    .qoob-feature-list__headertext_v1 {
+        margin-top: 0;
+    }
+     .qoob-progress__value:after {
+        line-height: 1.3;
+        width: 86%;
+        display: block;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .qoob-block-slider .owl-theme .owl-controls {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        height: 20px;
+        margin-top: auto !important;
+    }
+    .qoob-block-slider .owl-theme .owl-dots .owl-dot.active span {
+        background-color: #fff;
+    }
+    .qoob-gallery__thumb {
+        width: 50%;
+    }
+    .qoob-gallery__thumb.qoob-gallery__thumb_active {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .qoob-progress__value:after {
+        line-height: 1.3;
+        width: 86%;
+        display: block;
+    }
+    .qoob-block {
+        padding-top: 43px;
+        padding-bottom: 50px;
+    }
+    .qoob-main_nobtn {
+        padding-bottom: 25px;
+    }
+    .qoob-header__title {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+    .qoob-header__title,
+    .qoob-header__description {
+        text-align: left;
+    }
+    .qoob-header__description p {
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    .qoob-text {
+        padding-bottom: 25px;
+        background-image: none !important;
+    }
+    .qoob-text__description p {
+        line-height: 1.5;
+    }
+    .qoob-button__button {
+        width: 100%;
+    }
+    .qoob-button-call-to-action {
+        margin-top: 26px;
+    }
+    .qoob-block-video__container_grid {
+        width: 100%;
+    }
+    .qoob-cards {
+        padding-bottom: 36px;
+    } 
+    .qoob-card {
+        margin-top: 0;
+        margin-bottom: 16px;
+        min-height: 226px;
+    }
+    .qoob-card__headertext {
+        font-size: 24px;
+    }
+    .qoob-card__headertext_v2 {
+        margin-bottom: 5px;
+    }
+    .qoob-header__cards__description {
+        margin-bottom: 23px;
+    }
+    .qoob-card__description p {
+        line-height: 1.2;
+    }
+    .qoob-card_v2 {
+        margin-top: 0px;
+    }
+    .qoob-header__cards__description_v2 {
+        margin-bottom: 26px;
+    }
+    .qoob-header__cards__description_v2 p {
+        margin-bottom: 5px;
+    }
+    .qoob-main__description {
+        font-size: 20px;
+    }
+    .qoob-main__button {
+        margin-top: 26px;
+    }
+    .qoob-testimonial-grid {
+        padding-bottom: 5px;
+    }
+    .qoob-testimonial-grid__item {
+        margin-bottom: 9px;
+    }
+    .qoob-testimonial-grid__item_first {
+        margin-top: 6px;
+    }
+    .qoob-testimonial-grid__item dt,
+    .qoob-testimonial-grid__content__company {
+        float: none;
+    }
+    .qoob-testimonial-grid__content__company {
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 11px;
+    }
+    .qoob-testimonial-grid__item dd {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .qoob-testimonial-grid__person {
+        margin: 0 auto 10px auto;
+        display: block;
+    }
+    .qoob-testimonial-grid__content__title {
+        text-align: center;
+        display: block;
+        margin-bottom: 6px;
+    }
+    .qoob-testimonial-grid__content__text {
+        text-align: center;
+    }
+    .qoob-testimonial-grid__company_show_mobile {
+        display: block;
+    }
+    .qoob-testimonial-grid__company_hide_mobile {
+        display: none;
+    }
+    .qoob-testimonial-grid__content__text p:first-child::before {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 18px;
+        left: -14px;
+        top: 0;
+        margin-bottom: 11px;
+    }
+    .qoob-testimonial-slider__img {
+        margin: 0 auto;
+    }
+    .qoob-feature {
+        padding-bottom: 5px;
+    }
+    .qoob-feature-list {
+        padding-bottom: 0px;
+    }
+    .qoob-feature-list_v2, 
+    .qoob-feature-list_v3 {
+        padding-top: 0;
+    }
+    .qoob-feature__header {
+        margin-bottom: 25px;
+    }
+    .qoob-feature__header_list {
+        margin-bottom: 54px;
+    }
+    .qoob-feature-list__headertext {
+        line-height: 1.2;
+    }
+    .qoob-feature__icon_hor {
+        margin: 0 auto;
+        float: none;
+    }
+    .qoob-feature__wrap-content {
+        float: none;
+        width: 100%;
+        padding-left: 30px;
+    }
+    .qoob-feature__item_hor {
+        overflow: hidden;
+    }
+    .qoob-feature__headertext_hor,
+    .qoob-feature__description_hor {
+        text-align: center;
+    }
+    .qoob-block-feature_hor {
+        background-image: none !important;
+        padding-bottom: 23px !important; 
+    }
+    .qoob-feature_hor {
+        padding-bottom: 0px;
+    }
+    .qoob-feature__description p {
+        margin-bottom: 23px;
+    }
+    .qoob-feature-list__description p {
+        margin-bottom: 45px;
+    }
+    .qoob-feature-list__description_last p {
+        margin-bottom: 35px;
+    }
+    .qoob-feature-list_last .qoob-feature-list__item_last {
+        margin-bottom: 10px;
+    }
+    .qoob-block.qoob-feature {
+        padding-bottom: 20px;
+    }
+    .qoob-block.qoob-feature_list {
+        padding-bottom: 0px;
+    }
+    .qoob-feature__description_hor p {
+        margin-bottom: 25px;
+    }
+    .qoob-feature__wrap-content {
+        padding-left: 0;
+    }
+    .qoob-map {
+        padding-bottom: 0;
+    }
+    .qoob-map__wrapper {
+        margin-top: 25px;
+    }
+    .qoob-header-map__description p {
+        line-height: 1.3;
+    }
+    .qoob-iconbox {
+        margin-bottom: 25px;
+    }
+    .qoob-iconbox__icon {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 22px;
+    }
+    .qoob-iconbox__iconel {
+        line-height: 90px !important;
+        font-size: 40px;
+    }
+    .qoob-iconbox-block__header {
+        margin-bottom: 23px;
+    }
+    .qoob-iconbox__headertext {
+        margin-bottom: 13px;
+    }
+    .qoob-iconbox-block {
+        padding-bottom: 25px;
+    }
+    .qoob-block-slider {
+        padding: 0;
+    }
+    .qoob-slider__item {
+        padding-top: 43px;
+        padding-bottom: 85px;
+    }
+    .qoob-slider__button {
+        margin-top: 7px;
+    }
+    .qoob-slider__item_notext {
+        min-height: 390px;
+    }
+    .qoob-block-gallery-zoom {
+        padding-bottom: 0;
+    }
+    .qoob-gallery__item {
+        margin-top: 22px;
+    }
+    .qoob-block-progress {
+        padding-bottom: 22px;
+    }
+    .qoob-progress {
+        width: 100%;
+        margin: 0px auto 29px auto;
+    }
+    .qoob-block-progress_themegray {
+        padding-bottom: 22px;
+    }
+    .qoob-progress__bg_themegray {
+        margin-top: 9px;
+    }
+    .qoob-block-progress__header {
+        margin-bottom: 20px;
+    }
+    .qoob-block-testimonial {
+        padding-bottom: 42px;
+    }
+    .qoob-testimonial-slider__content p {
+        margin-bottom: 22px;
+    }
+    .qoob-block-testimonial .owl-theme .owl-controls {
+        margin-top: 0;
+    }
+    .qoob-block-video__container_v2 {
+        margin-top: 23px;
+    }
+}
+
+@media screen and (max-width: 668px) {
+    .qb-column.qb-mobile-1-1 {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+
+/*.demo-block {
+    padding-bottom: 100px;
+}
+
+.demo-block .row {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.demo-block .header-block {
+    text-align: center;
+    margin-bottom: 8.9rem;
+}
+
+.demo-iconbox-block .icon {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.demo-iconbox-block .icon-box-wrap {
+    text-align: center;
+}
+
+.demo-call-to-action .row {
+    text-align: center;
+}
+
+.demo-call-to-action .btn {
+    text-transform: uppercase;
+}
+
+.demo-map {
+    background-color: #131419;
+    padding-bottom: 0;
+}
+
+.demo-map .map-contacts strong {
+    color: #fff;
+}
+
+.demo-map .map-contacts strong p {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.demo-map .map-contacts div,
+.demo-map .map-contacts h2 {
+    color: #fff;
+}
+
+.demo-map-container {
+    padding: 0 !important;
+}
+
+.demo-map-container iframe {
+    width: 100%;
+    min-height: 400px;
+    margin-bottom: 0;
+    border: 0;
+}
+
+.demo-block-carousel {
+    padding-bottom: 0;
+}
+
+.demo-block-carousel .carousel-content {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.demo-block-carousel .carousel-content h1 {
+    margin: 0 !important;
+}
+
+.demo-block-carousel .carousel-control,
+.demo-block-carousel .carousel-control:hover {
+    background: none;
+}
+
+.demo-block-carousel .carousel-control .arrow {
+    display: inline-block;
+    height: 50px;
+    width: 26px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: calc(50% - 25px);
+}
+
+.demo-block-carousel .carousel-control.left .arrow {
+    left: 10px;
+    background-image: url('demo_carousel/assets/img/arrow_carousel_left.png');
+}
+
+.demo-block-carousel .carousel-control.right .arrow {
+    right: 10px;
+    background-image: url('demo_carousel/assets/img/arrow_carousel_right.png');
+}
+
+.demo-block-carousel .carousel-indicators {
+    margin-left: 0;
+    margin-bottom: 0;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+}
+
+.demo-block-carousel .carousel-indicators li {
+    border: 0px;
+    border-radius: 4px;
+    background: #fff;
+    opacity: .7;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 4px;
+    margin-right: 0;
+}
+
+.demo-block-carousel .carousel-indicators li:first-child {
+    margin-left: 0;
+}
+
+.demo-block-carousel .carousel-indicators .active {
+    opacity: 1; 
+}
+
+.demo-block-carousel .carousel-indicators .active,
+.demo-block-carousel .carousel-indicators li {
+    width: 17px;
+    height: 17px;
+}
+
+.demo-slider .owl-controls {
+    margin-top: 85px!important;
+}
+
+.demo-slider .owl-dots {
+    text-align: center;
+}
+
+.demo-slider .owl-nav {
+    display: none;
+}
+
+.demo-slider .owl-dot {
+    display: inline-block;
+    border: 0px;
+    border-radius: 4px;
+    background: #000;
+    opacity: .3;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 7px;
+    margin-right: 0;
+}
+
+.demo-slider .owl-dot:first-child {
+    margin-left: 0;
+}
+
+.demo-slider .owl-dot.active {
+    opacity: 1;
+}
+
+.demo-slider .owl-dot,
+.demo-slider .owl-dot.active {
+    width: 17px;
+    height: 17px;
+}
+
+.demo-slider .owl-dot span {
+    display: none !important;
+}
+
+.demo-gallery-zoom {
+    padding: 8.2rem 0 12rem 0;
+}
+
+.demo-gallery-zoom .gallery {
+    margin-left: -0.2rem;
+    margin-right: -0.2rem;
+}
+
+.demo-gallery-zoom .container-fluid {
+    overflow: hidden;
+}
+
+.demo-gallery-zoom .thumb {
+    padding: 0;
+    box-sizing: border-box;
+    border: .25rem solid #fff;
+    transition: all .4s;
+}
+
+.demo-gallery-zoom .thumb img {
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .demo-gallery-zoom .thumb.active {
+        width: 50% !important;
+    }
+
+    .demo-gallery-zoom .thumb.right.active {
+        float: right !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .demo-gallery-zoom .thumb.active {
+        width: 100%;
+    }
+}*/

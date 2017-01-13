@@ -1,0 +1,25 @@
+<div class="qoob-block qoob-block-progress qoob-block-progress_themegray">
+        <div class="qb-container">
+            <div class="qoob-header qoob-block-progress__header">
+            {{#if header}}
+                <h2 class="qoob-header__title qoob-header__title_color_white">{{header}}</h2>
+            {{/if}}
+            {{#if description}}
+                <div class="qoob-header__description qoob-header__description_color_white">
+                   {{{description}}}
+                </div>
+            {{/if}}
+            </div>
+        </div>
+        <div class="qb-container">
+        {{#if bars.length}}
+            {{#each_with_sort bars "order"}}
+                <div class="qoob-progress qoob-progress_themegray">
+                    <progress max="100" value="{{progress}}"></progress>
+                    <div class="qoob-progress__value qoob-progress__value_themegray" data-title="{{title}}"></div>
+                    <div class="qoob-progress__bg qoob-progress__bg_themegray"><div class="qoob-progress__bar qoob-progress__bar_themegray"></div></div>
+                </div>
+            {{/each_with_sort}}
+        {{/if}}
+        </div>
+</div>

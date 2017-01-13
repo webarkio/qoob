@@ -1,0 +1,53 @@
+<div class="qoob-block qoob-feature qoob-feature_two-row">
+        <div class="qb-container">
+            <div class="qoob-header qoob-feature__header">
+                {{#if header}}
+                    <h2 class="qoob-header__title qoob-header__title_color_black">{{header}}</h2>
+                {{/if}}
+                {{#if description}}
+                    <div class="qoob-header__description qoob-header__description_color_black">
+                       {{{description}}}
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <div class="qb-container">
+            {{#if feature_row.length}}
+                    {{#each_with_sort feature_row "order"}}
+                    <div class="qb-row">
+                     {{#if items.length}}
+                        {{#each_with_sort items "order"}}
+                            {{#ifCond ../type_row '==' '4'}}
+                            <div class="qb-column qb-1-4 qb-mobile-1-1 {{#ifIsNthItem nth=4 }} qb-column-margin-none {{/ifIsNthItem}}">
+                            {{/ifCond}}
+                            {{#ifCond ../type_row '==' '3'}}
+                            <div class="qb-column qb-1-3 qb-mobile-1-1 {{#ifIsNthItem nth=3 }} qb-column-margin-none {{/ifIsNthItem}}">
+                            {{/ifCond}}
+                                <div class="qoob-feature">
+                                    <div class="qoob-feature__item">
+                                        {{#if icon_front}}
+                                            <div class="qoob-feature__icon qoob-feature__icon_{{figure_form}}" style="background-color: {{figure_bg_color}}"><span class="qoob-feature__iconel {{icon_front}}"></span></div>
+                                        {{/if}}
+                                        {{#if header_item}}
+                                            <div class="qoob-feature__itemheader"><h4 class="qoob-feature__headertext" style="color: {{figure_bg_color}}">{{header_item}}</h4></div>
+                                        {{/if}}
+                                        {{#if description_item}}
+                                            <div class="qoob-feature__description qoob-feature__description_color_black">{{{description_item}}}</div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                            {{#ifCond ../type_row '==' '4'}}
+                                {{#ifIsNthItem nth=4}} <div class="clearfix"></div>{{/ifIsNthItem}}
+                            {{/ifCond}}
+                            {{#ifCond ../type_row '==' '3'}}
+                                {{#ifIsNthItem nth=3}} <div class="clearfix"></div>{{/ifIsNthItem}}
+                            {{/ifCond}}
+                        {{/each_with_sort}}
+                    {{/if}}
+                    </div>
+                    <div class="clearfix"></div>
+                {{/each_with_sort}}
+            {{/if}}
+        </div>
+</div>

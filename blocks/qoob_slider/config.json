@@ -1,0 +1,113 @@
+{
+    "name": "",
+    "groups": "slider",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "images",
+        "label": "Images",
+        "type": "accordion",
+        "settings": [
+        {
+            "name": "title",
+            "label": "Title",
+            "type": "text"
+        },
+        {
+            "name": "header",
+            "label": "Header",
+            "type": "text"
+        }, {
+            "name": "action_text",
+            "label": "Action button text",
+            "type": "text"
+        }, {
+            "name": "action_hover",
+            "label": "Button hover effect",
+            "type": "select",
+            "options": [{
+                "id": "hdf",
+                "val": "fade in"
+            }, {
+                "id": "htb",
+                "val": "from top to bottom"
+            }, {
+                "id": "hrl",
+                "val": "from left to right"
+            }, {
+                "id": "hcs",
+                "val": "from center to left and right side"
+            }, {
+                "id": "hscs",
+                "val": "screw from center to left and right side"
+            }, {
+                "id": "hctb",
+                "val": "from center to top and bottom side"
+            }]
+        }, {
+            "name": "action_url",
+            "label": "Url for action button",
+            "type": "text"
+        }, {
+            "name": "image",
+            "label": "Image",
+            "type": "image",
+            "tags": ["bg"]
+        }]
+    }],
+    "assets": [{
+        "type": "image",
+        "src": "%block_url%/assets/img/slide1.jpg",
+        "tags": ["bg"]
+    }],
+    "defaults": {
+        "images": [{
+            "title" : "slide 1",
+            "header": "This slider and it’s customizable too",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "action_text": "Try now",
+            "action_hover": "hdf",
+            "action_url": "http://qoob.it/",
+            "order": 0
+        }, {
+            "title" : "slide 2",
+            "header": "This slider and it’s customizable too",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "action_text": "Try now",
+            "action_hover": "hdf",
+            "action_url": "http://qoob.it/",
+            "order": 1
+        }, {
+            "title" : "slide 2",
+            "header": "This slider and it’s customizable too",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "action_text": "Try now",
+            "action_hover": "hdf",
+            "action_url": "http://qoob.it/",
+            "order": 2
+        }, {
+            "title" : "slide 3",
+            "header": "This slider and it’s customizable too",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "action_text": "Try now",
+            "action_hover": "hdf",
+            "action_url": "http://qoob.it/",
+            "order": 3
+        }, {
+            "title" : "slide 4",
+            "header": "This slider and it’s customizable too",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "action_text": "Try now",
+            "action_hover": "hdf",
+            "action_url": "http://qoob.it/",
+            "order": 4
+        }, {
+            "title" : "slide 5",
+            "header": "This slider and it’s customizable too",
+            "image": "%block_url%/assets/img/slide1.jpg",
+            "action_text": "Try now",
+            "action_hover": "hdf",
+            "action_url": "http://qoob.it/",
+            "order": 5
+        }]
+    }
+}

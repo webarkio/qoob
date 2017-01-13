@@ -1,0 +1,44 @@
+<div class="qoob-block qoob-feature qoob-block-feature_hor qoob-block_simple-bg" style="background-color: {{bg_color}}; background-image: url({{bg_image}});">
+        <div class="qb-container">
+            <div class="qoob-header qoob-feature__header">
+                {{#if header}}
+                    <h2 class="qoob-header__title qoob-header__title_color_white">{{header}}</h2>
+                {{/if}}
+                {{#if description}}
+                    <div class="qoob-header__description qoob-header__description_color_white">
+                       {{{description}}}
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <div class="qb-container">
+            {{#if cards.length}}
+                {{#each_with_sort cards "order"}}
+                    <div class="qb-column qb-1-2 qb-table-1-1 qb-mobile-1-1 {{#ifIsNthItem nth=2}} qb-column-margin-none {{/ifIsNthItem}}">
+                        <div class="qoob-feature qoob-feature_hor">
+                            <div class="qoob-feature__item qoob-feature__item_hor">
+                                {{#if icon_front}}
+                                    <div class="qoob-feature__icon qoob-feature__icon_rounded qoob-feature__icon_hor" style="background-color: {{figure_bg_color}}"><span class="qoob-feature__iconel {{icon_front}}"></span></div>
+                                {{/if}}
+                                <div class="qoob-feature__wrap-content">
+                                {{#if header_item}}
+                                    <div class="qoob-feature__itemheader qoob-feature__itemheader_hor"><h4 class="qoob-feature__headertext qoob-feature__headertext_hor" style="color: {{figure_bg_color}}">{{header_item}}</h4></div>
+                                {{/if}}
+                                {{#if description_item}}
+                                    <div class="qoob-feature__description qoob-feature__description_hor">{{{description_item}}}</div>
+                                {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{#ifIsNthItem nth=4}} <div class="clearfix"></div>{{/ifIsNthItem}}
+                {{/each_with_sort}}
+            {{/if}}
+        </div>
+</div>
+
+<script>
+    jQuery( document ).ready(function() {
+       
+    });
+</script>

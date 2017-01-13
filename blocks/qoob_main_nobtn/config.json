@@ -1,0 +1,29 @@
+{
+    "name": "",
+    "groups": "main",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "header",
+        "label": "Header",
+        "type": "text"
+    }, {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea"
+    },
+    {
+        "name": "bg_image_url",
+        "label": "Background image",
+        "type": "image"
+    }],
+    "assets": [{
+        "type": "image",
+        "src": "%block_url%/assets/img/main_nobtn_bg.jpg",
+        "tags": ["woman"]
+    }],
+    "defaults": {
+        "header": "Hello! This is pack of fully customizable blocks",
+        "bg_image_url": "%block_url%/assets/img/main_nobtn_bg.jpg",
+        "description": "<p>You can change all elemenths of the blocks whatever you want, so you have a lot variations to create great website</p>"
+    }
+}

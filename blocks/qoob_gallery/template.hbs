@@ -1,0 +1,51 @@
+<div class="qoob-block qoob-block-gallery-zoom">
+      <div class="qb-container">
+          <div class="qoob-header">
+                {{#if header}}
+                    <h2 class="qoob-header__title  qoob-header__title_color_black">{{header}}</h2>
+                {{/if}}
+                {{#if description}}
+                    <div class="qoob-header__description qoob-header__description_color_black">
+                       {{{description}}}
+                    </div>
+                {{/if}}
+           </div>
+      </div>
+          {{#if gallery.length}}
+              <div class="qoob-gallery__item qoob-gallery__item-{{id}}">
+                  {{#each_with_sort gallery "order"}}
+                  {{#if image}}
+                      <div class="qoob-gallery__thumb">
+                          <img class="img-responsive" src="{{image}}" alt="">
+                      </div>
+                  {{/if}}
+                  {{/each_with_sort}}
+              </div>
+          {{/if}}
+</div>
+<script>
+jQuery(document).ready(function () {
+  // resize image on click
+  jQuery('.qoob-gallery__item-{{id}} .qoob-gallery__thumb').click(function () {
+    if (jQuery(this).hasClass('qoob-gallery__thumb_active')) {
+      jQuery(this).removeClass('qoob-gallery__thumb_active');
+      return;
+    }
+    jQuery('.qoob-gallery__item-{{id}} .qoob-gallery__thumb').removeClass('qoob-gallery__thumb_active');
+    jQuery(this).addClass('qoob-gallery__thumb_active');
+  });
+
+  // define left a right elements
+  var order = 0;
+  jQuery('.qoob-gallery__item-{{id}} .qoob-gallery__thumb').each(function() {
+    if (++order < 3) {
+      jQuery(this).addClass('qoob-gallery__thumb_left');
+    } else {
+      jQuery(this).addClass('qoob-gallery__thumb_right');
+      if(order === 4) {
+        order = 0;
+      }
+    }     
+  });
+});
+</script>

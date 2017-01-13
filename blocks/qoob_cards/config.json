@@ -1,0 +1,107 @@
+{
+    "name": "",
+    "groups": "icon_box",
+    "template": "template.hbs",
+    "settings": [
+    {
+        "name" : "header",
+        "label" : "Header",
+        "type" : "text"
+    },
+    {
+        "name" : "description",
+        "label" : "Description",
+        "type" : "text"
+    },
+    {
+        "name": "bg_image_url",
+        "label": "Background image",
+        "type": "image"
+    }, {
+        "name": "cards",
+        "label": "Cards",
+        "type": "accordion",
+        "settings": [
+        {
+            "name": "title",
+            "label": "Title",
+            "type": "text"
+        },
+        {
+            "name": "icon_front",
+            "label": "Icon for front side",
+            "type": "icon",
+            "presets": ["glyphicon glyphicon-heart", "glyphicon glyphicon-search", "glyphicon glyphicon-time", "glyphicon glyphicon-map-marker"]
+        }, {
+            "name": "header_front",
+            "label": "Header front",
+            "type": "text"
+        }, {
+            "name": "description_front",
+            "label": "Text front",
+            "type": "textarea"
+        },
+        {
+            "name": "icon_back",
+            "label": "Icon for front side",
+            "type": "icon",
+            "presets": ["glyphicon glyphicon-heart", "glyphicon glyphicon-search", "glyphicon glyphicon-time", "glyphicon glyphicon-map-marker"]
+        },
+        {
+            "name": "header_back",
+            "label": "Header back",
+            "type": "text"
+        }, {
+            "name": "description_back",
+            "label": "Text back",
+            "type": "textarea"
+        }]
+    }],
+    "assets": [{
+        "type": "image",
+        "src": "%block_url%/assets/img/cards_bg.jpg",
+        "tags": ["woman"]
+    }],
+    "defaults": {
+        "header" : "Amazing cards block",
+        "description" : "You can change forms and all colors of the boxes and background whatever you want",
+        "bg_image_url": "%block_url%/assets/img/cards_bg.jpg",
+        "cards": [{
+            "title": "Card 1",
+            "icon_front": "glyphicon glyphicon-heart",
+            "icon_back": "glyphicon glyphicon-heart",
+            "header_front": "Call to action block",
+            "header_back": "Call to action block",
+            "description_front": "<p>Hover over card to see the flip in action</p>",
+            "description_back": "<p>Hover over card to see the flip in action</p>",
+            "order": 0
+        }, {
+            "title": "Card 2",
+            "icon_front": "glyphicon glyphicon-search",
+            "icon_back": "glyphicon glyphicon-search",
+            "header_front": "Call to action block",
+            "header_back": "Call to action block",
+            "description_front": "<p>Hover over card to see the flip in action</p>",
+            "description_back": "<p>Hover over card to see the flip in action</p>",
+            "order": 1
+        }, {
+            "title": "Card 3",
+            "icon_front": "glyphicon glyphicon-time",
+            "icon_back": "glyphicon glyphicon-time",
+            "header_front": "Call to action block",
+            "header_back": "Call to action block",
+            "description_front": "<p>Hover over card to see the flip in action</p>",
+            "description_back": "<p>Hover over card to see the flip in action</p>",
+            "order": 2
+        }, {
+            "title": "Card 4",
+            "icon_front": "glyphicon glyphicon-map-marker",
+            "icon_back": "glyphicon glyphicon-map-marker",
+            "header_front": "Call to action block",
+            "header_back": "Call to action block",
+            "description_front": "<p>Hover over card to see the flip in action</p>",
+            "description_back": "<p>Hover over card to see the flip in action</p>",
+            "order": 3
+        }]
+    }
+}

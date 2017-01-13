@@ -1,0 +1,32 @@
+<div class="qoob-block qoob-block-slider">
+        <div class="owl-carousel qoob-slider-{{id}}">
+            {{#if images.length}}
+                {{#each_with_sort images "order"}}
+                    <div class="item qoob-slider__item qoob-slider__item_notext" style="background-image: url({{image}});"></div>
+                {{/each_with_sort}}
+            {{/if}}
+        </div>                
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery('.qoob-slider-{{id}}').owlCarousel({
+        autoPlay: 3000, //Set AutoPlay to 3 seconds
+        margin: 0,
+        items : 1,
+        autoHeight:true,
+        navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+        responsive : {
+            0 : {
+                nav: false,
+                dots: true,
+            },
+            769 : {
+                nav: true,
+                dots: false
+            }
+        }
+  });
+    // 
+});
+</script>

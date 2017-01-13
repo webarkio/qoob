@@ -1,0 +1,29 @@
+{
+    "name": "",
+    "groups": "text",
+    "template": "template.hbs",
+    "settings": [{
+        "name": "header",
+        "label": "Title",
+        "type": "text"
+    }, {
+        "name": "text",
+        "label": "Content",
+        "type": "textarea"
+    },
+    {
+        "name": "bg_image_url",
+        "label": "Background image",
+        "type": "image"
+    }],
+    "assets": [{
+        "type": "image",
+        "src": "%block_url%/assets/img/qoob_text_bg.jpg",
+        "tags": ["bg"]
+    }],
+    "defaults": {
+        "bg_image_url": "%block_url%/assets/img/qoob_text_bg.jpg",
+        "header": "Create blocks with amazing backgrounds and amazing stories",
+        "text": "<p>Curabitur aliquet quam id dui posuere blandit. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Nulla quis lorem ut libero malesuada feugiat. 0ultricies ligula sed magna dictum porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Proin eget tortor risus. Curabitur arcu erat, accumsan imperdiet et, porttitor at sem. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Donec sollicitudin molestie malesuada.</p>"
+    }
+}
