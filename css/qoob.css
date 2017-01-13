@@ -1548,6 +1548,10 @@ ul.catalog-list li a:hover:after {
     margin-bottom: 0;
 }
 
+.settings-accordion .settings-accordion {
+    padding-bottom: 0 !important;
+}
+
 .settings-accordion .settings-block {
     margin-left: 0;
     overflow: hidden;
@@ -1983,6 +1987,10 @@ input[type="text"]#datepicker {
     width: 107px;
 }
 
+.settings-item.settings-accordion .edit-icon-preview {
+    width: 50%;
+}
+
 .settings-item .edit-image.empty,
 .settings-item .edit-video.empty,
 .settings-item .edit-icon-preview.empty {
@@ -2238,15 +2246,15 @@ input[type="text"]#datepicker {
     width: 246px;
     padding: 0 0 5px 0;
     background: #444444;
-    position: absolute;
     bottom: 0px;
     z-index: 99999999999;
 }
+
 .settings .settings-item .delete-button {
     margin: 7px 0 0 0;
 }
 
-.settings-blocks .block-button {
+.settings .block-button {
     margin: 0 4px 0 4px;
 }
 
@@ -2448,7 +2456,7 @@ body.qoob-editor {
 }
 
 #inner-settings-icon .icon-filter-group {
-    width: initial;
+    width: calc(100% - 10px);
     height: initial;
 }
 
@@ -2956,7 +2964,8 @@ html.active-js {
 }
 
 #settings-block-media {
-    overflow: auto;
+    background-color: #444444;
+    overflow-y: auto;
 }
 
 /* Blank block */
@@ -3023,14 +3032,15 @@ html.active-js {
 
 .other-icons {
     display: inline-block;
-    width: 127px;
+    width: calc(50% - 4px);
     float: right;
     text-align: center;
+    margin-left: 4px;
 }
 
 .other-icons .other-icon {
     display: inline-block;
-    width: 61px;
+    width: calc(50% - 2px);
     height: 57px;
     border: 2px solid #fff;
     box-sizing: border-box;
@@ -3042,6 +3052,10 @@ html.active-js {
     font-size: 25px;
 }
 
+/*.other-icons .other-icon:nth-child(odd) {
+    margin-right: 4px;
+}*/
+
 .filtered-icons .ajax-icon {
     text-align: center;
     display: inline-block;
@@ -3051,6 +3065,28 @@ html.active-js {
     line-height: 30px;
     cursor: pointer;
     margin-top: 33px;
+}
+
+/* Edge */
+@supports (-ms-ime-align:auto) {
+    .settings .delete-button-container,
+    .settings .delete-image,
+    .settings .delete-video,
+    .settings .delete-icon {
+        width: 236px;
+    }
+}
+
+/* IE 11 */
+_:-ms-fullscreen, :root .#inner-settings-icon .icon-search {
+    width: calc(100% - 92px);
+}
+_:-ms-fullscreen, :root .settings .delete-button-container,
+_:-ms-fullscreen, :root .settings .delete-image,
+_:-ms-fullscreen, :root .settings .delete-video,
+_:-ms-fullscreen, :root .settings .delete-icon {
+    width: 234px;
+    bottom: 5px;
 }
 
 /*Firefox fixes*/
