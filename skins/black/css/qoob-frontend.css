@@ -332,6 +332,19 @@
     position: relative;
 }
 
+.content-block-inner .empty-block {
+    height: 300px;
+    width: 100%;
+    text-align: center;
+    line-height: 300px;
+}
+
+.content-block-inner .empty-block .empty-block-text {
+    font-family: 'robotolight'
+    color: #000;
+    font-size: 20px;
+}
+
 /* Overlay */
 
 #qoob-blocks .content-block-outer {
