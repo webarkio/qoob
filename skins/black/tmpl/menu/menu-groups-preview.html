@@ -1,4 +1,4 @@
-<div class="<% if(!libs || libs.length === 1) { %>single<% } %> form-group lib-select">
+<div class="<% if(!libs) { %>empty<% } %> form-group lib-select">
     <select class="form-control" id="lib-select">
         <option value="all"><%= all_themes %></option>
         <% for (var i = 0; i < libs.length; i++) { %>

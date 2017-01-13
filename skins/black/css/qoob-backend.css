@@ -976,7 +976,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
     padding: 9px 0 9px 4px;
 }
 
-#card .lib-select.single {
+#card .lib-select.empty {
     display: none;
 }
 
