@@ -2297,6 +2297,13 @@ input[type="text"]#datepicker {
 }
 
 
+/* Layout helpers
+----------------------------------*/
+
+.ui-draggable-dragging {
+    z-index: 9999999 !important;
+}
+
 /*Field image*/
 .settings-block .filtered-images,
 .settings-block .filtered-videos,
