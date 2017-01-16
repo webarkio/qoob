@@ -21,15 +21,18 @@ var QoobBlockView = Backbone.View.extend({
         this.listenTo(this.model, 'change', this.render);
     },
     render: function(event) {
-        var self = this,
-            params = {name: self.model.get('template'), lib: self.model.get('lib')}
+        var self = this;
 
         //Start loading template for block
-        this.storage.getBlockTemplate(self.model.get('lib'), self.model.get('block'), function(err, template){
-            var config = self.storage.getBlockConfig(self.model.get('lib'), self.model.get('block'));
-            var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
-            var tplAdapter = QoobExtensions.templating[tplAdapterType];
-            self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
+        this.storage.getBlockTemplate(self.model.get('lib'), self.model.get('block'), function(err, template) {
+            if (err == 'blockNotFound') {
+                self.renderedTemplate = '<div class="empty-block"><div class="empty-block-text">The block ' + self.model.get('block') + ' is not found in the library '+ self.model.get('lib') +'</div></div>';
+            } else {
+                var config = self.storage.getBlockConfig(self.model.get('lib'), self.model.get('block'));
+                var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();
+                var tplAdapter = QoobExtensions.templating[tplAdapterType];
+                self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
+            }
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
             self.trigger('loaded');
             self.controller.triggerIframe();

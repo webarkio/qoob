@@ -55,6 +55,7 @@ function Skin() {
             { "type": "js", "name": "template-adapter-underscore", "src": "js/extensions/template-adapter-underscore.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-storage", "src": "js/qoob-storage.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
+            { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
         ],
         "prod": [
             { "type": "js", "name": "skin_assets", "src": "skin.concated.js" },

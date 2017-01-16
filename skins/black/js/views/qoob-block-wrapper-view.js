@@ -42,7 +42,9 @@ var QoobBlockWrapperView = Backbone.View.extend({
         return this;
     },
     clickStartEditBlock: function (evt) {
-        this.controller.navigate('edit/' + this.model.id, {trigger: true});
+        if (this.controller.layout.menu.getSettingsView(this.model.id)) {
+            this.controller.navigate('edit/' + this.model.id, {trigger: true});
+        }
     },
     droppable: function () {
         var self = this;

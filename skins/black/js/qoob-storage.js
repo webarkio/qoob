@@ -11,7 +11,6 @@ function QoobStorage(options) {
     this.skinTemplates = options.loader.loaded.skin_templates.data || null;
     this.librariesData = options.librariesData || {};
     this.pageData = options.pageData || null;
-    this.blockSettingsViewData = [];
     this.blockTemplates = [];
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
     this.defaultTemplatesCollection = new Backbone.Collection();
@@ -94,12 +93,15 @@ QoobStorage.prototype.getDefaultTemplateAdapter = function() {
 
 //FIXME
 QoobStorage.prototype.getBlockConfig = function(libName, blockName) {
-    var lib = _.findWhere(this.librariesData, {
+    var block,
+    lib = _.findWhere(this.librariesData, {
         "name": libName
     });
-    var block = _.findWhere(lib.blocks, {
-        "name": blockName
-    });
+    if (lib != undefined) {
+        block = _.findWhere(lib.blocks, {
+            "name": blockName
+        });
+    }
     return block;
 };
 
@@ -117,19 +119,30 @@ QoobStorage.prototype.getBlockTemplate = function(libName, blockName, cb) {
         var lib = _.findWhere(this.librariesData, {
             "name": libName
         });
-        var block = _.findWhere(lib.blocks, {
-            "name": blockName
-        });
-        var urlTemplate = block.url + block.template;
-        this.loader.add({
-            type: "data",
-            name: "block_" + libName + "_" + blockName,
-            src: urlTemplate,
-            onloaded: function(template) {
-                self.blockTemplates[libName + "_" + blockName] = template;
-                cb(null, template);
+
+        var err = 'blockNotFound';
+
+        if (lib === undefined) {
+            cb(err, null);
+        } else {
+            var block = _.findWhere(lib.blocks, {
+                "name": blockName
+            });
+            if (block === undefined) {
+                cb(err, null);
+            } else {
+                var urlTemplate = block.url + block.template;
+                this.loader.add({
+                    type: "data",
+                    name: "block_" + libName + "_" + blockName,
+                    src: urlTemplate,
+                    onloaded: function(template) {
+                        self.blockTemplates[libName + "_" + blockName] = template;
+                        cb(null, template);
+                    }
+                });
             }
-        });
+        }
     }
 };
 

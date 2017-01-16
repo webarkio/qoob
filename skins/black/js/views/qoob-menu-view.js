@@ -24,12 +24,14 @@ var QoobMenuView = Backbone.View.extend({
     },
     addSettings: function(model) {
         var item = this.storage.getBlockConfig(model.get('lib'), model.get('block'));
-        this.addView(new QoobMenuSettingsView({
-            "model": model,
-            "config": item,
-            "storage": this.storage,
-            controller: this.controller
-        }), 270);
+        if (item) {
+            this.addView(new QoobMenuSettingsView({
+                "model": model,
+                "config": item,
+                "storage": this.storage,
+                controller: this.controller
+            }));
+        }
     },
     /**
      * Render menu

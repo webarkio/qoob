@@ -71,7 +71,9 @@ var AccordionFlipView = QoobFieldView.extend(
                 this.model.off(null, null, this);
             },
             backward: function (e) {
-                e.preventDefault();
+                if (e) {
+                    e.preventDefault();
+                }
                 this.controller.layout.menu.rotateBackward(this.parentId);
             }
         });
