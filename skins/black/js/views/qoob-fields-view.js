@@ -27,8 +27,19 @@ var QoobFieldsView = Backbone.View.extend(
     render: function () {
         var res = [];
         for (var i = 0; i < this.settings.length; i++) {
-            var input = new Fields[this.settings[i].type]({model: this.model, storage: this.storage, settings: this.settings[i], defaults: this.defaults[this.settings[i].name], controller: this.controller, parentId: this.parentId});
-            res.push(input.render().el);
+            if (Fields[this.settings[i].type]) {
+                var input = new Fields[this.settings[i].type]({
+                    model: this.model,
+                    storage: this.storage,
+                    settings: this.settings[i],
+                    defaults: this.defaults[this.settings[i].name],
+                    controller: this.controller,
+                    parentId: this.parentId
+                });
+                res.push(input.render().el);
+            } else {
+                throw new Error("Field " + this.settings[i].type + " not found!");
+            }
         }
         this.$el.html(res);
         

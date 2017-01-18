@@ -33,12 +33,17 @@ var QoobManageLibsView = Backbone.View.extend(
             var self = this,
                 url = this.$el.find('input[name="url"]').val();
 
-            this.controller.showMenuOverlay();
-
             if (url.length > 0) {
-                this.controller.addLibrary(url, function(state) {
-                    self.showPhraseReload();
+                this.controller.showMenuOverlay();
+                this.controller.addLibrary(url, function(error, state) {
                     self.controller.hideMenuOverlay();
+                    if (error) {
+                        console.error(error);
+                    } else {
+                        self.showPhraseReload();
+                    }
+                    
+                    
                 });
             }
         },

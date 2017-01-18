@@ -1,41 +1,42 @@
 QUnit.module("QoobToolbarView");
 
-var mockToolbarTemplate = "<div class=\"logo\">" +
-    "<div class=\"wrap-qoob\">" +
-    "<div class=\"qoob\">" +
-    "<div class=\"side-0\"></div>" +
-    "<div class=\"side-90\"></div>" +
-    "<div class=\"side-180\"></div>" +
-    "<div class=\"side-270\"></div>" +
-    "</div>" +
-    "</div>" +
-    "<div class=\"text\"></div>" +
-    "</div>" +
-    "<div class=\"edit-control-bar\">" +
-    "<div class=\"autosave\">" +
-    "<label class=\"checkbox-sb\">" +
-    "<input type=\"checkbox\" class=\"autosave-checkbox\"><span></span><em>Autosave</em>" +
-    "</label>" +
-    "</div>" +
-    "<div class=\"edit-control-button\">" +
-    "<button class=\"save-button\"><span class=\"text\">Save</span>" +
-    "<span class=\"clock\">" +
-    "<span class=\"minutes-container\"><span class=\"minutes\"></span></span>" +
-    "<span class=\"seconds-container\"><span class=\"seconds\"></span></span>" +
-    "</span>" +
-    "</button>" +
-    "<button class=\"exit-button\">Exit</button>" +
-    "<button class=\"device-mode-button pc active\" name=\"pc\"></button>" +
-    "<button class=\"device-mode-button tablet-vertical\" name=\"tablet-vertical\"></button>" +
-    "<button class=\"device-mode-button phone-vertical\" name=\"phone-vertical\"></button>" +
-    "<button class=\"device-mode-button tablet-horizontal\" name=\"tablet-horizontal\"></button>" +
-    "<button class=\"device-mode-button phone-horizontal\" name=\"phone-horizontal\"></button>" +
-    "<button class=\"preview-mode-button\"></button>" +
-    "</div>" +
-    "</div>";
+var mockToolbarTemplate = '<div class="logo">' +
+    '<div class="wrap-qoob">' +
+    '<div class="qoob">' +
+    '<div class="side-0"></div>' +
+    '<div class="side-90"></div>' +
+    '<div class="side-180"></div>' +
+    '<div class="side-270"></div>' +
+    '</div>' +
+    '</div>' +
+    '<div class="text"></div>' +
+    '</div>' +
+    '<div class="edit-control-bar">' +
+    '<div class="autosave">' +
+    '<label class="checkbox-sb"><input type="checkbox" class="autosave-checkbox"><span></span><em>Autosave</em></label>' +
+    '</div>' +
+    '<div class="edit-control-button">' +
+    '<button class="save-button">' +
+    '<span class="text">Save</span>' +
+    '<span class="clock"><span class="minutes-container"><span class="minutes"></span></span><span class="seconds-container"><span class="seconds"></span></span></span>' +
+    '</button>' +
+    '<button class="exit-button">Exit</button>' +
+    '<div class="dropdown more-button">' +
+    '<button class="btn btn-default dropdown-toggle" type="button" id="more" data-toggle="dropdown">More <i class="fa fa-caret-down" data-unicode="f0d7"></i></button>' +
+    '<ul class="dropdown-menu" aria-labelledby="more">' +
+    '<li><a class="save-template" tabindex="-1" href="#more">Save as template</a></li>' +
+    '</ul>' +
+    '</div>' +
+    '<button class="device-mode-button pc active" name="pc"></button><button class="device-mode-button tablet-vertical" name="tablet-vertical"></button>' +
+    '<button class="device-mode-button phone-vertical" name="phone-vertical"></button>' +
+    '<button class="device-mode-button tablet-horizontal" name="tablet-horizontal"></button>' +
+    '<button class="device-mode-button phone-horizontal" name="phone-horizontal"></button>' +
+    '<button class="preview-mode-button"></button>' +
+    '</div>' +
+    '</div>';
 
 var mockToolbarStorage = {
-    getQoobTemplate: function(templateName) {
+    getSkinTemplate: function(templateName) {
         if (templateName == 'qoob-toolbar-preview') {
             return mockToolbarTemplate;
         }

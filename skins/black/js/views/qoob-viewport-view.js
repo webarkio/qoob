@@ -21,7 +21,7 @@ var QoobViewportView = Backbone.View.extend(
             this.controller = options.controller;
             this.storage = options.storage;
             //this.model.on("block_add", this.addBlock.bind(this));
-            //            this.model.on("block_delete", this.delBlockView.bind(this));
+            //this.model.on("block_delete", this.delBlockView.bind(this));
             this.model.on("block_moveup", this.moveUpBlockView.bind(this));
             this.model.on("block_movedown", this.moveDownBlockView.bind(this));
         },

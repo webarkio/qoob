@@ -189,7 +189,7 @@ var QoobController = Backbone.Router.extend({
     addLibrary: function(url, cb) {
         var self = this;
         this.storage.getLibraryByUrl(url, function(error, dataLib) {
-            if (!error && _.isArray(dataLib)) {
+            if ( error != 'error' && _.isArray(dataLib) ) {
                 var jsonLib = _.first(dataLib);
                 if (jsonLib.name.length > 0) {
                     self.storage.driver.loadLibrariesData(function(error, libraries) {
@@ -199,6 +199,8 @@ var QoobController = Backbone.Router.extend({
                         });
                     });
                 }
+            } else {
+                cb(error);
             }
         });
     },
