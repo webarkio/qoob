@@ -10,6 +10,7 @@ function Skin() {
     this.assets = {
         "dev": [
             { "type": "js", "name": "jquery-ui", "src": "js/libs/jquery-ui.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "jquery-ui-touch-punch", "src": "js/libs/jquery.ui.touch-punch.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "bootstrap-progressbar", "src": "js/libs/bootstrap-progressbar.js", "dep": ["bootstrap"] },
