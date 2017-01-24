@@ -1,3 +1,4 @@
+/*global QoobToolbarView*/
 QUnit.module("QoobToolbarView");
 
 var mockToolbarTemplate = '<div class="logo">' +
@@ -42,10 +43,7 @@ var mockToolbarStorage = {
         }
     },
     __: function(s1, s2) {
-        return s1;
-    },
-    qoobData: {
-        libs: []
+        return s1 + " " + s2;
     }
 };
 
@@ -99,14 +97,14 @@ QUnit.test("setPreviewMode", function(assert) {
         storage: mockToolbarStorage
     });
 
-    $('body').append(toolbar.render().$el);
+    jQuery('body').append(toolbar.render().$el);
     assert.equal(toolbar.$el.css('display'), 'block');
     toolbar.setPreviewMode();
     _.delay(function() {
         assert.equal(toolbar.$el.css('display'), 'none');
         toolbar.$el.remove();
         done();
-    }, 500);
+    }, 300);
 
 });
 
@@ -116,7 +114,7 @@ QUnit.test("setEditMode", function(assert) {
         storage: mockToolbarStorage
     });
 
-    $('body').append(toolbar.render().$el);
+    jQuery('body').append(toolbar.render().$el);
     assert.equal(toolbar.$el.css('display'), 'block');
     toolbar.setPreviewMode();
     _.delay(function() {
@@ -126,28 +124,21 @@ QUnit.test("setEditMode", function(assert) {
             assert.equal(toolbar.$el.css('display'), 'block');
             toolbar.$el.remove();
             done();
-        }, 500);
-    }, 500);
+        }, 300);
+    }, 300);
 
 });
 
-//???
 QUnit.test("setDeviceMode", function(assert) {
-    var done = assert.async();
     var toolbar = new QoobToolbarView({
         storage: mockToolbarStorage
     });
-    $('body').append(toolbar.render().$el);
+    jQuery('body').append(toolbar.render().$el);
     toolbar.setDeviceMode('pc');
-    _.delay(function() {
-        assert.ok(toolbar.$el.find('.device-mode-button[name=pc]').hasClass('active'));
-        toolbar.setDeviceMode('tablet-horisontal');
-        _.delay(function() {
-            assert.ok(!toolbar.$el.find('.device-mode-button[name=pc]').hasClass('active'));
-            toolbar.$el.remove();
-            done();
-        }, 500);
-    }, 500);
+    assert.ok(toolbar.$el.find('.device-mode-button[name=pc]').hasClass('active'));
+    toolbar.setDeviceMode('tablet-horisontal');
+    assert.ok(!toolbar.$el.find('.device-mode-button[name=pc]').hasClass('active'));
+    toolbar.$el.remove();
 });
 
 QUnit.test("startEditBlock", function(assert) {
@@ -158,11 +149,9 @@ QUnit.test("startEditBlock", function(assert) {
     assert.ok(!toolbar.$el.find('.logo').hasClass('side-270'));
     toolbar.render().startEditBlock();
     assert.ok(toolbar.$el.find('.logo').hasClass('side-270'));
-
 });
 
 QUnit.test("showSaveLoader", function(assert) {
-
     var toolbar = new QoobToolbarView({
         storage: mockToolbarStorage
     });
@@ -172,13 +161,12 @@ QUnit.test("showSaveLoader", function(assert) {
 });
 
 QUnit.test("hideSaveLoader", function(assert) {
-
     var toolbar = new QoobToolbarView({
         storage: mockToolbarStorage
     });
     assert.equal(toolbar.$el.find('.save-button .clock').css('display'), undefined);
     toolbar.render().hideSaveLoader();
-    assert.equal(toolbar.$el.find('.save-button .clock').css('display'), "");
+    assert.equal(toolbar.$el.find('.save-button .clock').css('display'), '');
 });
 
 QUnit.test("clickPreviewMode", function(assert) {
@@ -234,18 +222,16 @@ QUnit.test("clickExit", function(assert) {
 });
 
 QUnit.test("clickAutosave", function(assert) {
-    var checked = true;
+    var check = true;
     var toolbar = new QoobToolbarView({
         storage: mockToolbarStorage,
         controller: {
             setAutoSave: function(checked) {
                 assert.ok(checked);
-                checked = !checked;
+                checked = !check;
             }
         }
     });
 
-    toolbar.render().$el.find('.autosave-checkbox').trigger('click');
-    toolbar.render().$el.find('.autosave-checkbox').trigger('click');
     toolbar.render().$el.find('.autosave-checkbox').trigger('click');
 });

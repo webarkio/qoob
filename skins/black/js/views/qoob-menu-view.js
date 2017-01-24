@@ -1,12 +1,14 @@
+/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSaveTemplateView, QoobManageLibsView */
 /**
  * Create view for menu in qoob layout
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuView = Backbone.View.extend({
+var QoobMenuView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     id: "qoob-menu",
     currentScreen: 'catalog-groups',
     menuViews: [],
+    settingsViewStorage: [],
     events: {
         'change #lib-select': 'changeLib'
     },
@@ -84,12 +86,12 @@ var QoobMenuView = Backbone.View.extend({
             scrollSpeed: 15,
             containment: 'document',
             opacity: 0.5,
-            start: function(event, ui) {
+            start: function() {
                 jQuery('.droppable').show();
                 self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").hide();
 
             },
-            stop: function(event, ui) {
+            stop: function() {
                 jQuery('.droppable').hide();
                 self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").show();
             }
@@ -104,7 +106,6 @@ var QoobMenuView = Backbone.View.extend({
     },
     showGroup: function(group) {
         this.rotateForward('group-' + group);
-
     },
     showIndex: function() {
         this.rotateBackward('catalog-groups');
@@ -112,7 +113,6 @@ var QoobMenuView = Backbone.View.extend({
     startEditBlock: function(blockId) {
         this.rotateForward(blockId);
     },
-
     /**
      * Resize menu
      */
@@ -139,7 +139,7 @@ var QoobMenuView = Backbone.View.extend({
             if (this.menuViews[i].model && this.menuViews[i].model.id == id) {
                 return this.menuViews[i];
             }
-        };
+        }
     },
     /**
      * Menu rotation
@@ -159,7 +159,7 @@ var QoobMenuView = Backbone.View.extend({
 
         this.currentScreen = id;
 
-        this.$el.find('.card-main').prepend($('<div>', {
+        this.$el.find('.card-main').prepend(jQuery('<div>', {
             class: screen + ' side'
         }).append(cloneElement.show()));
 
@@ -174,7 +174,7 @@ var QoobMenuView = Backbone.View.extend({
         };
 
         if (!isIE11) {
-            $({
+            jQuery({
                 deg: 0
             }).animate({
                 deg: deg
@@ -218,34 +218,14 @@ var QoobMenuView = Backbone.View.extend({
     onEditMode: function() {
         this.$el.fadeIn(300);
     },
-
-    /**
-     * Rotate menu back
-     * Not used
-     */
-    back: function() {
-        var tmp = this.backSide;
-
-        // rotate qoob menu
-        this.$el.find('.card-main')
-            .removeClass(function(index, css) {
-                return (css.match(/\bside-\S+/g) || []).join(' ');
-            })
-            .addClass(this.backSide);
-
-        // Set back side
-        this.backSide = this.currentSide;
-
-        // Set current side
-        this.currentSide = tmp;
-    },
     /**
      * Delete view from settingsViewStorage
-     * @param {String} view id
+     * @param {String} view name
      */
-    delView: function(id) {
-        if (this.settingsViewStorage && this.settingsViewStorage[id]) {
-            this.settingsViewStorage[id].dispose();
+    delView: function(name) {
+        if (this.settingsViewStorage && this.settingsViewStorage[name]) {
+            this.settingsViewStorage[name].dispose();
+            delete this.settingsViewStorage[name];
         }
     },
     deleteSettings: function(model) {
@@ -289,7 +269,7 @@ var QoobMenuView = Backbone.View.extend({
         }
     },
     showOverlay: function() {
-        this.$el.prepend($('<div>', {
+        this.$el.prepend(jQuery('<div>', {
             class: 'overlay-menu'
         })).delay(10000).show();
     },

@@ -1,37 +1,56 @@
+/*global QoobMenuBlocksPreviewView*/
 QUnit.module("QoobMenuBlocksPreviewView");
 
-var View = Backbone.View.extend({
-    tag: 'div',
-    render: function() {
-        this.$el.html('view');
-        return this;
-    }
-});
-
 var mockTemplateMenuBlocksPreview =
-    "<div class=\"preview-blocks\">"+
-    "<div id=\"preview-block-header_small_bg\" class=\"preview-block\">"+
-        "<img src=\"1.png\">"+
-    "</div>"+
-"</div>";
+    '<div class="preview-blocks">' +
+    '<div id="preview-block-qoob_main" class="preview-block" data-lib="default">' +
+    '<img src="qoob/qoob/blocks/qoob_main/preview.png">' +
+    '</div>' +
+    '</div>';
 
 var mockStorageMenuBlocksPreview = {
-    qoobTemplates: { 'menu-blocks-preview': mockTemplateMenuBlocksPreview },
-    qoobData: { 'groups': [] },
+    getSkinTemplate: function(templateName) {
+        if (templateName == 'menu-blocks-preview') {
+            return mockTemplateMenuBlocksPreview;
+        }
+    },
     getBlocksByGroup: function() {
         return this.qoobData.groups;
     }
 };
 
-//============START TEST===============
-QUnit.test("initialize", function(assert) {
+var mockMenuBlockPreviewController = {
+    addNewBlock: function() {
+        jQuery('body').append(jQuery('<div class="qoob_main"></div>'));
+    }
+};
 
+//============START TEST===============
+QUnit.test("clickPreviewBlock", function(assert) {
     var menuBlocks = new QoobMenuBlocksPreviewView({
-        model: new Backbone.Model(),
+        storage: mockStorageMenuBlocksPreview,
+        group: "preview-block-qoob_main",
+        controller: mockMenuBlockPreviewController
+    });
+
+    jQuery('body').append(menuBlocks.render().$el.html());
+
+    menuBlocks.$el.find('.preview-block').trigger('click');
+
+    menuBlocks.$el.remove();
+
+    assert.equal(jQuery('body').find('.qoob_main').length, 1, 'Add new block');
+
+    jQuery('body').find('.qoob_main').remove();
+});
+
+QUnit.test("initialize", function(assert) {
+    var menuBlocks = new QoobMenuBlocksPreviewView({
         storage: 1,
         controller: 2,
         group: 3
     });
+
     assert.equal(menuBlocks.storage, 1);
     assert.equal(menuBlocks.controller, 2);
     assert.equal(menuBlocks.group, 3);
@@ -39,9 +58,11 @@ QUnit.test("initialize", function(assert) {
 
 QUnit.test("render", function(assert) {
     var menuBlocks = new QoobMenuBlocksPreviewView({
-        model: new Backbone.Model(),
         storage: mockStorageMenuBlocksPreview,
-        group: "preview-block-header_small_bg"
+        group: "preview-block-qoob_main",
+        controller: 1
     });
+
+    assert.equal(menuBlocks.controller, 1);
     assert.equal(mockTemplateMenuBlocksPreview, menuBlocks.render().$el.html());
 });

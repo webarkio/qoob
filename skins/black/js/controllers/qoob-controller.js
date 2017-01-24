@@ -1,4 +1,5 @@
-var QoobController = Backbone.Router.extend({
+/*global QoobUtils*/
+var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-vars
     routes: {
         "index": "index",
         "": "index", // Empty hash-tag
@@ -88,7 +89,7 @@ var QoobController = Backbone.Router.extend({
     exit: function() {
         var self = this;
         if (this.autosave) {
-            this.save(function(err, status) {
+            this.save(function() {
                 self.storage.driver.exit(self.storage.pageId);
             });
         } else {
@@ -111,13 +112,13 @@ var QoobController = Backbone.Router.extend({
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
     addBlock: function(values, afterId, scroll) {
-        scroll = (scroll == undefined) ? true : scroll;
+        scroll = (scroll === undefined) ? true : scroll;
 
         var model = QoobUtils.createModel(values);
 
         this.pageModel.addBlock(model, afterId);
         this.layout.viewPort.addBlock(model, afterId);
-        this.layout.menu.addSettings(model, afterId);
+        this.layout.menu.addSettings(model);
         if (scroll) {
             this.scrollTo(model.id);
         }
@@ -138,7 +139,7 @@ var QoobController = Backbone.Router.extend({
         });
     },
     load: function(blocks) {
-        if (blocks.length == 0) {
+        if (blocks.length === 0) {
             this.layout.viewPort.trigger('blocks_loaded');
         } else {
             for (var i = 0; i < blocks.length; i++) {
@@ -147,20 +148,17 @@ var QoobController = Backbone.Router.extend({
         }
     },
     setInnerSettingsView: function(view) {
-        //Creating storage for views
-        this.layout.menu.settingsViewStorage = this.layout.menu.settingsViewStorage || [];
         var name = view.$el.data('side-id');
         //Add view to the qoob side
         if (!!this.layout.menu.settingsViewStorage[name]) {
             this.deleteInnerSettingsView(name);
         }
-        this.layout.menu.addView(view, 270);
+        this.layout.menu.addView(view);
         this.layout.menu.rotateForward(name);
         this.layout.menu.settingsViewStorage[name] = view;
     },
     deleteInnerSettingsView: function(name) {
         this.layout.menu.delView(name);
-        delete this.layout.menu.settingsViewStorage[name];
     },
     deleteBlock: function(model) {
         this.pageModel.deleteBlock(model);
@@ -288,13 +286,12 @@ var QoobController = Backbone.Router.extend({
      * Create template
      */
     createTemplate: function(templateInfo, cb) {
-        var self = this;
         var dataPage = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var newTemplate = _.extend(templateInfo, dataPage);
 
         if (dataPage.blocks.length > 0) {
             this.showMenuOverlay();
-            this.storage.createTemplate(newTemplate, function(error, state){
+            this.storage.createTemplate(newTemplate, function(error){
                 cb(error, status);
             });
         }

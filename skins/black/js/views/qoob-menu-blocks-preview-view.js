@@ -3,7 +3,7 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuBlocksPreviewView = Backbone.View.extend(
+var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuGroupsView.prototype */
     {
         className: 'catalog-templates menu-block',
@@ -46,4 +46,5 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend(
 
             return this;
         }
-    });
+    }
+);
