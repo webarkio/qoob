@@ -80,6 +80,7 @@ var QoobMenuView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
         this.$el.find('.preview-block').draggable({
             appendTo: "body",
             helper: "clone",
+            distance: 10,
             iframeFix: true,
             iframeScroll: true,
             scrollSensitivity: 100,
