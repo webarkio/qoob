@@ -1,36 +1,46 @@
+/*global QoobMenuGroupsView*/
 QUnit.module("QoobMenuGroupsView");
 
-var View = Backbone.View.extend({
-    tag: 'div',
-    render: function() {
-        this.$el.html('view');
-        return this;
-    }
-});
-
 var mockTemplateMenuGroups =
-    "<ul><li><a href=\"#groups/introduction\"></a></li></ul>";
+    '<ul><li><a href="#groups/introduction"></a></li></ul>';
 
 var mockStorageMenuGroups = {
-    qoobTemplates: { 'menu-groups-preview': mockTemplateMenuGroups },
-    qoobData: { 'groups': [] }
+    getSkinTemplate: function(templateName) {
+        if (templateName == 'menu-groups-preview') {
+            return mockTemplateMenuGroups;
+        }
+    },
+    __: function(s1, s2) {
+        return s1 + ' ' + s2;
+    }
 };
 
 //============START TEST===============
-QUnit.test("initialize", function(assert) {
+QUnit.test("attributes", function(assert) {
+    var menugroups = new QoobMenuGroupsView({});
+    assert.equal(menugroups.attributes()['data-side-id'], 'catalog-groups');
+});
 
+QUnit.test("initialize", function(assert) {
     var menugroups = new QoobMenuGroupsView({
-        model: new Backbone.Model(),
-        storage: 1
+        storage: {},
+        groups: [],
+        controller: {}
     });
-    assert.equal(menugroups.storage, 1);
+
+    assert.deepEqual(menugroups.storage, {}, 'Storage Ok');
+    assert.deepEqual(menugroups.groups, [], 'Groups Ok');
+    assert.deepEqual(menugroups.controller, {}, 'Controller Ok');
 });
 
 QUnit.test("render", function(assert) {
     var menugroups = new QoobMenuGroupsView({
-        model: new Backbone.Model(),
-        storage: mockStorageMenuGroups
+        storage: mockStorageMenuGroups,
+        groups: [],
+        controller: {}
     });
-    assert.equal(mockTemplateMenuGroups, menugroups.render().$el.html());
-});
 
+    assert.equal(mockTemplateMenuGroups, menugroups.render().$el.html());
+    assert.deepEqual(menugroups.groups, [], 'Groups Ok');
+    assert.deepEqual(menugroups.controller, {}, 'Controller Ok');
+});

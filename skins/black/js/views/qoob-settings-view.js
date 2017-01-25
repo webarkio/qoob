@@ -1,9 +1,10 @@
+/*global QoobFieldsView*/
 /**
  * Create view settings for block
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuSettingsView = Backbone.View.extend(
+var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuSettingsView.prototype */
     {
         tagName: "div",
@@ -34,6 +35,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
          * @constructs
          */
         initialize: function(options) {
+            this.model = options.model;
             this.config = options.config;
             this.storage = options.storage;
             this.controller = options.controller;
@@ -51,12 +53,12 @@ var QoobMenuSettingsView = Backbone.View.extend(
                 controller: this.controller,
                 className: 'settings-block'
             });
-            
-            this.$el.html(_.template(this.storage.getSkinTemplate('menu-settings-preview'))({config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move')})).find('.settings-blocks').prepend(settingsBlock.render().el);
-            
+
+            this.$el.html(_.template(this.storage.getSkinTemplate('menu-settings-preview'))({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })).find('.settings-blocks').prepend(settingsBlock.render().el);
+
             return this;
         },
-        clickBack: function(e){
+        clickBack: function(e) {
             e.preventDefault();
             this.controller.stopEditBlock();
         },
@@ -69,7 +71,7 @@ var QoobMenuSettingsView = Backbone.View.extend(
             if (!alert) {
                 return false;
             }
-            
+
             this.controller.deleteBlock(this.model);
         },
         /**

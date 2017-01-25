@@ -4,10 +4,14 @@ var mockTemplate = "<iframe src=\"<%= url %>\" scrolling=\"auto\" name=\"qoob-if
     iframeUrl = "iframe.html";
 
 var mockStorageViewport = {
-    qoobTemplates: { 'qoob-viewport-preview': mockTemplate },
     driver: {
         getIframePageUrl: function(pageId) {
             return iframeUrl;
+        }
+    },
+    getSkinTemplate: function(templateName) {
+        if (templateName == 'qoob-viewport-preview') {
+            return mockTemplate;       
         }
     },
     pageId: 1
@@ -137,7 +141,7 @@ QUnit.test("setEditMode", function(assert) {
 
     viewport.on('iframe_loaded', function() {
         viewport.setEditMode();
-        assert.ok(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview') == false);
+        assert.ok(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview') === false);
         viewport.remove();
         done();
 

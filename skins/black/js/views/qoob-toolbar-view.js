@@ -4,7 +4,7 @@
  * @type @exp;Backbone@pro;View@call;extend
  */
 
-var QoobToolbarView = Backbone.View.extend({
+var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     /** @lends QoobToolbarView.prototype */
     tagName: 'div',
     events: {
@@ -42,7 +42,7 @@ var QoobToolbarView = Backbone.View.extend({
             "save_template": this.storage.__('save_template', 'Save as template'),
         };
         this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
-        
+
         return this;
     },
     /**
@@ -75,7 +75,7 @@ var QoobToolbarView = Backbone.View.extend({
         this.$el.find('.device-mode-button').removeClass('active');
         this.$el.find('.device-mode-button[name=' + mode + ']').addClass('active');
     },
-    startEditBlock: function(blockId) {
+    startEditBlock: function() {
         this.logoRotation('side-270');
     },
     /**

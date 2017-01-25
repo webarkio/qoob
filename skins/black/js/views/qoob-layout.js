@@ -80,7 +80,7 @@ var QoobLayout = Backbone.View.extend(
             //            this.resize();
         },
         startEditBlock: function(blockId){
-            this.toolbar.startEditBlock(blockId);
+            this.toolbar.startEditBlock();
             this.menu.startEditBlock(blockId);
             this.viewPort.startEditBlock(blockId);
         },
