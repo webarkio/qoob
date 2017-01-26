@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Qoob test case</title>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -30,7 +31,32 @@
             <div class="qoob-overlay"></div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../../../qoob-frontend-starter.min.js"></script>
+    <script type="text/javascript">
+    var starter = new QoobStarter({
+        "qoobUrl": '../../../',
+        "driver": {
+            loadLibrariesData: function(cb) {
+                var data = [{
+                    blocks: [{
+                        name: "qoob_main",
+                        url: "qoob_main/"
+                    }],
+                    groups: [{
+                        id: "main",
+                        label: "Main",
+                        position: "0"
+                    }],
+                    res: [],
+                    name: "default",
+                    url: "qoob/qoob/blocks"
+                }];
+
+                cb(null, data);
+            }
+        }
+    });
+    </script>
 </body>
 
 </html>

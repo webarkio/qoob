@@ -3,7 +3,7 @@
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobDefaultTemplatesView = Backbone.View.extend({
+var QoobDefaultTemplatesView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     tagName: "div",
     className: 'qoob-templates',
     events: {
@@ -28,7 +28,7 @@ var QoobDefaultTemplatesView = Backbone.View.extend({
     clickChoiceTemplateBlock: function(evt) {
         var self = this;
         var id = jQuery(evt.currentTarget).parents('[data-id]').data('id');
-        this.storage.defaultTemplatesCollection.each(function(item, index){
+        this.storage.defaultTemplatesCollection.each(function(item) {
             if (item.id === id) {
                 self.controller.load(item.get('blocks'));
             }
@@ -36,7 +36,6 @@ var QoobDefaultTemplatesView = Backbone.View.extend({
     },
     clickRemoveTemplateBlock: function(evt) {
         evt.preventDefault();
-        var self = this;
         var id = jQuery(evt.currentTarget).data('id');
         this.controller.removeTemplateBlock(id);
     }

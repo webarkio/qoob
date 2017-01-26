@@ -1,18 +1,57 @@
+/*global QoobViewportView*/
 QUnit.module("QoobViewportView");
 
-var mockTemplate = "<iframe src=\"<%= url %>\" scrolling=\"auto\" name=\"qoob-iframe\" id=\"qoob-iframe\" style=\"height: 488px; width: 768px;\"></iframe>",
+
+var mockTemplateIframe = "<iframe src=\"<%= url %>\" scrolling=\"auto\" name=\"qoob-iframe\" id=\"qoob-iframe\" style=\"height: 488px; width: 768px;\"></iframe>",
     iframeUrl = "iframe.html";
+
+var mockViewportBlocksTemplate = '<div id="outer-block-1"><div class="qoob-overlay"></div></div>' +
+    '<div id="outer-block-2"><div class="qoob-overlay"></div></div>';
+
+var mockTemplateBlockPleaseWaitPreview = '<div class="wait-block">' +
+    '<div class="clock">' +
+    '<div class="minutes-container">' +
+    '<div class="minutes"></div>' +
+    '</div>' +
+    '<div class="seconds-container">' +
+    '<div class="seconds"></div>' +
+    '</div>' +
+    '</div><span></span>' +
+    '</div>';
+
+var mockBlockDefaultTemplates = '<div class="block-blank full-page">' +
+    '<div class="block-blank-inner">' +
+    '<div class="block-blank-inner-text">' +
+    '<i class="fa fa-reply"></i>' +
+    '<div class="blank-text">This is blank page, you can click on block preview to add block</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
 
 var mockStorageViewport = {
     driver: {
-        getIframePageUrl: function(pageId) {
+        getIframePageUrl: function() {
             return iframeUrl;
         }
     },
     getSkinTemplate: function(templateName) {
         if (templateName == 'qoob-viewport-preview') {
-            return mockTemplate;       
+            return mockTemplateIframe;
+        } else if (templateName == 'block-pleasewait-preview') {
+            return mockTemplateBlockPleaseWaitPreview;
+        } else if (templateName == 'block-default-templates') {
+            return mockBlockDefaultTemplates;
         }
+    },
+    __: function(s1, s2) {
+        return s1 + ' ' + s2;
+    },
+    getBlockTemplate: function() {
+
+    },
+    defaultTemplatesCollection: new Backbone.Collection([{ name: "test" }]),
+    loadTemplates: function(cb) {
+        cb(null, []);
     },
     pageId: 1
 };
@@ -27,9 +66,19 @@ var mockController = {
     }
 };
 
+var View = Backbone.View.extend({
+    tag: 'div',
+    render: function() {
+        this.$el.html(mockViewportBlocksTemplate);
+        return this;
+    },
+    dispose: function() {
+        return this;
+    }
+});
+
 //============START TEST===============
 QUnit.test("initialize", function(assert) {
-
     var viewport = new QoobViewportView({
         model: new Backbone.Model(),
         storage: 1,
@@ -46,9 +95,8 @@ QUnit.test("render", function(assert) {
         storage: mockStorageViewport
     });
 
-    assert.equal(_.template(mockTemplate)({ "url": iframeUrl }), viewport.render().$el.html());
+    assert.equal(_.template(mockTemplateIframe)({ "url": iframeUrl }), viewport.render().$el.html());
 });
-
 
 QUnit.test("iframeLoaded", function(assert) {
     var done = assert.async();
@@ -57,16 +105,15 @@ QUnit.test("iframeLoaded", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function() {
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
         assert.ok(true);
         viewport.getWindowIframe();
         viewport.remove();
         done();
     });
-
-    $('body').append(viewport.render().$el);
 });
-
 
 QUnit.test("startEditBlock", function(assert) {
     var done = assert.async();
@@ -75,19 +122,18 @@ QUnit.test("startEditBlock", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function() {
-        //IFRAME CONTENT LOADED
-        viewport.startEditBlock(6);
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
         //Get iframe content
         var iframe = viewport.getWindowIframe();
-
-        assert.ok(iframe.jQuery('#outer-block-6').find('.qoob-overlay').hasClass('active'));
-        assert.ok(iframe.jQuery('#outer-block-1').find('.qoob-overlay').hasClass('active') == false);
+        iframe.jQuery('#qoob-blocks').append(mockViewportBlocksTemplate);
+        viewport.startEditBlock(1);
+        assert.ok(iframe.jQuery('#outer-block-1').find('.qoob-overlay').hasClass('active'));
+        assert.strictEqual(iframe.jQuery('#outer-block-2').find('.qoob-overlay').hasClass('active'), false);
         viewport.remove();
         done();
     });
-
-    $('body').append(viewport.render().$el);
 });
 
 QUnit.test("stopEditBlock", function(assert) {
@@ -97,20 +143,19 @@ QUnit.test("stopEditBlock", function(assert) {
         storage: mockStorageViewport
     });
 
-    viewport.on('iframe_loaded', function() {
-        //IFRAME CONTENT LOADED
-        viewport.startEditBlock(6);
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
         //Get iframe content
         var iframe = viewport.getWindowIframe();
-        assert.ok(iframe.jQuery('#outer-block-6').find('.qoob-overlay').hasClass('active'));
+        iframe.jQuery('#qoob-blocks').append(mockViewportBlocksTemplate);
+        viewport.startEditBlock(1);
+        assert.ok(iframe.jQuery('#outer-block-1').find('.qoob-overlay').hasClass('active'));
         viewport.stopEditBlock();
-        assert.ok(iframe.jQuery('#outer-block-6').find('.qoob-overlay').hasClass('active') == false);
+        assert.strictEqual(iframe.jQuery('#outer-block-1').find('.qoob-overlay').hasClass('active'), false);
         viewport.remove();
         done();
-
     });
-
-    $('body').append(viewport.render().$el);
 });
 
 QUnit.test("setPreviewMode", function(assert) {
@@ -125,11 +170,9 @@ QUnit.test("setPreviewMode", function(assert) {
         assert.ok(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview'));
         viewport.remove();
         done();
-
     });
 
-    $('body').append(viewport.render().$el);
-
+    jQuery('body').append(viewport.render().$el);
 });
 
 QUnit.test("setEditMode", function(assert) {
@@ -141,14 +184,13 @@ QUnit.test("setEditMode", function(assert) {
 
     viewport.on('iframe_loaded', function() {
         viewport.setEditMode();
-        assert.ok(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview') === false);
+        assert.strictEqual(viewport.getIframeContents().find('#qoob-blocks').hasClass('preview'), false);
         viewport.remove();
         done();
 
     });
 
-    $('body').append(viewport.render().$el);
-
+    jQuery('body').append(viewport.render().$el);
 });
 
 QUnit.test("setDeviceMode", function(assert) {
@@ -170,14 +212,13 @@ QUnit.test("setDeviceMode", function(assert) {
         done();
     });
 
-    $('body').append(viewport.render().$el);
+    jQuery('body').append(viewport.render().$el);
 
 });
 
 QUnit.test("resize", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
-
         model: new Backbone.Model(),
         storage: mockStorageViewport
     });
@@ -195,15 +236,130 @@ QUnit.test("resize", function(assert) {
         done();
     });
 
-    $('body').append(viewport.render().$el);
+    jQuery('body').append(viewport.render().$el);
 });
-//scrollTo
-//getBlockView
-//delBlockView
-//addBlock
 
+QUnit.test("scrollTo", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {}
+    });
 
-QUnit.test("triggerQoobBlock", function(assert) {
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var iframe = viewport.getWindowIframe();
+
+        var ViewTest = new View({
+            model: new Backbone.Model({
+                id: 2
+            })
+        });
+
+        viewport.blockViews.push(ViewTest);
+
+        iframe.jQuery('#qoob-blocks').append(ViewTest.render().$el);
+        var viewTop = ViewTest.$el.offset().top = 100;
+        viewport.scrollTo(2);
+        assert.equal(!viewTop, !ViewTest.$el.offset().top);
+        viewport.remove();
+        done();
+    });
+});
+
+QUnit.test("getBlockView", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {}
+    });
+
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var ViewTest = new View({
+            model: new Backbone.Model({
+                id: 20
+            })
+        });
+
+        viewport.blockViews.push(ViewTest);
+        assert.deepEqual(ViewTest, viewport.getBlockView(20));
+        viewport.remove();
+        done();
+    });
+});
+
+QUnit.test("delBlockView", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {
+            changeDefaultPage: function() {
+                assert.ok(true, 'controller changeDefaultPage');
+            }
+        }
+    });
+
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var Model = new Backbone.Model({
+            id: 103
+        });
+
+        viewport.blockViews.length = 0;
+
+        var ViewTest = new View({
+            model: Model
+        });
+
+        viewport.blockViews.push(ViewTest);
+        viewport.delBlockView(Model);
+        assert.equal(viewport.blockViews.length, 0);
+        viewport.remove();
+        done();
+    });
+});
+
+QUnit.test("addBlock", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {
+            changeDefaultPage: function() {},
+            layout: {
+                viewPort: {
+                    getWindowIframe: function() {
+                        return window.frames["qoob-iframe"];
+                    }
+                }
+            }
+        }
+    });
+
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var Model = new Backbone.Model({
+            id: 102
+        });
+
+        viewport.addBlock(Model);
+        var iframe = viewport.getWindowIframe();
+        assert.ok(iframe.jQuery('#outer-block-102').length);
+
+        viewport.remove();
+        done();
+    });
+});
+
+QUnit.test("triggerIframe", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
         model: new Backbone.Model(),
@@ -212,17 +368,19 @@ QUnit.test("triggerQoobBlock", function(assert) {
 
     viewport.on('iframe_loaded', function() {
         var iframe = viewport.getWindowIframe();
-        assert.ok(iframe.jQuery('#qoob-blocks').trigger('change'));
-        viewport.remove();
-        done();
+        viewport.triggerIframe();
+
+        iframe.jQuery('#qoob-blocks').on('change', function() {
+            assert.ok(true);
+            viewport.remove();
+            done();
+        });
+
     });
 
-    $('body').append(viewport.render().$el);
-
-
+    jQuery('body').append(viewport.render().$el);
 });
 
-///?
 QUnit.test("getIframe", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
@@ -231,16 +389,14 @@ QUnit.test("getIframe", function(assert) {
     });
 
     viewport.on('iframe_loaded', function() {
-        assert.deepEqual(viewport.$el.find('#qoob-iframe'), viewport.getIframe());
+        assert.ok(viewport.getIframe().length);
         viewport.remove();
         done();
     });
 
-    $('body').append(viewport.render().$el);
-
+    jQuery('body').append(viewport.render().$el);
 });
 
-//?
 QUnit.test("getIframeContents", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
@@ -249,17 +405,15 @@ QUnit.test("getIframeContents", function(assert) {
     });
 
     viewport.on('iframe_loaded', function() {
-        assert.deepEqual(viewport.getIframe().contents(), viewport.getIframeContents());
+        assert.ok(viewport.getIframeContents().length);
         viewport.remove();
         done();
 
     });
 
-    $('body').append(viewport.render().$el);
-
+    jQuery('body').append(viewport.render().$el);
 });
 
-//?
 QUnit.test("getWindowIframe", function(assert) {
     var done = assert.async();
     var viewport = new QoobViewportView({
@@ -268,37 +422,147 @@ QUnit.test("getWindowIframe", function(assert) {
     });
 
     viewport.on('iframe_loaded', function() {
-        viewport.getWindowIframe();
-        assert.equal(window.frames["qoob-iframe"], viewport.getWindowIframe());
+        assert.ok(viewport.getWindowIframe().document);
         viewport.remove();
         done();
-
     });
 
-    $('body').append(viewport.render().$el);
-
+    jQuery('body').append(viewport.render().$el);
 });
-//moveUpBlockView
-//moveDownBlockView
-//createBlankBlock
 
-// QUnit.test("createBlankBlock", function(assert) {
-//     var done = assert.async();
-//     var viewport = new QoobViewportView({
-//         model: new Backbone.Model(),
-//         storage: mockStorageViewport
-//     });
+QUnit.test("moveUpBlockView", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {
+            changeDefaultPage: function() {},
+            layout: {
+                viewPort: {
+                    getWindowIframe: function() {
+                        return window.frames["qoob-iframe"];
+                    }
+                }
+            }
+        }
+    });
 
-//     viewport.on('iframe_loaded', function(){
+    jQuery('body').append(viewport.render().$el);
 
-//         viewport.createBlankBlock();
-//         var iframe = viewport.getWindowIframe();
-//         assert.ok(iframe.jQuery('#qoob-blocks').append(_.template(mockTemplate)()));
-//        // assert.equal(_.template(mockTemplate)(), viewport.render().$el.html());
-//         viewport.remove();
-//         done();
-//     });
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var iframe = viewport.getWindowIframe();
 
-//     $('body').append(viewport.render().$el);
+        var FirstModel = new Backbone.Model({
+            id: 102
+        });
+        var SecondModel = new Backbone.Model({
+            id: 103
+        });
 
-// });
+        viewport.addBlock(FirstModel);
+        viewport.addBlock(SecondModel);
+
+        viewport.moveUpBlockView(103);
+        assert.equal(iframe.jQuery('#qoob-blocks').find('#outer-block-103').index(), 0);
+
+        viewport.remove();
+        done();
+    });
+});
+
+QUnit.test("moveDownBlockView", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {
+            changeDefaultPage: function() {},
+            layout: {
+                viewPort: {
+                    getWindowIframe: function() {
+                        return window.frames["qoob-iframe"];
+                    }
+                }
+            }
+        }
+    });
+
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var iframe = viewport.getWindowIframe();
+
+        var FirstModel = new Backbone.Model({
+            id: 107
+        });
+        var SecondModel = new Backbone.Model({
+            id: 108
+        });
+
+        viewport.addBlock(FirstModel);
+        viewport.addBlock(SecondModel);
+
+        viewport.moveDownBlockView(108);
+        assert.equal(iframe.jQuery('#qoob-blocks').find('#outer-block-108').index(), 1);
+
+        viewport.remove();
+        done();
+    });
+});
+
+QUnit.test("createBlankBlock", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {
+            layout: {
+                viewPort: {
+                    getWindowIframe: function() {
+                        return window.frames["qoob-iframe"];
+                    }
+                }
+            }
+        }
+    });
+
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var iframe = viewport.getWindowIframe();
+        viewport.createBlankPage();
+        assert.equal(iframe.jQuery('#qoob-blocks').find('.qoob-templates').length, 1);
+        viewport.remove();
+        done();
+    });
+});
+
+QUnit.test("changeDefaultPage", function(assert) {
+    var done = assert.async();
+    var viewport = new QoobViewportView({
+        model: new Backbone.Model(),
+        storage: mockStorageViewport,
+        controller: {
+            layout: {
+                viewPort: {
+                    getWindowIframe: function() {
+                        return window.frames["qoob-iframe"];
+                    }
+                }
+            }
+        }
+    });
+
+    jQuery('body').append(viewport.render().$el);
+
+    viewport.$el.find('#qoob-iframe').on('libraries_loaded', function() {
+        var iframe = viewport.getWindowIframe();
+        viewport.createBlankPage();
+        viewport.changeDefaultPage('hide');
+        assert.equal(iframe.jQuery('#qoob-blocks').find('.qoob-templates').css('display'), 'none', 'hide');
+        viewport.changeDefaultPage('show');
+        assert.equal(iframe.jQuery('#qoob-blocks').find('.qoob-templates').css('display'), 'block', 'show');
+        viewport.remove();
+        done();
+    });
+});

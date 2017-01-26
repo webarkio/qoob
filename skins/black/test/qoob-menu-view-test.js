@@ -1,15 +1,7 @@
 /*global QoobMenuView*/
 QUnit.module("QoobMenuView");
 
-var View = Backbone.View.extend({
-    tag: 'div',
-    render: function() {
-        this.$el.html('view');
-        return this;
-    }
-});
-
-var testView = Backbone.View.extend({
+var TestViewQoobMenu = Backbone.View.extend({
     tag: 'div',
     render: function() {
         this.$el.html('view');
@@ -262,7 +254,7 @@ QUnit.test("initialize", function(assert) {
 });
 
 QUnit.test("addSettings", function(assert) {
-    var view = new View({
+    var view = new TestViewQoobMenu({
         id: 'test-id',
         model: new Backbone.Model({
             id: 28,
@@ -355,7 +347,7 @@ QUnit.test("showGroup", function(assert) {
     });
     jQuery('body').append(menu.render().$el);
     assert.ok(!menu.$el.find('#group-main').is(':visible'));
-    var view = new View({
+    var view = new TestViewQoobMenu({
         id: 'group-main',
         'data-side-id': 'group-main'
     });
@@ -371,7 +363,7 @@ QUnit.test("showIndex", function(assert) {
         controller: {}
     });
     jQuery('body').append(menu.render().$el);
-    var view = new View({
+    var view = new TestViewQoobMenu({
         id: 'group-main',
         'data-side-id': 'group-main'
     });
@@ -390,7 +382,7 @@ QUnit.test("startEditBlock", function(assert) {
     });
     jQuery('body').append(menu.render().$el);
     assert.ok(!menu.$el.find('#settings-block-1').is(':visible'), "Block setting isn't visible");
-    var view = new View({
+    var view = new TestViewQoobMenu({
         id: 'settings-block-1'
     });
     menu.addView(view);
@@ -415,12 +407,12 @@ QUnit.test("addView", function(assert) {
         model: new Backbone.Model(),
         storage: mockStorageMenu
     });
-    var view = new View({
+    var view = new TestViewQoobMenu({
         id: 'your-id'
     });
-    assert.equal(menu.$el.find('#side-90').find('#your-id').length, 0);
-    menu.addView(view, '90');
-    assert.ok(menu.$el.find('#side-90').find('#your-id'));
+    assert.equal(menu.$el.find('#your-id').length, 0);
+    menu.addView(view);
+    assert.ok(menu.$el.find('#your-id'));
 });
 
 QUnit.test("rotate", function(assert) {
@@ -476,7 +468,7 @@ QUnit.test("onEditStart", function(assert) {
     });
     jQuery('body').append(menu.render().$el);
     assert.ok(!menu.$el.find('#settings-block-1').is(':visible'), "Edit block isn't visible");
-    var view = new View({
+    var view = new TestViewQoobMenu({
         id: 'settings-block-1'
     });
     menu.addView(view);
@@ -491,7 +483,7 @@ QUnit.test("onEditStop", function(assert) {
         controller: {}
     });
     jQuery('body').append(menu.render().$el);
-    var view = new View({
+    var view = new TestViewQoobMenu({
         id: 'settings-block-1'
     });
     menu.addView(view);
@@ -529,18 +521,18 @@ QUnit.test("delView", function(assert) {
         controller: {}
     });
 
-    var view = new testView({
+    var view = new TestViewQoobMenu({
         id: 'settings-block-media'
     });
 
     jQuery('body').append(menu.render().$el);
 
-    assert.equal(menu.$el.find('#settings-block-media').length, 0, "The view isn't found");
+    assert.equal(menu.settingsViewStorage.length, 0, "The view isn't found");
     menu.addView(view);
     menu.settingsViewStorage['settings-block-media'] = view;
-    assert.equal(menu.$el.find('#settings-block-media').length, 1, 'The view is found');
+    assert.equal(Object.keys(menu.settingsViewStorage).length, 1, 'The view is found');
     menu.delView('settings-block-media');
-    assert.equal(menu.$el.find('#settings-block-media').length, 0, "The view isn't found");
+    assert.equal(menu.settingsViewStorage.length, 0, "The view isn't found");
     menu.$el.remove();
 });
 
@@ -553,23 +545,11 @@ QUnit.test("deleteSettings", function(assert) {
             }
         }
     });
-    // FIXME: error dispose
-    var testView = Backbone.View.extend({
-        tag: 'div',
-        render: function() {
-            this.$el.html('view');
-            return this;
-        },
-        dispose: function() {
-            this.$el.remove();
-            this.off();
-        }
-    });
 
-    var view = new testView({
+    var view = new TestViewQoobMenu({
         id: 'settings-block-test',
         model: new Backbone.Model({
-            id: 28,
+            id: 30,
             lib: 'default'
         })
     });

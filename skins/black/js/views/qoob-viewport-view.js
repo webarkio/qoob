@@ -1,9 +1,10 @@
+/*global QoobBlockWrapperView, QoobDefaultTemplatesView*/
 /**
  * Create view for viewport in qoob layout
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobViewportView = Backbone.View.extend(
+var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobViewportView.prototype */
     {
         id: "qoob-viewport",
@@ -86,7 +87,7 @@ var QoobViewportView = Backbone.View.extend(
                 }
             };
             this.getIframe().stop().animate(size[mode], 500, function() {
-                currentRoute = self.controller.current();
+                var currentRoute = self.controller.current();
                 if (currentRoute.route == 'startEditBlock') {
                     self.controller.scrollTo(currentRoute.params[0]);
                 }
@@ -136,7 +137,6 @@ var QoobViewportView = Backbone.View.extend(
          * @param {Number} id modelId
          */
         delBlockView: function(model) {
-            var iframe = this.getWindowIframe();
             for (var i = 0; i < this.blockViews.length; i++) {
                 if (this.blockViews[i].model.id == model.id) {
                     this.blockViews[i].dispose();
@@ -236,14 +236,11 @@ var QoobViewportView = Backbone.View.extend(
          */
         createBlankPage: function() {
             var iframe = this.getWindowIframe();
-
             var defaultTemplates = new QoobDefaultTemplatesView({
                 storage: this.storage,
                 controller: this.controller
             });
-
             iframe.jQuery('#qoob-blocks').append(defaultTemplates.render().el);
-
             this.storage.loadTemplates(function(error, data) {
                 if (data && data.length > 0) {
                     defaultTemplates.render();
@@ -251,14 +248,14 @@ var QoobViewportView = Backbone.View.extend(
             });
         },
         changeDefaultPage: function(event) {
-            var qoob_blocks = this.getWindowIframe().jQuery('#qoob-blocks');
+            var qoobBlocks = this.getWindowIframe().jQuery('#qoob-blocks');
             if (event == 'hide') {
                 // hide block blank and qoob templates when add block
-                qoob_blocks.find('.qoob-templates').hide();
+                qoobBlocks.find('.qoob-templates').hide();
             }
             if (event == 'show') {
                 // hide block blank and qoob templates when add block
-                qoob_blocks.find('.qoob-templates').show();
+                qoobBlocks.find('.qoob-templates').show();
             }
         }
     });

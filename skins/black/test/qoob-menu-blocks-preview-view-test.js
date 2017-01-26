@@ -15,7 +15,7 @@ var mockStorageMenuBlocksPreview = {
         }
     },
     getBlocksByGroup: function() {
-        return this.qoobData.groups;
+        []
     }
 };
 
@@ -29,7 +29,12 @@ var mockMenuBlockPreviewController = {
 QUnit.test("clickPreviewBlock", function(assert) {
     var menuBlocks = new QoobMenuBlocksPreviewView({
         storage: mockStorageMenuBlocksPreview,
-        group: "preview-block-qoob_main",
+        group: {
+            id: "main",
+            label: "Main",
+            libs: [],
+            position: "0"
+        },
         controller: mockMenuBlockPreviewController
     });
 
