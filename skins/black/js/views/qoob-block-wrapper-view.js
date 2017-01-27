@@ -1,9 +1,10 @@
+/*global QoobBlockView*/
 /**
  * Create view for block
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobBlockWrapperView = Backbone.View.extend({
+var QoobBlockWrapperView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     tagName: "div",
 //    className: "content-block-outer",
     events: {
@@ -41,7 +42,7 @@ var QoobBlockWrapperView = Backbone.View.extend({
         this.innerBlock.render();
         return this;
     },
-    clickStartEditBlock: function (evt) {
+    clickStartEditBlock: function () {
         if (this.controller.layout.menu.getSettingsView(this.model.id)) {
             this.controller.navigate('edit/' + this.model.id, {trigger: true});
         }

@@ -38,11 +38,11 @@ QUnit.test("clickPreviewBlock", function(assert) {
         controller: mockMenuBlockPreviewController
     });
 
-    jQuery('body').append(menuBlocks.render().$el.html());
+    jQuery('body').append(menuBlocks.render().$el);
 
     menuBlocks.$el.find('.preview-block').trigger('click');
 
-    menuBlocks.$el.remove();
+    menuBlocks.remove();
 
     assert.equal(jQuery('body').find('.qoob_main').length, 1, 'Add new block');
 

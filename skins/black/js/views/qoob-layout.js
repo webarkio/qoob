@@ -56,7 +56,6 @@ var QoobLayout = Backbone.View.extend(
         },
         resize: function() {
             this.toolbar.resize();
-            this.editModeButton.resize();
             this.menu.resize();
             this.viewPort.resize();
         },

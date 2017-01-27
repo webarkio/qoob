@@ -3,7 +3,7 @@
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobManageLibsView = Backbone.View.extend(
+var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobManageLibsView.prototype */
     {
         events: {
@@ -30,12 +30,13 @@ var QoobManageLibsView = Backbone.View.extend(
             this.storage = options.storage;
         },
         clickAddLibrary: function(evt) {
+            evt.preventDefault();
             var self = this,
                 url = this.$el.find('input[name="url"]').val();
 
             if (url.length > 0) {
                 this.controller.showMenuOverlay();
-                this.controller.addLibrary(url, function(error, state) {
+                this.controller.addLibrary(url, function(error) {
                     self.controller.hideMenuOverlay();
                     if (error) {
                         console.error(error);
@@ -59,7 +60,7 @@ var QoobManageLibsView = Backbone.View.extend(
 
             this.controller.showMenuOverlay();
 
-            this.controller.updateLibrary(findLib.name, findLib.url, function(state) {
+            this.controller.updateLibrary(findLib.name, findLib.url, function() {
                 self.showPhraseReload();
                 self.controller.hideMenuOverlay();
             });
@@ -70,7 +71,7 @@ var QoobManageLibsView = Backbone.View.extend(
                 elem = this.$(evt.currentTarget);
 
             this.controller.showMenuOverlay();
-            this.controller.removeLibrary(elem.parent().data('lib-name'), function(state) {
+            this.controller.removeLibrary(elem.parent().data('lib-name'), function() {
                 elem.parents('.library').remove();
                 self.showPhraseReload();
                 self.controller.hideMenuOverlay();

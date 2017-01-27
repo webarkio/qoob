@@ -56,16 +56,9 @@ var mockSettingsViewController = {
         jQuery('#outer-block-1').find('.qoob-overlay').removeClass('active');
     },
     deleteBlock: function() {
-            jQuery('#settings-block-1').remove();
-            jQuery('#settings-block-1').off();
-        }
-        /*,
-            moveDownBlock: function() {
-                jQuery('#outer-block-1').before(jQuery('#outer-block-2'));
-            },
-            moveUpBlock: function() {
-                jQuery('#outer-block-2').after(jQuery('#outer-block-1'));
-            }*/
+        jQuery('#settings-block-1').remove();
+        jQuery('#settings-block-1').off();
+    }
 };
 
 QUnit.test("attributes", function(assert) {
@@ -157,6 +150,7 @@ QUnit.test("clickBack", function(assert) {
 
     jQuery('#qoob-blocks').remove();
     jQuery('#qoob-menu').remove();
+    menuSettings.$el.remove();
 });
 
 QUnit.test("clickDelete", function(assert) {
@@ -216,7 +210,7 @@ QUnit.test("clickMoveDown", function(assert) {
     menuSettings.$el.find('.movedown').trigger('click');
     // assert.equal(jQuery('#outer-block-2').index(), 0, 'Move down Ok');
 
-    // jQuery('#qoob-blocks').remove();
+    jQuery('#qoob-blocks').remove();
     jQuery('#qoob-menu').remove();
 
 });
@@ -247,7 +241,7 @@ QUnit.test("clickMoveUp", function(assert) {
     menuSettings.$el.find('.moveup').trigger('click');
     // assert.equal(jQuery('#outer-block-2').index(), 0, 'Move up Ok');
 
-    // jQuery('#qoob-blocks').remove();
+    jQuery('#qoob-blocks').remove();
     jQuery('#qoob-menu').remove();
 
 });
@@ -268,7 +262,7 @@ QUnit.test("dispose", function(assert) {
         controller: mockSettingsViewController
     });
 
-    jQuery('body').append(menuSettings.render().$el.html());
+    jQuery('body').append(menuSettings.render().$el);
 
     menuSettings.dispose();
 

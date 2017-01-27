@@ -59,6 +59,7 @@ QUnit.test("clickChoiceTemplateBlock", function(assert) {
     jQuery('body').append(defaultTemplates.render().$el);
     defaultTemplates.$el.append(mockBlockDefaultTemplate);
     defaultTemplates.$el.find('.title').trigger('click');
+    defaultTemplates.remove();
 });
 
 QUnit.test("clickRemoveTemplateBlock", function(assert) {
@@ -74,5 +75,6 @@ QUnit.test("clickRemoveTemplateBlock", function(assert) {
     jQuery('body').append(defaultTemplates.render().$el);
     defaultTemplates.$el.append(mockBlockDefaultTemplate);
     defaultTemplates.$el.find('.remove').trigger('click');
+    defaultTemplates.remove();
 });
 

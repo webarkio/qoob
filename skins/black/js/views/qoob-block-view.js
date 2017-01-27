@@ -1,9 +1,10 @@
+/*global QoobExtensions*/
 /**
  * Create view for block
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobBlockView = Backbone.View.extend({
+var QoobBlockView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     tagName: "div",
     className: "content-block-inner",
     /**
@@ -20,11 +21,11 @@ var QoobBlockView = Backbone.View.extend({
         this.controller = options.controller;
         this.listenTo(this.model, 'change', this.render);
     },
-    render: function(event) {
+    render: function() {
         var self = this;
 
         //Start loading template for block
-        this.storage.getBlockTemplate(self.model.get('lib'), self.model.get('block'), function(err, template) {
+        this.storage.getBlockTemplate(this.model.get('lib'), this.model.get('block'), function(err, template) {
             if (err == 'blockNotFound') {
                 self.renderedTemplate = '<div class="empty-block"><div class="empty-block-text">The block ' + self.model.get('block') + ' is not found in the library '+ self.model.get('lib') +'</div></div>';
             } else {
