@@ -4,7 +4,9 @@
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
+var QoobMenuView = Backbone.View.extend(// eslint-disable-line no-unused-vars
+/** @lends QoobMenuView.prototype */
+{
     id: "qoob-menu",
     currentScreen: 'catalog-groups',
     menuViews: [],

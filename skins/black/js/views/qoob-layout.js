@@ -1,9 +1,10 @@
+/*global QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView*/
 /**
  * Create qoob view
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobLayout = Backbone.View.extend(
+var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobLayout.prototype */
     {
         tagName: 'div',
@@ -48,7 +49,7 @@ var QoobLayout = Backbone.View.extend(
             this.editModeButton.hide();
             // this.$el.find('#builder').append(this.toolbar.render().el);
             // this.$el.find('#builder').append(this.editModeButton.render().el);
-            
+
             // this.$el.find('#builder').append(this.menu.render().el);
             // this.$el.find('#builder-content').append(this.viewPort.render().el);
 
@@ -76,14 +77,13 @@ var QoobLayout = Backbone.View.extend(
         setDeviceMode: function(mode) {
             this.toolbar.setDeviceMode(mode);
             this.viewPort.setDeviceMode(mode);
-            //            this.resize();
         },
-        startEditBlock: function(blockId){
+        startEditBlock: function(blockId) {
             this.toolbar.startEditBlock();
             this.menu.startEditBlock(blockId);
             this.viewPort.startEditBlock(blockId);
         },
-        stopEditBlock: function(){
+        stopEditBlock: function() {
             this.viewPort.stopEditBlock();
         }
     });

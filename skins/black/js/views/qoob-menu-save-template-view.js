@@ -1,9 +1,10 @@
+/*global QoobUtils, QoobFieldsView*/
 /**
  * Create view save template
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuSaveTemplateView = Backbone.View.extend(
+var QoobMenuSaveTemplateView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuSaveTemplateView.prototype */
     {
         events: {
@@ -57,7 +58,7 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
                 return obj.id;
             });
 
-            var newId = sorted.length ? sorted[sorted.length-1].id + 1 : 1;
+            var newId = sorted.length ? sorted[sorted.length - 1].id + 1 : 1;
 
             var dataView = {
                 'id': newId,
@@ -65,7 +66,7 @@ var QoobMenuSaveTemplateView = Backbone.View.extend(
                 'image': this.settingsModel.get('image')
             };
 
-            this.controller.createTemplate(dataView, function(error, state) {
+            this.controller.createTemplate(dataView, function() {
                 self.controller.hideMenuOverlay();
             });
         },
