@@ -1027,6 +1027,10 @@ label.checkbox-sb [type=checkbox]:checked + span {
     background-color: #606163;
 }
 
+#card .lib-select .bootstrap-select li.selected {
+    display: none;
+}
+
 #card .lib-select .bootstrap-select li:hover {
     background-color: #2bc0e4;
 }
