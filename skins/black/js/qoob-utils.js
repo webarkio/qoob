@@ -1,3 +1,4 @@
+/*global QoobUtils, BlockModel*/
 /**
  * Utils for qoob
  *
@@ -24,7 +25,7 @@ var QoobUtils = {
                     this.trigger('change', this);
                 });
 
-                newSettings[i].forEach(function(model, index) {
+                newSettings[i].forEach(function(model) {
                     model.owner_id = settings.id;
                 });
             } else {
@@ -65,18 +66,18 @@ var QoobUtils = {
             settings = {},
             defaults = {};
 
-        if(Array.isArray(items)) {
+        if (Array.isArray(items)) {
             settings = _.findWhere(items, { name: blockName }).settings;
             defaults = _.findWhere(items, { name: blockName }).defaults;
         } else {
             settings = items.settings;
             defaults = items.defaults;
         }
-        
+
         for (var i = 0; i < settings.length; i++) {
             values[settings[i].name] = defaults[settings[i].name];
         }
-        
+
         values.block = blockName;
         values.lib = items.lib;
         return values;

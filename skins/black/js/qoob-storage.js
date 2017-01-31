@@ -1,3 +1,4 @@
+/*global LocalDriver*/
 /**
  * Initialize qoob storage
  *
@@ -14,7 +15,6 @@ function QoobStorage(options) {
     this.blockTemplates = [];
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
     this.defaultTemplatesCollection = new Backbone.Collection();
-    //    this.currentLib = 'all';
 }
 
 
@@ -94,9 +94,9 @@ QoobStorage.prototype.getDefaultTemplateAdapter = function() {
 //FIXME
 QoobStorage.prototype.getBlockConfig = function(libName, blockName) {
     var block,
-    lib = _.findWhere(this.librariesData, {
-        "name": libName
-    });
+        lib = _.findWhere(this.librariesData, {
+            "name": libName
+        });
     if (lib != undefined) {
         block = _.findWhere(lib.blocks, {
             "name": blockName

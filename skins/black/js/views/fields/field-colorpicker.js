@@ -2,18 +2,9 @@ var Fields = Fields || {};
 Fields.colorpicker = QoobFieldView.extend(
 /** @lends Fields.colorpicker.prototype */{
     events: {
-        // 'change input': 'changeInput',
         'click .theme-colors': 'changeColor',
         'click .change-color': 'changeColorPicker'
     },
-    /**
-     * Event change colorpicker
-     * @param {Object} evt
-     */
-    // changeInput: function (evt) {
-    //     var target = jQuery(evt.target);
-
-    // },
     /**
      * Change color with colorpicker
      * @param {Object} evt

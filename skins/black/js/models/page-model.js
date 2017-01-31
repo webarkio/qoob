@@ -13,11 +13,8 @@ var PageModel = Backbone.Model.extend({
         } else {
             this.get('blocks').add(model, {at: this.get('blocks').length + 1});
         }
-
-        //this.trigger('block_add', model, beforeBlockId);
     },
     deleteBlock: function (model) {
-//        this.trigger('block_delete', model.id);
         this.get('blocks').remove(model);
     },
     moveUp: function (model) {

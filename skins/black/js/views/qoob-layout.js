@@ -47,12 +47,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             //FIXME: this.storage => this.model
             this.$el.html([this.toolbar.render().el, this.editModeButton.render().el, this.menu.render().el, this.viewPort.render().el]);
             this.editModeButton.hide();
-            // this.$el.find('#builder').append(this.toolbar.render().el);
-            // this.$el.find('#builder').append(this.editModeButton.render().el);
-
-            // this.$el.find('#builder').append(this.menu.render().el);
-            // this.$el.find('#builder-content').append(this.viewPort.render().el);
-
             return this;
         },
         resize: function() {

@@ -3,7 +3,6 @@ Fields.accordion_item_flip = QoobFieldView.extend(
         /** @lends Fields.accordion_item_front.prototype */{
             className: "settings-item settings-accordion",
             events: {
-                // 'click .cross-delete': 'deleteModel',
                 'click .title_accordion.inner-settings-flip': 'showSettings',
             },
             /**

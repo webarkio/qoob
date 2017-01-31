@@ -27,7 +27,7 @@ var QoobBlockView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
         //Start loading template for block
         this.storage.getBlockTemplate(this.model.get('lib'), this.model.get('block'), function(err, template) {
             if (err == 'blockNotFound') {
-                self.renderedTemplate = '<div class="empty-block"><div class="empty-block-text">The block ' + self.model.get('block') + ' is not found in the library '+ self.model.get('lib') +'</div></div>';
+                self.renderedTemplate = '<div class="empty-block"><div class="empty-block-text">The block ' + self.model.get('block') + ' is not found in the library ' + self.model.get('lib') + '</div></div>';
             } else {
                 var config = self.storage.getBlockConfig(self.model.get('lib'), self.model.get('block'));
                 var tplAdapterType = config.blockTemplateAdapter || self.storage.getDefaultTemplateAdapter();

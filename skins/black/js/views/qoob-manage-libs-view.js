@@ -43,8 +43,8 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
                     } else {
                         self.showPhraseReload();
                     }
-                    
-                    
+
+
                 });
             }
         },

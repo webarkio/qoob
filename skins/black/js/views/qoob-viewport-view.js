@@ -21,8 +21,6 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
         initialize: function(options) {
             this.controller = options.controller;
             this.storage = options.storage;
-            //this.model.on("block_add", this.addBlock.bind(this));
-            //this.model.on("block_delete", this.delBlockView.bind(this));
             this.model.on("block_moveup", this.moveUpBlockView.bind(this));
             this.model.on("block_movedown", this.moveDownBlockView.bind(this));
         },
@@ -36,7 +34,6 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.$el.html(_.template(this.storage.getSkinTemplate('qoob-viewport-preview'))({
                 "url": url
             }));
-            //this.$el.find('#qoob-iframe').on('load', this.iframeLoaded.bind(this));
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
         },

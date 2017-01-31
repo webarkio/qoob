@@ -173,8 +173,7 @@ Fields.accordion = QoobFieldView.extend(
                 helper: 'clone',
                 handle: ".drag-elem",
                 connectWith: "#drop-" + id,
-                //scroll: true,
-                start: function(event, ui) {
+                start: function() {
                     self.controller.layout.viewPort.getIframeContents().find(".droppable").css("visibility", "hidden");
                     jQuery(this).addClass('is-droppable');
                 },
