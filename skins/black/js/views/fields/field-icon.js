@@ -1,9 +1,10 @@
+/*global QoobFieldView, IconCenterView*/
 var Fields = Fields || {};
 
 /**
  * View field icon
  */
-Fields.icon = QoobFieldView.extend(
+Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
         /** @lends Fields.icon.prototype */{
             events: {
                 'change input': 'changeInput',
@@ -49,8 +50,7 @@ Fields.icon = QoobFieldView.extend(
              * Image upload
              * @param {Object} evt
              */
-            iconUpload: function (evt) {
-
+            iconUpload: function () {
                 window.selectFieldIcon = function (classes, tags) {
                     if (classes) {
                         this.$el.find('.edit-icon-preview span').attr({'class': classes, 'data-icon-tags': (!!tags ? tags : '')});

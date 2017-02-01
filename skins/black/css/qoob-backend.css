@@ -1375,6 +1375,10 @@ _:-ms-fullscreen,
     transform: rotate(90deg);
 }
 
+.settings-accordion .title_accordion.inner-settings-flip:hover .arrow-elem {
+    transform: rotate(-90deg);
+}
+
 .settings-accordion .title_accordion[aria-expanded="true"] .arrow-elem {
     background: url('../img/arrow_accordion_hover.png') no-repeat center;
     /*transform: rotate(0deg);*/

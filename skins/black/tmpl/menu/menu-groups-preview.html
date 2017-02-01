@@ -17,7 +17,7 @@
 <ul class="catalog-list">
     <% for (var i = 0; i < groups_arr.length; i++) { %>
         <% var group = groups_arr[i]; %>
-        <% var group_id = group.id.replace(/\s+/g, '').toLowerCase(); %>
+        <% var group_id = group.id.replace(/\s+/g, ''); %>
         <li class="<%= group.libs.join(' ') %>">
             <a href="#groups/<%= group_id %>">
             <% if (group.label){ %> 

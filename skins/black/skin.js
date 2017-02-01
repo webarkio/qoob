@@ -56,6 +56,7 @@ function Skin() {
             { "type": "js", "name": "qoob-storage", "src": "js/qoob-storage.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
             { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
+            { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
         ],
         "prod": [
             { "type": "js", "name": "skin_assets", "src": "skin.concated.js" },
@@ -107,7 +108,7 @@ Skin.prototype.activate = function(options) {
     this.controller.setLayout(this.layout);
     this.controller.setPageModel(this.pageModel);
     this.controller.setStorage(this.storage);
-    
+
     //Creating and appending qoob layout
     jQuery(window).resize(function() {
         self.layout.resize();
@@ -123,9 +124,9 @@ Skin.prototype.activate = function(options) {
     self.layout.viewPort.once('iframe_loaded', function() {
 
         Backbone.history.start({ pushState: false });
-    
+
         var iframe = self.layout.viewPort.getWindowIframe();
-        
+
         //css is loaded to iframe
         iframe.loader.once('loaded', function() {
             // self.layout.viewPort.getWindowIframe().onbeforeunload = function() {
