@@ -14,7 +14,6 @@ function Skin() {
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "bootstrap-progressbar", "src": "js/libs/bootstrap-progressbar.js", "dep": ["bootstrap"] },
-            { "type": "js", "name": "wheelcolorpicker", "src": "js/libs/jquery.wheelcolorpicker.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
             { "type": "js", "name": "block-model", "src": "js/models/block-model.js", "dep": ["backbone"] },
             { "type": "js", "name": "page-model", "src": "js/models/page-model.js", "dep": ["backbone"] },
@@ -68,7 +67,6 @@ function Skin() {
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "css", "name": "bootstrap-select.min.css", "src": "css/bootstrap-select.min.css" },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
-            { "type": "css", "name": "wheelcolorpicker.css", "src": "css/wheelcolorpicker.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
             { "type": "json", "name": "skin_translation", "src": "translation.json" }

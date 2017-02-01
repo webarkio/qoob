@@ -2068,8 +2068,13 @@ input[type="text"]#datepicker {
     border-color: #2bc0e4;
 }
 
+.settings-item .colorpicker-input {
+    color: #fff;
+}
+
 .settings-item .other-colors {
     display: inline-block;
+    margin-top: 5px;
     font-size: 0;
     vertical-align: top;
 }
@@ -2084,6 +2089,10 @@ input[type="text"]#datepicker {
     font-size: 0;
 }
 
+.settings-item .other-color:first-child {
+    margin-left: 0;
+}
+
 .settings-item .other-color span {
     display: block;
     overflow: hidden;
@@ -2093,7 +2102,7 @@ input[type="text"]#datepicker {
     border-radius: 2px;
 }
 
-.settings-item .other-color.active {
+/*.settings-item .other-color.active {
     border: solid 3px #2bc0e4;
     border-radius: 2px;
 }
@@ -2102,7 +2111,7 @@ input[type="text"]#datepicker {
     border-radius: 0;
     height: 23px;
     width: 23px;
-}
+}*/
 
 .settings-item .other-color.change-color {
     background: url(../img/colorpicker.png) 100%;

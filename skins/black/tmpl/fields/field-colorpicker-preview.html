@@ -1,23 +1,13 @@
 <div class="title">
     <%= label %>
 </div>
+<input type="text" class="input-text colorpicker-input" name="<%= name %>" value="<%= value %>" style="background-color: <%= value %>">
 <% if (colors){ %>
 	<div class="other-colors">
-		<% _.each( colors, function( color ){ %>
-			<div class="other-color theme-colors  <% if (color == value){ %> active <% } %>" style="background: <%= color %>">
-				<span ></span>
-			</div>
-		<% }); %>
+	    <% _.each( colors, function( color ){ %>
+	        <div class="other-color theme-colors" data-color="<%= color %>" style="background-color: <%= color %>">
+	            <span></span>
+	        </div>
+	    <% }); %>
 	</div>
 <% } %>
-<button class="change-color other-color <% if ( arr_colors === -1 ){ %> active <% } %>" data-wheelcolorpicker data-wcp-preview="true" data-wcp-format="css" data-wcp-sliders="wv" id="color-input" <% if ( arr_colors === -1 ){ %> style="background: <%= value %>" <% } %> ></button>
-<input type="hidden" class="colorpicker-input" name="<%= name %>" value="<%= value %>">
-
-<script type='text/javascript'>
-	jQuery(function() {
-	    jQuery('[data-wheelcolorpicker]').wheelColorPicker();
-	    jQuery('.settings-blocks').scroll(function() {
-	        jQuery('.jQWCP-wWidget').hide();
-	    });
-	});
-</script>
