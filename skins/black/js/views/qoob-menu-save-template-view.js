@@ -74,7 +74,7 @@ var QoobMenuSaveTemplateView = Backbone.View.extend( // eslint-disable-line no-u
             this.controller.createTemplate(dataView, function(error) {
                 elem.removeClass('active');
                 if (null === error) {
-                    self.$el.find('.save-template').addClass('show-notice');
+                    self.$el.find('.save-template-settings').addClass('show-notice');
                 }
             });
         },

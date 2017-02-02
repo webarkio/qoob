@@ -276,9 +276,10 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             jQuery(elem).removeClass('active');
         },
         hideNotice: function() {
-            var sideSaveTemplate = this.$el.find('#save-template');
-            if (sideSaveTemplate.find('.save-template').hasClass('show-notice')) {
-                sideSaveTemplate.find('.save-template').removeClass('show-notice');
+            var saveTemplateSettings = this.$el.find('#save-template .save-template-settings');
+            console.log(saveTemplateSettings);
+            if (saveTemplateSettings.hasClass('show-notice')) {
+                saveTemplateSettings.removeClass('show-notice');
             }
         }
     });

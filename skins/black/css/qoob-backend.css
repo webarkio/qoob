@@ -923,15 +923,15 @@ label.checkbox-sb [type=checkbox]:checked + span {
     height: 100%;
 }
 
-#qoob-menu .save-template .notice-block {
+#qoob-menu .save-template-settings .notice-block {
     display: none;
 }
 
-#qoob-menu .save-template.show-notice .notice-block {
+#qoob-menu .save-template-settings.show-notice .notice-block {
     display: block;
 }
-#qoob-menu .save-template.show-notice .settings-block,
-#qoob-menu .save-template.show-notice .block-button {
+#qoob-menu .save-template-settings.show-notice .settings-block,
+#qoob-menu .save-template-settings.show-notice .block-button {
     display: none;
 }
 
