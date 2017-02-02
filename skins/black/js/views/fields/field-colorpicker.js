@@ -3,7 +3,8 @@ var Fields = Fields || {};
 Fields.colorpicker = QoobFieldView.extend(
 /** @lends Fields.colorpicker.prototype */{
     events: {
-        'click .theme-colors': 'changeColor'
+        'click .theme-colors': 'changeColor',
+        'keyup input': 'changeInput'
     },
     /**
      * Change other image
@@ -16,6 +17,11 @@ Fields.colorpicker = QoobFieldView.extend(
         var color = elem.data('color');
         input.css({"backgroundColor" : color});
         this.model.set(input.prop('name'), color);
+    },
+    changeInput: function(evt) {
+        var target = jQuery(evt.target);
+        jQuery(evt.target).css({"backgroundColor" : target.val()});
+        this.model.set(target.attr('name'), target.val());
     },
     /**
      * Render filed colorpicker
