@@ -269,12 +269,16 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 this.controller.changeLib(this.$el.find('#lib-select').val());
             }
         },
-        showOverlay: function() {
-            this.$el.prepend(jQuery('<div>', {
-                class: 'overlay-menu'
-            })).delay(10000).show();
+        showLibraryLoader: function(elem) {
+            jQuery(elem).addClass('active')
         },
-        hideOverlay: function() {
-            this.$el.find('.overlay-menu').remove();
+        hideLibraryLoader: function(elem) {
+            jQuery(elem).removeClass('active');
+        },
+        hideNotice: function() {
+            var sideSaveTemplate = this.$el.find('#save-template');
+            if (sideSaveTemplate.find('.save-template').hasClass('show-notice')) {
+                sideSaveTemplate.find('.save-template').removeClass('show-notice');
+            }
         }
     });

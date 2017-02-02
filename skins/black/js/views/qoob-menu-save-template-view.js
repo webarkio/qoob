@@ -45,6 +45,9 @@ var QoobMenuSaveTemplateView = Backbone.View.extend( // eslint-disable-line no-u
         clickCreateTemplate: function(evt) {
             evt.preventDefault();
             var self = this;
+            var elem = this.$(evt.currentTarget);
+
+            
 
             if (this.settingsModel.get('title') == '') {
                 return;
@@ -66,8 +69,13 @@ var QoobMenuSaveTemplateView = Backbone.View.extend( // eslint-disable-line no-u
                 'image': this.settingsModel.get('image')
             };
 
-            this.controller.createTemplate(dataView, function() {
-                self.controller.hideMenuOverlay();
+            elem.addClass('active');
+
+            this.controller.createTemplate(dataView, function(error) {
+                elem.removeClass('active');
+                if (null === error) {
+                    self.$el.find('.save-template').addClass('show-notice');
+                }
             });
         },
         /**
@@ -79,7 +87,10 @@ var QoobMenuSaveTemplateView = Backbone.View.extend( // eslint-disable-line no-u
 
             var data = {
                 'back': this.storage.__('back', 'Back'),
-                'save_template': this.storage.__('save_template', 'Save template')
+                'save_template': this.storage.__('save_template', 'Save template'),
+                'save_loading': this.storage.__('save_process', 'Save...'),
+                'save_notice_title': this.storage.__('save_notice_title', 'Your template has been saved successfully!'),
+                'save_notice_text': this.storage.__('save_notice_text', 'You can use a ready-made template to create a new page.')
             };
 
             var settingsView = new QoobFieldsView({

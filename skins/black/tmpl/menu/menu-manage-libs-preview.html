@@ -7,11 +7,30 @@
 			<div class="title"><%= add_url_library %></div>
 			<div class="container-input-add">
 				<input class="input-url" type="text" name="url" value="" placeholder="<%= enter_url_library %>">
-				<div class="add-item add-ibrary"><i class="fa fa-plus"></i></div>
+				<div class="add-item add-ibrary">
+					<i class="hide-elem fa fa-plus"></i>
+					<span class="clock">
+						<span class="minutes-container">
+							<span class="minutes"></span>
+						</span>
+						<span class="seconds-container">
+							<span class="seconds"></span>
+						</span>
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div class="settings-block libraries">
+		<div class="settings-item" style="background-color: #9ea0a5; border-radius: 2px; padding: 3px; margin-bottom: 10px !important;">
+			<p><b><%= libraries_attention %></b></p>
+			<p>
+				<%= libraries_text_part_1 %>
+				<a class="reload-page" href=""><%= libraries_text_part_2 %></a>
+				<%= libraries_text_part_3 %>
+
+			</p>
+		</div>
 		<div class="settings-item">
 			<div class="title"><%= libraries_lng %></div>
 
@@ -26,15 +45,31 @@
 					</div>
 					<div class="control-library" data-lib-name="<%= libraries[i].name %>">
 						<% if (libraries[i].url.substr(libraries[i].url.length - 4) == 'json') { %>
-							<a class="update-library" href="#"><i class="fa fa-refresh"></i></a>
+							<a class="update-library" href="#">
+								<i class="hide-elem fa fa-refresh"></i>
+								<span class="clock">
+									<span class="minutes-container">
+										<span class="minutes"></span>
+									</span>
+									<span class="seconds-container">
+										<span class="seconds"></span>
+									</span>
+								</span>
+							</a>
 						<% } %>
-						<a class="remove-library" href="#"><i class="fa fa-trash"></i></a>
+						<a class="remove-library" href="#">
+							<span class="clock">
+								<span class="minutes-container">
+									<span class="minutes"></span>
+								</span>
+								<span class="seconds-container">
+									<span class="seconds"></span>
+								</span>
+							</span>
+						</a>
 					</div>
 				</div>
 			<% } %>
-		</div>
-		<div class="settings-item">
-			<div class="phrase-reload-page"><%= you_need_to %> <a class="reload-page" href=""><%= reload_page %></a></div>
 		</div>
 	</div>
 </div>

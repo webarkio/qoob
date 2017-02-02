@@ -923,53 +923,16 @@ label.checkbox-sb [type=checkbox]:checked + span {
     height: 100%;
 }
 
-#qoob-menu .overlay-menu {
-    position: absolute;
-    z-index: 999;
-    height: 2em;
-    width: 2em;
-    overflow: show;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+#qoob-menu .save-template .notice-block {
+    display: none;
 }
 
-#qoob-menu .overlay-menu:before {
-    content: '';
+#qoob-menu .save-template.show-notice .notice-block {
     display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
 }
-
-#qoob-menu .overlay-menu::not(:required) {
-    font: 0/0 a;
-    color: transparent;
-    text-shadow: none;
-    background-color: transparent;
-    border: 0;
-}
-
-#qoob-menu .overlay-menu:not(:required):after {
-    content: '';
-    display: block;
-    font-size: 10px;
-    width: 0.5em;
-    height: 0.5em;
-    margin-top: -0.5em;
-    -webkit-animation: spinner 1500ms infinite linear;
-    -moz-animation: spinner 1500ms infinite linear;
-    -ms-animation: spinner 1500ms infinite linear;
-    -o-animation: spinner 1500ms infinite linear;
-    animation: spinner 1500ms infinite linear;
-    border-radius: 0.5em;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-    box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+#qoob-menu .save-template.show-notice .settings-block,
+#qoob-menu .save-template.show-notice .block-button {
+    display: none;
 }
 
 #card .lib-select {
@@ -1712,12 +1675,89 @@ _:-ms-fullscreen,
     color: #b2b2b2;
 }
 
+.manage-libs .clock {
+    display: none;
+}
+
+.manage-libs .active .hide-elem {
+    display: none;
+}
+
+.manage-libs .active .clock {
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: #fff;
+    height: 20px;
+    position: relative;
+    width: 20px;
+    top: 8px;
+}
+
+
+.manage-libs .clock:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 2px;
+    z-index: 10;
+}
+
+.manage-libs .clock .minutes-container,
+.manage-libs .clock .seconds-container {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.manage-libs .clock .minutes,
+.manage-libs .clock .seconds {
+    display: block;
+    height: 8px;
+    left: 46.5%;
+    position: absolute;
+    width: 2px;
+}
+
+.manage-libs .clock .minutes {
+    top: 10%;
+}
+
+.manage-libs .clock .seconds {
+    top: 14%;
+    z-index: 8;
+}
+
+.manage-libs .clock .minutes,
+.manage-libs .clock .seconds,
+.manage-libs .clock:after {
+    background-color: #2bc0e4;
+}
+
+.manage-libs .clock .minutes-container {
+    animation: rotate 1s infinite linear;
+}
+
+.manage-libs .clock .seconds-container {
+    animation: rotate 0.3s infinite linear;
+}
+
+.manage-libs .settings-block .settings-item:first-child {
+    margin-bottom: 0;
+}
+
 .settings-item .input-url {
     float: left;
     height: auto;
-    width: 200px;
+    width: 214px;
     line-height: 20px;
-    padding: 5px 20px;
+    height: 36px;
     border: none;
     background-color: #fff;
     font-size: 13px;
@@ -1747,15 +1787,15 @@ _:-ms-fullscreen,
 
 .settings-item .add-item {
     float: left;
-    width: 50px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     border-radius: 0 2px 2px 0;
     background-color: #9ea0a5;
     vertical-align: middle;
     text-align: center;
-    line-height: 33px;
-    font-size: 20px;
-    color: #fff;
+    line-height: 38px;
+    font-size: 13px;
+    color: #444444;
     cursor: pointer;
 }
 
@@ -2070,6 +2110,7 @@ input[type="text"]#datepicker {
 
 .settings-item .colorpicker-input {
     color: #fff;
+    text-shadow: black 1px 1px 2px;
 }
 
 .settings-item .other-colors {
@@ -2102,17 +2143,6 @@ input[type="text"]#datepicker {
     border-radius: 2px;
 }
 
-/*.settings-item .other-color.active {
-    border: solid 3px #2bc0e4;
-    border-radius: 2px;
-}
-
-.settings-item .other-color.active span {
-    border-radius: 0;
-    height: 23px;
-    width: 23px;
-}*/
-
 .settings-item .other-color.change-color {
     background: url(../img/colorpicker.png) 100%;
     width: 31px;
@@ -2125,34 +2155,51 @@ input[type="text"]#datepicker {
 }
 
 .settings-block.libraries .library {
+    background-color: #606163;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+    border-radius: 2px;
+    height: 36px;
 }
 
 .settings-block.libraries .name-library {
     float: left;
     color: #fff;
+    font-size: 13px;
+    line-height: 36px;
+    padding-left: 14px;
+    font-family: 'robotoregular';
 }
 
 .settings-block.libraries .control-library {
     float: right;
-    font-size: 18px;
-    margin-right: 5px;
+    font-size: 13px;
 }
 
-.settings-block.libraries .control-library i {
-    color: #fff;
+.settings-block.libraries .control-library a {
+    display: inline-block;
+    vertical-align: top;
+    border-left: 1px solid #444444;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    line-height: 36px;
 }
 
 .settings-block.libraries .control-library .update-library {
-    padding-right: 10px;
+    color: #9ea0a5;
 }
 
-.settings-block.libraries .phrase-reload-page {
-    display: none;
+.settings-block.libraries .control-library .update-library:hover {
     color: #fff;
-    font-weight: bold;
-    text-align: center;
+}
+
+.settings-block.libraries .control-library .remove-library {
+    background: transparent url(../img/basket_delete_2_ver.png) no-repeat center center;
+}
+
+.settings-block.libraries .control-library .remove-library:hover {
+    background: transparent url(../img/basket_delete.png) no-repeat center center;
 }
 
 .jQWCP-wWidget {
@@ -2282,6 +2329,19 @@ input[type="text"]#datepicker {
     width: 100%;
     text-align: center;
     border-radius: 3px;
+}
+
+.block-button .button-save-template span {
+    padding: 0;
+}
+
+.block-button .button-save-template .save-loading,
+.block-button .button-save-template.active .save {
+    display: none;
+}
+
+.block-button .button-save-template.active .save-loading {
+    display: block;
 }
 
 .settings .delete-button-small {

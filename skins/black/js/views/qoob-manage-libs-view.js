@@ -32,19 +32,16 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
         clickAddLibrary: function(evt) {
             evt.preventDefault();
             var self = this,
+                elem = this.$(evt.currentTarget),
                 url = this.$el.find('input[name="url"]').val();
 
             if (url.length > 0) {
-                this.controller.showMenuOverlay();
+                this.controller.showLibraryLoader(elem);
                 this.controller.addLibrary(url, function(error) {
-                    self.controller.hideMenuOverlay();
+                    self.controller.hideLibraryLoader(elem);
                     if (error) {
                         console.error(error);
-                    } else {
-                        self.showPhraseReload();
                     }
-
-
                 });
             }
         },
@@ -58,11 +55,10 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
                 return item.name == elem.parent().data('lib-name');
             });
 
-            this.controller.showMenuOverlay();
+            this.controller.showLibraryLoader(elem);
 
             this.controller.updateLibrary(findLib.name, findLib.url, function() {
-                self.showPhraseReload();
-                self.controller.hideMenuOverlay();
+                self.controller.hideLibraryLoader(elem);
             });
         },
         clickRemoveLibrary: function(evt) {
@@ -70,15 +66,11 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
             var self = this,
                 elem = this.$(evt.currentTarget);
 
-            this.controller.showMenuOverlay();
+            this.controller.showLibraryLoader(elem);
             this.controller.removeLibrary(elem.parent().data('lib-name'), function() {
                 elem.parents('.library').remove();
-                self.showPhraseReload();
-                self.controller.hideMenuOverlay();
+                self.controller.hideLibraryLoader(elem);
             });
-        },
-        showPhraseReload: function() {
-            this.$el.find('.phrase-reload-page').show();
         },
         clickReloadPage: function() {
             location.reload();
@@ -90,11 +82,13 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
         render: function() {
             var data = {
                 'back': this.storage.__('back', 'Back'),
-                'add_url_library': this.storage.__('add_url_library', 'Add url library'),
-                'enter_url_library': this.storage.__('enter_url_library', 'enter url library'),
-                'libraries_lng': this.storage.__('libraries', 'Libraries'),
-                'you_need_to': this.storage.__('you_need_to', 'You need to'),
-                'reload_page': this.storage.__('reload_page', 'reload page'),
+                'add_url_library': this.storage.__('add_url_library', 'Add library URL'),
+                'enter_url_library': this.storage.__('enter_url_library', 'Enter URL library'),
+                'libraries_lng': this.storage.__('libraries', 'Active libraries'),
+                'libraries_attention': this.storage.__('libraries_attention', 'Attention!'), 
+                'libraries_text_part_1': this.storage.__('libraries_after_adding', 'After adding, updating or deleting the libraries don\'t forget to'),
+                'libraries_text_part_2': this.storage.__('libraries_reload_page', ' reload qoob page'),
+                'libraries_text_part_3': this.storage.__('libraries_builder', ' builder.'),
                 'libraries': this.storage.librariesData
             };
 

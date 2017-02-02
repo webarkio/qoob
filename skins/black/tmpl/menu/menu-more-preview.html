@@ -1,8 +1,15 @@
 <div class="backward">
     <a href="#index" class="back"><span><%= back %></span></a>
 </div>
-<div class="settings-blocks-full">
+<div class="settings-blocks-full save-template">
 	<div class="block-button">
-		<div class="button-save-template create-template"><%= save_template %></div>
+		<div class="button-save-template create-template">
+			<span class="save"><%= save_template %></span>
+			<span class="save-loading"><%= save_loading %></span>
+		</div>
+	</div>
+	<div class="notice-block" style="background-color: #9ea0a5; border-radius: 2px; padding: 3px; margin: 10px 0 !important;">
+		<p><b><%= save_notice_title %></b></p>
+		<p><%= save_notice_text %></p>
 	</div>
 </div>

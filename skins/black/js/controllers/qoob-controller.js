@@ -98,6 +98,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     },
     showMore: function() {
         this.layout.menu.rotateForward('save-template');
+        this.layout.menu.hideNotice();
         this.layout.toolbar.logoRotation('side-90');
         this.layout.stopEditBlock();
     },
@@ -226,6 +227,8 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
                         });
                     });
                 }
+            } else {
+                cb(error);
             }
         });
     },
@@ -290,10 +293,11 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         var newTemplate = _.extend(templateInfo, dataPage);
 
         if (dataPage.blocks.length > 0) {
-            this.showMenuOverlay();
             this.storage.createTemplate(newTemplate, function(error){
                 cb(error, status);
             });
+        } else {
+            cb(true);
         }
     },
     /**
@@ -309,15 +313,15 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         this.layout.viewPort.changeDefaultPage(event);
     },
     /**
-     * Show overlay on qoob menu
+     * Show libraty loader
      */
-    showMenuOverlay: function() {
-        this.layout.menu.showOverlay();
+    showLibraryLoader: function(elem) {
+         this.layout.menu.showLibraryLoader(elem);
     },
     /**
-     * Hide overlay on qoob menu
+     * Hide libraty loader
      */
-    hideMenuOverlay: function() {
-        this.layout.menu.hideOverlay();
+    hideLibraryLoader: function(elem) {
+         this.layout.menu.hideLibraryLoader(elem);
     }
 });
