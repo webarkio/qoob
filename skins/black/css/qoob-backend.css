@@ -973,6 +973,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #card .lib-select .bootstrap-select .dropdown-menu.open {
     padding: 0;
+    top: 0;
     text-align: left;
     border: none;
     background: transparent;
@@ -1123,15 +1124,12 @@ _:-ms-fullscreen,
     top: 0;
     width: 258px;
     height: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 #card.rotate .card-wrap {
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    transform: translateZ(151px) scale(0.5);
+    transform: translateZ(46px) scale(0.5);
 }
 
 #card .card-main {

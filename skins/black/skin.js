@@ -9,11 +9,11 @@
 function Skin() {
     this.assets = {
         "dev": [
-            { "type": "js", "name": "jquery-ui", "src": "js/libs/jquery-ui.min.js", "dep": ["jquery"] },
-            { "type": "js", "name": "jquery-ui-touch-punch", "src": "js/libs/jquery.ui.touch-punch.min.js", "dep": ["jquery-ui"] },
-            { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "dep": ["jquery-ui"] },
-            { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
-            { "type": "js", "name": "bootstrap-progressbar", "src": "js/libs/bootstrap-progressbar.js", "dep": ["bootstrap"] },
+            { "type": "js", "name": "jquery-ui", "src": "js/libs/jquery-ui.js", "min_src": "js/libs/jquery-ui.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "jquery-ui-touch-punch", "src": "js/libs/jquery.ui.touch-punch.js", "min_src": "js/libs/jquery.ui.touch-punch.min.js", "dep": ["jquery-ui"] },
+            { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "min_src": "js/libs/jquery-ui-droppable-iframe.min.js", "dep": ["jquery-ui"] },
+            { "type": "js", "name": "bootstrap-progressbar", "src": "js/libs/bootstrap-progressbar.js", "min_src": "js/libs/bootstrap-progressbar.min.js", "dep": ["bootstrap"] },
+            { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.js", "min_src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
             { "type": "js", "name": "block-model", "src": "js/models/block-model.js", "dep": ["backbone"] },
             { "type": "js", "name": "page-model", "src": "js/models/page-model.js", "dep": ["backbone"] },
@@ -56,6 +56,7 @@ function Skin() {
             { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
             { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
             { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
+            { "type": "css", "name": "bootstrap-select.css", "src": "css/bootstrap-select.css", "min_src": "css/bootstrap-select.min.css" },
         ],
         "prod": [
             { "type": "js", "name": "skin_assets", "src": "skin.concated.js" },
@@ -63,9 +64,8 @@ function Skin() {
         ],
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
-            { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "css", "name": "bootstrap-select.min.css", "src": "css/bootstrap-select.min.css" },
+            { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },

@@ -5,7 +5,11 @@ module.exports = function(grunt) {
     var resources = [];
     for (var i = 0; i < skin.assets.dev.length; i++) {
         if (skin.assets.dev[i].type == "js") {
-            resources.push(skin.assets.dev[i].src.replace("qoob/skins/black/", ""));
+            if (skin.assets.dev[i].min_src) {
+                resources.push(skin.assets.dev[i].min_src.replace("qoob/skins/black/", ""));
+            } else {
+                resources.push(skin.assets.dev[i].src.replace("qoob/skins/black/", ""));
+            }
         }
     }
 

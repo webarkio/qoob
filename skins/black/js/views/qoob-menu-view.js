@@ -259,14 +259,16 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             groups.show();
             blocks.show();
         },
-        changeLib: function() {
-            if (this.$el.find('#lib-select').val() == 'manage') {
+        changeLib: function(evt) {
+            var target = jQuery(evt.target);
+
+            if (target.val() == 'manage') {
                 this.controller.showManageLibs();
                 this.$el.find('#lib-select [value="manage"]').prop('selected', false);
                 this.$el.find('#lib-select').selectpicker('refresh');
                 this.controller.changeLib('all');
             } else {
-                this.controller.changeLib(this.$el.find('#lib-select').val());
+                this.controller.changeLib(target.val());
             }
         },
         showLibraryLoader: function(elem) {
@@ -277,7 +279,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         hideNotice: function() {
             var saveTemplateSettings = this.$el.find('#save-template .save-template-settings');
-            console.log(saveTemplateSettings);
             if (saveTemplateSettings.hasClass('show-notice')) {
                 saveTemplateSettings.removeClass('show-notice');
             }
