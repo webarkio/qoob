@@ -87,8 +87,8 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
                 'libraries_lng': this.storage.__('libraries', 'Active libraries'),
                 'libraries_attention': this.storage.__('libraries_attention', 'Attention!'), 
                 'libraries_text_part_1': this.storage.__('libraries_after_adding', 'After adding, updating or deleting the libraries don\'t forget to'),
-                'libraries_text_part_2': this.storage.__('libraries_reload_page', ' reload qoob page'),
-                'libraries_text_part_3': this.storage.__('libraries_builder', ' builder.'),
+                'libraries_text_part_2': this.storage.__('libraries_reload', 'reload'),
+                'libraries_text_part_3': this.storage.__('libraries_qoob_page_builder', 'qoob page builder.'),
                 'libraries': this.storage.librariesData
             };
 

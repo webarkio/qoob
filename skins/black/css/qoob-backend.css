@@ -925,11 +925,31 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #qoob-menu .save-template-settings .notice-block {
     display: none;
+    border-radius: 2px;
+    color: #fff;
+    font-family: 'robotoregular';
+    font-size: 13px;
+    padding: 15px 10px 14px 14px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 4px;
+}
+
+#qoob-menu .save-template-settings .notice-block.blue {
+    background-color: #2bc0e4;
+}
+
+#qoob-menu .save-template-settings .notice-block.grey {
+    background-color: #9ea0a5;
 }
 
 #qoob-menu .save-template-settings.show-notice .notice-block {
     display: block;
 }
+#qoob-menu .save-template-settings.show-notice {
+    padding-top: 113px;
+}
+
 #qoob-menu .save-template-settings.show-notice .settings-block,
 #qoob-menu .save-template-settings.show-notice .block-button {
     display: none;
@@ -1268,7 +1288,7 @@ _:-ms-fullscreen,
     color: #fefefe;
     font-family: 'robotobold';
     font-size: 13px;
-    padding: 0 0 10px 5px;
+    padding: 0 0 10px 15px;
     line-height: 11px;
     text-transform: capitalize;
     overflow: hidden;
@@ -1398,7 +1418,7 @@ _:-ms-fullscreen,
 .settings-accordion .settings-block {
     margin-left: 0;
     overflow: hidden;
-    width: 96.1% !important;
+    width: 100%;
     padding-top: 20px;
     background: #6f6f6f;
     padding: 0 5px;
@@ -1754,8 +1774,9 @@ _:-ms-fullscreen,
     float: left;
     height: auto;
     width: 214px;
-    line-height: 20px;
     height: 36px;
+    line-height: 20px;
+    padding-left: 14px;
     border: none;
     background-color: #fff;
     font-size: 13px;
@@ -2198,6 +2219,24 @@ input[type="text"]#datepicker {
 
 .settings-block.libraries .control-library .remove-library:hover {
     background: transparent url(../img/basket_delete.png) no-repeat center center;
+}
+
+.settings-block.libraries .library-notice {
+    
+}
+
+.settings-block.libraries .library-notice .notice-block {
+    border-radius: 2px;
+    background-color: #9ea0a5;
+    color: #444444;
+    font-size: 13px;
+    font-family: 'robotoregular';
+    padding: 15px 10px 14px 14px;
+    margin-bottom: 40px;
+}
+
+.settings-block.libraries .library-notice .notice-block a {
+    color: #fff;
 }
 
 .jQWCP-wWidget {
