@@ -26,7 +26,9 @@
         <div class="dropdown more-button">
             <button class="btn btn-default dropdown-toggle" type="button" id="more" data-toggle="dropdown"><%= more %> <i class="fa fa-caret-down" data-unicode="f0d7"></i></button>
             <ul class="dropdown-menu" aria-labelledby="more">
-                <li><a class="save-template" tabindex="-1" href="#more"><%= save_template %></a></li>
+                <% _.each( customMenu, function( item ) { %>
+                    <li><a <% if (item.action != '') { %>data-id="<%= item.id %>"<% } %> href="#<%= item.id %>"><%= item.label %></a></li>
+                <% }); %>
             </ul>
         </div>
         <button class="device-mode-button pc active" name="pc"></button>

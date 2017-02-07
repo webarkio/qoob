@@ -7,12 +7,14 @@
 var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     /** @lends QoobToolbarView.prototype */
     tagName: 'div',
+    customMenu: null,
     events: {
         'click .preview-mode-button': 'clickPreviewMode',
         'click .device-mode-button': 'clickDeviceMode',
         'click .exit-button': 'clickExit',
         'click .save-button': 'clickSave',
-        'click .autosave-checkbox': 'clickAutosave'
+        'click .autosave-checkbox': 'clickAutosave',
+        'click [data-id]': 'clickAction'
     },
     attributes: function() {
         return {
@@ -29,11 +31,22 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         this.storage = options.storage;
         this.controller = options.controller;
     },
+    clickAction: function(evt) {
+        evt.preventDefault();
+        var id = jQuery(evt.currentTarget).data("id");
+        var menuItem = this.customMenu.find(function(o) {
+            return o.id === id;
+        });
+
+        var menuAction = new Function("return (" + menuItem.action + ")");
+        menuAction().call(this);
+    },
     /**
      * Render toolbar
      * @returns {Object}
      */
     render: function() {
+        var self = this;
         var data = {
             "autosave": this.storage.__('autosave', 'Autosave'),
             "save": this.storage.__('save', 'Save'),
@@ -41,7 +54,19 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
             "more": this.storage.__('more', 'More'),
             "save_template": this.storage.__('save_template', 'Save as template'),
         };
-        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
+
+        if (typeof this.storage.driver.mainMenu === "function") {
+            this.storage.driver.mainMenu(function(error, json) {
+                if (error === null) {
+                    self.customMenu = json;
+                    data.customMenu = self.customMenu;
+
+                    self.$el.html(_.template(self.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
+                }
+            });
+        } else {
+            this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
+        }
 
         return this;
     },

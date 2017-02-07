@@ -43,7 +43,7 @@
 					</div>
 					<div class="control-library" data-lib-name="<%= libraries[i].name %>">
 						<% if (libraries[i].url.substr(libraries[i].url.length - 4) == 'json') { %>
-							<a class="update-library" href="#">
+							<a class="update-library" href="#" title="<% lng_update %>">
 								<i class="hide-elem fa fa-refresh"></i>
 								<span class="clock">
 									<span class="minutes-container">
@@ -55,7 +55,7 @@
 								</span>
 							</a>
 						<% } %>
-						<a class="remove-library" href="#">
+						<a class="remove-library" href="#" title="<%= lng_delete %>">
 							<span class="clock">
 								<span class="minutes-container">
 									<span class="minutes"></span>
