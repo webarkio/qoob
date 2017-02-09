@@ -132,6 +132,7 @@ textarea {
 
 #qoob {
     width: 100%;
+    font-family: 'robotoregular';
 }
 
 #qoob-toolbar {
@@ -383,7 +384,6 @@ textarea {
 }
 
 #qoob-toolbar .edit-control-button .more-button .dropdown-menu>li>a {
-    font-family: 'robotoregular';
     color: #fff;
     background-color: #444444;
     padding: 11px 0 11px 21px;
@@ -415,7 +415,6 @@ textarea {
 
 #qoob-toolbar .edit-control-button .save-button {
     color: #fff;
-    font-family: 'robotoregular';
     font-size: 16px;
     background-color: #2bc0e4;
 }
@@ -521,7 +520,6 @@ textarea {
 
 #qoob-toolbar .edit-control-button .exit-button {
     color: #c9c9c9;
-    font-family: 'robotoregular';
     font-size: 16px;
 }
 
@@ -928,7 +926,6 @@ label.checkbox-sb [type=checkbox]:checked + span {
     display: none;
     border-radius: 2px;
     color: #fff;
-    font-family: 'robotoregular';
     font-size: 13px;
     padding: 15px 10px 14px 14px;
     margin-left: 5px;
@@ -1026,7 +1023,6 @@ label.checkbox-sb [type=checkbox]:checked + span {
     color: #fff;
     background: none;
     box-shadow: none;
-    font-family: 'robotoregular';
 }
 
 #card .lib-select .bootstrap-select li.divider {
@@ -1233,6 +1229,7 @@ _:-ms-fullscreen,
 .settings-block {
     padding: 0 4px 0 4px;
     overflow-x: hidden;
+    height: 100%;
 }
 
 .settings-block input,
@@ -1480,7 +1477,7 @@ _:-ms-fullscreen,
     padding: 11px 0;
     text-align: center;
     border: 2px dashed #9fa1a7;
-    width: 98%;
+    width: 100%;
     margin-top: 7px;
     font-size: 13px;
 }
@@ -1572,7 +1569,6 @@ _:-ms-fullscreen,
 .settings-item .select.btn-group>.dropdown-menu,
 .settings-item .select.btn-group>.popover {
     color: #fff;
-    font-family: 'robotoregular';
     font-size: 13px;
 }
 
@@ -1670,7 +1666,6 @@ _:-ms-fullscreen,
     border: none;
     background-color: #fff;
     font-size: 13px;
-    font-family: 'robotoregular';
     color: #5a5b5e;
     border-radius: 2px;
     outline: none;
@@ -1781,7 +1776,6 @@ _:-ms-fullscreen,
     border: none;
     background-color: #fff;
     font-size: 13px;
-    font-family: 'robotoregular';
     color: #5a5b5e;
     border-radius: 2px 0 0 2px;
     outline: none;
@@ -1826,7 +1820,6 @@ _:-ms-fullscreen,
 .settings-item .textarea {
     border: 1px solid #fff;
     font-size: 13px;
-    font-family: 'robotoregular';
     color: #424242;
 }
 
@@ -1846,7 +1839,6 @@ _:-ms-fullscreen,
 .settings-item .status {
     display: inline-block;
     vertical-align: middle;
-    font-family: 'robotoregular';
     font-size: 14px;
     color: #fff;
     padding: 0 0 0 10px;
@@ -1910,7 +1902,6 @@ _:-ms-fullscreen,
     margin-left: 11px;
     font-size: 13px;
     color: #444444;
-    font-family: 'robotoregular';
     text-align: center;
     border: none;
     -webkit-border-radius: 2px;
@@ -1941,7 +1932,6 @@ input[type="text"]#datepicker {
     color: #fff;
     font-size: 14px;
     width: 74px;
-    font-family: 'robotoregular';
     text-align: center;
     border: none;
     background-color: transparent;
@@ -1957,16 +1947,11 @@ input[type="text"]#datepicker {
     text-align: right;
     color: #fff;
     font-size: 14px;
-    font-family: 'robotoregular';
     text-decoration: none;
     background: transparent url(../img/pencil_edit.png) no-repeat left center;
 }
 
-.settings-item .btn-upload {
-    display: none;
-}
-
-.settings-item .edit-image,
+/*.settings-item .edit-image,*/
 .settings-item .edit-icon,
 .settings-item .edit-video {
     width: 100%;
@@ -1981,11 +1966,15 @@ input[type="text"]#datepicker {
     height: 156px;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .settings-item .edit-video {
     background: #000;
+}
+
+.settings-item .edit-image img {
+    border-radius: 2px 2px 0 0;
 }
 
 .settings-item .edit-image img,
@@ -1994,6 +1983,103 @@ input[type="text"]#datepicker {
     height: 100%;
     object-fit: cover;
     object-position: 1% 50%;
+}
+
+.settings-item .edit-image .url-image {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 11px;
+    width: 100%;
+    color: #95969a;
+    opacity: .9;
+    border: none;
+    height: 20px;
+}
+
+.settings-item .edit-image .remove {
+    display: block;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    height: 9px;
+    width: 9px;
+    background: transparent url(../img/remove_white.png) no-repeat;
+}
+
+.settings-item .media-acton-button {
+    width: 100%;
+}
+
+.settings-item .media-acton-button.btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    width: calc(100% - 37px);
+    border-radius: 0 0 0 2px;
+    color: #fff;
+    font-size: 13px;
+    text-align: left;
+}
+
+.settings-item .media-acton-button.btn-group>.btn+.dropdown-toggle {
+    width: 36px;
+    border-radius: 0 0 2px 0;
+    font-size: 19px;
+    color: #fff;
+}
+
+.settings-item .media-acton-button.btn-group .btn+.btn {
+    margin-left: 1px;
+}
+
+.settings-item .media-acton-button.btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle),
+.settings-item .media-acton-button.btn-group>.btn+.dropdown-toggle {
+    background-color: #606163;
+    border: none;
+    height: 36px;
+}
+
+.settings-item .media-acton-button .dropdown-menu {
+    width: 100%;
+    background-color: #9ea0a5;
+    border-radius: 0 0 2px 2px;
+    border: none;
+    padding: 0 0 10px;
+    -webkit-box-shadow: 0px 2px 6px rgba(0,2,0, 0.18);
+    box-shadow: 0px 2px 6px rgba(0,2,0, 0.18);
+}
+
+.settings-item .media-acton-button .dropdown-menu>li>a {
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+    color: #3e3e3f;
+}
+
+.settings-item .media-acton-button .dropdown-menu>li>a:focus,
+.settings-item .media-acton-button .dropdown-menu>li>a:hover {
+    background-color: #606163;
+    color: #fff;
+}
+
+.settings-item .edit-image .url-image::-webkit-input-placeholder {
+    color: #95969a;
+}
+
+.settings-item .edit-image .url-image:-moz-placeholder {
+    color: #95969a;
+    opacity: 1;
+}
+
+.settings-item .edit-image .url-image::-moz-placeholder {
+    color: #95969a;
+    opacity: 1;
+}
+
+.settings-item .edit-image .url-image:-ms-input-placeholder {
+    color: #95969a;
+}
+
+.settings-item .image-control .input-file {
+    display: none;
 }
 
 .settings-item .edit-icon {
@@ -2009,7 +2095,7 @@ input[type="text"]#datepicker {
     width: 50%;
 }
 
-.settings-item .edit-image.empty,
+/*.settings-item .edit-image.empty,*/
 .settings-item .edit-video.empty,
 .settings-item .edit-icon-preview.empty {
     border: 3px dashed #8B8B8B;
@@ -2021,13 +2107,13 @@ input[type="text"]#datepicker {
     background: none;
 }
 
-.settings-item .edit-image.empty:hover,
+/*.settings-item .edit-image.empty:hover,*/
 .settings-item .edit-video.empty:hover,
 .settings-item .edit-icon-preview.empty:hover {
     opacity: .7;
 }
 
-.settings-item .edit-image.empty img,
+/*.settings-item .edit-image.empty img,*/
 .settings-item .edit-video.empty iframe {
     display: none;
 }
@@ -2067,13 +2153,11 @@ input[type="text"]#datepicker {
     border: 1px solid #2bc0e4;
     color: #fff;
     font-size: 16px;
-    font-family: 'robotoregular';
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
 }
 
-.settings-item .other-photos div,
 .settings-item .other-videos .other-video {
     overflow: hidden;
     height: 58px;
@@ -2109,7 +2193,6 @@ input[type="text"]#datepicker {
     background-size: 40%;
 }
 
-.settings-item .other-photos img,
 .settings-item .other-videos iframe {
     height: 100%;
 }
@@ -2118,12 +2201,10 @@ input[type="text"]#datepicker {
     width: 100%;
 }
 
-.settings-item .other-photos div:first-child,
 .settings-item .other-videos div:first-child {
     margin-left: 0px;
 }
 
-.settings-item .other-photos div.active,
 .settings-item .other-videos .other-video.active {
     border-color: #2bc0e4;
 }
@@ -2188,7 +2269,6 @@ input[type="text"]#datepicker {
     font-size: 13px;
     line-height: 36px;
     padding-left: 14px;
-    font-family: 'robotoregular';
 }
 
 .settings-block.libraries .control-library {
@@ -2231,7 +2311,6 @@ input[type="text"]#datepicker {
     background-color: #9ea0a5;
     color: #444444;
     font-size: 13px;
-    font-family: 'robotoregular';
     padding: 15px 10px 14px 14px;
     margin-bottom: 40px;
 }
@@ -2356,7 +2435,6 @@ input[type="text"]#datepicker {
     padding: 11px 0 0 22px;
     color: #fff;
     font-size: 13px;
-    font-family: 'robotoregular';
 }
 
 .block-button .button-save-template {
@@ -2816,7 +2894,6 @@ _:-ms-fullscreen, :root .settings .delete-icon {
 
 /*Firefox fixes*/
 @-moz-document url-prefix() {
-    .settings-item .other-photos div,
     .settings-item .other-videos .other-video {
         height: 55px;
         width: 55px;

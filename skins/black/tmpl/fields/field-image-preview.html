@@ -3,14 +3,32 @@
         <%= label %>
     </div>
 </div>
-<div class="edit-image <% if (value === '')  { %>empty<% } %>"><img src="<%= value %>" /></div>
-<% if(images) { %>
-    <div class="other-photos">
-        <%   for (var i = 0; i < images.length; i++) { %>
-            <div class="other-photo <% if(images[i] == value){ %> active <%}%>">
-                <img src="<%= images[i] %>">
-            </div>
-        <%}%>
+<div class="image-control">
+    <div class="edit-image<% if (value === '') { %> empty <% } %>">
+        <img src="<%= value %>" />
+        <input type="text" class="url-image" value="" placeholder="https://">
+        <a href="#" class="remove"></a>
     </div>
-<%}%>
-<input name="<%= name %>" class="btn-upload btn-builder" type="button" value="<%= media_center %>" />
+    <div class="media-acton-button btn-group">
+        <button type="button" class="btn media-center">
+            <%= media_center %>
+        </button>
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-angle-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#" class="upload">
+                    <%= upload %>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <%= word_press_media_library %>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <input type="file" class="input-file" name="<%= name %>-file">
+    <input name="<%= name %>" type="hidden" value="<%= value %>" />
+</div>

@@ -1,3 +1,4 @@
+/*global QoobFieldView, ImageCenterView*/
 var Fields = Fields || {};
 
 /**
@@ -6,91 +7,129 @@ var Fields = Fields || {};
 Fields.image = QoobFieldView.extend(
     /** @lends Fields.image.prototype */
     {
-    events: {
-        'change input': 'changeInput',
-        'click .edit-image': 'imageUpload',
-        'click .other-photo': 'changeImage'
-    },
-    /**
-     * View field image
-     * @class Fields.image
-     * @augments Backbone.View
-     * @constructs
-     */
-    initialize: function(options) {
-        QoobFieldView.prototype.initialize.call(this, options);
-        this.parentId = options.parentId;
-        this.tags = options.settings.tags || null;
+        events: {
+            'click .media-center': 'clickMediaCenter',
+            'keyup .url-image': 'changeInputUrlImage',
+            'click .remove': 'clickRemoveImage',
+            'click .upload': 'clickUploadImage',
+            'change .input-file': 'changeInputFile'
+        },
+        /**
+         * View field image
+         * @class Fields.image
+         * @augments Backbone.View
+         * @constructs
+         */
+        initialize: function(options) {
+            QoobFieldView.prototype.initialize.call(this, options);
+            this.parentId = options.parentId;
+            this.tags = options.settings.tags || null;
 
-        this.tpl = _.template(this.storage.getSkinTemplate('field-image-preview'));
-    },
-    /**
-     * Event change input
-     * @param {Object} evt
-     */
-    changeInput: function(evt) {
-        this.model.set(this.$(evt.target).attr('name'), this.$('.edit-image img').attr('src'));
-    },
-    /**
-     * Image upload
-     * @param {Object} evt
-     */
-    imageUpload: function(evt) {
+            this.tpl = _.template(this.storage.getSkinTemplate('field-image-preview'));
+        },
+        /**
+         * Remove image
+         * @param {Object} evt
+         */
+        clickRemoveImage: function(evt) {
+            evt.preventDefault();
+            this.$el.find('.edit-image img').attr('src', '');
+            this.model.set(this.$el.find('input[type="hidden"]').attr('name'), '');
+        },
+        /**
+         * Event change input url image
+         * @param {Object} evt
+         */
+        changeInputUrlImage: function(evt) {
+            var url = jQuery(evt.target).val();
 
-        window.selectFieldImage = function(src) {
-            this.$el.find('.edit-image').removeClass('empty');
-            if (!src) {
-                this.$el.find('.edit-image').addClass('empty');
+            if (url.match(/.(jpg|jpeg|png|gif)$/i)) {
+                this.$el.find('img').attr('src', url);
+                this.model.set(this.$el.find('input[type="hidden"]').attr('name'), url);
+            } else {
+                console.error('file format is not appropriate');
             }
-            this.$el.find('.edit-image').find('img').attr('src', src);
-            this.$el.find('input').trigger("change");
-            if (this.$el.find('.other-photos').length) {
-                this.$el.find('.other-photo').removeClass('active');
+        },
+        /**
+         * Show media center side
+         */
+        clickMediaCenter: function() {
+            window.selectFieldImage = function(src) {
+                this.$el.find('.edit-image').removeClass('empty');
+                if (!src) {
+                    this.$el.find('.edit-image').addClass('empty');
+                }
+                this.$el.find('.edit-image img').attr('src', src);
+                this.$el.find('input[type="hidden"]').trigger("change");
+            }.bind(this);
+
+            var mediaCenter = new ImageCenterView({
+                model: this.model,
+                controller: this.controller,
+                parentId: this.parentId,
+                storage: this.storage,
+                curSrc: this.$el.find('.edit-image img').attr('src'),
+                assets: this.storage.getAssets(),
+                tags: this.tags ? this.tags.join(', ') : '',
+                hideDeleteButton: this.settings.hideDeleteButton
+            });
+
+            this.controller.setInnerSettingsView(mediaCenter);
+
+            return false;
+        },
+        /**
+         * Image upload
+         * @param {Object} evt
+         */
+        clickUploadImage: function(evt) {
+            evt.preventDefault();
+            this.$el.find('input.input-file').trigger('click');
+        },
+        changeInputFile: function(evt) {
+            var file = jQuery(evt.target).val();
+
+            if (file.match(/.(jpg|jpeg|png|gif)$/i)) {
+                var formData = new FormData();
+                formData.append(jQuery(evt.target).attr('name'), this.$el.find('input[type=file]')[0].files[0], this.$el.find('input[type=file]')[0].files[0].name);
+                jQuery.ajax({
+                    url: '/upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    error: function(jqXHR, textStatus) {
+                        console.error(textStatus);
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        console.log('upload successful!');
+                    }
+                });
+
+                // this.$el.find('img').attr('src', url);
+                // this.model.set(this.$el.find('input[type="hidden"]').attr('name'), url);
+            } else {
+                console.error('file format is not appropriate');
             }
-        }.bind(this);
+        },
+        /**
+         * Render filed image
+         * @returns {Object}
+         */
+        render: function() {
+            var htmldata = {
+                "label": this.settings.label,
+                "name": this.settings.name,
+                "value": this.getValue(),
+                'media_center': this.storage.__('media_center', 'Media Center'),
+                'upload': this.storage.__('upload', 'Upload'),
+                'word_press_media_library': this.storage.__('word_press_media_library', 'WordPress media library')
+            };
 
-        var mediaCenter = new ImageCenterView({
-            model: this.model,
-            controller: this.controller,
-            parentId: this.parentId,
-            storage: this.storage,
-            curSrc: this.$el.find('.edit-image').find('img').attr('src'),
-            assets: this.storage.getAssets(),
-            tags: this.tags ? this.tags.join(', ') : '',
-            hideDeleteButton: this.settings.hideDeleteButton
-        });
-
-        this.controller.setInnerSettingsView(mediaCenter);
-
-        return false;
-    },
-    /**
-     * Change other image
-     * @param {Object} evt
-     */
-    changeImage: function(evt) {
-        var elem = this.$(evt.currentTarget);
-        this.$el.find('.other-photo').removeClass('active');
-        elem.addClass('active');
-        this.$el.find('.edit-image img').attr('src', elem.find('img').attr('src'));
-        this.$el.find('input').trigger("change");
-    },
-    /**
-     * Render filed image
-     * @returns {Object}
-     */
-    render: function() {
-        var htmldata = {
-            "label": this.settings.label,
-            "name": this.settings.name,
-            "images": this.settings.presets,
-            "value": this.getValue(),
-            'media_center': this.storage.__('media_center', 'Media Center')
-        };
-
-        if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
-            this.$el.html(this.tpl(htmldata));
+            if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
+                this.$el.html(this.tpl(htmldata));
+            }
+            return this;
         }
-        return this;
-    }
-});
+    });

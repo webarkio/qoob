@@ -280,6 +280,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         hideNotice: function() {
             var saveTemplateSettings = this.$el.find('#save-template .save-template-settings');
             if (saveTemplateSettings.hasClass('show-notice')) {
+                saveTemplateSettings.find('.input-text').val('');
                 saveTemplateSettings.removeClass('show-notice');
             }
         }
