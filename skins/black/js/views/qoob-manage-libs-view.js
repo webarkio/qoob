@@ -57,7 +57,7 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
 
             this.controller.showLibraryLoader(elem);
 
-            this.controller.updateLibrary(findLib.name, findLib.url, function() {
+            this.controller.updateLibrary(findLib.name, findLib.update, function() {
                 self.controller.hideLibraryLoader(elem);
             });
         },

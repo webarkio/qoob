@@ -206,12 +206,12 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     /**
      * Update library
      * @param name {String} name library
-     * @param url {String} url library
+     * @param updateUrl {String} update_url library
      * @param {Function} cb A callback to run.
      */
-    updateLibrary: function(name, url, cb) {
+    updateLibrary: function(name, updateUrl, cb) {
         var self = this;
-        this.storage.getLibraryByUrl(url, function(error, dataLib) {
+        this.storage.getLibraryByUrl(updateUrl, function(error, dataLib) {
             if (!error && _.isArray(dataLib)) {
                 var jsonLib = _.first(dataLib);
                 if (jsonLib.name.length > 0) {

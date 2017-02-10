@@ -7,7 +7,7 @@
 var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     /** @lends QoobToolbarView.prototype */
     tagName: 'div',
-    customMenu: null,
+    // customMenu: null,
     events: {
         'click .preview-mode-button': 'clickPreviewMode',
         'click .device-mode-button': 'clickDeviceMode',
@@ -34,12 +34,16 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     clickAction: function(evt) {
         evt.preventDefault();
         var id = jQuery(evt.currentTarget).data("id");
-        var menuItem = this.customMenu.find(function(o) {
-            return o.id === id;
-        });
 
-        var menuAction = new Function("return (" + menuItem.action + ")");
-        menuAction().call(this);
+        if (typeof this.storage.driver.mainMenu === "function") {
+            console.log(111);
+            var menuItem = this.customMenu.find(function(o) {
+                return o.id === id;
+            });
+
+            var menuAction = new Function("return (" + menuItem.action + ")");
+            menuAction().call(this);
+        }
     },
     /**
      * Render toolbar
@@ -56,8 +60,9 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
 
         if (typeof this.storage.driver.mainMenu === "function") {
             this.customMenu = this.storage.driver.mainMenu();
-            data.customMenu = this.customMenu;
         }
+
+        data.customMenu = this.customMenu;
 
         this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
 
