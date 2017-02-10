@@ -46,7 +46,6 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
      * @returns {Object}
      */
     render: function() {
-        var self = this;
         var data = {
             "autosave": this.storage.__('autosave', 'Autosave'),
             "save": this.storage.__('save', 'Save'),
@@ -56,17 +55,11 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         };
 
         if (typeof this.storage.driver.mainMenu === "function") {
-            this.storage.driver.mainMenu(function(error, json) {
-                if (error === null) {
-                    self.customMenu = json;
-                    data.customMenu = self.customMenu;
-
-                    self.$el.html(_.template(self.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
-                }
-            });
-        } else {
-            this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
+            this.customMenu = this.storage.driver.mainMenu();
+            data.customMenu = this.customMenu;
         }
+
+        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
 
         return this;
     },

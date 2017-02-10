@@ -87,6 +87,7 @@ Fields.image = QoobFieldView.extend(
             this.$el.find('input.input-file').trigger('click');
         },
         changeInputFile: function(evt) {
+            var self = this;
             var file = jQuery(evt.target).val();
 
             if (file.match(/.(jpg|jpeg|png|gif)$/i)) {
@@ -102,13 +103,11 @@ Fields.image = QoobFieldView.extend(
                         console.error(textStatus);
                     },
                     success: function(data) {
-                        console.log(data);
-                        console.log('upload successful!');
+                        var json = JSON.parse(data);
+                        self.$el.find('img').attr('src', json.url);
+                        self.model.set(self.$el.find('input[type="hidden"]').attr('name'), json.url);
                     }
                 });
-
-                // this.$el.find('img').attr('src', url);
-                // this.model.set(this.$el.find('input[type="hidden"]').attr('name'), url);
             } else {
                 console.error('file format is not appropriate');
             }

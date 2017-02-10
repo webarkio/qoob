@@ -1769,7 +1769,7 @@ _:-ms-fullscreen,
 .settings-item .input-url {
     float: left;
     height: auto;
-    width: 214px;
+    width: calc(100% - 36px);
     height: 36px;
     line-height: 20px;
     padding-left: 14px;
@@ -2255,7 +2255,7 @@ input[type="text"]#datepicker {
     outline: none;
 }
 
-.settings-block.libraries .library {
+.settings-block .libraries .library {
     background-color: #606163;
     overflow: hidden;
     margin-bottom: 2px;
@@ -2263,7 +2263,7 @@ input[type="text"]#datepicker {
     height: 36px;
 }
 
-.settings-block.libraries .name-library {
+.settings-block .libraries .name-library {
     float: left;
     color: #fff;
     font-size: 13px;
@@ -2271,12 +2271,12 @@ input[type="text"]#datepicker {
     padding-left: 14px;
 }
 
-.settings-block.libraries .control-library {
+.settings-block .libraries .control-library {
     float: right;
     font-size: 13px;
 }
 
-.settings-block.libraries .control-library a {
+.settings-block .libraries .control-library a {
     display: inline-block;
     vertical-align: top;
     border-left: 1px solid #444444;
@@ -2286,27 +2286,23 @@ input[type="text"]#datepicker {
     line-height: 36px;
 }
 
-.settings-block.libraries .control-library .update-library {
+.settings-block .libraries .control-library .update-library {
     color: #9ea0a5;
 }
 
-.settings-block.libraries .control-library .update-library:hover {
+.settings-block .libraries .control-library .update-library:hover {
     color: #fff;
 }
 
-.settings-block.libraries .control-library .remove-library {
+.settings-block .libraries .control-library .remove-library {
     background: transparent url(../img/basket_delete_2_ver.png) no-repeat center center;
 }
 
-.settings-block.libraries .control-library .remove-library:hover {
+.settings-block .libraries .control-library .remove-library:hover {
     background: transparent url(../img/basket_delete.png) no-repeat center center;
 }
 
-.settings-block.libraries .library-notice {
-    
-}
-
-.settings-block.libraries .library-notice .notice-block {
+.settings-block .libraries .library-notice .notice-block {
     border-radius: 2px;
     background-color: #9ea0a5;
     color: #444444;
@@ -2315,7 +2311,7 @@ input[type="text"]#datepicker {
     margin-bottom: 40px;
 }
 
-.settings-block.libraries .library-notice .notice-block a {
+.settings-block .libraries .library-notice .notice-block a {
     color: #fff;
 }
 
