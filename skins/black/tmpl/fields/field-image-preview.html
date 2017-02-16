@@ -5,8 +5,8 @@
 </div>
 <div class="image-control">
     <div class="edit-image<% if (value === '') { %> empty <% } %>">
-        <img src="<%= value %>" />
-        <input type="text" class="url-image" value="" placeholder="https://">
+        <img class="media-center" src="<%= value %>" />
+        <input type="text" name="<%= name %>" class="image-url" value="<%= value %>" placeholder="https://">
         <a href="#" class="remove"></a>
     </div>
     <div class="media-acton-button btn-group">
@@ -30,5 +30,4 @@
         </ul>
     </div>
     <input type="file" class="input-file" name="<%= name %>-file">
-    <input name="<%= name %>" type="hidden" value="<%= value %>" />
 </div>

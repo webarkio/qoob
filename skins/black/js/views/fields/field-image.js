@@ -9,7 +9,7 @@ Fields.image = QoobFieldView.extend(
     {
         events: {
             'click .media-center': 'clickMediaCenter',
-            'keyup .url-image': 'changeInputUrlImage',
+            'keyup .image': 'changeInputUrlImage',
             'click .remove': 'clickRemoveImage',
             'click .upload': 'clickUploadImage',
             'change .input-file': 'changeInputFile'
@@ -34,7 +34,7 @@ Fields.image = QoobFieldView.extend(
         clickRemoveImage: function(evt) {
             evt.preventDefault();
             this.$el.find('.edit-image img').attr('src', '');
-            this.model.set(this.$el.find('input[type="hidden"]').attr('name'), '');
+            this.model.set(this.$el.find('input.image').attr('name'), '');
         },
         /**
          * Event change input url image
@@ -45,8 +45,10 @@ Fields.image = QoobFieldView.extend(
 
             if (url.match(/.(jpg|jpeg|png|gif)$/i)) {
                 this.$el.find('img').attr('src', url);
-                this.model.set(this.$el.find('input[type="hidden"]').attr('name'), url);
+                this.model.set(this.$el.find('input.image').attr('name'), url);
             } else {
+                this.$el.find('img').attr('src', '');
+                this.model.set(this.$el.find('input.image').attr('name'), '');
                 console.error('file format is not appropriate');
             }
         },
@@ -60,7 +62,7 @@ Fields.image = QoobFieldView.extend(
                     this.$el.find('.edit-image').addClass('empty');
                 }
                 this.$el.find('.edit-image img').attr('src', src);
-                this.$el.find('input[type="hidden"]').trigger("change");
+                this.$el.find('input.image').trigger("change");
             }.bind(this);
 
             var mediaCenter = new ImageCenterView({

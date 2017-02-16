@@ -7,7 +7,7 @@
 			<div class="title"><%= add_url_library %></div>
 			<div class="container-input-add">
 				<input class="input-url" type="text" name="url" value="" placeholder="<%= enter_url_library %>">
-				<div class="add-item add-ibrary">
+				<button class="add-library">
 					<i class="hide-elem fa fa-plus"></i>
 					<span class="clock">
 						<span class="minutes-container">
@@ -17,7 +17,7 @@
 							<span class="seconds"></span>
 						</span>
 					</span>
-				</div>
+				</button>
 			</div>
 		</div>
 		<div class="libraries">
@@ -41,7 +41,7 @@
 							<% } %>
 						</div>
 						<div class="control-library" data-lib-name="<%= libraries[i].name %>">
-							<% if (libraries[i].url.substr(libraries[i].update.length - 4) == 'json') { %>
+							<% if (libraries[i].update.substr(libraries[i].update.length - 4) == 'json') { %>
 								<a class="update-library" href="#" title="<% lng_update %>">
 									<i class="hide-elem fa fa-refresh"></i>
 									<span class="clock">

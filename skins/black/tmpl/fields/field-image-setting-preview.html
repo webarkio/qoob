@@ -1,34 +1,24 @@
-<div id="inner-settings-image" class="inner-settings">
+<div id="inner-settings-image">
     <div class="backward">
         <a class="backward-image" href="#"><span><%= back %></span></a>
     </div>
-    <div class="img-url-group">
-        <input class="input-text img-url" type="text" placeholder="<%= image_url %>" />
-        <i class="img-url-select"></i>
-    </div>
-    <div class="img-filter-group">
-        <input class="input-text img-search" type="text" placeholder="<%= tags %>">
-        <select class="img-pack">
-            <option selected value="all"><%= all %></option>
-        </select>
-    </div>
-    <div class="clearfix"></div>
-    <div class="settings-block">
-        <div class="filtered-images"> 
-           <%  for (var i = 0; i < assets.length; i++) {
-                    for (var j = 0; j < assets[i].length; j++) { 
-                        if (assets[i][j].type === 'image') { %>
-                        <div class="ajax-image" data-image-pack="<%if(assets[i][j].pack) {%><%=assets[i][j].pack%><%} else {%><%='default'%><% } %>" data-image-tags="<% if( assets[i][j].tags ){ %><%=assets[i][j].tags.join()%><% } %>">
-                                <img src="<%= assets[i][j].src %>" alt="" /> 
-                            </div>
-                        <% }
-                    }
-                } %>
+    <div class="settings-blocks-full">
+        <div class="settings-block">
+            <div class="selected-image">
+                <img class="img" src="<%= curSrc %>">
+                <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                    <a href="#" class="remove"></a>
+                    <% } %>
+            </div>
+            <div class="img-filter-group">
+                <input class="input-text img-search" type="text" value="" placeholder="<%= search %>">
+                <button class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="filtered-images">
+                <div class="inview-images" style="height: 36px; width: 100%; clear: both;"></div>
+            </div>
         </div>
-        <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
-        <div class="delete-button-container">
-            <div class="delete-image"></div>
-        </div>
-        <% } %>
     </div>
 </div>

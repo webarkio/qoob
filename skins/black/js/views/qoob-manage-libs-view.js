@@ -7,7 +7,7 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
     /** @lends QoobManageLibsView.prototype */
     {
         events: {
-            'click .add-ibrary': 'clickAddLibrary',
+            'click .add-library': 'clickAddLibrary',
             'click .update-library': 'clickUpdateLibrary',
             'click .remove-library': 'clickRemoveLibrary',
             'click .reload-page': 'clickReloadPage'

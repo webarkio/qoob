@@ -216,15 +216,22 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
                 var jsonLib = _.first(dataLib);
                 if (jsonLib.name.length > 0) {
                     self.storage.driver.loadLibrariesData(function(error, libraries) {
-                        libraries = _.without(libraries, _.findWhere(libraries, {
+                        var library = _.findWhere(libraries, {
                           name: name
-                        }));
-
-                        libraries.push(jsonLib);
-
-                        self.storage.driver.saveLibrariesData(libraries, function(error, state) {
-                            cb(error, state);
                         });
+
+                        if (library.version !== jsonLib.version) {
+                            libraries = _.without(libraries, library);
+                            libraries.push(jsonLib);
+
+                            self.storage.driver.saveLibrariesData(libraries, function(error, state) {
+                                cb(error, state);
+                            });
+
+                        } else {
+                            console.info('You have the latest version');
+                            cb('You have the latest version');
+                        }
                     });
                 }
             } else {
