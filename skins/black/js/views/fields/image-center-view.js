@@ -63,7 +63,8 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 assets: this.assets,
                 hideDeleteButton: this.hideDeleteButton,
                 back: this.storage.__('back', 'Back'),
-                search: this.storage.__('search', 'Search')
+                search: this.storage.__('search', 'Search'),
+                'no_image': this.storage.__('no_image', 'No image'),
             }));
 
             this.afterRender();
@@ -229,9 +230,12 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * Delete image
          * @param {type} evt
          */
-        deleteImage: function() {
+        deleteImage: function(evt) {
+            evt.preventDefault();
             window.selectFieldImage('');
-            this.controller.layout.menu.rotate(this.backId);
+            this.$el.find('.selected-image').addClass('empty');
+
+            // this.controller.layout.menu.rotate(this.backId);
         },
         /**
          * Keyup event for filtering images by tags in search input

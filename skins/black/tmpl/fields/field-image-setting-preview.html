@@ -4,11 +4,17 @@
     </div>
     <div class="settings-blocks-full">
         <div class="settings-block">
-            <div class="selected-image">
-                <img class="img" src="<%= curSrc %>">
-                <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
-                    <a href="#" class="remove"></a>
+            <div class="selected-image <%if (curSrc === '') { %>empty<%}%>">
+                <div class="select-image-container">
+                    <img class="img" src="<%= curSrc %>">
+                    <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                        <a href="#" class="remove"></a>
                     <% } %>
+                </div>
+                <div class="no-image">
+                    <i class="icon fa fa-file-image-o"></i>
+                    <div class="no-image-title"><%= no_image %></div>
+                </div>
             </div>
             <div class="img-filter-group">
                 <input class="input-text img-search" type="text" value="" placeholder="<%= search %>">
