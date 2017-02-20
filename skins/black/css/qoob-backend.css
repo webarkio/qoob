@@ -928,6 +928,10 @@ label.checkbox-sb [type=checkbox]:checked + span {
     height: 100%;
 }
 
+#qoob-menu .save-template-settings .settings-block {
+    height: auto;
+}
+
 #qoob-menu .save-template-settings .notice-block {
     display: none;
     border-radius: 2px;

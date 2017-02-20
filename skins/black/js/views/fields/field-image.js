@@ -31,6 +31,7 @@ Fields.image = QoobFieldView.extend(
 
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-preview'));
 
+            // init drag image
             this.dragImage();
         },
         /**
@@ -51,8 +52,7 @@ Fields.image = QoobFieldView.extend(
         dragImage: function() {
             var self = this,
                 counter = 0;
-
-            jQuery('body, iframe').on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
+            jQuery('#qoob').on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
                     evt.preventDefault();
                     evt.stopPropagation();
                 })
