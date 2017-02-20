@@ -1791,7 +1791,7 @@ _:-ms-fullscreen,
 
 .settings-item .input-url {
     float: left;
-    width: calc(100% - 36px);
+    width: calc(100% - 48px);
     height: 36px;
     line-height: 20px;
     padding-left: 14px;
@@ -1823,21 +1823,48 @@ _:-ms-fullscreen,
 
 .settings-item .add-library {
     float: left;
-    width: 36px;
+    width: 48px;
     height: 36px;
     border-radius: 0 3px 3px 0;
     background-color: #9ea0a5;
     vertical-align: middle;
     text-align: center;
     line-height: 36px;
+    font-family: 'robotobold';
     font-size: 13px;
-    color: #444444;
+    color: #fff;
     cursor: pointer;
     border: none;
 }
 
 .settings-item .container-input-add {
     overflow: hidden;
+}
+
+.settings-item .container-input-add.error .add-library {
+    background-color: #ff0042;
+}
+
+.settings-item .container-input-add.error .input-url {
+    color: #ff0042;
+}
+
+.settings-item .container-input-add.error .input-url::-webkit-input-placeholder {
+    color: #ff0042;
+}
+
+.settings-item .container-input-add.error .input-url:-moz-placeholder {
+    color: #ff0042;
+    opacity: 1;
+}
+
+.settings-item .container-input-add.error .input-url::-moz-placeholder {
+    color: #ff0042;
+    opacity: 1;
+}
+
+.settings-item .container-input-add.error .input-url:-ms-input-placeholder {
+    color: #ff0042;
 }
 
 .settings-item .textarea {
