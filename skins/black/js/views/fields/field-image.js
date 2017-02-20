@@ -9,7 +9,7 @@ Fields.image = QoobFieldView.extend(
     {
         events: {
             'click .media-center': 'clickMediaCenter',
-            'keyup .image': 'changeInputUrlImage',
+            'keyup change .image-url': 'changeInputUrlImage',
             'click .remove': 'clickRemoveImage',
             'click .upload': 'clickUploadImage',
             'change .input-file': 'changeInputFile',
@@ -40,18 +40,19 @@ Fields.image = QoobFieldView.extend(
          */
         clickRemoveImage: function(evt) {
             evt.preventDefault();
-            this.$el.find('.edit-image img').attr('src', '');
+            this.$el.find('.preview-image').attr('src', '');
             this.$el.find('.image-url').val('');
             this.$el.find('.img-container').hide();
             this.$el.find('.no-image').show();
-            this.model.set(this.$el.find('input.image').attr('name'), '');
+            this.model.set(this.$el.find('.image-url').attr('name'), '');
         },
         /**
          * Drag image on screen
          */
         dragImage: function() {
             var self = this,
-                counter = 0;
+                counter = 0,
+                viewport = jQuery('#qoob-viewport');
             jQuery('#qoob').on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
                     evt.preventDefault();
                     evt.stopPropagation();
@@ -59,11 +60,15 @@ Fields.image = QoobFieldView.extend(
                 .on('dragenter', function() {
                     counter++;
                     self.$el.find('.drop-zone').show();
+                    if (counter === 1) {
+                        jQuery('<div/>', {class: 'temporary-viewport'}).appendTo(viewport);
+                    }
                 })
                 .on('dragleave', function() {
                     counter--;
                     if (counter === 0) {
                         self.$el.find('.drop-zone').hide();
+                        viewport.find('.temporary-viewport').remove();
                     }
                 })
                 .on('drop', function() {
@@ -99,13 +104,13 @@ Fields.image = QoobFieldView.extend(
          */
         changeInputUrlImage: function(evt) {
             var url = jQuery(evt.target).val();
-
+            console.log('change');
             if (url.match(/.(jpg|jpeg|png|gif)$/i)) {
-                this.$el.find('img').attr('src', url);
-                this.model.set(this.$el.find('input.image').attr('name'), url);
+                this.$el.find('.preview-image').attr('src', url);
+                this.model.set(jQuery(evt.target).attr('name'), url);
             } else {
-                this.$el.find('img').attr('src', '');
-                this.model.set(this.$el.find('input.image').attr('name'), '');
+                this.$el.find('.preview-image').attr('src', '');
+                this.model.set(jQuery(evt.target).attr('name'), '');
                 console.error('file format is not appropriate');
             }
         },
@@ -118,8 +123,12 @@ Fields.image = QoobFieldView.extend(
                 if (!src) {
                     this.$el.find('.edit-image').addClass('empty');
                 }
-                this.$el.find('.edit-image img').attr('src', src);
-                this.$el.find('input.image').trigger("change");
+                this.$el.find('.preview-image').attr('src', src);
+                this.$el.find('.image-url').val(src);
+                this.$el.find('.img-container').show();
+                this.$el.find('.no-image').hide();
+                this.model.set(this.$el.find('.image-url').attr('name'), src);
+
             }.bind(this);
 
             var mediaCenter = new ImageCenterView({
@@ -127,7 +136,7 @@ Fields.image = QoobFieldView.extend(
                 controller: this.controller,
                 parentId: this.parentId,
                 storage: this.storage,
-                curSrc: this.$el.find('.edit-image img').attr('src'),
+                curSrc: this.$el.find('.preview-image').attr('src'),
                 assets: this.storage.getAssets(),
                 tags: this.tags ? this.tags.join(', ') : '',
                 hideDeleteButton: this.settings.hideDeleteButton
@@ -163,7 +172,7 @@ Fields.image = QoobFieldView.extend(
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
-                        self.$el.find('.media-center').attr('src', json.url);
+                        self.$el.find('.preview-image').attr('src', json.url);
                         self.model.set(self.$el.find('.image-url').attr('name'), json.url);
                         self.$el.find('.image-url').val(json.url);
                     }
