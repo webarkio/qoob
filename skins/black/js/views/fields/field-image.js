@@ -12,6 +12,7 @@ Fields.image = QoobFieldView.extend(
             'keyup change .image-url': 'changeInputUrlImage',
             'click .remove': 'clickRemoveImage',
             'click .upload': 'clickUploadImage',
+            'click .reset': 'clickResetImageToDefault',
             'change .input-file': 'changeInputFile',
             'drop .drop-zone': 'dropImage',
             'dragenter .drop-zone': 'dragOnDropZone',
@@ -26,6 +27,7 @@ Fields.image = QoobFieldView.extend(
          */
         initialize: function(options) {
             QoobFieldView.prototype.initialize.call(this, options);
+            this.options = options;
             this.parentId = options.parentId;
             this.tags = options.settings.tags || null;
 
@@ -35,16 +37,23 @@ Fields.image = QoobFieldView.extend(
             this.dragImage();
         },
         /**
+         * Main method change image
+         * @param {String} url image
+         */
+        changeImage: function(url) {
+            this.$el.find('.preview-image').attr('src', url);
+            this.model.set(this.$el.find('.image-url').attr('name'), url);
+            this.$el.find('.image-url').val(url);
+        },
+        /**
          * Remove image
          * @param {Object} evt
          */
         clickRemoveImage: function(evt) {
             evt.preventDefault();
-            this.$el.find('.preview-image').attr('src', '');
-            this.$el.find('.image-url').val('');
             this.$el.find('.img-container').hide();
             this.$el.find('.no-image').show();
-            this.model.set(this.$el.find('.image-url').attr('name'), '');
+            this.changeImage('');
         },
         /**
          * Drag image on screen
@@ -104,14 +113,10 @@ Fields.image = QoobFieldView.extend(
          */
         changeInputUrlImage: function(evt) {
             var url = jQuery(evt.target).val();
-            console.log('change');
             if (url.match(/.(jpg|jpeg|png|gif)$/i)) {
-                this.$el.find('.preview-image').attr('src', url);
-                this.model.set(jQuery(evt.target).attr('name'), url);
+                this.changeImage(url);
             } else {
-                this.$el.find('.preview-image').attr('src', '');
-                this.model.set(jQuery(evt.target).attr('name'), '');
-                console.error('file format is not appropriate');
+                this.changeImage('');
             }
         },
         /**
@@ -123,11 +128,10 @@ Fields.image = QoobFieldView.extend(
                 if (!src) {
                     this.$el.find('.edit-image').addClass('empty');
                 }
-                this.$el.find('.preview-image').attr('src', src);
-                this.$el.find('.image-url').val(src);
+
                 this.$el.find('.img-container').show();
                 this.$el.find('.no-image').hide();
-                this.model.set(this.$el.find('.image-url').attr('name'), src);
+                this.changeImage(src);
 
             }.bind(this);
 
@@ -145,6 +149,10 @@ Fields.image = QoobFieldView.extend(
             this.controller.setInnerSettingsView(mediaCenter);
 
             return false;
+        },
+        clickResetImageToDefault: function(evt) {
+            evt.preventDefault();
+            this.changeImage(this.options.defaults);
         },
         /**
          * Image upload
@@ -172,9 +180,7 @@ Fields.image = QoobFieldView.extend(
                     },
                     success: function(data) {
                         var json = JSON.parse(data);
-                        self.$el.find('.preview-image').attr('src', json.url);
-                        self.model.set(self.$el.find('.image-url').attr('name'), json.url);
-                        self.$el.find('.image-url').val(json.url);
+                        self.changeImage(json.url);
                     }
                 });
             } else {
@@ -195,7 +201,8 @@ Fields.image = QoobFieldView.extend(
                 'word_press_media_library': this.storage.__('word_press_media_library', 'WordPress media library'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_image': this.storage.__('no_image', 'No image'),
-                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here')
+                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here'),
+                'reset_to_default': this.storage.__('reset_to_default', 'Reset to default')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {

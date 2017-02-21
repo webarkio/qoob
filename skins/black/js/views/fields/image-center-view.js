@@ -217,6 +217,10 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.$el.find('.ajax-image').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
             window.selectFieldImage(evt.target.getAttribute('src'));
+            this.$el.find('.select-image-container img').attr('src', evt.target.getAttribute('src'));
+            if  (this.$el.find('.selected-image').hasClass('empty')) {
+                this.$el.find('.selected-image').removeClass('empty');
+            }
         },
         /**
          * Unset the chosen image and returning to the default one
@@ -234,8 +238,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             evt.preventDefault();
             window.selectFieldImage('');
             this.$el.find('.selected-image').addClass('empty');
-
-            // this.controller.layout.menu.rotate(this.backId);
+            this.$el.find('.ajax-image').removeClass('chosen');
         },
         /**
          * Keyup event for filtering images by tags in search input

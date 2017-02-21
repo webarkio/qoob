@@ -8,11 +8,11 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
     {
         events: {
             'keyup .input-url': 'keyupInput',
-            'keydown': 'keyAction'
+            'keydown': 'keyAction',
             'click .add-library': 'clickAddLibrary',
             'click .update-library': 'clickUpdateLibrary',
             'click .remove-library': 'clickRemoveLibrary',
-            'click .reload-page': 'clickReloadPage',
+            'click .reload-page': 'clickReloadPage'
         },
         id: "manage-libs",
         attributes: function() {
