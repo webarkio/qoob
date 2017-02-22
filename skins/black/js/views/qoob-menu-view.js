@@ -148,7 +148,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * @param {String} screen Class side
          * @param {Number} deg number transform
          */
-        rotate: function(id, screen, deg) {
+        rotate: function(id, screen, deg, cb) {
             var self = this;
 
             this.$el.find('#card').addClass('rotate');
@@ -172,6 +172,9 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         self.$el.find('.' + screen).remove();
                     });
                 });
+                if(cb){
+                    cb();
+                }
             };
 
             if (!isIE11) {
@@ -199,15 +202,15 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * Menu rotation forward
          * @param {Number} id
          */
-        rotateForward: function(id) {
-            this.rotate(id, 'forward-screen', 90);
+        rotateForward: function(id, cb) {
+            this.rotate(id, 'forward-screen', 90, cb);
         },
         /**
          * Menu rotation backward
          * @param {Number} id
          */
-        rotateBackward: function(id) {
-            this.rotate(id, 'backward-screen', -90);
+        rotateBackward: function(id, cb) {
+            this.rotate(id, 'backward-screen', -90, cb);
         },
         onEditStart: function(blockId) {
             this.rotate('settings-block-' + blockId);
