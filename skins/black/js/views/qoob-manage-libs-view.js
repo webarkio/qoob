@@ -33,7 +33,7 @@ var QoobManageLibsView = Backbone.View.extend( // eslint-disable-line no-unused-
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
-                this.$(".add-library").click();
+                this.$el.find(".add-library").click();
             }
         },
         keyupInput: function(evt) {

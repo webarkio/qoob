@@ -861,15 +861,6 @@ label.checkbox-sb [type=checkbox]:checked + span {
     z-index: 99998;
 }
 
-.temporary-viewport {
-    position: absolute;
-    z-index: 99999;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-}
-
 #qoob-iframe {
     border: none;
     margin: 0 auto;
@@ -931,6 +922,16 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #qoob-menu .backward a:hover {
     background-color: #606163;
+}
+
+#qoob-menu .settings.overlay .backward:before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .65);
+    z-index: 10;
 }
 
 #qoob-menu .save-template {
@@ -1280,6 +1281,16 @@ _:-ms-fullscreen,
 
 .settings {
     height: 100%;
+}
+
+.settings.overlay .settings-block:before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .65);
+    z-index: 10;
 }
 
 .settings-item {
@@ -2079,7 +2090,7 @@ input[type="text"]#datepicker {
     font-size: 30px;
     text-align: center;
     vertical-align: middle;
-    z-index: 2;
+    z-index: 11;
     padding: 5px;
 }
 
