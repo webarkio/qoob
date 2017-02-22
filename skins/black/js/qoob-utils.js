@@ -6,7 +6,21 @@
  * @class  QoobUtils
  */
 var QoobUtils = {
+    
+    /*
+    Generate Ids
+     */
+    genId: function(ignoreId) {
+        window.usedQoobIds = window.usedQoobIds || [];
 
+        var newId = ignoreId || parseInt(_.uniqueId());
+        while (window.usedQoobIds.indexOf(newId) != -1) {
+            newId = parseInt(_.uniqueId());
+        }
+        window.usedQoobIds.push(newId);
+        return newId;
+
+    },
     /**
      * Create Backbone.Model for settings
      *
@@ -14,7 +28,7 @@ var QoobUtils = {
      * @returns {Backbone.Model|QoobUtils.prototype.createModel.model}
      */
     createModel: function(settings) {
-        settings.id = settings.id || parseInt(_.uniqueId());
+        settings.id = QoobUtils.genId(settings.id);
         var model = new BlockModel();
 
         var newSettings = {};

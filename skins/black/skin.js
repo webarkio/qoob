@@ -117,12 +117,13 @@ Skin.prototype.activate = function(options) {
     //Blocks loaded to viewPort
     self.layout.viewPort.on('blocks_loaded', function() {
         self.loader.trigger('skin_loaded');
+        Backbone.history.start({ pushState: false });
     });
 
     //If iframe ready to load blocks. All libraries css and js have already loaded to iframe
     self.layout.viewPort.once('iframe_loaded', function() {
 
-        Backbone.history.start({ pushState: false });
+        
 
         var iframe = self.layout.viewPort.getWindowIframe();
 
