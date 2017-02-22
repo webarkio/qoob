@@ -14,7 +14,7 @@ var QoobUtils = {
      * @returns {Backbone.Model|QoobUtils.prototype.createModel.model}
      */
     createModel: function(settings) {
-        settings.id = parseInt(_.uniqueId());
+        settings.id = settings.id || parseInt(_.uniqueId());
         var model = new BlockModel();
 
         var newSettings = {};
