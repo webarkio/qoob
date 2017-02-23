@@ -4,7 +4,7 @@
     </div>
     <div class="settings-blocks-full">
         <div class="settings-block">
-            <div class="selected-image <%if (curSrc === '') { %>empty<%}%>">
+            <div class="selected-image<%if (curSrc === '') { %> empty<%}%>">
                 <div class="select-image-container">
                     <img class="img" src="<%= curSrc %>">
                     <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
@@ -23,6 +23,7 @@
                 </button>
             </div>
             <div class="filtered-images">
+                <div class="inview-images"></div>
             </div>
         </div>
     </div>

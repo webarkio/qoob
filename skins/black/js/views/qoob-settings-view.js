@@ -70,6 +70,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
                     evt.stopPropagation();
                 })
                 .on('dragenter', function() {
+                    console.log(counter);
                     counter++;
                     if (counter === 1) {
                         for (var i = 0; i < fields.length; i++) {
@@ -85,6 +86,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
                             fields[i].$el.trigger('global_drag_stop');
                         }
                         self.$el.removeClass('overlay');
+                        console.log(counter);
                     }
                 })
                 .on('drop', function() {
@@ -92,6 +94,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
                         fields[i].$el.trigger('global_drag_stop');
                     }
                     self.$el.removeClass('overlay');
+                    counter = 0;
                 });
         },
         clickBack: function(e) {

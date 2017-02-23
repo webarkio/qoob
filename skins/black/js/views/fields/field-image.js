@@ -9,7 +9,7 @@ Fields.image = QoobFieldView.extend(
     {
         events: {
             'click .media-center': 'clickMediaCenter',
-            'keyup change .image-url': 'changeInputUrlImage',
+            'change .image-url': 'changeInputUrlImage',
             'click .remove': 'clickRemoveImage',
             'click .upload': 'clickUploadImage',
             'click .reset': 'clickResetImageToDefault',
@@ -72,6 +72,7 @@ Fields.image = QoobFieldView.extend(
         dropImage: function(evt) {
             var droppedFiles = evt.originalEvent.dataTransfer.files;
             this.$el.find('input[type="file"]').prop('files', droppedFiles);
+            this.counterDropZone = 0;
         },
         /**
          * Drag image on drop zone

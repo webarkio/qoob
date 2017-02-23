@@ -2480,7 +2480,14 @@ input[type="text"]#datepicker {
     background: none;
     box-shadow: none;
     border: 0;
-    margin-top: 3px;
+    margin: 0;
+    padding: 3px 0 0 0;
+    list-style: none;
+}
+
+.media-autocomplete {
+    max-width: 250px;
+    z-index: 99999;
 }
 
 .settings-autocomplete li {
@@ -2887,8 +2894,14 @@ input[type="text"]#datepicker {
     height: 100%;
 }
 
+#inner-settings-image .filtered-images .inview-images {
+    height: 36px;
+    width: 100%;
+    clear: both;
+}
 
-/*#inner-settings-image .filtered-images img,*/
+
+/*#inner-settings-image .filtered-images img, */
 
 #inner-settings-video .filtered-videos iframe {
     width: 100%;

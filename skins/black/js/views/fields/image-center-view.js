@@ -8,13 +8,17 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
     /** @lends ImageCenterView.prototype */
     {
         className: "settings menu-block",
-        dataImages: [],
+        dataImages: null,
+        offset: 0,
+        limit: 12,
         events: {
+            'keydown': 'keyAction',
             'click .backward-image': 'backward',
             'click #inner-settings-image .ajax-image': 'selectImage',
             'keyup #inner-settings-image .img-search': 'searchFilter',
             'click .remove': 'deleteImage',
-            'click .search-button': 'clickSearchButton'
+            'click .search-button': 'clickSearchButton',
+            'shown': 'afterRender'
         },
         /**
          * Set setting's id
@@ -43,6 +47,15 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.assets = options.assets;
             this.tags = options.tags;
             this.hideDeleteButton = options.hideDeleteButton;
+
+            this.dataImages = [];
+            for (var i = 0; i < this.assets.length; i++) {
+                for (var j = 0, asset = this.assets[i]; j < asset.length; j++) {
+                    if (asset[j].type === 'image') {
+                        this.dataImages.push({ src: this.assets[i][j].src, tags: this.assets[i][j].tags });
+                    }
+                }
+            }
         },
         /**
          * Render ImageCenter view
@@ -59,8 +72,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 'no_image': this.storage.__('no_image', 'No image'),
             }));
 
-            this.afterRender();
-
             return this;
         },
         /**
@@ -68,60 +79,70 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          *
          */
         afterRender: function() {
-            var assets = this.assets;
+            var self = this;
 
             //Inserting tags if such existed
             if (!!this.tags) {
                 this.$el.find('.img-search').val(this.tags);
             }
 
-            for (var i = 0; i < assets.length; i++) {
-                for (var j = 0, asset = assets[i]; j < asset.length; j++) {
-                    if (asset[j].type === 'image') {
-                        this.dataImages.push({ src: assets[i][j].src, tags: assets[i][j].tags });
-                    }
-                }
-            }
 
-            this.loadImages();
+            this.loadMore();
+            this.$el.find('.filtered-images').on('scroll', function() {
+                if (self.checkLoadMore()) {
+                    self.loadMore();
+                }
+            });
+        },
+        checkLoadMore: function() {
+            var filteredImages = this.$el.find('.filtered-images');
+            if (this.$el.find('.inview-images').offset().top < filteredImages.offset().top + (filteredImages.height())) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        keyAction: function(evt) {
+            if (evt.keyCode == 13) {
+                this.$el.find(".search-button").click();
+            }
         },
         clickSearchButton: function() {
-            var images, filteredWords = this.$el.find('.img-search').val().split(','),
+            var filteredWords = this.$el.find('.img-search').val().split(','),
                 filteredImages = this.$el.find('.filtered-images');
 
-            images = this.getImages(filteredWords);
-            filteredImages.empty();
-            filteredImages.append(images);
-        },
-        /**
-         * Load images
-         * @returns {String} html
-         */
-        loadImages: function() {
-            var images, tags = this.tags,
-                filteredImages = this.$el.find('.filtered-images');
+            filteredImages.find('.ajax-image').remove();
 
-            images = this.getImages(tags);
-            filteredImages.append(images);
+            this.tags = filteredWords;
+            this.offset = 0;
+            this.loadMore();
         },
-        getImages: function(tags) {
+        loadMore: function() {
+            var filteredImages = this.$el.find('.filtered-images'),
+                images = this.getImages(this.tags, this.offset);
+            
+            if (images) {
+                this.offset = this.offset + this.limit;
+                filteredImages.find('.inview-images').before(images);
+                if (this.checkLoadMore()) {
+                    this.loadMore();
+                }
+            }
+        },
+        getImages: function(tags, offset) {
             var filteredWords = tags,
-                images = this.dataImages,
                 imgs = [];
 
-            if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
-                for (var i = 0; i < 100; i++) {
-                    if (images[i] == undefined) {
-                        break;
-                    }
+            var images = this.dataImages.slice(offset, offset + this.limit);
+
+            for (var i = 0; i < images.length; i++) {
+                if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                     imgs.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
-                }
-            } else {
-                for (var obj = 0; obj < images.length; obj++) {
+                } else {
                     for (var j = 0; j < filteredWords.length; j++) {
                         var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-                        if (filteredWords[j] !== '' && images[obj].tags.join(' ').match(regEx)) {
-                            imgs.push('<div class="ajax-image"><img src="' + images[obj].src + '" alt="" /></div>');
+                        if (filteredWords[j] !== '' && images[i].tags.join(' ').match(regEx)) {
+                            imgs.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
                         }
                     }
                 }
@@ -129,7 +150,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
             return imgs.join('');
         },
-
         /**
          * Returning to main block settings on clicking back button
          * @returns {undefined}
@@ -166,14 +186,48 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * Keyup event for filtering images by tags in search input
          * @param {type} evt
          */
-        searchFilter: function(evt) {
-            var filteredImages = this.$el.find('.filtered-images'),
-                filteredWords = evt.target.value.split(','),
-                images;
+        searchFilter: function() {
+            var self = this;
 
-            images = this.getImages(filteredWords);
-            filteredImages.empty();
-            filteredImages.append(images);
+            // Get tags byGroup
+            var groupTags = _.groupBy(this.dataImages, function(image) {
+                return image.tags;
+            });
+
+            // Get array tags
+            var tagsList = [];
+            _.each(groupTags, function(val, key) {
+                if (val) {
+                    tagsList.push(key);
+                }
+            });
+
+            this.$el.find('.img-search').autocomplete({
+                source: function(request, callback) {
+                    var searchParam = request.term;
+                    init(searchParam, callback);
+                },
+                select: function() {
+                    self.$el.find('.search-button').trigger('click');
+                },
+            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+                //Ul custom class here
+                ul.addClass('settings-autocomplete media-autocomplete');
+                return jQuery("<li>")
+                    .attr("data-value", item.value)
+                    .append(item.label)
+                    .appendTo(ul);
+            };;
+
+            function init(query, callback) {
+                var response = [];
+                for (var i = 0; i < tagsList.length; i++) {
+                    if (!_.contains(response, tagsList[i])) {
+                        response.push(tagsList[i]);
+                    }
+                }
+                callback(response);
+            };
         },
         /**
          * Remove view
