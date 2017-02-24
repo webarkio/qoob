@@ -130,8 +130,12 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         }
     },
     startEditBlock: function(blockId) {
-        this.layout.startEditBlock(blockId);
-        this.scrollTo(blockId);
+        if(this.pageModel.get('blocks').get(blockId)){
+            this.layout.startEditBlock(blockId);
+            this.scrollTo(blockId);
+        }else{
+            this.navigate('index') 
+        }
     },
     stopEditBlock: function() {
         this.layout.stopEditBlock();
