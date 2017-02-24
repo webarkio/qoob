@@ -114,7 +114,7 @@ Skin.prototype.activate = function(options) {
 
 
     //Blocks loaded to viewPort
-    self.layout.viewPort.on('blocks_loaded', function() {
+    self.layout.viewPort.once('blocks_loaded', function() {
         self.loader.trigger('skin_loaded');
         Backbone.history.start({ pushState: false });
     });
