@@ -1,180 +1,223 @@
+/*global window*/
 /**
  * Create IconCenterView view 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var IconCenterView = Backbone.View.extend(
-        /** @lends IconCenterView.prototype */{
-            className: "settings menu-block",
-            parentId: null,
-            events: {
-                'click .backward-icon': 'backward',
-                'click #inner-settings-icon .ajax-icon': 'selectIcon',
-                'click #inner-settings-icon .ajax-icon.chosen': 'unselectIcon',
-                'keyup #inner-settings-icon .icon-search': 'searchFilter',
-                'change #inner-settings-icon .pack-icon': 'categoryChange',
-                'click .delete-icon': 'deleteIcon'
-            },
-            /**
-             * Set setting's id
-             * @class SettingsView
-             * @augments Backbone.View
-             * @constructs
-             */
-            attributes: function () {
-                return {
-                    id: "settings-block-media",
-                    'data-side-id': 'settings-block-media'
-                };
-            },
-            /**
-             * View IconCenter
-             * @class IconCenterView
-             * @augments Backbone.View
-             * @constructs
-             */
-            initialize: function (options) {
-                this.storage = options.storage;
-                this.controller = options.controller;
-                this.tpl = _.template(this.storage.getSkinTemplate('field-icon-setting-preview'));
-                this.parentId = options.parentId;
-                this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
-                this.icons = options.icons;
-                this.icon = options.icon;
-            },
-            /**
-             * Render IconCenter view
-             * @returns {Object}
-             */
-            render: function () {
-                //Creating layout
-                this.$el.html(this.tpl({
-                    back: this.storage.__('back', 'Back'),
-                    all: this.storage.__('all', 'all'),
-                    tags: this.storage.__('tags', 'Tags'),
-                    icons: this.icons
-                }));
+var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
+    /** @lends IconCenterView.prototype */
+    {
+        className: "settings menu-block",
+        offset: 0,
+        limit: 12,
+        events: {
+            'keydown': 'keyAction',
+            'click .backward-icon': 'backward',
+            'click #inner-settings-icon .ajax-icon': 'selectIcon',
+            'keyup #inner-settings-icon .icon-search': 'searchFilter',
+            'click .remove': 'clickRemoveIcon',
+            'click .search-button': 'clickSearchButton',
+            'shown': 'afterRender'
+        },
+        /**
+         * Set setting's id
+         * @class SettingsView
+         * @augments Backbone.View
+         * @constructs
+         */
+        attributes: function() {
+            return {
+                id: "settings-block-media",
+                'data-side-id': 'settings-block-media'
+            };
+        },
+        /**
+         * View IconCenter
+         * @class IconCenterView
+         * @augments Backbone.View
+         * @constructs
+         */
+        initialize: function(options) {
+            this.storage = options.storage;
+            this.controller = options.controller;
+            this.tpl = _.template(this.storage.getSkinTemplate('field-icon-setting-preview'));
+            this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
+            this.icons = options.icons;
+            this.icon = options.icon;
+            this.tags = options.icon.tags || '';
+        },
+        /**
+         * Render IconCenter view
+         * @returns {Object}
+         */
+        render: function() {
+            //Creating layout
+            this.$el.html(this.tpl({
+                back: this.storage.__('back', 'Back'),
+                search: this.storage.__('search', 'Search'),
+                'no_icon': this.storage.__('no_icon', 'No icon'),
+                icon: this.icon
+            }));
 
-                this.afterRender();
+            return this;
+        },
+        /**
+         * Actions to do after element is rendered 
+         *
+         */
+        afterRender: function() {
+            var self = this;
 
-                return this;
-            },
-            /**
-             * Actions to do after element is rendered 
-             *
-             */
-            afterRender: function () {
-                var packs = [];
+            //Inserting tags if such existed
+            if (!!this.tags) {
+                this.$el.find('.icon-search').val(this.tags);
+            }
 
-                for (var i in this.icons) {
-                    var pack = this.icons[i].classes.split(' ')[0] || 'all';
-                    if (!_.contains(packs, pack)) {
-                        packs.push(pack);
-                        this.$el.find('.pack-icon').append('<option value="' + pack + '">' + pack + '</option>');
+            this.loadMore();
+            this.$el.find('.filtered-icons').on('scroll', function() {
+                if (self.checkLoadMore()) {
+                    self.loadMore();
+                }
+            });
+        },
+        checkLoadMore: function() {
+            var filteredIcons = this.$el.find('.filtered-icons');
+            if (this.$el.find('.inview-icons').offset().top < filteredIcons.offset().top + (filteredIcons.height())) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        keyAction: function(evt) {
+            if (evt.keyCode == 13) {
+                this.$el.find(".search-button").click();
+            }
+        },
+        clickSearchButton: function() {
+            var filteredWords = this.$el.find('.icon-search').val().split(','),
+                filteredIcons = this.$el.find('.filtered-icons');
+
+            filteredIcons.find('.ajax-icon').remove();
+
+            this.tags = filteredWords;
+            this.offset = 0;
+            this.loadMore();
+        },
+        loadMore: function() {
+            var filteredIcons = this.$el.find('.filtered-icons'),
+                icons = this.getIcons(this.tags, this.offset);
+
+            if (icons) {
+                this.offset = this.offset + this.limit;
+                filteredIcons.find('.inview-icons').before(icons);
+                if (this.checkLoadMore()) {
+                    this.loadMore();
+                }
+            }
+        },
+        getIcons: function(tags, offset) {
+            var filteredWords = tags,
+                result = [];
+
+            if (_.isString(filteredWords)) {
+                filteredWords = filteredWords.split(',');
+            }
+
+            var icons = this.icons.slice(offset, offset + this.limit);
+
+            for (var i = 0; i < icons.length; i++) {
+                if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+                    result.push('<div class="ajax-icon"><span  data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
+                } else {
+                    for (var j = 0; j < filteredWords.length; j++) {
+                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
+                        if (filteredWords[j] !== '' && icons[i].tags.match(regEx)) {
+                            result.push('<div class="ajax-icon"><span  data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
+                        }
                     }
                 }
-                //Inserting tags if such existed
-                if (!!this.icon.tags) {
-                    this.$el.find('.icon-search').val(this.icon.tags);
-                    this.$el.find('.icon-search').trigger('keyup');
-                }
-                //Initialize select picker
-                this.$('.pack-icon').selectpicker();
-            },
-            /**
-             * Remove view
-             */
-            dispose: function () {
-                // same as this.$el.remove();
-                this.$el.remove();
-                // unbind events that are
-                // set on this view
-                this.off();
-            },
-            /**
-             * Returning to main block settings on clicking back button
-             * @returns {undefined}
-             */
-            backward: function (e) {
-                e.preventDefault();
-                this.controller.layout.menu.rotateBackward(this.backId);
-            },
-            /**
-             * Setting an icon by clicking it
-             * @param {type} evt
-             * @returns {undefined}
-             */
-            selectIcon: function (evt) {
-                this.$el.find('.ajax-icon').removeClass('chosen');
-                evt.currentTarget.classList.add('chosen');
-                window.selectFieldIcon(this.$(evt.currentTarget).find('span').attr('class'), this.$(evt.currentTarget).find('span').attr('data-icon-tags'));
-            },
-            /**
-             * Unset the chosen icon and returning to the default one
-             */
-            unselectIcon: function (evt) {
-                this.$el.find('.ajax-icon').removeClass('chosen');
-                evt.currentTarget.classList.remove('chosen');
-                window.selectFieldIcon(this.icon.classes, this.icon.tags);
-            },
-            /**
-             * Delete icon
-             * @param {type} evt
-             */
-            deleteIcon: function (evt) {
-                window.selectFieldIcon('empty');
-                this.controller.layout.menu.rotateBackward(this.backId);
-            },
-            /**
-             * Keyup event for filtering icons by tags in search input
-             * @param {type} evt
-             */
-            searchFilter: function (evt) {
-                var self = this,
-                        filteredWords = evt.target.value.split(','),
-                        iconsToFilter = this.$el.find('.ajax-icon');
-
-                iconsToFilter.css('display', 'inline-block');
-
-                if (filteredWords.length <= 1 && filteredWords[0] === '') {
-                    iconsToFilter.css('display', 'inline-block');
-                } else {
-                    iconsToFilter.each(function () {
-                        var filtered = false;
-                        for (var i = 0; i < filteredWords.length; i++) {
-                            var regEx = new RegExp(filteredWords[i].replace(/ /g, ' *'));
-                            if (filteredWords[i] !== '' && self.$(this).find('span').attr('data-icon-tags').match(regEx)) {
-                                filtered = true;
-                                self.$(this).css('display', 'inline-block');
-                                break;
-                            }
-                        }
-                        if (!filtered) {
-                            self.$(this).hide();
-                            //Question: first time fadeOut() doesn't work, but hide() dose
-                        }
-                    });
-                }
-            },
-            /**
-             * Filtering icons by category select controller
-             * @param {type} evt
-             * @returns {undefined}
-             */
-            categoryChange: function (evt) {
-                var pack = evt.target.value,
-                        iconsToFilter = this.$el.find('.ajax-icon');
-
-                iconsToFilter.removeClass('not-in-pack');
-
-                if (pack !== 'all') {
-                    iconsToFilter.each(function () {
-                        if (pack !== this.getAttribute('data-pack-icon')) {
-                            this.classList.add('not-in-pack');
-                        }
-                    });
-                }
-
-                this.$el.find('.icon-search').trigger('keyup');
             }
-        });
+
+            return result.join('');
+        },
+        /**
+         * Returning to main block settings on clicking back button
+         * @returns {undefined}
+         */
+        backward: function(e) {
+            e.preventDefault();
+            this.controller.layout.menu.rotateBackward(this.backId);
+        },
+        /**
+         * Setting an icon by clicking it
+         * @param {type} evt
+         * @returns {undefined}
+         */
+        selectIcon: function(evt) {
+            var currentTarget = this.$(evt.currentTarget).find('span');
+            this.$el.find('.ajax-icon').removeClass('chosen');
+            evt.currentTarget.classList.add('chosen');
+            if (this.$el.find('.selected-icon').hasClass('empty')) {
+                this.$el.find('.selected-icon').removeClass('empty');
+            }
+            this.$el.find('.preview-icon span').attr({
+                'class': currentTarget.attr('class'),
+                'data-icon-tags': currentTarget.attr('data-icon-tags')
+            });
+            window.selectFieldIcon(currentTarget.attr('class'), currentTarget.attr('data-icon-tags'));
+        },
+        /**
+         * Delete icon
+         * @param {type} evt
+         */
+        clickRemoveIcon: function(evt) {
+            evt.preventDefault();
+            window.selectFieldIcon('');
+            this.$el.find('.selected-icon').addClass('empty');
+            this.$el.find('.ajax-icon').removeClass('chosen');
+        },
+        /**
+         * Keyup event for filtering icons by tags in search input
+         * @param {type} evt
+         */
+        searchFilter: function() {
+            var self = this;
+
+            // Get tags byGroup
+            var groupTags = _.groupBy(this.icons, function(icon) {
+                return icon.tags;
+            });
+
+            // Get array tags
+            var tagsList = [];
+            _.each(groupTags, function(val, key) {
+                if (val) {
+                    tagsList.push(key);
+                }
+            });
+
+            this.$el.find('.icon-search').autocomplete({
+                source: tagsList,
+                select: function() {
+                    self.$el.find('.search-button').trigger('click');
+                },
+            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+                //Ul custom class here
+                ul.addClass('settings-autocomplete media-autocomplete');
+                return jQuery("<li>")
+                    .attr("data-value", item.value)
+                    .append(item.label)
+                    .appendTo(ul);
+            };
+        },
+        /**
+         * Remove view
+         */
+        dispose: function() {
+            // same as this.$el.remove();
+            this.$el.remove();
+            // unbind events that are
+            // set on this view
+            this.off();
+        }
+    });

@@ -32,7 +32,6 @@ Fields.image = QoobFieldView.extend(
             this.options = options;
             this.parentId = options.parentId;
             this.tags = options.settings.tags || null;
-
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-preview'));
         },
         /**
@@ -50,9 +49,23 @@ Fields.image = QoobFieldView.extend(
          */
         clickRemoveImage: function(evt) {
             evt.preventDefault();
-            this.$el.find('.img-container').hide();
-            this.$el.find('.no-image').show();
+            this.$el.find('.edit-image').addClass('empty');
             this.changeImage('');
+        },
+        clickResetImageToDefault: function(evt) {
+            evt.preventDefault();
+            this.changeImage(this.options.defaults);
+            if (this.$el.find('.edit-icon').hasClass('empty')) {
+                this.$el.find('.edit-icon').removeClass('empty');
+            }
+        },
+        /**
+         * Image upload
+         * @param {Object} evt
+         */
+        clickUploadImage: function(evt) {
+            evt.preventDefault();
+            this.$el.find('input.input-file').trigger('click');
         },
         /**
          * Show drop zone
@@ -103,7 +116,7 @@ Fields.image = QoobFieldView.extend(
             }
         },
         /**
-         * Show media center side
+         * Show media center images
          */
         clickMediaCenter: function() {
             window.selectFieldImage = function(src) {
@@ -111,9 +124,6 @@ Fields.image = QoobFieldView.extend(
                 if (!src) {
                     this.$el.find('.edit-image').addClass('empty');
                 }
-
-                this.$el.find('.img-container').show();
-                this.$el.find('.no-image').hide();
                 this.changeImage(src);
 
             }.bind(this);
@@ -132,18 +142,6 @@ Fields.image = QoobFieldView.extend(
             this.controller.setInnerSettingsView(mediaCenter);
 
             return false;
-        },
-        clickResetImageToDefault: function(evt) {
-            evt.preventDefault();
-            this.changeImage(this.options.defaults);
-        },
-        /**
-         * Image upload
-         * @param {Object} evt
-         */
-        clickUploadImage: function(evt) {
-            evt.preventDefault();
-            this.$el.find('input.input-file').trigger('click');
         },
         changeInputFile: function(evt) {
             var self = this;

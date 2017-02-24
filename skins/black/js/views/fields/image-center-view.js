@@ -65,7 +65,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             //Creating layout
             this.$el.html(this.tpl({
                 curSrc: this.curSrc,
-                assets: this.assets,
                 hideDeleteButton: this.hideDeleteButton,
                 back: this.storage.__('back', 'Back'),
                 search: this.storage.__('search', 'Search'),
@@ -131,24 +130,24 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         },
         getImages: function(tags, offset) {
             var filteredWords = tags,
-                imgs = [];
+                result = [];
 
             var images = this.dataImages.slice(offset, offset + this.limit);
 
             for (var i = 0; i < images.length; i++) {
                 if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
-                    imgs.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
+                    result.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
                 } else {
                     for (var j = 0; j < filteredWords.length; j++) {
                         var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
                         if (filteredWords[j] !== '' && images[i].tags.join(' ').match(regEx)) {
-                            imgs.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
+                            result.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
                         }
                     }
                 }
             }
 
-            return imgs.join('');
+            return result.join('');
         },
         /**
          * Returning to main block settings on clicking back button
@@ -166,11 +165,11 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         selectImage: function(evt) {
             this.$el.find('.ajax-image').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
-            window.selectFieldImage(evt.target.getAttribute('src'));
-            this.$el.find('.select-image-container img').attr('src', evt.target.getAttribute('src'));
+            this.$el.find('.image-container img').attr('src', evt.target.getAttribute('src'));
             if (this.$el.find('.selected-image').hasClass('empty')) {
                 this.$el.find('.selected-image').removeClass('empty');
             }
+            window.selectFieldImage(evt.target.getAttribute('src'));
         },
         /**
          * Delete image
@@ -203,10 +202,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             });
 
             this.$el.find('.img-search').autocomplete({
-                source: function(request, callback) {
-                    var searchParam = request.term;
-                    init(searchParam, callback);
-                },
+                source: tagsList,
                 select: function() {
                     self.$el.find('.search-button').trigger('click');
                 },
@@ -217,16 +213,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                     .attr("data-value", item.value)
                     .append(item.label)
                     .appendTo(ul);
-            };;
-
-            function init(query, callback) {
-                var response = [];
-                for (var i = 0; i < tagsList.length; i++) {
-                    if (!_.contains(response, tagsList[i])) {
-                        response.push(tagsList[i]);
-                    }
-                }
-                callback(response);
             };
         },
         /**

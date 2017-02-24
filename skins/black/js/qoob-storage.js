@@ -48,10 +48,6 @@ QoobStorage.prototype.getGroups = function(libName) {
     return _.sortBy(groups, "position");
 };
 
-QoobStorage.prototype.upload = function(cb) {
-    this.driver.upload(cb);
-};
-
 /**
  *
  * @param  {String} group   Group name for which to find blocks.
