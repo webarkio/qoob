@@ -12,7 +12,6 @@ function Skin() {
             { "type": "js", "name": "jquery-ui", "src": "js/libs/jquery-ui.js", "min_src": "js/libs/jquery-ui.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "jquery-ui-touch-punch", "src": "js/libs/jquery.ui.touch-punch.js", "min_src": "js/libs/jquery.ui.touch-punch.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "min_src": "js/libs/jquery-ui-droppable-iframe.min.js", "dep": ["jquery-ui"] },
-            { "type": "js", "name": "jquery.inview", "src": "js/libs/jquery.inview.js", "min_src": "js/libs/jquery.inview.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "bootstrap-progressbar", "src": "js/libs/bootstrap-progressbar.js", "min_src": "js/libs/bootstrap-progressbar.min.js", "dep": ["bootstrap"] },
             { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.js", "min_src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
@@ -64,7 +63,7 @@ function Skin() {
 
         ],
         "all": [
-            { "type": "js", "name": "quill", "src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },

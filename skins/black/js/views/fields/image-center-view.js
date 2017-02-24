@@ -8,19 +8,17 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
     /** @lends ImageCenterView.prototype */
     {
         className: "settings menu-block",
-        dataImages: [],
+        dataImages: null,
+        offset: 0,
         limit: 12,
-        stepScroll: 0,
         events: {
+            'keydown': 'keyAction',
             'click .backward-image': 'backward',
             'click #inner-settings-image .ajax-image': 'selectImage',
-            // 'click #inner-settings-image .ajax-image.chosen': 'unselectImage',
             'keyup #inner-settings-image .img-search': 'searchFilter',
-            // 'change #inner-settings-image .img-pack': 'categoryChange',
             'click .remove': 'deleteImage',
-            // 'inview .inview-images': 'test'
-            // 'click .img-url-select': 'imgUrlUpload',
-            // 'change .img-url': 'imgUrlChange'
+            'click .search-button': 'clickSearchButton',
+            'shown': 'afterRender'
         },
         /**
          * Set setting's id
@@ -44,13 +42,20 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-setting-preview'));
-            // this.parentId = options.parentId;
             this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
             this.curSrc = options.curSrc;
             this.assets = options.assets;
             this.tags = options.tags;
             this.hideDeleteButton = options.hideDeleteButton;
 
+            this.dataImages = [];
+            for (var i = 0; i < this.assets.length; i++) {
+                for (var j = 0, asset = this.assets[i]; j < asset.length; j++) {
+                    if (asset[j].type === 'image') {
+                        this.dataImages.push({ src: this.assets[i][j].src, tags: this.assets[i][j].tags });
+                    }
+                }
+            }
         },
         /**
          * Render ImageCenter view
@@ -67,8 +72,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 'no_image': this.storage.__('no_image', 'No image'),
             }));
 
-            this.afterRender();
-
             return this;
         },
         /**
@@ -76,130 +79,77 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          *
          */
         afterRender: function() {
-            var assets = this.assets;
+            var self = this;
 
             //Inserting tags if such existed
             if (!!this.tags) {
                 this.$el.find('.img-search').val(this.tags);
-                this.$el.find('.img-search').trigger('keyup');
             }
 
-            for (var i = 0; i < assets.length; i++) {
-                for (var j = 0, asset = assets[i]; j < asset.length; j++) {
-                    if (asset[j].type === 'image') {
-                        this.dataImages.push({ src: assets[i][j].src, tags: assets[i][j].tags });
+
+            this.loadMore();
+            this.$el.find('.filtered-images').on('scroll', function() {
+                if (self.checkLoadMore()) {
+                    self.loadMore();
+                }
+            });
+        },
+        checkLoadMore: function() {
+            var filteredImages = this.$el.find('.filtered-images');
+            if (this.$el.find('.inview-images').offset().top < filteredImages.offset().top + (filteredImages.height())) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        keyAction: function(evt) {
+            if (evt.keyCode == 13) {
+                this.$el.find(".search-button").click();
+            }
+        },
+        clickSearchButton: function() {
+            var filteredWords = this.$el.find('.img-search').val().split(','),
+                filteredImages = this.$el.find('.filtered-images');
+
+            filteredImages.find('.ajax-image').remove();
+
+            this.tags = filteredWords;
+            this.offset = 0;
+            this.loadMore();
+        },
+        loadMore: function() {
+            var filteredImages = this.$el.find('.filtered-images'),
+                images = this.getImages(this.tags, this.offset);
+            
+            if (images) {
+                this.offset = this.offset + this.limit;
+                filteredImages.find('.inview-images').before(images);
+                if (this.checkLoadMore()) {
+                    this.loadMore();
+                }
+            }
+        },
+        getImages: function(tags, offset) {
+            var filteredWords = tags,
+                imgs = [];
+
+            var images = this.dataImages.slice(offset, offset + this.limit);
+
+            for (var i = 0; i < images.length; i++) {
+                if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+                    imgs.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
+                } else {
+                    for (var j = 0; j < filteredWords.length; j++) {
+                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
+                        if (filteredWords[j] !== '' && images[i].tags.join(' ').match(regEx)) {
+                            imgs.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
+                        }
                     }
                 }
             }
 
-            this.loadImages();
-        },
-        /*
-        test: function(event, isInView) {
-            console.log('tut');
-            var self = this,
-                tags = this.tags,
-                filteredImages = this.$el.find('.filtered-images');
-
-
-            if (isInView) {
-                console.log('isInView');
-
-                filteredImages.find('.inview-images').before(self.getImages(tags));
-                filteredImages.find('.inview-images').trigger('inview');
-
-                // element is now visible in the viewport
-            } else {
-                console.log('ne vizhu');
-                // element has gone out of viewport
-            }
-
-        },
-        */
-        /**
-         * Load images
-         * @returns {String} html
-         */
-        loadImages: function() {
-            var self = this,
-                tags = this.tags,
-                filteredImages = this.$el.find('.filtered-images');
-
-            var images = self.getImages(tags);
-
-            this.$el.find('.inview-images').on('inview', function(event, isInView) {
-                if (isInView && images) {
-                    console.log('isInView');
-                    filteredImages.find('.inview-images').before(images);
-                    self.loadImages();
-                    // element is now visible in the viewport
-                } else {
-                    console.log('element has gone out of viewport');
-                    // element has gone out of viewport
-                }
-            });
-
-            // var currPage = 0,
-            //     itemsInPage = 100,
-            //     items = [],
-            //     scrollTimeout = 0;
-            // for (var i = 0; i < 1000; i++) items.push(i + 1);
-            // window.onscroll = function() { 
-            //     clearTimeout(scrollTimeout);
-            //     scrollTimeout = setTimeout(function() { 
-            //         items.forEach(function(item, index) {
-            //             if (currPage >= Math.ceil(items.length / itemsInPage))
-            //                 currPage = 0;
-
-            //             var startItem = currPage * itemsInPage;
-            //             var endItem = startItem + itemsInPage;
-            //             if (index >= startItem && index < endItem)
-            //                 console.log(item); 
-            //         });
-            //         currPage++; 
-            //     }, 250);
-            // };
-        },
-
-        getImages: function(tags) {
-            var limit = 12;
-
-            var filteredWords = tags,
-                data = this.dataImages,
-                imgs = [];
-
-            var paginate = function(step) {
-                var start = limit * step;
-                return data.slice(start, start + limit);
-            }
-
-            var images = paginate(this.stepScroll);
-
-            images.forEach(function(item) {
-                imgs.push('<div class="ajax-image"><img src="' + item.src + '" alt="" /></div>');
-            });
-
-            this.stepScroll++;
-
-            // for (var i = 0; i < data.length; i++) {
-            //     if (filteredWords.length <= 1 && filteredWords[0] === '') {
-            //         for (var j = 0; j < filteredWords.length; j++) {
-            //             var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-            //             if (filteredWords[j] !== '' && data[j].join(' ').tags.match(regEx)) {
-            //                 console.log(1);
-            //                 // filtered = true;
-            //                 // self.$(this).stop(true, true).fadeIn();
-            //                 break;
-            //             }
-            //         }
-            //     } else {
-            //         imgs.push('<div class="ajax-image"><img src="' + data[i].src + '" alt="" /></div>');
-            //     }
-            // }
-
             return imgs.join('');
         },
-
         /**
          * Returning to main block settings on clicking back button
          * @returns {undefined}
@@ -218,18 +168,10 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             evt.currentTarget.classList.add('chosen');
             window.selectFieldImage(evt.target.getAttribute('src'));
             this.$el.find('.select-image-container img').attr('src', evt.target.getAttribute('src'));
-            if  (this.$el.find('.selected-image').hasClass('empty')) {
+            if (this.$el.find('.selected-image').hasClass('empty')) {
                 this.$el.find('.selected-image').removeClass('empty');
             }
         },
-        /**
-         * Unset the chosen image and returning to the default one
-         */
-        // unselectImage: function (evt) {
-        //     this.$el.find('.ajax-image').removeClass('chosen');
-        //     evt.currentTarget.classList.remove('chosen');
-        //     window.selectFieldImage(this.curSrc);
-        // },
         /**
          * Delete image
          * @param {type} evt
@@ -244,56 +186,48 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * Keyup event for filtering images by tags in search input
          * @param {type} evt
          */
-        searchFilter: function(evt) {
-            var assets = this.assets,
-                filteredImages = this.$el.find('.filtered-images'),
-                filteredWords = evt.target.value.split(',');
+        searchFilter: function() {
+            var self = this;
 
-            filteredImages.empty();
+            // Get tags byGroup
+            var groupTags = _.groupBy(this.dataImages, function(image) {
+                return image.tags;
+            });
 
-            // console.log(assets);
+            // Get array tags
+            var tagsList = [];
+            _.each(groupTags, function(val, key) {
+                if (val) {
+                    tagsList.push(key);
+                }
+            });
 
-            var imgs = [];
-            if (filteredWords.length <= 1 && filteredWords[0] === '') {
+            this.$el.find('.img-search').autocomplete({
+                source: function(request, callback) {
+                    var searchParam = request.term;
+                    init(searchParam, callback);
+                },
+                select: function() {
+                    self.$el.find('.search-button').trigger('click');
+                },
+            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+                //Ul custom class here
+                ul.addClass('settings-autocomplete media-autocomplete');
+                return jQuery("<li>")
+                    .attr("data-value", item.value)
+                    .append(item.label)
+                    .appendTo(ul);
+            };;
 
-            } else {
-                for (var i = 0; i < assets.length; i++) {
-                    for (var j = 0, asset = assets[i]; j < asset.length; j++) {
-                        if (asset[j].type === 'image') {
-                            imgs.push('<div class="ajax-image"><img src="' + assets[i][j].src + '" alt="" /></div>');
-                        }
+            function init(query, callback) {
+                var response = [];
+                for (var i = 0; i < tagsList.length; i++) {
+                    if (!_.contains(response, tagsList[i])) {
+                        response.push(tagsList[i]);
                     }
                 }
-                filteredImages.append(imgs.join(''));
-            }
-
-
-
-            // var self = this,
-
-            //     imagesToFilter = this.$el.find('.ajax-image');
-
-            // imagesToFilter.stop(true, true).fadeIn();
-
-            // if (filteredWords.length <= 1 && filteredWords[0] === '') {
-            //     imagesToFilter.stop(true, true).fadeIn();
-            // } else {
-            //     imagesToFilter.each(function() {
-            //         var filtered = false;
-            //         for (var i = 0; i < filteredWords.length; i++) {
-            //             var regEx = new RegExp(filteredWords[i].replace(/ /g, ' *'));
-            //             if (filteredWords[i] !== '' && this.getAttribute('data-image-tags').match(regEx)) {
-            //                 filtered = true;
-            //                 self.$(this).stop(true, true).fadeIn();
-            //                 break;
-            //             }
-            //         }
-            //         if (!filtered) {
-            //             //Question: first time fadeOut() doesn't work, but hide() dose
-            //             self.$(this).stop(true, true).fadeOut().hide();
-            //         }
-            //     });
-            // }
+                callback(response);
+            };
         },
         /**
          * Remove view
@@ -303,26 +237,5 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             // unbind events that are
             // set on this view
             this.off();
-        },
-        /**
-         * Filtering images by category select controller
-         * @param {type} evt
-         * @returns {undefined}
-         */
-        /*categoryChange: function (evt) {
-            var pack = evt.target.value,
-                    imagesToFilter = this.$el.find('.ajax-image');
-
-            imagesToFilter.removeClass('not-in-pack');
-
-            if (pack !== 'all') {
-                imagesToFilter.each(function () {
-                    if (pack !== this.getAttribute('data-image-pack')) {
-                        this.classList.add('not-in-pack');
-                    }
-                });
-            }
-
-            this.$el.find('.img-search').trigger('keyup');
-        }*/
+        }
     });

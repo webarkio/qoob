@@ -9,14 +9,16 @@ Fields.image = QoobFieldView.extend(
     {
         events: {
             'click .media-center': 'clickMediaCenter',
-            'keyup change .image-url': 'changeInputUrlImage',
+            'change .image-url': 'changeInputUrlImage',
             'click .remove': 'clickRemoveImage',
             'click .upload': 'clickUploadImage',
             'click .reset': 'clickResetImageToDefault',
             'change .input-file': 'changeInputFile',
             'drop .drop-zone': 'dropImage',
             'dragenter .drop-zone': 'dragOnDropZone',
-            'dragleave .drop-zone': 'dragLeaveDropZone'
+            'dragleave .drop-zone': 'dragLeaveDropZone',
+            'global_drag_start': 'showDropZone',
+            'global_drag_stop': 'hideDropZone'
         },
         counterDropZone: 0,
         /**
@@ -32,9 +34,6 @@ Fields.image = QoobFieldView.extend(
             this.tags = options.settings.tags || null;
 
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-preview'));
-
-            // init drag image
-            this.dragImage();
         },
         /**
          * Main method change image
@@ -56,33 +55,16 @@ Fields.image = QoobFieldView.extend(
             this.changeImage('');
         },
         /**
-         * Drag image on screen
+         * Show drop zone
          */
-        dragImage: function() {
-            var self = this,
-                counter = 0,
-                viewport = jQuery('#qoob-viewport');
-            jQuery('#qoob').on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
-                    evt.preventDefault();
-                    evt.stopPropagation();
-                })
-                .on('dragenter', function() {
-                    counter++;
-                    self.$el.find('.drop-zone').show();
-                    if (counter === 1) {
-                        jQuery('<div/>', {class: 'temporary-viewport'}).appendTo(viewport);
-                    }
-                })
-                .on('dragleave', function() {
-                    counter--;
-                    if (counter === 0) {
-                        self.$el.find('.drop-zone').hide();
-                        viewport.find('.temporary-viewport').remove();
-                    }
-                })
-                .on('drop', function() {
-                    self.$el.find('.drop-zone').hide();
-                });
+        showDropZone: function() {
+            this.$el.find('.drop-zone').show();
+        },
+        /**
+         * Hide drop zone
+         */
+        hideDropZone: function() {
+            this.$el.find('.drop-zone').hide();
         },
         /**
          * Drop image on zone
@@ -90,6 +72,7 @@ Fields.image = QoobFieldView.extend(
         dropImage: function(evt) {
             var droppedFiles = evt.originalEvent.dataTransfer.files;
             this.$el.find('input[type="file"]').prop('files', droppedFiles);
+            this.counterDropZone = 0;
         },
         /**
          * Drag image on drop zone
@@ -198,7 +181,6 @@ Fields.image = QoobFieldView.extend(
                 "value": this.getValue(),
                 'media_center': this.storage.__('media_center', 'Media Center'),
                 'upload': this.storage.__('upload', 'Upload'),
-                'word_press_media_library': this.storage.__('word_press_media_library', 'WordPress media library'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_image': this.storage.__('no_image', 'No image'),
                 'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here'),
