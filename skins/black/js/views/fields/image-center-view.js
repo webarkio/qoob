@@ -85,7 +85,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 this.$el.find('.img-search').val(this.tags);
             }
 
-
             this.loadMore();
             this.$el.find('.filtered-images').on('scroll', function() {
                 if (self.checkLoadMore()) {

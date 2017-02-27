@@ -1,36 +1,30 @@
-<div id="inner-settings-video" class="inner-settings">
+<div id="inner-settings-video">
     <div class="backward">
-        <a class="backward-image" href="#"><span><%= back %></span></a>
+        <a class="backward-video" href="#"><span><%= back %></span></a>
     </div>
-    <div class="video-url-group">
-        <input class="input-text video-url" type="text" placeholder="<%= video_url %>" />
-        <i class="video-url-select"></i>
-    </div>
-    <div class="video-filter-group">
-        <input class="input-text video-search" type="text" placeholder="<%= tags %>">
-        <select class="video-pack">
-            <option selected value="all"><%= all %></option>
-        </select>
-    </div>
-    <div class="clearfix"></div>
-    <div class="settings-block">
-        <div class="filtered-videos">
-            <%  for (var i = 0; i < videos.length; i++) { %>
-                <div data-src="<%= videos[i].value %>" class="ajax-video" data-video-pack="<%if(videos[i].pack) {%><%=videos[i].pack%><%} else {%><%='default'%><% } %>" data-video-tags="<% if( videos[i].tags ){ %><%=videos[i].tags.join(', ')%><% } %>">
-                    <% if (videos[i].title !== '') { %> 
-                    <div class="video-title">
-                        <h4><%= videos[i].title %></h4>
-                    </div>
-                    <% } %>
-                    <% if (videos[i].preview !== '') { %> 
-                    <div class="video-preview" style="background: url('<%= videos[i].preview %>') center center no-repeat; background-size: cover;"></div>
-                    <% } %>
-                    <div class="video-overlay"></div>
+    <div class="settings-blocks-full">
+        <div class="settings-block">
+            <div class="selected-video<%if (src.url === '') { %> empty<%}%>">
+                <div class="video-container">
+                    <img class="img" src="<%= src.preview %>" alt="">
+                    <a href="#" class="remove"></a>
                 </div>
-                <% } %>
-        </div>
-        <div class="delete-button-container">
-            <div class="delete-video"></div>
+                <div class="no-video">
+                    <i class="icon fa fa-file-video-o"></i>
+                    <div class="no-video-title">
+                        <%= no_video %>
+                    </div>
+                </div>
+            </div>
+            <div class="video-filter-group">
+                <input class="input-text video-search" type="text" value="" placeholder="<%= search %>">
+                <button class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="filtered-videos">
+                <div class="inview-videos"></div>
+            </div>
         </div>
     </div>
 </div>

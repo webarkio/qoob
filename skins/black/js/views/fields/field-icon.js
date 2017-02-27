@@ -74,13 +74,14 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          */
         clickMediaCenter: function() {
             window.selectFieldIcon = function(classes, tags) {
-                if (classes) {
+                if (classes && tags) {
                     this.$el.find('.edit-icon span').attr({ 'class': classes, 'data-icon-tags': (!!tags ? tags : '') });
                     if (classes === 'empty') {
                         this.$el.find('.edit-icon').addClass('empty');
                     } else {
                         this.$el.find('.edit-icon').removeClass('empty');
                     }
+                this.changeIcon(classes);
                 }
             }.bind(this);
 

@@ -55,8 +55,8 @@ Fields.image = QoobFieldView.extend(
         clickResetImageToDefault: function(evt) {
             evt.preventDefault();
             this.changeImage(this.options.defaults);
-            if (this.$el.find('.edit-icon').hasClass('empty')) {
-                this.$el.find('.edit-icon').removeClass('empty');
+            if (this.$el.find('.edit-image').hasClass('empty')) {
+                this.$el.find('.edit-image').removeClass('empty');
             }
         },
         /**
