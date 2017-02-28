@@ -3,11 +3,14 @@
 * Includes: core.css, draggable.css
 * Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
 
+
 /* Layout helpers
 ----------------------------------*/
+
 .ui-helper-hidden {
     display: none;
 }
+
 .ui-helper-hidden-accessible {
     border: 0;
     clip: rect(0 0 0 0);
@@ -18,6 +21,7 @@
     position: absolute;
     width: 1px;
 }
+
 .ui-helper-reset {
     margin: 0;
     padding: 0;
@@ -28,18 +32,23 @@
     font-size: 100%;
     list-style: none;
 }
+
 .ui-helper-clearfix:before,
 .ui-helper-clearfix:after {
     content: "";
     display: table;
     border-collapse: collapse;
 }
+
 .ui-helper-clearfix:after {
     clear: both;
 }
+
 .ui-helper-clearfix {
-    min-height: 0; /* support: IE7 */
+    min-height: 0;
+    /* support: IE7 */
 }
+
 .ui-helper-zfix {
     width: 100%;
     height: 100%;
@@ -47,15 +56,18 @@
     left: 0;
     position: absolute;
     opacity: 0;
-    filter:Alpha(Opacity=0); /* support: IE8 */
+    filter: Alpha(Opacity=0);
+    /* support: IE8 */
 }
 
 .ui-front {
     z-index: 99999;
 }
 
+
 /* Interaction Cues
 ----------------------------------*/
+
 .ui-state-disabled {
     cursor: default !important;
 }
@@ -64,7 +76,9 @@
 /* Icons
 ----------------------------------*/
 
+
 /* states and img */
+
 .ui-icon {
     display: block;
     text-indent: -99999px;
@@ -76,7 +90,9 @@
 /* Misc visuals
 ----------------------------------*/
 
+
 /* Overlays */
+
 .ui-widget-overlay {
     position: fixed;
     top: 0;
@@ -90,7 +106,6 @@
     touch-action: none;
 }
 
-
 .ui-draggable-dragging {
     z-index: 9999999 !important;
 }
@@ -99,14 +114,13 @@
 /* Misc visuals
 ----------------------------------*/
 
+
 /* Fonts */
+
 @font-face {
     font-family: 'robotothin';
     src: url('../fonts/Roboto-Thin-webfont.eot');
-    src: url('../fonts/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Thin-webfont.woff') format('woff'),
-        url('../fonts/Roboto-Thin-webfont.ttf') format('truetype'),
-        url('../fonts/Roboto-Thin-webfont.svg#robotobold') format('svg');
+    src: url('../fonts/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Roboto-Thin-webfont.woff') format('woff'), url('../fonts/Roboto-Thin-webfont.ttf') format('truetype'), url('../fonts/Roboto-Thin-webfont.svg#robotobold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -114,22 +128,15 @@
 @font-face {
     font-family: 'robotolight';
     src: url('../fonts/Roboto-Light-webfont.eot');
-    src: url('../fonts/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Light-webfont.woff') format('woff'),
-        url('../fonts/Roboto-Light-webfont.ttf') format('truetype'),
-        url('../fonts/Roboto-Light-webfont.svg#robotobold') format('svg');
+    src: url('../fonts/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Roboto-Light-webfont.woff') format('woff'), url('../fonts/Roboto-Light-webfont.ttf') format('truetype'), url('../fonts/Roboto-Light-webfont.svg#robotobold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
-
 @font-face {
     font-family: 'robotobold';
     src: url('../fonts/Roboto-Bold-webfont.eot');
-    src: url('../fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Bold-webfont.woff') format('woff'),
-        url('../fonts/Roboto-Bold-webfont.ttf') format('truetype'),
-        url('../fonts/Roboto-Bold-webfont.svg#robotobold') format('svg');
+    src: url('../fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/Roboto-Bold-webfont.ttf') format('truetype'), url('../fonts/Roboto-Bold-webfont.svg#robotobold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -137,18 +144,18 @@
 @font-face {
     font-family: 'robotoregular';
     src: url('../fonts/Roboto-Regular-webfont.eot');
-    src: url('../fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Regular-webfont.woff') format('woff'),
-        url('../fonts/Roboto-Regular-webfont.ttf') format('truetype'),
-        url('../fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    src: url('../fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Roboto-Regular-webfont.woff') format('woff'), url('../fonts/Roboto-Regular-webfont.ttf') format('truetype'), url('../fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
+
 /* Overlays */
+
 #droppable-0 {
     margin-top: -1px;
 }
+
 .ui-droppable {
     position: absolute;
     width: 100%;
@@ -205,7 +212,10 @@
 .ui-droppable-hover span {
     margin-top: -10px;
 }
+
+
 /* Wait Block */
+
 .wait-block {
     cursor: default;
     visibility: visible;
@@ -272,11 +282,14 @@
 .wait-block .minutes-container {
     animation: rotate 1s infinite linear;
 }
+
 .wait-block .seconds-container {
     animation: rotate 0.3s infinite linear;
 }
 
+
 /* Animation add block and remove block */
+
 @-webkit-keyframes rotate {
     100% {
         transform: rotateZ(360deg);
@@ -295,6 +308,7 @@
         -webkit-transform: scale(.5);
     }
 }
+
 @keyframes scaleUp {
     from {
         opacity: 0;
@@ -304,26 +318,28 @@
 }
 
 @-webkit-keyframes scaleDown {
-    from { }
+    from {}
     to {
         opacity: 0;
         -webkit-transform: scale(.8);
     }
 }
+
 @keyframes scaleDown {
-    from { }
+    from {}
     to {
         opacity: 0;
         -webkit-transform: scale(.8);
         transform: scale(.8);
     }
 }
-.content-block-outer.content-show  {
+
+.content-block-outer.content-show {
     -webkit-animation: scaleUp .7s ease both;
     animation: scaleUp .7s ease both;
 }
 
-.content-block-outer.content-hide  {
+.content-block-outer.content-hide {
     -webkit-animation: scaleDown .7s ease both;
     animation: scaleDown .7s ease both;
 }
@@ -340,16 +356,17 @@
 }
 
 .content-block-inner .empty-block .empty-block-text {
-    font-family: 'robotolight'
-    color: #000;
+    font-family: 'robotolight' color: #000;
     font-size: 20px;
 }
+
 
 /* Overlay */
 
 #qoob-blocks .content-block-outer {
     position: relative;
 }
+
 .content-block-outer .qoob-overlay {
     position: absolute;
     display: block;
@@ -360,28 +377,34 @@
     transition: all;
     z-index: 9999;
 }
+
 .content-block-outer .qoob-overlay:hover {
     background: #fff;
     opacity: .4;
     cursor: pointer;
 }
+
 .content-block-outer .qoob-overlay.active {
     display: none;
 }
+
 .content-block-outer .qoob-overlay.no-active {
     background: #000;
     opacity: .7;
 }
+
 .content-block-outer .qoob-overlay.no-active:hover {
     background: #000;
     opacity: .4;
 }
 
 #qoob-blocks.preview .qoob-overlay {
-    display:none;
+    display: none;
 }
 
+
 /* Frontend Blank Block */
+
 #qoob-blocks .block-blank {
     position: relative;
     background-color: #e6e6e6;
@@ -420,7 +443,7 @@
 
 #qoob-blocks .block-blank-inner-text {
     width: 100%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -485,9 +508,9 @@
     height: 392px;
     /*margin: 0 auto;*/
     background-color: #fff;
-    -webkit-box-shadow: 0px 0px 15px 3px rgba(196,196,196,1);
-    -moz-box-shadow: 0px 0px 15px 3px rgba(196,196,196,1);
-    box-shadow: 0px 0px 15px 3px rgba(196,196,196,1);
+    -webkit-box-shadow: 0px 0px 15px 3px rgba(196, 196, 196, 1);
+    -moz-box-shadow: 0px 0px 15px 3px rgba(196, 196, 196, 1);
+    box-shadow: 0px 0px 15px 3px rgba(196, 196, 196, 1);
 }
 
 #qoob-blocks .qoob-templates .template .remove {
@@ -505,6 +528,7 @@
         width: 264px;
     }
 }
+
 @media (min-width: 992px) and (max-width: 1199px) {
     #qoob-blocks .qoob-templates .template {
         width: 264px;
@@ -519,6 +543,7 @@
         width: 100%;
     }
 }
+
 @media (max-width: 767px) {
     #qoob-blocks .qoob-templates .template {
         width: 42.5%;
@@ -530,6 +555,7 @@
         width: 100%;
     }
 }
+
 @media (max-width: 480px) {
     #qoob-blocks .qoob-templates {
         background-color: #e6e6e6;
@@ -543,14 +569,98 @@
     }
 }
 
+
 /* Quill editor
 ----------------------------------*/
+
 .ql-align-center {
-  text-align: center;
+    text-align: center;
 }
+
 .ql-align-justify {
-  text-align: justify;
+    text-align: justify;
 }
+
 .ql-align-right {
-  text-align: right;
+    text-align: right;
+}
+
+/* Loader
+----------------------------------*/
+@keyframes loader {
+  0%, 10%, 100% {
+    width: 80px;
+    height: 80px;
+  }
+  65% {
+    width: 150px;
+    height: 150px;
+  }
+}
+@keyframes loaderBlock {
+  0%, 30% {
+    transform: rotate(0);
+  }
+  55% {
+    background-color: #949599;
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+@keyframes loaderBlockInverse {
+  0%, 20% {
+    transform: rotate(0);
+  }
+  55% {
+    background-color: #949599;
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+.loader-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 9999999;
+}
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%) rotate(45deg) translate3d(0, 0, 0);
+  animation: loader 1.2s infinite ease-in-out;
+  z-index: 9999999;
+}
+.loader span {
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: #949599;
+  animation: loaderBlock 1.2s infinite ease-in-out both;
+}
+.loader span:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+.loader span:nth-child(2) {
+  top: 0;
+  right: 0;
+  animation: loaderBlockInverse 1.2s infinite ease-in-out both;
+}
+.loader span:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  animation: loaderBlockInverse 1.2s infinite ease-in-out both;
+}
+.loader span:nth-child(4) {
+  bottom: 0;
+  right: 0;
 }
