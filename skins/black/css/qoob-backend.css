@@ -1938,10 +1938,6 @@ input[type="text"]#datepicker {
     color: #fff;
 }
 
-.settings-item .media-acton-button.btn-group>.btn+.dropdown-toggle[aria-expanded="true"] {
-    background-color: #9ea0a5;
-}
-
 .settings-item .media-acton-button.btn-group>.btn+.dropdown-toggle[aria-expanded="true"] i {
     transform: rotate(180deg);
 }
