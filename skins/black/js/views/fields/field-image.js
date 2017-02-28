@@ -162,6 +162,10 @@ Fields.image = QoobFieldView.extend(
                     success: function(data) {
                         var json = JSON.parse(data);
                         self.changeImage(json.url);
+                        
+                        if (self.$el.find('.edit-image').hasClass('empty')) {
+                            self.$el.find('.edit-image').removeClass('empty');
+                        }
                     }
                 });
             } else {
@@ -174,6 +178,7 @@ Fields.image = QoobFieldView.extend(
          */
         render: function() {
             var htmldata = {
+                hideDeleteButton: this.settings.hideDeleteButton,
                 "label": this.settings.label,
                 "name": this.settings.name,
                 "value": this.getValue(),

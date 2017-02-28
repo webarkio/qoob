@@ -1448,27 +1448,25 @@ _:-ms-fullscreen,
 }
 
 .settings-accordion .settings-block {
-    margin-left: 0;
-    overflow: hidden;
     width: 100%;
-    padding-top: 20px;
     background: #6f6f6f;
-    padding: 0 5px;
-    margin-top: 2px;
+    padding: 20px 5px 0 5px;
+    margin: 2px 0 0 0;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    overflow: hidden !important;
-    /*hide scroll when expand accordion item*/
+    overflow: inherit;
 }
 
 .settings-accordion .settings-block .cross-delete.expand {
     height: 25px;
-    width: 250px;
-    margin-left: -8px;
+    width: calc(100% + 10px);
+    margin-left: -5px;
     background-color: #9fa1a7;
     background-image: url(../img/basket_delete.png);
     background-repeat: no-repeat;
     background-position: center center;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 .settings-accordion .settings-block .settings-block .cross-delete.expand {
@@ -1481,7 +1479,7 @@ _:-ms-fullscreen,
 }
 
 .settings-accordion .settings-block .settings-item:first-child {
-    margin-top: 20px;
+    margin-top: 0;
 }
 
 .without-title .settings-accordion .title_accordion .text {
@@ -1677,6 +1675,7 @@ _:-ms-fullscreen,
 
 .settings-item .select .dropdown-menu li a {
     color: #5a5b5e;
+    font-size: 13px;
     padding: 11px 0 11px 22px;
 }
 

@@ -8,7 +8,9 @@
         <div class="drop-zone"><span class="drop-zone-text"><%= drop_here %></span></div>
         <div class="img-container">
             <img class="media-center preview-image" src="<%= value %>" />
-            <a href="#" class="remove"></a>
+            <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                <a href="#" class="remove"></a>
+            <% } %>
         </div>
         <div class="no-image media-center">
             <i class="icon fa fa-file-image-o"></i>
