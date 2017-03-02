@@ -11,7 +11,9 @@
                     <img src="<%= src.preview %>" alt="">
                 <% } %>
             </div>
-            <a href="#" class="remove"></a>
+            <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                <a href="#" class="remove"></a>
+            <% } %>
         </div>
         <div class="no-video media-center">
             <i class="icon fa fa-file-video-o"></i>

@@ -45,6 +45,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.src = options.src;
             this.assets = options.assets;
             this.tags = options.tags;
+            this.hideDeleteButton = options.hideDeleteButton;
 
 
             //Getting info about all video assets
@@ -73,7 +74,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 back: this.storage.__('back', 'Back'),
                 'no_video': this.storage.__('no_video', 'No video'),
                 search: this.storage.__('search', 'Search'),
-                src: this.src
+                src: this.src,
+                hideDeleteButton: this.hideDeleteButton
             }));
 
             return this;

@@ -78,7 +78,8 @@ Fields.video = QoobFieldView.extend(
                 storage: this.storage,
                 src: this.getValue(),
                 assets: this.storage.getAssets(),
-                tags: this.tags ? this.tags.join(', ') : ''
+                tags: this.tags ? this.tags.join(', ') : '',
+                hideDeleteButton: this.settings.hideDeleteButton
             });
 
             this.controller.setInnerSettingsView(videoCenter);
@@ -94,6 +95,7 @@ Fields.video = QoobFieldView.extend(
                 label: this.settings.label,
                 name: this.settings.name,
                 src: this.getValue(),
+                hideDeleteButton: this.settings.hideDeleteButton,
                 'media_center': this.storage.__('media_center', 'Media Center'),
                 'no_video': this.storage.__('no_video', 'No video'),
                 'reset_to_default': this.storage.__('reset_to_default', 'Reset to default')
