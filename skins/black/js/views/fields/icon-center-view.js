@@ -164,7 +164,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 'class': currentTarget.attr('class'),
                 'data-icon-tags': currentTarget.attr('data-icon-tags')
             });
-            window.selectFieldIcon(currentTarget.attr('class'), currentTarget.attr('data-icon-tags'));
+            window.selectFieldIcon(currentTarget.attr('class'));
         },
         /**
          * Delete icon
