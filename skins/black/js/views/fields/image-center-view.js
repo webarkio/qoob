@@ -131,6 +131,10 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             var filteredWords = tags,
                 result = [];
 
+            if (_.isString(filteredWords)) {
+                filteredWords = filteredWords.split(',');
+            }
+
             var images = this.dataImages.slice(offset, offset + this.limit);
 
             for (var i = 0; i < images.length; i++) {
