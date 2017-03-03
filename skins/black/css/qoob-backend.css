@@ -2493,8 +2493,9 @@ input[type="text"]#datepicker {
     user-select: none;
 }
 
-.settings-block .filtered-images {
-    height: calc(100% - 224px);
+.settings-block .filtered-images,
+.settings-block .filtered-videos {
+    height: calc(100% - 208px);
 }
 
 .settings-block .filtered-icons {
@@ -2625,6 +2626,18 @@ input[type="text"]#datepicker {
     margin-bottom: 10px;
 }
 
+_:-ms-fullscreen, :root #inner-settings-image .filtered-images .ajax-image {
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+@supports (-ms-ime-align:auto) {
+     #inner-settings-image .filtered-images .ajax-image {
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+}
+
 #inner-settings-image .filtered-images .ajax-image:hover,
 #inner-settings-video .filtered-videos .ajax-video:hover {
     border: solid 2px #6a7bcf;
@@ -2677,7 +2690,6 @@ input[type="text"]#datepicker {
 #inner-settings-image .selected-image,
 #inner-settings-video .selected-video {
     width: 100%;
-    /*height: 172px;*/
     position: relative;
     overflow: hidden;
     margin-bottom: 8px;
@@ -2686,12 +2698,11 @@ input[type="text"]#datepicker {
 #inner-settings-image .selected-image .img,
 #inner-settings-video .selected-video .img {
     width: 100%;
-    height: 100%;
+    height: 172px;
     object-fit: cover;
     object-position: 50% 50%;
     border-radius: 3px;
 }
-
 
 /*** IFRAME ***/
 
