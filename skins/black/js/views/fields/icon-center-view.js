@@ -10,6 +10,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         className: "settings menu-block",
         offset: 0,
         limit: 12,
+        dataSearchIcons: null,
         events: {
             'keydown': 'keyAction',
             'click .backward-icon': 'backward',
@@ -123,18 +124,25 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 filteredWords = filteredWords.split(',');
             }
 
-            var icons = this.icons.slice(offset, offset + this.limit);
-
-            for (var i = 0; i < icons.length; i++) {
-                if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+            if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+                var icons = this.icons.slice(offset, offset + this.limit);
+                for (var i = 0; i < icons.length; i++) {
                     result.push('<div class="ajax-icon"><span  data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
-                } else {
+                }
+            } else {
+                this.dataSearchIcons = [];
+                for (var y = 0; y < this.icons.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
                         var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-                        if (filteredWords[j] !== '' && icons[i].tags.match(regEx)) {
-                            result.push('<div class="ajax-icon"><span  data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
+                        if (filteredWords[j] !== '' && this.icons[y].tags.match(regEx)) {
+                            this.dataSearchIcons.push(this.icons[y]);
                         }
                     }
+                }
+
+                var searchIcons = this.dataSearchIcons.slice(offset, offset + this.limit);
+                for (var x = 0; x < searchIcons.length; x++) {
+                    result.push('<div class="ajax-icon"><span  data-icon-tags="' + searchIcons[x].tags + '" class="' + searchIcons[x].classes + '"></span> </div>');
                 }
             }
 
@@ -183,18 +191,13 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         searchFilter: function() {
             var self = this;
 
-            // Get tags byGroup
-            var groupTags = _.groupBy(this.icons, function(icon) {
-                return icon.tags;
-            });
+            var groupTags = [], data = this.icons;
 
-            // Get array tags
-            var tagsList = [];
-            _.each(groupTags, function(val, key) {
-                if (val) {
-                    tagsList.push(key);
-                }
-            });
+            for (var i = 0; i < data.length; i++) {
+                groupTags.push(data[i].tags);
+            }
+
+            var tagsList = _.union(_.flatten(groupTags));
 
             this.$el.find('.icon-search').autocomplete({
                 source: tagsList,

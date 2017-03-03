@@ -8,6 +8,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
     {
         className: "settings menu-block",
         dataVideos: null,
+        dataSearchVideos: null,
         offset: 0,
         limit: 12,
         events: {
@@ -142,20 +143,44 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 filteredWords = filteredWords.split(',');
             }
 
-            var videos = this.dataVideos.slice(offset, offset + this.limit);
+            // var videos = this.dataVideos.slice(offset, offset + this.limit);
 
-            for (var i = 0; i < videos.length; i++) {
-                if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+            // for (var i = 0; i < videos.length; i++) {
+            //     if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+            //         result.push('<div class="ajax-video" data-src="' + videos[i].src + '"><img src="' + videos[i].preview + '" alt="" /></div>');
+            //     } else {
+            //         for (var j = 0; j < filteredWords.length; j++) {
+            //             var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
+            //             if (filteredWords[j] !== '' && videos[i].tags.join(' ').match(regEx)) {
+            //                 result.push('<div class="ajax-video" data-src="' + videos[i].src + '"><img src="' + videos[i].preview + '" alt="" /></div>');
+            //             }
+            //         }
+            //     }
+            // }
+
+
+            if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+                var videos = this.dataVideos.slice(offset, offset + this.limit);
+                for (var i = 0; i < videos.length; i++) {
                     result.push('<div class="ajax-video" data-src="' + videos[i].src + '"><img src="' + videos[i].preview + '" alt="" /></div>');
-                } else {
+                }
+            } else {
+                this.dataSearchVideos = [];
+                for (var y = 0; y < this.dataVideos.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
                         var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-                        if (filteredWords[j] !== '' && videos[i].tags.join(' ').match(regEx)) {
-                            result.push('<div class="ajax-video" data-src="' + videos[i].src + '"><img src="' + videos[i].preview + '" alt="" /></div>');
+                        if (filteredWords[j] !== '' && this.dataVideos[y].tags.join(' ').match(regEx)) {
+                            this.dataSearchVideos.push(this.dataVideos[y]);
                         }
                     }
                 }
+
+                var searchVideos = this.dataSearchVideos.slice(offset, offset + this.limit);
+                for (var x = 0; x < searchVideos.length; x++) {
+                    result.push('<div class="ajax-video" data-src="' + searchVideos[x].src + '"><img src="' + searchVideos[x].preview + '" alt="" /></div>');
+                }
             }
+
 
             return result.join('');
         },
@@ -203,18 +228,13 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         searchFilter: function() {
             var self = this;
 
-            // Get tags byGroup
-            var groupTags = _.groupBy(this.dataVideos, function(video) {
-                return video.tags;
-            });
+            var groupTags = [], data = this.dataVideos;
 
-            // Get array tags
-            var tagsList = [];
-            _.each(groupTags, function(val, key) {
-                if (val) {
-                    tagsList.push(key);
-                }
-            });
+            for (var i = 0; i < data.length; i++) {
+                groupTags.push(data[i].tags);
+            }
+
+            var tagsList = _.union(_.flatten(groupTags));
 
             this.$el.find('.video-search').autocomplete({
                 source: tagsList,
