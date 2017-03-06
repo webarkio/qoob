@@ -2488,6 +2488,8 @@ input[type="text"]#datepicker {
     overflow-y: auto;
     margin-top: 8px;
     height: 100%;
+    margin-right: -4px;
+    padding-right: 4px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
