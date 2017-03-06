@@ -145,22 +145,6 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 filteredWords = filteredWords.split(',');
             }
 
-            // var videos = this.dataVideos.slice(offset, offset + this.limit);
-
-            // for (var i = 0; i < videos.length; i++) {
-            //     if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
-            //         result.push('<div class="ajax-video" data-src="' + videos[i].src + '"><img src="' + videos[i].preview + '" alt="" /></div>');
-            //     } else {
-            //         for (var j = 0; j < filteredWords.length; j++) {
-            //             var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-            //             if (filteredWords[j] !== '' && videos[i].tags.join(' ').match(regEx)) {
-            //                 result.push('<div class="ajax-video" data-src="' + videos[i].src + '"><img src="' + videos[i].preview + '" alt="" /></div>');
-            //             }
-            //         }
-            //     }
-            // }
-
-
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var videos = this.dataVideos.slice(offset, offset + this.limit);
                 for (var i = 0; i < videos.length; i++) {
@@ -200,6 +184,9 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * @returns {undefined}
          */
         selectVideo: function(evt) {
+            if (evt.currentTarget.classList.contains('chosen')) {
+                return;
+            }
             this.$el.find('.ajax-video').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
 

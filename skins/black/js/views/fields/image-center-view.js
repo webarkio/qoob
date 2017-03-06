@@ -176,6 +176,9 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * @returns {undefined}
          */
         selectImage: function(evt) {
+            if (evt.currentTarget.classList.contains('chosen')) {
+                return;
+            }
             this.$el.find('.ajax-image').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
             this.$el.find('.image-container img').attr('src', evt.target.getAttribute('src'));

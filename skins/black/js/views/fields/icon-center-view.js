@@ -164,6 +164,9 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * @returns {undefined}
          */
         selectIcon: function(evt) {
+            if (evt.currentTarget.classList.contains('chosen')) {
+                return;
+            }
             var currentTarget = this.$(evt.currentTarget).find('span');
             this.$el.find('.ajax-icon').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
