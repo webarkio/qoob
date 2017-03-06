@@ -1216,10 +1216,10 @@ _:-ms-fullscreen,
 }
 
 .preview-block {
-    display: inline-block;
     cursor: all-scroll;
-    padding: 6px 0 0 8px;
-    margin: 0 auto;
+    padding-top: 6px;
+    text-align: center;
+    width: 100%;    
 }
 
 .preview-block img {
@@ -1262,6 +1262,7 @@ _:-ms-fullscreen,
 
 .preview-blocks {
     overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
     width: 100%;
     padding-top: 70px;
@@ -2618,25 +2619,14 @@ input[type="text"]#datepicker {
     cursor: pointer;
     position: relative;
     float: left;
-    width: 54px;
+    width: 22%;
     height: 54px;
     border-radius: 3px;
     border: solid 2px #fff;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: 4%;
+    margin-bottom: 4%;
 }
 
-_:-ms-fullscreen, :root #inner-settings-image .filtered-images .ajax-image {
-    margin-right: 6px;
-    margin-bottom: 6px;
-}
-
-@supports (-ms-ime-align:auto) {
-     #inner-settings-image .filtered-images .ajax-image {
-        margin-right: 6px;
-        margin-bottom: 6px;
-    }
-}
 
 #inner-settings-image .filtered-images .ajax-image:hover,
 #inner-settings-video .filtered-videos .ajax-video:hover {
