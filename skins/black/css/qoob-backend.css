@@ -1218,8 +1218,8 @@ _:-ms-fullscreen,
 .preview-block {
     cursor: all-scroll;
     padding-top: 6px;
+    margin: 0 auto;
     text-align: center;
-    width: 100%;    
 }
 
 .preview-block img {
