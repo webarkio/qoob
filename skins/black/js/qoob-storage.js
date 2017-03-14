@@ -14,7 +14,7 @@ function QoobStorage(options) {
     this.pageData = options.pageData || null;
     this.blockTemplates = [];
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
-    this.defaultTemplatesCollection = new Backbone.Collection();
+    this.pageTemplatesCollection = new Backbone.Collection();
 }
 
 
@@ -190,13 +190,13 @@ QoobStorage.prototype.getAssets = function(libNames) {
 
 /**
  * Getting default templates
- * @returns Array of templates
+ * @returns callback {state} Array of templates
  */
 QoobStorage.prototype.loadPageTemplates = function(cb) {
     var self = this;
     this.driver.loadPageTemplates(function(error, data) {
         if (data && data.length > 0) {
-            self.defaultTemplatesCollection.add(data);
+            self.pageTemplatesCollection.add(data);
         }
         cb(error);
     });
@@ -207,10 +207,10 @@ QoobStorage.prototype.loadPageTemplates = function(cb) {
  * @param template {Array}
  * @returns callback {state}
  */
-QoobStorage.prototype.createTemplate = function(template, cb) {
-    this.defaultTemplatesCollection.add(template);
+QoobStorage.prototype.createPageTemplate = function(template, cb) {
+    this.pageTemplatesCollection.add(template);
 
-    this.driver.savePageTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
+    this.driver.savePageTemplate(this.pageTemplatesCollection.toJSON(), function(error, state) {
         if (state) {
             cb(error, state);
         }
@@ -222,11 +222,11 @@ QoobStorage.prototype.createTemplate = function(template, cb) {
  * @param id {Number}
  * @returns callback {state}
  */
-QoobStorage.prototype.removeTemplate = function(id) {
-    var model = this.defaultTemplatesCollection.get(id);
-    this.defaultTemplatesCollection.remove(model);
+QoobStorage.prototype.removePageTemplate = function(id) {
+    var model = this.pageTemplatesCollection.get(id);
+    this.pageTemplatesCollection.remove(model);
 
-    this.driver.savePageTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
+    this.driver.savePageTemplate(this.pageTemplatesCollection.toJSON(), function(error, state) {
         if (state) {
             console.log('Done', state);
         }
