@@ -1,9 +1,9 @@
 /**
- * Create view for default templates
+ * Create view for page templates
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobDefaultTemplatesView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
+var QoobPageTemplatesView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     tagName: "div",
     className: 'qoob-templates',
     events: {
@@ -14,11 +14,11 @@ var QoobDefaultTemplatesView = Backbone.View.extend({ // eslint-disable-line no-
         this.storage = options.storage;
         this.controller = options.controller;
 
-        this.listenTo(this.storage.defaultTemplatesCollection, 'add remove', this.render);
+        this.listenTo(this.storage.pageTemplatesCollection, 'add remove', this.render);
     },
     render: function() {
         this.$el.html(_.template(this.storage.getSkinTemplate('block-default-templates'))({
-            "templates": this.storage.defaultTemplatesCollection.toJSON(),
+            "templates": this.storage.pageTemplatesCollection.toJSON(),
             "block_default_templates_text": this.storage.__('block_default_templates_text', 'Or you can choose one of templates'),
             "text_default_blank": this.storage.__('block_default_blank', "This is blank page, you can click on block preview to add block")
         }));
@@ -28,7 +28,7 @@ var QoobDefaultTemplatesView = Backbone.View.extend({ // eslint-disable-line no-
     clickChoiceTemplateBlock: function(evt) {
         var self = this;
         var id = jQuery(evt.currentTarget).parents('[data-id]').data('id');
-        this.storage.defaultTemplatesCollection.each(function(item) {
+        this.storage.pageTemplatesCollection.each(function(item) {
             if (item.id === id) {
                 self.controller.load(item.get('blocks'));
             }
