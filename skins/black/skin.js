@@ -24,7 +24,7 @@ function Skin() {
             { "type": "js", "name": "qoob-layout", "src": "js/views/qoob-layout.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-blocks-preview-view", "src": "js/views/qoob-menu-blocks-preview-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-groups-view", "src": "js/views/qoob-menu-groups-view.js", "dep": ["backbone"] },
-            { "type": "js", "name": "qoob-menu-save-template-view", "src": "js/views/qoob-menu-save-template-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-menu-save-template-view", "src": "js/views/qoob-menu-save-page-template-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-manage-libs-view", "src": "js/views/qoob-manage-libs-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-view", "src": "js/views/qoob-menu-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-settings-view", "src": "js/views/qoob-settings-view.js", "dep": ["backbone"] },

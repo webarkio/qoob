@@ -4,8 +4,8 @@
  *
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuSaveTemplateView = Backbone.View.extend( // eslint-disable-line no-unused-vars
-    /** @lends QoobMenuSaveTemplateView.prototype */
+var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line no-unused-vars
+    /** @lends QoobMenuSavePageTemplateView.prototype */
     {
         events: {
             'click .create-template': 'clickCreateTemplate'
@@ -34,7 +34,7 @@ var QoobMenuSaveTemplateView = Backbone.View.extend( // eslint-disable-line no-u
         },
         /**
          * View settings
-         * @class QoobMenuSaveTemplateView
+         * @class QoobMenuSavePageTemplateView
          * @augments Backbone.View
          * @constructs
          */

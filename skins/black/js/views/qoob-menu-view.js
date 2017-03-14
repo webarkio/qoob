@@ -1,4 +1,4 @@
-/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSaveTemplateView, QoobManageLibsView */
+/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView, QoobManageLibsView */
 /**
  * Create view for menu in qoob layout
  *
@@ -58,7 +58,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }));
             }
 
-            this.addView(new QoobMenuSaveTemplateView({
+            this.addView(new QoobMenuSavePageTemplateView({
                 storage: this.storage,
                 controller: this.controller
             }));

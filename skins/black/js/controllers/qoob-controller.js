@@ -5,7 +5,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         "": "index", // Empty hash-tag
         "groups/:group": "showGroup", // #groups/name
         "edit/:blockId": "startEditBlock", // #groups/name
-        "save-template": "showSaveTemplate",
+        "save-template": "showSavePageTemplate",
         "manage-libs": "showManageLibs"
     },
     index: function() {
@@ -96,7 +96,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
             this.storage.driver.exit(this.storage.pageId);
         }
     },
-    showSaveTemplate: function() {
+    showSavePageTemplate: function() {
         this.layout.menu.rotateForward('save-template');
         this.layout.menu.hideNotice();
         this.layout.toolbar.logoRotation('side-90');
