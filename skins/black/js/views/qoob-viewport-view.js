@@ -1,4 +1,4 @@
-/*global QoobBlockWrapperView, QoobDefaultTemplatesView*/
+/*global QoobBlockWrapperView, QoobPageTemplatesView*/
 /**
  * Create view for viewport in qoob layout
  * 
@@ -233,7 +233,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
          */
         createBlankPage: function() {
             var iframe = this.getWindowIframe();
-            var defaultTemplates = new QoobDefaultTemplatesView({
+            var defaultTemplates = new QoobPageTemplatesView({
                 storage: this.storage,
                 controller: this.controller
             });
