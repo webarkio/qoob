@@ -192,9 +192,9 @@ QoobStorage.prototype.getAssets = function(libNames) {
  * Getting default templates
  * @returns Array of templates
  */
-QoobStorage.prototype.loadTemplates = function(cb) {
+QoobStorage.prototype.loadPageTemplates = function(cb) {
     var self = this;
-    this.driver.loadTemplates(function(error, data) {
+    this.driver.loadPageTemplates(function(error, data) {
         if (data && data.length > 0) {
             self.defaultTemplatesCollection.add(data);
         }

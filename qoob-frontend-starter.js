@@ -31,10 +31,9 @@
             options.driver.loadLibrariesData(function(err, libs) {
                 window.loader = new Loader();
                 window.loader.once('complete', function() {
-
                     if (window.parent.frames['qoob-iframe']) {
                         $('#qoob-blocks').empty();
-                        window.parent.$('#qoob-iframe').trigger('libraries_loaded');
+                        window.parent.jQuery('#qoob-iframe').trigger('libraries_loaded');
                         //call ready to build block event
                     } else {}
                     $.holdReady(false);

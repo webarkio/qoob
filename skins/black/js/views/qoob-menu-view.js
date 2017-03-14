@@ -90,7 +90,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 start: function() {
                     jQuery('.droppable').show();
                     self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").hide();
-
                 },
                 stop: function() {
                     jQuery('.droppable').hide();

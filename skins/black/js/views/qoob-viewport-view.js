@@ -238,7 +238,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 controller: this.controller
             });
             iframe.jQuery('#qoob-blocks').append(defaultTemplates.render().el);
-            this.storage.loadTemplates(function(error, data) {
+            this.storage.loadPageTemplates(function(error, data) {
                 if (data && data.length > 0) {
                     defaultTemplates.render();
                 }
