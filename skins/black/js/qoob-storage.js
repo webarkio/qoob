@@ -192,9 +192,9 @@ QoobStorage.prototype.getAssets = function(libNames) {
  * Getting default templates
  * @returns Array of templates
  */
-QoobStorage.prototype.loadTemplates = function(cb) {
+QoobStorage.prototype.loadPageTemplates = function(cb) {
     var self = this;
-    this.driver.loadTemplates(function(error, data) {
+    this.driver.loadPageTemplates(function(error, data) {
         if (data && data.length > 0) {
             self.defaultTemplatesCollection.add(data);
         }
@@ -210,7 +210,7 @@ QoobStorage.prototype.loadTemplates = function(cb) {
 QoobStorage.prototype.createTemplate = function(template, cb) {
     this.defaultTemplatesCollection.add(template);
 
-    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
+    this.driver.savePageTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
         if (state) {
             cb(error, state);
         }
@@ -226,7 +226,7 @@ QoobStorage.prototype.removeTemplate = function(id) {
     var model = this.defaultTemplatesCollection.get(id);
     this.defaultTemplatesCollection.remove(model);
 
-    this.driver.saveTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
+    this.driver.savePageTemplate(this.defaultTemplatesCollection.toJSON(), function(error, state) {
         if (state) {
             console.log('Done', state);
         }
