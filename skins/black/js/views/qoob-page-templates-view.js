@@ -7,7 +7,7 @@ var QoobPageTemplatesView = Backbone.View.extend({ // eslint-disable-line no-unu
     tagName: "div",
     className: 'qoob-templates',
     events: {
-        'click .template img, .template .title': 'clickChoiceTemplateBlock',
+        'click .template .image-bg, .template .title': 'clickChoiceTemplateBlock',
         'click .remove': 'clickRemoveTemplateBlock'
     },
     initialize: function(options) {
@@ -20,7 +20,8 @@ var QoobPageTemplatesView = Backbone.View.extend({ // eslint-disable-line no-unu
         this.$el.html(_.template(this.storage.getSkinTemplate('block-default-templates'))({
             "templates": this.storage.pageTemplatesCollection.toJSON(),
             "block_default_templates_text": this.storage.__('block_default_templates_text', 'Or you can choose one of templates'),
-            "text_default_blank": this.storage.__('block_default_blank', "This is blank page, you can click on block preview to add block")
+            "text_default_blank": this.storage.__('block_default_blank', "This is blank page, you can click on block preview to add block"),
+            "template": this.storage.__('template', 'Template')
         }));
 
         return this;

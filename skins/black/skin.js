@@ -119,9 +119,7 @@ Skin.prototype.activate = function(options) {
     });
 
     //If iframe ready to load blocks. All libraries css and js have already loaded to iframe
-    self.layout.viewPort.once('iframe_loaded', function() {
-
-        
+    self.layout.viewPort.once('iframe_loaded', function() {       
 
         var iframe = self.layout.viewPort.getWindowIframe();
 

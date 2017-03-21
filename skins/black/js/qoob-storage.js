@@ -239,7 +239,7 @@ QoobStorage.prototype.removePageTemplate = function(id) {
  * @param {getLibraryByUrlCallback} cb - A callback to run.
  */
 QoobStorage.prototype.getLibraryByUrl = function(url, cb) {
-    $.ajax({
+    jQuery.ajax({
         dataType: "json",
         url: url,
         error: function(jqXHR, textStatus, errorThrown) {
