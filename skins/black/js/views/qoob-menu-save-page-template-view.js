@@ -47,9 +47,8 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             var self = this;
             var elem = this.$(evt.currentTarget);
 
-            
-
             if (this.settingsModel.get('title') == '') {
+                this.$el.find('.input-text').addClass('error');
                 return;
             }
 
@@ -57,7 +56,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
                 this.settingsModel.set('image', '/qoob/qoob/skins/black/img/default_template.png');
             }
 
-            var sorted = _.sortBy(this.storage.defaultTemplatesCollection.models, function(obj) {
+            var sorted = _.sortBy(this.storage.pageTemplatesCollection.models, function(obj) {
                 return obj.id;
             });
 

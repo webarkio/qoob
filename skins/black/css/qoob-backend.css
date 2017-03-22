@@ -1781,25 +1781,30 @@ _:-ms-fullscreen,
     background-color: #ff0042;
 }
 
-.settings-item .container-input-add.error .input-url {
+.settings-item .container-input-add.error .input-url,
+.settings-item .input-text.error {
     color: #ff0042;
 }
 
-.settings-item .container-input-add.error .input-url::-webkit-input-placeholder {
+.settings-item .container-input-add.error .input-url::-webkit-input-placeholder,
+.settings-item .input-text.error::-webkit-input-placeholder {
     color: #ff0042;
 }
 
-.settings-item .container-input-add.error .input-url:-moz-placeholder {
-    color: #ff0042;
-    opacity: 1;
-}
-
-.settings-item .container-input-add.error .input-url::-moz-placeholder {
+.settings-item .container-input-add.error .input-url:-moz-placeholder,
+.settings-item .input-text.error:-moz-placeholder {
     color: #ff0042;
     opacity: 1;
 }
 
-.settings-item .container-input-add.error .input-url:-ms-input-placeholder {
+.settings-item .container-input-add.error .input-url::-moz-placeholder,
+.settings-item .input-text.error::-moz-placeholder {
+    color: #ff0042;
+    opacity: 1;
+}
+
+.settings-item .container-input-add.error .input-url:-ms-input-placeholder,
+.settings-item .input-text.error:-ms-input-placeholder {
     color: #ff0042;
 }
 

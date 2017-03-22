@@ -17,7 +17,6 @@ function QoobStorage(options) {
     this.pageTemplatesCollection = new Backbone.Collection();
 }
 
-
 /**
  * Return all groups array or array of specified groups.
  * @param  {Array} libNames Names of needed groups.
