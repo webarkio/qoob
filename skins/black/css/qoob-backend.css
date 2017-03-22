@@ -2236,13 +2236,6 @@ input[type="text"]#datepicker {
     border-radius: 3px;
 }
 
-.settings-item .other-color.change-color {
-    background: url(../img/colorpicker.png) 100%;
-    width: 31px;
-    height: 31px;
-    margin: 0 0 0 1px;
-}
-
 .settings-block .libraries .library {
     background-color: #606163;
     overflow: hidden;
@@ -2797,6 +2790,7 @@ html.active-js {
     height: 20px;
     position: relative;
     width: 20px;
+    margin-top: 8px;
 }
 
 .manage-libs .clock:after {

@@ -299,14 +299,14 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         };
     },
     /**
-     * Create template
+     * Create page template
      */
-    createTemplate: function(templateInfo, cb) {
+    createPageTemplate: function(templateInfo, cb) {
         var dataPage = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var newTemplate = _.extend(templateInfo, dataPage);
 
         if (dataPage.blocks.length > 0) {
-            this.storage.createTemplate(newTemplate, function(error){
+            this.storage.createPageTemplate(newTemplate, function(error){
                 cb(error, status);
             });
         } else {
@@ -317,7 +317,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      * Remove template
      */
     removeTemplateBlock: function(id) {
-        this.storage.removeTemplate(id);
+        this.storage.removePageTemplate(id);
     },
     /**
      * Change default blank viewport when blocks is null

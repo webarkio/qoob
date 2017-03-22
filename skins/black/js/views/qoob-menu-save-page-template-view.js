@@ -50,10 +50,8 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             if (this.settingsModel.get('title') == '') {
                 this.$el.find('.input-text').addClass('error');
                 return;
-            }
-
-            if (this.settingsModel.get('image') == '') {
-                this.settingsModel.set('image', '/qoob/qoob/skins/black/img/default_template.png');
+            } else {
+                this.$el.find('.input-text').removeClass('error');
             }
 
             var sorted = _.sortBy(this.storage.pageTemplatesCollection.models, function(obj) {
@@ -70,7 +68,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             elem.addClass('active');
 
-            this.controller.createTemplate(dataView, function(error) {
+            this.controller.createPageTemplate(dataView, function(error) {
                 elem.removeClass('active');
                 if (null === error) {
                     self.$el.find('.save-template-settings').addClass('show-notice');
