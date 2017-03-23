@@ -336,5 +336,16 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      */
     hideLibraryLoader: function(elem) {
          this.layout.menu.hideLibraryLoader(elem);
+    },
+    /**
+     * Upload image
+     *
+     * @param {Array} data image
+     * @param {uploadImageCallback} cb - A callback to run.
+     */
+    uploadImage: function(data, cb) {
+        this.storage.driver.upload(data, function(error, url){
+            cb(error, url);
+        });
     }
 });

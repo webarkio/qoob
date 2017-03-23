@@ -150,19 +150,10 @@ Fields.image = QoobFieldView.extend(
             if (file.match(/.(jpg|jpeg|png|gif)$/i)) {
                 var formData = new FormData();
                 formData.append(jQuery(evt.target).attr('name'), this.$el.find('input[type=file]')[0].files[0], this.$el.find('input[type=file]')[0].files[0].name);
-                jQuery.ajax({
-                    url: '/upload',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    error: function(jqXHR, textStatus) {
-                        console.error(textStatus);
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        self.changeImage(json.url);
-                        
+                this.controller.uploadImage(formData, function(error, url){
+                    if ('' !== url) {
+                        self.changeImage(url);
+
                         if (self.$el.find('.edit-image').hasClass('empty')) {
                             self.$el.find('.edit-image').removeClass('empty');
                         }
