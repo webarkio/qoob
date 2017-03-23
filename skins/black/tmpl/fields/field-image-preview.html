@@ -27,17 +27,13 @@
             <i class="fa fa-angle-down"></i>
         </button>
         <ul class="dropdown-menu">
-            <li>
-                <a href="#" class="upload">
-                    <%= upload %>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="reset">
-                    <%= reset_to_default %>
-                </a>
-            </li>
+            <% _.each( customItems, function( item ){ %>
+                <li>
+                    <a href="#" data-id="<%- item.id %>" class="<%- item.id %>">
+                        <%- item.label %>
+                    </a>
+                </li>
+            <% }); %>
         </ul>
     </div>
-    <input type="file" class="input-file" name="<%= name %>-file">
 </div>

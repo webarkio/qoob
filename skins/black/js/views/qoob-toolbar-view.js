@@ -31,6 +31,10 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         this.storage = options.storage;
         this.controller = options.controller;
     },
+    /**
+     * Start action custom menu
+     * @param {Object} evt
+     */
     clickAction: function(evt) {
         evt.preventDefault();
         var id = jQuery(evt.currentTarget).data("id");
@@ -40,8 +44,9 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
                 return o.id === id;
             });
 
-            var menuAction = new Function("return (" + menuItem.action + ")");
-            menuAction().call(this);
+            if (menuItem.action) {
+                menuItem.action(this);
+            }
         }
     },
     /**

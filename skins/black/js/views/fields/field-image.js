@@ -7,18 +7,17 @@ var Fields = Fields || {};
 Fields.image = QoobFieldView.extend(
     /** @lends Fields.image.prototype */
     {
+        customItems: null,
         events: {
             'click .media-center': 'clickMediaCenter',
             'change .image-url': 'changeInputUrlImage',
             'click .remove': 'clickRemoveImage',
-            'click .upload': 'clickUploadImage',
-            'click .reset': 'clickResetImageToDefault',
-            'change .input-file': 'changeInputFile',
             'drop .drop-zone': 'dropImage',
             'dragenter .drop-zone': 'dragOnDropZone',
             'dragleave .drop-zone': 'dragLeaveDropZone',
             'global_drag_start': 'showDropZone',
-            'global_drag_stop': 'hideDropZone'
+            'global_drag_stop': 'hideDropZone',
+            'click [data-id]': 'clickAction'
         },
         counterDropZone: 0,
         /**
@@ -33,6 +32,24 @@ Fields.image = QoobFieldView.extend(
             this.parentId = options.parentId;
             this.tags = options.settings.tags || null;
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-preview'));
+        },
+        /**
+         * Start action custom menu
+         * @param {Object} evt
+         */
+        clickAction: function(evt) {
+            evt.preventDefault();
+            var id = jQuery(evt.currentTarget).data("id");
+
+            if (typeof this.storage.driver.fieldImageActions === "function") {
+                var item = this.customItems.find(function(o) {
+                    return o.id === id;
+                });
+
+                if (item.action) {
+                    item.action(this);
+                }
+            }
         },
         /**
          * Main method change image
@@ -51,21 +68,6 @@ Fields.image = QoobFieldView.extend(
             evt.preventDefault();
             this.$el.find('.edit-image').addClass('empty');
             this.changeImage('');
-        },
-        clickResetImageToDefault: function(evt) {
-            evt.preventDefault();
-            this.changeImage(this.options.defaults);
-            if (this.$el.find('.edit-image').hasClass('empty')) {
-                this.$el.find('.edit-image').removeClass('empty');
-            }
-        },
-        /**
-         * Image upload
-         * @param {Object} evt
-         */
-        clickUploadImage: function(evt) {
-            evt.preventDefault();
-            this.$el.find('input.input-file').trigger('click');
         },
         /**
          * Show drop zone
@@ -143,26 +145,6 @@ Fields.image = QoobFieldView.extend(
 
             return false;
         },
-        changeInputFile: function(evt) {
-            var self = this;
-            var file = jQuery(evt.target).val();
-
-            if (file.match(/.(jpg|jpeg|png|gif)$/i)) {
-                var formData = new FormData();
-                formData.append(jQuery(evt.target).attr('name'), this.$el.find('input[type=file]')[0].files[0], this.$el.find('input[type=file]')[0].files[0].name);
-                this.controller.uploadImage(formData, function(error, url){
-                    if ('' !== url) {
-                        self.changeImage(url);
-
-                        if (self.$el.find('.edit-image').hasClass('empty')) {
-                            self.$el.find('.edit-image').removeClass('empty');
-                        }
-                    }
-                });
-            } else {
-                console.error('file format is not appropriate');
-            }
-        },
         /**
          * Render filed image
          * @returns {Object}
@@ -174,12 +156,15 @@ Fields.image = QoobFieldView.extend(
                 "name": this.settings.name,
                 "value": this.getValue(),
                 'media_center': this.storage.__('media_center', 'Media Center'),
-                'upload': this.storage.__('upload', 'Upload'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_image': this.storage.__('no_image', 'No image'),
-                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here'),
-                'reset_to_default': this.storage.__('reset_to_default', 'Reset to default')
+                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here')
             };
+
+            if (typeof this.storage.driver.mainMenu === "function") {
+                var staticCustom = [];
+                htmldata.customItems = this.customItems = this.storage.driver.fieldImageActions(staticCustom);
+            }
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
                 this.$el.html(this.tpl(htmldata));
