@@ -35,6 +35,9 @@ var QoobBlockView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
                 self.renderedTemplate = tplAdapter(template)(self.model.toJSON());
             }
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html(self.renderedTemplate);
+            if (err == 'blockNotFound') {
+                self.renderedTemplate = '';
+            }
             self.trigger('loaded');
             self.controller.triggerIframe();
         });
