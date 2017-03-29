@@ -155,7 +155,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 for (var y = 0; y < this.dataVideos.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
                         var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-                        if (filteredWords[j] !== '' && this.dataVideos[y].tags.join(' ').match(regEx)) {
+                        if (filteredWords[j] !== '' && (this.dataVideos[y].tags && this.dataVideos[y].tags.join(' ').match(regEx))) {
                             this.dataSearchVideos.push(this.dataVideos[y]);
                         }
                     }
@@ -220,7 +220,9 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             var groupTags = [], data = this.dataVideos;
 
             for (var i = 0; i < data.length; i++) {
-                groupTags.push(data[i].tags);
+                if (! _.isUndefined(data[i].tags) ) {
+                    groupTags.push(data[i].tags);
+                }
             }
 
             var tagsList = _.union(_.flatten(groupTags));

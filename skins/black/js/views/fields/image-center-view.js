@@ -121,7 +121,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         loadMore: function() {
             var filteredImages = this.$el.find('.filtered-images'),
                 images = this.getImages(this.tags, this.offset);
-            
+
             if (images) {
                 this.offset = this.offset + this.limit;
                 filteredImages.find('.inview-images').before(images);
@@ -148,7 +148,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 for (var y = 0; y < this.dataImages.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
                         var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-                        if (filteredWords[j] !== '' && this.dataImages[y].tags.join(' ').match(regEx)) {
+                        if (filteredWords[j] !== '' && (this.dataImages[y].tags && this.dataImages[y].tags.join(' ').match(regEx))) {
                             this.dataSearchImages.push(this.dataImages[y]);
                         }
                     }
@@ -204,10 +204,13 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         searchFilter: function() {
             var self = this;
 
-            var groupTags = [], data = this.dataImages;
+            var groupTags = [],
+                data = this.dataImages;
 
             for (var i = 0; i < data.length; i++) {
-                groupTags.push(data[i].tags);
+                if (!_.isUndefined(data[i].tags)) {
+                    groupTags.push(data[i].tags);
+                }
             }
 
             var tagsList = _.union(_.flatten(groupTags));

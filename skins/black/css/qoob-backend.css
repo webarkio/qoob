@@ -2325,6 +2325,7 @@ input[type="text"]#datepicker {
 
 .media-autocomplete {
     max-width: 250px;
+    width: 100% !important;
     z-index: 99999;
 }
 

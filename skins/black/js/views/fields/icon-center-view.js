@@ -199,7 +199,9 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var groupTags = [], data = this.icons;
 
             for (var i = 0; i < data.length; i++) {
-                groupTags.push(data[i].tags);
+                if (! _.isUndefined(data[i].tags) ) {
+                    groupTags.push(data[i].tags);
+                }
             }
 
             var tagsList = _.union(_.flatten(groupTags));
