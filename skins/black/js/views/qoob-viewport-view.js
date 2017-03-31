@@ -32,7 +32,8 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             // Getting driver page id for iframe
             var url = this.storage.driver.getIframePageUrl();
             this.$el.html(_.template(this.storage.getSkinTemplate('qoob-viewport-preview'))({
-                "url": url
+                "url": url,
+                "text_droppable_zone": this.storage.__('text_droppable_zone', 'Drop here to creative new block')
             }));
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
@@ -41,6 +42,24 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
         iframeLoaded: function() {
             this.trigger('iframe_loaded');
             this.triggerIframe();
+            this.defaultDroppable();
+        },
+        /**
+         * Create default droppable zone
+         */
+        defaultDroppable: function() {
+            var self = this;
+            this.$el.find('#droppable-default').droppable({
+                tolerance: "pointer",
+                drop: function(event, ui) {
+                    //get block name
+                    var name = ui.draggable.attr("id").replace("preview-block-", "");
+                    // get lib
+                    var lib = ui.draggable.data('lib');
+                    // add new block
+                    self.controller.addNewBlock(lib, name);
+                }
+            });
         },
         /**
          * Shows edit buttons, shadowing other blocks
@@ -246,13 +265,16 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
         },
         changeDefaultPage: function(event) {
             var qoobBlocks = this.getWindowIframe().jQuery('#qoob-blocks');
+
             if (event == 'hide') {
                 // hide block blank and qoob templates when add block
                 qoobBlocks.find('.qoob-templates').hide();
+                this.$el.find('#droppable-default').hide();
             }
             if (event == 'show') {
                 // hide block blank and qoob templates when add block
                 qoobBlocks.find('.qoob-templates').show();
+                this.$el.find('#droppable-default').show();
             }
         }
     });

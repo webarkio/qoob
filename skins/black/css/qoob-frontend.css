@@ -152,15 +152,10 @@
 
 /* Overlays */
 
-#droppable-0 {
-    margin-top: -1px;
-}
-
-.ui-droppable {
+.droppable-zone.ui-droppable {
     position: absolute;
     width: 100%;
     height: 75px;
-    /*display: none;*/
     visibility: hidden;
     margin-top: 0;
     z-index: 999;
@@ -171,48 +166,44 @@
     background-color: rgba(178, 178, 178, 0.8);
 }
 
-.ui-droppable i.plus {
+.droppable-zone.ui-droppable i.plus {
     display: inline-block;
     height: 21px;
     width: 21px;
-    margin: 4px 8px 0 0;
+    margin: 0 8px 0 0;
     vertical-align: middle;
     background: transparent url(../img/plus.png) no-repeat center center;
 }
 
-.ui-droppable i.plus + span {
+.droppable-zone.ui-droppable i.plus + span {
     display: inline-block;
     vertical-align: middle;
 }
 
-.ui-droppable .dropp-block {
+.droppable-zone.ui-droppable .dropp-block {
     cursor: default;
-    line-height: 68px;
-    height: 70px;
+    line-height: 75px;
+    height: 75px;
 }
 
-.ui-droppable-active {
-    /*background-color: blue;*/
+.droppable-zone.ui-droppable-active {
     visibility: visible;
     display: block;
 }
 
-.ui-droppable-hover {
-    /*margin-top: -43px;*/
-    /*height: 70px;*/
+.droppable-zone.ui-droppable-hover {
     border-top: solid #2bc0e4 5px;
     background-color: rgba(0, 208, 236, 0.8);
     display: block;
 }
 
-.ui-droppable-hover i.plus {
-    margin-top: -6px;
-}
-
-.ui-droppable-hover span {
+.droppable-zone.ui-droppable-hover i.plus {
     margin-top: -10px;
 }
 
+.droppable-zone.ui-droppable-hover span {
+    margin-top: -10px;
+}
 
 /* Wait Block */
 
@@ -463,6 +454,7 @@
 }
 
 #qoob-blocks .qoob-templates {
+    position: relative;
     background-color: #e6e6e6;
     width: calc(100% - 50px);
     margin: 25px 25px 0 25px;
