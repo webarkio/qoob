@@ -98,6 +98,7 @@ Fields.video = QoobFieldView.extend(
                 hideDeleteButton: this.settings.hideDeleteButton,
                 'media_center': this.storage.__('media_center', 'Media Center'),
                 'no_video': this.storage.__('no_video', 'No video'),
+                'no_poster': this.storage.__('no_poster', 'No poster'),
                 'reset_to_default': this.storage.__('reset_to_default', 'Reset to default')
             };
 

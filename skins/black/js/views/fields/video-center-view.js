@@ -74,6 +74,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.$el.html(this.tpl({
                 back: this.storage.__('back', 'Back'),
                 'no_video': this.storage.__('no_video', 'No video'),
+                'no_poster': this.storage.__('no_poster', 'No poster'),
                 search: this.storage.__('search', 'Search'),
                 src: this.src,
                 hideDeleteButton: this.hideDeleteButton
