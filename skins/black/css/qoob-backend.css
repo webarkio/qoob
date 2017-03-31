@@ -387,6 +387,10 @@ textarea {
     margin-top: 4px;
 }
 
+#qoob-toolbar .edit-control-button .more-button .dropdown-menu>li {
+    margin: 0;
+}
+
 #qoob-toolbar .edit-control-button .more-button .dropdown-menu>li>a {
     color: #fff;
     background-color: #444444;
