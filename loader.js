@@ -240,8 +240,9 @@ Loader.prototype.loadJSON = function(src, success, error) {
                 if (success)
                     success(JSON.parse(xhr.responseText));
             } else {
-                if (error)
+                if (error) {
                     error(xhr);
+                }
             }
         }
     };

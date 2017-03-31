@@ -234,17 +234,13 @@
         for (var i in libs) {
             var currentLib = libs[i];
             for (var j in currentLib.blocks) {
-
+                // console.log(libs[i].blocks[j].url, libs[i].blocks[j].lib, JSON.stringify(libs[i].blocks[j].config));
                 var configString = JSON.stringify(libs[i].blocks[j].config);
-
-
-
-                configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
-
-
-
-                configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
-                currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                if (configString !== undefined) {
+                    configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
+                    configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
+                    currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                }
             }
         }
         return libs;
