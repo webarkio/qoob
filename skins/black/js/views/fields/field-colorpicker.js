@@ -15,6 +15,7 @@ Fields.colorpicker = QoobFieldView.extend(
         // var input = elem.closest('.colorpicker-input');
         var input = elem.closest('.settings-item').find('.colorpicker-input');
         var color = elem.data('color');
+        input.val(color);
         input.css({"backgroundColor" : color});
         this.model.set(input.prop('name'), color);
     },
