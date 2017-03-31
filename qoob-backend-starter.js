@@ -234,13 +234,10 @@
         for (var i in libs) {
             var currentLib = libs[i];
             for (var j in currentLib.blocks) {
-                // console.log(libs[i].blocks[j].url, libs[i].blocks[j].lib, JSON.stringify(libs[i].blocks[j].config));
                 var configString = JSON.stringify(libs[i].blocks[j].config);
-                if (configString !== undefined) {
-                    configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
-                    configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
-                    currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
-                }
+                configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
+                configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
+                currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
             }
         }
         return libs;
@@ -266,12 +263,13 @@
         var result = [];
         for (var i in libs) {
             var lib = libs[i];
+
             for (var j in lib.blocks) {
                 if (this.loader.loaded[lib.name + "_" + lib.blocks[j].name]) {
                     lib.blocks[j].lib = lib.name;
                     lib.blocks[j].config = this.applySelfMask(this.loader.loaded[lib.name + "_" + lib.blocks[j].name].data, lib.url, lib.blocks[j].url);
                 } else {
-                    lib.blocks.splice(j, 1);
+                    delete lib.blocks[j];
                 }
             }
             result.push(lib);
