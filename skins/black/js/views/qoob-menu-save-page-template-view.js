@@ -49,9 +49,11 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             if (this.settingsModel.get('title') == '') {
                 this.$el.find('.input-text').addClass('error');
+                this.$el.find('.save-template-settings .error-block').show();
                 return;
             } else {
                 this.$el.find('.input-text').removeClass('error');
+                this.$el.find('.save-template-settings .error-block').hide();
             }
 
             var sorted = _.sortBy(this.storage.pageTemplatesCollection.models, function(obj) {
@@ -70,8 +72,11 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             this.controller.createPageTemplate(dataView, function(error) {
                 elem.removeClass('active');
-                if (null === error) {
+                if (error === null) {
                     self.$el.find('.save-template-settings').addClass('show-notice');
+                    self.$el.find('.save-template-settings .error-block').hide();
+                } else {
+                    self.$el.find('.save-template-settings .error-block').show();
                 }
             });
         },
@@ -87,7 +92,8 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
                 'save_template': this.storage.__('save_template', 'Save template'),
                 'save_loading': this.storage.__('save_process', 'Save...'),
                 'save_notice_title': this.storage.__('save_notice_title', 'Your template has been saved successfully!'),
-                'save_notice_text': this.storage.__('save_notice_text', 'You can use a ready-made template to create a new page.')
+                'save_notice_text': this.storage.__('save_notice_text', 'You can use a ready-made template to create a new page.'),
+                'you_cant_save_empty_template': this.storage.__('you_cant_save_empty_template', "You can't save empty template")
             };
 
             var settingsView = new QoobFieldsView({

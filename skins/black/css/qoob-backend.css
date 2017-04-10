@@ -990,7 +990,7 @@ label.checkbox-sb [type=checkbox]:checked + span {
 #qoob-menu .save-template-settings .notice-block {
     display: none;
     border-radius: 3px;
-    color: #fff;
+    color: #ffffff;
     font-size: 13px;
     padding: 15px 10px 14px 14px;
     margin-left: 5px;
@@ -1012,6 +1012,22 @@ label.checkbox-sb [type=checkbox]:checked + span {
 
 #qoob-menu .save-template-settings.show-notice {
     padding-top: 113px;
+}
+
+#qoob-menu .save-template-settings .error-block {
+    display: none;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 13px;
+    padding: 26px 0 28px 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 42px;
+    background-color: #ec0011;
+}
+
+#qoob-menu .save-template-settings .error-block .icon {
+    padding-right: 4px;
 }
 
 #qoob-menu .save-template-settings.show-notice .settings-block,
