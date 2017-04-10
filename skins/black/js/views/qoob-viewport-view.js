@@ -131,10 +131,23 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 this.getIframe().width("100%");
             }
         },
-        scrollTo: function(blockId) {
+        scrollTo: function(blockId, position) {
+            var scroll,
+                iframe = this.getWindowIframe();
+
+            if (position === 'top') {
+                scroll = 0;
+            } else if (position === 'bottom') {
+                scroll = iframe.document.body.scrollHeight;
+            } else {
+                var el = this.getBlockView(blockId).$el;
+                var windowHeight = this.getIframe().height();
+                scroll = el.offset().top - ( windowHeight - el.outerHeight(true) ) / 2;
+            }
+
             //Scroll to new block
             this.getWindowIframe().jQuery('html, body').animate({
-                scrollTop: this.getBlockView(blockId).$el.offset().top
+                scrollTop: scroll
             }, 1000);
         },
         /**
