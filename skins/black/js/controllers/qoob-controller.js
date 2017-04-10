@@ -118,23 +118,40 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         var model = QoobUtils.createModel(values);
 
         this.pageModel.addBlock(model, afterId);
-        this.layout.viewPort.addBlock(model, afterId);
         this.layout.menu.addSettings(model);
+        this.layout.viewPort.addBlock(model, afterId);
+
         if (scroll) {
-            this.scrollTo(model.id);
+            var self = this,
+                position,
+                indexModel = this.pageModel.get('blocks').indexOf(model),
+                modelBelove = this.pageModel.get('blocks').at(indexModel + 1);
+
+            if (indexModel === 0) {
+                position = 'top';
+            } else if (this.pageModel.get('blocks').length > 1 && modelBelove === undefined) {
+                position = 'bottom';
+            } else {
+                position = false;
+            }
+
+            setTimeout(function(){
+                self.scrollTo(model.id, position);
+            }, 700);
+            
         }
 
         // Remove empty div for mobile
-        if (jQuery('#qoob-viewport').find('div[attr="style"]').length > 0) {
-            jQuery('#qoob-viewport').find('div[attr="style"]').remove();
+        if (jQuery('#qoob-viewport').find('div[style]').length > 0) {
+            jQuery('#qoob-viewport').find('div[style]').remove();
         }
     },
     startEditBlock: function(blockId) {
-        if(this.pageModel.get('blocks').get(blockId)){
+        if (this.pageModel.get('blocks').get(blockId)) {
             this.layout.startEditBlock(blockId);
             this.scrollTo(blockId);
-        }else{
-            this.navigate('index') 
+        } else {
+            this.navigate('index');
         }
     },
     stopEditBlock: function() {
@@ -159,7 +176,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
             this.deleteInnerSettingsView(name);
         }
         this.layout.menu.addView(view);
-        this.layout.menu.rotateForward(name, function(){
+        this.layout.menu.rotateForward(name, function() {
             view.$el.trigger('shown');
         });
         this.layout.menu.settingsViewStorage[name] = view;
@@ -194,7 +211,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     addLibrary: function(url, cb) {
         var self = this;
         this.storage.getLibraryByUrl(url, function(error, dataLib) {
-            if ( error != 'error' && _.isArray(dataLib) ) {
+            if (error != 'error' && _.isArray(dataLib)) {
                 var jsonLib = _.first(dataLib);
                 if (jsonLib.name.length > 0) {
                     self.storage.driver.loadLibrariesData(function(error, libraries) {
@@ -223,7 +240,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
                 if (jsonLib.name.length > 0) {
                     self.storage.driver.loadLibrariesData(function(error, libraries) {
                         var library = _.findWhere(libraries, {
-                          name: name
+                            name: name
                         });
 
                         if (library.version !== jsonLib.version) {
@@ -255,7 +272,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
 
         this.storage.driver.loadLibrariesData(function(error, libraries) {
             libraries = _.without(libraries, _.findWhere(libraries, {
-              name: name
+                name: name
             }));
 
             self.storage.driver.saveLibrariesData(libraries, function(error, state) {
@@ -266,8 +283,8 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     /**
      * Scroll to block
      */
-    scrollTo: function(modelId) {
-        this.layout.viewPort.scrollTo(modelId);
+    scrollTo: function(modelId, position) {
+        this.layout.viewPort.scrollTo(modelId, position);
     },
     /**
      * Get current params from Backbone.history.fragment
@@ -306,7 +323,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         var newTemplate = _.extend(templateInfo, dataPage);
 
         if (dataPage.blocks.length > 0) {
-            this.storage.createPageTemplate(newTemplate, function(error){
+            this.storage.createPageTemplate(newTemplate, function(error) {
                 cb(error, status);
             });
         } else {
@@ -329,12 +346,12 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      * Show libraty loader
      */
     showLibraryLoader: function(elem) {
-         this.layout.menu.showLibraryLoader(elem);
+        this.layout.menu.showLibraryLoader(elem);
     },
     /**
      * Hide libraty loader
      */
     hideLibraryLoader: function(elem) {
-         this.layout.menu.hideLibraryLoader(elem);
+        this.layout.menu.hideLibraryLoader(elem);
     }
 });
