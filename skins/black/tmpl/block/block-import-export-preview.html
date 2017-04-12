@@ -1,0 +1,22 @@
+<div class="modal fade" id="qoob-import-export-window" tabindex="-1" role="dialog" aria-labelledby="<%= page_data_text %>">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="<%= page_data_text %>"><%= page_data_text %></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <textarea class="form-control qoob-import-export-textarea"><%= page_data %></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= save_changes %></button>
+        <button type="button" class="btn btn-primary save-changes"><%= save_changes %></button>
+      </div>
+    </div>
+  </div>
+</div>
