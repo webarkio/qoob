@@ -150,7 +150,8 @@ QoobStorage.prototype.getBlockTemplate = function(libName, blockName, cb) {
 QoobStorage.prototype.save = function(json, html, cb) {
     var data = {
         data: json,
-        html: html
+        html: html,
+        libs: this.librariesData
     };
     this.driver.savePageData(data, function(err, state) {
         cb(err, state);

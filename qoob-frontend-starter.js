@@ -20,9 +20,8 @@
         }
 
         this.options = options;
-        this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + "/qoob/qoob/";
+        this.options.qoobUrl = this.options.qoobUrl || (window.location.protocol != 'file:' ? (window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + "/") : "") + "qoob/qoob/";
         this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
-
         var loaderSrc = this.options.qoobUrl + "loader.min.js";
         var script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
@@ -38,7 +37,7 @@
                     } else {}
                     $.holdReady(false);
                 });
-                for (var i in libs) {
+                for (var i = 0; i < libs.length; i++) {
 
                     var libUrl = libs[i].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
 
@@ -48,7 +47,9 @@
                             if (res[j].src.indexOf("http://") !== 0 && res[j].src.indexOf("https://") !== 0) {
                                 res[j].src = libUrl + res[j].src.replace(/^\/+/g, ''); //Trim slashes in the begining
                             }
-                            window.loader.add(res[j]);
+                            if (!res[j].backend) {
+                                window.loader.add(res[j]);
+                            }
                         }
                     }
                 }
@@ -57,10 +58,10 @@
 
         };
         script.onerror = function() {
-            console.log("Can't load loader.js file");
+            console.log("Can't load loader.js file at " + self.options.qoobUrl);
         };
         document.head.appendChild(script);
     }
-    
+
     window.QoobStarter = QoobStarter;
 }(jQuery));

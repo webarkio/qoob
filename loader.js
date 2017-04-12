@@ -67,13 +67,13 @@ Loader.prototype.add = function(obj, opt) {
             if (this.isStarted) {
                 this.loadNext();
             }
-        }else{
-            if(obj.onloaded){
-                if(obj.name in this.loaded){
+        } else {
+            if (obj.onloaded) {
+                if (obj.name in this.loaded) {
                     obj.onloaded(this.loaded[obj.name].data);
-                }else{
-                    this.on('loaded', function(objLoaded){
-                        if(objLoaded.name===obj.name){
+                } else {
+                    this.on('loaded', function(objLoaded) {
+                        if (objLoaded.name === obj.name) {
                             obj.onloaded(self.loaded[obj.name].data);
                         }
                     });
@@ -139,9 +139,9 @@ Loader.prototype.stop = function() {
 };
 
 Loader.prototype.loadNext = function() {
-    for (var obj in this.queue) {
-        if (this.isDependencyLoaded(this.queue[obj].dep)) {
-            this.startLoading(obj);
+    for (var i = 0; i < this.queue.length; i++) {
+        if (this.isDependencyLoaded(this.queue[i].dep)) {
+            this.startLoading(this.queue[i]);
         }
     }
 };

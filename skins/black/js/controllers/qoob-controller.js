@@ -135,10 +135,10 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
                 position = false;
             }
 
-            setTimeout(function(){
+            setTimeout(function() {
                 self.scrollTo(model.id, position);
             }, 700);
-            
+
         }
 
         // Remove empty div for mobile
@@ -353,5 +353,20 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      */
     hideLibraryLoader: function(elem) {
         this.layout.menu.hideLibraryLoader(elem);
+    },
+   /**
+     * Remove page data
+     */
+    removePageData: function() {
+        var self = this;
+        _.each(_.clone(this.pageModel.get('blocks').models), function(model) {
+          self.deleteBlock(model);
+        });
+    },
+    /**
+     * Show import/export window
+     */
+    showImportExportWindow: function() {
+        this.layout.ImportExport.showImportExportWindow();
     }
 });

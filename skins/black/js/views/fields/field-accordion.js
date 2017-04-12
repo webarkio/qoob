@@ -73,7 +73,7 @@ Fields.accordion = QoobFieldView.extend(
                 data = [],
                 newModel;
 
-            for (var i in settings) {
+            for (var i = 0; i < settings.length; i++) {
                 settingsParams.push({ 'name': settings[i].name, 'default': defaults[settings[i].name] });
             }
 

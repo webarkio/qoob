@@ -142,7 +142,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             } else {
                 var el = this.getBlockView(blockId).$el;
                 var windowHeight = this.getIframe().height();
-                scroll = el.offset().top - ( windowHeight - el.outerHeight(true) ) / 2;
+                scroll = el.offset().top - (windowHeight - el.outerHeight(true)) / 2;
             }
 
             //Scroll to new block

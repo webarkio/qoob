@@ -1,4 +1,4 @@
-/*global QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView*/
+/*global QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView*/
 /**
  * Create qoob view
  *
@@ -38,6 +38,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 "storage": this.storage,
                 "controller": this.controller
             });
+            this.ImportExport = new QoobImportExportView({
+                "storage": this.storage,
+                "controller": this.controller
+            });
         },
         /**
          * Render qoob view
@@ -45,7 +49,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         render: function() {
             //FIXME: this.storage => this.model
-            this.$el.html([this.toolbar.render().el, this.editModeButton.render().el, this.menu.render().el, this.viewPort.render().el]);
+            this.$el.html([this.toolbar.render().el, this.editModeButton.render().el, this.menu.render().el, this.viewPort.render().el, this.ImportExport.render().el]);
             this.editModeButton.hide();
             return this;
         },

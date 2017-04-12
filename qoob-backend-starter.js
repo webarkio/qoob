@@ -106,8 +106,7 @@
                 return;
             }
 
-            for (var i in libs) {
-
+            for (var i = 0; i < libs.length; i++) {
                 var libUrl = libs[i].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
 
                 if (libs[i].res) {
@@ -125,8 +124,7 @@
 
                 var blocks = libs[i].blocks;
 
-
-                for (var k in blocks) {
+                for (var k = 0; k < blocks.length; k++) {
                     blocks[k].url = blocks[k].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
 
                     if (blocks[k].url.indexOf("http://") !== 0 && blocks[k].url.indexOf("https://") !== 0) {
@@ -231,9 +229,9 @@
                 }
             }
         };
-        for (var i in libs) {
+        for (var i = 0; i < libs.length; i++) {
             var currentLib = libs[i];
-            for (var j in currentLib.blocks) {
+            for (var j = 0; j < currentLib.blocks.length; j++) {
                 var configString = JSON.stringify(libs[i].blocks[j].config);
                 configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
                 configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
@@ -261,10 +259,10 @@
 
     QoobStarter.prototype.parseBlockData = function(libs) {
         var result = [];
-        for (var i in libs) {
+        for (var i = 0; i < libs.length; i++) {
             var lib = libs[i];
 
-            for (var j in lib.blocks) {
+            for (var j = 0; j < lib.blocks.length; j++) {
                 if (this.loader.loaded[lib.name + "_" + lib.blocks[j].name]) {
                     lib.blocks[j].lib = lib.name;
                     lib.blocks[j].config = this.applySelfMask(this.loader.loaded[lib.name + "_" + lib.blocks[j].name].data, lib.url, lib.blocks[j].url);
@@ -274,6 +272,7 @@
             }
             result.push(lib);
         }
+
         return this.applyGlobalMask(result);
     };
 

@@ -54,6 +54,7 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
      * @returns {Object}
      */
     render: function() {
+        var self = this;
         var data = {
             "autosave": this.storage.__('autosave', 'Autosave'),
             "save": this.storage.__('save', 'Save'),
@@ -64,7 +65,17 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         };
 
         if (typeof this.storage.driver.mainMenu === "function") {
-            var staticCustomMenu = [];
+            var staticCustomMenu = [{
+                "id": "import-export",
+                "label": "Import/export",
+                "action": function(){self.controller.showImportExportWindow()},
+                "icon": ""
+            }, {
+                "id": "empty-page",
+                "label": "Empty page",
+                "action": function(){self.controller.removePageData()},
+                "icon": ""
+            }];
             data.customMenu = this.customMenu = this.storage.driver.mainMenu(staticCustomMenu);
         }
 
