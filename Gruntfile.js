@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         shell: {
             gitpull: {
-                command: 'git pull'
+                command: 'git pull "origin" master'
             }
         },
         uglify: {

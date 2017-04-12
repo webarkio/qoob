@@ -20,7 +20,7 @@
         }
 
         this.options = options;
-        this.options.qoobUrl = this.options.qoobUrl || (window.location.protocol != 'file:' ? (window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + "/") : "") + "qoob/qoob/";
+        this.options.qoobUrl = this.options.qoobUrl || (window.location.protocol != 'file:' ? (window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + "/") : "") + "qoob/";
         this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
         var loaderSrc = this.options.qoobUrl + "loader.min.js";
         var script = document.createElement('script');

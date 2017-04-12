@@ -20,7 +20,7 @@
         this.options = options;
         this.options.skip = options.skip || [];
         var pathname = window.location.pathname.replace(/\/.*\..*?$/g, '/');
-        this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + pathname + (pathname.indexOf("/", pathname.length - "/".length) !== -1 ? '' : '/') + "qoob/qoob/";
+        this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + pathname + (pathname.indexOf("/", pathname.length - "/".length) !== -1 ? '' : '/') + "qoob/";
         this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
         this.options.skins = this.options.skins || { 'black': this.options.qoobUrl + 'skins/black/skin.js' };
         this.options.debug = this.options.debug || false;
