@@ -139,9 +139,9 @@ Loader.prototype.stop = function() {
 };
 
 Loader.prototype.loadNext = function() {
-    for (var i = 0; i < this.queue.length; i++) {
-        if (this.isDependencyLoaded(this.queue[i].dep)) {
-            this.startLoading(this.queue[i]);
+    for (var obj in this.queue) {
+        if (this.isDependencyLoaded(this.queue[obj].dep)) {
+            this.startLoading(obj);
         }
     }
 };
@@ -169,7 +169,9 @@ Loader.prototype.progress = function() {
         //        this.stop();
         this.emmit('complete', [this.loaded, this.failed]);
     } else {
-        this.loadNext();
+        if (this.isStarted) {
+            this.loadNext();
+        }
     }
 };
 
