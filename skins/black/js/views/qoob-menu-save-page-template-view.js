@@ -47,15 +47,6 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             var self = this;
             var elem = this.$(evt.currentTarget);
 
-            if (this.settingsModel.get('title') == '') {
-                this.$el.find('.input-text').addClass('error');
-                this.$el.find('.save-template-settings .error-block').show();
-                return;
-            } else {
-                this.$el.find('.input-text').removeClass('error');
-                this.$el.find('.save-template-settings .error-block').hide();
-            }
-
             var sorted = _.sortBy(this.storage.pageTemplatesCollection.models, function(obj) {
                 return obj.id;
             });
@@ -69,14 +60,22 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             };
 
             elem.addClass('active');
-
             this.controller.createPageTemplate(dataView, function(error) {
                 elem.removeClass('active');
                 if (error === null) {
                     self.$el.find('.save-template-settings').addClass('show-notice');
                     self.$el.find('.save-template-settings .error-block').hide();
+                    self.settingsModel.set('image', '');
+                    self.settingsModel.set('title', '');
+                    self.$el.find('.input-text').removeClass('error');
                 } else {
-                    self.$el.find('.save-template-settings .error-block').show();
+                    if (error.title) {
+                        self.$el.find('.input-text').addClass('error');    
+                    }
+                    if (error.blocks) {
+                        self.$el.find('.save-template-settings .error-block').show();
+                    }
+                    
                 }
             });
         },
