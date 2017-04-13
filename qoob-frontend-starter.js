@@ -47,9 +47,6 @@
                             if (res[j].src.indexOf("http://") !== 0 && res[j].src.indexOf("https://") !== 0) {
                                 res[j].src = libUrl + res[j].src.replace(/^\/+/g, ''); //Trim slashes in the begining
                             }
-                            if (!res[j].backend) {
-                                window.loader.add(res[j]);
-                            }
                         }
                     }
                 }

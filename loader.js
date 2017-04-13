@@ -269,3 +269,7 @@ Loader.prototype.loadCSS = function(src, success, error) {
     style.onerror = error;
     document.head.appendChild(style);
 };
+
+if (module.exports){
+    module.exports = Loader;
+}
