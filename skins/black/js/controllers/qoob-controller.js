@@ -317,12 +317,21 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         var dataPage = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var newTemplate = _.extend(templateInfo, dataPage);
 
-        if (dataPage.blocks.length > 0) {
+        console.log(templateInfo.title);
+
+        if (dataPage.blocks.length > 0 && templateInfo.title !== '') {
             this.storage.createPageTemplate(newTemplate, function(error) {
                 cb(error, status);
             });
         } else {
-            cb(true);
+            var err = {};
+            if (templateInfo.title === '') {
+                err.title = true;
+            }
+            if (dataPage.blocks.length === 0) {
+                err.blocks = true;
+            }
+            cb(err);
         }
     },
     /**
@@ -349,13 +358,13 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     hideLibraryLoader: function(elem) {
         this.layout.menu.hideLibraryLoader(elem);
     },
-   /**
+    /**
      * Remove page data
      */
     removePageData: function() {
         var self = this;
         _.each(_.clone(this.pageModel.get('blocks').models), function(model) {
-          self.deleteBlock(model);
+            self.deleteBlock(model);
         });
     },
     /**
