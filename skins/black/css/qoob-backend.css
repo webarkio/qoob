@@ -604,25 +604,85 @@ textarea {
     }
 }
 
+
 /* bootsrap modal window */
 
 .modal-backdrop {
     z-index: 99999;
+    background-color: #ffffff;
+}
+
+.modal-backdrop.in {
+    opacity: 1;
 }
 
 .modal {
     z-index: 999991;
 }
 
-#qoob-import-export {
-/*    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,.8);
-    z-index: 99999;*/
+
+/* qoob import/export modal window */
+
+#qoob-import-export-window .modal-dialog {
+    width: calc(100% - 46px);
+    height: calc(100vh - 46px);
+    margin: 23px auto 0;
+}
+
+#qoob-import-export-window .modal-content {
+    height: calc(100vh - 46px);
+    box-shadow: 0 0 17px rgba(1, 1, 1, .4);
+}
+
+#qoob-import-export-window .qoob-import-export-textarea {
+    font-family: 'robotoregular' font-size: 16px;
+    color: #000000;
+    height: calc(100vh - 263px);
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#qoob-import-export-window .modal-header {
+    padding: 13px 39px 15px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+#qoob-import-export-window .modal-footer {
+    border-top: 1px solid #e3e3e3;
+    padding-right: 23px;
+    padding-top: 23px;
+}
+
+#qoob-import-export-window .modal-title {
+    font-family: 'robotobold';
+    font-size: 18px;
+    color: #121619;
+}
+
+#qoob-import-export-window .modal-body {
+    padding-top: 34px;
+    padding-left: 38px;
+    padding-bottom: 25px;
+}
+
+#qoob-import-export-window .btn-cancel,
+#qoob-import-export-window .btn-save-changes {
+    color: #ffffff;
+    font-family: 'robotobold';
+    font-size: 14px;
+    text-transform: uppercase;
+    width: 159px;
+    padding: 9px 0;
+}
+
+#qoob-import-export-window .btn-cancel {
+    background-color: #bbbbbb;
+}
+
+#qoob-import-export-window .btn-save-changes {
+    background-color: #0084ff;
 }
 
 
@@ -892,7 +952,9 @@ label.checkbox-sb [type=checkbox]:checked + span {
     display: block;
 }
 
+
 /* Default droppable style */
+
 .droppable-zone-full.ui-droppable {
     position: absolute;
     top: 0;
@@ -2709,7 +2771,6 @@ input[type="text"]#datepicker {
     margin-bottom: 4%;
 }
 
-
 #inner-settings-image .filtered-images .ajax-image:hover,
 #inner-settings-video .filtered-videos .ajax-video:hover {
     border: solid 2px #6a7bcf;
@@ -2775,6 +2836,7 @@ input[type="text"]#datepicker {
     object-position: 50% 50%;
     border-radius: 3px;
 }
+
 
 /*** IFRAME ***/
 
