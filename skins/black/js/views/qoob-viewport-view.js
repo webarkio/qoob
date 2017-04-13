@@ -221,6 +221,11 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 this.controller.changeDefaultPage('hide');
             }
 
+            // Remove empty div for mobile
+            if (this.$el.find('#qoob-iframe').next('div').length > 0) {
+                this.$el.find('#qoob-iframe').nextAll('div').remove();
+            }
+
             this.triggerIframe();
         },
         /**
@@ -279,12 +284,11 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
         changeDefaultPage: function(event) {
             var qoobBlocks = this.getWindowIframe().jQuery('#qoob-blocks');
 
-            if (event == 'hide') {
+            if (event === 'hide') {
                 // hide block blank and qoob templates when add block
                 qoobBlocks.find('.qoob-templates').hide();
                 this.$el.find('#droppable-default').hide();
-            }
-            if (event == 'show') {
+            } else if (event === 'show') {
                 // hide block blank and qoob templates when add block
                 qoobBlocks.find('.qoob-templates').show();
                 this.$el.find('#droppable-default').show();

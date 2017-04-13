@@ -140,11 +140,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
             }, 700);
 
         }
-
-        // Remove empty div for mobile
-        if (jQuery('#qoob-viewport').find('div[style]').length > 0) {
-            jQuery('#qoob-viewport').find('div[style]').remove();
-        }
     },
     startEditBlock: function(blockId) {
         if (this.pageModel.get('blocks').get(blockId)) {
