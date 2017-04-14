@@ -1,4 +1,4 @@
-/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView, QoobManageLibsView */
+/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView */
 /**
  * Create view for menu in qoob layout
  *
@@ -59,11 +59,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
 
             this.addView(new QoobMenuSavePageTemplateView({
-                storage: this.storage,
-                controller: this.controller
-            }));
-
-            this.addView(new QoobManageLibsView({
                 storage: this.storage,
                 controller: this.controller
             }));
@@ -261,21 +256,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         changeLib: function(evt) {
             var target = jQuery(evt.target);
-
-            if (target.val() == 'manage') {
-                this.controller.showManageLibs();
-                this.$el.find('#lib-select [value="manage"]').prop('selected', false);
-                this.$el.find('#lib-select').selectpicker('refresh');
-                this.controller.changeLib('all');
-            } else {
-                this.controller.changeLib(target.val());
-            }
-        },
-        showLibraryLoader: function(elem) {
-            jQuery(elem).addClass('active')
-        },
-        hideLibraryLoader: function(elem) {
-            jQuery(elem).removeClass('active');
+            this.controller.changeLib(target.val());
         },
         hideNotice: function() {
             var saveTemplateSettings = this.$el.find('#save-template .save-template-settings');

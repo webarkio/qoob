@@ -218,10 +218,11 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         searchFilter: function() {
             var self = this;
 
-            var groupTags = [], data = this.dataVideos;
+            var groupTags = [],
+                data = this.dataVideos;
 
             for (var i = 0; i < data.length; i++) {
-                if (! _.isUndefined(data[i].tags) ) {
+                if (!_.isUndefined(data[i].tags)) {
                     groupTags.push(data[i].tags);
                 }
             }

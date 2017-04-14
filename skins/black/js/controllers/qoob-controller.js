@@ -5,8 +5,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         "": "index", // Empty hash-tag
         "groups/:group": "showGroup", // #groups/name
         "edit/:blockId": "startEditBlock", // #groups/name
-        "save-template": "showSavePageTemplate",
-        "manage-libs": "showManageLibs"
+        "save-template": "showSavePageTemplate"
     },
     index: function() {
         this.layout.menu.showIndex();
@@ -102,11 +101,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         this.layout.toolbar.logoRotation('side-90');
         this.layout.stopEditBlock();
     },
-    showManageLibs: function() {
-        this.navigate('manage-libs');
-        this.layout.menu.rotateForward('manage-libs');
-        this.layout.toolbar.logoRotation('side-90');
-    },
     addNewBlock: function(lib, block, afterId) {
         var blockConfig = this.storage.getBlockConfig(lib, block);
 
@@ -199,83 +193,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         this.layout.menu.hideLibsExcept(name);
     },
     /**
-     * Add new library
-     * @param url {String}
-     * @param {Function} cb A callback to run.
-     */
-    addLibrary: function(url, cb) {
-        var self = this;
-        this.storage.getLibraryByUrl(url, function(error, dataLib) {
-            if (error != 'error' && _.isArray(dataLib)) {
-                var jsonLib = _.first(dataLib);
-                if (jsonLib.name.length > 0) {
-                    self.storage.driver.loadLibrariesData(function(error, libraries) {
-                        libraries.push(jsonLib);
-                        self.storage.driver.saveLibrariesData(libraries, function(error, state) {
-                            cb(error, state);
-                        });
-                    });
-                }
-            } else {
-                cb(error);
-            }
-        });
-    },
-    /**
-     * Update library
-     * @param name {String} name library
-     * @param updateUrl {String} update_url library
-     * @param {Function} cb A callback to run.
-     */
-    updateLibrary: function(name, updateUrl, cb) {
-        var self = this;
-        this.storage.getLibraryByUrl(updateUrl, function(error, dataLib) {
-            if (!error && _.isArray(dataLib)) {
-                var jsonLib = _.first(dataLib);
-                if (jsonLib.name.length > 0) {
-                    self.storage.driver.loadLibrariesData(function(error, libraries) {
-                        var library = _.findWhere(libraries, {
-                            name: name
-                        });
-
-                        if (library.version !== jsonLib.version) {
-                            libraries = _.without(libraries, library);
-                            libraries.push(jsonLib);
-
-                            self.storage.driver.saveLibrariesData(libraries, function(error, state) {
-                                cb(error, state);
-                            });
-
-                        } else {
-                            console.info('You have the latest version');
-                            cb('You have the latest version');
-                        }
-                    });
-                }
-            } else {
-                cb(error);
-            }
-        });
-    },
-    /**
-     * Remove library
-     * @param name {String} name library
-     * @param {Function} cb A callback to run.
-     */
-    removeLibrary: function(name, cb) {
-        var self = this;
-
-        this.storage.driver.loadLibrariesData(function(error, libraries) {
-            libraries = _.without(libraries, _.findWhere(libraries, {
-                name: name
-            }));
-
-            self.storage.driver.saveLibrariesData(libraries, function(error, state) {
-                cb(error, state);
-            });
-        });
-    },
-    /**
      * Scroll to block
      */
     scrollTo: function(modelId, position) {
@@ -317,8 +234,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         var dataPage = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         var newTemplate = _.extend(templateInfo, dataPage);
 
-        console.log(templateInfo.title);
-
         if (dataPage.blocks.length > 0 && templateInfo.title !== '') {
             this.storage.createPageTemplate(newTemplate, function(error) {
                 cb(error, status);
@@ -345,18 +260,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      */
     changeDefaultPage: function(event) {
         this.layout.viewPort.changeDefaultPage(event);
-    },
-    /**
-     * Show libraty loader
-     */
-    showLibraryLoader: function(elem) {
-        this.layout.menu.showLibraryLoader(elem);
-    },
-    /**
-     * Hide libraty loader
-     */
-    hideLibraryLoader: function(elem) {
-        this.layout.menu.hideLibraryLoader(elem);
     },
     /**
      * Remove page data
