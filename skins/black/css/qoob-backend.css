@@ -1900,6 +1900,23 @@ _:-ms-fullscreen,
     color: #b2b2b2;
 }
 
+.settings-item .input-text.error {
+    color: #ff0042;
+}
+
+.settings-item .input-text.error::-webkit-input-placeholder {
+    color: #ff0042;
+}
+
+.settings-item .input-text.error:-moz-placeholder {
+    color: #ff0042;
+    opacity: 1;
+}
+
+.settings-item .input-text.error:-ms-input-placeholder {
+    color: #ff0042;
+}
+
 .settings-item .textarea {
     border: 1px solid #fff;
     font-size: 13px;

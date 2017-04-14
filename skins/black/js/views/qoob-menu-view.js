@@ -59,6 +59,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
 
             this.addView(new QoobMenuSavePageTemplateView({
+                id: 'save-template',
                 storage: this.storage,
                 controller: this.controller
             }));
@@ -164,7 +165,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         self.$el.find('.' + screen).remove();
                     });
                 });
-                if(cb){
+                if (cb) {
                     cb();
                 }
             };
@@ -259,16 +260,19 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.controller.changeLib(target.val());
         },
         hideNotice: function() {
-            var saveTemplateSettings = this.$el.find('#save-template .save-template-settings');
-            if (saveTemplateSettings.hasClass('show-notice')) {
-                saveTemplateSettings.find('.input-text').val('');
-                saveTemplateSettings.removeClass('show-notice');
+            var viewSaveTemplate = _.findWhere(this.menuViews, { 'id': 'save-template' }),
+            element = viewSaveTemplate.$el;
+            
+            if (element.find('.save-template-settings').hasClass('show-notice')) {
+                element.find('.remove').trigger('click');
+                element.find('.input-text').val('');
+                element.find('.save-template-settings').removeClass('show-notice');
             }
-            if (saveTemplateSettings.find('.error-block').is(':visible')) {
-                saveTemplateSettings.find('.error-block').hide();
+            if (element.find('.error-block').is(':visible')) {
+                element.find('.error-block').hide();
             }
-            if (saveTemplateSettings.find('.input-text').hasClass('error')) {
-                saveTemplateSettings.find('.input-text').removeClass('error');
+            if (element.find('.input-text').hasClass('error')) {
+                element.find('.input-text').removeClass('error');
             }
         }
     });
