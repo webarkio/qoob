@@ -666,8 +666,9 @@ textarea {
 
 #qoob-import-export-window .modal-body {
     padding-top: 34px;
-    padding-left: 38px;
     padding-bottom: 25px;
+    padding-left: 38px;
+    padding-right: 38px;
 }
 
 #qoob-import-export-window .btn-cancel,
