@@ -644,6 +644,8 @@ textarea {
     border: none;
     border-radius: 0;
     box-shadow: none;
+    padding-left: 38px;
+    padding-right: 38px;
 }
 
 #qoob-import-export-window .modal-header {
@@ -667,8 +669,8 @@ textarea {
 #qoob-import-export-window .modal-body {
     padding-top: 34px;
     padding-bottom: 25px;
-    padding-left: 38px;
-    padding-right: 38px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #qoob-import-export-window .btn-cancel,
