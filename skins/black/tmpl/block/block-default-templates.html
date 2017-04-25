@@ -22,7 +22,9 @@
 				<% if (templates[k].title) { %>
 					<div class="title"><%= templates[k].title %></div>
 				<% } %>
-				<a class="remove" data-id="<%= templates[k].id %>" href="#"></a>
+				<% if ( ! templates[k].external ) { %>
+					<a class="remove" data-id="<%= templates[k].id %>" href="#"></a>
+				<% } %>
 			</div>
 		<% } %>
 	</div>
