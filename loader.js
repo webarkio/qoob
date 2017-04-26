@@ -270,6 +270,6 @@ Loader.prototype.loadCSS = function(src, success, error) {
     document.head.appendChild(style);
 };
 
-if (module.exports){
+if ('undefined' !== typeof module) {
     module.exports = Loader;
 }
