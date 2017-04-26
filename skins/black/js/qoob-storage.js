@@ -214,8 +214,6 @@ QoobStorage.prototype.createPageTemplate = function(template, cb) {
         return template.get('external') !== true;
     });
 
-    console.log(pageTemplatesCollection);
-
     this.driver.savePageTemplate(pageTemplatesCollection, function(error, state) {
         if (state) {
             cb(error, state);
