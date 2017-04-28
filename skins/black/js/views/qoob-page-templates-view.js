@@ -20,7 +20,7 @@ var QoobPageTemplatesView = Backbone.View.extend({ // eslint-disable-line no-unu
         var self = this;
         var id = jQuery(evt.currentTarget).parents('[data-id]').data('id');
         this.storage.pageTemplatesCollection.each(function(item) {
-            if (item.id === id) {
+            if (parseInt(item.id) === id) {
                 self.controller.load(item.get('blocks'));
             }
         });

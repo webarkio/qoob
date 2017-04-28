@@ -210,7 +210,11 @@ QoobStorage.prototype.loadPageTemplates = function(cb) {
 QoobStorage.prototype.createPageTemplate = function(template, cb) {
     this.pageTemplatesCollection.add(template);
 
-    this.driver.savePageTemplate(this.pageTemplatesCollection.toJSON(), function(error, state) {
+    var pageTemplatesCollection = this.pageTemplatesCollection.filter(function(template) {
+        return template.get('external') !== true;
+    });
+
+    this.driver.savePageTemplate(pageTemplatesCollection, function(error, state) {
         if (state) {
             cb(error, state);
         }
@@ -224,9 +228,14 @@ QoobStorage.prototype.createPageTemplate = function(template, cb) {
  */
 QoobStorage.prototype.removePageTemplate = function(id) {
     var model = this.pageTemplatesCollection.get(id);
+
     this.pageTemplatesCollection.remove(model);
 
-    this.driver.savePageTemplate(this.pageTemplatesCollection.toJSON(), function(error, state) {
+    var pageTemplatesCollection = this.pageTemplatesCollection.filter(function(template) {
+        return template.get('external') !== true;
+    });
+
+    this.driver.savePageTemplate(pageTemplatesCollection, function(error, state) {
         if (state) {
             console.log('Done', state);
         }

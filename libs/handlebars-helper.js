@@ -341,7 +341,7 @@ Handlebars.registerHelper('everyNth', function(context, every, options) {
  * @returns {array}
  */
 Handlebars.registerHelper('globalVar', function(varName) {
-    return window.ajax[varName];
+    return window.qoob_backend_custom[varName];
 });
 
 /**
