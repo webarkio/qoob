@@ -38,7 +38,6 @@
                         } else {}
                     } catch (err) {
                     }
-
                     $.holdReady(false);
                 });
                 for (var i = 0; i < libs.length; i++) {
