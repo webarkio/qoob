@@ -8,6 +8,7 @@ Fields.image = QoobFieldView.extend(
     /** @lends Fields.image.prototype */
     {
         customItems: null,
+        counterDropZone: 0,
         events: {
             'click .media-center': 'clickMediaCenter',
             'change .image-url': 'changeInputUrlImage',
@@ -19,7 +20,6 @@ Fields.image = QoobFieldView.extend(
             'global_drag_stop': 'hideDropZone',
             'click [data-id]': 'clickAction'
         },
-        counterDropZone: 0,
         /**
          * View field image
          * @class Fields.image

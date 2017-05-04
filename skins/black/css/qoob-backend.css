@@ -2151,7 +2151,8 @@ input[type="text"]#datepicker {
     height: 100%;
 }
 
-.settings-item .edit-image .drop-zone {
+.settings-item .edit-image .drop-zone,
+.settings-item .edit-video .drop-zone {
     display: none;
     background-color: #9ea0a5;
     color: #fff;
@@ -2165,11 +2166,13 @@ input[type="text"]#datepicker {
     padding: 5px;
 }
 
-.settings-item .edit-image .drop-zone.hover {
+.settings-item .edit-image .drop-zone.hover,
+.settings-item .edit-video .drop-zone.hover {
     background-color: #6a7bcf;
 }
 
-.settings-item .edit-image .drop-zone-text {
+.settings-item .edit-image .drop-zone-text,
+.settings-item .edit-video .drop-zone-text {
     display: block;
     width: 100%;
     height: 100%;
@@ -2260,7 +2263,8 @@ input[type="text"]#datepicker {
     color: #95969a;
 }
 
-.settings-item .image-control .input-file {
+.settings-item .image-control .input-file,
+.settings-item .video-control .input-file {
     display: none;
 }
 

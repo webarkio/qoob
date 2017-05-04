@@ -5,6 +5,7 @@
 </div>
 <div class="video-control">
     <div class="edit-video<% if ((src === '' || src !== '' && !src.hasOwnProperty('url')) || (src.hasOwnProperty('url') && src.url === '') || (src.hasOwnProperty('preview') && src.preview === '') ) { %> empty<% } %>">
+        <div class="drop-zone"><span class="drop-zone-text"><%= drop_here %></span></div>
         <div class="video-container">
             <div class="media-center preview-video">
                 <% if (src.preview) { %>
@@ -22,7 +23,7 @@
                     <%= no_video %>
                 <% } else if (src !== '' && !src.hasOwnProperty('url')) { %>
                     <%= no_poster %>
-                <% } else if (!src.hasOwnProperty('url') || !src.hasOwnProperty('preview')) { %>
+                <% } else if (src.hasOwnProperty('url') || src.hasOwnProperty('preview')) { %>
                     <% if (src.url === '') { %>
                         <%= no_video %>
                     <% } %>
@@ -31,6 +32,7 @@
                     <% } %>
                 <% } %>
             </div>
+            <p class="text"><%= you_can_drop_it_here %></p>
         </div>
         <input type="hidden" class="url" name="<%= name %>" value="<%= src.url %>">
         <input type="hidden" class="preview" name="<%= name %>" value="<%= src.preview %>">
@@ -43,11 +45,13 @@
             <i class="fa fa-angle-down"></i>
         </button>
         <ul class="dropdown-menu">
-            <li>
-                <a href="#" class="reset">
-                    <%= reset_to_default %>
-                </a>
-            </li>
+            <% _.each( customItems, function( item ){ %>
+                <li>
+                    <a href="#" data-id="<%- item.id %>" class="action">
+                        <%- item.label %>
+                    </a>
+                </li>
+            <% }); %>
         </ul>
     </div>
 </div>
