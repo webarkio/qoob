@@ -85,8 +85,22 @@ Fields.image = QoobFieldView.extend(
          * Drop image on zone
          */
         dropImage: function(evt) {
+            var self = this;
             var droppedFiles = evt.originalEvent.dataTransfer.files;
-            this.$el.find('input[type="file"]').prop('files', droppedFiles);
+
+            if (droppedFiles[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
+                this.storage.driver.uploadImage(droppedFiles, function(error, url) {
+                    if ('' !== url) {
+                        self.changeImage(url);
+                        if (self.$el.find('.edit-image').hasClass('empty')) {
+                            self.$el.find('.edit-image').removeClass('empty');
+                        }
+                    }
+                });
+            } else {
+                console.error('file format is not appropriate');
+            }
+
             this.counterDropZone = 0;
         },
         /**

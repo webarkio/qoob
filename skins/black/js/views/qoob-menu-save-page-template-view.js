@@ -70,12 +70,12 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
                     self.$el.find('.input-text').removeClass('error');
                 } else {
                     if (error.title) {
-                        self.$el.find('.input-text').addClass('error');    
+                        self.$el.find('.input-text').addClass('error');
                     }
                     if (error.blocks) {
                         self.$el.find('.save-template-settings .error-block').show();
                     }
-                    
+
                 }
             });
         },
@@ -95,7 +95,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
                 'you_cant_save_empty_template': this.storage.__('you_cant_save_empty_template', "You can't save empty template")
             };
 
-            var settingsView = new QoobFieldsView({
+            this.settingsView = new QoobFieldsView({
                 model: model,
                 settings: this.config,
                 defaults: this.defaults,
@@ -104,11 +104,47 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
                 parentId: this.id
             });
 
-            this.settingsModel = settingsView.model;
+            this.settingsModel = this.settingsView.model;
 
+            this.$el.html(_.template(this.storage.getSkinTemplate('menu-more-preview'))(data)).find('.settings-blocks-full').prepend(this.settingsView.render().el);
 
-            this.$el.html(_.template(this.storage.getSkinTemplate('menu-more-preview'))(data)).find('.settings-blocks-full').prepend(settingsView.render().el);
+            this.afterRender();
 
             return this;
-        }
+        },
+        afterRender: function() {
+            var self = this,
+                counter = 0,
+                fields = this.settingsView.fields;
+
+            this.$el.on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                })
+                .on('dragenter', function() {
+                    counter++;
+                    if (counter === 1) {
+                        for (var i = 0; i < fields.length; i++) {
+                            fields[i].$el.trigger('global_drag_start');
+                        }
+                        self.$el.addClass('overlay');
+                    }
+                })
+                .on('dragleave', function() {
+                    counter--;
+                    if (counter === 0) {
+                        for (var i = 0; i < fields.length; i++) {
+                            fields[i].$el.trigger('global_drag_stop');
+                        }
+                        self.$el.removeClass('overlay');
+                    }
+                })
+                .on('drop', function() {
+                    for (var i = 0; i < fields.length; i++) {
+                        fields[i].$el.trigger('global_drag_stop');
+                    }
+                    self.$el.removeClass('overlay');
+                    counter = 0;
+                });
+        },
     });

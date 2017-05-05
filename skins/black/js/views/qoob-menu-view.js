@@ -261,8 +261,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         hideNotice: function() {
             var viewSaveTemplate = _.findWhere(this.menuViews, { 'id': 'save-template' }),
-            element = viewSaveTemplate.$el;
-            
+                element = viewSaveTemplate.$el;
+
             if (element.find('.save-template-settings').hasClass('show-notice')) {
                 element.find('.remove').trigger('click');
                 element.find('.input-text').val('');
