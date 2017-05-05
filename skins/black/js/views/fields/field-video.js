@@ -154,7 +154,8 @@ Fields.video = QoobFieldView.extend(
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_video': this.storage.__('no_video', 'No video'),
                 'no_poster': this.storage.__('no_poster', 'No poster'),
-                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here')
+                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here'),
+                'formats': this.storage.__('formats', 'mp4, ogv, webm')
             };
 
             if (typeof this.storage.driver.mainMenu === "function") {

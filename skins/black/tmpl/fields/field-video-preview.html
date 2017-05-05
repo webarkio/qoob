@@ -32,7 +32,10 @@
                     <% } %>
                 <% } %>
             </div>
-            <p class="text"><%= you_can_drop_it_here %></p>
+            <p class="text">
+                <%= you_can_drop_it_here %><br/>
+                <%= formats %>                
+            </p>
         </div>
         <input type="hidden" class="url" name="<%= name %>" value="<%= src.url %>">
         <input type="hidden" class="preview" name="<%= name %>" value="<%= src.preview %>">
