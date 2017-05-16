@@ -1,5 +1,6 @@
+/*global QoobFieldView, QoobFieldsView, AccordionFlipView */
 var Fields = Fields || {};
-Fields.accordion_item_flip = QoobFieldView.extend(
+Fields.accordion_item_flip = QoobFieldView.extend( 
         /** @lends Fields.accordion_item_front.prototype */{
             className: "settings-item settings-accordion",
             events: {
@@ -23,7 +24,7 @@ Fields.accordion_item_flip = QoobFieldView.extend(
              * Show accordion item's settings
              * @returns {Object}
              */
-            showSettings: function (evt) {
+            showSettings: function () {
                 var flipView = new AccordionFlipView({
                     model: this.model,
                     settings: this.settings,
