@@ -1,0 +1,22 @@
+<div class="title"><%= label %></div>
+<div id="<%= textareaId %>"><%= value %></div>
+<script type="text/javascript">
+	var quill_<%= textareaId %> = new Quill('#<%= textareaId %>', {
+		modules: {
+			toolbar: [
+				['bold', 'italic', {
+					'list': 'ordered'
+				}, {
+					'list': 'bullet'
+				}, {
+					'align': []
+				}]
+			]
+		},
+		placeholder: '',
+		theme: 'snow'
+	});
+	quill_<%= textareaId %>.on('text-change', function() {
+		jQuery('#<%= textareaId %>').trigger('change', quill_<%= textareaId %>);
+	});
+</script>

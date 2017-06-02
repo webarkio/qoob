@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Qoob test case</title>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/qoob-frontend.css">
+</head>
+
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <div id="qoob-blocks">
+        <div id="outer-block-1">
+            <div class="qoob-overlay"></div>
+        </div>
+        <div id="outer-block-2">
+            <div class="qoob-overlay"></div>
+        </div>
+        <div id="outer-block-3">
+            <div class="qoob-overlay"></div>
+        </div>
+        <div id="outer-block-4">
+            <div class="qoob-overlay"></div>
+        </div>
+        <div id="outer-block-5">
+            <div class="qoob-overlay"></div>
+        </div>
+        <div id="outer-block-6">
+            <div class="qoob-overlay"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../../../qoob-frontend-starter.min.js"></script>
+    <script type="text/javascript">
+    var starter = new QoobStarter({
+        "qoobUrl": '../../../',
+        "driver": {
+            loadLibrariesData: function(cb) {
+                var data = [{
+                    blocks: [{
+                        name: "qoob_main",
+                        url: "qoob_main/"
+                    }],
+                    groups: [{
+                        id: "main",
+                        label: "Main",
+                        position: "0"
+                    }],
+                    res: [],
+                    name: "default",
+                    url: "qoob/qoob/blocks"
+                }];
+
+                cb(null, data);
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<div id="inner-settings-video">
+    <div class="backward">
+        <a class="backward-video" href="#"><span><%= back %></span></a>
+    </div>
+    <div class="settings-blocks-full">
+        <div class="settings-block">
+            <div class="selected-video<% if ((src === '' || src !== '' && !src.hasOwnProperty('url')) || (src.hasOwnProperty('url') && src.url === '') || (src.hasOwnProperty('preview') && src.preview === '') ) { %> empty<% } %>">
+                <div class="video-container">
+                    <img class="img" src="<%= src.preview %>" alt="">
+                    <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                        <a href="#" class="remove"></a>
+                    <% } %>
+                </div>
+                <div class="no-video">
+                    <i class="icon fa fa-file-video-o"></i>
+                    <div class="no-video-title">
+                        <% if (src === '') {  %>
+                            <%= no_video %>
+                        <% } else if (src !== '' && !src.hasOwnProperty('url')) { %>
+                            <%= no_poster %>
+                        <% } else if (!src.hasOwnProperty('url') || !src.hasOwnProperty('preview')) { %>
+                            <% if (src.url === '') { %>
+                                <%= no_video %>
+                            <% } %>
+                            <% if (src.preview === '') { %>
+                                <%= no_poster %>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="video-filter-group">
+                <input class="input-text video-search" type="text" value="" placeholder="<%= search %>">
+                <button class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="filtered-videos">
+                <div class="inview-videos"></div>
+            </div>
+        </div>
+    </div>
+</div>

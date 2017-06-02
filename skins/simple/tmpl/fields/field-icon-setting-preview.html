@@ -1,0 +1,32 @@
+<div id="inner-settings-icon">
+    <div class="backward">
+        <a class="backward-icon" href="#"><span><%= back %></span></a>
+    </div>
+    <div class="settings-blocks-full">
+        <div class="settings-block">
+            <div class="selected-icon<%if (!icon.classes) { %> empty<%}%>">
+                <div class="icon-container">
+                    <div class="media-center preview-icon">
+                        <span data-icon-tags="<%= icon.tags %>" class="<%= icon.classes %>"></span>
+                    </div>
+                    <a href="#" class="remove"></a>
+                </div>
+                <div class="no-icon">
+                    <i class="icon fa fa-file-image-o"></i>
+                    <div class="no-icon-title">
+                        <%= no_icon %>
+                    </div>
+                </div>
+            </div>
+            <div class="icon-filter-group">
+                <input class="input-text icon-search" type="text" value="" placeholder="<%= search %>">
+                <button class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="filtered-icons">
+                <div class="inview-icons"></div>
+            </div>
+        </div>
+    </div>
+</div>

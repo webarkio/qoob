@@ -1,0 +1,5 @@
+<div id="<%= uniqueId %>" class="accordion <% if(settings.length == 1 && settings[0].type == 'image') {%> without-title <%}%>">
+    <div class="title"><%= label %></div>
+</div>  
+<div class="add-block btn-builder"><%= add_component %></div>
+<div id="drop-<%= uniqueId %>" class="delete-drop-zone"><span><%= drag_to_delete %></span></div>

@@ -1,0 +1,30 @@
+<div id="inner-settings-image">
+    <div class="backward">
+        <a class="backward-image" href="#"><span><%= back %></span></a>
+    </div>
+    <div class="settings-blocks-full">
+        <div class="settings-block">
+            <div class="selected-image<%if (curSrc === '') { %> empty<%}%>">
+                <div class="image-container">
+                    <img class="img" src="<%= curSrc %>">
+                    <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                        <a href="#" class="remove"></a>
+                    <% } %>
+                </div>
+                <div class="no-image">
+                    <i class="icon fa fa-file-image-o"></i>
+                    <div class="no-image-title"><%= no_image %></div>
+                </div>
+            </div>
+            <div class="img-filter-group">
+                <input class="input-text img-search" type="text" value="" placeholder="<%= search %>">
+                <button class="search-button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="filtered-images">
+                <div class="inview-images"></div>
+            </div>
+        </div>
+    </div>
+</div>

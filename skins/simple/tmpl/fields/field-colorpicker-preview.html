@@ -1,0 +1,13 @@
+<div class="title">
+    <%= label %>
+</div>
+<input type="text" class="input-text colorpicker-input" name="<%= name %>" value="<%= value %>" style="background-color: <%= value %>">
+<% if (colors){ %>
+	<div class="other-colors">
+	    <% _.each( colors, function( color ){ %>
+	        <div class="other-color theme-colors" data-color="<%= color %>" style="background-color: <%= color %>">
+	            <span></span>
+	        </div>
+	    <% }); %>
+	</div>
+<% } %>
