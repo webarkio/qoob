@@ -112,8 +112,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         resize: function() {
             this.$el.css({
-                height: jQuery(window).height() - 70,
-                top: 70
+                height: jQuery(window).height() - 62,
+                top: 62
             });
         },
         /**

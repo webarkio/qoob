@@ -10,11 +10,9 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     index: function() {
         this.layout.menu.showIndex();
         this.layout.stopEditBlock();
-        this.layout.toolbar.logoRotation('side-0');
     },
     showGroup: function(group) {
         this.layout.menu.showGroup(group);
-        this.layout.toolbar.logoRotation('side-90');
     },
     setLayout: function(layout) {
         this.layout = layout;
@@ -140,7 +138,10 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
             this.layout.startEditBlock(blockId);
             this.scrollTo(blockId);
         } else {
-            this.navigate('index');
+            this.navigate('index', {
+            trigger: true,
+            replace: true
+        });
         }
     },
     stopEditBlock: function() {

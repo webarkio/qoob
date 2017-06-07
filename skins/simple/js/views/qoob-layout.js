@@ -54,7 +54,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             return this;
         },
         resize: function() {
-            this.toolbar.resize();
             this.menu.resize();
             this.viewPort.resize();
         },

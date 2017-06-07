@@ -170,11 +170,9 @@ Skin.prototype.activate = function(options) {
         var data = e[key];
 
         if (data === 'SwipeRightPageMessage') {
-            jQuery("#qoob-menu").removeClass('close-panel');
-            jQuery("#qoob-viewport").removeClass('close-panel');
+            jQuery("#qoob").removeClass('close-panel');
         } else if (data === 'SwipeLeftPageMessage') {
-            jQuery("#qoob-menu").addClass('close-panel');
-            jQuery("#qoob-viewport").addClass('close-panel');
+            jQuery("#qoob").addClass('close-panel');
         }
     }, false);
 
@@ -182,11 +180,9 @@ Skin.prototype.activate = function(options) {
     var swipeOn = function() {
         hammer.on('swipeleft swiperight', function(e) {
             if (e.type === "swiperight") {
-                jQuery("#qoob-menu").removeClass('close-panel');
-                jQuery("#qoob-viewport").removeClass('close-panel');
+                jQuery("#qoob").removeClass('close-panel');
             } else if (e.type === "swipeleft") {
-                jQuery("#qoob-menu").addClass('close-panel');
-                jQuery("#qoob-viewport").addClass('close-panel');
+                jQuery("#qoob").addClass('close-panel');
             }
         });
     };
@@ -202,11 +198,10 @@ Skin.prototype.activate = function(options) {
         } else {
             hammer.off('swipeleft').off('swiperight');
         }
-
     }
 
     if (jQuery(window).width() <= 480) {
-        jQuery("#qoob-menu").addClass('close-panel');
+        jQuery("#qoob").addClass('close-panel');
     }
 
     responsive();

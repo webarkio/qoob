@@ -113,20 +113,8 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
          * Resize qoob content
          */
         resize: function() {
-            var size = {
-                'height': (this.previewMode ? 0 : 70),
-                'width': (this.previewMode ? 0 : 258)
-            };
-
-            this.$el.stop().animate({
-                height: jQuery(window).height() - size.height,
-                top: size.height,
-                // width: jQuery(window).width() - size.width,
-                // left: size.width
-            });
-
             //Iframe resize
-            this.getIframe().height(jQuery(window).height() - size.height);
+            this.getIframe().height(jQuery(window).height());
             if (this.deviceMode == "pc") {
                 this.getIframe().width("100%");
             }
