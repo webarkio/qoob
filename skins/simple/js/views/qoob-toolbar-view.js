@@ -9,10 +9,10 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     tagName: 'div',
     customMenu: null,
     events: {
-        'click .preview-mode-button': 'clickPreviewMode',
-        'click .device-mode-button': 'clickDeviceMode',
-        'click .exit-button': 'clickExit',
-        'click .save-button': 'clickSave',
+        'click .preview-mode': 'clickPreviewMode',
+        'click .device-mode': 'clickDeviceMode',
+        'click .exit': 'clickExit',
+        'click .save': 'clickSave',
         'click .autosave-checkbox': 'clickAutosave',
         'click [data-id]': 'clickAction'
     },
@@ -56,11 +56,17 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     render: function() {
         var self = this;
         var data = {
-            "autosave": this.storage.__('autosave', 'Autosave'),
             "save": this.storage.__('save', 'Save'),
-            "exit": this.storage.__('exit', 'Exit'),
+            "close": this.storage.__('close', 'close'),
             "more": this.storage.__('more', 'More'),
+            "preview": this.storage.__('preview', 'Preview'),
+            "devices": this.storage.__('devices', 'Devices'),
+            "desktop": this.storage.__('desktop', 'Desktop'),
+            "tablet": this.storage.__('tablet', 'Tablet'),
+            "rotate": this.storage.__('rotate', 'Rotate'),
+            "phone": this.storage.__('phone', 'Phone'),
             "save_template": this.storage.__('save_template', 'Save as template'),
+            "autosave": this.storage.__('autosave', 'Autosave'),
             "customMenu": null
         };
 
@@ -84,15 +90,18 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         return this;
     },
     /**
+     * Deprecated
      * Resize toolbar
      */
     resize: function() {
+        return;
         this.$el.css({
             width: "100%"
         });
         return this;
     },
     /**
+     * Deprecated
      * Logo rotation
      * @param {Integer} side
      */
@@ -113,6 +122,7 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         this.$el.find('.device-mode-button').removeClass('active');
         this.$el.find('.device-mode-button[name=' + mode + ']').addClass('active');
     },
+    /* Deprecated */
     startEditBlock: function() {
         this.logoRotation('side-270');
     },
@@ -120,15 +130,15 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
      * Show loader autosave
      */
     showSaveLoader: function() {
-        this.$el.find('.save-button span.text').hide();
-        this.$el.find('.save-button .clock').css('display', 'block');
+        this.$el.find('.save span.text').hide();
+        this.$el.find('.save .clock').css('display', 'block');
     },
     /**
      * Hide loader autosave
      */
     hideSaveLoader: function() {
-        this.$el.find('.save-button .clock').css('display', '');
-        this.$el.find('.save-button span.text').show();
+        this.$el.find('.save .clock').css('display', '');
+        this.$el.find('.save span.text').show();
     },
 
     //EVENTS
