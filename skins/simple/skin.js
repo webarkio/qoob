@@ -86,7 +86,7 @@ Skin.prototype.activate = function(options) {
     this.options = {
         blockTemplateAdapter: 'hbs',
         blockPreviewUrl: "preview.png",
-        skinUrl: options.skins[options.skin].replace("skin.js", "")
+        skinUrl: options.skinUrl
     };
     _.extend(this.options, options);
 
