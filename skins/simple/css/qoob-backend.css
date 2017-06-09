@@ -806,6 +806,7 @@ ul.catalog-list li a:hover {
     box-sizing: border-box;
     margin: 0;
     position: absolute;
+    overflow: hidden;
     left: 0;
     top: 0;
     z-index: 0;
@@ -816,8 +817,8 @@ ul.catalog-list li a:hover {
     padding-top: 6px;
     margin: 0 auto;
     text-align: center;
-    -ms-touch-action: none;
-    touch-action: none;
+/*    -ms-touch-action: none;
+    touch-action: none;*/
 }
 
 .preview-block img {
@@ -2044,7 +2045,6 @@ input[type="text"]#datepicker {
 .ui-draggable-dragging {
     z-index: 9999999 !important;
 }
-
 
 /*Field image, video, icon*/
 
