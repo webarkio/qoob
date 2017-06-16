@@ -214,7 +214,17 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 this.$el.find('#qoob-iframe').nextAll('div').remove();
             }
 
+            this.controller.removeEmptyDraggableElement();
+
             this.triggerIframe();
+        },
+        /**
+         * Remove empty div for mobile
+         */
+        removeEmptyDraggableElement: function() {
+            if (this.getIframe().next('div').length > 0) {
+                this.getIframe().nextAll('div').remove();
+            }
         },
         /**
          * Create event change for iframe

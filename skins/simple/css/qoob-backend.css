@@ -776,6 +776,7 @@ ul.catalog-list li a:hover {
 
 #card .card-main {
     position: absolute;
+    overflow: hidden;
     left: 0;
     top: 0;
     width: 100%;
@@ -784,6 +785,7 @@ ul.catalog-list li a:hover {
 
 #card .card-main .side {
     position: absolute;
+    overflow: hidden;
     left: 0;
     top: 0;
     width: 100%;
@@ -865,6 +867,10 @@ ul.catalog-list li a:hover {
     width: 100%;
     padding-top: 70px;
     background-color: #9ea0a5;
+}
+
+.preview-blocks.disable-scroll {
+    overflow-y: hidden;
 }
 
 .preview-blocks:after {
@@ -2463,8 +2469,6 @@ textarea {
     font-family: 'robotoregular';
 }
 
-
-
 #qoob-menu,
 #qoob-toolbar {
     transition: transform .2s linear;
@@ -2486,10 +2490,17 @@ textarea {
     width: 100%;
 }
 
-#qoob.mobile #qoob-menu,
-#qoob.mobile #qoob-toolbar {
+#qoob.mobile #qoob-toolbar,
+#qoob.mobile #qoob-menu {
     width: 100%;
-    z-index: 99999;
+}
+
+#qoob.mobile #qoob-toolbar {
+    z-index: 3;
+}
+
+#qoob.mobile #qoob-menu {
+    z-index: 2;
 }
 
 #qoob.mobile.close-panel #qoob-menu,

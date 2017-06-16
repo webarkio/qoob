@@ -563,9 +563,14 @@
 @media (max-width: 480px) {
     #qoob-blocks .qoob-templates {
         background-color: #e6e6e6;
-        width: calc(100% - 20px);
-        margin: 20px 20px 0 20px;
-        padding: 30px 30px 0 30px;
+        width: 100%;
+        padding: 30px 30px 30px 30px;
+    }
+    #qoob-blocks .block-blank.full-page {
+        height: calc(100vh - 60px);
+    }
+    #qoob-blocks .block-blank.full-page .block-blank-inner {
+        height: calc(100vh - 60px);
     }
     #qoob-blocks .qoob-templates .template {
         width: 89%;

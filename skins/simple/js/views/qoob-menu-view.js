@@ -1,4 +1,4 @@
-/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView */
+/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView, isMobile */
 /**
  * Create view for menu in qoob layout
  *
@@ -70,30 +70,13 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             return this;
         },
-
         draggable: function() {
-            var self = this;
-            // this.$el.find('.preview-block').draggable({
-            //     appendTo: "body",
-            //     helper: "clone",
-            //     distance: 10,
-            //     iframeFix: true,
-            //     iframeScroll: true,
-            //     scrollSensitivity: 100,
-            //     scrollSpeed: 15,
-            //     containment: 'document',
-            //     opacity: 0.5,
-            //     start: function(event) {
-            //         self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").hide();
-            //     },
-            //     stop: function() {
-            //         self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").show();
-            //     }
-            // });
-        function longClick($el){
-            //$el=jQuery(el);
-                        
-            $el.find('.preview-block').draggable({
+            var self = this,
+                longTouch = false,
+                scrollbarWidth,
+                parent;
+
+            this.$el.find('.preview-block').draggable({
                 appendTo: "body",
                 helper: "clone",
                 distance: 10,
@@ -103,183 +86,65 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 scrollSpeed: 15,
                 containment: 'document',
                 opacity: 0.5,
-                start: function(event) {
-                    self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").hide();
+                start: function() {
+                    if (!longTouch) {
+                        self.controller.removeEmptyDraggableElement();
+                        return false;
+                    } else {
+                        if (isMobile.phone) {
+                            self.controller.hideSwipeMenu();
+                        }
+                    }
                 },
                 stop: function() {
-                    self.controller.layout.viewPort.getIframeContents().find(".qoob-drag-hide").show();
+                    self.controller.removeEmptyDraggableElement();
                 }
             });
 
-            $el.on( "dragstart", function( event, ui ) {
-                console.log('DRAG start');
-            } );
-
-            $el.on( "dragstop", function( event, ui ) {
-                console.log('DRAG stop');
-
-
-                jQuery(event.target).draggable( "destroy" );
-            } );
-
-            $el.simulate( "mousedown");
-        }
-            
-            //self.$el.find('.preview-block').draggable( 'disable');
             this.$el.find('.preview-block').each(function() {
-
-
-jQuery(this).on("mousedown touchstart",function(){
-    console.log('mouse');
-    var timer;
-    $this = $(this);
-
-    timer = setInterval(function(){
-        longClick($this);
-        console.log("WORKY MOUSE");
-        $this.one('click', function(){
-            return false;
-        });
-    },1000);
-
-        $this.one("mouseup mouseleave mousemove touchmove touchend",function(evt){
-        console.log('out');
-        console.log(evt);
-    clearInterval(timer);
-    });
-    return false;
-});
-
-// jQuery(this).on("touchstart",function(){
-//     var timer;
-//     $this = $(this);
-//     $this.one("touchmove touchend",function(evt){
-//         clearInterval(timer);
-//         return false;
-//     });
-//     timer = setInterval(function(){
-//         longClick($this);
-//         console.log("WORKY TOUCH");
-//         $this.one('click', function(){
-//             return false;
-//         });
-//     },1000);
-//     return false;
-// });
-
-                // var $this = jQuery(this);
-                // var mc = new Hammer(this);
-                // // listen to events...
-                // mc.on("press", function(ev) {
-
-                //         console.log('press');
-
-                        // jQuery(ev.target.parentElement).draggable('enable');
-
-                        // jQuery( ev.target.parentElement ).on( "dragstart", function( event, ui ) {
-                        //     console.log('DRAG start');
-                        // } );
-
-                        // jQuery( ev.target.parentElement ).on( "dragstop", function( event, ui ) {
-                        //     console.log('DRAG stop');
-                        //     jQuery(event.target).draggable( "disable" );
-                        // } );
-
-                        // jQuery(ev.target.parentElement).simulate( "mousedown");
-
-    // // This will set enough properties to simulate valid mouse options.
-    // jQuery.ui.mouse.options = jQuery.ui.mouse.defaults;
-
-    // var divOffset = jQuery(ev.target.parentElement).offset();
-
-    // // This will simulate clicking down on the div - works mostly.
-    // console.log(jQuery.ui.mouse);
-    // jQuery.ui.mouse._mouseDown({
-    //         target: jQuery(ev.target.parentElement),
-    //         pageX: divOffset.left,
-    //         pageY: divOffset.top,
-    //         which: 1,
-
-    //         preventDefault: function() { }
-    // });
-
-//                        jQuery(ev.target.parentElement).trigger('mousedown', ev);
-                        
-                        // console.log(ev);
-                        // self.$el.find('.preview-block').draggable( 'enable'); 
-
-                // });
-            });
-
-            
-            /*
-            var element;
-            document.addEventListener('touchstart', function(event) {
-                // event.preventDefault();
-                // self.$el.find('.preview-block').draggable( 'disable'); //if swipe is horizontal
-                var touch = event.touches[0];
-                element = document.elementFromPoint(touch.pageX,touch.pageY);
-            }, false);
-
-            document.addEventListener('touchmove', function(event) {
-                // event.preventDefault();
-                var touch = event.touches[0];
-                if (element !== document.elementFromPoint(touch.pageX,touch.pageY)) {
-                    touchleave();
-                }
-            }, false);
-
-            function touchleave() { 
-                console.log ("You're not touching the element anymore");
-            }
-            */
-            /*
-            
-            var hammer = new Hammer.Manager(this.$el.find('.preview-blocks')[7], {
-                touchAction: 'auto',
-                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
-                recognizers: [
-                    [Hammer.Swipe, {
-                        direction: Hammer.DIRECTION_VERTICAL
-                    }]
-                ]
-            });
-
-            hammer.on('swipeup swipedown', function(e) {
-                if (e.type === "swipedown") {
-                    console.log("swipedown");
-                    self.$el.find('.preview-block').draggable( 'disable'); //if swipe is horizontal
-                } else if (e.type === "swipeup") {
-                    console.log("swipeup");
-                    self.$el.find('.preview-block').draggable( 'disable'); //if swipe is horizontal
-                }
-            });
-            */
-
-            /*
-            this.$el.find('.preview-block').on("touchstart", function(e) {
-                    touchY = e.originalEvent.touches[0].pageY;
-                    touchX = e.originalEvent.touches[0].pageX;
-
+                jQuery(this).on("mousedown", function() {
+                    if (event.buttons === 0) {} else {
+                        longTouch = true;
+                    }
                 });
 
-                self.$el.find('.preview-block').on("touchmove", function(e) {
+                jQuery(this).on("touchstart", function(evt) {
+                    var timer;
+                    $this = jQuery(this);
 
-                    var fTouchY = e.originalEvent.touches[0].pageY;
-                    var fTouchX = e.originalEvent.touches[0].pageX;
+                    scrollbarWidth = jQuery.position.scrollbarWidth();
+                    parent = $this.parent('.preview-blocks');
 
-                    if ((Math.abs(fTouchX - touchX)) / Math.abs(fTouchY - touchY) > 1){ //check swipe direction
+                    timer = setTimeout(function() {
+                        if (parent.get(0).scrollHeight > parent.get(0).clientHeight) {
+                            parent.css('padding-right', scrollbarWidth).addClass('disable-scroll');
+                        }
+                        longTouch = true;
 
-                        self.$el.find('.preview-block').draggable( 'enable'); //if swipe is horizontal
-                    }
-                    else{
-                        self.$el.find('.preview-block').draggable( 'disable'); //if swipe is horizontal
-                    }
+                        var simulateMousemove = jQuery.Event('mousemove');
+                        var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
 
+                        // coordinates
+                        simulateMousemove.pageX = (touch.pageX + 10);
+                        simulateMousemove.pageY = touch.pageY;
+                        $this.trigger(simulateMousemove);
+
+                    }, 500);
+
+                    $this.one("touchend", function() {
+                        longTouch = false;
+                        if (parent.get(0).scrollHeight > parent.get(0).clientHeight) {
+                            parent.removeAttr('style').removeClass('disable-scroll');
+                        }
+                        clearTimeout(timer);
+                    });
+
+                    $this.one("touchmove", function() {
+                        clearTimeout(timer);
+                    });
+                });
             });
-            */
         },
-
         setPreviewMode: function() {
             this.$el.fadeOut(300);
         },
@@ -382,7 +247,6 @@ jQuery(this).on("mousedown touchstart",function(){
         onEditStop: function() {
             this.rotate('catalog-groups');
         },
-
         onEditMode: function() {
             this.$el.fadeIn(300);
         },
@@ -444,6 +308,20 @@ jQuery(this).on("mousedown touchstart",function(){
             }
             if (element.find('.input-text').hasClass('error')) {
                 element.find('.input-text').removeClass('error');
+            }
+        },
+        /**
+         * Show sidebar menu
+         */
+        showSwipeMenu: function() {
+            jQuery('#qoob').removeClass('close-panel');
+        },
+        /**
+         * Hide sidebar menu
+         */
+        hideSwipeMenu: function() {
+            if (!jQuery('#qoob').hasClass('close-panel')) {
+                jQuery('#qoob').addClass('close-panel');
             }
         }
     });

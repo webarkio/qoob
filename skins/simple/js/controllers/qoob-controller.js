@@ -96,7 +96,8 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     showSavePageTemplate: function() {
         this.layout.menu.rotateForward('save-template');
         this.layout.menu.hideNotice();
-        this.layout.toolbar.logoRotation('side-90');
+        // Deprecated
+        // this.layout.toolbar.logoRotation('side-90');
         this.layout.stopEditBlock();
     },
     addNewBlock: function(lib, block, afterId) {
@@ -276,5 +277,23 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      */
     showImportExportWindow: function() {
         this.layout.ImportExport.showImportExportWindow();
+    },
+    /**
+     * Remove empty div for mobile
+     */
+    removeEmptyDraggableElement: function() {
+        this.layout.viewPort.removeEmptyDraggableElement();
+    },
+    /**
+     * Show menu sidebar
+     */
+    showSwipeMenu: function() {
+        this.layout.menu.showSwipeMenu();
+    },
+    /**
+     * Hide menu sidebar
+     */
+    hideSwipeMenu: function() {
+        this.layout.menu.hideSwipeMenu();
     }
 });

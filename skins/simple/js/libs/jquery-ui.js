@@ -2094,12 +2094,12 @@ $.widget( "ui.draggable", $.ui.mouse, {
 
 	_mouseCapture: function( event ) {
 		var o = this.options;
-
 		// Among others, prevent a drag on a resizable-handle
 		if ( this.helper || o.disabled ||
 				$( event.target ).closest( ".ui-resizable-handle" ).length > 0 ) {
 			return false;
 		}
+
 
 		//Quit if we're not on a valid handle
 		this.handle = this._getHandle( event );

@@ -35,8 +35,6 @@
       return;
     }
 
-    event.preventDefault();
-
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
     
@@ -126,13 +124,6 @@
 
     // Simulate the mouseout event
     simulateMouseEvent(event, 'mouseout');
-
-    // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
-
-      // Simulate the click event
-      simulateMouseEvent(event, 'click');
-    }
 
     // Unset the flag to allow other widgets to inherit the touch event
     touchHandled = false;

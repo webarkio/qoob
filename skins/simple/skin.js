@@ -1,3 +1,4 @@
+/*global isMobile, Hammer, QoobStorage, QoobController, PageModel, QoobLayout*/
 /**
  * Initialize page qoob
  *
@@ -14,6 +15,7 @@ function Skin() {
             { "type": "js", "name": "jquery-ui-touch-punch", "src": "js/libs/jquery.ui.touch-punch.js", "min_src": "js/libs/jquery.ui.touch-punch.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "min_src": "js/libs/jquery-ui-droppable-iframe.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "hammer", "src": "js/libs/hammer.js", "min_src": "js/libs/hammer.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "is-mobile-device", "src": "js/libs/isMobile.js", "min_src": "js/libs/isMobile.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.js", "min_src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
             { "type": "js", "name": "block-model", "src": "js/models/block-model.js", "dep": ["backbone"] },
@@ -160,8 +162,6 @@ Skin.prototype.activate = function(options) {
         ]
     });
 
-
-
     var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
     var eventer = window[eventMethod];
     var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
@@ -171,45 +171,44 @@ Skin.prototype.activate = function(options) {
         var data = e[key];
 
         if (data === 'SwipeRightPageMessage') {
-            jQuery("#qoob").removeClass('close-panel');
+            self.controller.showSwipeMenu();
         } else if (data === 'SwipeLeftPageMessage') {
-            jQuery("#qoob").addClass('close-panel');
+            self.controller.hideSwipeMenu();
         }
     }, false);
 
 
-    var swipeOn = function() {
+    // var swipeEvents = function() {
         hammer.on('swipeleft swiperight', function(e) {
-            if (e.type === "swiperight") {
-                jQuery("#qoob").removeClass('close-panel');
-            } else if (e.type === "swipeleft") {
-                jQuery("#qoob").addClass('close-panel');
+            if (e.type === 'swipeleft') {
+                self.controller.hideSwipeMenu();
+            } else if (e.type === 'swiperight') {
+                self.controller.showSwipeMenu();             
             }
         });
-    };
+    // };
 
-    var responsive = function() {
-        jQuery('#qoob').removeClass('mobile tablet');
-        if (jQuery(window).width() <= 480) {
-            jQuery('#qoob').addClass('mobile');
-            swipeOn();
-        } else if (jQuery(window).width() <= 768) {
-            jQuery('#qoob').addClass('tablet');
-            swipeOn();
+    var swipeResize = function() {
+        var container = jQuery('#qoob');
+        container.removeClass('mobile tablet');
+        if (isMobile.phone) {
+            container.addClass('mobile');
+        } else if (isMobile.tablet) {
+            container.addClass('tablet');
         } else {
             hammer.off('swipeleft').off('swiperight');
         }
     }
 
-    if (jQuery(window).width() <= 480) {
-        jQuery("#qoob").addClass('close-panel');
+    if (isMobile.phone) {
+        self.controller.showSwipeMenu();
     }
 
-    responsive();
-
     Hammer.on(window, "resize", function() {
-        responsive();
+        swipeResize();
     });
+
+    swipeResize();
 
 };
 

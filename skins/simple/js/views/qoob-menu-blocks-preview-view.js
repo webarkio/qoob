@@ -21,8 +21,8 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-
 
             this.controller.addNewBlock(lib, name);
 
-            if (jQuery(window).width() <= 480) {
-                jQuery("#qoob-menu").addClass('close-panel');
+            if (isMobile.phone) {
+                this.controller.hideSwipeMenu();
             }
         },
         /**
