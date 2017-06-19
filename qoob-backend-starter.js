@@ -22,10 +22,10 @@
         var pathname = window.location.pathname.replace(/\/.*\..*?$/g, '/');
         this.options.qoobUrl = this.options.qoobUrl || window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + pathname + (pathname.indexOf("/", pathname.length - "/".length) !== -1 ? '' : '/') + "qoob/";
         this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
-        this.options.skins = this.options.skins || { 'black': this.options.qoobUrl + 'skins/black/skin.js' };
         this.options.debug = this.options.debug || false;
         this.options.mode = this.options.mode || "prod";
         this.options.skin = this.options.skin || "black";
+        this.options.skinUrl = this.options.skinUrl || this.options.qoobUrl + 'skins/'+this.options.skin+'/';
         this.options.librariesData = this.options.librariesData || [];
         this.options.pageData = this.options.pageData || {};
 
@@ -180,12 +180,12 @@
                 });
                 window.qoob.activate(self.options);
             });
-            var skinPrefix = self.options.skins[self.options.skin].replace("skin.js", "");
-            self.loader.add(window.qoob.assets[self.options.mode], { "prefix": skinPrefix });
-            self.loader.add(window.qoob.assets.all, { "prefix": skinPrefix });
+
+            self.loader.add(window.qoob.assets[self.options.mode], { "prefix": self.options.skinUrl });
+            self.loader.add(window.qoob.assets.all, { "prefix": self.options.skinUrl });
         });
 
-        self.loader.add({ "type": "js", "src": this.options.skins[this.options.skin], "name": "skin" });
+        self.loader.add({ "type": "js", "src": self.options.skinUrl+'skin.js', "name": "skin" });
         if (self.options.driver.assets) {
             self.loader.add(self.options.driver.assets);
         }

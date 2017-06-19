@@ -1,0 +1,31 @@
+ <div class="block-blank <% if (templates.length == 0) { %>full-page<% } %>">
+    <div class="block-blank-inner">
+    	<div class="block-blank-inner-text">
+	        <i class="fa fa-reply"></i>
+	        <div class="blank-text"><%= text_default_blank %></div>
+        </div>
+    </div>
+</div>
+
+ <% if (templates.length > 0) { %>
+	<div class="title-block"><%= block_default_templates_text %></div>
+	<div class="templates">
+		<% for (var k = 0; k < templates.length; k++) { %>
+			<div class="template" data-id="<%= templates[k].id %>">
+				<div class="image-bg">
+					<% if (templates[k].image) { %>
+						<img src="<%= templates[k].image %>" alt="<%= templates[k].title %>">
+					<% } else { %>
+						<span class="template-no-image"><%= template %></span>
+					<% } %>
+				</div>
+				<% if (templates[k].title) { %>
+					<div class="title"><%= templates[k].title %></div>
+				<% } %>
+				<% if ( ! templates[k].external ) { %>
+					<a class="remove" data-id="<%= templates[k].id %>" href="#"></a>
+				<% } %>
+			</div>
+		<% } %>
+	</div>
+<% } %>

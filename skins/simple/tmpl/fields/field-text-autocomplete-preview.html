@@ -1,0 +1,30 @@
+<script type="text/javascript">
+jQuery("#<%= uniqueId %>").autocomplete({
+    source: function(request, callback) {        
+        var searchParam = request.term;
+        init(searchParam, callback);
+    },
+}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        //Ul custom class here
+        ul.addClass('settings-autocomplete');
+        return jQuery( "<li>" )
+            .attr( "data-value", item.value )
+            .append( item.label )
+            .appendTo( ul );
+        };;
+
+function init(query, callback) {
+    var response = [];
+    var inputs = jQuery("#<%= uniqueId %>").parents(".ui-accordion").find(".text-autocomplete");
+    inputs.each(function() {
+        if (!_.contains(response, jQuery(this).val())) {
+            response.push(jQuery(this).val());
+        }
+    });
+    callback(response);
+};
+</script>
+<div class="title">
+    <%= label %>
+</div>
+<input id="<%= uniqueId %>" class="input-text text-autocomplete" type="text" name="<%= name %>" value="<%= value %>" placeholder="<%= placeholder %>">

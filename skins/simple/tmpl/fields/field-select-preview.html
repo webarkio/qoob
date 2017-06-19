@@ -1,0 +1,26 @@
+<div class="title"><%= label %></div>
+<% if(visible_color === undefined || visible_color === false){ %>
+	<select class="selectpicker select" name="<%= name %>" data-width="100%" data-dropup-auto="false">
+		<% _.each( options, function( option ){ %>
+			<option <% if ( current === option.id ){ %> selected <% } %> value='<%- option.id %>'>
+				<% if (option.val.length > 35) { %>
+					<%= option.val.substring(0, 35) %>...
+				<% } else { %>
+					<%= option.val %>
+				<% } %>
+			</option>
+		<% }); %>
+	</select>
+<% }else { %>
+	<div class="other-colors">
+		<% _.each( options, function( option ){ %>
+			<div id="<%-option.id %>" class="other-color theme-colors <% if ( current === option.id ){ %>active<% } %>">
+				<span style="background: <%- option.colorimage %>"></span>
+			</div>
+		<% }); %>
+	</div>
+	<input type="hidden" name="<%= name %>" value="">
+<%}%>
+<script type="text/javascript">
+jQuery('.selectpicker').selectpicker();
+</script>

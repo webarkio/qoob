@@ -1,0 +1,39 @@
+<div class="title">
+    <div class="text">
+        <%= label %>
+    </div>
+</div>
+<div class="image-control">
+    <div class="edit-image<% if (value === '') { %> empty <% } %>">
+        <div class="drop-zone"><span class="drop-zone-text"><%= drop_here %></span></div>
+        <div class="img-container">
+            <img class="media-center preview-image" src="<%= value %>" />
+            <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                <a href="#" class="remove"></a>
+            <% } %>
+        </div>
+        <div class="no-image media-center">
+            <i class="icon fa fa-file-image-o"></i>
+            <div class="no-image-title"><%= no_image %></div>
+            <p class="text"><%= you_can_drop_it_here %></p>
+        </div>
+        <input type="text" name="<%= name %>" class="image-url" value="<%= value %>" placeholder="https://">
+    </div>
+    <div class="media-acton-button btn-group">
+        <button type="button" class="btn media-center">
+            <%= media_center %>
+        </button>
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-angle-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <% _.each( customItems, function( item ){ %>
+                <li>
+                    <a href="#" data-id="<%- item.id %>" class="action">
+                        <%- item.label %>
+                    </a>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>

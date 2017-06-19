@@ -1,0 +1,60 @@
+<div class="title">
+    <div class="text">
+        <%= label %>
+    </div>
+</div>
+<div class="video-control">
+    <div class="edit-video<% if ((src === '' || src !== '' && !src.hasOwnProperty('url')) || (src.hasOwnProperty('url') && src.url === '') || (src.hasOwnProperty('preview') && src.preview === '') ) { %> empty<% } %>">
+        <div class="drop-zone"><span class="drop-zone-text"><%= drop_here %></span></div>
+        <div class="video-container">
+            <div class="media-center preview-video">
+                <% if (src.preview) { %>
+                    <img src="<%= src.preview %>" alt="">
+                <% } %>
+            </div>
+            <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+                <a href="#" class="remove"></a>
+            <% } %>
+        </div>
+        <div class="no-video media-center">
+            <i class="icon fa fa-file-video-o"></i>
+            <div class="no-video-title">
+                <% if (src === '') {  %>
+                    <%= no_video %>
+                <% } else if (src !== '' && !src.hasOwnProperty('url')) { %>
+                    <%= no_poster %>
+                <% } else if (src.hasOwnProperty('url') || src.hasOwnProperty('preview')) { %>
+                    <% if (src.url === '') { %>
+                        <%= no_video %>
+                    <% } %>
+                    <% if (src.preview === '') { %>
+                        <%= no_poster %>
+                    <% } %>
+                <% } %>
+            </div>
+            <p class="text">
+                <%= you_can_drop_it_here %><br/>
+                <%= formats %>                
+            </p>
+        </div>
+        <input type="hidden" class="url" name="<%= name %>" value="<%= src.url %>">
+        <input type="hidden" class="preview" name="<%= name %>" value="<%= src.preview %>">
+    </div>
+    <div class="media-acton-button btn-group">
+        <button type="button" class="btn media-center">
+            <%= media_center %>
+        </button>
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-angle-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <% _.each( customItems, function( item ){ %>
+                <li>
+                    <a href="#" data-id="<%- item.id %>" class="action">
+                        <%- item.label %>
+                    </a>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>

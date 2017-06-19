@@ -1,0 +1,40 @@
+<div class="control-buttons">
+    <button class="button preview-mode">
+        <%= preview %>
+    </button>
+    <div class="dropdown devices">
+        <button class="button dropdown-toggle" type="button" id="devices" data-toggle="dropdown"><%= devices %></button>
+        <ul class="dropdown-menu" aria-labelledby="devices">
+            <li><a name="pc" class="pc device-mode" href="#"><%= desktop %></a></li>
+            <li><a name="tablet-vertical" class="tablet-vertical device-mode" href="#"><%= tablet %></a></li>
+            <li><a name="tablet-horizontal" class="tablet-horizontal device-mode" href="#"><%= rotate %></a></li>
+            <li><a name="phone-vertical" class="phone-vertical device-mode" href="#"><%= phone %></a></li>
+            <li><a name="phone-horizontal" class="phone-horizontal device-mode" href="#"><%= rotate %></a></li>
+        </ul>
+    </div>
+    <button class="button save"><span class="text"><%= save %></span>
+        <span class="clock">
+            <span class="minutes-container"><span class="minutes"></span></span>
+        <span class="seconds-container"><span class="seconds"></span></span>
+        </span>
+    </button>
+    <div class="dropdown more">
+        <button class="dropdown-toggle button" type="button" id="more" data-toggle="dropdown"><%= more %></button>        
+        <ul class="dropdown-menu" aria-labelledby="more">
+            <li>
+                <div class="autosave">
+                    <label class="checkbox-sb">
+                        <input type="checkbox" class="autosave-checkbox"><span></span><em><%= autosave %></em>
+                    </label>
+                </div>
+            </li>
+            <% if (customMenu) { %>
+                <% _.each( customMenu, function( item ) { %>
+                    <li><a <% if (item.action != '') { %>data-id="<%= item.id %>"<% } %> href="#<%= item.id %>"><%= item.label %></a></li>
+                <% }); %>
+            <% } %>
+        </ul>
+        
+    </div>
+    <button class="exit button"><%= close %></button>
+</div>

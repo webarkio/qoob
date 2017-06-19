@@ -1370,6 +1370,8 @@ _:-ms-fullscreen,
     padding-top: 6px;
     margin: 0 auto;
     text-align: center;
+    -ms-touch-action: none;
+    touch-action: none;
 }
 
 .preview-block img {
@@ -2891,6 +2893,7 @@ html.active-js {
     line-height: 40px;
     vertical-align: middle;
 }
+
 
 /* Edge */
 

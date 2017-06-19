@@ -1,0 +1,37 @@
+<div class="title">
+    <div class="text">
+        <%= label %>
+    </div>
+</div>
+<div class="icon-control">
+    <div class="edit-icon <% if (!icon.classes && icon === 'empty') { %><%= icon %><% } %>">
+        <div class="icon-container">
+            <div class="media-center preview-icon">
+                <span data-icon-tags="<%= icon.tags %>" class="<%= icon.classes %>"></span>
+            </div>
+            <a href="#" class="remove"></a>
+        </div>
+        <div class="no-icon media-center">
+            <i class="icon fa fa-file-image-o"></i>
+            <div class="no-icon-title">
+                <%= no_icon %>
+            </div>
+        </div>
+        <input type="hidden" name="<%= name %>" value="<%= icon.classes %>">
+    </div>
+    <div class="media-acton-button btn-group">
+        <button type="button" class="btn media-center">
+            <%= media_center %>
+        </button>
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-angle-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#" class="reset">
+                    <%= reset_to_default %>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

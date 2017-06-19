@@ -1,0 +1,18 @@
+<div class="backward">
+<a href="#index">
+	<span>
+		<% if(group.label){ %> 
+	        <%= group.label %> 
+	    <% }else{ %> 
+	        <%= group.id %> 
+	    <% } %>
+	</span>
+</a>
+</div>
+<div class="preview-blocks">
+<% for (var k = 0; k < items.length; k++) { %>
+    <div id="preview-block-<%= items[k].name %>" class="preview-block <%= items[k].lib %>" data-lib="<%= items[k].lib %>">
+        <img src="<%= items[k].url + (items[k].blockPreviewUrl ? items[k].blockPreviewUrl : qoob.options.blockPreviewUrl) %>">
+    </div>
+<% } %>
+</div>
