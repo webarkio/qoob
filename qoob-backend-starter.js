@@ -232,10 +232,12 @@
         for (var i = 0; i < libs.length; i++) {
             var currentLib = libs[i];
             for (var j = 0; j < currentLib.blocks.length; j++) {
-                var configString = JSON.stringify(libs[i].blocks[j].config);
-                configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
-                configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
-                currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                if (undefined !== libs[i].blocks[j]) {
+                    var configString = JSON.stringify(libs[i].blocks[j].config);
+                    configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
+                    configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
+                    currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                }
             }
         }
         return libs;
