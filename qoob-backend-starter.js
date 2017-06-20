@@ -287,5 +287,5 @@
     };
 
     window.QoobStarter = QoobStarter;
-    window.QoobVersion = "2.0.3";
+    window.QoobVersion = "2.0.4";
 }());
