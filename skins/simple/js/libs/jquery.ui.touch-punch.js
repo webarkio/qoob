@@ -35,6 +35,10 @@
       return;
     }
 
+    if(!jQuery(event.currentTarget).data( "blockPreventDefault")){
+      event.preventDefault();
+    }
+
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
     

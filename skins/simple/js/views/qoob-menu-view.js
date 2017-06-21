@@ -76,6 +76,9 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 scrollbarWidth,
                 parent;
 
+            // set params for touch punch
+            this.$el.find('.preview-block').data("blockPreventDefault", true);
+
             this.$el.find('.preview-block').draggable({
                 appendTo: "body",
                 helper: "clone",
