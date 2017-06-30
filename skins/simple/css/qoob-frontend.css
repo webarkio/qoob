@@ -493,6 +493,7 @@
 }
 
 #qoob-blocks .qoob-templates .template .image-bg {
+    overflow: hidden;
     cursor: pointer;
     position: relative;
     border: 5px solid #fff;

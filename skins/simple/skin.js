@@ -15,6 +15,7 @@ function Skin() {
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "min_src": "js/libs/jquery-ui-droppable-iframe.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "hammer", "src": "js/libs/hammer.js", "min_src": "js/libs/hammer.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "is-mobile-device", "src": "js/libs/isMobile.js", "min_src": "js/libs/isMobile.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "html2canvas", "src": "js/libs/html2canvas.js", "min_src": "js/libs/html2canvas.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.js", "min_src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
             { "type": "js", "name": "block-model", "src": "js/models/block-model.js", "dep": ["backbone"] },
