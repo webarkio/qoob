@@ -47,7 +47,7 @@ Fields.image = QoobFieldView.extend(
                 });
 
                 if (item.action) {
-                    item.action(this);
+                    item.action(this, this.storage);
                 }
             }
         },
@@ -164,11 +164,22 @@ Fields.image = QoobFieldView.extend(
          * @returns {Object}
          */
         render: function() {
+            var iframeUrl,
+                pattern = /^((http|https):\/\/)/;
+
+            // if url has "http|https"
+            if (!pattern.test(this.getValue())) {
+                iframeUrl = this.storage.driver.getFrontendPageUrl();
+            } else {
+                iframeUrl = '';
+            }
+
             var htmldata = {
                 hideDeleteButton: this.settings.hideDeleteButton,
                 "label": this.settings.label,
                 "name": this.settings.name,
                 "value": this.getValue(),
+                "iframeUrl": iframeUrl,
                 'media_center': this.storage.__('media_center', 'Media Center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_image': this.storage.__('no_image', 'No image'),

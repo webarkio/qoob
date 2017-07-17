@@ -145,11 +145,30 @@ Fields.video = QoobFieldView.extend(
          * @returns {Object}
          */
         render: function() {
+            var iframeUrl,
+                pattern = /^((http|https):\/\/)/;
+
+            // if url has "http|https"
+            if (_.isObject(this.getValue())) {
+                if (!pattern.test(this.getValue().preview)) {
+                    iframeUrl = this.storage.driver.getFrontendPageUrl();
+                } else {
+                    iframeUrl = '';
+                }
+            } else {
+                if (!pattern.test(this.getValue())) {
+                    iframeUrl = this.storage.driver.getFrontendPageUrl();
+                } else {
+                    iframeUrl = '';
+                }
+            }
+
             var htmldata = {
+                hideDeleteButton: this.settings.hideDeleteButton,
                 label: this.settings.label,
                 name: this.settings.name,
                 src: this.getValue(),
-                hideDeleteButton: this.settings.hideDeleteButton,
+                "iframeUrl": '',
                 'media_center': this.storage.__('media_center', 'Media Center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_video': this.storage.__('no_video', 'No video'),

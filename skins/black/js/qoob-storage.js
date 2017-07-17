@@ -15,6 +15,7 @@ function QoobStorage(options) {
     this.blockTemplates = [];
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
     this.pageTemplatesCollection = new Backbone.Collection();
+    this.assets = [];
 }
 
 /**
@@ -27,20 +28,22 @@ QoobStorage.prototype.getGroups = function(libName) {
 
     _.each(this.librariesData, function(lib) {
         if (libName == null || libName == lib.name) {
-            groups = _.reduce(lib.groups, function(res, group) {
-                var findedGroup = _.findWhere(res, {
-                    "id": group.id
-                });
-                if (findedGroup) {
-                    findedGroup.position = (parseInt(findedGroup.position) + parseInt(group.position)) / 2;
-                    findedGroup.libs.push(lib.name);
-                } else {
-                    var resGroup = _.clone(group);
-                    resGroup.libs = [lib.name];
-                    res.push(resGroup);
-                }
-                return res;
-            }, groups);
+            if (undefined !== lib.groups) {
+                groups = _.reduce(lib.groups, function(res, group) {
+                    var findedGroup = _.findWhere(res, {
+                        "id": group.id
+                    });
+                    if (findedGroup) {
+                        findedGroup.position = (parseInt(findedGroup.position) + parseInt(group.position)) / 2;
+                        findedGroup.libs.push(lib.name);
+                    } else {
+                        var resGroup = _.clone(group);
+                        resGroup.libs = [lib.name];
+                        res.push(resGroup);
+                    }
+                    return res;
+                }, groups);
+            }
         }
     });
 
@@ -64,10 +67,12 @@ QoobStorage.prototype.getBlocksByGroup = function(group, libNames) {
     }
 
     for (var i = 0; i < data.length; i++) {
-        result = result.concat(data[i].blocks.filter(function(block) {
-            block.lib = data[i].name;
-            return (!!group) ? (!!block.settings && block.groups === group) : (!!block.settings);
-        }));
+        if (undefined !== data[i].blocks) {
+            result = result.concat(data[i].blocks.filter(function(block) {
+                block.lib = data[i].name;
+                return (!!group) ? (!!block.settings && block.groups === group) : (!!block.settings);
+            }));
+        }
     }
 
     return result;
@@ -168,24 +173,23 @@ QoobStorage.prototype.__ = function(title, defValue) {
  * Getting all assets from storage
  * @returns Array of assets
  */
-QoobStorage.prototype.getAssets = function(libNames) {
-    var assets = [],
-        data = this.librariesData;
-
-    if (!!libNames) {
-        data = data.filter(function(lib) {
-            return libNames.indexOf(lib.name) !== -1;
-        });
-    }
+QoobStorage.prototype.getAssets = function() {
+    var data = this.librariesData;
 
     for (var i = 0; i < data.length; i++) {
-        for (var j = 0; j < data[i].blocks.length; j++) {
-            if (!!data[i].blocks[j].assets)
-                assets.push(data[i].blocks[j].assets);
+        if (undefined !== data[i].blocks) {
+            for (var j = 0; j < data[i].blocks.length; j++) {
+                if (!!data[i].blocks[j].assets)
+                    this.assets.push(data[i].blocks[j].assets);
+            }
+        }
+
+        if (undefined !== data[i].assets) {
+            this.assets.push(data[i].assets);
         }
     }
 
-    return assets;
+    return this.assets;
 };
 
 /**
