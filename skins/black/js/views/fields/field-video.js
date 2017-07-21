@@ -150,13 +150,13 @@ Fields.video = QoobFieldView.extend(
 
             // if url has "http|https"
             if (_.isObject(this.getValue())) {
-                if (!pattern.test(this.getValue().preview)) {
+                if (!pattern.test(this.getValue().preview) && typeof this.storage.driver.getFrontendPageUrl === "function") {
                     iframeUrl = this.storage.driver.getFrontendPageUrl();
                 } else {
                     iframeUrl = '';
                 }
             } else {
-                if (!pattern.test(this.getValue())) {
+                if (!pattern.test(this.getValue()) && typeof this.storage.driver.getFrontendPageUrl === "function") {
                     iframeUrl = this.storage.driver.getFrontendPageUrl();
                 } else {
                     iframeUrl = '';
