@@ -11,9 +11,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         currentScreen: 'catalog-groups',
         menuViews: [],
         settingsViewStorage: [],
-        events: {
-            'change #lib-select': 'changeLib'
-        },
         /**
          * View menu
          * @class QoobMenuView
@@ -64,9 +61,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 controller: this.controller
             }));
 
-            this.draggable();
-
-            this.$el.find('#lib-select').selectpicker();
+            this.draggable();            
 
             return this;
         },
@@ -292,10 +287,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             groups.show();
             blocks.show();
-        },
-        changeLib: function(evt) {
-            var target = jQuery(evt.target);
-            this.controller.changeLib(target.val());
         },
         hideNotice: function() {
             var viewSaveTemplate = _.findWhere(this.menuViews, { 'id': 'save-template' }),

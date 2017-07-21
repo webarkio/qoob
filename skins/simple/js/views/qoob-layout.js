@@ -18,6 +18,11 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         initialize: function(options) {
             this.storage = options.storage;
             this.controller = options.controller;
+            this.sidebar = new QoobSidebarView({
+                "model": this.model,
+                "storage": this.storage,
+                "controller": this.controller
+            });
             this.menu = new QoobMenuView({
                 "model": this.model,
                 "storage": this.storage,
@@ -49,8 +54,11 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         render: function() {
             //FIXME: this.storage => this.model
-            this.$el.html([this.toolbar.render().el, this.editModeButton.render().el, this.menu.render().el, this.viewPort.render().el, this.ImportExport.render().el]);
-            this.editModeButton.hide();
+
+            this.sidebar.$el.html([this.toolbar.render().el, this.menu.render().el]);
+
+            this.$el.html([this.sidebar.render().el, this.viewPort.render().el, this.ImportExport.render().el, this.editModeButton.render().el]);
+            // this.editModeButton.hide();
             return this;
         },
         resize: function() {

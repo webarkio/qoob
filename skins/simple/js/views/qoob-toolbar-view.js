@@ -14,7 +14,8 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         'click .exit': 'clickExit',
         'click .save': 'clickSave',
         'click .autosave-checkbox': 'clickAutosave',
-        'click [data-id]': 'clickAction'
+        'click [data-id]': 'clickAction',
+        'change #lib-select': 'changeLib'
     },
     attributes: function() {
         return {
@@ -56,6 +57,9 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     render: function() {
         var self = this;
         var data = {
+            "libs": this.storage.librariesData,
+            "curLib": this.storage.currentLib,
+            "allThemes": this.storage.__('all_libs', 'All Libs'),
             "save": this.storage.__('save', 'Save'),
             "close": this.storage.__('close', 'close'),
             "more": this.storage.__('more', 'More'),
@@ -74,12 +78,12 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
             var staticCustomMenu = [{
                 "id": "import-export",
                 "label": "Import/export",
-                "action": function(){self.controller.showImportExportWindow()},
+                "action": function() { self.controller.showImportExportWindow() },
                 "icon": ""
             }, {
                 "id": "empty-page",
                 "label": "Empty page",
-                "action": function(){self.controller.removePageData()},
+                "action": function() { self.controller.removePageData() },
                 "icon": ""
             }];
             data.customMenu = this.customMenu = this.storage.driver.mainMenu(staticCustomMenu);
@@ -87,8 +91,12 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
 
         this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
 
+        // Init select
+        this.$el.find('#lib-select').qoobSelect();
+
         return this;
     },
+
     /**
      * Deprecated
      * Resize toolbar
@@ -156,5 +164,9 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     },
     clickAutosave: function(evt) {
         this.controller.setAutoSave(evt.target.checked);
+    },
+    changeLib: function(evt) {
+        var target = jQuery(evt.target);
+        this.controller.changeLib(target.val());
     }
 });

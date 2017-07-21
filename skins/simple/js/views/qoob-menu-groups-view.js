@@ -29,10 +29,7 @@ var QoobMenuGroupsView = Backbone.View.extend( // eslint-disable-line no-unused-
          */
         render: function() {
             var data = {
-                "groups_arr": this.groups,
-                "libs": this.storage.librariesData,
-                "curLib": this.storage.currentLib,
-                "all_themes": this.storage.__('all_libs', 'All Libs')
+                "groups_arr": this.groups
             };
 
             this.$el.html(_.template(this.storage.getSkinTemplate('menu-groups-preview'))(data));

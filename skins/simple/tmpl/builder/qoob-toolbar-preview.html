@@ -1,3 +1,37 @@
+<div class="<% if(!libs) { %>empty <% } %>lib-select">
+    <select id="lib-select">
+        <option value="all" selected><%= allThemes %></option>
+        <% if(libs) { %>
+            <% for (var i = 0; i < libs.length; i++) { %>
+                <option value="<%= libs[i].name %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
+                    <% if (libs[i].name.length > 14) { %>
+                        <%= libs[i].name.substring(0, 14) %>...
+                    <% } else { %>
+                        <%= libs[i].name %>
+                    <% } %>
+                </option>
+            <% } %>
+        <% } %>
+    </select>
+</div>
+<div class="dropdown more">
+    <button class="dropdown-toggle button" type="button" id="more" data-toggle="dropdown"><%= more %></button>        
+    <ul class="dropdown-menu" aria-labelledby="more">
+        <li>
+            <div class="autosave">
+                <label class="checkbox-sb">
+                    <input type="checkbox" class="autosave-checkbox"><span></span><em><%= autosave %></em>
+                </label>
+            </div>
+        </li>
+        <% if (customMenu) { %>
+            <% _.each( customMenu, function( item ) { %>
+                <li><a <% if (item.action != '') { %>data-id="<%= item.id %>"<% } %> href="#<%= item.id %>"><%= item.label %></a></li>
+            <% }); %>
+        <% } %>
+    </ul>
+</div>
+
 <div class="control-buttons">
     <button class="button preview-mode">
         <%= preview %>
@@ -18,23 +52,5 @@
         <span class="seconds-container"><span class="seconds"></span></span>
         </span>
     </button>
-    <div class="dropdown more">
-        <button class="dropdown-toggle button" type="button" id="more" data-toggle="dropdown"><%= more %></button>        
-        <ul class="dropdown-menu" aria-labelledby="more">
-            <li>
-                <div class="autosave">
-                    <label class="checkbox-sb">
-                        <input type="checkbox" class="autosave-checkbox"><span></span><em><%= autosave %></em>
-                    </label>
-                </div>
-            </li>
-            <% if (customMenu) { %>
-                <% _.each( customMenu, function( item ) { %>
-                    <li><a <% if (item.action != '') { %>data-id="<%= item.id %>"<% } %> href="#<%= item.id %>"><%= item.label %></a></li>
-                <% }); %>
-            <% } %>
-        </ul>
-        
-    </div>
     <button class="exit button"><%= close %></button>
 </div>
