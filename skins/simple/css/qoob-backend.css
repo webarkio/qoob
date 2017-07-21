@@ -476,7 +476,43 @@ color: rgb(1, 8, 51);
     display: block;
 }
 
-
+#card {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.card-wrap {
+    position: absolute;
+    left: 0;
+    overflow-y: auto;
+    height: 100%;
+    width: 279px;
+    padding-right: -78px;
+    padding-right: 15px;
+}
+.card-main {
+    width: 264px;
+}
+/* group list */
+.group-list__item {
+    height: 50px;
+}
+.group-list__link {
+    display: block;
+    color: #010833;
+    padding-left: 47px;
+    height: 100%;
+    line-height: 50px;
+}
+.group-list__link:hover {
+    background-color: #ececec; 
+}
+.group-list__link-active {
+    background-color: #010833;
+    color: #fff;
+} 
+/* end group list */
 /* default qoob select */
 
 .qoob-select {
