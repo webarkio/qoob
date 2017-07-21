@@ -168,7 +168,7 @@ Fields.image = QoobFieldView.extend(
                 pattern = /^((http|https):\/\/)/;
 
             // if url has "http|https"
-            if (!pattern.test(this.getValue())) {
+            if (!pattern.test(this.getValue()) && typeof this.storage.driver.getFrontendPageUrl === "function") {
                 iframeUrl = this.storage.driver.getFrontendPageUrl();
             } else {
                 iframeUrl = '';
