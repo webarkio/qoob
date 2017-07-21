@@ -3,13 +3,15 @@
         <option value="all" selected><%= all_themes %></option>
         <% if(libs) { %>
             <% for (var i = 0; i < libs.length; i++) { %>
-                <option value="<%= libs[i].name %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
-                    <% if (libs[i].name.length > 26) { %>
-                        <%= libs[i].name.substring(0, 26) %>...
-                    <% } else { %>
-                        <%= libs[i].name %>
-                    <% } %>
-                </option>
+                <% if(libs[i].name !== undefined) { %>
+                    <option value="<%= libs[i].name %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
+                        <% if (libs[i].name.length > 26) { %>
+                            <%= libs[i].name.substring(0, 26) %>...
+                        <% } else { %>
+                            <%= libs[i].name %>
+                        <% } %>
+                    </option>
+                <% } %>    
             <% } %>
             <option data-divider="true"></option>
         <% } %>
