@@ -98,6 +98,7 @@ if (typeof(jQuery) === 'undefined') {
         });
 
         $selectedValue.on('blur', function() {
+            console.log('blur');
             $options.trigger('close');
         });
 

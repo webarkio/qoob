@@ -14,10 +14,11 @@ function Skin() {
             { "type": "js", "name": "jquery-ui-touch-punch", "src": "js/libs/jquery.ui.touch-punch.js", "min_src": "js/libs/jquery.ui.touch-punch.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "min_src": "js/libs/jquery-ui-droppable-iframe.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "hammer", "src": "js/libs/hammer.js", "min_src": "js/libs/hammer.min.js", "dep": ["jquery"] },
-            { "type": "js", "name": "custom-qoob-select", "src": "js/libs/custom-qoob-select.js", "dep": ["jquery"] },
+            { "type": "js", "name": "qoob-select", "src": "js/libs/qoob-select.js", "dep": ["jquery"] },
+            { "type": "js", "name": "qoob-dropdown", "src": "js/libs/qoob-dropdown.js", "dep": ["jquery"] },
             { "type": "js", "name": "is-mobile-device", "src": "js/libs/isMobile.js", "min_src": "js/libs/isMobile.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "html2canvas", "src": "js/libs/html2canvas.js", "min_src": "js/libs/html2canvas.min.js", "dep": ["jquery"] },
-            { "type": "js", "name": "materialize", "src": "js/libs/materialize.js", "min_src": "js/libs/materialize.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "jquery.easing", "src": "js/libs/jquery.easing.js", "min_src": "js/libs/jquery.easing.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
             { "type": "js", "name": "block-model", "src": "js/models/block-model.js", "dep": ["backbone"] },
             { "type": "js", "name": "page-model", "src": "js/models/page-model.js", "dep": ["backbone"] },
@@ -69,7 +70,6 @@ function Skin() {
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "css", "name": "materialize.css", "src": "css/materialize.css", "min_src": "css/materialize.min.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
             { "type": "json", "name": "skin_translation", "src": "translation.json" }
