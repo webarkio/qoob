@@ -9,7 +9,7 @@
         <div class="video-container">
             <div class="media-center preview-video">
                 <% if (src.preview) { %>
-                    <img src="<%= src.preview %>" alt="">
+                    <img src="<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= src.preview %>" alt="">
                 <% } %>
             </div>
             <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>

@@ -14,8 +14,10 @@ function Skin() {
             { "type": "js", "name": "jquery-ui-touch-punch", "src": "js/libs/jquery.ui.touch-punch.js", "min_src": "js/libs/jquery.ui.touch-punch.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "jquery-ui-droppable-iframe", "src": "js/libs/jquery-ui-droppable-iframe.js", "min_src": "js/libs/jquery-ui-droppable-iframe.min.js", "dep": ["jquery-ui"] },
             { "type": "js", "name": "hammer", "src": "js/libs/hammer.js", "min_src": "js/libs/hammer.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "custom-qoob-select", "src": "js/libs/custom-qoob-select.js", "dep": ["jquery"] },
             { "type": "js", "name": "is-mobile-device", "src": "js/libs/isMobile.js", "min_src": "js/libs/isMobile.min.js", "dep": ["jquery"] },
-            { "type": "js", "name": "bootstrap-select", "src": "js/libs/bootstrap-select.js", "min_src": "js/libs/bootstrap-select.min.js", "dep": ["bootstrap"] },
+            { "type": "js", "name": "html2canvas", "src": "js/libs/html2canvas.js", "min_src": "js/libs/html2canvas.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "materialize", "src": "js/libs/materialize.js", "min_src": "js/libs/materialize.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
             { "type": "js", "name": "block-model", "src": "js/models/block-model.js", "dep": ["backbone"] },
             { "type": "js", "name": "page-model", "src": "js/models/page-model.js", "dep": ["backbone"] },
@@ -25,13 +27,14 @@ function Skin() {
             { "type": "js", "name": "qoob-field-view", "src": "js/views/qoob-field-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-fields-view", "src": "js/views/qoob-fields-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-layout", "src": "js/views/qoob-layout.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-sidebar-view", "src": "js/views/qoob-sidebar-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-menu-view", "src": "js/views/qoob-menu-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-toolbar-view", "src": "js/views/qoob-toolbar-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-viewport-view", "src": "js/views/qoob-viewport-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-blocks-preview-view", "src": "js/views/qoob-menu-blocks-preview-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-groups-view", "src": "js/views/qoob-menu-groups-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-save-page-view", "src": "js/views/qoob-menu-save-page-template-view.js", "dep": ["backbone"] },
-            { "type": "js", "name": "qoob-menu-view", "src": "js/views/qoob-menu-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-settings-view", "src": "js/views/qoob-settings-view.js", "dep": ["backbone"] },
-            { "type": "js", "name": "qoob-toolbar-view", "src": "js/views/qoob-toolbar-view.js", "dep": ["backbone"] },
-            { "type": "js", "name": "qoob-viewport-view", "src": "js/views/qoob-viewport-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-import-export-view", "src": "js/views/qoob-import-export-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-page-templates-view", "src": "js/views/qoob-page-templates-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-accordion-item-expand", "src": "js/views/fields/field-accordion-item-expand.js", "dep": ["backbone"] },
@@ -57,8 +60,7 @@ function Skin() {
             { "type": "js", "name": "qoob-storage", "src": "js/qoob-storage.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
             { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
-            { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
-            { "type": "css", "name": "bootstrap-select.css", "src": "css/bootstrap-select.css", "min_src": "css/bootstrap-select.min.css" }
+            { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" }
         ],
         "prod": [
             { "type": "js", "name": "skin_assets", "src": "skin.concated.js" },
@@ -67,8 +69,7 @@ function Skin() {
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
-            { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
+            { "type": "css", "name": "materialize.css", "src": "css/materialize.css", "min_src": "css/materialize.min.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
             { "type": "json", "name": "skin_translation", "src": "translation.json" }
@@ -147,8 +148,8 @@ Skin.prototype.activate = function(options) {
 
     //Render layout
     jQuery('body').prepend(self.layout.render().el);
-    self.layout.resize();
 
+    this.layout.resize();
 
     // Init swipe
     var hammer = new Hammer.Manager(document.documentElement, {
