@@ -1386,6 +1386,79 @@
     border: 0;
     border-bottom: 1px solid #ccc;
   }
+
+
+ /* Field radio
+   ========================================================================== */
+    .radio__container {
+        margin-top: 36px;
+    }
+    .radio__title {
+        font-size: 12px;
+        font-family: "robotolight";
+        color: rgb(0, 0, 0);
+        display: block;
+        text-align: left;
+        padding-left: 13px;
+        margin-bottom: 12px;
+    }
+    .radio__item {
+        position: relative;
+    }
+    .radio__input {
+        position: absolute;
+        visibility: hidden;
+    }
+
+    .radio__label {
+        display: block;
+        position: relative;
+        color: #010833;
+        line-height: 1;
+        font-size: 14px;
+        padding-left: 40px; 
+        margin: 10px auto;
+        height: 14px;
+        cursor: pointer;
+        -webkit-transition: all 0.3s linear;
+    }
+
+    .radio__check{
+        display: block;
+        position: absolute;
+        border: 2px solid #151b43;
+        border-radius: 100%;
+        height: 12px;
+        width: 12px;
+        top: 1px;
+        left: 15px;
+        z-index: 5;
+        transition: border .3s linear;
+        -webkit-transition: border .3s linear;
+    }
+
+    .radio__item .radio__check::before {
+        display: block;
+        position: absolute;
+        content: '';
+        border-radius: 100%;
+        height: 4px;
+        width: 4px;
+        top: 2px;
+        left: 2px;
+        margin: auto;
+        transition: background 0.3s linear;
+        -webkit-transition: background 0.3s linear;
+    }
+
+    .radio__input:checked ~ .radio__check {
+        border: 2px solid #151b43;
+    }
+
+    .radio__input:checked ~ .radio__check::before{
+        background: #151b43;
+    }
+
  /* Field accordion
    ========================================================================== */
 
