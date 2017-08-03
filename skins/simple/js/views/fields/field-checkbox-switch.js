@@ -1,6 +1,7 @@
 var Fields = Fields || {};
 Fields.checkbox_switch = QoobFieldView.extend(
 /** @lends Fields.checkbox.prototype */{
+    className: 'field-checkbox-switch',
     events: {
         'change input': 'changeSwitch'
     },

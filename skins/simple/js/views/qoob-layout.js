@@ -1,4 +1,4 @@
-/*global QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView*/
+/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView*/
 /**
  * Create qoob view
  *
@@ -62,29 +62,25 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             return this;
         },
         resize: function() {
-            this.menu.resize();
+            this.sidebar.resize();
             this.viewPort.resize();
         },
         setPreviewMode: function() {
-            this.toolbar.setPreviewMode();
             this.editModeButton.setPreviewMode();
-            this.menu.setPreviewMode();
+            this.sidebar.setPreviewMode();
             this.viewPort.setPreviewMode();
             this.resize();
         },
         setEditMode: function() {
-            this.toolbar.setEditMode();
             this.editModeButton.setEditMode();
             this.menu.setEditMode();
             this.viewPort.setEditMode();
             this.resize();
         },
         setDeviceMode: function(mode) {
-            this.toolbar.setDeviceMode(mode);
             this.viewPort.setDeviceMode(mode);
         },
         startEditBlock: function(blockId) {
-            this.toolbar.startEditBlock();
             this.menu.startEditBlock(blockId);
             this.viewPort.startEditBlock(blockId);
         },

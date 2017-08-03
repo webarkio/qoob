@@ -1,6 +1,7 @@
 var Fields = Fields || {};
 Fields.text = QoobFieldView.extend(
 /** @lends Fields.text.prototype */{
+    className: 'field-text',
     events: {
         'keyup input': 'changeInput'
     },

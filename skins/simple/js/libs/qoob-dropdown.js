@@ -15,32 +15,45 @@ if (typeof(jQuery) === 'undefined') {
 ;
 (function($) {
     $(document).on('click', '.qoob-dropdown-toggle', function(event) {
-        event.preventDefault();
+        event.stopPropagation();
 
-        var $parent = $(this).parent(),
-            $dropdown = $($parent).find('.qoob-dropdown-content');
+        var $parent = $(this).parent('.qoob-dropdown'),
+            $dropdown = $parent.find('.qoob-dropdown-content');
+
+        // Listen to show and hide event
+        $dropdown.on({
+            'show': function() {
+
+                $(this).slideDown({
+                        queue: false,
+                        duration: 300,
+                        easing: 'easeOutCubic'
+                    })
+                    .css('overflow', 'visible', 'important')
+                    .animate({ opacity: 1 }, { queue: false, duration: 300, easing: 'easeOutSine' });
+
+                $parent.addClass('active');
+            },
+            'hide': function() {
+                $(this).fadeOut(225);
+                $parent.removeClass('active');
+            }
+        });
+
+        $dropdown.on('click', 'a', function(event) {
+            $dropdown.trigger('hide');
+        });
 
         if (!$dropdown.is(':visible')) {
-
-            $dropdown.slideDown({
-                    queue: false,
-                    duration: 300,
-                    easing: 'easeOutCubic'
-                })
-                .animate({ opacity: 1 }, { queue: false, duration: 300, easing: 'easeOutSine' });
+            $dropdown.trigger('show');
         } else {
-            $dropdown.fadeOut(225);
+            $dropdown.trigger('hide');
+
         }
+
+        $parent.mouseleave(function() {
+            $dropdown.trigger('hide');
+        });
     });
+
 }(jQuery));
-
-
-// < div class = "dropdown" >
-//     < button class = "btn btn-primary dropdown-toggle"
-// type = "button"
-// data - toggle = "dropdown" > Dropdown Example < span class = "caret" > < /span></button >
-//     < ul class = "dropdown-menu" >
-//     < li > < a href = "#" > HTML < /a></li >
-//     < li > < a href = "#" > CSS < /a></li >
-//     < li > < a href = "#" > JavaScript < /a></li >
-//     < /ul> < /div>

@@ -1,5 +1,7 @@
-<div class="title"><%= label %></div>
-<div id="<%= textareaId %>"><%= value %></div>
+<label class="textarea-label"><%= label %></label>
+<div class="textarea-container">
+	<div id="<%= textareaId %>"><%= value %></div>
+</div>
 <script type="text/javascript">
 	var quill_<%= textareaId %> = new Quill('#<%= textareaId %>', {
 		modules: {

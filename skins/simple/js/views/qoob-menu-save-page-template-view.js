@@ -21,11 +21,10 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             "title": "",
             "image": ""
         },
-        id: "save-template",
         attributes: function() {
             return {
-                'class': "save-template settings",
-                'data-side-id': "save-template"
+                'data-side-id': "save-template",
+                'class': "save-template settings"
             };
         },
         /**

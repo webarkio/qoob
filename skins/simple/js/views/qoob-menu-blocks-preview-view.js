@@ -6,7 +6,7 @@
 var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuGroupsView.prototype */
     {
-        className: 'catalog-templates menu-block',
+        className: 'preview-block-wrap',
         events: {
             'click .preview-block': 'clickPreviewBlock'
         },

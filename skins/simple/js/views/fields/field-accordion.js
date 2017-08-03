@@ -2,6 +2,7 @@ var Fields = Fields || {};
 Fields.accordion = QoobFieldView.extend(
     /** @lends Fields.accordion.prototype */
     {
+        className: 'field-accordion',
         uniqueId: null,
         classNameItem: "",
         accordionMenuViews: [],
@@ -26,7 +27,7 @@ Fields.accordion = QoobFieldView.extend(
          * 
          */
         remove: function() {
-            this.$el.find('#' + this.uniqueId).next('.add-block').off("click", this.addNewItem);
+            this.$el.find('#' + this.uniqueId).next('.add-item').off("click", this.addNewItem);
             Backbone.View.prototype.remove.apply(this, arguments);
         },
         removeItem: function() {
@@ -42,7 +43,7 @@ Fields.accordion = QoobFieldView.extend(
         changePosition: function(event, position) {
             var self = this,
                 values = this.getValue(),
-                blocks = this.$el.find('#' + this.getUniqueId()).children('.settings-accordion');
+                blocks = this.$el.find('#' + this.getUniqueId()).children('.field-accordion__settings');
 
             blocks.each(function(index, listItem) {
                 var dataId = self.$(listItem).data('model-id'),
@@ -167,11 +168,11 @@ Fields.accordion = QoobFieldView.extend(
                 active: false,
                 heightStyle: 'content'
             }).sortable({
-                items: ".settings-accordion",
+                items: ".field-accordion__settings",
                 revert: false,
                 axis: "y",
                 helper: 'clone',
-                handle: ".drag-elem",
+                handle: ".draggable",
                 connectWith: "#drop-" + id,
                 scope: "accordion",
                 start: function() {

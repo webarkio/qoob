@@ -1,6 +1,7 @@
 var Fields = Fields || {};
 Fields.checkbox = QoobFieldView.extend(
 /** @lends Fields.checkbox.prototype */{
+    className: 'field-checkbox',
     events: {
         'change input': 'changeInput'
     },
@@ -11,9 +12,6 @@ Fields.checkbox = QoobFieldView.extend(
     changeInput: function (evt) {
         var target = jQuery(evt.target);
         this.model.set(target.attr('name'), (target[0].checked == false ? 0 : 1));
-
-        var elem = target.parents('.checkbox-switcher').next('.status').find('span');
-        elem.toggleClass('status-on');
     },
     /**
      * Get boolean value
@@ -46,7 +44,6 @@ Fields.checkbox = QoobFieldView.extend(
         var htmldata = {
             "label" : this.settings.label,
             "name" : this.settings.name,
-            "status" : (this.checked() ? "status-on" : ""),
             "checked" : (this.checked()  ? "checked" : "")
         };
         

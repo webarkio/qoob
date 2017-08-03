@@ -1,7 +1,7 @@
 var Fields = Fields || {};
 Fields.accordion_item_expand = Backbone.View.extend(
 /** @lends Fields.accordion_item.prototype */{
-    className: "settings-item settings-accordion",
+    className: "field-accordion__settings",
     events: {
         'click .cross-delete': 'deleteModel'
     },
@@ -38,8 +38,8 @@ Fields.accordion_item_expand = Backbone.View.extend(
                     "title": settingsView.model.get('title')
                 };
         this.listenTo(this.model, 'change', function () {
-            this.$el.find("h3 span.text").first().html(this.model.get('title'));
-            this.$el.find("h3 span.preview_img img").first().prop('src', this.model.get('image'));
+            this.$el.find(".title-item").first().html(this.model.get('title'));
+            this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
         });
 
         items.push(this.tpl(htmldata));

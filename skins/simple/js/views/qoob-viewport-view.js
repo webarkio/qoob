@@ -89,17 +89,11 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 'pc': {
                     'width': '100%'
                 },
-                'tablet-vertical': {
+                'tablet': {
                     'width': '768px'
                 },
-                'phone-vertical': {
+                'phone': {
                     'width': '375px'
-                },
-                'tablet-horizontal': {
-                    'width': '1024px'
-                },
-                'phone-horizontal': {
-                    'width': '667px'
                 }
             };
             this.getIframe().stop().animate(size[mode], 500, function() {
@@ -113,6 +107,14 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
          * Resize qoob content
          */
         resize: function() {
+            var size = {
+                'width': (this.previewMode ? 0 : 264)
+            };
+
+            this.$el.stop().animate({
+                width: jQuery(window).width() - size.width
+            });
+
             //Iframe resize
             this.getIframe().height(jQuery(window).height());
             if (this.deviceMode == "pc") {

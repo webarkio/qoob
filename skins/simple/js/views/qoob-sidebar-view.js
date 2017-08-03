@@ -27,5 +27,14 @@ var QoobSidebarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
      */
     render: function() {
         return this;
+    },
+    setPreviewMode: function() {
+        this.$el.addClass('hide-sidebar');
+    },
+    /**
+     * Resize sidebar
+     */
+    resize: function() {
+        this.$el.css('height', jQuery(window).height());
     }
 });

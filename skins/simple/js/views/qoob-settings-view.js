@@ -8,10 +8,10 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
     /** @lends QoobMenuSettingsView.prototype */
     {
         tagName: "div",
-        className: "settings menu-block",
+        className: "settings",
         config: null,
         events: {
-            'click .back': 'clickBack',
+            'click .back': 'clickBack', /* deprecater */
             'click .delete-block': 'clickDelete',
             'click .movedown': 'clickMoveDown',
             'click .moveup': 'clickMoveUp'
@@ -24,8 +24,8 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
          */
         attributes: function() {
             return {
-                id: "settings-block-" + this.model.id,
-                'data-side-id': this.model.id
+                'data-side-id': this.model.id,
+                id: "settings-block-" + this.model.id
             };
         },
         /**
@@ -50,8 +50,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
                 storage: this.storage,
                 settings: this.config.settings,
                 defaults: this.config.defaults,
-                controller: this.controller,
-                className: 'settings-block'
+                controller: this.controller
             });
 
             this.$el.html(_.template(this.storage.getSkinTemplate('menu-settings-preview'))({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })).find('.settings-blocks').prepend(this.settingsBlock.render().el);
@@ -95,6 +94,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
                     counter = 0;
                 });
         },
+        /* deprecater */
         clickBack: function(e) {
             e.preventDefault();
             this.controller.stopEditBlock();
