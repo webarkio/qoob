@@ -28,6 +28,15 @@
         script.setAttribute('src', loaderSrc);
         script.onload = function() {
             options.driver.loadLibrariesData(function(err, libs) {
+                if (err) {
+                    console.error("Libraries have been not loaded from driver " + self.options.driver.constructor.name + "." + err);
+                    return;
+                }
+                if (typeof(libs) == 'undefined') {
+                    console.error("Libraries have been not loaded from driver " + self.options.driver.constructor.name + ". Check 'loadLibrariesData' method.");
+                    return;
+                }
+
                 window.loader = new Loader();
                 window.loader.once('complete', function() {
                     try {
