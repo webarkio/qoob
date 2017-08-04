@@ -1,4 +1,6 @@
-<label class="textarea-label"><%= label %></label>
+<% if (label){ %>
+	<label class="textarea-label field-label"><%= label %></label>
+<% } %>
 <div class="textarea-container">
 	<div id="<%= textareaId %>"><%= value %></div>
 </div>

@@ -2,7 +2,7 @@ var Fields = Fields || {};
 Fields.text_autocomplete = QoobFieldView.extend(
 /** @lends Fields.text_autocomplete.prototype */{
     uniqueId: null,
-    className: 'field-input-autocomplete',
+    className: 'field-input-autocomplete field-group',
     events: {
         'keyup input': 'changeInput'
     },

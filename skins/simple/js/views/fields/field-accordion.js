@@ -2,7 +2,7 @@ var Fields = Fields || {};
 Fields.accordion = QoobFieldView.extend(
     /** @lends Fields.accordion.prototype */
     {
-        className: 'field-accordion',
+        className: 'field-accordion field-group',
         uniqueId: null,
         classNameItem: "",
         accordionMenuViews: [],

@@ -1,5 +1,7 @@
 <div class="radio__container">
-  <span class="radio__title"><%= label %></span>
+<% if (label){ %>
+    <span class="radio__title field-label"><%= label %></span>
+<% } %>
   <ul class="radio__list">
 <% _.each( options, function( option ){ %>
   <li class="radio__item">

@@ -1,6 +1,7 @@
 var Fields = Fields || {};
 Fields.radio = QoobFieldView.extend(
 /** @lends Fields.radio.prototype */{
+    className: 'field-radio field-group',
     events: {
         'change .radio__input': 'changeInput',
     },

@@ -1,11 +1,14 @@
-<div class="title"><%= label %></div>
+<% if (label){ %>
+    <div class="field-label"><%= label %></div>
+<% } %>
 <div id="<%= sliderId %>" class="sliders-size"></div>
 <input class="size" name="<%= name %>" type="text" id="<%= sizeId %>" value="<%= value %>">
 <script type="text/javascript">
+
 jQuery("#<%= sliderId %>").slider({
     value: '<%= value %>',
-    min: 0,
-    max: 100,
+    min: '<%= min %>', 
+    max: '<%= max %>',
     step: 1,
     slide: function(event, ui) {
         jQuery("#<%= sizeId %>").val(ui.value);
