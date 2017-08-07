@@ -23,8 +23,8 @@ Fields.slider = QoobFieldView.extend(
             "sizeId" : _.uniqueId('size'),
             "label" : this.settings.label,
             "name" : this.settings.name,
-            "min" : this.settings.min,
-            "max" : this.settings.max,
+            "min" : this.settings.min || 0,
+            "max" : this.settings.max || 100,
             "value" : this.getValue()
         };
         

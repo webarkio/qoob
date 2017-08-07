@@ -71,6 +71,7 @@ function Skin() {
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
+            { "type": "css", "name": "jqueryui", "src": "css/jquery-ui.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
             { "type": "json", "name": "skin_translation", "src": "translation.json" }

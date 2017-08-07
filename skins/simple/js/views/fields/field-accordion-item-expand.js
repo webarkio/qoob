@@ -44,7 +44,6 @@ Fields.accordion_item_expand = Backbone.View.extend(
         items.push(settingsView.render().$el);
 
         if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
-            console.log(items);
             this.$el.html(items);
         }
         return this;
