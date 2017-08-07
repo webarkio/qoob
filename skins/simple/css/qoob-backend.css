@@ -930,7 +930,6 @@
      transition: transform .3s linear;
  }
  /*FIXME*/
-
  .qoob-menu-left-side img {
      max-width: 100%;
  }
@@ -1019,6 +1018,7 @@
 
  .settings-blocks {
      margin-top: 25px;
+     margin-bottom: 89px;
      padding: 0 6px;
  }
 
@@ -1064,6 +1064,44 @@
  .edit-mode-button {
      display: none !important;
  }
+/* Move and delete buttons
+   ========================================================================== */
+   .block-button {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0 8px 149px 6px;
+    background: #fff;
+   }
+    .button-movedown,
+    .button-moveup {
+        width: 93px;
+        height: 46px;
+        line-height: 46px;
+        border-radius: 2px;
+        background-color: rgb(236, 236, 236);
+        float: left;
+        cursor: pointer;
+        text-align: center;
+    }
+    .button-moveup {
+        margin-right: 2px;
+    }
+    .icon-moveup,
+    .icon-movedown {
+        padding-right: 7px;
+    }
+    .delete-button-small {
+        width: 60px;
+        height: 46px;
+        border-radius: 2px;
+        background-color: rgb(236, 236, 236);
+        float: right;
+        line-height: 46px;
+        text-align: center;
+        cursor: pointer;
+    }
  /* Fields common
    ========================================================================== */
     .field-group {
