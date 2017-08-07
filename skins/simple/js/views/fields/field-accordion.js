@@ -27,7 +27,7 @@ Fields.accordion = QoobFieldView.extend(
          * 
          */
         remove: function() {
-            this.$el.find('#' + this.uniqueId).next('.add-item').off("click", this.addNewItem);
+            this.$el.find('#' + this.uniqueId).parent().find('.add-item').off("click", this.addNewItem);
             Backbone.View.prototype.remove.apply(this, arguments);
         },
         removeItem: function() {
@@ -143,8 +143,8 @@ Fields.accordion = QoobFieldView.extend(
                 "label": this.settings.label,
                 "uniqueId": this.getUniqueId(),
                 "settings": settings,
-                'add_component': this.storage.__('add_component', 'Add component'),
-                'drag_to_delete': this.storage.__('drag_to_delete', 'Drag to delete')
+                'add_new_tab': this.storage.__('add_new_tab', 'Add new tab'),
+                'Delete': this.storage.__('delete', 'Delete')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
@@ -153,7 +153,7 @@ Fields.accordion = QoobFieldView.extend(
             }
             // AddNewItem func on clicking button
             // we added this handler dynamiclly to prevent bubbling it to inner accordions
-            this.$el.find('#' + this.uniqueId).next('.add-block').on('click', this.addNewItem.bind(this));
+            this.$el.find('#' + this.uniqueId).parent().find('.add-item').on('click', this.addNewItem.bind(this));
 
             return this;
         },

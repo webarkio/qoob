@@ -1378,14 +1378,14 @@
      box-shadow: 0.342px 0.94px 2.84px 1.16px rgba(0, 0, 0, 0.15);
  }
 
-  .field-textarea .ql-container.ql-snow {
-    border: 0;
-  }
+ .field-textarea .ql-container.ql-snow {
+     border: 0;
+ }
 
-  .field-textarea  .ql-toolbar.ql-snow {
-    border: 0;
-    border-bottom: 1px solid #ccc;
-  }
+ .field-textarea .ql-toolbar.ql-snow {
+     border: 0;
+     border-bottom: 1px solid #ccc;
+ }
  /* Field accordion
    ========================================================================== */
 
@@ -1433,6 +1433,10 @@
      font-size: 14px;
      color: rgb(1, 8, 51);
  }
+
+ .without-title .field-accordion__settings .title-item {
+    display: none;
+}
 
  .field-accordion__settings .draggable {
      display: block;
@@ -1505,4 +1509,59 @@
 
  .field-accordion .settings-block-items {
      padding-top: 23px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 14px;
  }
+
+ .field-accordion .add-item {
+     border-radius: 2px;
+     background-color: rgb(236, 236, 236);
+     width: 100%;
+     height: 42px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 18px;
+ }
+
+  .field-accordion .dropzone-remove {
+    height: 0;
+    visibility: hidden;
+  }
+
+ .field-accordion .add-item span,
+ .field-accordion .dropzone-remove span {
+    line-height: 42px;
+    display: block;
+    font-size: 14px;
+}
+
+ .field-accordion .add-item span:before {
+    content:"\f067";
+    display: inline-block;
+    font-family: FontAwesome;
+    margin-right: 10px;
+}
+
+.field-accordion .is-droppable + .add-item {
+    display: none;
+}
+
+ .field-accordion .dropzone-remove span:before {
+    content:"\f014";
+    display: inline-block;
+    font-family: FontAwesome;
+    margin-right: 10px;
+}
+
+ .is-droppable + .add-item + .dropzone-remove {
+    display: block;
+    visibility: visible;
+     border-radius: 2px;
+     background-color: rgb(236, 236, 236);
+     width: 100%;
+     height: 42px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 18px;
+}

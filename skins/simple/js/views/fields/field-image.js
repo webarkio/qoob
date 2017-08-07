@@ -7,6 +7,7 @@ var Fields = Fields || {};
 Fields.image = QoobFieldView.extend(
     /** @lends Fields.image.prototype */
     {
+        className: 'field-image',
         customItems: null,
         counterDropZone: 0,
         events: {
