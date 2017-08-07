@@ -1,7 +1,7 @@
 var Fields = Fields || {};
 Fields.textarea = QoobFieldView.extend(
 /** @lends Fields.textarea.prototype */{
-    className: 'field-textarea',
+    className: 'field-textarea field-group',
     events: {
         'change': 'changeTextarea'
     },

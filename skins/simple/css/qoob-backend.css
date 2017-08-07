@@ -1063,23 +1063,22 @@
  .edit-mode-button {
      display: none !important;
  }
- /* Fields
+ /* Fields common
    ========================================================================== */
+    .field-group {
+        margin-top: 46px;
+    }
+    .field-label {
+        font-size: 14px;
+        font-family: "robotolight";
+        color: rgb(0, 0, 0);
+        display: block;
+        text-align: left;
+        padding-left: 23px;
+        margin-bottom: 12px;
+    }
  /* Field text
    ========================================================================== */
-
- .field-text {
-     margin-top: 36px;
- }
-
- .field-text .input-label {
-     font-size: 12px;
-     font-family: "robotolight";
-     color: rgb(0, 0, 0);
-     display: block;
-     text-align: left;
-     padding-left: 13px;
- }
 
  .field-text .input-text {
      font-size: 14px;
@@ -1143,7 +1142,6 @@
    ========================================================================== */
 
  .field-checkbox {
-     margin-top: 36px;
      padding-left: 13px;
  }
 
@@ -1173,10 +1171,6 @@
  }
  /* Field input autocomplete
    ========================================================================== */
-
- .field-input-autocomplete {
-     margin-top: 40px;
- }
 
  .field-input-autocomplete .text-autocomplete {
      outline: 0;
@@ -1277,7 +1271,6 @@
    ========================================================================== */
 
  .field-checkbox-switch {
-     margin-top: 40px;
      clear: both;
      padding-left: 13px;
      padding-right: 13px;
@@ -1355,20 +1348,6 @@
  /* Field textarea
    ========================================================================== */
 
- .field-textarea {
-     margin-top: 36px;
- }
-
- .field-textarea .textarea-label {
-     font-size: 12px;
-     font-family: "robotolight";
-     color: rgb(0, 0, 0);
-     display: block;
-     text-align: left;
-     padding-left: 13px;
-     margin-bottom: 12px;
- }
-
  .field-textarea .textarea-container {
      border-style: solid;
      border-width: 2px;
@@ -1386,22 +1365,131 @@
      border: 0;
      border-bottom: 1px solid #ccc;
  }
+
+
+ /* Field radio
+   ========================================================================== */
+    .radio__title {
+        font-size: 12px;
+        font-family: "robotolight";
+        color: rgb(0, 0, 0);
+        display: block;
+        text-align: left;
+        padding-left: 13px;
+        margin-bottom: 12px;
+    }
+    .radio__item {
+        position: relative;
+    }
+    .radio__input {
+        position: absolute;
+        visibility: hidden;
+    }
+
+    .radio__label {
+        display: block;
+        position: relative;
+        color: #010833;
+        line-height: 1;
+        font-size: 14px;
+        padding-left: 40px; 
+        margin: 10px auto;
+        height: 14px;
+        cursor: pointer;
+        -webkit-transition: all 0.3s linear;
+    }
+
+    .radio__check{
+        display: block;
+        position: absolute;
+        border: 2px solid #151b43;
+        border-radius: 100%;
+        height: 12px;
+        width: 12px;
+        top: 1px;
+        left: 15px;
+        z-index: 5;
+        transition: border .3s linear;
+        -webkit-transition: border .3s linear;
+    }
+
+    .radio__item .radio__check::before {
+        display: block;
+        position: absolute;
+        content: '';
+        border-radius: 100%;
+        height: 4px;
+        width: 4px;
+        top: 2px;
+        left: 2px;
+        margin: auto;
+        transition: background 0.3s linear;
+        -webkit-transition: background 0.3s linear;
+    }
+
+    .radio__input:checked ~ .radio__check {
+        border: 2px solid #151b43;
+    }
+
+    .radio__input:checked ~ .radio__check::before{
+        background: #151b43;
+    }
+
+ /* Field color picker
+   ========================================================================== */
+    .field-color-picker__title {
+        font-size: 14px;
+        font-family: "robotolight";
+        color: rgb(0, 0, 0);
+        display: block;
+        text-align: left;
+        padding-left: 23px;
+        margin-bottom: 12px;
+    }
+    .field-color-picker__input {
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(255, 255, 255);
+        border-radius: 2px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0.342px 0.94px 2.84px 1.16px rgba(0, 0, 0, 0.15);
+        padding-left: 19px;
+        width: 100%;
+        height: 50px;
+    }
+    .field-color-picker__colors-list {
+        padding: 0;
+        margin: 4px 0 0 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    .field-color-picker__color {
+        padding: 5px;
+        width: 38px;
+        height: 38px;
+        margin-right: 5px;
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(255, 255, 255);
+        border-radius: 2px;
+        box-shadow: 0.342px 0.94px 1.42px 0.58px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+    }
+    .field-color-picker__color:last-child {
+        margin-right: 0;
+    }
  /* Field accordion
    ========================================================================== */
 
  .field-accordion {
-     margin-top: 40px;
      width: 100%;
- }
-
- .field-accordion .accordion-title {
-     font-size: 12px;
-     font-family: "robotolight";
-     color: rgb(0, 0, 0);
-     display: block;
-     text-align: left;
-     padding-left: 13px;
-     margin-bottom: 12px;
  }
 
  .field-accordion__settings {
