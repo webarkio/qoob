@@ -1486,6 +1486,42 @@
     .field-color-picker__color:last-child {
         margin-right: 0;
     }
+ /* Field slider
+   ========================================================================== */
+    .field-slider {
+        overflow: hidden;
+        padding-bottom: 1px;
+    }
+    .field-slider-label {
+        margin-bottom: 21px;
+    }
+    .field-slider .ui-slider-handle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #010833;
+        top: -8px;
+        border: none;
+    }
+    .field-slider .ui-widget-content {
+        height: 3px;
+        border: none;
+        background-color:#ececec;
+        border-radius: 0;
+        width: 153px;
+        margin-left: 16px;
+        float: left;
+    }
+    .field-slider .ui-slider-range-min {
+        background-color: #010833;
+    }
+    .field-slider .size {
+        width: 50px;
+        float: right;
+        margin-top: -10px;
+        margin-right: 13px;
+        border: none;
+    }
  /* Field accordion
    ========================================================================== */
 
