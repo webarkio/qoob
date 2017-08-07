@@ -34,14 +34,17 @@ Fields.accordion_item_expand = Backbone.View.extend(
                     "image": settingsView.model.get('image'),
                     "title": settingsView.model.get('title')
                 };
+
         this.listenTo(this.model, 'change', function () {
             this.$el.find(".title-item").first().html(this.model.get('title'));
             this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
         });
-
+        
         items.push(this.tpl(htmldata));
+        items.push(settingsView.render().$el);
 
         if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
+            console.log(items);
             this.$el.html(items);
         }
         return this;
