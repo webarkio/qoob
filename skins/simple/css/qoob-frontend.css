@@ -156,7 +156,7 @@
     position: absolute;
     width: 100%;
     height: 50px;
-    /*visibility: hidden;*/
+    visibility: hidden;
     margin-top: 0;
     z-index: 999;
     font-family: 'robotoregular';
@@ -168,17 +168,7 @@
 }
 
 .droppable-zone.ui-droppable i.plus {
-    display: inline-block;
-    height: 21px;
-    width: 21px;
     margin: 0 8px 0 0;
-    vertical-align: middle;
-    background: transparent url(../img/plus.png) no-repeat center center;
-}
-
-.droppable-zone.ui-droppable i.plus + span {
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .droppable-zone.ui-droppable .dropp-block {
@@ -193,8 +183,8 @@
 }
 
 .droppable-zone.ui-droppable-hover {
-    border-top: solid #2bc0e4 5px;
-    background-color: rgba(0, 208, 236, 0.8);
+    background-color: #00ce63;
+    color: #ffffff;
     display: block;
 }
 
