@@ -12,7 +12,6 @@ Fields.datepicker = QoobFieldView.extend(
     changeInput: function(evt) {
         var target = jQuery(evt.target);
         this.model.set(target.attr('name'), target.val());
-        console.log('here');
     },
     /**
      * Get unique id
