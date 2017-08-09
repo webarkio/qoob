@@ -1,0 +1,26 @@
+	
+<% if (label){ %>
+    <div class="field-datepicker-label field-label"><%= label %></div>
+<% } %>
+<input class="field-datepicker__input field-datepicker__input-<%= uniqueId %>" type="text" data-field="date" name="<%= name %>" value="<%= value %>">
+
+<div id="field-datepicker__box-<%= uniqueId %>"></div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function()
+    {
+        jQuery("#field-datepicker__box-<%= uniqueId %>").DateTimePicker({
+            isPopup: false,
+            inputElement: jQuery(".field-datepicker__input-<%= uniqueId %>"),
+            showHeader: false,
+            isInline: true,
+            buttonsToDisplay: [""],
+            setValueInTextboxOnEveryClick: true,
+            incrementButtonContent: "<i class='fa fa-chevron-up' aria-hidden='true'></i>",
+            decrementButtonContent: "<i class='fa fa-chevron-down' aria-hidden='true'></i>"
+        });
+    });
+
+</script>
+	

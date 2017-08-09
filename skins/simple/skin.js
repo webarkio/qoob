@@ -54,6 +54,7 @@ function Skin() {
             { "type": "js", "name": "field-text", "src": "js/views/fields/field-text.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-textarea", "src": "js/views/fields/field-textarea.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-video", "src": "js/views/fields/field-video.js", "dep": ["backbone"] },
+            { "type": "js", "name": "field-datepicker", "src": "js/views/fields/field-datepicker.js", "dep": ["backbone"] },
             { "type": "js", "name": "icon-center-view", "src": "js/views/fields/icon-center-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "image-center-view", "src": "js/views/fields/image-center-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "video-center-view", "src": "js/views/fields/video-center-view.js", "dep": ["backbone"] },
@@ -61,6 +62,7 @@ function Skin() {
             { "type": "js", "name": "template-adapter-underscore", "src": "js/extensions/template-adapter-underscore.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-storage", "src": "js/qoob-storage.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
+            { "type": "js", "name": "date-time-picker", "src": "js/libs/date-time-picker.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
             { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" }
         ],
