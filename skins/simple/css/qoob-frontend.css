@@ -201,12 +201,12 @@
 .wait-block {
     cursor: default;
     visibility: visible;
-    background-color: #2bc0e4;
+    background-color: #00ce63;
     color: #fff;
-    font-family: 'robotobold';
-    font-size: 18px;
-    line-height: 68px;
-    height: 70px;
+    font-family: 'robotoregular';
+    font-size: 16px;
+    line-height: 46px;
+    height: 50px;
     text-align: center;
 }
 
@@ -226,7 +226,7 @@
 }
 
 .wait-block .clock:after {
-    background: #2bc0e4;
+    background: #00ce63;
     content: "";
     position: absolute;
     left: 50%;
@@ -249,7 +249,7 @@
 
 .wait-block .minutes,
 .wait-block .seconds {
-    background: #2bc0e4;
+    background: #00ce63;
     height: 15px;
     left: 47%;
     position: absolute;
@@ -389,7 +389,6 @@
 
 #qoob-blocks .block-blank {
     position: relative;
-    background-color: #e6e6e6;
     width: 100%;
 }
 
@@ -401,7 +400,6 @@
     position: relative;
     overflow: hidden;
     height: 136px;
-    border: dashed 2px #b2b2b2;
     font-size: 25px;
     color: #b2b2b2;
     font-family: 'robotobold';
@@ -423,33 +421,38 @@
     font-size: 40px;
 }
 
-#qoob-blocks .block-blank-inner-text {
-    width: 100%;
+#qoob-blocks .block-blank-inner-wrap {
     transform: translate(-50%, -50%);
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
+}
+
+#qoob-blocks .block-blank-inner-image {
+    width: 196px;
+    height: 116px;
+    background-image: url('../img/qoob-start-page-image.png');
+    background-repeat: no-repeat;
+    margin: 0 auto 10px auto;
 }
 
 #qoob-blocks .block-blank-inner-text .blank-text {
     font-family: 'robotobold';
-    font-size: 30px;
-    padding-left: 23px;
+    font-size: 24px;
+    letter-spacing: 0.06em;
 }
 
 #qoob-blocks .block-blank-inner i,
 #qoob-blocks .block-blank-inner-text .blank-text {
     display: inline-block;
-    color: #606163;
+    color: #cdcdcd;
     vertical-align: middle;
 }
 
 #qoob-blocks .qoob-templates {
     position: relative;
-    /*background-color: #e6e6e6;*/
     width: 100%;
-    /*margin: 25px 25px 0 25px;*/
-    padding: 40px 40px 0 40px;
 }
 
 #qoob-blocks .qoob-templates .title-block {
@@ -544,9 +547,6 @@
     #qoob-blocks .qoob-templates .template {
         width: 42.5%;
     }
-    #qoob-blocks .block-blank-inner-text .blank-text {
-        padding: 0 5px;
-    }
     #qoob-blocks .qoob-templates .template .image-bg {
         width: 100%;
     }
@@ -554,7 +554,7 @@
 
 @media (max-width: 480px) {
     #qoob-blocks .qoob-templates {
-        background-color: #e6e6e6;
+        background-color: #fff;
         width: 100%;
         padding: 30px 30px 30px 30px;
     }
