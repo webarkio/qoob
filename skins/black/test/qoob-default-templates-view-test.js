@@ -5,14 +5,14 @@ var mockBlockDefaultTemplates = '<div class="block-blank full-page">' +
     '<div class="block-blank-inner">' +
     '<div class="block-blank-inner-text">' +
     '<i class="fa fa-reply"></i>' +
-    '<div class="blank-text">This is blank page, you can click on block preview to add block</div>' +
+    '<div class="blank-text">This is blank page, you can click on block preview to add a block</div>' +
     '</div>' +
     '</div>' +
     '</div>';
 
 var mockBlockDefaultTemplate = '<div class="templates"><div class="template" data-id="1"><div class="image-bg"><img src="/qoob/qoob/skins/black/img/default_template.png" alt="test"></div><div class="title">test</div><a class="remove" data-id="1" href="#"></a></div></div>';
 
-var defaultTemplatesRenderResult = '<div class="block-blank full-page"><div class="block-blank-inner"><div class="block-blank-inner-text"><i class="fa fa-reply"></i><div class="blank-text">This is blank page, you can click on block preview to add block</div></div></div></div>';
+var defaultTemplatesRenderResult = '<div class="block-blank full-page"><div class="block-blank-inner"><div class="block-blank-inner-text"><i class="fa fa-reply"></i><div class="blank-text">This is blank page, you can click on block preview to add a block</div></div></div></div>';
 
 var mockStorageDefaultTemplatesView = {
     getSkinTemplate: function(templateName) {

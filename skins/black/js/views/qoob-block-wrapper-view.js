@@ -23,7 +23,7 @@ var QoobBlockWrapperView = Backbone.View.extend({ // eslint-disable-line no-unus
         var self = this;
 
         this.innerBlock.once('loaded', function() {
-            var droppable = _.template(self.storage.getSkinTemplate('block-droppable-preview'))({ "blockId": self.model.id, "text": this.storage.__('text_droppable_zone', 'Drop here to created new block') });
+            var droppable = _.template(self.storage.getSkinTemplate('block-droppable-preview'))({ "blockId": self.model.id, "text": this.storage.__('text_droppable_zone', 'Drop here to creative a new block') });
             var overlay = _.template(self.storage.getSkinTemplate('block-overlay-preview'))({ "blockId": self.model.id });
             self.controller.layout.viewPort.getWindowIframe().jQuery(self.el).html([droppable, overlay, self.innerBlock.el]);
             self.$el.addClass('content-show content-block-outer');

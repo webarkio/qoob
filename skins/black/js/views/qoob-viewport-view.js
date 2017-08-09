@@ -33,7 +33,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             var url = this.storage.driver.getIframePageUrl();
             this.$el.html(_.template(this.storage.getSkinTemplate('qoob-viewport-preview'))({
                 "url": url,
-                "text_droppable_zone": this.storage.__('text_droppable_zone', 'Drop here to created new block')
+                "text_droppable_zone": this.storage.__('text_droppable_zone', 'Drop here to creative a new block')
             }));
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
