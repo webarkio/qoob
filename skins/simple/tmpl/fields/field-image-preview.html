@@ -1,29 +1,42 @@
-<label class="image-label"><%= label %></label>
+<label class="field-label"><%= label %></label>
 
-<div class="image-control">
-    <div class="edit-image<% if (value === '') { %> empty <% } %>">
-        <div class="drop-zone"><span class="drop-zone-text"><%= drop_here %></span></div>
-        <div class="img-container">
-            <img class="media-center preview-image" src="<%= value %>" />
-            <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
-                <a href="#" class="remove"></a>
-            <% } %>
-        </div>
-        <div class="no-image media-center">
-            <i class="icon fa fa-file-image-o"></i>
-            <div class="no-image-title"><%= no_image %></div>
-            <p class="text"><%= you_can_drop_it_here %></p>
-        </div>
-        <input type="text" name="<%= name %>" class="image-url" value="<%= value %>" placeholder="https://">
+<input type="text" class="field-image__url" name="<%= name %>" value="<%= value %>" placeholder="">
+
+<div class="field-image-container<% if (value === '') { %> empty <% } %>">
+    <div class="field-image__preview">
+        <img class="show-media-center" src="<%= value %>" />
+        <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
+            <i class="field-image__remove-image fa fa-times"></i>
+        <% } %>
     </div>
-    <div class="media-acton-button btn-group">
-        <button type="button" class="btn media-center">
-            <%= media_center %>
+    <div class="field-image__noimage show-media-center">
+        <i class="fa fa-file-image-o"></i>
+    </div>
+</div>
+
+<div class="media-center clearfix">
+    <button type="button" class="show-media-center media-center__button">
+        <%= media_center %>
+    </button>
+
+    <div class="qoob-dropdown media-center__button-more">
+        <button class="qoob-dropdown-toggle" type="button">
+            <div class="dot">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </button>
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-angle-down"></i>
-        </button>
-        <ul class="dropdown-menu">
+        <ul class="qoob-dropdown-content">
+            <li>
+                <div class="autosave clearfix">
+                    <div class="autosave-item-name">dfffffffffffdfsfsd</div>
+                    <label class="autosave-item-switch">
+                        <input type="checkbox" class="autosave-checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </li>
             <% _.each( customItems, function( item ){ %>
                 <li>
                     <a href="#" data-id="<%- item.id %>" class="action">

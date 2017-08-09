@@ -7,13 +7,13 @@ var Fields = Fields || {};
 Fields.image = QoobFieldView.extend(
     /** @lends Fields.image.prototype */
     {
-        className: 'field-image',
+        className: 'field-image field-group',
         customItems: null,
         counterDropZone: 0,
         events: {
-            'click .media-center': 'clickMediaCenter',
+            'click .show-media-center': 'clickMediaCenter',
             'change .image-url': 'changeInputUrlImage',
-            'click .remove': 'clickRemoveImage',
+            'click .field-image__remove-image': 'clickRemoveImage',
             'drop .drop-zone': 'dropImage',
             'dragenter .drop-zone': 'dragOnDropZone',
             'dragleave .drop-zone': 'dragLeaveDropZone',
@@ -63,11 +63,9 @@ Fields.image = QoobFieldView.extend(
         },
         /**
          * Remove image
-         * @param {Object} evt
          */
-        clickRemoveImage: function(evt) {
-            evt.preventDefault();
-            this.$el.find('.edit-image').addClass('empty');
+        clickRemoveImage: function() {
+            this.$el.find('.field-image-container').addClass('empty');
             this.changeImage('');
         },
         /**

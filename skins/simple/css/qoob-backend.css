@@ -652,17 +652,14 @@
      background-color: rgb(236, 236, 236);
  }
  /* end library select */
- /* library select */
+ /* default button dropdowns */
 
  .qoob-dropdown-content {
      display: none;
  }
 
- .qoob-dropdown-more {
-     float: right;
- }
 
- .qoob-dropdown-more .qoob-dropdown-toggle {
+ .qoob-dropdown .qoob-dropdown-toggle {
      outline: none;
      border: 1px solid transparent;
      margin: 0;
@@ -673,18 +670,18 @@
      height: 50px;
  }
 
- .qoob-dropdown-more.active .qoob-dropdown-toggle {
+ .qoob-dropdown.active .qoob-dropdown-toggle {
      background-color: rgb(255, 255, 255);
      box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
  }
 
- .qoob-dropdown-more .dot {
+ .qoob-dropdown .dot {
      position: relative;
      height: 100%;
      width: calc(100% - 4px);
  }
 
- .qoob-dropdown-more .dot span {
+ .qoob-dropdown .dot span {
      position: absolute;
      width: 4px;
      height: 4px;
@@ -692,39 +689,37 @@
      background-color: rgb(1, 8, 51);
  }
 
- .qoob-dropdown-more .dot span:first-child {
+ .qoob-dropdown .dot span:first-child {
      transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
      top: 16px;
  }
 
- .qoob-dropdown-more.active .dot span:first-child {
+ .qoob-dropdown.active .dot span:first-child {
      transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
      left: 18px;
      top: 23px;
  }
 
- .qoob-dropdown-more .dot span:nth-child(2) {
+ .qoob-dropdown .dot span:nth-child(2) {
      top: 23px;
  }
 
- .qoob-dropdown-more .dot span:nth-child(3) {
+ .qoob-dropdown .dot span:nth-child(3) {
      transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
      top: 30px;
  }
 
- .qoob-dropdown-more.active .dot span:nth-child(3) {
+ .qoob-dropdown.active .dot span:nth-child(3) {
      transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
      right: 15px;
      top: 23px;
  }
 
- .qoob-dropdown-more .qoob-dropdown-content {
+ .qoob-dropdown .qoob-dropdown-content {
      position: absolute;
      top: 50px;
      left: 0;
      right: 0;
-     margin-right: 6px;
-     margin-left: 6px;
      padding-left: 38px;
      padding-right: 8px;
      border-radius: 2px;
@@ -737,11 +732,11 @@
      z-index: 3;
  }
 
- .qoob-dropdown-more .qoob-dropdown-content li {
+ .qoob-dropdown .qoob-dropdown-content li {
      line-height: 47px;
  }
 
- .qoob-dropdown-more .qoob-dropdown-content:before {
+ .qoob-dropdown .qoob-dropdown-content:before {
      content: '';
      display: block;
      position: absolute;
@@ -753,7 +748,17 @@
      z-index: 1;
      border-right: solid 2px #e6e6e6;
  }
- /* end library select */
+ /* end default button dropdowns */
+ /* button dropdowns */
+
+ .qoob-dropdown-more {
+     float: right;
+ }
+ .qoob-dropdown-more .qoob-dropdown-content {
+     margin-right: 6px;
+     margin-left: 6px;
+ }
+ /* end button dropdowns */
  /* autosave */
 
  .autosave-item-name {
@@ -930,6 +935,7 @@
      transition: transform .3s linear;
  }
  /*FIXME*/
+
  .qoob-menu-left-side img {
      max-width: 100%;
  }
@@ -966,21 +972,19 @@
  }
 
  .preview-block {
-     position: relative;
+     margin-bottom: 12px;
+     z-index: 10;
+ }
+
+ .preview-block img {
      display: block;
-     overflow: hidden;
+     /*width: 223px;*/
      width: 100%;
      border-style: solid;
      border-width: 3px;
      border-color: rgb(255, 255, 255);
      border-radius: 2px;
      background-color: rgb(255, 255, 255);
-     margin-bottom: 12px;
- }
-
- .preview-block img {
-     display: block;
-     width: 223px;
  }
 
  .preview-block-wrap {
@@ -1064,44 +1068,49 @@
  .edit-mode-button {
      display: none !important;
  }
-/* Move and delete buttons
+ /* Move and delete buttons
    ========================================================================== */
-   .block-button {
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 0 8px 149px 6px;
-    background: #fff;
-   }
-    .button-movedown,
-    .button-moveup {
-        width: 93px;
-        height: 46px;
-        line-height: 46px;
-        border-radius: 2px;
-        background-color: rgb(236, 236, 236);
-        float: left;
-        cursor: pointer;
-        text-align: center;
-    }
-    .button-moveup {
-        margin-right: 2px;
-    }
-    .icon-moveup,
-    .icon-movedown {
-        padding-right: 7px;
-    }
-    .delete-button-small {
-        width: 60px;
-        height: 46px;
-        border-radius: 2px;
-        background-color: rgb(236, 236, 236);
-        float: right;
-        line-height: 46px;
-        text-align: center;
-        cursor: pointer;
-    }
+
+ .block-button {
+     overflow: hidden;
+     position: fixed;
+     bottom: 0;
+     width: 100%;
+     padding: 0 8px 149px 6px;
+     background: #fff;
+ }
+
+ .button-movedown,
+ .button-moveup {
+     width: 93px;
+     height: 46px;
+     line-height: 46px;
+     border-radius: 2px;
+     background-color: rgb(236, 236, 236);
+     float: left;
+     cursor: pointer;
+     text-align: center;
+ }
+
+ .button-moveup {
+     margin-right: 2px;
+ }
+
+ .icon-moveup,
+ .icon-movedown {
+     padding-right: 7px;
+ }
+
+ .delete-button-small {
+     width: 60px;
+     height: 46px;
+     border-radius: 2px;
+     background-color: rgb(236, 236, 236);
+     float: right;
+     line-height: 46px;
+     text-align: center;
+     cursor: pointer;
+ }
  /* Fields common
    ========================================================================== */
 
@@ -1532,40 +1541,46 @@
  }
  /* Field slider
    ========================================================================== */
-    .field-slider {
-        overflow: hidden;
-        padding-bottom: 1px;
-    }
-    .field-slider-label {
-        margin-bottom: 21px;
-    }
-    .field-slider .ui-slider-handle {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: #010833;
-        top: -8px;
-        border: none;
-    }
-    .field-slider .ui-widget-content {
-        height: 3px;
-        border: none;
-        background-color:#ececec;
-        border-radius: 0;
-        width: 153px;
-        margin-left: 16px;
-        float: left;
-    }
-    .field-slider .ui-slider-range-min {
-        background-color: #010833;
-    }
-    .field-slider .size {
-        width: 50px;
-        float: right;
-        margin-top: -10px;
-        margin-right: 13px;
-        border: none;
-    }
+
+ .field-slider {
+     overflow: hidden;
+     padding-bottom: 1px;
+ }
+
+ .field-slider-label {
+     margin-bottom: 21px;
+ }
+
+ .field-slider .ui-slider-handle {
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background-color: #010833;
+     top: -8px;
+     border: none;
+ }
+
+ .field-slider .ui-widget-content {
+     height: 3px;
+     border: none;
+     background-color: #ececec;
+     border-radius: 0;
+     width: 153px;
+     margin-left: 16px;
+     float: left;
+ }
+
+ .field-slider .ui-slider-range-min {
+     background-color: #010833;
+ }
+
+ .field-slider .size {
+     width: 50px;
+     float: right;
+     margin-top: -10px;
+     margin-right: 13px;
+     border: none;
+ }
  /* Field accordion
    ========================================================================== */
 
@@ -1686,7 +1701,7 @@
      content: "\f077";
  }
 
- .field-accordion__settings .preview-image + .title-item {
+ .field-accordion__settings .preview-image+.title-item {
      width: 130px;
      white-space: nowrap;
      overflow: hidden;
@@ -1694,7 +1709,7 @@
  }
 
  .field-accordion .settings-block-items {
-    overflow: visible;
+     overflow: visible;
      padding-top: 23px;
      padding-left: 6px;
      padding-right: 6px;
@@ -1751,4 +1766,56 @@
      text-align: center;
      cursor: pointer;
      margin-top: 18px;
+ }
+ /* Field image
+   ========================================================================== */
+
+.field-image-container {
+    position: relative;
+}
+
+.field-image__noimage {
+    display: none;
+}
+
+.field-image-container.empty .field-image__preview {
+    display: none;
+}
+
+.field-image-container.empty .field-image__noimage {
+    display: block;
+}
+ 
+
+ .field-image__preview {
+    position: relative;
+     border-style: solid;
+     border-width: 3px;
+     border-color: rgb(255, 255, 255);
+     border-radius: 2px;
+ }
+
+.field-image__remove-image {
+    cursor: pointer;
+  color: rgb(255, 255, 255);
+  text-shadow: 0.5px 0.866px 2px rgba(0, 0, 0, 0.21);
+  position: absolute;
+    right: 8px;
+    top: 8px;
+ }
+
+ .media-center {
+    position: relative;
+ }
+
+ .media-center__button {
+     float: left;
+ }
+
+ .media-center__button-more {
+     float: right;
+ }
+
+ .media-center__button-more .qoob-dropdown-content {
+    top: 39px;
  }
