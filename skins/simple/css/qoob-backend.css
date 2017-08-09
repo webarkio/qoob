@@ -652,6 +652,52 @@
      background-color: rgb(236, 236, 236);
  }
  /* end library select */
+
+/* Default droppable zone
+========================================================================== */
+ .droppable-zone-full.ui-droppable {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    visibility: hidden;
+    margin-top: 0;
+    z-index: 999;
+    font-family: 'robotoregular';
+    font-size: 16px;
+    color: #010833;
+    line-height: 50px;
+    text-align: center;
+    background-color: #ececec;
+}
+
+.droppable-zone-full.ui-droppable i.plus {
+    margin: 0 8px 0 0;
+}
+
+.droppable-zone-full.ui-droppable .dropp-block {
+    cursor: default;
+}
+
+.droppable-zone-full.ui-droppable-active {
+    visibility: visible;
+    display: block;
+}
+
+.droppable-zone-full.ui-droppable-hover {
+    background-color: #00ce63;
+    color: #ffffff;
+    display: block;
+}
+
+.droppable-zone-full.ui-droppable-hover i.plus {
+    margin-top: -10px;
+}
+
+.droppable-zone-full.ui-droppable-hover span {
+    margin-top: -10px;
+}
+/* End Default droppable zone
+========================================================================== */
  /* default button dropdowns */
 
  .qoob-dropdown-content {
