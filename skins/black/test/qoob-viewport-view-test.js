@@ -23,7 +23,7 @@ var mockBlockDefaultTemplates = '<div class="block-blank full-page">' +
     '<div class="block-blank-inner">' +
     '<div class="block-blank-inner-text">' +
     '<i class="fa fa-reply"></i>' +
-    '<div class="blank-text">This is blank page, you can click on block preview to add block</div>' +
+    '<div class="blank-text">This is blank page, you can click on block preview to add a block</div>' +
     '</div>' +
     '</div>' +
     '</div>';

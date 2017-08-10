@@ -8,7 +8,7 @@ var QoobFieldsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobFieldsView.prototype */
     {
         tagName: "div",
-        className: "settings-block",
+        className: "settings-block-items",
         /**
          * View settings
          * @class SettingsView

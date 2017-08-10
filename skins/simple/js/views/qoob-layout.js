@@ -1,4 +1,4 @@
-/*global QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView*/
+/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView*/
 /**
  * Create qoob view
  *
@@ -18,6 +18,11 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         initialize: function(options) {
             this.storage = options.storage;
             this.controller = options.controller;
+            this.sidebar = new QoobSidebarView({
+                "model": this.model,
+                "storage": this.storage,
+                "controller": this.controller
+            });
             this.menu = new QoobMenuView({
                 "model": this.model,
                 "storage": this.storage,
@@ -49,34 +54,33 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         render: function() {
             //FIXME: this.storage => this.model
-            this.$el.html([this.toolbar.render().el, this.editModeButton.render().el, this.menu.render().el, this.viewPort.render().el, this.ImportExport.render().el]);
-            this.editModeButton.hide();
+
+            this.sidebar.$el.html([this.toolbar.render().el, this.menu.render().el]);
+
+            this.$el.html([this.sidebar.render().el, this.viewPort.render().el, this.ImportExport.render().el, this.editModeButton.render().el]);
+            // this.editModeButton.hide();
             return this;
         },
         resize: function() {
-            this.menu.resize();
+            this.sidebar.resize();
             this.viewPort.resize();
         },
         setPreviewMode: function() {
-            this.toolbar.setPreviewMode();
             this.editModeButton.setPreviewMode();
-            this.menu.setPreviewMode();
+            this.sidebar.setPreviewMode();
             this.viewPort.setPreviewMode();
             this.resize();
         },
         setEditMode: function() {
-            this.toolbar.setEditMode();
             this.editModeButton.setEditMode();
             this.menu.setEditMode();
             this.viewPort.setEditMode();
             this.resize();
         },
         setDeviceMode: function(mode) {
-            this.toolbar.setDeviceMode(mode);
             this.viewPort.setDeviceMode(mode);
         },
         startEditBlock: function(blockId) {
-            this.toolbar.startEditBlock();
             this.menu.startEditBlock(blockId);
             this.viewPort.startEditBlock(blockId);
         },

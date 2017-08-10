@@ -1,4 +1,4 @@
-/*global QoobUtils, QoobFieldsView*/
+/*global QoobUtils, QoobFieldsView, html2canvas*/
 /**
  * Create view save template
  *
@@ -16,20 +16,15 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             "label": "Title",
             "type": "text",
             "placeholder": "Enter name template"
-        }, {
-            "name": "image",
-            "label": "Image",
-            "type": "image"
         }],
         defaults: {
             "title": "",
             "image": ""
         },
-        id: "save-template",
         attributes: function() {
             return {
-                'class': "save-template settings",
-                'data-side-id': "save-template"
+                'data-side-id': "save-template",
+                'class': "save-template settings"
             };
         },
         /**
@@ -56,28 +51,44 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             var dataView = {
                 'id': newId,
                 'title': this.settingsModel.get('title'),
-                'image': this.settingsModel.get('image')
+                'image': null
             };
 
             elem.addClass('active');
-            this.controller.createPageTemplate(dataView, function(error) {
-                elem.removeClass('active');
-                if (error === null) {
-                    self.$el.find('.save-template-settings').addClass('show-notice');
-                    self.$el.find('.save-template-settings .error-block').hide();
-                    self.settingsModel.set('image', '');
-                    self.settingsModel.set('title', '');
-                    self.$el.find('.input-text').removeClass('error');
-                } else {
-                    if (error.title) {
-                        self.$el.find('.input-text').addClass('error');
-                    }
-                    if (error.blocks) {
-                        self.$el.find('.save-template-settings .error-block').show();
-                    }
 
-                }
+            this.controller.layout.viewPort.getIframeContents().scrollTop(0);
+
+            html2canvas(this.controller.layout.viewPort.getIframeContents().find('body'), {scale: 2}).then(function(canvas) {
+                var extraCanvas = document.createElement("canvas");
+                extraCanvas.setAttribute('width',254);
+                extraCanvas.setAttribute('height',272);
+                var ctx = extraCanvas.getContext('2d');
+                ctx.drawImage(canvas,0,0,canvas.width, canvas.height,0,0,254,272);
+                var dataURL = extraCanvas.toDataURL();
+                dataView['image'] = dataURL;
+
+                self.controller.createPageTemplate(dataView, function(error) {
+                    elem.removeClass('active');
+                    if (error === null) {
+                        self.$el.find('.save-template-settings').addClass('show-notice');
+                        self.$el.find('.save-template-settings .error-block').hide();
+                        self.settingsModel.set('image', '');
+                        self.settingsModel.set('title', '');
+                        self.$el.find('.input-text').removeClass('error');
+                    } else {
+                        if (error.title) {
+                            self.$el.find('.input-text').addClass('error');
+                        }
+                        if (error.blocks) {
+                            self.$el.find('.save-template-settings .error-block').show();
+                        }
+
+                    }
+                });
             });
+
+
+
         },
         /**
          * Render settings
@@ -108,43 +119,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             this.$el.html(_.template(this.storage.getSkinTemplate('menu-more-preview'))(data)).find('.settings-blocks-full').prepend(this.settingsView.render().el);
 
-            this.afterRender();
 
             return this;
-        },
-        afterRender: function() {
-            var self = this,
-                counter = 0,
-                fields = this.settingsView.fields;
-
-            this.$el.on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
-                    evt.preventDefault();
-                    evt.stopPropagation();
-                })
-                .on('dragenter', function() {
-                    counter++;
-                    if (counter === 1) {
-                        for (var i = 0; i < fields.length; i++) {
-                            fields[i].$el.trigger('global_drag_start');
-                        }
-                        self.$el.addClass('overlay');
-                    }
-                })
-                .on('dragleave', function() {
-                    counter--;
-                    if (counter === 0) {
-                        for (var i = 0; i < fields.length; i++) {
-                            fields[i].$el.trigger('global_drag_stop');
-                        }
-                        self.$el.removeClass('overlay');
-                    }
-                })
-                .on('drop', function() {
-                    for (var i = 0; i < fields.length; i++) {
-                        fields[i].$el.trigger('global_drag_stop');
-                    }
-                    self.$el.removeClass('overlay');
-                    counter = 0;
-                });
-        },
+        }
     });

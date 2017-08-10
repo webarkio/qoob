@@ -1,10 +1,7 @@
 var Fields = Fields || {};
 Fields.accordion_item_expand = Backbone.View.extend(
 /** @lends Fields.accordion_item.prototype */{
-    className: "settings-item settings-accordion",
-    events: {
-        'click .cross-delete': 'deleteModel'
-    },
+    className: "field-accordion__settings",
     parentId: null,
     /**
      * View field accordion item
@@ -37,13 +34,14 @@ Fields.accordion_item_expand = Backbone.View.extend(
                     "image": settingsView.model.get('image'),
                     "title": settingsView.model.get('title')
                 };
-        this.listenTo(this.model, 'change', function () {
-            this.$el.find("h3 span.text").first().html(this.model.get('title'));
-            this.$el.find("h3 span.preview_img img").first().prop('src', this.model.get('image'));
-        });
 
+        this.listenTo(this.model, 'change', function () {
+            this.$el.find(".title-item").first().html(this.model.get('title'));
+            this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
+        });
+        
         items.push(this.tpl(htmldata));
-        items.push(settingsView.render().$el.append('<div class="cross-delete expand"></div>'));
+        items.push(settingsView.render().$el);
 
         if (typeof (this.settings.show) == "undefined" || this.settings.show(this.model)) {
             this.$el.html(items);

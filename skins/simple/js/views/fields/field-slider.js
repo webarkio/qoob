@@ -1,6 +1,7 @@
 var Fields = Fields || {};
 Fields.slider = QoobFieldView.extend(
 /** @lends Fields.slider.prototype */{
+    className: 'field-slider field-group',
     events: {
         'change input': 'changeInput'
     },
@@ -22,7 +23,9 @@ Fields.slider = QoobFieldView.extend(
             "sizeId" : _.uniqueId('size'),
             "label" : this.settings.label,
             "name" : this.settings.name,
-            "value" : this.getValue()
+            "min" : this.settings.min || 0,
+            "max" : this.settings.max || 100,
+            "value" : this.getValue() || 0
         };
         
         this.$el.html(_.template(this.storage.getSkinTemplate('field-slider-preview'))(htmldata));

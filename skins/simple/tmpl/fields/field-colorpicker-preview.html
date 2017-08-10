@@ -1,11 +1,17 @@
-<div class="title">
-    <%= label %>
-</div>
-<input type="text" class="input-text colorpicker-input" name="<%= name %>" value="<%= value %>" style="background-color: <%= value %>">
+<% if (label){ %>
+	<div class="field-color-picker__title">
+		<%= label %>
+	</div>
+<% } %>
+<input type="text" class="field-color-picker__input input-text colorpicker-input" name="<%= name %>" value="<%= value %>" style="background-color: <%= value %>; color: <%= inputColor %>;">
 <% if (colors){ %>
-	<div class="other-colors">
-	    <% _.each( colors, function( color ){ %>
-	        <div class="other-color theme-colors" data-color="<%= color %>" style="background-color: <%= color %>">
+	<div class="field-color-picker__colors-list other-colors">
+	    <% _.each( colors, function( color , index){ %>
+			<% if (index !== 0 && index % 6 === 0 ) { %>
+				</div>
+				<div class="field-color-picker__colors-list other-colors">
+			<% } %>
+	        <div class="field-color-picker__color other-color theme-colors" data-color="<%= color %>" style="background-color: <%= color %>">
 	            <span></span>
 	        </div>
 	    <% }); %>

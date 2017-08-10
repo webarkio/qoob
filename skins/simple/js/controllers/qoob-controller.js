@@ -10,6 +10,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     index: function() {
         this.layout.menu.showIndex();
         this.layout.stopEditBlock();
+
     },
     showGroup: function(group) {
         this.layout.menu.showGroup(group);
@@ -96,8 +97,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     showSavePageTemplate: function() {
         this.layout.menu.rotateForward('save-template');
         this.layout.menu.hideNotice();
-        // Deprecated
-        // this.layout.toolbar.logoRotation('side-90');
         this.layout.stopEditBlock();
     },
     addNewBlock: function(lib, block, afterId) {
@@ -162,14 +161,17 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     },
     setInnerSettingsView: function(view) {
         var name = view.$el.data('side-id');
+
         //Add view to the qoob side
         if (!!this.layout.menu.settingsViewStorage[name]) {
             this.deleteInnerSettingsView(name);
         }
         this.layout.menu.addView(view);
-        this.layout.menu.rotateForward(name, function() {
-            view.$el.trigger('shown');
-        });
+        this.layout.menu.showSide('left', name);
+        // this.layout.menu.rotateForward(name, function() {
+        //     view.$el.trigger('shown');
+        // });
+        view.$el.trigger('shown');
         this.layout.menu.settingsViewStorage[name] = view;
     },
     deleteInnerSettingsView: function(name) {

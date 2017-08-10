@@ -6,11 +6,13 @@
 var QoobMenuGroupsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuGroupsView.prototype */
     {
-        id: "catalog-groups",
         attributes: function() {
             return {
                 'data-side-id': 'catalog-groups'
             };
+        },
+        events: {
+            'click .group-list__link-active': 'clickLinkGroupActive'
         },
         /**
          * View menu groups
@@ -23,16 +25,21 @@ var QoobMenuGroupsView = Backbone.View.extend( // eslint-disable-line no-unused-
             this.groups = options.groups;
             this.controller = options.controller;
         },
+        clickLinkGroupActive: function(evt) {
+            evt.preventDefault();
+            $(evt.currentTarget).removeClass('group-list__link-active');
+            this.controller.navigate('index', {
+                trigger: true,
+                replace: true
+            });
+        },
         /**
          * Render menu groups
          * @returns {Object}
          */
         render: function() {
             var data = {
-                "groups_arr": this.groups,
-                "libs": this.storage.librariesData,
-                "curLib": this.storage.currentLib,
-                "all_themes": this.storage.__('all_libs', 'All Libs')
+                "groups_arr": this.groups
             };
 
             this.$el.html(_.template(this.storage.getSkinTemplate('menu-groups-preview'))(data));

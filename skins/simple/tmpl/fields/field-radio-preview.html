@@ -1,0 +1,20 @@
+<div class="radio__container">
+<% if (label){ %>
+    <span class="radio__title field-label"><%= label %></span>
+<% } %>
+  <ul class="radio__list">
+<% _.each( options, function( option ){ %>
+  <li class="radio__item">
+    <input class="radio__input" type="radio" id="<%= option.id %>" name="<%= name %>" <% if ( current === option.id ){ %> checked <% } %> >
+    <label class="radio__label" for="<%= option.id %>">
+        <% if (option.val.length > 35) { %>
+           <%= option.val.substring(0, 35) %>...
+        <% } else { %>
+           <%= option.val %>
+        <% } %>
+    </label>
+    <div class="radio__check"></div>
+  </li>
+<% }); %>
+</ul>
+</div>

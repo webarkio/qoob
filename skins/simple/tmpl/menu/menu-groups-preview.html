@@ -1,26 +1,10 @@
-<div class="<% if(!libs) { %>empty <% } %>form-group lib-select">
-    <select class="form-control" id="lib-select">
-        <option value="all" selected><%= all_themes %></option>
-        <% if(libs) { %>
-            <% for (var i = 0; i < libs.length; i++) { %>
-                <option value="<%= libs[i].name %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
-                    <% if (libs[i].name.length > 26) { %>
-                        <%= libs[i].name.substring(0, 26) %>...
-                    <% } else { %>
-                        <%= libs[i].name %>
-                    <% } %>
-                </option>
-            <% } %>
-        <% } %>
-    </select>
-</div>
-<ul class="catalog-list">
+<ul class="catalog-list group-list">
     <% if(groups_arr) { %>
         <% for (var i = 0; i < groups_arr.length; i++) { %>
             <% var group = groups_arr[i]; %>
             <% var group_id = group.id.replace(/\s+/g, ''); %>
-            <li class="<%= group.libs.join(' ') %>">
-                <a href="#groups/<%= group_id %>">
+            <li class="group-list__item">
+                <a href="#groups/<%= group_id %>" class="group-list__link" data-group-id="<%= group_id %>">
                 <% if (group.label){ %> 
                     <%= group.label %> 
                 <% } else { %> 

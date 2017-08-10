@@ -1,30 +1,31 @@
-<div class="control-buttons">
-    <button class="button preview-mode">
-        <%= preview %>
-    </button>
-    <div class="dropdown devices">
-        <button class="button dropdown-toggle" type="button" id="devices" data-toggle="dropdown"><%= devices %></button>
-        <ul class="dropdown-menu" aria-labelledby="devices">
-            <li><a name="pc" class="pc device-mode" href="#"><%= desktop %></a></li>
-            <li><a name="tablet-vertical" class="tablet-vertical device-mode" href="#"><%= tablet %></a></li>
-            <li><a name="tablet-horizontal" class="tablet-horizontal device-mode" href="#"><%= rotate %></a></li>
-            <li><a name="phone-vertical" class="phone-vertical device-mode" href="#"><%= phone %></a></li>
-            <li><a name="phone-horizontal" class="phone-horizontal device-mode" href="#"><%= rotate %></a></li>
-        </ul>
+<div class="clearfix">
+    <div class="libraries">
+        <select class="lib-select <% if(!libs) { %>disabled <% } %>qoob-select-item">
+            <option value="all" selected><%= allThemes %></option>
+            <% if(libs) { %>
+                <% for (var i = 0; i < libs.length; i++) { %>
+                    <option value="<%= libs[i].name %>" data-title="<% if (libs[i].name.length > 14) { %><%= libs[i].name.substring(0, 14) %>...<% } else { %><%= libs[i].name %><% } %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
+                        <% if (libs[i].name.length > 26) { %><%= libs[i].name.substring(0, 26) %>...<% } else { %><%= libs[i].name %><% } %>
+                    </option>
+                <% } %>
+            <% } %>
+        </select>
     </div>
-    <button class="button save"><span class="text"><%= save %></span>
-        <span class="clock">
-            <span class="minutes-container"><span class="minutes"></span></span>
-        <span class="seconds-container"><span class="seconds"></span></span>
-        </span>
-    </button>
-    <div class="dropdown more">
-        <button class="dropdown-toggle button" type="button" id="more" data-toggle="dropdown"><%= more %></button>        
-        <ul class="dropdown-menu" aria-labelledby="more">
+    <div class="qoob-dropdown qoob-dropdown-more">
+        <button class="qoob-dropdown-toggle" type="button">
+            <div class="dot">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>        
+        <ul class="qoob-dropdown-content">
             <li>
-                <div class="autosave">
-                    <label class="checkbox-sb">
-                        <input type="checkbox" class="autosave-checkbox"><span></span><em><%= autosave %></em>
+                <div class="autosave clearfix">
+                    <div class="autosave-item-name"><%= autosave %></div>
+                    <label class="autosave-item-switch">
+                        <input type="checkbox" class="autosave-checkbox">
+                        <span class="slider"></span>
                     </label>
                 </div>
             </li>
@@ -34,7 +35,18 @@
                 <% }); %>
             <% } %>
         </ul>
-        
     </div>
-    <button class="exit button"><%= close %></button>
+</div>
+
+<div class="control-buttons clearfix">
+    <button class="button backward"></button>
+    <button class="button view-preview"></button>
+    <button class="button save" title="<%= save %>"></button>
+    <div class="preview-modes">
+        <select class="qoob-select-item">
+            <option value="pc" data-icon="fa fa-desktop"><%= desktop %></option>
+            <option value="tablet" data-icon="fa fa-tablet"><%= tablet %></option>
+            <option value="phone" data-icon="fa fa-mobile"><%= phone %></option>
+        </select>
+    </div>
 </div>

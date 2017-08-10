@@ -60,7 +60,6 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
             "save": this.storage.__('save', 'Save'),
             "exit": this.storage.__('exit', 'Exit'),
             "more": this.storage.__('more', 'More'),
-            "save_template": this.storage.__('save_template', 'Save as template'),
             "customMenu": null
         };
 
