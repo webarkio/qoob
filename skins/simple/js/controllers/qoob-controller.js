@@ -166,7 +166,8 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         if (!!this.layout.menu.settingsViewStorage[name]) {
             this.deleteInnerSettingsView(name);
         }
-        this.layout.menu.addView(view);
+        console.log(view);
+        this.layout.menu.addView(view, 'left');
         this.layout.menu.showSide('left', name);
         // this.layout.menu.rotateForward(name, function() {
         //     view.$el.trigger('shown');

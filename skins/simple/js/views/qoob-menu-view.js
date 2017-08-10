@@ -164,7 +164,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * @param {String} side location
          */
         addView: function(view, side) {
-            console.log('view');
             this.menuViews.push(view);
             if (side === 'left' || side === 'right') {
                 this.$el.find('.qoob-menu-' + side + '-side').append(view.render().el);

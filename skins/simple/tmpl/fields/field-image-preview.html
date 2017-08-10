@@ -16,6 +16,7 @@
 
 <div class="media-center clearfix">
     <button type="button" class="show-media-center media-center__button">
+        <i class="media-center__button_image-icon fa fa-file-image-o"></i>
         <%= media_center %>
     </button>
 
@@ -28,15 +29,6 @@
             </div>
         </button>
         <ul class="qoob-dropdown-content">
-            <li>
-                <div class="autosave clearfix">
-                    <div class="autosave-item-name">dfffffffffffdfsfsd</div>
-                    <label class="autosave-item-switch">
-                        <input type="checkbox" class="autosave-checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </li>
             <% _.each( customItems, function( item ){ %>
                 <li>
                     <a href="#" data-id="<%- item.id %>" class="action">

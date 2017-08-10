@@ -1,290 +1,373 @@
 /* Edit admin page */
 
- body {
-     margin: 0;
-     background-color: #ffffff;
-     overflow: hidden;
- }
+body {
+    margin: 0;
+    background-color: #ffffff;
+    overflow: hidden;
+}
 
- @font-face {
-     font-family: 'robotobold';
-     src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
-     src: url('../fonts/roboto/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.ttf') format('truetype'), url('../fonts/roboto/Roboto-Bold-webfont.svg#robotobold') format('svg');
-     font-weight: normal;
-     font-style: normal;
- }
+@font-face {
+    font-family: 'robotobold';
+    src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.ttf') format('truetype'), url('../fonts/roboto/Roboto-Bold-webfont.svg#robotobold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
- @font-face {
-     font-family: 'robotoregular';
-     src: url('../fonts/roboto/Roboto-Regular.eot');
-     src: url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'), url('../fonts/roboto/Roboto-Regular.svg#robotoregular') format('svg');
-     font-weight: normal;
-     font-style: normal;
- }
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../fonts/roboto/Roboto-Regular.eot');
+    src: url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'), url('../fonts/roboto/Roboto-Regular.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
- @font-face {
-     font-family: 'robotolight';
-     src: url('../fonts/roboto/Roboto-Regular.eot');
-     src: url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'), url('../fonts/roboto/Roboto-Regular.svg#robotoregular') format('svg');
-     font-weight: normal;
-     font-style: normal;
- }
+@font-face {
+    font-family: 'robotolight';
+    src: url('../fonts/roboto/Roboto-Regular.eot');
+    src: url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'), url('../fonts/roboto/Roboto-Regular.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
- @font-face {
-     font-family: 'robotoblack';
-     src: url('../fonts/roboto/Roboto-Black.eot');
-     src: url('../fonts/roboto/Roboto-Black.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Black.woff') format('woff'), url('../fonts/roboto/Roboto-Black.ttf') format('truetype'), url('../fonts/roboto/Roboto-Black.svg#robotoblack') format('svg');
-     font-weight: normal;
-     font-style: normal;
- }
+@font-face {
+    font-family: 'robotoblack';
+    src: url('../fonts/roboto/Roboto-Black.eot');
+    src: url('../fonts/roboto/Roboto-Black.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Black.woff') format('woff'), url('../fonts/roboto/Roboto-Black.ttf') format('truetype'), url('../fonts/roboto/Roboto-Black.svg#robotoblack') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
- @font-face {
-     font-family: 'robotolight';
-     src: url('../fonts/roboto/Roboto-Light.eot');
-     src: url('../fonts/roboto/Roboto-Light.eot?#iefix') format('embedded-opentype'),
-     url('../fonts/roboto/Roboto-Light.woff') format('woff'),
-     url('../fonts/roboto/Roboto-Light.ttf') format('truetype'),
-     url('../fonts/roboto/Roboto-Light.svg#robotolight') format('svg');
-     font-weight: normal;
-     font-style: normal;
- }
- /* HTML5 display definitions
+@font-face {
+    font-family: 'robotolight';
+    src: url('../fonts/roboto/Roboto-Light.eot');
+    src: url('../fonts/roboto/Roboto-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/roboto/Roboto-Light.woff') format('woff'),
+    url('../fonts/roboto/Roboto-Light.ttf') format('truetype'),
+    url('../fonts/roboto/Roboto-Light.svg#robotolight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/* HTML5 display definitions
    ========================================================================== */
- /**
+
+
+/**
  * Correct `block` display not defined for any HTML5 element in IE 8/9.
  * Correct `block` display not defined for `details` or `summary` in IE 10/11
  * and Firefox.
  * Correct `block` display not defined for `main` in IE 11.
  */
 
- article,
- aside,
- details,
- figcaption,
- figure,
- footer,
- header,
- hgroup,
- main,
- menu,
- nav,
- section,
- summary {
-     display: block;
- }
- /**
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+
+
+/**
  * 1. Correct `inline-block` display not defined in IE 8/9.
  * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
  */
 
- audio,
- canvas,
- progress,
- video {
-     display: inline-block;
-     /* 1 */
-     vertical-align: baseline;
-     /* 2 */
- }
- /**
+audio,
+canvas,
+progress,
+video {
+    display: inline-block;
+    /* 1 */
+    vertical-align: baseline;
+    /* 2 */
+}
+
+
+
+/**
  * Prevent modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS 5 devices.
  */
 
- audio:not([controls]) {
-     display: none;
-     height: 0;
- }
- /**
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+
+
+/**
  * Address `[hidden]` styling not present in IE 8/9/10.
  * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
  */
 
- [hidden],
- template {
-     display: none;
- }
- /* Links
+[hidden],
+template {
+    display: none;
+}
+
+
+
+/* Links
    ========================================================================== */
- /**
+
+
+/**
  * Remove the gray background color from active links in IE 10.
  */
 
- a {
-     background-color: transparent;
- }
- /**
+a {
+    background-color: transparent;
+}
+
+
+
+/**
  * Improve readability of focused elements when they are also in an
  * active/hover state.
  */
 
- a:active,
- a:hover {
-     outline: 0;
- }
- /* Text-level semantics
+a:active,
+a:hover {
+    outline: 0;
+}
+
+
+
+/* Text-level semantics
    ========================================================================== */
- /**
+
+
+/**
  * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
  */
 
- abbr[title] {
-     border-bottom: 1px dotted;
- }
- /**
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+
+
+/**
  * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
  */
 
- b,
- strong {
-     font-weight: bold;
- }
- /**
+b,
+strong {
+    font-weight: bold;
+}
+
+
+
+/**
  * Address styling not present in Safari and Chrome.
  */
 
- dfn {
-     font-style: italic;
- }
- /**
+dfn {
+    font-style: italic;
+}
+
+
+
+/**
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
  */
 
- h1 {
-     font-size: 2em;
-     margin: 0.67em 0;
- }
- /**
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+
+
+/**
  * Address styling not present in IE 8/9.
  */
 
- mark {
-     background: #ff0;
-     color: #000;
- }
- /**
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+
+
+/**
  * Address inconsistent and variable font size in all browsers.
  */
 
- small {
-     font-size: 80%;
- }
- /**
+small {
+    font-size: 80%;
+}
+
+
+
+/**
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
 
- sub,
- sup {
-     font-size: 75%;
-     line-height: 0;
-     position: relative;
-     vertical-align: baseline;
- }
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
 
- sup {
-     top: -0.5em;
- }
+sup {
+    top: -0.5em;
+}
 
- sub {
-     bottom: -0.25em;
- }
- /* Embedded content
+sub {
+    bottom: -0.25em;
+}
+
+
+
+/* Embedded content
    ========================================================================== */
- /**
+
+
+/**
  * Remove border when inside `a` element in IE 8/9/10.
  */
 
- img {
-     border: 0;
- }
- /**
+img {
+    border: 0;
+}
+
+
+
+/**
  * Correct overflow not hidden in IE 9/10/11.
  */
 
- svg:not(:root) {
-     overflow: hidden;
- }
- /* Grouping content
+svg:not(:root) {
+    overflow: hidden;
+}
+
+
+
+/* Grouping content
    ========================================================================== */
- /**
+
+
+/**
  * Address margin not present in IE 8/9 and Safari.
  */
 
- figure {
-     margin: 1em 40px;
- }
- /**
+figure {
+    margin: 1em 40px;
+}
+
+
+
+/**
  * Address differences between Firefox and other browsers.
  */
 
- hr {
-     -webkit-box-sizing: content-box;
-     box-sizing: content-box;
-     height: 0;
- }
- /**
+hr {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+}
+
+
+
+/**
  * Contain overflow in all browsers.
  */
 
- pre {
-     overflow: auto;
- }
- /**
+pre {
+    overflow: auto;
+}
+
+
+
+/**
  * Address odd `em`-unit font size rendering in all browsers.
  */
 
- code,
- kbd,
- pre,
- samp {
-     font-family: monospace, monospace;
-     font-size: 1em;
- }
- /* Forms
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+
+
+/* Forms
    ========================================================================== */
- /**
+
+
+/**
  * Known limitation: by default, Chrome and Safari on OS X allow very limited
  * styling of `select`, unless a `border` property is set.
  */
- /**
+
+
+/**
  * 1. Correct color not being inherited.
  *    Known issue: affects color of disabled elements.
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
 
- button,
- input,
- optgroup,
- select,
- textarea {
-     color: inherit;
-     /* 1 */
-     font: inherit;
-     /* 2 */
-     margin: 0;
-     /* 3 */
- }
- /**
+button,
+input,
+optgroup,
+select,
+textarea {
+    color: inherit;
+    /* 1 */
+    font: inherit;
+    /* 2 */
+    margin: 0;
+    /* 3 */
+}
+
+
+
+/**
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
 
- button {
-     overflow: visible;
- }
- /**
+button {
+    overflow: visible;
+}
+
+
+
+/**
  * Address inconsistent `text-transform` inheritance for `button` and `select`.
  * All other form control elements do not inherit `text-transform` values.
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
 
- button,
- select {
-     text-transform: none;
- }
- /**
+button,
+select {
+    text-transform: none;
+}
+
+
+
+/**
  * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
  *    and `video` controls.
  * 2. Correct inability to style clickable `input` types in iOS.
@@ -292,41 +375,53 @@
  *    `input` and others.
  */
 
- button,
- html input[type="button"],
- input[type="reset"],
- input[type="submit"] {
-     -webkit-appearance: button;
-     /* 2 */
-     cursor: pointer;
-     /* 3 */
- }
- /**
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    /* 2 */
+    cursor: pointer;
+    /* 3 */
+}
+
+
+
+/**
  * Re-set default cursor for disabled elements.
  */
 
- button[disabled],
- html input[disabled] {
-     cursor: default;
- }
- /**
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+
+
+/**
  * Remove inner padding and border in Firefox 4+.
  */
 
- button::-moz-focus-inner,
- input::-moz-focus-inner {
-     border: 0;
-     padding: 0;
- }
- /**
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+
+
+/**
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
  */
 
- input {
-     line-height: normal;
- }
- /**
+input {
+    line-height: normal;
+}
+
+
+
+/**
  * It's recommended that you don't attempt to style these elements.
  * Firefox's implementation doesn't respect box-sizing, padding, or width.
  *
@@ -334,328 +429,372 @@
  * 2. Remove excess padding in IE 8/9/10.
  */
 
- input[type="checkbox"],
- input[type="radio"] {
-     -webkit-box-sizing: border-box;
-     box-sizing: border-box;
-     /* 1 */
-     padding: 0;
-     /* 2 */
- }
- /**
+input[type="checkbox"],
+input[type="radio"] {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    /* 1 */
+    padding: 0;
+    /* 2 */
+}
+
+
+
+/**
  * Fix the cursor style for Chrome's increment/decrement buttons. For certain
  * `font-size` values of the `input`, it causes the cursor style of the
  * decrement button to change from `default` to `text`.
  */
 
- input[type="number"]::-webkit-inner-spin-button,
- input[type="number"]::-webkit-outer-spin-button {
-     height: auto;
- }
- /**
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+
+
+/**
  * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
  * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
  */
 
- input[type="search"] {
-     -webkit-appearance: textfield;
-     /* 1 */
-     -webkit-box-sizing: content-box;
-     box-sizing: content-box;
-     /* 2 */
- }
- /**
+input[type="search"] {
+    -webkit-appearance: textfield;
+    /* 1 */
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    /* 2 */
+}
+
+
+
+/**
  * Remove inner padding and search cancel button in Safari and Chrome on OS X.
  * Safari (but not Chrome) clips the cancel button when the search input has
  * padding (and `textfield` appearance).
  */
 
- input[type="search"]::-webkit-search-cancel-button,
- input[type="search"]::-webkit-search-decoration {
-     -webkit-appearance: none;
- }
- /**
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+
+
+/**
  * Define consistent border, margin, and padding.
  */
 
- fieldset {
-     border: 1px solid #c0c0c0;
-     margin: 0 2px;
-     padding: 0.35em 0.625em 0.75em;
- }
- /**
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+
+
+/**
  * 1. Correct `color` not being inherited in IE 8/9/10/11.
  * 2. Remove padding so people aren't caught out if they zero out fieldsets.
  */
 
- legend {
-     border: 0;
-     /* 1 */
-     padding: 0;
-     /* 2 */
- }
- /**
+legend {
+    border: 0;
+    /* 1 */
+    padding: 0;
+    /* 2 */
+}
+
+
+
+/**
  * Remove default vertical scrollbar in IE 8/9/10/11.
  */
 
- textarea {
-     overflow: auto;
- }
- /**
+textarea {
+    overflow: auto;
+}
+
+
+
+/**
  * Don't inherit the `font-weight` (applied by a rule above).
  * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
  */
 
- optgroup {
-     font-weight: bold;
- }
- /* Tables
+optgroup {
+    font-weight: bold;
+}
+
+
+
+/* Tables
    ========================================================================== */
- /**
+
+
+/**
  * Remove most spacing between table cells.
  */
 
- table {
-     border-collapse: collapse;
-     border-spacing: 0;
- }
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
- td,
- th {
-     padding: 0;
- }
+td,
+th {
+    padding: 0;
+}
 
- html {
-     -webkit-box-sizing: border-box;
-     box-sizing: border-box;
- }
+html {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
- *,
- *:before,
- *:after {
-     -webkit-box-sizing: inherit;
-     box-sizing: inherit;
- }
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+}
 
- ul:not(.browser-default) {
-     padding-left: 0;
-     list-style-type: none;
- }
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
 
- ul:not(.browser-default) li {
-     list-style-type: none;
- }
+ul:not(.browser-default) li {
+    list-style-type: none;
+}
 
- a {
-     color: rgb(1, 8, 51);
-     text-decoration: none;
-     -webkit-tap-highlight-color: transparent;
- }
+a {
+    color: rgb(1, 8, 51);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
 
- .clearfix:after {
-     display: block;
-     content: "";
-     clear: both;
- }
+.clearfix:after {
+    display: block;
+    content: "";
+    clear: both;
+}
 
- #qoob {
-     width: 100%;
-     font-family: 'robotoregular';
-     color: rgb(1, 8, 51);
- }
+#qoob {
+    width: 100%;
+    font-family: 'robotoregular';
+    color: rgb(1, 8, 51);
+}
 
- #qoob-sidebar {
-     position: fixed;
-     width: 264px;
-     left: 0;
-     top: 0;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
-     z-index: 2;
-     letter-spacing: 0.25px;
- }
+#qoob-sidebar {
+    position: fixed;
+    width: 264px;
+    left: 0;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    letter-spacing: 0.25px;
+}
 
- #qoob-sidebar.hide-sidebar {
-     transition: all 0.3s linear;
-     left: -264px;
- }
+#qoob-sidebar.hide-sidebar {
+    transition: all 0.3s linear;
+    left: -264px;
+}
 
- #qoob-toolbar {
-     top: 0;
-     left: 0;
-     padding-right: 6px;
-     padding-left: 6px;
-     padding-bottom: 12px;
-     padding-top: 12px;
-     z-index: 10;
-     position: relative;
-     background-color: #fff;
- }
+#qoob-toolbar {
+    top: 0;
+    left: 0;
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-bottom: 12px;
+    padding-top: 12px;
+    z-index: 10;
+    position: relative;
+    background-color: #fff;
+}
 
- #qoob-menu {
-     position: relative;
-     height: 100%;
- }
+#qoob-menu {
+    position: relative;
+    height: 100%;
+}
 
- #qoob-viewport {
-     right: 0;
-     width: 100%;
-     background-color: #fff;
-     position: absolute;
-     vertical-align: top;
-     z-index: 1;
- }
+#qoob-viewport {
+    right: 0;
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    vertical-align: top;
+    z-index: 1;
+}
 
- #qoob-iframe {
-     border: none;
-     margin: 0 auto;
-     display: block;
-     box-shadow: 0px 1px 15.6px 4.4px rgba(0, 0, 0, 0.3);
- }
- /* group list */
+#qoob-iframe {
+    border: none;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0px 1px 15.6px 4.4px rgba(0, 0, 0, 0.3);
+}
 
- .group-list__item {
-     height: 50px;
- }
 
- .group-list__link {
-     display: block;
-     color: #010833;
-     padding-left: 47px;
-     height: 100%;
-     line-height: 50px;
- }
 
- .group-list__link:hover {
-     background-color: #ececec;
- }
+/* group list */
 
- .group-list__link-active,
- .group-list__link-active:hover {
-     background-color: #010833;
-     color: #fff;
- }
- /* end group list */
- /* default qoob select */
+.group-list__item {
+    height: 50px;
+}
 
- .qoob-select {
-     position: relative;
-     height: 100%;
- }
+.group-list__link {
+    display: block;
+    color: #010833;
+    padding-left: 47px;
+    height: 100%;
+    line-height: 50px;
+}
 
- .qoob-select select {
-     display: block;
-     position: absolute;
-     width: 0;
-     pointer-events: none;
-     height: 0;
-     top: 0;
-     left: 0;
-     opacity: 0;
- }
+.group-list__link:hover {
+    background-color: #ececec;
+}
 
- .qoob-select-dropdown {
-     display: none;
- }
+.group-list__link-active,
+.group-list__link-active:hover {
+    background-color: #010833;
+    color: #fff;
+}
 
- .qoob-select-dropdown {
-     position: absolute;
-     top: 0;
-     left: 0;
-     margin: 0;
- }
 
- .qoob-selected-value:focus {
-     outline: none;
- }
- /* end default qoob select */
- /* library select */
 
- .libraries {
-     float: left;
-     position: relative;
-     border-radius: 2px;
-     width: 188px;
-     height: 50px;
-     font-size: 16px;
-     font-family: "robotoblack";
- }
+/* end group list */
 
- #card .lib-select.disabled {}
 
- .libraries .qoob-selected-value {
-     position: absolute;
-     cursor: pointer;
-     width: 188px;
-     height: 50px;
-     padding-top: 18px;
-     padding-left: 18px;
-     background-color: rgb(236, 236, 236);
-     line-height: 1.12;
-     text-align: left;
- }
+/* default qoob select */
 
- .libraries .qoob-selected-value:before {
-     position: absolute;
-     right: 26px;
-     top: 16px;
-     width: 11px;
-     height: 7px;
-     display: block;
-     font-family: FontAwesome;
-     content: "\f078";
-     font-size: 14px;
-     line-height: 1;
- }
+.qoob-select {
+    position: relative;
+    height: 100%;
+}
 
- .libraries .qoob-select-dropdown {
-     border-radius: 2px;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
-     position: absolute;
-     left: 0;
-     top: 0;
-     width: 252px;
-     z-index: 1;
- }
+.qoob-select select {
+    display: block;
+    position: absolute;
+    width: 0;
+    pointer-events: none;
+    height: 0;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
 
- .libraries .qoob-select-dropdown .selected {
-     color: rgb(255, 255, 255);
-     background-color: rgb(1, 8, 51);
- }
+.qoob-select-dropdown {
+    display: none;
+}
 
- .libraries .qoob-select-dropdown .selected:before {
-     position: absolute;
-     right: 26px;
-     top: 16px;
-     width: 11px;
-     height: 7px;
-     display: block;
-     font-family: FontAwesome;
-     content: "\f077";
-     width: 11px;
-     height: 7px;
-     font-size: 14px;
-     line-height: 1;
- }
+.qoob-select-dropdown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+}
 
- .libraries .qoob-select-dropdown li {
-     cursor: pointer;
-     width: 252px;
-     height: 50px;
-     line-height: 52px;
-     padding-left: 18px;
-     text-align: left;
- }
+.qoob-selected-value:focus {
+    outline: none;
+}
 
- .libraries .qoob-select-dropdown li:not(.selected):hover {
-     background-color: rgb(236, 236, 236);
- }
- /* end library select */
+
+
+/* end default qoob select */
+
+
+/* library select */
+
+.libraries {
+    float: left;
+    position: relative;
+    border-radius: 2px;
+    width: 188px;
+    height: 50px;
+    font-size: 16px;
+    font-family: "robotoblack";
+}
+
+#card .lib-select.disabled {}
+
+.libraries .qoob-selected-value {
+    position: absolute;
+    cursor: pointer;
+    width: 188px;
+    height: 50px;
+    padding-top: 18px;
+    padding-left: 18px;
+    background-color: rgb(236, 236, 236);
+    line-height: 1.12;
+    text-align: left;
+}
+
+.libraries .qoob-selected-value:before {
+    position: absolute;
+    right: 26px;
+    top: 16px;
+    width: 11px;
+    height: 7px;
+    display: block;
+    font-family: "FontAwesome";
+    content: "\f078";
+    font-size: 14px;
+    line-height: 1;
+}
+
+.libraries .qoob-select-dropdown {
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 252px;
+    z-index: 1;
+}
+
+.libraries .qoob-select-dropdown .selected {
+    color: rgb(255, 255, 255);
+    background-color: rgb(1, 8, 51);
+}
+
+.libraries .qoob-select-dropdown .selected:before {
+    position: absolute;
+    right: 26px;
+    top: 16px;
+    width: 11px;
+    height: 7px;
+    display: block;
+    font-family: "FontAwesome";
+    content: "\f077";
+    width: 11px;
+    height: 7px;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.libraries .qoob-select-dropdown li {
+    cursor: pointer;
+    width: 252px;
+    height: 50px;
+    line-height: 52px;
+    padding-left: 18px;
+    text-align: left;
+}
+
+.libraries .qoob-select-dropdown li:not(.selected):hover {
+    background-color: rgb(236, 236, 236);
+}
+
+
+
+/* end library select */
+
 
 /* Default droppable zone
 ========================================================================== */
- .droppable-zone-full.ui-droppable {
+
+.droppable-zone-full.ui-droppable {
     position: absolute;
     width: 100%;
     height: 50px;
@@ -696,1177 +835,1311 @@
 .droppable-zone-full.ui-droppable-hover span {
     margin-top: -10px;
 }
+
+
+
 /* End Default droppable zone
 ========================================================================== */
- /* default button dropdowns */
 
- .qoob-dropdown-content {
-     display: none;
- }
 
+/* default button dropdowns */
 
- .qoob-dropdown .qoob-dropdown-toggle {
-     outline: none;
-     border: 1px solid transparent;
-     margin: 0;
-     padding: 0;
-     border-radius: 2px;
-     background-color: rgb(236, 236, 236);
-     width: 60px;
-     height: 50px;
- }
-
- .qoob-dropdown.active .qoob-dropdown-toggle {
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
- }
-
- .qoob-dropdown .dot {
-     position: relative;
-     height: 100%;
-     width: calc(100% - 4px);
- }
-
- .qoob-dropdown .dot span {
-     position: absolute;
-     width: 4px;
-     height: 4px;
-     border-radius: 50%;
-     background-color: rgb(1, 8, 51);
- }
-
- .qoob-dropdown .dot span:first-child {
-     transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-     top: 16px;
- }
-
- .qoob-dropdown.active .dot span:first-child {
-     transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-     left: 18px;
-     top: 23px;
- }
-
- .qoob-dropdown .dot span:nth-child(2) {
-     top: 23px;
- }
-
- .qoob-dropdown .dot span:nth-child(3) {
-     transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-     top: 30px;
- }
-
- .qoob-dropdown.active .dot span:nth-child(3) {
-     transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-     right: 15px;
-     top: 23px;
- }
-
- .qoob-dropdown .qoob-dropdown-content {
-     position: absolute;
-     top: 50px;
-     left: 0;
-     right: 0;
-     padding-left: 38px;
-     padding-right: 8px;
-     border-radius: 2px;
-     font-size: 16px;
-     font-family: 'robotoregular';
-     line-height: 1.2;
-     text-align: left;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
-     z-index: 3;
- }
-
- .qoob-dropdown .qoob-dropdown-content li {
-     line-height: 47px;
- }
-
- .qoob-dropdown .qoob-dropdown-content:before {
-     content: '';
-     display: block;
-     position: absolute;
-     top: -5px;
-     right: -2px;
-     width: 62px;
-     height: 5px;
-     background-color: rgb(255, 255, 255);
-     z-index: 1;
-     border-right: solid 2px #e6e6e6;
- }
- /* end default button dropdowns */
- /* button dropdowns */
-
- .qoob-dropdown-more {
-     float: right;
- }
-
- .qoob-dropdown-more .qoob-dropdown-content {
-     margin-right: 6px;
-     margin-left: 6px;
- }
- /* end button dropdowns */
- /* autosave */
-
- .autosave-item-name {
-     float: left;
- }
-
- .autosave-item-switch {
-     float: right;
-     position: relative;
-     display: inline-block;
-     width: 43px;
-     height: 26px;
-     margin-top: 10px;
- }
-
- .autosave-item-switch input {
-     display: none;
- }
-
- .autosave-item-switch .slider {
-     position: absolute;
-     cursor: pointer;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgb(255, 255, 255);
-     -webkit-transition: .4s;
-     transition: .4s;
-     border-radius: 13px;
-     border-width: 1.321px;
-     border-color: rgb(228, 228, 228);
-     border-style: solid;
- }
-
-
- .autosave-item-switch .slider:before {
-     position: absolute;
-     content: "";
-     width: 20px;
-     height: 20px;
-     left: 0px;
-     bottom: 2px;
-     background-color: rgb(255, 255, 255);
-     -webkit-transition: .4s;
-     transition: .4s;
-     border-radius: 50%;
-     box-shadow: -0.342px 0.94px 1.62px 1.38px rgba(0, 0, 0, 0.15);
- }
-
- .autosave-item-switch input:checked+.slider {
-     background-color: rgb(0, 206, 99);
- }
-
- .autosave-item-switch input:focus+.slider {
-     box-shadow: 0 0 1px #2196F3;
- }
-
- .autosave-item-switch input:checked+.slider:before {
-     box-shadow: none;
-     -webkit-transform: translateX(19px);
-     -ms-transform: translateX(19px);
-     transform: translateX(19px);
- }
- /* end autosave */
- /* control buttons */
-
- .control-buttons .button {
-     position: relative;
-     float: left;
-     width: 60px;
-     height: 50px;
-     border-radius: 2px;
-     background-color: rgb(236, 236, 236);
-     outline: none;
-     border: 1px solid transparent;
-     padding: 0;
-     margin-right: 4px;
- }
-
- .control-buttons .preview-modes {
-     float: left;
-     width: 60px;
-     height: 50px;
-     border-radius: 2px;
-     background-color: rgb(236, 236, 236);
- }
-
- .control-buttons .backward:before,
- .control-buttons .view-preview:before,
- .control-buttons .save:before {
-     font-family: FontAwesome;
-     position: absolute;
-     width: 100%;
-     left: 0;
-     font-size: 16px;
-     line-height: 1;
-     margin: 0 auto;
- }
-
- .control-buttons .backward:before {
-     content: "\f177";
-     top: 16px;
-     height: 8px;
- }
-
- .control-buttons .view-preview:before {
-     content: "\f06e";
-     top: 16px;
-     height: 12px;
- }
-
- .control-buttons .save:before {
-     content: "\f0c7";
-     top: 16px;
-     height: 15px;
- }
-
- .preview-modes .qoob-selected-value {
-     cursor: pointer;
-     text-align: center;
-     height: 100%;
- }
-
- .preview-modes .qoob-selected-value i {
-     position: relative;
-     top: 16px;
- }
-
- .preview-modes .qoob-select-dropdown {
-     border-radius: 2px;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
-     position: absolute;
-     left: 0;
-     top: 0;
-     width: 60px;
-     height: 149px;
-     z-index: 3;
- }
-
- .preview-modes .qoob-select-dropdown li {
-     text-align: center;
-     width: 60px;
-     height: 50px;
-     padding-top: 16px;
- }
-
- .preview-modes .qoob-select-dropdown li:hover {
-     background-color: rgb(236, 236, 236);
- }
- /* end control buttons */
- /* menu */
-
- .catalog-list {
-     margin: 0;
- }
-
- .qoob-menu-center {
-     height: 100%;
-     background-color: #fff;
-     position: relative;
-     z-index: 1;
- }
-
- .qoob-menu-left-side {
-     position: absolute;
-     transform: translate(-100%, 0);
-     transform: translate3d(-100%, 0, 0);
-     width: 264px;
-     height: 100%;
-     z-index: 4;
-     background-color: #fff;
-     transition: transform .3s linear;
- }
- /*FIXME*/
-
- .qoob-menu-left-side img {
-     max-width: 100%;
- }
-
- .qoob-menu-left-side.show-side {
-     transform: translate(0, 0);
-     transform: translate3d(0, 0, 0);
-     transition: transform .3s linear;
-     overflow: hidden;
- }
-
- .qoob-menu-right-side {
-     display: block;
-     position: absolute;
-     overflow-x: hidden;
-     left: 0;
-     top: -128px;
-     width: 230px;
-     height: 100%;
-     background-color: rgb(236, 236, 236);
-     box-shadow: inset 8px 0 8px -8px rgba(0, 0, 0, 0.3);
-     transition: left .3s linear;
- }
-
- .qoob-menu-right-side.show-side {
-     left: 264px;
-     transition: left .3s linear;
- }
-
- .preview-blocks {
-     margin-left: 6px;
-     margin-right: 6px;
-     margin-top: 12px;
- }
-
- .preview-block {
-     margin-bottom: 12px;
-     z-index: 10;
- }
-
- .preview-block img {
-     display: block;
-     /*width: 223px;*/
-     width: 100%;
-     border-style: solid;
-     border-width: 3px;
-     border-color: rgb(255, 255, 255);
-     border-radius: 2px;
-     background-color: rgb(255, 255, 255);
- }
-
- .preview-block-wrap {
-     display: none;
-     height: 100%;
-     overflow-y: scroll;
-     margin-right: -17px;
- }
- /* Detect Mac Safari 6.1 or newer, hide any straggling Chrome references */
-
- @media screen and (-webkit-max-device-pixel-ratio:1) and (min-color-index:0) {
-     .preview-block-wrap {
-         margin-right: -15px;
-     }
- }
- /* Detect Mac Firefox 25 or newer */
-
- @supports (-moz-osx-font-smoothing:auto) {
-     .preview-block-wrap {
-         margin-right: -15px;
-     }
- }
- /* Detect Edge */
-
- @supports (-ms-ime-align:auto) {
-     .preview-block-wrap {
-         margin-right: -12px;
-     }
- }
-
- .settings {
-     display: none;
- }
-
-
- .settings-blocks {
-     margin-top: 34px;
-     margin-bottom: 89px;
-     padding: 0 6px;
- }
-
- .settings-block-items>div:first-child {
-     margin-top: 0;
- }
-
- .side-item-show {
-     display: block;
-     height: calc(100% - 128px);
-     overflow-y: scroll;
-     margin-right: -17px;
-     position: relative;
- }
-
- @media screen and (-webkit-max-device-pixel-ratio:1) and (min-color-index:0) {
-     .side-item-show {
-         margin-right: -15px;
-     }
- }
- /* Detect Mac Firefox 25 or newer */
-
- @supports (-moz-osx-font-smoothing:auto) {
-     .side-item-show {
-         margin-right: -15px;
-     }
- }
- /* Detect Edge */
-
- @supports (-ms-ime-align:auto) {
-     .side-item-show {
-         margin-right: -12px;
-     }
- }
- /* end menu */
- /* qoob import/export modal window */
-
- #qoob-import-export-window {
-     display: none;
- }
- /* end qoob import/export modal window */
-
- .edit-mode-button {
-     display: none !important;
- }
- /* Move and delete buttons
-   ========================================================================== */
-
- .block-button {
-     overflow: hidden;
-     position: fixed;
-     bottom: 0;
-     width: 100%;
-     padding: 0 8px 149px 6px;
-     background: #fff;
- }
-
- .button-movedown,
- .button-moveup {
-     width: 93px;
-     height: 46px;
-     line-height: 46px;
-     border-radius: 2px;
-     background-color: rgb(236, 236, 236);
-     float: left;
-     cursor: pointer;
-     text-align: center;
- }
-
- .button-moveup {
-     margin-right: 2px;
- }
-
- .icon-moveup,
- .icon-movedown {
-     padding-right: 7px;
- }
-
- .delete-button-small {
-     width: 60px;
-     height: 46px;
-     border-radius: 2px;
-     background-color: rgb(236, 236, 236);
-     float: right;
-     line-height: 46px;
-     text-align: center;
-     cursor: pointer;
- }
- /* Fields common
-   ========================================================================== */
-
- .field-group {
-     margin-top: 44px;
- }
-
- .field-label {
-     font-size: 14px;
-     font-family: "robotolight";
-     color: rgb(0, 0, 0);
-     display: block;
-     text-align: left;
-     padding-left: 22px;
-     margin-bottom: 12px;
- }
- /* Field text
-   ========================================================================== */
-
- .field-text .input-text {
-     font-size: 16px;
-     width: 100%;
-     height: 35px;
-     line-height: 35px;
-     padding-left: 22px;
-     border: 0;
-     background-image: -webkit-gradient(linear, left top, left bottom, from(#00ce63), to(#00ce63)), -webkit-gradient(linear, left top, left bottom, from(#c6c6c6), to(#c6c6c6));
-     background-image: -webkit-linear-gradient(#00ce63, #00ce63), -webkit-linear-gradient(#c6c6c6, #c6c6c6);
-     background-image: -o-linear-gradient(#00ce63, #00ce63), -o-linear-gradient(#c6c6c6, #c6c6c6);
-     background-image: linear-gradient(#00ce63, #00ce63), linear-gradient(#c6c6c6, #c6c6c6);
-     -webkit-background-size: 0 2px, 100% 1px;
-     background-size: 0 2px, 100% 1px;
-     background-repeat: no-repeat;
-     background-position: center bottom, center -webkit-calc(100% - 1px);
-     background-position: center bottom, center calc(100% - 1px);
-     background-color: rgba(0, 0, 0, 0);
-     -webkit-transition: background 0s ease-out;
-     -o-transition: background 0s ease-out;
-     transition: background 0s ease-out;
-     float: none;
-     -webkit-box-shadow: none;
-     box-shadow: none;
-     border-radius: 0;
- }
-
- .field-text .input-text:focus {
-     outline: none;
-     background-image: -webkit-gradient(linear, left top, left bottom, from(#00ce63), to(#00ce63)), -webkit-gradient(linear, left top, left bottom, from(#c6c6c6), to(#c6c6c6));
-     background-image: -webkit-linear-gradient(#00ce63, #00ce63), -webkit-linear-gradient(#c6c6c6, #c6c6c6);
-     background-image: -o-linear-gradient(#00ce63, #00ce63), -o-linear-gradient(#c6c6c6, #c6c6c6);
-     background-image: linear-gradient(#00ce63, #00ce63), linear-gradient(#c6c6c6, #c6c6c6);
-     -webkit-background-size: 100% 2px, 100% 1px;
-     background-size: 100% 2px, 100% 1px;
-     -webkit-box-shadow: none;
-     box-shadow: none;
-     -webkit-transition-duration: 0.3s;
-     -o-transition-duration: 0.3s;
-     transition-duration: 0.3s;
- }
-
-
- .field-text .input-text::-webkit-input-placeholder {
-     color: rgb(1, 8, 51);
- }
-
- .field-text .input-text:-ms-input-placeholder {
-     color: rgb(1, 8, 51);
- }
-
- .field-text .input-text::-moz-placeholder {
-     color: rgb(1, 8, 51);
-     opacity: 1;
- }
-
- .field-text::placeholder {
-     color: rgb(1, 8, 51);
- }
- /* Field checkbox
-   ========================================================================== */
-
- .field-checkbox {
-     padding-left: 24px;
- }
-
- .field-checkbox .input-checkbox {
-     display: none;
- }
-
- .field-checkbox .input-checkbox+.label-text:before {
-     font-family: FontAwesome;
-     display: inline-block;
-     width: 30px;
-     height: 12px;
-     font-size: 16px;
- }
-
- .field-checkbox .input-checkbox+.label-text:before {
-     content: "\f096";
- }
-
- .field-checkbox .input-checkbox:checked+.label-text:before {
-     content: "\f046";
- }
-
- .field-checkbox .label-text {
-     vertical-align: top;
-     font-size: 16px;
- }
- /* Field input autocomplete
-   ========================================================================== */
-
- .field-input-autocomplete .text-autocomplete {
-     outline: 0;
-     border-radius: 2px;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
-     width: 100%;
-     height: 50px;
-     padding-left: 48px;
-     border: none;
-     font-size: 16px;
- }
-
- .field-input-autocomplete .icon-search {
-     float: left;
-     font-size: 14px;
-     margin-left: 21px;
-     margin-top: -33px;
-     position: relative;
-     z-index: 2;
- }
-
- .field-input-autocomplete .text-autocomplete::-webkit-input-placeholder {
-     color: rgb(1, 8, 51);
- }
-
- .field-input-autocomplete .text-autocomplete:-ms-input-placeholder {
-     color: rgb(1, 8, 51);
- }
-
- .field-input-autocomplete .text-autocomplete::-moz-placeholder {
-     color: rgb(1, 8, 51);
-     opacity: 1;
- }
-
- .field-input-autocomplete-list {
-     font-family: 'robotoregular';
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
-     border: 0;
-     margin: 0;
-     list-style: none;
-     z-index: 2;
- }
-
- .field-input-autocomplete-list:before {
-     content: '';
-     display: block;
-     position: absolute;
-     top: -4px;
-     left: 0;
-     height: 4px;
-     width: 100%;
-     background-color: rgb(255, 255, 255);
-     border-radius: 2px;
- }
-
- .field-input-autocomplete-list:after {
-     content: '';
-     display: block;
-     position: absolute;
-     top: 0;
-     box-shadow: inset 1px 7px 7px -7px rgba(0, 0, 0, 0.3);
-     height: 4px;
-     width: 100%;
- }
-
-
- .field-input-autocomplete-list .ui-menu-item-wrapper {
-     color: rgb(1, 8, 51);
-     line-height: 36px;
-     background-color: #fff;
-     height: 36px;
-     font-size: 14px;
- }
-
- .field-input-autocomplete-list .ui-menu-item-wrapper:before {
-     content: "\f002";
-     position: relative;
-     font-size: 12px;
-     margin-left: 18px;
-     margin-top: -26px;
-     position: relative;
-     z-index: 2;
-     font-family: FontAwesome;
-     color: rgb(190, 190, 190);
-     padding-right: 10px;
- }
-
- .field-input-autocomplete-list .ui-menu-item-wrapper.ui-state-active:before {
-     color: rgb(1, 8, 51);
- }
-
- .field-input-autocomplete-list .ui-menu-item .ui-state-active {
-     background-color: rgb(236, 236, 236);
- }
- /* Field checkbox switch
-   ========================================================================== */
-
- .field-checkbox-switch {
-     clear: both;
-     padding-left: 22px;
-     padding-right: 20px;
- }
-
- .field-checkbox-switch:after {
-     display: block;
-     content: "";
-     clear: both;
- }
-
-
- .field-checkbox-switch .checkbox-label {
-     font-size: 16px;
-     float: left;
- }
-
- .field-checkbox-switch .checkbox-switch {
-     float: right;
-     position: relative;
-     display: inline-block;
-     width: 44px;
-     height: 26px;
- }
-
- .field-checkbox-switch .checkbox-switch input {
-     display: none;
- }
-
- .field-checkbox-switch .checkbox-switch .slider {
-     position: absolute;
-     cursor: pointer;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgb(255, 255, 255);
-     -webkit-transition: .4s;
-     transition: .4s;
-     border-radius: 13px;
-     border-width: 1.321px;
-     border-color: rgb(228, 228, 228);
-     border-style: solid;
- }
-
-
- .field-checkbox-switch .checkbox-switch .slider:before {
-     position: absolute;
-     content: "";
-     width: 22px;
-     height: 22px;
-     left: 0px;
-     bottom: 1px;
-     background-color: rgb(255, 255, 255);
-     -webkit-transition: .4s;
-     transition: .4s;
-     border-radius: 50%;
-     box-shadow: -0.342px 0.94px 1.62px 1.38px rgba(0, 0, 0, 0.15);
- }
-
- .field-checkbox-switch .checkbox-switch input:checked+.slider {
-     background-color: rgb(0, 206, 99);
- }
-
- .field-checkbox-switch .checkbox-switch input:focus+.slider {
-     box-shadow: 0 0 1px #2196F3;
- }
-
- .field-checkbox-switch .checkbox-switch input:checked+.slider:before {
-     box-shadow: none;
-     -webkit-transform: translateX(18px);
-     -ms-transform: translateX(18px);
-     transform: translateX(18px);
- }
- /* Field textarea
-   ========================================================================== */
-
- .field-textarea .textarea-container {
-     border-style: solid;
-     border-width: 2px;
-     border-color: rgb(255, 255, 255);
-     border-radius: 2px;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0.342px 0.94px 2.84px 1.16px rgba(0, 0, 0, 0.15);
- }
-
- .field-textarea .ql-container.ql-snow {
-     border: 0;
- }
-
- .field-textarea .ql-toolbar.ql-snow {
-     border: 0;
-     border-bottom: 1px solid #ccc;
- }
- /* Field radio
-   ========================================================================== */
-
- .radio__title {
-     font-size: 12px;
-     font-family: "robotolight";
-     color: rgb(0, 0, 0);
-     display: block;
-     text-align: left;
-     padding-left: 13px;
-     margin-bottom: 12px;
- }
-
- .radio__item {
-     position: relative;
- }
-
- .radio__input {
-     position: absolute;
-     visibility: hidden;
- }
-
- .radio__label {
-     display: block;
-     position: relative;
-     color: #010833;
-     line-height: 1;
-     font-size: 14px;
-     padding-left: 40px;
-     margin: 10px auto;
-     height: 14px;
-     cursor: pointer;
-     -webkit-transition: all 0.3s linear;
- }
-
- .radio__check {
-     display: block;
-     position: absolute;
-     border: 2px solid #151b43;
-     border-radius: 100%;
-     height: 12px;
-     width: 12px;
-     top: 1px;
-     left: 15px;
-     z-index: 5;
-     transition: border .3s linear;
-     -webkit-transition: border .3s linear;
- }
-
- .radio__item .radio__check::before {
-     display: block;
-     position: absolute;
-     content: '';
-     border-radius: 100%;
-     height: 4px;
-     width: 4px;
-     top: 2px;
-     left: 2px;
-     margin: auto;
-     transition: background 0.3s linear;
-     -webkit-transition: background 0.3s linear;
- }
-
- .radio__input:checked~.radio__check {
-     border: 2px solid #151b43;
- }
-
- .radio__input:checked~.radio__check::before {
-     background: #151b43;
- }
- /* Field color picker
-   ========================================================================== */
-
- .field-color-picker__title {
-     font-size: 14px;
-     font-family: "robotolight";
-     color: rgb(0, 0, 0);
-     display: block;
-     text-align: left;
-     padding-left: 22px;
-     margin-bottom: 12px;
- }
-
- .field-color-picker__input {
-     border-style: solid;
-     border-width: 2px;
-     border-color: rgb(255, 255, 255);
-     border-radius: 2px;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0.342px 0.94px 2.84px 1.16px rgba(0, 0, 0, 0.15);
-     padding-left: 19px;
-     width: 100%;
-     height: 50px;
- }
-
- .field-color-picker__colors-list {
-     padding: 0;
-     margin: 4px 0 0 0;
-     list-style: none;
-     -ms-box-orient: horizontal;
-     display: -webkit-box;
-     display: -moz-box;
-     display: -ms-flexbox;
-     display: -moz-flex;
-     display: -webkit-flex;
-     display: flex;
- }
-
- .field-color-picker__color {
-     padding: 5px;
-     width: 38px;
-     height: 38px;
-     margin-right: 5px;
-     border-style: solid;
-     border-width: 2px;
-     border-color: rgb(255, 255, 255);
-     border-radius: 2px;
-     box-shadow: 0.342px 0.94px 1.42px 0.58px rgba(0, 0, 0, 0.15);
-     cursor: pointer;
- }
-
- .field-color-picker__color:last-child {
-     margin-right: 0;
- }
- /* Field slider
-   ========================================================================== */
-
- .field-slider {
-     overflow: hidden;
-     padding-bottom: 1px;
- }
-
- .field-slider-label {
-     margin-bottom: 21px;
- }
-
- .field-slider .ui-slider-handle {
-     width: 20px;
-     height: 20px;
-     border-radius: 50%;
-     background-color: #010833;
-     top: -8px;
-     border: none;
- }
-
- .field-slider .ui-widget-content {
-     height: 3px;
-     border: none;
-     background-color: #ececec;
-     border-radius: 0;
-     width: 153px;
-     margin-left: 16px;
-     float: left;
- }
-
- .field-slider .ui-slider-range-min {
-     background-color: #010833;
- }
-
- .field-slider .size {
-     width: 50px;
-     float: right;
-     margin-top: -10px;
-     margin-right: 13px;
-     border: none;
- }
- /* Field accordion
-   ========================================================================== */
-
- .field-accordion {
-     width: 100%;
- }
-
- .field-accordion__settings {
-     border-radius: 2px;
-     background-color: rgb(255, 255, 255);
-     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
-     width: 100%;
-     margin-bottom: 6px;
- }
-
- .field-accordion__settings .title-accordion {
-     background-color: rgb(255, 255, 255);
-     position: relative;
-     margin: 0;
-     font-size: 16px;
-     outline: 0;
-     overflow: hidden;
-     padding: 0;
-     padding-top: 2px;
-     padding-bottom: 2px;
-     border-radius: 0;
-     border: 0;
- }
-
- .field-accordion__settings .title-accordion.ui-state-active {
-     background-color: rgb(236, 236, 236);
-     border: 0;
- }
-
- .field-accordion__settings .title-item {
-     float: left;
-     padding-top: 14px;
-     padding-left: 16px;
-     font-size: 16px;
-     color: rgb(1, 8, 51);
-     width: 180px;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
- }
-
- .without-title .field-accordion__settings .title-item {
-     display: none;
- }
-
- .field-accordion__settings .draggable {
-     display: block;
-     float: left;
-     position: relative;
-     left: 2px;
-     padding-left: 6px;
-     margin-right: 4px;
-     background-color: rgb(236, 236, 236);
-     width: 16px;
-     height: 46px;
-     -webkit-border-top-left-radius: 1px;
-     -webkit-border-bottom-left-radius: 1px;
-     -moz-border-radius-topleft: 1px;
-     -moz-border-radius-bottomleft: 1px;
-     border-top-left-radius: 1px;
-     border-bottom-left-radius: 1px;
- }
-
- .field-accordion__settings .draggable span {
-     position: absolute;
-     width: 3px;
-     height: 3px;
-     border-radius: 50%;
-     background-color: rgb(1, 8, 51);
- }
-
- .field-accordion__settings .draggable span:first-child {
-     top: 14px;
- }
-
- .field-accordion__settings .draggable span:nth-child(2) {
-     top: 19px;
- }
-
- .field-accordion__settings .draggable span:nth-child(3) {
-     top: 24px;
- }
-
- .field-accordion__settings .draggable span:nth-child(4) {
-     top: 29px;
- }
-
- .field-accordion__settings .preview-image {
-     display: block;
-     float: left;
- }
-
- .field-accordion__settings .preview-image img {
-     display: inherit;
-     height: 45px;
- }
-
- .field-accordion__settings .arrow {
-     position: absolute;
-     top: 17px;
-     right: 18px;
- }
-
- .field-accordion__settings .arrow:before {
-     content: "\f078";
-     display: block;
-     font-family: FontAwesome;
-     color: rgb(1, 8, 51);
-     font-size: 13px;
- }
-
- .field-accordion__settings .ui-state-active .arrow:before {
-     content: "\f077";
- }
-
- .field-accordion__settings .preview-image+.title-item {
-     width: 130px;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
- }
-
- .field-accordion .settings-block-items {
-     overflow: visible;
-     padding-top: 23px;
-     padding-left: 6px;
-     padding-right: 6px;
-     padding-bottom: 14px;
- }
-
- .field-accordion .add-item {
-     border-radius: 2px;
-     background-color: rgb(236, 236, 236);
-     width: 100%;
-     height: 42px;
-     text-align: center;
-     cursor: pointer;
-     margin-top: 18px;
- }
-
- .field-accordion .dropzone-remove {
-     height: 0;
-     visibility: hidden;
- }
-
- .field-accordion .add-item span,
- .field-accordion .dropzone-remove span {
-     line-height: 42px;
-     display: block;
-     font-size: 14px;
- }
-
- .field-accordion .add-item span:before {
-     content: "\f067";
-     display: inline-block;
-     font-family: FontAwesome;
-     margin-right: 10px;
- }
-
- .field-accordion .is-droppable+.add-item {
-     display: none;
- }
-
- .field-accordion .dropzone-remove span:before {
-     content: "\f014";
-     display: inline-block;
-     font-family: FontAwesome;
-     margin-right: 10px;
- }
-
- .is-droppable+.add-item+.dropzone-remove {
-     display: block;
-     visibility: visible;
-     border-radius: 2px;
-     background-color: rgb(236, 236, 236);
-     width: 100%;
-     height: 42px;
-     text-align: center;
-     cursor: pointer;
-     margin-top: 18px;
- }
- /* Field image
-   ========================================================================== */
-
- .field-image-container {
-     position: relative;
- }
-
- .field-image__noimage {
-     display: none;
- }
-
- .field-image-container.empty .field-image__preview {
-     display: none;
- }
-
- .field-image-container.empty .field-image__noimage {
-     display: block;
- }
-
-
- .field-image__preview {
-     position: relative;
-     border-style: solid;
-     border-width: 3px;
-     border-color: rgb(255, 255, 255);
-     border-radius: 2px;
- }
-
- .field-image__remove-image {
-     cursor: pointer;
-     color: rgb(255, 255, 255);
-     text-shadow: 0.5px 0.866px 2px rgba(0, 0, 0, 0.21);
-     position: absolute;
-     right: 8px;
-     top: 8px;
- }
-
- .media-center {
-     position: relative;
- }
-
- .media-center__button {
-     float: left;
- }
-
- .media-center__button-more {
-     float: right;
- }
-
- .media-center__button-more .qoob-dropdown-content {
-     top: 39px;
- }
+.qoob-dropdown-content {
+    display: none;
 }
+
+
+.qoob-dropdown .qoob-dropdown-toggle {
+    outline: none;
+    border: 1px solid transparent;
+    margin: 0;
+    padding: 0;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+}
+
+.qoob-dropdown.active .qoob-dropdown-toggle {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+.qoob-dropdown .dot {
+    position: relative;
+    height: 100%;
+    width: calc(100% - 4px);
+}
+
+.qoob-dropdown .dot span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgb(1, 8, 51);
+}
+
+.qoob-dropdown .dot span:first-child {
+    transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+    top: 16px;
+}
+
+.qoob-dropdown.active .dot span:first-child {
+    transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+    left: 18px;
+    top: 23px;
+}
+
+.qoob-dropdown .dot span:nth-child(2) {
+    top: 23px;
+}
+
+.qoob-dropdown .dot span:nth-child(3) {
+    transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+    top: 30px;
+}
+
+.qoob-dropdown.active .dot span:nth-child(3) {
+    transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+    right: 15px;
+    top: 23px;
+}
+
+.qoob-dropdown .qoob-dropdown-content {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    padding-left: 38px;
+    padding-right: 8px;
+    border-radius: 2px;
+    font-size: 16px;
+    font-family: 'robotoregular';
+    line-height: 1.2;
+    text-align: left;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+.qoob-dropdown .qoob-dropdown-content li {
+    line-height: 47px;
+}
+
+.qoob-dropdown .qoob-dropdown-content:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -5px;
+    right: -2px;
+    width: 62px;
+    height: 5px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    border-right: solid 2px #e6e6e6;
+}
+
+
+
+/* end default button dropdowns */
+
+
+/* button dropdowns */
+
+.qoob-dropdown-more {
+    float: right;
+}
+
+.qoob-dropdown-more .qoob-dropdown-content {
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+.qoob-dropdown-more .qoob-dropdown-toggle {
+    width: 60px;
+    height: 50px;
+}
+
+
+
+/* end button dropdowns */
+
+
+/* autosave */
+
+.autosave-item-name {
+    float: left;
+}
+
+.autosave-item-switch {
+    float: right;
+    position: relative;
+    display: inline-block;
+    width: 43px;
+    height: 26px;
+    margin-top: 10px;
+}
+
+.autosave-item-switch input {
+    display: none;
+}
+
+.autosave-item-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 255, 255);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 13px;
+    border-width: 1.321px;
+    border-color: rgb(228, 228, 228);
+    border-style: solid;
+}
+
+
+.autosave-item-switch .slider:before {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 20px;
+    left: 0px;
+    bottom: 2px;
+    background-color: rgb(255, 255, 255);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: -0.342px 0.94px 1.62px 1.38px rgba(0, 0, 0, 0.15);
+}
+
+.autosave-item-switch input:checked+.slider {
+    background-color: rgb(0, 206, 99);
+}
+
+.autosave-item-switch input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.autosave-item-switch input:checked+.slider:before {
+    box-shadow: none;
+    -webkit-transform: translateX(19px);
+    -ms-transform: translateX(19px);
+    transform: translateX(19px);
+}
+
+
+
+/* end autosave */
+
+
+/* control buttons */
+
+.control-buttons .button {
+    position: relative;
+    float: left;
+    width: 60px;
+    height: 50px;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    outline: none;
+    border: 1px solid transparent;
+    padding: 0;
+    margin-right: 4px;
+}
+
+.control-buttons .preview-modes {
+    float: left;
+    width: 60px;
+    height: 50px;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+}
+
+.control-buttons .backward:before,
+.control-buttons .view-preview:before,
+.control-buttons .save:before {
+    font-family: "FontAwesome";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    font-size: 16px;
+    line-height: 1;
+    margin: 0 auto;
+}
+
+.control-buttons .backward:before {
+    content: "\f177";
+    top: 16px;
+    height: 8px;
+}
+
+.control-buttons .view-preview:before {
+    content: "\f06e";
+    top: 16px;
+    height: 12px;
+}
+
+.control-buttons .save:before {
+    content: "\f0c7";
+    top: 16px;
+    height: 15px;
+}
+
+.preview-modes .qoob-selected-value {
+    cursor: pointer;
+    text-align: center;
+    height: 100%;
+}
+
+.preview-modes .qoob-selected-value i {
+    position: relative;
+    top: 16px;
+}
+
+.preview-modes .qoob-select-dropdown {
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 149px;
+    z-index: 3;
+}
+
+.preview-modes .qoob-select-dropdown li {
+    text-align: center;
+    width: 60px;
+    height: 50px;
+    padding-top: 16px;
+}
+
+.preview-modes .qoob-select-dropdown li:hover {
+    background-color: rgb(236, 236, 236);
+}
+
+
+
+/* end control buttons */
+
+
+/* menu */
+
+.catalog-list {
+    margin: 0;
+}
+
+.qoob-menu-center {
+    height: 100%;
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.qoob-menu-left-side {
+    position: absolute;
+    transform: translate(calc(-100% - 17px), 0);
+    transform: translate3d(calc(-100% - 17px), 0, 0);
+    width: 264px;
+    height: 100%;
+    z-index: 4;
+    background-color: #fff;
+    transition: transform .3s linear;
+}
+
+
+
+/*FIXME*/
+
+.qoob-menu-left-side img {
+    max-width: 100%;
+}
+
+.qoob-menu-left-side.show-side {
+    transform: translate(0, 0);
+    transform: translate3d(0, 0, 0);
+    transition: transform .3s linear;
+    overflow: hidden;
+}
+
+.qoob-menu-right-side {
+    display: block;
+    position: absolute;
+    overflow-x: hidden;
+    left: 0;
+    top: -128px;
+    width: 230px;
+    height: 100%;
+    background-color: rgb(236, 236, 236);
+    box-shadow: inset 8px 0 8px -8px rgba(0, 0, 0, 0.3);
+    transition: left .3s linear;
+}
+
+.qoob-menu-right-side.show-side {
+    left: 264px;
+    transition: left .3s linear;
+}
+
+.preview-blocks {
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 12px;
+}
+
+.preview-block {
+    margin-bottom: 12px;
+    z-index: 10;
+}
+
+.preview-block img {
+    display: block;
+    /*width: 223px;*/
+    width: 100%;
+    border-style: solid;
+    border-width: 3px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+}
+
+.preview-block-wrap {
+    display: none;
+    height: 100%;
+    overflow-y: scroll;
+    margin-right: -17px;
+}
+
+
+
+/* Detect Mac Safari 6.1 or newer, hide any straggling Chrome references */
+
+@media screen and (-webkit-max-device-pixel-ratio:1) and (min-color-index:0) {
+    .preview-block-wrap {
+        margin-right: -15px;
+    }
+}
+
+
+
+/* Detect Mac Firefox 25 or newer */
+
+@supports (-moz-osx-font-smoothing:auto) {
+    .preview-block-wrap {
+        margin-right: -15px;
+    }
+}
+
+
+
+/* Detect Edge */
+
+@supports (-ms-ime-align:auto) {
+    .preview-block-wrap {
+        margin-right: -12px;
+    }
+}
+
+.settings {
+    display: none;
+}
+
+
+.settings-blocks {
+    margin-top: 34px;
+    margin-bottom: 89px;
+    padding: 0 6px;
+}
+
+.settings-block-items>div:first-child {
+    margin-top: 0;
+}
+
+.side-item-show {
+    display: block;
+    height: calc(100% - 128px);
+    overflow-y: scroll;
+    margin-right: -17px;
+    position: relative;
+}
+
+/* Detect Mac Firefox 25 or newer */
+
+@supports (-moz-osx-font-smoothing:auto) {
+    .side-item-show {
+        margin-right: -15px;
+    }
+}
+
+
+
+/* Detect Edge */
+
+@supports (-ms-ime-align:auto) {
+    .side-item-show {
+        margin-right: -12px;
+    }
+}
+
+
+
+/* end menu */
+
+
+/* qoob import/export modal window */
+
+#qoob-import-export-window {
+    display: none;
+}
+
+
+
+/* end qoob import/export modal window */
+
+.edit-mode-button {
+    display: none !important;
+}
+
+
+
+/* Move and delete buttons
+   ========================================================================== */
+
+.block-button {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0 8px 149px 6px;
+    background: #fff;
+}
+
+.button-movedown,
+.button-moveup {
+    width: 93px;
+    height: 46px;
+    line-height: 46px;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    float: left;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button-moveup {
+    margin-right: 2px;
+}
+
+.icon-moveup,
+.icon-movedown {
+    padding-right: 7px;
+}
+
+.delete-button-small {
+    width: 60px;
+    height: 46px;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    float: right;
+    line-height: 46px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+
+/* Fields common
+   ========================================================================== */
+
+.field-group {
+    margin-top: 44px;
+}
+
+.field-label {
+    font-size: 14px;
+    font-family: "robotolight";
+    color: rgb(0, 0, 0);
+    display: block;
+    text-align: left;
+    padding-left: 22px;
+    margin-bottom: 12px;
+}
+
+
+
+/* Field text
+   ========================================================================== */
+
+.field-text .input-text {
+    font-size: 16px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 22px;
+    border: 0;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#00ce63), to(#00ce63)), -webkit-gradient(linear, left top, left bottom, from(#c6c6c6), to(#c6c6c6));
+    background-image: -webkit-linear-gradient(#00ce63, #00ce63), -webkit-linear-gradient(#c6c6c6, #c6c6c6);
+    background-image: -o-linear-gradient(#00ce63, #00ce63), -o-linear-gradient(#c6c6c6, #c6c6c6);
+    background-image: linear-gradient(#00ce63, #00ce63), linear-gradient(#c6c6c6, #c6c6c6);
+    -webkit-background-size: 0 2px, 100% 1px;
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center -webkit-calc(100% - 1px);
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: rgba(0, 0, 0, 0);
+    -webkit-transition: background 0s ease-out;
+    -o-transition: background 0s ease-out;
+    transition: background 0s ease-out;
+    float: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.field-text .input-text:focus {
+    outline: none;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#00ce63), to(#00ce63)), -webkit-gradient(linear, left top, left bottom, from(#c6c6c6), to(#c6c6c6));
+    background-image: -webkit-linear-gradient(#00ce63, #00ce63), -webkit-linear-gradient(#c6c6c6, #c6c6c6);
+    background-image: -o-linear-gradient(#00ce63, #00ce63), -o-linear-gradient(#c6c6c6, #c6c6c6);
+    background-image: linear-gradient(#00ce63, #00ce63), linear-gradient(#c6c6c6, #c6c6c6);
+    -webkit-background-size: 100% 2px, 100% 1px;
+    background-size: 100% 2px, 100% 1px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+
+.field-text .input-text::-webkit-input-placeholder {
+    color: rgb(1, 8, 51);
+}
+
+.field-text .input-text:-ms-input-placeholder {
+    color: rgb(1, 8, 51);
+}
+
+.field-text .input-text::-moz-placeholder {
+    color: rgb(1, 8, 51);
+    opacity: 1;
+}
+
+.field-text::placeholder {
+    color: rgb(1, 8, 51);
+}
+
+
+
+/* Field checkbox
+   ========================================================================== */
+
+.field-checkbox {
+    padding-left: 24px;
+}
+
+.field-checkbox .input-checkbox {
+    display: none;
+}
+
+.field-checkbox .input-checkbox+.label-text:before {
+    font-family: "FontAwesome";
+    display: inline-block;
+    width: 30px;
+    height: 12px;
+    font-size: 16px;
+}
+
+.field-checkbox .input-checkbox+.label-text:before {
+    content: "\f096";
+}
+
+.field-checkbox .input-checkbox:checked+.label-text:before {
+    content: "\f046";
+}
+
+.field-checkbox .label-text {
+    vertical-align: top;
+    font-size: 16px;
+}
+
+
+
+/* Field input autocomplete
+   ========================================================================== */
+
+.field-input-autocomplete .text-autocomplete {
+    outline: 0;
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 50px;
+    padding-left: 48px;
+    border: none;
+    font-size: 16px;
+}
+
+.field-input-autocomplete .icon-search {
+    float: left;
+    font-size: 14px;
+    margin-left: 21px;
+    margin-top: -33px;
+    position: relative;
+    z-index: 2;
+}
+
+.field-input-autocomplete .text-autocomplete::-webkit-input-placeholder {
+    color: rgb(1, 8, 51);
+}
+
+.field-input-autocomplete .text-autocomplete:-ms-input-placeholder {
+    color: rgb(1, 8, 51);
+}
+
+.field-input-autocomplete .text-autocomplete::-moz-placeholder {
+    color: rgb(1, 8, 51);
+    opacity: 1;
+}
+
+.field-input-autocomplete-list {
+    font-family: 'robotoregular';
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
+    border: 0;
+    margin: 0;
+    list-style: none;
+    z-index: 2;
+}
+
+.field-input-autocomplete-list:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -4px;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 2px;
+}
+
+.field-input-autocomplete-list:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    box-shadow: inset 1px 7px 7px -7px rgba(0, 0, 0, 0.3);
+    height: 4px;
+    width: 100%;
+}
+
+
+.field-input-autocomplete-list .ui-menu-item-wrapper {
+    color: rgb(1, 8, 51);
+    line-height: 36px;
+    background-color: #fff;
+    height: 36px;
+    font-size: 14px;
+}
+
+.field-input-autocomplete-list .ui-menu-item-wrapper:before {
+    content: "\f002";
+    position: relative;
+    font-size: 12px;
+    margin-left: 18px;
+    margin-top: -26px;
+    position: relative;
+    z-index: 2;
+    font-family: "FontAwesome";
+    color: rgb(190, 190, 190);
+    padding-right: 10px;
+}
+
+.field-input-autocomplete-list .ui-menu-item-wrapper.ui-state-active:before {
+    color: rgb(1, 8, 51);
+}
+
+.field-input-autocomplete-list .ui-menu-item .ui-state-active {
+    background-color: rgb(236, 236, 236);
+}
+
+
+
+/* Field checkbox switch
+   ========================================================================== */
+
+.field-checkbox-switch {
+    clear: both;
+    padding-left: 22px;
+    padding-right: 20px;
+}
+
+.field-checkbox-switch:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+
+.field-checkbox-switch .checkbox-label {
+    font-size: 16px;
+    float: left;
+}
+
+.field-checkbox-switch .checkbox-switch {
+    float: right;
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 26px;
+}
+
+.field-checkbox-switch .checkbox-switch input {
+    display: none;
+}
+
+.field-checkbox-switch .checkbox-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 255, 255);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 13px;
+    border-width: 1.321px;
+    border-color: rgb(228, 228, 228);
+    border-style: solid;
+}
+
+
+.field-checkbox-switch .checkbox-switch .slider:before {
+    position: absolute;
+    content: "";
+    width: 22px;
+    height: 22px;
+    left: 0px;
+    bottom: 1px;
+    background-color: rgb(255, 255, 255);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: -0.342px 0.94px 1.62px 1.38px rgba(0, 0, 0, 0.15);
+}
+
+.field-checkbox-switch .checkbox-switch input:checked+.slider {
+    background-color: rgb(0, 206, 99);
+}
+
+.field-checkbox-switch .checkbox-switch input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.field-checkbox-switch .checkbox-switch input:checked+.slider:before {
+    box-shadow: none;
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+
+
+
+/* Field textarea
+   ========================================================================== */
+
+.field-textarea .textarea-container {
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0.342px 0.94px 2.84px 1.16px rgba(0, 0, 0, 0.15);
+}
+
+.field-textarea .ql-container.ql-snow {
+    border: 0;
+}
+
+.field-textarea .ql-toolbar.ql-snow {
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+/* Field radio
+   ========================================================================== */
+
+.radio__title {
+    font-size: 12px;
+    font-family: "robotolight";
+    color: rgb(0, 0, 0);
+    display: block;
+    text-align: left;
+    padding-left: 13px;
+    margin-bottom: 12px;
+}
+
+.radio__item {
+    position: relative;
+}
+
+.radio__input {
+    position: absolute;
+    visibility: hidden;
+}
+
+.radio__label {
+    display: block;
+    position: relative;
+    color: #010833;
+    line-height: 1;
+    font-size: 14px;
+    padding-left: 40px;
+    margin: 10px auto;
+    height: 14px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s linear;
+}
+
+.radio__check {
+    display: block;
+    position: absolute;
+    border: 2px solid #151b43;
+    border-radius: 100%;
+    height: 12px;
+    width: 12px;
+    top: 1px;
+    left: 15px;
+    z-index: 5;
+    transition: border .3s linear;
+    -webkit-transition: border .3s linear;
+}
+
+.radio__item .radio__check::before {
+    display: block;
+    position: absolute;
+    content: '';
+    border-radius: 100%;
+    height: 4px;
+    width: 4px;
+    top: 2px;
+    left: 2px;
+    margin: auto;
+    transition: background 0.3s linear;
+    -webkit-transition: background 0.3s linear;
+}
+
+.radio__input:checked~.radio__check {
+    border: 2px solid #151b43;
+}
+
+.radio__input:checked~.radio__check::before {
+    background: #151b43;
+}
+
+
+
+/* Field color picker
+   ========================================================================== */
+
+.field-color-picker__title {
+    font-size: 14px;
+    font-family: "robotolight";
+    color: rgb(0, 0, 0);
+    display: block;
+    text-align: left;
+    padding-left: 22px;
+    margin-bottom: 12px;
+}
+
+.field-color-picker__input {
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0.342px 0.94px 2.84px 1.16px rgba(0, 0, 0, 0.15);
+    padding-left: 19px;
+    width: 100%;
+    height: 50px;
+}
+
+.field-color-picker__colors-list {
+    padding: 0;
+    margin: 4px 0 0 0;
+    list-style: none;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.field-color-picker__color {
+    padding: 5px;
+    width: 38px;
+    height: 38px;
+    margin-right: 5px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    box-shadow: 0.342px 0.94px 1.42px 0.58px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.field-color-picker__color:last-child {
+    margin-right: 0;
+}
+
+
+
+/* Field slider
+   ========================================================================== */
+
+.field-slider {
+    overflow: hidden;
+    padding-bottom: 1px;
+}
+
+.field-slider-label {
+    margin-bottom: 21px;
+}
+
+.field-slider .ui-slider-handle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #010833;
+    top: -8px;
+    border: none;
+}
+
+.field-slider .ui-widget-content {
+    height: 3px;
+    border: none;
+    background-color: #ececec;
+    border-radius: 0;
+    width: 153px;
+    margin-left: 16px;
+    float: left;
+}
+
+.field-slider .ui-slider-range-min {
+    background-color: #010833;
+}
+
+.field-slider .size {
+    width: 50px;
+    float: right;
+    margin-top: -10px;
+    margin-right: 13px;
+    border: none;
+}
+
+
+
+/* Field accordion
+   ========================================================================== */
+
+.field-accordion {
+    width: 100%;
+}
+
+.field-accordion__settings {
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+.field-accordion__settings .title-accordion {
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    margin: 0;
+    font-size: 16px;
+    outline: 0;
+    overflow: hidden;
+    padding: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 0;
+    border: 0;
+}
+
+.field-accordion__settings .title-accordion.ui-state-active {
+    background-color: rgb(236, 236, 236);
+    border: 0;
+}
+
+.field-accordion__settings .title-item {
+    float: left;
+    padding-top: 14px;
+    padding-left: 16px;
+    font-size: 16px;
+    color: rgb(1, 8, 51);
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.without-title .field-accordion__settings .title-item {
+    display: none;
+}
+
+.field-accordion__settings .draggable {
+    display: block;
+    float: left;
+    position: relative;
+    left: 2px;
+    padding-left: 6px;
+    margin-right: 4px;
+    background-color: rgb(236, 236, 236);
+    width: 16px;
+    height: 46px;
+    -webkit-border-top-left-radius: 1px;
+    -webkit-border-bottom-left-radius: 1px;
+    -moz-border-radius-topleft: 1px;
+    -moz-border-radius-bottomleft: 1px;
+    border-top-left-radius: 1px;
+    border-bottom-left-radius: 1px;
+}
+
+.field-accordion__settings .draggable span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: rgb(1, 8, 51);
+}
+
+.field-accordion__settings .draggable span:first-child {
+    top: 14px;
+}
+
+.field-accordion__settings .draggable span:nth-child(2) {
+    top: 19px;
+}
+
+.field-accordion__settings .draggable span:nth-child(3) {
+    top: 24px;
+}
+
+.field-accordion__settings .draggable span:nth-child(4) {
+    top: 29px;
+}
+
+.field-accordion__settings .preview-image {
+    display: block;
+    float: left;
+}
+
+.field-accordion__settings .preview-image img {
+    display: inherit;
+    height: 45px;
+}
+
+.field-accordion__settings .arrow {
+    position: absolute;
+    top: 17px;
+    right: 18px;
+}
+
+.field-accordion__settings .arrow:before {
+    content: "\f078";
+    display: block;
+    font-family: "FontAwesome";
+    color: rgb(1, 8, 51);
+    font-size: 13px;
+}
+
+.field-accordion__settings .ui-state-active .arrow:before {
+    content: "\f077";
+}
+
+.field-accordion__settings .preview-image+.title-item {
+    width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.field-accordion .settings-block-items {
+    overflow: visible;
+    padding-top: 23px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 14px;
+}
+
+.field-accordion .add-item {
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    width: 100%;
+    height: 42px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 18px;
+}
+
+.field-accordion .dropzone-remove {
+    height: 0;
+    visibility: hidden;
+}
+
+.field-accordion .add-item span,
+.field-accordion .dropzone-remove span {
+    line-height: 42px;
+    display: block;
+    font-size: 14px;
+}
+
+.field-accordion .add-item span:before {
+    content: "\f067";
+    display: inline-block;
+    font-family: "FontAwesome";
+    margin-right: 10px;
+}
+
+.field-accordion .is-droppable+.add-item {
+    display: none;
+}
+
+.field-accordion .dropzone-remove span:before {
+    content: "\f014";
+    display: inline-block;
+    font-family: "FontAwesome";
+    margin-right: 10px;
+}
+
+.is-droppable+.add-item+.dropzone-remove {
+    display: block;
+    visibility: visible;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    width: 100%;
+    height: 42px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 18px;
+}
+
+
+
+/* Field image
+   ========================================================================== */
+
+.field-image-container {
+    position: relative;
+}
+
+.field-image__noimage {
+    display: none;
+}
+
+.field-image-container.empty .field-image__preview {
+    display: none;
+}
+
+.field-image-container.empty .field-image__noimage {
+    display: block;
+}
+
+
+.field-image__preview {
+    position: relative;
+    border-radius: 2px;
+}
+
+.field-image__remove-image {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    text-shadow: 0.5px 0.866px 2px rgba(0, 0, 0, 0.21);
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+
+/* Media center buttons
+   ========================================================================== */
+
+.media-center {
+    position: relative;
+}
+
+.media-center__button {
+    outline: none;
+    border: none;
+    float: left;
+    font-size: 16px;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    width: 188px;
+    height: 45px;
+    padding: 0;
+    margin: 0;
+}
+
+.media-center__button_image-icon {
+    font-size: 18px;
+     padding-right: 13px;
+}
+
+.media-center__button-more {
+    float: right;
+}
+
+.media-center__button-more .qoob-dropdown-toggle {
+    width: 60px;
+    height: 45px;
+}
+
+.media-center__button-more .dot span:first-child {
+    top: 14px;
+}
+
+.media-center__button-more.active .dot span:first-child {
+    top: 20px;
+}
+
+.media-center__button-more .dot span:nth-child(2) {
+    top: 20px;
+}
+
+.media-center__button-more.active .dot span:nth-child(2) {
+    top: 20px;
+}
+
+.media-center__button-more .dot span:nth-child(3) {
+    top: 26px;
+}
+
+.media-center__button-more.active .dot span:nth-child(3) {
+    top: 20px;
+}
+
+.media-center__button-more .qoob-dropdown-content {
+    top: 33px;
+}
+
+.field-accordion .media-center__button-more .qoob-dropdown-toggle {
+    width: 58px;
+}
+
+.field-accordion .media-center__button {
+    width: 178px;
+}
+
 
 /* ----------------------------------------------------------------------------- 
 
@@ -1878,6 +2151,7 @@
   Documentation : https://nehakadam.github.io/DateTimePicker
 
  ----------------------------------------------------------------------------- */
+
 .dtpicker-overlay {
     z-index: 2000;
     display: none;
@@ -2111,9 +2385,11 @@
 .dtpicker-twoButtons .dtpicker-buttonClear {
     float: right;
 }
+
 .field-datepicker__input {
     display: none;
 }
+
 .field-datepicker .dtpicker-overlay {
     display: block !important;
 }
@@ -2125,13 +2401,16 @@
     background: #fff;
     padding: 0;
 }
+
 .field-datepicker .dtpicker-overlay {
     min-width: 264px;
     background-color: transparent;
 }
+
 .field-datepicker .dtpicker-components {
     margin: 0;
 }
+
 .field-datepicker .dtpicker-components .dtpicker-compValue {
     background-color: #ececec;
     color: #010833;
@@ -2139,17 +2418,21 @@
     height: 50px;
     line-height: 50px;
 }
+
 .field-datepicker .dtpicker-components .dtpicker-compButton {
     font-size: 14px;
     color: #010833;
 }
+
 .field-datepicker .dtpicker-components .dtpicker-compOutline {
     width: 82px;
     margin: 0 2px 0 0;
 }
+
 .field-datepicker .dtpicker-components .dtpicker-compOutline:last-child {
     margin: 0;
 }
+
 .field-datepicker .dtpicker-buttonCont {
     margin: 0;
 }

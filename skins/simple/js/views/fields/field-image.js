@@ -168,7 +168,7 @@ Fields.image = QoobFieldView.extend(
                 "label": this.settings.label,
                 "name": this.settings.name,
                 "value": this.getValue(),
-                'media_center': this.storage.__('media_center', 'Media Center'),
+                'media_center': this.storage.__('media_center', 'Media center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_image': this.storage.__('no_image', 'No image'),
                 'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here')
