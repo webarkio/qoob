@@ -1185,10 +1185,18 @@
 }
 .save-template-settings .notice-block {
     display: none;
+    background-color: rgb(0, 206, 99);
+    border-radius: 3px;
+    color: #fff;
+    font-family: "robotoregular", sans-serif;
+    letter-spacing: 0.025em;
+    font-size: 14px;
+    padding: 18px 23px 20px 23px;
 }
 .save-template-settings.show-notice .notice-block {
     display: block;
 }
+
 .save-template-settings .error-block {
     border-radius: 3px;
     background-color: rgb(237, 49, 42);
@@ -1274,7 +1282,7 @@
      color: rgb(1, 8, 51);
      opacity: 1;
  }
- .field-text .input-text.error {
+ .field-text.error .input-text {
      background-image: -webkit-gradient(linear, left top, left bottom, from(#ee3f38), to(#ee3f38)), -webkit-gradient(linear, left top, left bottom, from(#ee3f38), to(#ee3f38));
      background-image: -webkit-linear-gradient(#ee3f38, #ee3f38), -webkit-linear-gradient(#ee3f38, #ee3f38);
      background-image: -o-linear-gradient(#ee3f38, #ee3f38), -o-linear-gradient(#ee3f38, #ee3f38);
