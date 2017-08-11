@@ -456,49 +456,51 @@
 }
 
 #qoob-blocks .qoob-templates .title-block {
-    color: #606163;
+    color: #cdcdcd;
+    letter-spacing: 0.06em;
     text-align: center;
-    font-family: 'robotothin';
+    font-family: 'robotoblack';
     font-size: 36px;
-    padding-top: 65px;
-    margin-bottom: 28px;
+    margin-top: 75px;
+    margin-bottom: 49px;
 }
 
 #qoob-blocks .qoob-templates .templates {
-    overflow: hidden;
-    margin: 0 -20px;
+    margin: 0 auto;
+    max-width: 878px;
 }
 
 #qoob-blocks .qoob-templates .template {
     position: relative;
     text-align: center;
     float: left;
-    border-radius: 5px;
-    margin: 0 21px 32px 21px;
+    border-radius: 3px;
+    margin: 0 41px 39px 0px;
 }
 
 #qoob-blocks .qoob-templates .template .title {
     cursor: pointer;
-    font-family: 'robotobold';
-    font-size: 20px;
+    font-family: 'robotoblack';
+    font-size: 16px;
+    letter-spacing: 0.025em;
     text-align: center;
-    margin-top: 13px;
-    color: #606163;
+    margin-top: 17px;
+    color: #010833;
 }
 
 #qoob-blocks .qoob-templates .template .image-bg {
     overflow: hidden;
+    margin-top: 5px;
     cursor: pointer;
     position: relative;
-    border: 5px solid #fff;
-    border-radius: 5px;
+    border-radius: 3px;
     width: 264px;
-    height: 392px;
-    /*margin: 0 auto;*/
+    height: 431px;
     background-color: #fff;
-    -webkit-box-shadow: 0px 0px 15px 3px rgba(196, 196, 196, 1);
-    -moz-box-shadow: 0px 0px 15px 3px rgba(196, 196, 196, 1);
-    box-shadow: 0px 0px 15px 3px rgba(196, 196, 196, 1);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
 #qoob-blocks .qoob-templates .template .image-bg .template-no-image {
@@ -526,29 +528,47 @@
     #qoob-blocks .qoob-templates .template {
         width: 264px;
     }
+    #qoob-blocks .qoob-templates .template:nth-child(3n) {
+        margin: 0 0 32px 0;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
     #qoob-blocks .qoob-templates .template {
         width: 264px;
     }
+     #qoob-blocks .qoob-templates .template:nth-child(3n) {
+        margin: 0 0 32px 0;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    #qoob-blocks .qoob-templates .templates {
+        max-width: 690px;
+    }
     #qoob-blocks .qoob-templates .template {
-        width: 43.6%;
+        width: 46.6%;
     }
     #qoob-blocks .qoob-templates .template .image-bg {
         width: 100%;
+    }
+    #qoob-blocks .qoob-templates .template:nth-child(2n) {
+        margin: 0 0 32px 0;
     }
 }
 
 @media (max-width: 767px) {
     #qoob-blocks .qoob-templates .template {
-        width: 42.5%;
+        width: 46.5%;
     }
     #qoob-blocks .qoob-templates .template .image-bg {
         width: 100%;
+    }
+    #qoob-blocks .qoob-templates .templates {
+        max-width: 640px;
+    }
+    #qoob-blocks .qoob-templates .template:nth-child(2n) {
+        margin: 0 0 32px 0;
     }
 }
 
@@ -565,8 +585,9 @@
         height: calc(100vh - 60px);
     }
     #qoob-blocks .qoob-templates .template {
-        width: 89%;
+        width: 100%;
         float: none;
+        margin: 0 0 32px 0;
     }
 }
 

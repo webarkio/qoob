@@ -44,8 +44,11 @@
                             $('#qoob-blocks').empty();
                             window.parent.jQuery('#qoob-iframe').trigger('libraries_loaded');
                             //call ready to build block event
-                        } else {}
+                        } else {
+                            console.info('frame not found');
+                        }
                     } catch (err) {
+                        console.error(err);
                     }
                     $.holdReady(false);
                 });
