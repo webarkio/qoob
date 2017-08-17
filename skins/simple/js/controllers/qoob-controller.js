@@ -94,7 +94,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         }
     },
     showSavePageTemplate: function() {
-        this.layout.menu.rotateForward('save-template');
+        this.layout.menu.showSide('left', 'save-template');
         this.layout.menu.hideNotice();
         this.layout.stopEditBlock();
     },

@@ -314,6 +314,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 element.find('.remove').trigger('click');
                 element.find('.input-text').val('');
                 element.find('.save-template-settings').removeClass('show-notice');
+                element.find('.field-text').show();
+                element.find('.save-template-settings .button-save-template').show();
             }
             if (element.find('.error-block').is(':visible')) {
                 element.find('.error-block').hide();

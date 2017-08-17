@@ -602,7 +602,6 @@ a {
     vertical-align: top;
     z-index: 1;
 }
-
 #qoob-iframe {
     border: none;
     margin: 0 auto;
@@ -1307,19 +1306,62 @@ a {
     padding-right: 7px;
 }
 
-.delete-button-small {
-    width: 60px;
-    height: 46px;
+ .delete-button-small {
+     width: 60px;
+     height: 46px;
+     border-radius: 2px;
+     background-color: rgb(236, 236, 236);
+     float: right;
+     line-height: 46px;
+     text-align: center;
+     cursor: pointer;
+ }
+ /* Side save template
+   ============================================================================ */
+.save-template-settings {
+    padding: 0 7px;
+}
+.save-template-settings .save-loading {
+    display: none;
+}
+ .button-save-template {
     border-radius: 2px;
     background-color: rgb(236, 236, 236);
-    float: right;
-    line-height: 46px;
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
     text-align: center;
     cursor: pointer;
+    margin-top: 19px;
+}
+.save-template-settings .save-icon {
+    padding-right: 13px;
+}
+.save-template-settings .notice-block {
+    display: none;
+    background-color: rgb(0, 206, 99);
+    border-radius: 3px;
+    color: #fff;
+    font-family: "robotoregular", sans-serif;
+    letter-spacing: 0.025em;
+    font-size: 14px;
+    padding: 18px 23px 20px 23px;
+}
+.save-template-settings.show-notice .notice-block {
+    display: block;
 }
 
+.save-template-settings .error-block {
+    border-radius: 3px;
+    background-color: rgb(237, 49, 42);
+    color: #fff;
+    font-family: "robotoregular", sans-serif;
+    letter-spacing: 0.025em;
+    font-size: 14px;
+    padding: 18px 23px 20px 23px;
+}
 
-/* Fields common
+ /* Fields common
    ========================================================================== */
 
 .field-group {
@@ -1339,7 +1381,9 @@ a {
 
 /* Field text
    ========================================================================== */
-
+ .field-text {
+     position: relative;
+ }
 .field-text .input-text {
     font-size: 16px;
     width: 100%;
@@ -1403,7 +1447,26 @@ a {
     color: rgb(1, 8, 51);
     opacity: 1;
 }
-
+ .field-text.error .input-text {
+     background-image: -webkit-gradient(linear, left top, left bottom, from(#ee3f38), to(#ee3f38)), -webkit-gradient(linear, left top, left bottom, from(#ee3f38), to(#ee3f38));
+     background-image: -webkit-linear-gradient(#ee3f38, #ee3f38), -webkit-linear-gradient(#ee3f38, #ee3f38);
+     background-image: -o-linear-gradient(#ee3f38, #ee3f38), -o-linear-gradient(#ee3f38, #ee3f38);
+     background-image: linear-gradient(#ee3f38, #ee3f38), linear-gradient(#ee3f38, #ee3f38);
+ }
+  .field-text.error:after {
+      content: "!";
+      color: #fff;
+      display: block;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 25px;
+      position: absolute;
+      right: 15px;
+      bottom: 9px;
+      background-color: #ee3f38; 
+  }
 .field-text ::placeholder {
     color: rgb(1, 8, 51);
 }
