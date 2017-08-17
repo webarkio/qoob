@@ -50,10 +50,8 @@ body {
 }
 
 
-
 /* HTML5 display definitions
    ========================================================================== */
-
 
 /**
  * Correct `block` display not defined for any HTML5 element in IE 8/9.
@@ -79,7 +77,6 @@ summary {
 }
 
 
-
 /**
  * 1. Correct `inline-block` display not defined in IE 8/9.
  * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
@@ -96,7 +93,6 @@ video {
 }
 
 
-
 /**
  * Prevent modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS 5 devices.
@@ -108,7 +104,6 @@ audio:not([controls]) {
 }
 
 
-
 /**
  * Address `[hidden]` styling not present in IE 8/9/10.
  * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
@@ -118,7 +113,6 @@ audio:not([controls]) {
 template {
     display: none;
 }
-
 
 
 /* Links
@@ -134,7 +128,6 @@ a {
 }
 
 
-
 /**
  * Improve readability of focused elements when they are also in an
  * active/hover state.
@@ -144,7 +137,6 @@ a:active,
 a:hover {
     outline: 0;
 }
-
 
 
 /* Text-level semantics
@@ -160,7 +152,6 @@ abbr[title] {
 }
 
 
-
 /**
  * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
  */
@@ -171,7 +162,6 @@ strong {
 }
 
 
-
 /**
  * Address styling not present in Safari and Chrome.
  */
@@ -179,7 +169,6 @@ strong {
 dfn {
     font-style: italic;
 }
-
 
 
 /**
@@ -193,7 +182,6 @@ h1 {
 }
 
 
-
 /**
  * Address styling not present in IE 8/9.
  */
@@ -204,7 +192,6 @@ mark {
 }
 
 
-
 /**
  * Address inconsistent and variable font size in all browsers.
  */
@@ -212,7 +199,6 @@ mark {
 small {
     font-size: 80%;
 }
-
 
 
 /**
@@ -236,7 +222,6 @@ sub {
 }
 
 
-
 /* Embedded content
    ========================================================================== */
 
@@ -250,7 +235,6 @@ img {
 }
 
 
-
 /**
  * Correct overflow not hidden in IE 9/10/11.
  */
@@ -258,7 +242,6 @@ img {
 svg:not(:root) {
     overflow: hidden;
 }
-
 
 
 /* Grouping content
@@ -274,7 +257,6 @@ figure {
 }
 
 
-
 /**
  * Address differences between Firefox and other browsers.
  */
@@ -286,7 +268,6 @@ hr {
 }
 
 
-
 /**
  * Contain overflow in all browsers.
  */
@@ -294,7 +275,6 @@ hr {
 pre {
     overflow: auto;
 }
-
 
 
 /**
@@ -308,7 +288,6 @@ samp {
     font-family: monospace, monospace;
     font-size: 1em;
 }
-
 
 
 /* Forms
@@ -342,7 +321,6 @@ textarea {
 }
 
 
-
 /**
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
@@ -350,7 +328,6 @@ textarea {
 button {
     overflow: visible;
 }
-
 
 
 /**
@@ -364,7 +341,6 @@ button,
 select {
     text-transform: none;
 }
-
 
 
 /**
@@ -386,7 +362,6 @@ input[type="submit"] {
 }
 
 
-
 /**
  * Re-set default cursor for disabled elements.
  */
@@ -395,7 +370,6 @@ button[disabled],
 html input[disabled] {
     cursor: default;
 }
-
 
 
 /**
@@ -409,7 +383,6 @@ input::-moz-focus-inner {
 }
 
 
-
 /**
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
@@ -418,7 +391,6 @@ input::-moz-focus-inner {
 input {
     line-height: normal;
 }
-
 
 
 /**
@@ -439,7 +411,6 @@ input[type="radio"] {
 }
 
 
-
 /**
  * Fix the cursor style for Chrome's increment/decrement buttons. For certain
  * `font-size` values of the `input`, it causes the cursor style of the
@@ -450,7 +421,6 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     height: auto;
 }
-
 
 
 /**
@@ -467,7 +437,6 @@ input[type="search"] {
 }
 
 
-
 /**
  * Remove inner padding and search cancel button in Safari and Chrome on OS X.
  * Safari (but not Chrome) clips the cancel button when the search input has
@@ -480,7 +449,6 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 
-
 /**
  * Define consistent border, margin, and padding.
  */
@@ -490,7 +458,6 @@ fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
 }
-
 
 
 /**
@@ -506,7 +473,6 @@ legend {
 }
 
 
-
 /**
  * Remove default vertical scrollbar in IE 8/9/10/11.
  */
@@ -514,7 +480,6 @@ legend {
 textarea {
     overflow: auto;
 }
-
 
 
 /**
@@ -525,7 +490,6 @@ textarea {
 optgroup {
     font-weight: bold;
 }
-
 
 
 /* Tables
@@ -613,6 +577,18 @@ a {
     background-color: #fff;
 }
 
+#qoob-sidebar.overlay #qoob-toolbar:before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .65);
+    z-index: 12;
+}
+
 #qoob-menu {
     position: relative;
     height: 100%;
@@ -633,7 +609,6 @@ a {
     display: block;
     box-shadow: 0px 1px 15.6px 4.4px rgba(0, 0, 0, 0.3);
 }
-
 
 
 /* group list */
@@ -659,7 +634,6 @@ a {
     background-color: #010833;
     color: #fff;
 }
-
 
 
 /* end group list */
@@ -697,7 +671,6 @@ a {
 .qoob-selected-value:focus {
     outline: none;
 }
-
 
 
 /* end default qoob select */
@@ -787,7 +760,6 @@ a {
 }
 
 
-
 /* end library select */
 
 
@@ -835,7 +807,6 @@ a {
 .droppable-zone-full.ui-droppable-hover span {
     margin-top: -10px;
 }
-
 
 
 /* End Default droppable zone
@@ -938,7 +909,6 @@ a {
 }
 
 
-
 /* end default button dropdowns */
 
 
@@ -957,7 +927,6 @@ a {
     width: 60px;
     height: 50px;
 }
-
 
 
 /* end button dropdowns */
@@ -1027,7 +996,6 @@ a {
     -ms-transform: translateX(19px);
     transform: translateX(19px);
 }
-
 
 
 /* end autosave */
@@ -1121,7 +1089,6 @@ a {
 }
 
 
-
 /* end control buttons */
 
 
@@ -1149,12 +1116,10 @@ a {
     transition: transform .3s linear;
 }
 
-
-
-/*FIXME*/
-
 .qoob-menu-left-side img {
     max-width: 100%;
+    cursor: pointer;
+    display: block;
 }
 
 .qoob-menu-left-side.show-side {
@@ -1212,7 +1177,6 @@ a {
 }
 
 
-
 /* Detect Mac Safari 6.1 or newer, hide any straggling Chrome references */
 
 @media screen and (-webkit-max-device-pixel-ratio:1) and (min-color-index:0) {
@@ -1222,7 +1186,6 @@ a {
 }
 
 
-
 /* Detect Mac Firefox 25 or newer */
 
 @supports (-moz-osx-font-smoothing:auto) {
@@ -1230,7 +1193,6 @@ a {
         margin-right: -15px;
     }
 }
-
 
 
 /* Detect Edge */
@@ -1245,6 +1207,18 @@ a {
     display: none;
 }
 
+
+#qoob-sidebar.overlay .settings-blocks:before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .65);
+    z-index: 12;
+}
 
 .settings-blocks {
     margin-top: 34px;
@@ -1273,7 +1247,6 @@ a {
 }
 
 
-
 /* Detect Edge */
 
 @supports (-ms-ime-align:auto) {
@@ -1281,7 +1254,6 @@ a {
         margin-right: -12px;
     }
 }
-
 
 
 /* end menu */
@@ -1294,13 +1266,11 @@ a {
 }
 
 
-
 /* end qoob import/export modal window */
 
 .edit-mode-button {
     display: none !important;
 }
-
 
 
 /* Move and delete buttons
@@ -1313,6 +1283,7 @@ a {
     width: 100%;
     padding: 0 8px 149px 6px;
     background: #fff;
+    z-index: 2;
 }
 
 .button-movedown,
@@ -1348,7 +1319,6 @@ a {
 }
 
 
-
 /* Fields common
    ========================================================================== */
 
@@ -1365,7 +1335,6 @@ a {
     padding-left: 22px;
     margin-bottom: 12px;
 }
-
 
 
 /* Field text
@@ -1412,24 +1381,32 @@ a {
     transition-duration: 0.3s;
 }
 
+.field-text .input-url {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 40px;
+  border: 0;
+  outline: none;
+  padding-left: 22px;
+}
 
-.field-text .input-text::-webkit-input-placeholder {
+.field-text ::-webkit-input-placeholder {
     color: rgb(1, 8, 51);
 }
 
-.field-text .input-text:-ms-input-placeholder {
+.field-text :-ms-input-placeholder {
     color: rgb(1, 8, 51);
 }
 
-.field-text .input-text::-moz-placeholder {
+.field-text ::-moz-placeholder {
     color: rgb(1, 8, 51);
     opacity: 1;
 }
 
-.field-text::placeholder {
+.field-text ::placeholder {
     color: rgb(1, 8, 51);
 }
-
 
 
 /* Field checkbox
@@ -1465,7 +1442,6 @@ a {
 }
 
 
-
 /* Field input autocomplete
    ========================================================================== */
 
@@ -1481,10 +1457,10 @@ a {
     font-size: 16px;
 }
 
-.field-input-autocomplete .icon-search {
+.field-input-autocomplete__icon-search {
     float: left;
     font-size: 14px;
-    margin-left: 21px;
+    margin-left: 22px;
     margin-top: -33px;
     position: relative;
     z-index: 2;
@@ -1538,19 +1514,18 @@ a {
 
 .field-input-autocomplete-list .ui-menu-item-wrapper {
     color: rgb(1, 8, 51);
-    line-height: 36px;
     background-color: #fff;
-    height: 36px;
-    font-size: 14px;
+    font-size: 16px;
+    padding: 10px 0 10px 46px;
+    margin: 0;
 }
 
 .field-input-autocomplete-list .ui-menu-item-wrapper:before {
     content: "\f002";
-    position: relative;
-    font-size: 12px;
-    margin-left: 18px;
-    margin-top: -26px;
-    position: relative;
+    position: absolute;
+    font-size: 14px;
+    margin-left: -26px;
+    margin-top: 5px;
     z-index: 2;
     font-family: "FontAwesome";
     color: rgb(190, 190, 190);
@@ -1562,9 +1537,13 @@ a {
 }
 
 .field-input-autocomplete-list .ui-menu-item .ui-state-active {
+    border: none;
     background-color: rgb(236, 236, 236);
 }
 
+.field-input-autocomplete-list-inner {
+    width: 253px;
+}
 
 
 /* Field checkbox switch
@@ -1647,7 +1626,6 @@ a {
 }
 
 
-
 /* Field textarea
    ========================================================================== */
 
@@ -1668,7 +1646,6 @@ a {
     border: 0;
     border-bottom: 1px solid #ccc;
 }
-
 
 
 /* Field radio
@@ -1743,7 +1720,6 @@ a {
 }
 
 
-
 /* Field color picker
    ========================================================================== */
 
@@ -1800,7 +1776,6 @@ a {
 }
 
 
-
 /* Field slider
    ========================================================================== */
 
@@ -1843,7 +1818,6 @@ a {
     margin-right: 13px;
     border: none;
 }
-
 
 
 /* Field accordion
@@ -2000,7 +1974,7 @@ a {
 .field-accordion .dropzone-remove span {
     line-height: 42px;
     display: block;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .field-accordion .add-item span:before {
@@ -2034,7 +2008,6 @@ a {
 }
 
 
-
 /* Field image
    ========================================================================== */
 
@@ -2052,12 +2025,32 @@ a {
 
 .field-image-container.empty .field-image__noimage {
     display: block;
+    cursor: pointer;
+    background-color: rgb(1, 8, 51);
+    width: 100%;
+    height: 193px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
 }
 
+.field-image__noimage-icon {
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+}
 
 .field-image__preview {
     position: relative;
     border-radius: 2px;
+    margin-bottom: 2px;
+}
+
+#qoob-sidebar.overlay .field-image__preview-image,
+#qoob-sidebar.overlay .field-image__noimage {
+    display: none;
 }
 
 .field-image__remove-image {
@@ -2067,6 +2060,366 @@ a {
     position: absolute;
     right: 8px;
     top: 8px;
+}
+
+.field-image .input-file {
+    display: none;
+}
+
+.others {
+    padding: 0;
+    margin: 0 0 8px 0;
+    list-style: none;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.others__item {
+    width: 60px;
+    margin-right: 4px;
+}
+
+.others__item:last-child {
+    margin-right: 0;
+}
+
+.others-item__image {
+    cursor: pointer;
+    width: 60px;
+    height: 47px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.field-accordion .others__item {
+    width: 58px;
+    margin-right: 2px;
+}
+
+.field-accordion .others-item__image {
+    width: 58px;
+    height: 44px;
+}
+
+.filtered-images {
+    overflow: hidden;
+}
+
+.filtered-images .ajax-image {
+    cursor: pointer;
+    border-radius: 2px;
+    width: 58px;
+    height: 58px;
+    float: left;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.filtered-images .ajax-image:nth-child(4n) {
+    margin-right: 0;
+}
+
+.filtered-images .ajax-image.chosen {
+    position: relative;
+}
+
+.filtered-images .ajax-image.chosen:before {
+    content:"\f00c";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-family: "FontAwesome";
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    border-style: solid;
+    border-top-width: 3px;
+    border-left-width: 3px;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-color: rgb(255, 255, 255);
+    background-color: rgb(1, 8, 51);
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    line-height: 22px;
+}
+
+
+/* Field video
+   ========================================================================== */
+
+.field-video-container {
+    position: relative;
+}
+
+.field-video__novideo {
+    display: none;
+}
+
+.field-video-container.empty .field-video__preview {
+    display: none;
+}
+
+.field-video-container.empty .field-video__novideo {
+    display: block;
+    cursor: pointer;
+    background-color: rgb(1, 8, 51);
+    width: 100%;
+    height: 193px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.field-video__novideo-icon {
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+}
+
+.field-video__preview {
+    position: relative;
+    border-radius: 2px;
+    margin-bottom: 2px;
+}
+
+#qoob-sidebar.overlay .field-video__preview-image,
+#qoob-sidebar.overlay .field-video__noimage {
+    display: none;
+}
+
+.field-video__remove-video {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    text-shadow: 0.5px 0.866px 2px rgba(0, 0, 0, 0.21);
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+.field-video .input-file {
+    display: none;
+}
+
+.filtered-videos {
+    overflow: hidden;
+}
+
+.filtered-videos .ajax-video {
+    cursor: pointer;
+    border-radius: 2px;
+    width: 58px;
+    height: 58px;
+    float: left;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.filtered-videos .ajax-video:nth-child(4n) {
+    margin-right: 0;
+}
+
+.filtered-videos .ajax-video.chosen {
+    position: relative;
+}
+
+.filtered-videos .ajax-video.chosen:before {
+    content:"\f00c";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-family: "FontAwesome";
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    border-style: solid;
+    border-top-width: 3px;
+    border-left-width: 3px;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-color: rgb(255, 255, 255);
+    background-color: rgb(1, 8, 51);
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    line-height: 22px;
+}
+
+/* Field icon
+   ========================================================================== */
+
+.field-icon-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 6px;
+    color: rgb(1, 8, 51);
+}
+
+.field-icon__noicon {
+    display: none;
+}
+
+.field-icon-container.empty .field-icon__preview-icon {
+    display: none;
+}
+
+.field-icon-container.empty .field-icon__noicon {
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: rgb(1, 8, 51);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.field-icon__noicon-icon {
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+}
+
+.field-icon__preview {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    margin-right: 4px;
+}
+
+.field-icon__preview-icon {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+}
+
+.field-icon__preview-icon span {
+    font-size: 54px;
+}
+
+.field-icon__remove-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: rgb(1, 8, 51);
+    font-size: 14px;
+}
+
+.other-icons {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+}
+
+.other-icon {
+    cursor: pointer;
+    float: left;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.other-icon:first-child {
+    margin-right: 4px;
+}
+
+.other-icon:nth-child(3) {
+    margin-right: 4px;
+    margin-top: 4px;
+}
+
+.other-icon:nth-child(4) {
+    margin-top: 4px;
+}
+
+.field-accordion .field-icon__preview {
+    margin-right: 3px;
+}
+
+.field-accordion .other-icon {
+    width: 57px;
+    height: 58px;
+}
+
+.field-accordion .other-icon:first-child {
+    margin-right: 3px;
+}
+
+.field-accordion .other-icon:nth-child(3) {
+    margin-right: 3px;
+    margin-top: 4px;
+}
+
+
+.field-icon__selected-icon {
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    width: 100%;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.field-icon__selected-icon span {
+    font-size: 72px;
+}
+
+.filtered-icons {
+    overflow: hidden;
+}
+
+.filtered-icons .ajax-icon {
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: rgb(236, 236, 236);
+    width: 58px;
+    height: 58px;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.filtered-icons .ajax-icon:nth-child(4n) {
+    margin-right: 0;
+}
+
+.filtered-icons .ajax-icon.chosen {
+    background-color: rgb(1, 8, 51);
+    color: rgb(255,255,255);
 }
 
 
@@ -2084,7 +2437,8 @@ a {
     font-size: 16px;
     border-radius: 2px;
     background-color: rgb(236, 236, 236);
-    width: 188px;
+    color: rgb(1, 8, 51);
+    width: 190px;
     height: 45px;
     padding: 0;
     margin: 0;
@@ -2092,7 +2446,7 @@ a {
 
 .media-center__button_image-icon {
     font-size: 18px;
-     padding-right: 13px;
+    padding-right: 13px;
 }
 
 .media-center__button-more {
@@ -2443,4 +2797,162 @@ a {
 
 .field-datepicker .dtpicker-cont {
     border: 0;
+}
+
+
+/* Field select
+   ========================================================================== */
+
+.field-select {
+    margin-top: 44px;
+}
+
+.field-select .select {
+    border-radius: 2px;
+    height: 50px;
+    width: 100%;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: rgb(236, 236, 236);
+    padding-left: 22px;
+    padding-right: 35px;
+    line-height: 54px;
+}
+
+.field-select .select option {
+    background-color: rgb(255, 255, 255);
+}
+
+.field-select .select-container {
+    position: relative;
+}
+
+.field-select .select-container:after {
+    content: "\f078";
+    padding: 18px 0;
+    position: absolute;
+    right: 13px;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+    width: 10%;
+    height: 100%;
+    pointer-events: none;
+    box-sizing: border-box;
+    font-family: "FontAwesome";
+    font-size: 14px;
+}
+
+
+/* CAUTION: IE hackery ahead */
+
+.field-select select::-ms-expand {
+    display: none;
+    /* remove default arrow on ie10 and ie11 */
+}
+
+.field-select .select:focus {
+    outline: none;
+}
+
+/* Field drop zone
+   ========================================================================== */
+
+.field-drop-zone {
+    display: none;
+}
+
+#qoob-sidebar.overlay .field-drop-zone {
+    display: block;
+    position: relative;
+    border-style: solid;
+    border-width: 6px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: rgb(0, 206, 99);
+    width: 100%;
+    height: 193px;
+    z-index: 14;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.field-drop-zone-text {
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+}
+
+.field-drop-zone-text:before {
+    content: '';
+    display: block;
+    font-size: 22px;
+    font-family: "FontAwesome";
+}
+
+.field-upload-error {
+    display: none;
+    background-color: rgb(237, 49, 42);
+    width: 100%;
+    height: 193px;
+    text-align: center;
+    align-items: center;
+    padding: 0 38px;
+}
+
+.field-upload-error-active {
+ display: flex;
+}
+
+.field-upload-error__text {
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+}
+
+.field-upload-error__text-bold {
+    font-family: 'robotobold';
+}
+
+/* Inner setttings
+   ========================================================================== */
+
+.inner-settings {
+    margin-top: 18px;
+    padding: 0 6px;
+}
+
+.inner-settings-icon .field-input-autocomplete {
+    margin-top: 28px;
+    margin-bottom: 10px;
+}
+
+.inner-settings-video .field-input-autocomplete,
+.inner-settings-image .field-input-autocomplete {
+    margin-top: 26px;
+    margin-bottom: 12px;
+}
+
+.field-image-container-inner.empty .field-image,
+.field-video-container-inner.empty .field-video,
+.field-icon-container-inner.empty .field-icon {
+    display: none;
+}
+
+.field-image-container-inner.empty .field-image__noimage,
+.field-video-container-inner.empty .field-video__novideo,
+.field-icon-container-inner.empty .field-icon__noicon {
+    border-radius: 2px;
+    background-color: rgb(1, 8, 51);
+    width: 100%;
+    height: 168px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
 }

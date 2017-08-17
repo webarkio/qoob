@@ -35,11 +35,13 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 "url": url,
                 "text_droppable_zone": this.storage.__('text_droppable_zone', 'Drop here to create a new block')
             }));
+
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
         },
 
         iframeLoaded: function() {
+          
             this.trigger('iframe_loaded');
             this.triggerIframe();
             this.defaultDroppable();
@@ -202,6 +204,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             //If event 'blocks_loaded' have not been triggered
             this.blocksCounter++;
             blockWrapper.once('loaded', function() {
+       
                 self.trigger('block_loaded');
                 self.blocksCounter--;
                 if (self.blocksCounter === 0) {

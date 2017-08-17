@@ -33,8 +33,8 @@ var QoobPageTemplatesView = Backbone.View.extend({ // eslint-disable-line no-unu
     render: function() {
         this.$el.html(_.template(this.storage.getSkinTemplate('block-default-templates'))({
             "templates": this.storage.pageTemplatesCollection.toJSON(),
-            "block_default_templates_text": this.storage.__('block_default_templates_text', 'Or you can choose one of templates'),
-            "text_default_blank": this.storage.__('block_default_blank', "This is blank page, you can click on block preview to add a block"),
+            "block_default_templates_text": this.storage.__('block_default_templates_text', 'Choose one from amazing templates'),
+            "text_default_blank": this.storage.__('block_default_blank', "Pick a block to add to the page"),
             "template": this.storage.__('template', 'Template')
         }));
 

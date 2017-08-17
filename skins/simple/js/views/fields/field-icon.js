@@ -7,10 +7,12 @@ var Fields = Fields || {};
 Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
     /** @lends Fields.icon.prototype */
     {
+        className: 'field-icon field-group',
         events: {
-            'click .media-center': 'clickMediaCenter',
-            'click .remove': 'clickRemoveIcon',
-            'click .reset': 'clickResetIconToDefault'
+            'click .show-media-center': 'clickMediaCenter',
+            'click .field-icon__remove-icon': 'clickRemoveIcon',
+            'click .reset': 'clickResetIconToDefault',
+            'click .other-icon': 'clickOtherIcon'
         },
         /**
          * View field icon
@@ -46,14 +48,14 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          */
         clickRemoveIcon: function(evt) {
             evt.preventDefault();
-            this.$el.find('.edit-icon').addClass('empty');
+            this.$el.find('.field-icon-container').addClass('empty');
             this.changeIcon('');
         },
         clickResetIconToDefault: function(evt) {
             evt.preventDefault();
             this.changeIcon(this.options.defaults);
-            if (this.$el.find('.edit-icon').hasClass('empty')) {
-                this.$el.find('.edit-icon').removeClass('empty');
+            if (this.$el.find('.field-icon-container').hasClass('empty')) {
+                this.$el.find('.field-icon-container').removeClass('empty');
             }
         },
         /**
@@ -62,7 +64,7 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          */
         changeIcon: function(icon) {
             var iconObject = this.findByClasses(icon);
-            this.$el.find('.preview-icon span').attr({
+            this.$el.find('.field-icon__preview-icon span').attr({
                 'class': icon,
                 'data-icon-tags': (iconObject ? iconObject.tags : '')
             });
@@ -70,14 +72,22 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
             this.model.set(this.$el.find('input[type="hidden"]').attr('name'), icon);
         },
         /**
+         * Click other icon
+         * @param {Object} evt
+         */
+        clickOtherIcon: function(evt) {
+            var icon = this.$(evt.currentTarget).find('span').prop('class');
+            this.changeIcon(icon);
+        },
+        /**
          * Show media center icon
          */
         clickMediaCenter: function() {
             window.selectFieldIcon = function(classes) {
                 if (classes === '') {
-                    this.$el.find('.edit-icon').addClass('empty');
+                    this.$el.find('.field-icon-container').addClass('empty');
                 } else {
-                    this.$el.find('.edit-icon').removeClass('empty');
+                    this.$el.find('.field-icon-container').removeClass('empty');
                 }
                 this.changeIcon(classes);
 
@@ -91,8 +101,7 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
                 parentId: this.parentId,
                 storage: this.storage,
                 icon: iconObject ? { classes: iconObject.classes, tags: iconObject.tags } : '',
-                icons: this.icons,
-                'no_icon': this.storage.__('no_icon', 'No icon')
+                icons: this.icons
             });
 
             this.controller.setInnerSettingsView(iconCenter);
@@ -107,9 +116,12 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
             var htmldata = {
                 label: this.settings.label,
                 name: this.settings.name,
+                icons: _.map(this.settings.presets, function(val) {
+                    return this.findByClasses(val);
+                }.bind(this)),
                 icon: this.findByClasses(this.getValue()) || this.getValue(),
-                'media_center': this.storage.__('media_center', 'Media Center'),
-                'no_icon': this.storage.__('no_icon', 'No icon'),
+                hideDeleteButton: this.settings.hideDeleteButton,
+                'icon_center': this.storage.__('icon_center', 'Icon center'),
                 'reset_to_default': this.storage.__('reset_to_default', 'Reset to default')
             };
 

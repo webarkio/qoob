@@ -10,7 +10,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     index: function() {
         this.layout.menu.showIndex();
         this.layout.stopEditBlock();
-
     },
     showGroup: function(group) {
         this.layout.menu.showGroup(group);
@@ -166,7 +165,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         if (!!this.layout.menu.settingsViewStorage[name]) {
             this.deleteInnerSettingsView(name);
         }
-        console.log(view);
+
         this.layout.menu.addView(view, 'left');
         this.layout.menu.showSide('left', name);
         // this.layout.menu.rotateForward(name, function() {

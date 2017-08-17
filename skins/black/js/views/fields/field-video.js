@@ -168,7 +168,7 @@ Fields.video = QoobFieldView.extend(
                 label: this.settings.label,
                 name: this.settings.name,
                 src: this.getValue(),
-                "iframeUrl": '',
+                "iframeUrl": iframeUrl,
                 'media_center': this.storage.__('media_center', 'Media Center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_video': this.storage.__('no_video', 'No video'),
