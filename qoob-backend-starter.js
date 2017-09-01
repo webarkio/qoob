@@ -126,20 +126,22 @@
 
                 if (undefined !== blocks) {
                     for (var k = 0; k < blocks.length; k++) {
-                        blocks[k].url = blocks[k].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
+                        if (undefined !== blocks[k]) {
+                            blocks[k].url = blocks[k].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
 
-                        if (blocks[k].url.indexOf("http://") !== 0 && blocks[k].url.indexOf("https://") !== 0) {
-                            blocks[k].url = libUrl + blocks[k].url;
-                        }
-                        if (blocks[k].config_url) {
-                            if (blocks[k].config_url.indexOf("http://") !== 0 && blocks[k].config_url.indexOf("https://") !== 0) {
-                                blocks[k].config_url = libUrl + blocks[k].config_url.replace(/^\/+/g, ''); //Trim slashes in the begining
+                            if (blocks[k].url.indexOf("http://") !== 0 && blocks[k].url.indexOf("https://") !== 0) {
+                                blocks[k].url = libUrl + blocks[k].url;
                             }
-                        } else {
-                            blocks[k].config_url = blocks[k].url + "config.json";
-                        }
+                            if (blocks[k].config_url) {
+                                if (blocks[k].config_url.indexOf("http://") !== 0 && blocks[k].config_url.indexOf("https://") !== 0) {
+                                    blocks[k].config_url = libUrl + blocks[k].config_url.replace(/^\/+/g, ''); //Trim slashes in the begining
+                                }
+                            } else {
+                                blocks[k].config_url = blocks[k].url + "config.json";
+                            }
 
-                        self.loader.add({ "type": "json", "name": libs[i].name + "_" + blocks[k].name, "src": blocks[k].config_url });
+                            self.loader.add({ "type": "json", "name": libs[i].name + "_" + blocks[k].name, "src": blocks[k].config_url });
+                        }
                     }
                 }
             }
@@ -212,7 +214,6 @@
                 libName = splited[0];
                 blockName = splited[1];
             } else if (splited.length === 1) {
-
                 libName = currentLib.name;
                 blockName = splited[0];
             } else {
@@ -235,10 +236,12 @@
             var currentLib = libs[i];
             if (undefined !== currentLib.blocks) {
                 for (var j = 0; j < currentLib.blocks.length; j++) {
-                    var configString = JSON.stringify(libs[i].blocks[j].config);
-                    configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
-                    configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
-                    currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                    if (undefined !== libs[i].blocks[j]) {
+                        var configString = JSON.stringify(libs[i].blocks[j].config);
+                        configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
+                        configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
+                        currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                    }
                 }
             }
         }
@@ -263,9 +266,9 @@
 
     QoobStarter.prototype.parseBlockData = function(libs) {
         var result = [];
+
         for (var i = 0; i < libs.length; i++) {
             var lib = libs[i];
-
 
             if (undefined !== lib.blocks) {
                 for (var j = 0; j < lib.blocks.length; j++) {
