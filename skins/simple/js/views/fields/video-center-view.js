@@ -6,18 +6,15 @@
 var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends VideoCenterView.prototype */
     {
-        className: "settings menu-block",
+        className: "inner-settings-video settings inner-settings",
         dataVideos: null,
         dataSearchVideos: null,
         offset: 0,
         limit: 12,
         events: {
             'keydown': 'keyAction',
-            'click .backward-video': 'backward',
-            'click #inner-settings-video .ajax-video': 'selectVideo',
-            'keyup #inner-settings-video .video-search': 'searchFilter',
-            'click .remove': 'deleteVideo',
-            'click .search-button': 'clickSearchButton',
+            'click .ajax-video': 'selectVideo',
+            'keyup .video-search': 'searchFilter',
             'shown': 'afterRender'
         },
         /**
@@ -46,7 +43,6 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.src = options.src;
             this.assets = options.assets;
             this.tags = options.tags;
-            this.hideDeleteButton = options.hideDeleteButton;
 
 
             //Getting info about all video assets
@@ -72,12 +68,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         render: function() {
             //Creating layout
             this.$el.html(this.tpl({
-                back: this.storage.__('back', 'Back'),
-                'no_video': this.storage.__('no_video', 'No video'),
-                'no_poster': this.storage.__('no_poster', 'No poster'),
                 search: this.storage.__('search', 'Search'),
-                src: this.src,
-                hideDeleteButton: this.hideDeleteButton
+                src: this.src
             }));
 
             return this;
@@ -108,7 +100,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 return false;
             }
         },
-        clickSearchButton: function() {
+        search: function() {
             var filteredWords = this.$el.find('.video-search').val().split(','),
                 filteredIcons = this.$el.find('.filtered-videos');
 
@@ -151,7 +143,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var videos = this.dataVideos.slice(offset, offset + this.limit);
                 for (var i = 0; i < videos.length; i++) {
-                    result.push('<div class="ajax-video" data-src="' + videos[i].src + '"><img src="' + videos[i].preview + '" alt="" /></div>');
+                    result.push('<div class="ajax-video' + (images[i].src === this.src.url ? ' chosen ' : '') + '" data-src="' + videos[i].src + '" data-preview="' + videos[i].preview + '" style="background-image: url(' + videos[i].preview + ');"></div>');
                 }
             } else {
                 this.dataSearchVideos = [];
@@ -166,20 +158,12 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
                 var searchVideos = this.dataSearchVideos.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchVideos.length; x++) {
-                    result.push('<div class="ajax-video" data-src="' + searchVideos[x].src + '"><img src="' + searchVideos[x].preview + '" alt="" /></div>');
+                    result.push('<div class="ajax-video' + (searchVideos[x].src === this.src.url ? ' chosen ' : '') + '" data-src="' + searchVideos[x].src + '" data-preview="' + searchVideos[x].preview + '" style="background-image: url(' + searchVideos[x].preview + ');"></div>');
                 }
             }
 
 
             return result.join('');
-        },
-        /**
-         * Returning to main block settings on clicking back button
-         * @returns {undefined}
-         */
-        backward: function(e) {
-            e.preventDefault();
-            this.controller.layout.menu.rotateBackward(this.backId);
         },
         /**
          * Setting an video by clicking it
@@ -193,25 +177,15 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.$el.find('.ajax-video').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
 
-            var url = this.$(evt.currentTarget).attr('data-src'),
-                preview = this.$(evt.currentTarget).find('img').attr('src');
+            var url = this.$(evt.currentTarget).data('src'),
+                preview = this.$(evt.currentTarget).data('preview');
 
-            this.$el.find('.video-container img').attr('src', preview);
+            this.$el.find('.field-video__selected-video img').attr('src', preview);
 
             if (this.$el.find('.selected-video').hasClass('empty')) {
                 this.$el.find('.selected-video').removeClass('empty');
             }
             window.selectFieldVideo({ url: url, preview: preview });
-        },
-        /**
-         * Delete video
-         * @param {type} evt
-         */
-        deleteVideo: function(evt) {
-            evt.preventDefault();
-            window.selectFieldVideo('');
-            this.$el.find('.selected-video').addClass('empty');
-            this.$el.find('.ajax-video').removeClass('chosen');
         },
         /**
          * Keyup event for filtering videos by tags in search input
@@ -234,14 +208,14 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.$el.find('.video-search').autocomplete({
                 source: tagsList,
                 select: function() {
-                    self.$el.find('.search-button').trigger('click');
+                    self.search();
                 },
             }).data("ui-autocomplete")._renderItem = function(ul, item) {
                 //Ul custom class here
-                ul.addClass('settings-autocomplete media-autocomplete');
+                ul.addClass('field-input-autocomplete-list field-input-autocomplete-list-inner');
                 return jQuery("<li>")
                     .attr("data-value", item.value)
-                    .append(item.label)
+                    .append("<div>" + item.label + "</div>")
                     .appendTo(ul);
             };
         },

@@ -2265,8 +2265,7 @@ input[type="text"]#datepicker {
     color: #95969a;
 }
 
-.settings-item .image-control .input-file,
-.settings-item .video-control .input-file {
+.settings-item .input-file {
     display: none;
 }
 

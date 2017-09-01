@@ -7,18 +7,16 @@
 var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends ImageCenterView.prototype */
     {
-        className: "settings menu-block",
+        className: "inner-settings-image settings inner-settings",
         dataImages: null,
         dataSearchImages: null,
         offset: 0,
         limit: 12,
         events: {
             'keydown': 'keyAction',
-            'click .backward-image': 'backward',
-            'click #inner-settings-image .ajax-image': 'selectImage',
-            'keyup #inner-settings-image .img-search': 'searchFilter',
-            'click .remove': 'deleteImage',
-            'click .search-button': 'clickSearchButton',
+            'click .ajax-image': 'clickListImage',
+            'keyup .img-search': 'searchFilter',
+            'change .image-url': 'changeInputUrlImage',
             'shown': 'afterRender'
         },
         /**
@@ -47,7 +45,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.curSrc = options.curSrc;
             this.assets = options.assets;
             this.tags = options.tags;
-            this.hideDeleteButton = options.hideDeleteButton;
+            this.iframeUrl = options.iframeUrl;
 
             this.dataImages = [];
             for (var i = 0; i < this.assets.length; i++) {
@@ -65,11 +63,9 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         render: function() {
             //Creating layout
             this.$el.html(this.tpl({
-                curSrc: this.curSrc,
-                hideDeleteButton: this.hideDeleteButton,
-                back: this.storage.__('back', 'Back'),
-                search: this.storage.__('search', 'Search'),
-                'no_image': this.storage.__('no_image', 'No image'),
+                'curSrc': this.curSrc,
+                'search': this.storage.__('search', 'Search'),
+                'url': this.storage.__('url', 'url')
             }));
 
             return this;
@@ -103,12 +99,24 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
-                this.$el.find(".search-button").click();
-                this.$el.find('.img-search').autocomplete('close');
+                this.search();
+                this.$el.find('.img-search').autocomplete("search", "");
                 return false;
             }
         },
-        clickSearchButton: function() {
+        /**
+         * Event change input url image
+         * @param {Object} evt
+         */
+        changeInputUrlImage: function(evt) {
+            var url = jQuery(evt.target).val();
+            if (url.match(/.(jpg|jpeg|png|gif)$/i)) {
+                this.changeImage(url);
+            } else {
+                console.error('Invalid file format');
+            }
+        },
+        search: function() {
             var filteredWords = this.$el.find('.img-search').val().split(','),
                 filteredImages = this.$el.find('.filtered-images');
 
@@ -133,7 +141,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         getImages: function(tags, offset) {
             var filteredWords = tags,
                 result = [];
-
+ 
             if (_.isString(filteredWords)) {
                 filteredWords = filteredWords.split(',');
             } else if (_.isArray(filteredWords)) {
@@ -143,7 +151,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var images = this.dataImages.slice(offset, offset + this.limit);
                 for (var i = 0; i < images.length; i++) {
-                    result.push('<div class="ajax-image"><img src="' + images[i].src + '" alt="" /></div>');
+                    result.push('<div class="ajax-image' + (images[i].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + images[i].src + ');" data-url="'+ images[i].src +'"></div>');
                 }
             } else {
                 this.dataSearchImages = [];
@@ -156,48 +164,39 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                     }
                 }
 
-                var searcImages = this.dataSearchImages.slice(offset, offset + this.limit);
-                for (var x = 0; x < searcImages.length; x++) {
-                    result.push('<div class="ajax-image"><img src="' + searcImages[x].src + '" alt="" /></div>');
+                var searchImages = this.dataSearchImages.slice(offset, offset + this.limit);
+                for (var x = 0; x < searchImages.length; x++) {
+                    result.push('<div class="ajax-image' + (searchImages[x].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + searchImages[x].src + ');" data-url="'+ images[i].src +'"></div>');
                 }
             }
 
             return result.join('');
         },
         /**
-         * Returning to main block settings on clicking back button
-         * @returns {undefined}
-         */
-        backward: function(e) {
-            e.preventDefault();
-            this.controller.layout.menu.rotateBackward(this.backId);
-        },
-        /**
          * Setting an image by clicking it
          * @param {type} evt
-         * @returns {undefined}
          */
-        selectImage: function(evt) {
+       clickListImage: function(evt) {
             if (evt.currentTarget.classList.contains('chosen')) {
                 return;
             }
             this.$el.find('.ajax-image').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
-            this.$el.find('.image-container img').attr('src', evt.target.getAttribute('src'));
-            if (this.$el.find('.selected-image').hasClass('empty')) {
-                this.$el.find('.selected-image').removeClass('empty');
-            }
-            window.selectFieldImage(evt.target.getAttribute('src'));
+
+            var url = this.$(evt.currentTarget).data('url');
+
+            this.changeImage(url);
+
         },
-        /**
-         * Delete image
-         * @param {type} evt
-         */
-        deleteImage: function(evt) {
-            evt.preventDefault();
-            window.selectFieldImage('');
-            this.$el.find('.selected-image').addClass('empty');
-            this.$el.find('.ajax-image').removeClass('chosen');
+        changeImage: function(url) {
+            this.$el.find('.field-image__selected-image img').attr('src', url);
+            if (this.$el.find('.field-image-container-inner').hasClass('empty')) {
+                this.$el.find('.field-image-container-inner').removeClass('empty');
+            }
+
+            this.$el.find('.image-url').val(url);
+            this.curSrc = url;
+            window.selectFieldImage(url);
         },
         /**
          * Keyup event for filtering images by tags in search input
@@ -220,14 +219,14 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.$el.find('.img-search').autocomplete({
                 source: tagsList,
                 select: function() {
-                    self.$el.find('.search-button').trigger('click');
+                    self.search();
                 },
             }).data("ui-autocomplete")._renderItem = function(ul, item) {
                 //Ul custom class here
-                ul.addClass('settings-autocomplete media-autocomplete');
+                ul.addClass('field-input-autocomplete-list field-input-autocomplete-list-inner');
                 return jQuery("<li>")
                     .attr("data-value", item.value)
-                    .append(item.label)
+                    .append("<div>" + item.label + "</div>")
                     .appendTo(ul);
             };
         },

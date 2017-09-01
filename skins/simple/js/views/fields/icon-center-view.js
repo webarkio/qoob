@@ -7,17 +7,14 @@
 var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends IconCenterView.prototype */
     {
-        className: "settings menu-block",
+        className: "inner-settings-icon settings inner-settings",
         offset: 0,
         limit: 12,
         dataSearchIcons: null,
         events: {
             'keydown': 'keyAction',
-            'click .backward-icon': 'backward',
-            'click #inner-settings-icon .ajax-icon': 'selectIcon',
-            'keyup #inner-settings-icon .icon-search': 'searchFilter',
-            'click .remove': 'clickRemoveIcon',
-            'click .search-button': 'clickSearchButton',
+            'click .ajax-icon': 'selectIcon',
+            'keyup .icon-search': 'searchFilter',
             'shown': 'afterRender'
         },
         /**
@@ -54,9 +51,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         render: function() {
             //Creating layout
             this.$el.html(this.tpl({
-                back: this.storage.__('back', 'Back'),
                 search: this.storage.__('search', 'Search'),
-                'no_icon': this.storage.__('no_icon', 'No icon'),
                 icon: this.icon
             }));
 
@@ -91,12 +86,12 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
-                this.$el.find(".search-button").click();
-                this.$el.find('.icon-search').autocomplete('close');
+                this.search();
+                this.$el.find('.icon-search').autocomplete("search", "");
                 return false;
             }
         },
-        clickSearchButton: function() {
+        search: function() {
             var filteredWords = this.$el.find('.icon-search').val().split(','),
                 filteredIcons = this.$el.find('.filtered-icons');
 
@@ -146,19 +141,11 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
                 var searchIcons = this.dataSearchIcons.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchIcons.length; x++) {
-                    result.push('<div class="ajax-icon"><span  data-icon-tags="' + searchIcons[x].tags + '" class="' + searchIcons[x].classes + '"></span> </div>');
+                    result.push('<div class="ajax-icon' + (searchIcons[x].classes === this.icon.classes ? ' chosen ' : '') + '"><span  data-icon-tags="' + searchIcons[x].tags + '" class="' + searchIcons[x].classes + '"></span></div>');
                 }
             }
 
             return result.join('');
-        },
-        /**
-         * Returning to main block settings on clicking back button
-         * @returns {undefined}
-         */
-        backward: function(e) {
-            e.preventDefault();
-            this.controller.layout.menu.rotateBackward(this.backId);
         },
         /**
          * Setting an icon by clicking it
@@ -169,27 +156,20 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if (evt.currentTarget.classList.contains('chosen')) {
                 return;
             }
+
             var currentTarget = this.$(evt.currentTarget).find('span');
             this.$el.find('.ajax-icon').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
-            if (this.$el.find('.selected-icon').hasClass('empty')) {
-                this.$el.find('.selected-icon').removeClass('empty');
+
+            if (this.$el.find('.field-icon-container-inner').hasClass('empty')) {
+                this.$el.find('.field-icon-container-inner').removeClass('empty');
             }
-            this.$el.find('.preview-icon span').attr({
+
+            this.$el.find('.field-icon__selected-icon span').attr({
                 'class': currentTarget.attr('class'),
                 'data-icon-tags': currentTarget.attr('data-icon-tags')
             });
             window.selectFieldIcon(currentTarget.attr('class'));
-        },
-        /**
-         * Delete icon
-         * @param {type} evt
-         */
-        clickRemoveIcon: function(evt) {
-            evt.preventDefault();
-            window.selectFieldIcon('');
-            this.$el.find('.selected-icon').addClass('empty');
-            this.$el.find('.ajax-icon').removeClass('chosen');
         },
         /**
          * Keyup event for filtering icons by tags in search input
@@ -198,10 +178,11 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         searchFilter: function() {
             var self = this;
 
-            var groupTags = [], data = this.icons;
+            var groupTags = [],
+                data = this.icons;
 
             for (var i = 0; i < data.length; i++) {
-                if (! _.isUndefined(data[i].tags) ) {
+                if (!_.isUndefined(data[i].tags)) {
                     groupTags.push(data[i].tags);
                 }
             }
@@ -211,14 +192,14 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.$el.find('.icon-search').autocomplete({
                 source: tagsList,
                 select: function() {
-                    self.$el.find('.search-button').trigger('click');
+                    self.search();
                 },
             }).data("ui-autocomplete")._renderItem = function(ul, item) {
                 //Ul custom class here
-                ul.addClass('settings-autocomplete media-autocomplete');
+                ul.addClass('field-input-autocomplete-list field-input-autocomplete-list-inner');
                 return jQuery("<li>")
                     .attr("data-value", item.value)
-                    .append(item.label)
+                    .append("<div>" + item.label + "</div>")
                     .appendTo(ul);
             };
         },

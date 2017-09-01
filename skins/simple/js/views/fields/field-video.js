@@ -7,16 +7,17 @@ var Fields = Fields || {};
 Fields.video = QoobFieldView.extend(
     /** @lends Fields.video.prototype */
     {
+        className: 'field-video field-group',
         customItems: null,
         counterDropZone: 0,
         events: {
-            'click .media-center': 'clickMediaCenter',
-            'click .remove': 'clickRemoveVideo',
-            'drop .drop-zone': 'dropVideo',
-            'dragenter .drop-zone': 'dragOnDropZone',
-            'dragleave .drop-zone': 'dragLeaveDropZone',
-            'global_drag_start': 'showDropZone',
-            'global_drag_stop': 'hideDropZone',
+            'click .show-media-center': 'clickMediaCenter',
+            'click .field-video__remove-video': 'clickRemoveVideo',
+            'click .others-item__image': 'clickOtherVideo',
+            'drop .field-drop-zone': 'dropVideo',
+            'dragenter .field-drop-zone': 'dragOnDropZone',
+            'dragleave .field-drop-zone': 'dragLeaveDropZone',
+            'global_drag_start': 'globalDragStart',
             'click [data-id]': 'clickAction'
         },
         /**
@@ -56,16 +57,31 @@ Fields.video = QoobFieldView.extend(
          */
         changeVideo: function(src) {
             if (src !== '') {
-                this.$el.find('.video-container img').attr('src', src.preview);
-                this.model.set(this.$el.find('input.url').attr('name'), src);
-                this.$el.find('input.url').val(src.url);
-                this.$el.find('input.preview').val(src.preview);
+                this.$el.find('.field-video__preview-image').attr('src', src.preview);
+                this.model.set(this.$el.find('.field-video__url-hidden').attr('name'), src);
+                this.$el.find('.field-video__url-hidden').val(src.url);
+                this.$el.find('.field-video__preview-hidden').val(src.preview);
             } else {
-                this.$el.find('.video-container img').attr('src', '');
-                this.model.set(this.$el.find('input.url').attr('name'), '');
-                this.$el.find('input.url').val('');
-                this.$el.find('input.preview').val('');
+                this.$el.find('.field-video__preview-image').attr('src', '');
+                this.model.set(this.$el.find('.field-video__url-hidden').attr('name'), '');
+                this.$el.find('.field-video__url-hidden').val('');
+                this.$el.find('.field-video__preview-hidden').val('');
             }
+        },
+        /**
+         * Click other video
+         * @param {Object} evt
+         */
+        clickOtherVideo: function(evt) {
+            var video = this.$(evt.currentTarget).data('src-video'),
+            preview = this.$(evt.currentTarget).data('src-preview');
+
+            var src = {
+                'url': video,
+                'preview': preview
+            };
+
+            this.changeVideo(src);
         },
         /**
          * Remove video
@@ -73,20 +89,8 @@ Fields.video = QoobFieldView.extend(
          */
         clickRemoveVideo: function(evt) {
             evt.preventDefault();
-            this.$el.find('.edit-video').addClass('empty');
+            this.$el.find('.field-video-container').addClass('empty');
             this.changeVideo('');
-        },
-        /**
-         * Show drop zone
-         */
-        showDropZone: function() {
-            this.$el.find('.drop-zone').show();
-        },
-        /**
-         * Hide drop zone
-         */
-        hideDropZone: function() {
-            this.$el.find('.drop-zone').hide();
         },
         /**
          * Drop image on zone
@@ -97,11 +101,20 @@ Fields.video = QoobFieldView.extend(
             this.counterDropZone = 0;
         },
         /**
+         * Global trigger drag start
+         */
+        globalDragStart: function() {
+            var uploadError = this.$el.find('.field-upload-error');
+            if (uploadError.hasClass('field-upload-error-active')) {
+                uploadError.removeClass('field-upload-error-active');
+            }
+        },
+        /**
          * Drag image on drop zone
          */
         dragOnDropZone: function() {
             this.counterDropZone++;
-            this.$el.find('.drop-zone').addClass('hover');
+            this.$el.find('.field-drop-zone').addClass('hover');
         },
         /**
          * Leave drag image on drop zone
@@ -109,7 +122,7 @@ Fields.video = QoobFieldView.extend(
         dragLeaveDropZone: function() {
             this.counterDropZone--;
             if (this.counterDropZone === 0) {
-                this.$el.find('.drop-zone').removeClass('hover');
+                this.$el.find('.field-drop-zone').removeClass('hover');
             }
         },
         /**
@@ -118,9 +131,9 @@ Fields.video = QoobFieldView.extend(
          */
         clickMediaCenter: function() {
             window.selectFieldVideo = function(src) {
-                this.$el.find('.edit-video').removeClass('empty');
+                this.$el.find('.field-video-container').removeClass('empty');
                 if (!src) {
-                    this.$el.find('.edit-video').addClass('empty');
+                    this.$el.find('.field-video-container').addClass('empty');
                 }
                 this.changeVideo(src);
             }.bind(this);
@@ -132,8 +145,7 @@ Fields.video = QoobFieldView.extend(
                 storage: this.storage,
                 src: this.getValue(),
                 assets: this.storage.getAssets(),
-                tags: this.tags ? this.tags.join(', ') : '',
-                hideDeleteButton: this.settings.hideDeleteButton
+                tags: this.tags ? this.tags.join(', ') : ''
             });
 
             this.controller.setInnerSettingsView(videoCenter);
@@ -145,17 +157,36 @@ Fields.video = QoobFieldView.extend(
          * @returns {Object}
          */
         render: function() {
+            var iframeUrl,
+                pattern = /^((http|https):\/\/)/;
+
+            // if url has "http|https"
+            if (_.isObject(this.getValue())) {
+                if (!pattern.test(this.getValue().preview) && typeof this.storage.driver.getFrontendPageUrl === "function") {
+                    iframeUrl = this.storage.driver.getFrontendPageUrl();
+                } else {
+                    iframeUrl = '';
+                }
+            } else {
+                if (!pattern.test(this.getValue()) && typeof this.storage.driver.getFrontendPageUrl === "function") {
+                    iframeUrl = this.storage.driver.getFrontendPageUrl();
+                } else {
+                    iframeUrl = '';
+                }
+            }
+
             var htmldata = {
                 label: this.settings.label,
                 name: this.settings.name,
+                videos: this.settings.presets,
                 src: this.getValue(),
+                "iframeUrl": iframeUrl,
                 hideDeleteButton: this.settings.hideDeleteButton,
-                'media_center': this.storage.__('media_center', 'Media Center'),
+                'media_center': this.storage.__('media_center', 'Media center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
-                'no_video': this.storage.__('no_video', 'No video'),
                 'no_poster': this.storage.__('no_poster', 'No poster'),
-                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here'),
-                'formats': this.storage.__('formats', 'mp4, ogv, webm')
+                'error': this.storage.__('error', 'Error!'),
+                'error_text': this.storage.__('error_text', 'Video size can not exceed 30 mb')
             };
 
             if (typeof this.storage.driver.mainMenu === "function") {

@@ -12,9 +12,9 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         'click .view-preview': 'clickPreviewMode',
         'change .lib-select': 'changeLib',
         'change .preview-modes': 'changeDeviceMode',
-        // 'click .exit': 'clickExit',
         'click .save': 'clickSave',
         'click .autosave-checkbox': 'clickAutosave',
+        'click .backward': 'clickBackward',
         'click [data-id]': 'clickAction'
     },
     attributes: function() {
@@ -115,10 +115,6 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     changeDeviceMode: function(evt) {
         this.controller.setDeviceMode(evt.target.value);
     },
-    // deprecated
-    clickExit: function() {
-        this.controller.exit();
-    },
     clickSave: function() {
         this.controller.save();
     },
@@ -127,5 +123,8 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     },
     changeLib: function(evt) {
         this.controller.changeLib(evt.target.value);
+    },
+    clickBackward: function() {
+        this.controller.backward();
     }
 });
