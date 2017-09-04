@@ -1,6 +1,18 @@
 'use strict';
 
 /**
+ * Handlebars Utils 
+ */
+Handlebars.utils = {
+    isNumber: function(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    },
+    random: function(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
+    }
+}
+
+/**
  * Handlebars helpers.
  * @namespace Handlebars.helpers
  * Sorts array by a given key
@@ -365,4 +377,292 @@ Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
         "/": lvalue / rvalue,
         "%": lvalue % rvalue
     }[operator];
+});
+
+/**
+ * Return the magnitude of `a`.
+ *
+ * @param {Number} `a`
+ * @return {Number}
+ * @api public
+ */
+Handlebars.registerHelper('abs', function(num) {
+  if (!Handlebars.utils.isNumber(num)) {
+    throw new TypeError('expected a number');
+  }
+  return Math.abs(num);
+});
+
+/**
+ * Return the sum of `a` plus `b`.
+ *
+ * @param {Number} `a`
+ * @param {Number} `b`
+ * @return {Number}
+ * @api public
+ */
+Handlebars.registerHelper('add', function(a, b) {
+  if (Handlebars.utils.isNumber(a) && Handlebars.utils.isNumber(b)) {
+    return Number(a) + Number(b);
+  }
+  if (typeof a === 'string' && typeof b === 'string') {
+    return a + b;
+  }
+  return '';
+});
+
+/**
+ * Returns the average of all numbers in the given array.
+ *
+ * ```handlebars
+ * {{avg "[1, 2, 3, 4, 5]"}}
+ * <!-- results in: '3' -->
+ * ```
+ *
+ * @param {Array} `array` Array of numbers to add up.
+ * @return {Number}
+ * @api public
+ */
+
+Handlebars.registerHelper('avg', function() {
+  var args = [].concat.apply([], arguments);
+
+  // remove handlebars options object
+  args.pop();
+
+  args = args[0].replace(/[\[\]']+/g, '');
+  
+  var args = args.split(",");
+
+  var len = args.length;
+  var sum = 0;
+
+  while (len--) {
+    if (Handlebars.utils.isNumber(args[len])) {
+      sum += Number(args[len]);
+    }
+  }
+
+  return sum / args.length;
+});
+
+/**
+ * Get the `Math.ceil()` of the given value.
+ *
+ * @param {Number} `value`
+ * @return {Number}
+ * @api public
+ */
+
+Handlebars.registerHelper('ceil', function(num) {
+  if (!Handlebars.utils.isNumber(num)) {
+    throw new TypeError('expected a number');
+  }
+  return Math.ceil(num);
+});
+
+/**
+ * Divide `a` by `b`
+ *
+ * @param {Number} `a` numerator
+ * @param {Number} `b` denominator
+ * @api public
+ */
+
+Handlebars.registerHelper('divide', function(a, b) {
+  if (!Handlebars.utils.isNumber(a)) {
+    throw new TypeError('expected the first argument to be a number');
+  }
+  if (!Handlebars.utils.isNumber(b)) {
+    throw new TypeError('expected the second argument to be a number');
+  }
+  return Number(a) / Number(b);
+});
+
+/**
+ * Get the `Math.floor()` of the given value.
+ *
+ * @param {Number} `value`
+ * @return {Number}
+ * @api public
+ */
+
+Handlebars.registerHelper('floor', function(num) {
+  if (!Handlebars.utils.isNumber(num)) {
+    throw new TypeError('expected a number');
+  }
+  return Math.floor(num);
+});
+
+/**
+ * Return the difference of `a` minus `b`.
+ *
+ * @param {Number} `a`
+ * @param {Number} `b`
+ * @alias subtract
+ * @api public
+ */
+
+Handlebars.registerHelper('minus', function(a, b) {
+  if (!Handlebars.utils.isNumber(a)) {
+    throw new TypeError('expected the first argument to be a number');
+  }
+  if (!Handlebars.utils.isNumber(b)) {
+    throw new TypeError('expected the second argument to be a number');
+  }
+  return Number(a) - Number(b);
+});
+
+/**
+ * Get the remainder of a division operation.
+ *
+ * @param {Number} `a`
+ * @param {Number} `b`
+ * @return {Number}
+ * @api public
+ */
+
+Handlebars.registerHelper('modulo', function(a, b) {
+  if (!Handlebars.utils.isNumber(a)) {
+    throw new TypeError('expected the first argument to be a number');
+  }
+  if (!Handlebars.utils.isNumber(b)) {
+    throw new TypeError('expected the second argument to be a number');
+  }
+  return Number(a) % Number(b);
+});
+
+/**
+ * Return the product of `a` times `b`.
+ *
+ * @param {Number} `a` factor
+ * @param {Number} `b` multiplier
+ * @return {Number}
+ * @alias times
+ * @api public
+ */
+
+Handlebars.registerHelper('multiply', function(a, b) {
+  if (!Handlebars.utils.isNumber(a)) {
+    throw new TypeError('expected the first argument to be a number');
+  }
+  if (!Handlebars.utils.isNumber(b)) {
+    throw new TypeError('expected the second argument to be a number');
+  }
+  return Number(a) * Number(b);
+});
+
+/**
+ * Add `a` by `b`.
+ *
+ * @param {Number} `a` factor
+ * @param {Number} `b` multiplier
+ * @api public
+ */
+
+Handlebars.registerHelper('plus', function(a, b) {
+  if (!Handlebars.utils.isNumber(a)) {
+    throw new TypeError('expected the first argument to be a number');
+  }
+  if (!Handlebars.utils.isNumber(b)) {
+    throw new TypeError('expected the second argument to be a number');
+  }
+  return Number(a) + Number(b);
+});
+
+/**
+ * Generate a random number between two values
+ *
+ * @param {Number} `min`
+ * @param {Number} `max`
+ * @return {String}
+ * @api public
+ */
+
+Handlebars.registerHelper('random', function(min, max) {
+  if (!Handlebars.utils.isNumber(min)) {
+    throw new TypeError('expected minimum to be a number');
+  }
+  if (!Handlebars.utils.isNumber(max)) {
+    throw new TypeError('expected maximum to be a number');
+  }
+  return Handlebars.utils.random(min, max);
+});
+
+/**
+ * Get the remainder when `a` is divided by `b`.
+ *
+ * @param {Number} `a` a
+ * @param {Number} `b` b
+ * @api public
+ */
+
+Handlebars.registerHelper('remainder', function(a, b) {
+  return a % b;
+});
+
+/**
+ * Round the given number.
+ *
+ * @param {Number} `number`
+ * @return {Number}
+ * @api public
+ */
+
+Handlebars.registerHelper('round', function(num) {
+  if (!Handlebars.utils.isNumber(num)) {
+    throw new TypeError('expected a number');
+  }
+  return Math.round(num);
+});
+
+/**
+ * Return the product of `a` minus `b`.
+ *
+ * @param {Number} `a`
+ * @param {Number} `b`
+ * @return {Number}
+ * @alias minus
+ * @api public
+ */
+
+Handlebars.registerHelper('subtract', function(a, b) {
+  if (!Handlebars.utils.isNumber(a)) {
+    throw new TypeError('expected the first argument to be a number');
+  }
+  if (!Handlebars.utils.isNumber(b)) {
+    throw new TypeError('expected the second argument to be a number');
+  }
+  return Number(a) - Number(b);
+});
+
+/**
+ * Returns the sum of all numbers in the given array.
+ *
+ * ```handlebars
+ * {{sum "[1, 2, 3, 4, 5]"}}
+ * <!-- results in: '15' -->
+ * ```
+ * @param {Array} `array` Array of numbers to add up.
+ * @return {Number}
+ * @api public
+ */
+
+Handlebars.registerHelper('sum', function() {
+  var args = [].concat.apply([], arguments);
+
+  // remove handlebars options object
+  args.pop();
+
+  args = args[0];
+
+  var len = args.length;
+  var sum = 0;
+
+  while (len--) {
+    if (Handlebars.utils.isNumber(args[len])) {
+      sum += Number(args[len]);
+    }
+  }
+  return sum;
 });
