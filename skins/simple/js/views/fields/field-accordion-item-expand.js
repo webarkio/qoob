@@ -24,7 +24,7 @@ Fields.accordion_item_expand = Backbone.View.extend(
         var items = [],
                 settingsView = new QoobFieldsView({
                     model: this.model,
-                    settings: this.settings,
+                    settings: this.settings.settings,
                     defaults: this.defaults,
                     storage: this.storage,
                     controller: this.controller,

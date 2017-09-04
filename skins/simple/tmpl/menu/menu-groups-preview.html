@@ -4,7 +4,7 @@
             <% var group = groups_arr[i]; %>
             <% var group_id = group.id.replace(/\s+/g, ''); %>
             <li class="group-list__item">
-                <a href="#groups/<%= group_id %>" class="group-list__link" data-group-id="<%= group_id %>">
+                <a href="#groups-<%= group_id %>" class="group-list__link" data-group-id="<%= group_id %>">
                 <% if (group.label){ %> 
                     <%= group.label %> 
                 <% } else { %> 

@@ -1097,12 +1097,14 @@ a {
     margin: 0;
 }
 
-.qoob-menu-center {
+.qoob-menu-main-side {
     height: 100%;
     background-color: #fff;
     position: relative;
     z-index: 1;
 }
+
+/*
 
 .qoob-menu-left-side {
     position: absolute;
@@ -1127,6 +1129,8 @@ a {
     transition: transform .3s linear;
     overflow: hidden;
 }
+
+*/
 
 .qoob-menu-right-side {
     display: block;
@@ -1158,6 +1162,7 @@ a {
 }
 
 .preview-block img {
+    cursor: pointer;
     display: block;
     /*width: 223px;*/
     width: 100%;
@@ -1899,13 +1904,16 @@ a {
 }
 
 .field-accordion__settings .title-accordion {
+    cursor: pointer;
     background-color: rgb(255, 255, 255);
     position: relative;
     margin: 0;
     font-size: 16px;
+    font-weight: normal;
     outline: 0;
     overflow: hidden;
-    padding: 0;
+    padding-right: 0;
+    padding-left: 0;
     padding-top: 2px;
     padding-bottom: 2px;
     border-radius: 0;
@@ -2005,9 +2013,7 @@ a {
 
 .field-accordion__settings .preview-image+.title-item {
     width: 130px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-family: 'robotoregular';
 }
 
 .field-accordion .settings-block-items {

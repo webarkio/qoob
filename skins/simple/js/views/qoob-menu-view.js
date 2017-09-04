@@ -29,7 +29,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     "config": item,
                     "storage": this.storage,
                     controller: this.controller
-                }), 'left');
+                }), 'main');
             }
         },
         /**
@@ -44,7 +44,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 storage: this.storage,
                 groups: groups,
                 controller: this.controller
-            }));
+            }), 'main');
 
             for (var i = 0; i < groups.length; i++) {
                 this.addView(new QoobMenuBlocksPreviewView({
@@ -59,7 +59,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 id: 'save-template',
                 storage: this.storage,
                 controller: this.controller
-            }), 'left');
+            }), 'main');
 
             this.draggable();
 
@@ -159,17 +159,13 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.showSide('left', id);
         },
         /**
-         * Add view to side qoob
+         * Add view to position qoob
          * @param {Object} BackboneView  View from render
          * @param {String} side location
          */
-        addView: function(view, side) {
+        addView: function(view, position) {
             this.menuViews.push(view);
-            if (side === 'left' || side === 'right') {
-                this.$el.find('.qoob-menu-' + side + '-side').append(view.render().el);
-            } else {
-                this.$el.find('.qoob-menu-center').append(view.render().el);
-            }
+            this.$el.find('.qoob-menu-' + position + '-side').append(view.render().el);
         },
         /**
          * Get SettingsView by id
@@ -182,8 +178,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }
             }
         },
-        showSide: function(side, id) {
-            var side = this.$el.find('.qoob-menu-' + side + '-side');
+        showSide: function(position, id) {
+            var side = this.$el.find('.qoob-menu-' + position + '-side');
 
             // Selected item menu
             this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
@@ -209,7 +205,15 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 side.removeClass('show-side');
             }
         },
+        rotate: function(id, motion) {
+            console.log(id);
+            if (motion === 'back') {
+                // this.$el.add
+            }
+            
+        },
         onEditStart: function(blockId) {
+            console.log('onEditStart');
             this.rotate('settings-block-' + blockId);
         },
         onEditStop: function() {

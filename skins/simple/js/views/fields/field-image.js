@@ -134,6 +134,7 @@ Fields.image = QoobFieldView.extend(
          * Show media center images
          */
         clickMediaCenter: function() {
+            console.log('clickMediaCenter');
             window.selectFieldImage = function(src) {
                 this.$el.find('.field-image-container').removeClass('empty');
                 if (!src) {
@@ -154,6 +155,19 @@ Fields.image = QoobFieldView.extend(
             });
 
             this.controller.setInnerSettingsView(mediaCenter);
+
+            
+
+            // this.controller.history.push(Backbone.history.fragment + '/' + this.settings.name);
+
+            console.log(Backbone.history.getFragment());
+
+
+            console.log(Backbone.history.fragment + '/' + this.settings.name);
+
+            this.controller.navigate(Backbone.history.fragment + '/' + this.settings.name, {
+                trigger: false
+            });
 
             return false;
         },

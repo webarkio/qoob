@@ -11,8 +11,6 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
         className: "settings",
         config: null,
         events: {
-            'click .back': 'clickBack',
-            /* deprecater */
             'click .delete-block': 'clickDelete',
             'click .movedown': 'clickMoveDown',
             'click .moveup': 'clickMoveUp'
@@ -115,11 +113,6 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
                         counter = 0;
                     });
             }
-        },
-        /* deprecater */
-        clickBack: function(e) {
-            e.preventDefault();
-            this.controller.stopEditBlock();
         },
         /**
          * Click button remove block

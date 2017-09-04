@@ -3,23 +3,84 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     routes: {
         "": "index", // Empty hash-tag
         "index": "index",
-        "groups/:group(/)": "showGroup", // #groups/name
-        "edit/:blockId(/)": "startEditBlock", // #groups/name
+        "groups-:group(/)": "showGroup", // #groups/name
+        "edit-:blockId(/)": "startEditBlock", // #groups/name
         "save-template(/)": "showSavePageTemplate",
         '*default': 'default'
     },
     initialize: function() {
         this.history = [];
-        this.on("route", this.storeRoute);
+        // this.on("route", this.storeRoute);
     },
     storeRoute: function() {
         // console.log(Backbone.history.fragment);
         this.history.push(Backbone.history.fragment);
     },
     default: function(args) {
-        this.index();
-        // console.log(this.current());
-        // console.log(args);
+        var fragment = args, viewSettings, fields;
+
+        if (fragment.charAt(fragment.length - 1) == '/') {
+            fragment = fragment.substr(0, fragment.length - 1);
+        }
+
+        var path = fragment.split("/");
+
+        if (path[0] === 'edit' && path[1] !== undefined) {
+
+            var navigatePath = path[0] + '/' + path[1];
+
+            this.navigate(navigatePath, {
+                trigger: false
+            });
+
+            var getFieldByPath = function(fields, path) {
+              return _.find(fields, function(field){
+                    return field.settings.name == path;
+                });
+            } 
+
+            viewSettings = this.layout.menu.getSettingsView(path[1]);
+            fields = viewSettings.settingsBlock.fields;
+
+            path = path.slice(2);
+
+            for (var i = 0; i < path.length; i++) {
+                var item = getFieldByPath(fields, path[i]);
+
+                if (item === undefined) {
+                    this.navigate(navigatePath, {
+                        trigger: false
+                    });
+                    break;
+                }
+
+                if (item.settings.type === 'accordion' && item.settings.viewType === 'flip') {
+                    // navigatePath += '/' + path[i] + '/' + path[i + 1];
+
+                    item.$el.find('.field-accordion__settings').eq(path[i+1]).trigger('click');
+
+                    var modelId = item.$el.find('.field-accordion__settings').eq(path[i + 1]).data('model-id');
+
+                    viewSettings = this.layout.menu.getSettingsView(modelId);
+                    fields = viewSettings.settingsView.fields;
+
+                    i++;
+                    continue;
+                } else {
+                    // navigatePath += '/' + path[i];
+
+                    // if (navigatePath !== Backbone.history.fragment) {
+                    //     this.navigate(navigatePath, {
+                    //         trigger: false
+                    //     });
+                    // }
+
+                    jQuery(item.$el.find('.show-media-center')[0]).trigger('click');
+                }
+            }
+        } else {
+            this.index();
+        }
     },
     // execute: function(callback, args) {
     //   // args.pop();
@@ -28,15 +89,13 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     //   console.log(args);
     // },
     backward: function() {
-        // console.log(this.history.length > 1);
-        // console.log(this.history[this.history.length - 2]);
+        // console.log(this.history[this.history.length - 1]);
 
-        // if (this.history.length > 1) {
-        //     console.log(this.history);
-        //     this.navigate(this.history[this.history.length - 2], true);
+        // if (this.history.length > 0) {
+        //     this.navigate(this.history[this.history.length - 2], false);
         //     this.history.splice(-2, 2);
         //     console.log(this.history);
-        //     // this.history.pop();
+        //     this.history.pop();
         // } else {
         //     this.navigate('', {
         //         trigger: true,
@@ -44,17 +103,30 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         //     });
         // }
 
+
         // window.history.back();
 
-        Backbone.history.history.back();
+        // console.log(Backbone.history.history);
 
-        // this.before();
-        /*
-        var route = this.current();
-        var params = route.exec(route.fragment).slice(1);
-        console.log(params);
-        console.log(this.current());
-        */
+        // Backbone.history.history.back();
+
+        var path = Backbone.history.getFragment();
+
+        if (path.charAt(path.length - 1) == '/') {
+            path = path.substr(0, path.length - 1);
+        }
+
+        path = path.split('/');
+
+        if (path.length > 0) {
+            var lastPath = path[path.length - 1];
+            var beforeLastPath = path[path.length - 2];
+            var newPath = path.slice(0, -1);
+
+            this.navigate(newPath.join('/'), false);
+
+            this.menu.rotate(beforeLastPath, 'back');
+        }
     },
     index: function() {
         this.layout.menu.showIndex();
