@@ -38,6 +38,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
             this.config = options.config;
             this.storage = options.storage;
             this.controller = options.controller;
+            this.url = options.url;
         },
         /**
          * Render settings

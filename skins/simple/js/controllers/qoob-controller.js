@@ -119,13 +119,13 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         path = path.split('/');
 
         if (path.length > 0) {
-            var lastPath = path[path.length - 1];
-            var beforeLastPath = path[path.length - 2];
-            var newPath = path.slice(0, -1);
+            var lastPath = path[path.length - 1],
+                beforeLastPath = path[path.length - 2],
+                newPath = path.slice(0, -1);
+
+            this.layout.menu.rotate(beforeLastPath, 'backward');
 
             this.navigate(newPath.join('/'), false);
-
-            this.menu.rotate(beforeLastPath, 'back');
         }
     },
     index: function() {

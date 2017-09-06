@@ -25,6 +25,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var item = this.storage.getBlockConfig(model.get('lib'), model.get('block'));
             if (item) {
                 this.addView(new QoobMenuSettingsView({
+                    "url": 'edit' + '-' + model.id,
                     "model": model,
                     "config": item,
                     "storage": this.storage,
@@ -51,11 +52,12 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     id: groups[i].id,
                     storage: this.storage,
                     controller: this.controller,
-                    group: groups[i]
+                    group: groups[i],
                 }), 'right');
             }
 
             this.addView(new QoobMenuSavePageTemplateView({
+                url: 'save-template',
                 id: 'save-template',
                 storage: this.storage,
                 controller: this.controller
@@ -147,16 +149,16 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.$el.fadeIn(300);
         },
         showGroup: function(group) {
-            this.hideSide('left');
             this.showSide('right', group);
         },
         showIndex: function() {
-            this.hideSide('left');
+            this.$el.find('.catalog-groups').addClass('side-item-show');
             this.hideSide('right');
         },
         startEditBlock: function(id) {
             this.hideSide('right');
-            this.showSide('left', id);
+            this.rotate(id, 'forward');
+            // this.showSide('left', id);
         },
         /**
          * Add view to position qoob
@@ -174,6 +176,19 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         getSettingsView: function(id) {
             for (var i = 0; i < this.menuViews.length; i++) {
                 if (this.menuViews[i].model && this.menuViews[i].model.id == id) {
+                    return this.menuViews[i];
+                }
+            }
+        },
+        /**
+         * Get MenuView by url
+         * @param {String} url
+         */
+        getMenuViewByUrl: function(url) {
+            for (var i = 0; i < this.menuViews.length; i++) {
+                // console.log(this.menuViews[i]);
+                // console.log(url);
+                if (this.menuViews[i].url === url) {
                     return this.menuViews[i];
                 }
             }
@@ -205,12 +220,49 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 side.removeClass('show-side');
             }
         },
-        rotate: function(id, motion) {
-            console.log(id);
-            if (motion === 'back') {
-                // this.$el.add
+        rotate: function(url, motion) {
+            var self = this;
+            console.log(url);
+            var url = Backbone.history.fragment;
+            console.log(Backbone.history.fragment);
+            var view = this.getMenuViewByUrl(url);
+            if (motion === 'backward') {
+                // var side = this.$el.find('[data-side-id="' + id + '"]'),
+                    var cloneSide = view.$el.clone();
+
+                this.$el.find('.qoob-menu-backward-side').append(cloneSide.addClass('side-item-show'));
+
+                this.$el.addClass('show-backward');
+                self.$el.find('.qoob-menu-main-side .side-item-show').removeClass('side-item-show');
+
+                // view.$el.addClass('side-item-show');
+
+                this.$el.find('[data-side-id="catalog-groups"]').addClass('side-item-show');
+
+
+
+
+            } else if (motion === 'forward') {
+                // var side = this.$el.find('[data-side-id="' + id + '"]'),
+                    var cloneSide = view.$el.clone();
+
+                this.$el.find('.qoob-menu-forward-side').append(cloneSide.addClass('side-item-show'));
+
+                this.$el.addClass('show-forward');
+
+                this.$el.find('.qoob-menu-forward-side').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                    if (e.target == this) {
+
+                        self.$el.find('.qoob-menu-main-side .side-item-show').removeClass('side-item-show');
+                        view.$el.addClass('side-item-show');
+                        self.$el.find('.qoob-menu-forward-side').html('');
+                        self.$el.removeClass('show-forward');
+
+
+                        jQuery(this).off(e);
+                    }
+                });
             }
-            
         },
         onEditStart: function(blockId) {
             console.log('onEditStart');

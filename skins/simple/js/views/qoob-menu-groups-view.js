@@ -6,6 +6,7 @@
 var QoobMenuGroupsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuGroupsView.prototype */
     {
+        className: 'catalog-groups',
         attributes: function() {
             return {
                 'data-side-id': 'catalog-groups'
