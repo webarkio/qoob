@@ -20,7 +20,6 @@ var AccordionFlipView = QoobFieldView.extend(
                 };
             },
             events: {
-                'click .backward-accordion': 'backward',
                 'click .delete-item-accordion': 'deleteInnerSettings'
             },
             /**
@@ -39,7 +38,7 @@ var AccordionFlipView = QoobFieldView.extend(
              * @returns {Object}
              */
             render: function () {
-                var settingsView = new QoobFieldsView({
+                this.settingsView = new QoobFieldsView({
                     model: this.model,
                     settings: this.settings,
                     defaults: this.defaults,
@@ -47,13 +46,13 @@ var AccordionFlipView = QoobFieldView.extend(
                     controller: this.controller,
                     parentId: this.model.id
                 });
-                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id, 'back': this.storage.__('back', 'Back')}));
-                this.$el.find('.settings-blocks').prepend(settingsView.render().$el);
+
+                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
+                this.$el.find('.settings-blocks').prepend(this.settingsView.render().$el);
                 return this;
             },
             deleteInnerSettings: function () {
                 var name = this.$el.prop('id');
-                this.backward();
                 this.model.trigger('delete_model', this);
                 this.controller.deleteInnerSettingsView(name);
             },
@@ -69,12 +68,6 @@ var AccordionFlipView = QoobFieldView.extend(
                 // remove all models bindings
                 // made by this view
                 this.model.off(null, null, this);
-            },
-            backward: function (e) {
-                if (e) {
-                    e.preventDefault();
-                }
-                this.controller.layout.menu.rotateBackward(this.parentId);
             }
         });
 

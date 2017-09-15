@@ -42,7 +42,7 @@ var QoobBlockWrapperView = Backbone.View.extend({ // eslint-disable-line no-unus
     },
     clickStartEditBlock: function() {
         if (this.controller.layout.menu.getSettingsView(this.model.id)) {
-            this.controller.navigate('edit/' + this.model.id, { trigger: true });
+            this.controller.navigate('edit-' + this.model.id, { trigger: true });
         }
  
         if (isMobile.phone) {

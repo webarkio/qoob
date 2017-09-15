@@ -29,7 +29,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     "config": item,
                     "storage": this.storage,
                     controller: this.controller
-                }), 'left');
+                }), 'main');
             }
         },
         /**
@@ -44,7 +44,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 storage: this.storage,
                 groups: groups,
                 controller: this.controller
-            }));
+            }), 'main');
 
             for (var i = 0; i < groups.length; i++) {
                 this.addView(new QoobMenuBlocksPreviewView({
@@ -59,7 +59,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 id: 'save-template',
                 storage: this.storage,
                 controller: this.controller
-            }), 'left');
+            }), 'main');
 
             this.draggable();
 
@@ -159,18 +159,13 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.showSide('left', id);
         },
         /**
-         * Add view to side qoob
+         * Add view to position qoob
          * @param {Object} BackboneView  View from render
          * @param {String} side location
          */
-        addView: function(view, side) {
-            console.log('view');
+        addView: function(view, position) {
             this.menuViews.push(view);
-            if (side === 'left' || side === 'right') {
-                this.$el.find('.qoob-menu-' + side + '-side').append(view.render().el);
-            } else {
-                this.$el.find('.qoob-menu-center').append(view.render().el);
-            }
+            this.$el.find('.qoob-menu-' + position + '-side').append(view.render().el);
         },
         /**
          * Get SettingsView by id
@@ -183,56 +178,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }
             }
         },
-        /**
-         * Menu rotation
-         * @param {Number} id
-         * @param {String} side class
-         */
-        // rotate: function(id, side) {
-        //     var self = this,
-        //         findScreen = this.$el.find('[data-side-id="' + id + '"]'),
-        //         currentSide = this.$el.find('[data-side-id="' + this.currentScreen + '"]');
-
-        //     if (this.currentScreen === id) {
-        //         currentSide.addClass('show');
-        //         return;
-        //     }
-
-        //     this.$el.find('.' + screen).append(findScreen.clone());
-        //     this.$el.find('.current-temporary').append(currentSide.clone());
-
-        //     this.$el.find('.current-temporary').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
-        //         if (e.target == this) {
-        //             self.$el.find('#card').removeClass('rotate-forward rotate-backward');
-        //             self.$el.find('[data-side-id]').removeClass('show');
-        //             findScreen.addClass('show');
-        //             self.$el.find('.' + screen).html('');
-        //             self.$el.find('.current-temporary').html('');
-
-        //             self.currentScreen = id;
-
-        //             jQuery(this).off(e);
-        //         }
-        //     });
-        // },
-        /**
-         * deprecated
-         * Menu rotation forward
-         * @param {Number} id
-         */
-        // rotateForward: function(id, cb) {
-        //     this.rotate(id, 'forward-screen', 90, cb);
-        // },
-        /**
-         * deprecated
-         * Menu rotation backward
-         * @param {Number} id
-         */
-        // rotateBackward: function(id, cb) {
-        //     this.rotate(id, 'backward-screen', -90, cb);
-        // },
-        showSide: function(side, id) {
-            var side = this.$el.find('.qoob-menu-' + side + '-side');
+        showSide: function(position, id) {
+            var side = this.$el.find('.qoob-menu-' + position + '-side');
 
             // Selected item menu
             this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
@@ -258,7 +205,15 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 side.removeClass('show-side');
             }
         },
+        rotate: function(id, motion) {
+            console.log(id);
+            if (motion === 'back') {
+                // this.$el.add
+            }
+            
+        },
         onEditStart: function(blockId) {
+            console.log('onEditStart');
             this.rotate('settings-block-' + blockId);
         },
         onEditStop: function() {
@@ -315,6 +270,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 element.find('.remove').trigger('click');
                 element.find('.input-text').val('');
                 element.find('.save-template-settings').removeClass('show-notice');
+                element.find('.field-text').show();
+                element.find('.save-template-settings .button-save-template').show();
             }
             if (element.find('.error-block').is(':visible')) {
                 element.find('.error-block').hide();

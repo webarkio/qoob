@@ -1,16 +1,136 @@
 /*global QoobUtils*/
 var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-vars
     routes: {
-        "index": "index",
         "": "index", // Empty hash-tag
-        "groups/:group": "showGroup", // #groups/name
-        "edit/:blockId": "startEditBlock", // #groups/name
-        "save-template": "showSavePageTemplate"
+        "index": "index",
+        "groups-:group(/)": "showGroup", // #groups/name
+        "edit-:blockId(/)": "startEditBlock", // #groups/name
+        "save-template(/)": "showSavePageTemplate",
+        '*default': 'default'
+    },
+    initialize: function() {
+        this.history = [];
+        // this.on("route", this.storeRoute);
+    },
+    storeRoute: function() {
+        // console.log(Backbone.history.fragment);
+        this.history.push(Backbone.history.fragment);
+    },
+    default: function(args) {
+        var fragment = args, viewSettings, fields;
+
+        if (fragment.charAt(fragment.length - 1) == '/') {
+            fragment = fragment.substr(0, fragment.length - 1);
+        }
+
+        var path = fragment.split("/");
+
+        if (path[0] === 'edit' && path[1] !== undefined) {
+
+            var navigatePath = path[0] + '/' + path[1];
+
+            this.navigate(navigatePath, {
+                trigger: false
+            });
+
+            var getFieldByPath = function(fields, path) {
+              return _.find(fields, function(field){
+                    return field.settings.name == path;
+                });
+            } 
+
+            viewSettings = this.layout.menu.getSettingsView(path[1]);
+            fields = viewSettings.settingsBlock.fields;
+
+            path = path.slice(2);
+
+            for (var i = 0; i < path.length; i++) {
+                var item = getFieldByPath(fields, path[i]);
+
+                if (item === undefined) {
+                    this.navigate(navigatePath, {
+                        trigger: false
+                    });
+                    break;
+                }
+
+                if (item.settings.type === 'accordion' && item.settings.viewType === 'flip') {
+                    // navigatePath += '/' + path[i] + '/' + path[i + 1];
+
+                    item.$el.find('.field-accordion__settings').eq(path[i+1]).trigger('click');
+
+                    var modelId = item.$el.find('.field-accordion__settings').eq(path[i + 1]).data('model-id');
+
+                    viewSettings = this.layout.menu.getSettingsView(modelId);
+                    fields = viewSettings.settingsView.fields;
+
+                    i++;
+                    continue;
+                } else {
+                    // navigatePath += '/' + path[i];
+
+                    // if (navigatePath !== Backbone.history.fragment) {
+                    //     this.navigate(navigatePath, {
+                    //         trigger: false
+                    //     });
+                    // }
+
+                    jQuery(item.$el.find('.show-media-center')[0]).trigger('click');
+                }
+            }
+        } else {
+            this.index();
+        }
+    },
+    // execute: function(callback, args) {
+    //   // args.pop();
+    //   // if (callback) callback.apply(this, args);
+
+    //   console.log(args);
+    // },
+    backward: function() {
+        // console.log(this.history[this.history.length - 1]);
+
+        // if (this.history.length > 0) {
+        //     this.navigate(this.history[this.history.length - 2], false);
+        //     this.history.splice(-2, 2);
+        //     console.log(this.history);
+        //     this.history.pop();
+        // } else {
+        //     this.navigate('', {
+        //         trigger: true,
+        //         replace: true
+        //     });
+        // }
+
+
+        // window.history.back();
+
+        // console.log(Backbone.history.history);
+
+        // Backbone.history.history.back();
+
+        var path = Backbone.history.getFragment();
+
+        if (path.charAt(path.length - 1) == '/') {
+            path = path.substr(0, path.length - 1);
+        }
+
+        path = path.split('/');
+
+        if (path.length > 0) {
+            var lastPath = path[path.length - 1];
+            var beforeLastPath = path[path.length - 2];
+            var newPath = path.slice(0, -1);
+
+            this.navigate(newPath.join('/'), false);
+
+            this.menu.rotate(beforeLastPath, 'back');
+        }
     },
     index: function() {
         this.layout.menu.showIndex();
         this.layout.stopEditBlock();
-
     },
     showGroup: function(group) {
         this.layout.menu.showGroup(group);
@@ -95,7 +215,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         }
     },
     showSavePageTemplate: function() {
-        this.layout.menu.rotateForward('save-template');
+        this.layout.menu.showSide('left', 'save-template');
         this.layout.menu.hideNotice();
         this.layout.stopEditBlock();
     },
@@ -139,9 +259,9 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
             this.scrollTo(blockId);
         } else {
             this.navigate('index', {
-            trigger: true,
-            replace: true
-        });
+                trigger: true,
+                replace: true
+            });
         }
     },
     stopEditBlock: function() {
@@ -166,11 +286,10 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         if (!!this.layout.menu.settingsViewStorage[name]) {
             this.deleteInnerSettingsView(name);
         }
-        this.layout.menu.addView(view);
+
+        this.layout.menu.addView(view, 'left');
         this.layout.menu.showSide('left', name);
-        // this.layout.menu.rotateForward(name, function() {
-        //     view.$el.trigger('shown');
-        // });
+
         view.$el.trigger('shown');
         this.layout.menu.settingsViewStorage[name] = view;
     },

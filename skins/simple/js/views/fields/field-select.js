@@ -1,6 +1,7 @@
 var Fields = Fields || {};
 Fields.select = QoobFieldView.extend(
 /** @lends Fields.select.prototype */{
+    className: 'field-select',
     events: {
         'change select': 'changeSelect',
         'change input': 'changeInput',
@@ -32,7 +33,6 @@ Fields.select = QoobFieldView.extend(
         elem.addClass('active');
         this.$el.find('input').trigger("change");
     },
-
     /**
      * Render filed select
      * @returns {Object}
@@ -47,6 +47,7 @@ Fields.select = QoobFieldView.extend(
         };
 
         this.$el.html(_.template(this.storage.getSkinTemplate('field-select-preview'))(htmldata));
+
         return this;
     }
 });

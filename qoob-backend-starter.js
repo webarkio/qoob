@@ -40,7 +40,6 @@
         var stageProgress = (failed + stageLoaded) * 100 / total;
         var progress = parseInt((this.loader.stage - 1) * deltaPerStage + (deltaPerStage / 100 * stageProgress));
         document.getElementById("qoob_loader_precent").innerHTML = progress;
-        document.getElementById("qoob_loader_progressbar").style.width = progress + "%";
         if (progress == 100) {
             this.loadingComplete();
         }
@@ -48,7 +47,6 @@
 
     QoobStarter.prototype.loadingComplete = function() {
         document.getElementById("qoob_loader_precent").innerHTML = 100;
-        document.getElementById("qoob_loader_progressbar").style.width = "100%";
         this.loader.off('progress', this.loadingProgressListener);
         jQuery('#loader-wrapper').delay(100).fadeOut(1000, function() {
             jQuery('#loader-wrapper').remove();
@@ -126,20 +124,22 @@
 
                 if (undefined !== blocks) {
                     for (var k = 0; k < blocks.length; k++) {
-                        blocks[k].url = blocks[k].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
+                        if (undefined !== blocks[k]) {
+                            blocks[k].url = blocks[k].url.replace(/\/+$/g, '') + "/"; //Trim slashes in the end and add /
 
-                        if (blocks[k].url.indexOf("http://") !== 0 && blocks[k].url.indexOf("https://") !== 0) {
-                            blocks[k].url = libUrl + blocks[k].url;
-                        }
-                        if (blocks[k].config_url) {
-                            if (blocks[k].config_url.indexOf("http://") !== 0 && blocks[k].config_url.indexOf("https://") !== 0) {
-                                blocks[k].config_url = libUrl + blocks[k].config_url.replace(/^\/+/g, ''); //Trim slashes in the begining
+                            if (blocks[k].url.indexOf("http://") !== 0 && blocks[k].url.indexOf("https://") !== 0) {
+                                blocks[k].url = libUrl + blocks[k].url;
                             }
-                        } else {
-                            blocks[k].config_url = blocks[k].url + "config.json";
-                        }
+                            if (blocks[k].config_url) {
+                                if (blocks[k].config_url.indexOf("http://") !== 0 && blocks[k].config_url.indexOf("https://") !== 0) {
+                                    blocks[k].config_url = libUrl + blocks[k].config_url.replace(/^\/+/g, ''); //Trim slashes in the begining
+                                }
+                            } else {
+                                blocks[k].config_url = blocks[k].url + "config.json";
+                            }
 
-                        self.loader.add({ "type": "json", "name": libs[i].name + "_" + blocks[k].name, "src": blocks[k].config_url });
+                            self.loader.add({ "type": "json", "name": libs[i].name + "_" + blocks[k].name, "src": blocks[k].config_url });
+                        }
                     }
                 }
             }
@@ -212,7 +212,6 @@
                 libName = splited[0];
                 blockName = splited[1];
             } else if (splited.length === 1) {
-
                 libName = currentLib.name;
                 blockName = splited[0];
             } else {
@@ -235,10 +234,12 @@
             var currentLib = libs[i];
             if (undefined !== currentLib.blocks) {
                 for (var j = 0; j < currentLib.blocks.length; j++) {
-                    var configString = JSON.stringify(libs[i].blocks[j].config);
-                    configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
-                    configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
-                    currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                    if (undefined !== libs[i].blocks[j]) {
+                        var configString = JSON.stringify(libs[i].blocks[j].config);
+                        configString = configString.replace(/%lib_url\(.*?\)%\/|%lib_url\(.*?\)%/g, filterLibUrlFunction);
+                        configString = configString.replace(/%block_url\(.*?\)%\/|%block_url\(.*?\)%/g, filterBlockUrlFunction);
+                        currentLib.blocks[j] = _.extend(JSON.parse(configString), currentLib.blocks[j]);
+                    }
                 }
             }
         }
@@ -263,9 +264,9 @@
 
     QoobStarter.prototype.parseBlockData = function(libs) {
         var result = [];
+
         for (var i = 0; i < libs.length; i++) {
             var lib = libs[i];
-
 
             if (undefined !== lib.blocks) {
                 for (var j = 0; j < lib.blocks.length; j++) {
@@ -284,8 +285,53 @@
     };
 
     QoobStarter.prototype.getLoaderHTML = function() {
-        return "<div id='loader-wrapper' style='position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 100500;'><div style='position: relative; height: 668px; top: calc(50% - 150px);'><div class='loading-panel' style='position: relative; text-align: center;'><div class='qoob-preview-img' style='display: block; width: 100%; height: 105px; background: url(\"" + this.options.qoobUrl + "qoob_logo.png\") center center no-repeat;'></div><span style='display: inline-block; margin-top: 23px; font-family: \"Helvetica\",Arial,sans-serif; font-size: 14px; color: #2DC0E4; line-height: 20px;'>Loading <span id='qoob_loader_precent'>0</span>%</span><div style='height: 10px; border-radius: 5px; overflow: hidden; margin-top: 97px; margin-bottom: 102px; margin-left: 15%; margin-right: 15%; box-shadow: none; background: #E2E5E9;'><div id='qoob_loader_progressbar' style='height: 10px; background: #2DC0E4;' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style='width:0%;'></div></div></div></div></div>";
+        return "<div id='loader-wrapper' style=' font-size: 20px; font-weight: 700; font-family: robotobold, sans-serif; position: relative; line-height: 1;  z-index: 9999; height: 100vh; background-color: #fff; display: flex; align-items: center; justify-content: center;'>" +
+                    "<div class='loading-panel' style='text-align: center;  letter-spacing: 0.05em; color: #010833; -webkit-transition: -webkit-transform .5s ease 0s; -moz-transition: -moz-transform .5s ease 0s; -o-transition: -o-transform .5s ease 0s; transition: transform .5s ease 0s;  width: 100%;'>" +
+                    "<span>Loading <span id='qoob_loader_precent'>0</span>%</span>" +
+                    "<div class='loading-dots' style='margin: 19px auto 0 auto;'>" +
+                        "<div class='loading-dot' style='width: 18px; height: 18px; margin-right: 7px; background-color: #010833; border-radius: 100%; display: inline-block; -webkit-animation: block-elements 1.4s ease-in-out 0s infinite both; animation: block-elements 1.4s ease-in-out 0s infinite both; -webkit-animation-delay: -.32s; animation-delay: -.32s;'></div>" +
+                        "<div class='loading-dot' style='width: 18px; height: 18px; margin-right: 7px; background-color: #010833; border-radius: 100%; display: inline-block; -webkit-animation: block-elements 1.4s ease-in-out 0s infinite both; animation: block-elements 1.4s ease-in-out 0s infinite both; -webkit-animation-delay: -.16s; animation-delay: -.16s;'></div>" +
+                        "<div class='loading-dot' style='width: 18px; height: 18px; margin-right: 7px; background-color: #010833; border-radius: 100%; display: inline-block; -webkit-animation: block-elements 1.4s ease-in-out 0s infinite both; animation: block-elements 1.4s ease-in-out 0s infinite both; margin-right: 0;'></div>" +
+                    "</div>" +
+                    "</div>" +
+                    "<style>"+         
+                        "html {"+
+                            "-webkit-box-sizing: border-box;"+
+                            "box-sizing: border-box;"+
+                        "}"+
+                        "*,"+
+                        "*:before,"+
+                        "*:after {"+
+                            "-webkit-box-sizing: inherit;"+
+                            "box-sizing: inherit;"+
+                        "}"+
+                        "body {"+
+                            "overflow: hidden; line-height: 1;"+
+                        "}"+
+                        "@-webkit-keyframes block-elements {"+
+                            "0%,100%,80%{"+
+                                "-webkit-transform:scale(0);"+
+                                "transform:scale(0)"+
+                            "}"+
+                            "40%{"+
+                                "-webkit-transform:scale(1);"+
+                                "transform:scale(1)"+
+                            "}"+
+                        "}"+
+                        "@keyframes block-elements {"+
+                            "0%,100%,80%{"+
+                                "-webkit-transform:scale(0);"+
+                                "transform:scale(0)"+
+                            "}"+
+                            "40%{"+
+                                "-webkit-transform:scale(1);"+
+                                "transform:scale(1)"+
+                            "}"+
+                        "}   "+                 
+                    "</style>"+
+               "</div>";
     };
+
 
     QoobStarter.prototype.attachLoaderHTML = function() {
         document.body.innerHTML = this.getLoaderHTML() + document.body.innerHTML;

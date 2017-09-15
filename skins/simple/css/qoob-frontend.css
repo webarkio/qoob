@@ -517,11 +517,14 @@
 #qoob-blocks .qoob-templates .template .remove {
     position: absolute;
     display: block;
-    width: 9px;
-    height: 9px;
-    top: 0;
-    right: -14px;
-    background: transparent url(../img/remove.png) no-repeat;
+    width: 11px;
+    height: 11px;
+    top: 14px;
+    right: 14px;
+    font-size: 16px;
+    line-height: 0px;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.21);
+    color: #fff;
 }
 
 @media (min-width: 1200px) {

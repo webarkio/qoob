@@ -12,13 +12,12 @@ Fields.image = QoobFieldView.extend(
         counterDropZone: 0,
         events: {
             'click .show-media-center': 'clickMediaCenter',
-            'change .image-url': 'changeInputUrlImage',
             'click .field-image__remove-image': 'clickRemoveImage',
-            'drop .drop-zone': 'dropImage',
-            'dragenter .drop-zone': 'dragOnDropZone',
-            'dragleave .drop-zone': 'dragLeaveDropZone',
-            'global_drag_start': 'showDropZone',
-            'global_drag_stop': 'hideDropZone',
+            'click .others-item__image': 'clickOtherImage',
+            'drop .field-drop-zone': 'dropImage',
+            'dragenter .field-drop-zone': 'dragOnDropZone',
+            'dragleave .field-drop-zone': 'dragLeaveDropZone',
+            'global_drag_start': 'globalDragStart',
             'click [data-id]': 'clickAction'
         },
         /**
@@ -57,9 +56,18 @@ Fields.image = QoobFieldView.extend(
          * @param {String} url image
          */
         changeImage: function(url) {
-            this.$el.find('.preview-image').attr('src', url);
-            this.model.set(this.$el.find('.image-url').attr('name'), url);
-            this.$el.find('.image-url').val(url);
+            this.$el.find('.field-image__preview-image').attr('src', url);
+            this.model.set(this.$el.find('.field-image__url-hidden').attr('name'), url);
+            this.$el.find('.field-image__url-hidden').val(url);
+        },
+        /**
+         * Click other image
+         * @param {Object} evt
+         */
+        clickOtherImage: function(evt) {
+            var bg = this.$(evt.currentTarget).css('background-image'),
+                url = bg.replace('url(','').replace(')','').replace(/\"/gi, "");
+            this.changeImage(url);
         },
         /**
          * Remove image
@@ -69,45 +77,49 @@ Fields.image = QoobFieldView.extend(
             this.changeImage('');
         },
         /**
-         * Show drop zone
-         */
-        showDropZone: function() {
-            this.$el.find('.drop-zone').show();
-        },
-        /**
-         * Hide drop zone
-         */
-        hideDropZone: function() {
-            this.$el.find('.drop-zone').hide();
-        },
-        /**
          * Drop image on zone
          */
         dropImage: function(evt) {
             var self = this;
             var droppedFiles = evt.originalEvent.dataTransfer.files;
 
-            if (droppedFiles[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
-                this.storage.driver.uploadImage(droppedFiles, function(error, url) {
-                    if ('' !== url) {
-                        self.changeImage(url);
-                        if (self.$el.find('.edit-image').hasClass('empty')) {
-                            self.$el.find('.edit-image').removeClass('empty');
-                        }
-                    }
-                });
+            // 30 MB limit
+            if (droppedFiles[0].size > 31457280) {
+                this.$el.find('.field-image__preview').hide();
+                this.$el.find('.field-upload-error').addClass('field-upload-error-active');
+
             } else {
-                console.error('file format is not appropriate');
+                if (droppedFiles[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
+                    this.storage.driver.uploadImage(droppedFiles, function(error, url) {
+                        if ('' !== url) {
+                            self.changeImage(url);
+                            if (self.$el.find('.field-image-container').hasClass('empty')) {
+                                self.$el.find('.field-image-container').removeClass('empty');
+                            }
+                        }
+                    });
+                } else {
+                    console.error('file format is not appropriate');
+                }
             }
 
             this.counterDropZone = 0;
+        },
+        /**
+         * Global trigger drag start
+         */
+        globalDragStart: function() {
+            var uploadError = this.$el.find('.field-upload-error');
+            if (uploadError.hasClass('field-upload-error-active')) {
+                uploadError.removeClass('field-upload-error-active');
+            }
         },
         /**
          * Drag image on drop zone
          */
         dragOnDropZone: function() {
             this.counterDropZone++;
-            this.$el.find('.drop-zone').addClass('hover');
+            this.$el.find('.field-drop-zone').addClass('hover');
         },
         /**
          * Leave drag image on drop zone
@@ -115,32 +127,20 @@ Fields.image = QoobFieldView.extend(
         dragLeaveDropZone: function() {
             this.counterDropZone--;
             if (this.counterDropZone === 0) {
-                this.$el.find('.drop-zone').removeClass('hover');
-            }
-        },
-        /**
-         * Event change input url image
-         * @param {Object} evt
-         */
-        changeInputUrlImage: function(evt) {
-            var url = jQuery(evt.target).val();
-            if (url.match(/.(jpg|jpeg|png|gif)$/i)) {
-                this.changeImage(url);
-            } else {
-                this.changeImage('');
+                this.$el.find('.field-drop-zone').removeClass('hover');
             }
         },
         /**
          * Show media center images
          */
         clickMediaCenter: function() {
+            console.log('clickMediaCenter');
             window.selectFieldImage = function(src) {
-                this.$el.find('.edit-image').removeClass('empty');
+                this.$el.find('.field-image-container').removeClass('empty');
                 if (!src) {
-                    this.$el.find('.edit-image').addClass('empty');
+                    this.$el.find('.field-image-container').addClass('empty');
                 }
                 this.changeImage(src);
-
             }.bind(this);
 
             var mediaCenter = new ImageCenterView({
@@ -148,30 +148,59 @@ Fields.image = QoobFieldView.extend(
                 controller: this.controller,
                 parentId: this.parentId,
                 storage: this.storage,
-                curSrc: this.$el.find('.preview-image').attr('src'),
+                curSrc: this.$el.find('.field-image__url-hidden').val(),
                 assets: this.storage.getAssets(),
                 tags: this.tags ? this.tags.join(', ') : '',
-                hideDeleteButton: this.settings.hideDeleteButton
+                iframeUrl: this.getIframeUrl()
             });
 
             this.controller.setInnerSettingsView(mediaCenter);
 
+            
+
+            // this.controller.history.push(Backbone.history.fragment + '/' + this.settings.name);
+
+            console.log(Backbone.history.getFragment());
+
+
+            console.log(Backbone.history.fragment + '/' + this.settings.name);
+
+            this.controller.navigate(Backbone.history.fragment + '/' + this.settings.name, {
+                trigger: false
+            });
+
             return false;
+        },
+        getIframeUrl: function() {
+            var iframeUrl, pattern = /^((http|https):\/\/)/;
+
+            // if url has "http|https"
+            if (!pattern.test(this.getValue()) && typeof this.storage.driver.getFrontendPageUrl === "function") {
+                iframeUrl = this.storage.driver.getFrontendPageUrl();
+            } else {
+                iframeUrl = '';
+            }
+
+            return iframeUrl;
         },
         /**
          * Render filed image
          * @returns {Object}
          */
         render: function() {
+
+
             var htmldata = {
                 hideDeleteButton: this.settings.hideDeleteButton,
                 "label": this.settings.label,
                 "name": this.settings.name,
+                "images": this.settings.presets,
                 "value": this.getValue(),
-                'media_center': this.storage.__('media_center', 'Media Center'),
+                "iframeUrl": this.getIframeUrl(),
+                'media_center': this.storage.__('media_center', 'Media center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
-                'no_image': this.storage.__('no_image', 'No image'),
-                'you_can_drop_it_here': this.storage.__('you_can_drop_it_here', 'You can drop it here')
+                'error': this.storage.__('error', 'Error!'),
+                'error_text': this.storage.__('error_text', 'Image size can not exceed 30 mb')
             };
 
             if (typeof this.storage.driver.mainMenu === "function") {

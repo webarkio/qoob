@@ -37,10 +37,8 @@ Fields.accordion = QoobFieldView.extend(
         },
         /**
          * Change position blocks accordion
-         * @param {Object} event
-         * @param {integer} position
          */
-        changePosition: function(event, position) {
+        changePosition: function() {
             var self = this,
                 values = this.getValue(),
                 blocks = this.$el.find('#' + this.getUniqueId()).children('.field-accordion__settings');
@@ -111,7 +109,6 @@ Fields.accordion = QoobFieldView.extend(
          */
         render: function() {
             var values = this.getValue(),
-                settings = this.settings.settings,
                 items = [];
             // sort accordion settings
             values.models = _.sortBy(values.models, function(model) {
@@ -123,7 +120,7 @@ Fields.accordion = QoobFieldView.extend(
                 for (var i = 0; i < values.models.length; i++) {
                     var item = new Fields[this.classNameItem]({
                         model: values.models[i],
-                        settings: settings,
+                        settings: this.settings,
                         defaults: this.defaults[i] || this.defaults[0],
                         storage: this.storage,
                         controller: this.controller,
@@ -142,7 +139,7 @@ Fields.accordion = QoobFieldView.extend(
             var htmldata = {
                 "label": this.settings.label,
                 "uniqueId": this.getUniqueId(),
-                "settings": settings,
+                "settings": this.settings.settings,
                 'add_new_tab': this.storage.__('add_new_tab', 'Add a new item'),
                 'Delete': this.storage.__('delete', 'Delete')
             };

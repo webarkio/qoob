@@ -11,7 +11,6 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
         className: "settings",
         config: null,
         events: {
-            'click .back': 'clickBack', /* deprecater */
             'click .delete-block': 'clickDelete',
             'click .movedown': 'clickMoveDown',
             'click .moveup': 'clickMoveUp'
@@ -62,42 +61,58 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
         afterRender: function() {
             var self = this,
                 counter = 0,
-                fields = this.settingsBlock.fields;
+                fields = this.settingsBlock.fields,
+                allow = false;
 
-            this.$el.on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
-                    evt.preventDefault();
-                    evt.stopPropagation();
-                })
-                .on('dragenter', function() {
-                    counter++;
-                    if (counter === 1) {
-                        for (var i = 0; i < fields.length; i++) {
-                            fields[i].$el.trigger('global_drag_start');
+            // allow fields
+            var allowedArr = ['image', 'video'];
+
+            for (var i = 0; i < fields.length; i++) {
+                if (~allowedArr.indexOf(fields[i].settings.type)) {
+                    allow = true;
+                }
+            }
+
+            var getCurrentRoute = function(evt) {
+                var currentRoute = self.controller.current();
+                    if (currentRoute.route !== 'startEditBlock') {
+                        evt.stopImmediatePropagation();
+                    }
+            }
+
+            if (allow) {
+                self.controller.layout.sidebar.$el.on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+
+                        getCurrentRoute(evt);
+                    })
+                    .on('dragenter', function(evt) {
+                        getCurrentRoute(evt);
+
+                        counter++;
+                        if (counter === 1) {
+                            for (var i = 0; i < fields.length; i++) {
+                                fields[i].$el.trigger('global_drag_start');
+                            }
+                            self.controller.layout.sidebar.$el.addClass('overlay');
                         }
-                        self.$el.addClass('overlay');
-                    }
-                })
-                .on('dragleave', function() {
-                    counter--;
-                    if (counter === 0) {
-                        for (var i = 0; i < fields.length; i++) {
-                            fields[i].$el.trigger('global_drag_stop');
+                    })
+                    .on('dragleave', function(evt) {
+                        getCurrentRoute(evt);
+
+                        counter--;
+                        if (counter === 0) {
+                            self.controller.layout.sidebar.$el.removeClass('overlay');
                         }
-                        self.$el.removeClass('overlay');
-                    }
-                })
-                .on('drop', function() {
-                    for (var i = 0; i < fields.length; i++) {
-                        fields[i].$el.trigger('global_drag_stop');
-                    }
-                    self.$el.removeClass('overlay');
-                    counter = 0;
-                });
-        },
-        /* deprecater */
-        clickBack: function(e) {
-            e.preventDefault();
-            this.controller.stopEditBlock();
+                    })
+                    .on('drop', function(evt) {
+                        getCurrentRoute(evt);
+                        
+                        self.controller.layout.sidebar.$el.removeClass('overlay');
+                        counter = 0;
+                    });
+            }
         },
         /**
          * Click button remove block

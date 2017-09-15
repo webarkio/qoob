@@ -1,21 +1,38 @@
 <label class="field-label"><%= label %></label>
 
-<input type="text" class="field-image__url" name="<%= name %>" value="<%= value %>" placeholder="">
-
 <div class="field-image-container<% if (value === '') { %> empty <% } %>">
     <div class="field-image__preview">
-        <img class="show-media-center" src="<%= value %>" />
+        <img class="field-image__preview-image show-media-center" src="<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= value %>" />
         <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
             <i class="field-image__remove-image fa fa-times"></i>
         <% } %>
     </div>
     <div class="field-image__noimage show-media-center">
-        <i class="fa fa-file-image-o"></i>
+        <i class="field-image__noimage-icon fa fa-plus"></i>
+    </div>
+    <div class="field-drop-zone"><span class="field-drop-zone-text"><%= drop_here %></span></div>
+    <div class="field-upload-error">
+        <div class="field-upload-error__text">
+            <span class="field-upload-error__text-bold"><%= error %></span> <%= error_text %>
+        </div>
     </div>
 </div>
 
+<input type="hidden" class="field-image__url-hidden" name="<%= name %>" value="<%= value %>">
+
+<% if(images) { %>
+<div class="others">
+    <% for (var i = 0; i < images.length; i++) { %>
+        <div class="others__item">
+            <div class="others-item__image" style="background-image: url('<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= images[i] %>');"></div>
+        </div>
+    <%}%>
+</div>
+<% } %>
+
 <div class="media-center clearfix">
     <button type="button" class="show-media-center media-center__button">
+        <i class="media-center__button_image-icon fa fa-file-image-o"></i>
         <%= media_center %>
     </button>
 
@@ -28,15 +45,6 @@
             </div>
         </button>
         <ul class="qoob-dropdown-content">
-            <li>
-                <div class="autosave clearfix">
-                    <div class="autosave-item-name">dfffffffffffdfsfsd</div>
-                    <label class="autosave-item-switch">
-                        <input type="checkbox" class="autosave-checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </li>
             <% _.each( customItems, function( item ){ %>
                 <li>
                     <a href="#" data-id="<%- item.id %>" class="action">
