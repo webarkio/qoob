@@ -41,7 +41,12 @@
 <div class="control-buttons clearfix">
     <button class="button backward"></button>
     <button class="button view-preview"></button>
-    <button class="button save" title="<%= save %>"></button>
+    <button class="button save" title="<%= save %>">
+        <span class="save-clock">
+            <span class="minutes-container"><span class="minutes"></span></span>
+            <span class="seconds-container"><span class="seconds"></span></span>
+        </span>
+    </button>
     <div class="preview-modes">
         <select class="qoob-select-item">
             <option value="pc" data-icon="fa fa-desktop"><%= desktop %></option>

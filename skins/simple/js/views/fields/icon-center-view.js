@@ -39,10 +39,10 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-icon-setting-preview'));
-            this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
             this.icons = options.icons;
             this.icon = options.icon;
             this.tags = options.icon.tags || '';
+            this.cb = options.cb;
         },
         /**
          * Render IconCenter view
@@ -169,7 +169,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 'class': currentTarget.attr('class'),
                 'data-icon-tags': currentTarget.attr('data-icon-tags')
             });
-            window.selectFieldIcon(currentTarget.attr('class'));
+            this.cb(currentTarget.attr('class'));
         },
         /**
          * Keyup event for filtering icons by tags in search input

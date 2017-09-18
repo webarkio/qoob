@@ -1,4 +1,4 @@
-/*global QoobFieldView, QoobFieldsView, AccordionFlipView */
+/*global QoobFieldView, QoobFieldsView */
 var Fields = Fields || {};
 Fields.accordion_item_flip = QoobFieldView.extend( 
         /** @lends Fields.accordion_item_front.prototype */{
@@ -9,7 +9,7 @@ Fields.accordion_item_flip = QoobFieldView.extend(
             /**
              * View field accordion item
              * needed for field accordion
-             * @class Fields.image
+             * @class Fields.accordion_item_flip
              * @augments Backbone.View
              * @constructs
              */
@@ -17,7 +17,6 @@ Fields.accordion_item_flip = QoobFieldView.extend(
                 QoobFieldView.prototype.initialize.call(this, options);
                 this.$el.attr('data-model-id', this.model.id);
                 this.tpl = _.template(this.storage.getSkinTemplate('field-accordion-item-flip-preview'));
-                this.parentId = options.parentId || this.model.owner_id;
                 this.model.on("delete_model", this.deleteModel.bind(this));
             },
             /**
@@ -26,38 +25,8 @@ Fields.accordion_item_flip = QoobFieldView.extend(
              * @returns {Object}
              */
             showSettings: function (evt) {
-                console.log('showSettings');
-                var flipView = new AccordionFlipView({
-                    model: this.model,
-                    settings: this.settings.settings,
-                    defaults: this.defaults,
-                    storage: this.storage,
-                    controller: this.controller,
-                    parentId: this.parentId
-                });
-                this.controller.setInnerSettingsView(flipView);
-
                 var itemId = jQuery(evt.currentTarget).index() - 1;
-
-
-                // console.log(Backbone.history.fragment + '/' + this.settings.name + '/' + itemId);
-
-                // console.log(Backbone.history.getFragment());
-
-
-                // this.controller.history.push(Backbone.history.fragment + '/' + this.settings.name + '/' + itemId);
-
-                // if (Backbone.history.getFragment() === (Backbone.history.fragment + '/' + this.settings.name + '/' + itemId)) {
-                //     console.log('tttttt');
-                // }
-
-                // console.log(Backbone.history.getFragment());
-                // console.log(Backbone.history.getFragment() + '/' + this.settings.name + '/' + itemId);
-                
-                this.controller.navigate(Backbone.history.getFragment() + '/' + this.settings.name + '-' + this.model.id, {
-                    trigger: false
-                });
-                
+                this.controller.navigate(this.controller.currentUrl()+"/"+this.settings.name+"-"+itemId, true);
             },
             /**
              * Render field accordion_item

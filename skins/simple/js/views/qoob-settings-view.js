@@ -4,7 +4,7 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
+var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuSettingsView.prototype */
     {
         tagName: "div",
@@ -28,32 +28,17 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
             };
         },
         /**
-         * View settings
-         * @class QoobMenuSettingsView
-         * @augments Backbone.View
-         * @constructs
-         */
-        initialize: function(options) {
-            this.model = options.model;
-            this.config = options.config;
-            this.storage = options.storage;
-            this.controller = options.controller;
-            this.url = options.url;
-        },
-        /**
          * Render settings
          * @returns {Object}
          */
         render: function() {
-            this.settingsBlock = new QoobFieldsView({
-                model: this.model,
-                storage: this.storage,
-                settings: this.config.settings,
-                defaults: this.config.defaults,
-                controller: this.controller
-            });
+            var html = QoobFieldsView.prototype.getHtml.apply(this, arguments);
 
-            this.$el.html(_.template(this.storage.getSkinTemplate('menu-settings-preview'))({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })).find('.settings-blocks').prepend(this.settingsBlock.render().el);
+            this.$el.html(
+                _.template(
+                    this.storage.getSkinTemplate('menu-settings-preview')
+                )({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })
+            ).find('.settings-blocks').html(html); // prepend(this.fieldsView.render().el);
 
             this.afterRender();
 
@@ -62,7 +47,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
         afterRender: function() {
             var self = this,
                 counter = 0,
-                fields = this.settingsBlock.fields,
+                fields = this.fields,
                 allow = false;
 
             // allow fields
@@ -76,9 +61,9 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
 
             var getCurrentRoute = function(evt) {
                 var currentRoute = self.controller.current();
-                    if (currentRoute.route !== 'startEditBlock') {
-                        evt.stopImmediatePropagation();
-                    }
+                if (currentRoute.route !== 'startEditBlock') {
+                    evt.stopImmediatePropagation();
+                }
             }
 
             if (allow) {
@@ -109,7 +94,7 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
                     })
                     .on('drop', function(evt) {
                         getCurrentRoute(evt);
-                        
+
                         self.controller.layout.sidebar.$el.removeClass('overlay');
                         counter = 0;
                     });

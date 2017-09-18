@@ -1,15 +1,15 @@
+/*global QoobFieldsView*/
 /**
  * Create accordion item flip view 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var AccordionFlipView = QoobFieldView.extend(
+var AccordionFlipView = QoobFieldsView.extend( // eslint-disable-line no-unused-vars
         /** @lends AccordionFlipView.prototype */{
             className: "settings menu-block accordion-item",
-            parentId: null,
             /**
              * Set setting's id
-             * @class SettingsView
+             * @class fieldsView
              * @augments Backbone.View
              * @constructs
              */
@@ -23,38 +23,16 @@ var AccordionFlipView = QoobFieldView.extend(
                 'click .delete-item-accordion': 'deleteInnerSettings'
             },
             /**
-             * View accordion item flip
-             * @class AccordionFlipView
-             * @augments Backbone.View
-             * @constructs
-             */
-            initialize: function (options) {
-                QoobFieldView.prototype.initialize.call(this, options);
-                this.tpl = _.template(this.storage.getSkinTemplate('field-accordion-item-flip-view-preview'));
-                this.parentId = options.parentId;
-            },
-            /**
              * Render accordion item flip view
              * @returns {Object}
              */
             render: function () {
-                this.settingsView = new QoobFieldsView({
-                    model: this.model,
-                    settings: this.settings,
-                    defaults: this.defaults,
-                    storage: this.storage,
-                    controller: this.controller,
-                    parentId: this.model.id
-                });
-
-                this.$el.html(this.tpl({id: "settings-block-" + this.parentId, currentId: "settings-block-" + this.model.id}));
-                this.$el.find('.settings-blocks').prepend(this.settingsView.render().$el);
+                this.$el.html(_.template(this.storage.getSkinTemplate('field-accordion-item-flip-view-preview'))());
+                this.$el.find('.settings-blocks').html(QoobFieldsView.prototype.getHtml.apply(this, arguments));
                 return this;
             },
             deleteInnerSettings: function () {
-                var name = this.$el.prop('id');
                 this.model.trigger('delete_model', this);
-                this.controller.deleteInnerSettingsView(name);
             },
             /**
              * Remove view

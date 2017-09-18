@@ -39,11 +39,10 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-video-setting-preview'));
-            this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
             this.src = options.src;
             this.assets = options.assets;
             this.tags = options.tags;
-
+            this.cb = options.cb;
 
             //Getting info about all video assets
             this.dataVideos = [];
@@ -185,7 +184,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if (this.$el.find('.selected-video').hasClass('empty')) {
                 this.$el.find('.selected-video').removeClass('empty');
             }
-            window.selectFieldVideo({ url: url, preview: preview });
+            this.cb({ url: url, preview: preview });
         },
         /**
          * Keyup event for filtering videos by tags in search input

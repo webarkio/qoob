@@ -73,8 +73,8 @@ function Skin() {
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "css", "name": "jqueryui", "src": "css/jquery-ui.css" },
-            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
+            { "type": "css", "name": "jquery-ui.css", "src": "css/jquery-ui.css" },
+            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css"},
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
             { "type": "json", "name": "skin_translation", "src": "translation.json" }
         ]
@@ -154,66 +154,6 @@ Skin.prototype.activate = function(options) {
     jQuery('body').prepend(self.layout.render().el);
 
     this.layout.resize();
-
-    // Init swipe
-    var hammer = new Hammer.Manager(document.documentElement, {
-        touchAction: 'auto',
-        inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
-        recognizers: [
-            [Hammer.Swipe, {
-                direction: Hammer.DIRECTION_HORIZONTAL
-            }]
-        ]
-    });
-
-    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-    var eventer = window[eventMethod];
-    var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-
-    eventer(messageEvent, function(e) {
-        var key = e.message ? "message" : "data";
-        var data = e[key];
-
-        if (data === 'SwipeRightPageMessage') {
-            self.controller.showSwipeMenu();
-        } else if (data === 'SwipeLeftPageMessage') {
-            self.controller.hideSwipeMenu();
-        }
-    }, false);
-
-
-    // var swipeEvents = function() {
-        hammer.on('swipeleft swiperight', function(e) {
-            if (e.type === 'swipeleft') {
-                self.controller.hideSwipeMenu();
-            } else if (e.type === 'swiperight') {
-                self.controller.showSwipeMenu();             
-            }
-        });
-    // };
-
-    var swipeResize = function() {
-        var container = jQuery('#qoob');
-        container.removeClass('mobile tablet');
-        if (isMobile.phone) {
-            container.addClass('mobile');
-        } else if (isMobile.tablet) {
-            container.addClass('tablet');
-        } else {
-            hammer.off('swipeleft').off('swiperight');
-        }
-    }
-
-    if (isMobile.phone) {
-        self.controller.showSwipeMenu();
-    }
-
-    Hammer.on(window, "resize", function() {
-        swipeResize();
-    });
-
-    swipeResize();
-
 };
 
 

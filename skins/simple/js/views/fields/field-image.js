@@ -1,4 +1,4 @@
-/*global QoobFieldView, ImageCenterView*/
+/*global QoobFieldView*/
 var Fields = Fields || {};
 
 /**
@@ -29,7 +29,6 @@ Fields.image = QoobFieldView.extend(
         initialize: function(options) {
             QoobFieldView.prototype.initialize.call(this, options);
             this.options = options;
-            this.parentId = options.parentId;
             this.tags = options.settings.tags || null;
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-preview'));
         },
@@ -56,6 +55,10 @@ Fields.image = QoobFieldView.extend(
          * @param {String} url image
          */
         changeImage: function(url) {
+            this.$el.find('.field-image-container').removeClass('empty');
+            if (!url) {
+                this.$el.find('.field-image-container').addClass('empty');
+            }            
             this.$el.find('.field-image__preview-image').attr('src', url);
             this.model.set(this.$el.find('.field-image__url-hidden').attr('name'), url);
             this.$el.find('.field-image__url-hidden').val(url);
@@ -66,7 +69,7 @@ Fields.image = QoobFieldView.extend(
          */
         clickOtherImage: function(evt) {
             var bg = this.$(evt.currentTarget).css('background-image'),
-                url = bg.replace('url(','').replace(')','').replace(/\"/gi, "");
+                url = bg.replace('url(', '').replace(')', '').replace(/\"/gi, "");
             this.changeImage(url);
         },
         /**
@@ -84,7 +87,7 @@ Fields.image = QoobFieldView.extend(
             var droppedFiles = evt.originalEvent.dataTransfer.files;
 
             // 30 MB limit
-            if (droppedFiles[0].size > 31457280) {
+            if (droppedFiles[0].size > 2097152) {
                 this.$el.find('.field-image__preview').hide();
                 this.$el.find('.field-upload-error').addClass('field-upload-error-active');
 
@@ -134,41 +137,7 @@ Fields.image = QoobFieldView.extend(
          * Show media center images
          */
         clickMediaCenter: function() {
-            console.log('clickMediaCenter');
-            window.selectFieldImage = function(src) {
-                this.$el.find('.field-image-container').removeClass('empty');
-                if (!src) {
-                    this.$el.find('.field-image-container').addClass('empty');
-                }
-                this.changeImage(src);
-            }.bind(this);
-
-            var mediaCenter = new ImageCenterView({
-                model: this.model,
-                controller: this.controller,
-                parentId: this.parentId,
-                storage: this.storage,
-                curSrc: this.$el.find('.field-image__url-hidden').val(),
-                assets: this.storage.getAssets(),
-                tags: this.tags ? this.tags.join(', ') : '',
-                iframeUrl: this.getIframeUrl()
-            });
-
-            this.controller.setInnerSettingsView(mediaCenter);
-
-            
-
-            // this.controller.history.push(Backbone.history.fragment + '/' + this.settings.name);
-
-            console.log(Backbone.history.getFragment());
-
-
-            console.log(Backbone.history.fragment + '/' + this.settings.name);
-
-            this.controller.navigate(Backbone.history.fragment + '/' + this.settings.name, {
-                trigger: false
-            });
-
+            this.controller.navigate(this.controller.currentUrl() + "/" + this.settings.name, true);
             return false;
         },
         getIframeUrl: function() {
@@ -188,8 +157,6 @@ Fields.image = QoobFieldView.extend(
          * @returns {Object}
          */
         render: function() {
-
-
             var htmldata = {
                 hideDeleteButton: this.settings.hideDeleteButton,
                 "label": this.settings.label,
@@ -200,7 +167,7 @@ Fields.image = QoobFieldView.extend(
                 'media_center': this.storage.__('media_center', 'Media center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'error': this.storage.__('error', 'Error!'),
-                'error_text': this.storage.__('error_text', 'Image size can not exceed 30 mb')
+                'error_text': this.storage.__('error_text', 'Image size can not exceed 2 mb')
             };
 
             if (typeof this.storage.driver.mainMenu === "function") {

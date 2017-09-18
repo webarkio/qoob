@@ -96,4 +96,5 @@ var QoobUtils = {
         values.lib = items.lib;
         return values;
     }
+
 };

@@ -23,22 +23,16 @@ var QoobEditModeButtonView = Backbone.View.extend({ // eslint-disable-line no-un
         this.controller.setEditMode();
     },
     setPreviewMode: function() {
-        this.$el.fadeIn(300);
+        var self = this;
+        this.controller.layout.sidebar.$el.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+            if (e.target == this) {
+                self.$el.addClass('edit-mode-button-show');
+                self.controller.layout.sidebar.$el.off('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
+            }
+        });
     },
     setEditMode: function() {
-        this.$el.fadeOut(300);
-    },
-    /**
-     * Show toolbar
-     */
-    show: function() {
-        this.$el.show();
-    },
-    /**
-     * Hide toolbar
-     */
-    hide: function() {
-        this.$el.hide();
+        this.$el.removeClass('edit-mode-button-show');
     },
     /**
      * If visible toolbar

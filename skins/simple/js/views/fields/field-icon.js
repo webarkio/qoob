@@ -1,4 +1,4 @@
-/*global QoobFieldView, IconCenterView*/
+/*global QoobFieldView*/
 var Fields = Fields || {};
 
 /**
@@ -22,14 +22,13 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          */
         initialize: function(options) {
             QoobFieldView.prototype.initialize.call(this, options);
-            this.parentId = options.parentId;
             this.options = options;
             var assets = this.storage.getAssets();
 
             this.icons = [];
 
             //Get all icons from assets
-            for (var i = 0, asLen = assets.length; i < asLen; i++) {
+            for (var i = 0; i < assets.length; i++) {
                 for (var j = 0, aLen = assets[i].length; j < aLen; j++) {
                     if (assets[i][j].type === 'icon') {
                         this.icons.push({
@@ -68,6 +67,13 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
                 'class': icon,
                 'data-icon-tags': (iconObject ? iconObject.tags : '')
             });
+
+            if (iconObject === '') {
+                this.$el.find('.field-icon-container').addClass('empty');
+            } else {
+                this.$el.find('.field-icon-container').removeClass('empty');
+            }
+
             this.$el.find('input[type="hidden"]').val(icon);
             this.model.set(this.$el.find('input[type="hidden"]').attr('name'), icon);
         },
@@ -83,29 +89,7 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          * Show media center icon
          */
         clickMediaCenter: function() {
-            window.selectFieldIcon = function(classes) {
-                if (classes === '') {
-                    this.$el.find('.field-icon-container').addClass('empty');
-                } else {
-                    this.$el.find('.field-icon-container').removeClass('empty');
-                }
-                this.changeIcon(classes);
-
-            }.bind(this);
-
-            var iconObject = this.findByClasses(this.$el.find('input[type="hidden"]').val());
-
-            var iconCenter = new IconCenterView({
-                model: this.model,
-                controller: this.controller,
-                parentId: this.parentId,
-                storage: this.storage,
-                icon: iconObject ? { classes: iconObject.classes, tags: iconObject.tags } : '',
-                icons: this.icons
-            });
-
-            this.controller.setInnerSettingsView(iconCenter);
-
+            this.controller.navigate(this.controller.currentUrl() + "/" + this.settings.name, true);
             return false;
         },
         /**

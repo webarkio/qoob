@@ -79,8 +79,16 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.getIframeContents().find('#qoob-blocks').addClass('preview');
         },
         setEditMode: function() {
+            var self = this;
             this.previewMode = false;
-            this.getIframeContents().find('#qoob-blocks').removeClass('preview');
+            this.controller.layout.editModeButton.$el.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                if (e.target == this) {
+                    self.controller.layout.resize();
+                    self.getIframeContents().find('#qoob-blocks').removeClass('preview');
+                    self.controller.layout.editModeButton.$el.off('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
+                }
+            });
+            
         },
         setDeviceMode: function(mode) {
             var self = this;
@@ -129,16 +137,18 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 scroll = 0;
             } else if (position === 'bottom') {
                 scroll = iframe.document.body.scrollHeight;
-            } else {
+            } else if (this.getBlockView(blockId)) {
                 var el = this.getBlockView(blockId).$el;
                 var windowHeight = this.getIframe().height();
                 scroll = el.offset().top - (windowHeight - el.outerHeight(true)) / 2;
             }
 
-            //Scroll to new block
-            this.getWindowIframe().jQuery('html, body').animate({
-                scrollTop: scroll
-            }, 1000);
+            if (scroll) {
+                //Scroll to new block
+                this.getWindowIframe().jQuery('html, body').animate({
+                    scrollTop: scroll
+                }, 1000);
+            }
         },
         /**
          * Get BlockView by id

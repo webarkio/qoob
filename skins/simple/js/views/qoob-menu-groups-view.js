@@ -28,8 +28,8 @@ var QoobMenuGroupsView = Backbone.View.extend( // eslint-disable-line no-unused-
         },
         clickLinkGroupActive: function(evt) {
             evt.preventDefault();
-            $(evt.currentTarget).removeClass('group-list__link-active');
-            this.controller.navigate('index', {
+            jQuery(evt.currentTarget).removeClass('group-list__link-active');
+            this.controller.navigate('', {
                 trigger: true,
                 replace: true
             });

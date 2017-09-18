@@ -41,11 +41,11 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-setting-preview'));
-            this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
             this.curSrc = options.curSrc;
             this.assets = options.assets;
             this.tags = options.tags;
             this.iframeUrl = options.iframeUrl;
+            this.cb = options.cb;
 
             this.dataImages = [];
             for (var i = 0; i < this.assets.length; i++) {
@@ -196,7 +196,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
             this.$el.find('.image-url').val(url);
             this.curSrc = url;
-            window.selectFieldImage(url);
+            this.cb(url);
         },
         /**
          * Keyup event for filtering images by tags in search input

@@ -21,14 +21,13 @@ var QoobFieldsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.settings = options.settings;
             this.defaults = options.defaults;
             this.controller = options.controller;
-            this.parentId = options.parentId;
             this.fields = [];
         },
         /**
          * Render settings
          * @returns {Object}
          */
-        render: function() {
+        getHtml: function() {
             var res = [];
             for (var i = 0; i < this.settings.length; i++) {
                 if (Fields[this.settings[i].type]) {
@@ -38,7 +37,7 @@ var QoobFieldsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         settings: this.settings[i],
                         defaults: this.defaults[this.settings[i].name],
                         controller: this.controller,
-                        parentId: this.parentId
+                        parent: this
                     });
 
                     this.fields.push(field);
@@ -47,9 +46,7 @@ var QoobFieldsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     throw new Error("Field " + this.settings[i].type + " not found!");
                 }
             }
-            this.$el.html(res);
-
-            return this;
+            return res;
         }
     }
 );

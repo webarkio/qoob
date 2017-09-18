@@ -9,7 +9,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     {
         id: "qoob-menu",
         menuViews: [],
-        settingsViewStorage: [],
         groupActiveClass: 'group-list__link-active',
         /**
          * View menu
@@ -20,16 +19,18 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         initialize: function(options) {
             this.controller = options.controller;
             this.storage = options.storage;
+            this.currentSide = null;
         },
         addSettings: function(model) {
             var item = this.storage.getBlockConfig(model.get('lib'), model.get('block'));
             if (item) {
                 this.addView(new QoobMenuSettingsView({
-                    "url": 'edit' + '-' + model.id,
+                    "id":'edit' + '-' + model.id,
                     "model": model,
-                    "config": item,
+                    "settings": item.settings,
+                    "defaults": item.defaults,
                     "storage": this.storage,
-                    controller: this.controller
+                    "controller": this.controller
                 }), 'main');
             }
         },
@@ -42,6 +43,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var groups = this.storage.getGroups();
 
             this.addView(new QoobMenuGroupsView({
+                id: 'catalog-groups',
                 storage: this.storage,
                 groups: groups,
                 controller: this.controller
@@ -145,20 +147,21 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 });
             });
         },
-        setEditMode: function() {
-            this.$el.fadeIn(300);
-        },
         showGroup: function(group) {
             this.showSide('right', group);
         },
-        showIndex: function() {
-            this.$el.find('.catalog-groups').addClass('side-item-show');
+        showIndex: function(isBack) {
+            this.controller.layout.stopEditBlock();
             this.hideSide('right');
+            var newSide = this.getView("catalog-groups");
+            this.changeSide(this.currentSide, newSide, isBack);
+            this.currentSide = newSide;
         },
-        startEditBlock: function(id) {
+        startEditBlock: function(id, isBack) {
             this.hideSide('right');
-            this.rotate(id, 'forward');
-            // this.showSide('left', id);
+            var newSide = this.getSettingsView(id);
+            this.changeSide(this.currentSide, newSide, isBack);
+            this.currentSide = newSide;
         },
         /**
          * Add view to position qoob
@@ -169,26 +172,30 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.menuViews.push(view);
             this.$el.find('.qoob-menu-' + position + '-side').append(view.render().el);
         },
+        setInnerSettingsView: function(view) {            
+            this.addView(view, 'main');
+            view.$el.trigger('shown');
+        },
+        showInnerSettingsView: function(id, isBack){
+            var newSide = this.getView(id);
+            console.log(this.currentSide, newSide);
+            this.changeSide(this.currentSide, newSide, isBack);
+            this.currentSide = newSide;
+        },
         /**
          * Get SettingsView by id
          * @param {Number} id modelId
          */
-        getSettingsView: function(id) {
+        getView: function(id) {
             for (var i = 0; i < this.menuViews.length; i++) {
-                if (this.menuViews[i].model && this.menuViews[i].model.id == id) {
+                if (this.menuViews[i].id == id) {
                     return this.menuViews[i];
                 }
             }
         },
-        /**
-         * Get MenuView by url
-         * @param {String} url
-         */
-        getMenuViewByUrl: function(url) {
+        getSettingsView: function(id) {
             for (var i = 0; i < this.menuViews.length; i++) {
-                // console.log(this.menuViews[i]);
-                // console.log(url);
-                if (this.menuViews[i].url === url) {
+                if (this.menuViews[i].model && this.menuViews[i].model.id == id) {
                     return this.menuViews[i];
                 }
             }
@@ -209,8 +216,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             side.find('[data-side-id]').removeClass('side-item-show');
             side.find('[data-side-id="' + id + '"]').addClass('side-item-show');
         },
-        hideSide: function(side) {
-            var side = this.$el.find('.qoob-menu-' + side + '-side');
+        hideSide: function(position) {
+            var side = this.$el.find('.qoob-menu-' + position + '-side');
 
             if (side.find('[data-side-id]').hasClass('side-item-show')) {
                 this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
@@ -220,69 +227,65 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 side.removeClass('show-side');
             }
         },
-        rotate: function(url, motion) {
-            var self = this;
-            console.log(url);
-            var url = Backbone.history.fragment;
-            console.log(Backbone.history.fragment);
-            var view = this.getMenuViewByUrl(url);
-            if (motion === 'backward') {
-                // var side = this.$el.find('[data-side-id="' + id + '"]'),
-                    var cloneSide = view.$el.clone();
+
+        changeSide: function(oldSide, newSide, direction) {
+            var self = this,
+            cloneSide;
+
+            // console.log('oldSide', oldSide);
+            // console.log('newSide', newSide);
+            // console.log('compare', oldSide == newSide);
+
+            if (oldSide == newSide)
+                return;
+
+            if (direction) { // back
+                cloneSide = oldSide.$el.clone();
 
                 this.$el.find('.qoob-menu-backward-side').append(cloneSide.addClass('side-item-show'));
 
+                if (oldSide) {
+                    oldSide.$el.removeClass('side-item-show');
+                }
+
                 this.$el.addClass('show-backward');
-                self.$el.find('.qoob-menu-main-side .side-item-show').removeClass('side-item-show');
 
-                // view.$el.addClass('side-item-show');
+                newSide.$el.addClass('side-item-show');
 
-                this.$el.find('[data-side-id="catalog-groups"]').addClass('side-item-show');
-
-
-
-
-            } else if (motion === 'forward') {
-                // var side = this.$el.find('[data-side-id="' + id + '"]'),
-                    var cloneSide = view.$el.clone();
-
-                this.$el.find('.qoob-menu-forward-side').append(cloneSide.addClass('side-item-show'));
-
-                this.$el.addClass('show-forward');
-
-                this.$el.find('.qoob-menu-forward-side').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                this.$el.find('.qoob-menu-backward-side').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
                     if (e.target == this) {
-
-                        self.$el.find('.qoob-menu-main-side .side-item-show').removeClass('side-item-show');
-                        view.$el.addClass('side-item-show');
-                        self.$el.find('.qoob-menu-forward-side').html('');
-                        self.$el.removeClass('show-forward');
-
+                        self.$el.find('.qoob-menu-backward-side').html('');
+                        self.$el.removeClass('show-backward');
 
                         jQuery(this).off(e);
                     }
                 });
+
+            } else { // forward
+                if (newSide !== undefined) {
+                    cloneSide = newSide.$el.clone();
+
+                    this.$el.find('.qoob-menu-forward-side').append(cloneSide.addClass('side-item-show'));
+
+                    this.$el.addClass('show-forward');
+
+                    this.$el.find('.qoob-menu-forward-side').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                        if (e.target == this) {
+                            if (oldSide) {
+                                oldSide.$el.removeClass('side-item-show');
+                            }
+                            newSide.$el.addClass('side-item-show');
+                            self.$el.find('.qoob-menu-forward-side').html('');
+                            self.$el.removeClass('show-forward');
+
+                            jQuery(this).off(e);
+                        }
+                    });
+                }
             }
-        },
-        onEditStart: function(blockId) {
-            console.log('onEditStart');
-            this.rotate('settings-block-' + blockId);
-        },
-        onEditStop: function() {
-            this.rotate('catalog-groups');
         },
         onEditMode: function() {
             this.$el.fadeIn(300);
-        },
-        /**
-         * Delete view from settingsViewStorage
-         * @param {String} view name
-         */
-        delView: function(name) {
-            if (this.settingsViewStorage && this.settingsViewStorage[name]) {
-                this.settingsViewStorage[name].dispose();
-                delete this.settingsViewStorage[name];
-            }
         },
         deleteSettings: function(model) {
             this.controller.stopEditBlock();
@@ -330,20 +333,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
             if (element.find('.input-text').hasClass('error')) {
                 element.find('.input-text').removeClass('error');
-            }
-        },
-        /**
-         * Show sidebar menu
-         */
-        showSwipeMenu: function() {
-            jQuery('#qoob').removeClass('close-panel');
-        },
-        /**
-         * Hide sidebar menu
-         */
-        hideSwipeMenu: function() {
-            if (!jQuery('#qoob').hasClass('close-panel')) {
-                jQuery('#qoob').addClass('close-panel');
             }
         }
     });

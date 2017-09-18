@@ -29,7 +29,6 @@ Fields.video = QoobFieldView.extend(
         initialize: function(options) {
             QoobFieldView.prototype.initialize.call(this, options);
             this.options = options;
-            this.parentId = options.parentId;
             this.tags = options.settings.tags || null;
             this.tpl = _.template(this.storage.getSkinTemplate('field-video-preview'));
         },
@@ -56,6 +55,11 @@ Fields.video = QoobFieldView.extend(
          * @param {Object} evt
          */
         changeVideo: function(src) {
+            this.$el.find('.field-video-container').removeClass('empty');
+            if (!src) {
+                this.$el.find('.field-video-container').addClass('empty');
+            }
+
             if (src !== '') {
                 this.$el.find('.field-video__preview-image').attr('src', src.preview);
                 this.model.set(this.$el.find('.field-video__url-hidden').attr('name'), src);
@@ -130,26 +134,7 @@ Fields.video = QoobFieldView.extend(
          * @param {Object} evt
          */
         clickMediaCenter: function() {
-            window.selectFieldVideo = function(src) {
-                this.$el.find('.field-video-container').removeClass('empty');
-                if (!src) {
-                    this.$el.find('.field-video-container').addClass('empty');
-                }
-                this.changeVideo(src);
-            }.bind(this);
-
-            var videoCenter = new VideoCenterView({
-                model: this.model,
-                controller: this.controller,
-                parentId: this.parentId,
-                storage: this.storage,
-                src: this.getValue(),
-                assets: this.storage.getAssets(),
-                tags: this.tags ? this.tags.join(', ') : ''
-            });
-
-            this.controller.setInnerSettingsView(videoCenter);
-
+            this.controller.navigate(this.controller.currentUrl() + "/" + this.settings.name, true);
             return false;
         },
         /**
