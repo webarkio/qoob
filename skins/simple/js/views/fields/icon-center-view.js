@@ -1,6 +1,5 @@
-/*global window*/
 /**
- * Create IconCenterView view 
+ * Create IconCenterView 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
@@ -10,7 +9,6 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         className: "inner-settings-icon settings inner-settings",
         offset: 0,
         limit: 12,
-        dataSearchIcons: null,
         events: {
             'keydown': 'keyAction',
             'click .ajax-icon': 'selectIcon',
@@ -36,6 +34,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * @constructs
          */
         initialize: function(options) {
+            this.name = options.name;
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-icon-setting-preview'));
@@ -129,17 +128,19 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     result.push('<div class="ajax-icon"><span  data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
                 }
             } else {
-                this.dataSearchIcons = [];
+                var dataSearchIcons = [];
                 for (var y = 0; y < this.icons.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
-                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
-                        if (filteredWords[j] !== '' && this.icons[y].tags.match(regEx)) {
-                            this.dataSearchIcons.push(this.icons[y]);
+                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' '));
+                        if (filteredWords[j] !== '' && (this.icons[y].tags && this.icons[y].tags.match(regEx))) {
+                            if (dataSearchIcons.indexOf(this.icons[y]) < 0) {
+                                dataSearchIcons.push(this.icons[y]);
+                            }
                         }
                     }
                 }
 
-                var searchIcons = this.dataSearchIcons.slice(offset, offset + this.limit);
+                var searchIcons = dataSearchIcons.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchIcons.length; x++) {
                     result.push('<div class="ajax-icon' + (searchIcons[x].classes === this.icon.classes ? ' chosen ' : '') + '"><span  data-icon-tags="' + searchIcons[x].tags + '" class="' + searchIcons[x].classes + '"></span></div>');
                 }
@@ -207,7 +208,6 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * Remove view
          */
         dispose: function() {
-            // same as this.$el.remove();
             this.$el.remove();
             // unbind events that are
             // set on this view

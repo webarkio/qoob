@@ -116,7 +116,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
          */
         resize: function() {
             var size = {
-                'width': (this.previewMode ? 0 : 264)
+                'width': (this.previewMode ? 0 : parseInt(jQuery('#qoob-sidebar').css('width'), 10))
             };
 
             this.$el.stop().animate({

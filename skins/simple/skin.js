@@ -38,10 +38,15 @@ function Skin() {
             { "type": "js", "name": "qoob-settings-view", "src": "js/views/qoob-settings-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-import-export-view", "src": "js/views/qoob-import-export-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-page-templates-view", "src": "js/views/qoob-page-templates-view.js", "dep": ["backbone"] },
-            { "type": "js", "name": "field-accordion-item-expand", "src": "js/views/fields/field-accordion-item-expand.js", "dep": ["backbone"] },
-            { "type": "js", "name": "field-accordion-item-flip-settings", "src": "js/views/fields/field-accordion-item-flip-settings.js", "dep": ["backbone"] },
-            { "type": "js", "name": "field-accordion-item-flip", "src": "js/views/fields/field-accordion-item-flip.js", "dep": ["backbone"] },
+
             { "type": "js", "name": "field-accordion", "src": "js/views/fields/field-accordion.js", "dep": ["backbone"] },
+            { "type": "js", "name": "field-accordion-item", "src": "js/views/fields/field-accordion-item.js", "dep": ["backbone"] },
+            { "type": "js", "name": "field-accordion-item-settings", "src": "js/views/fields/field-accordion-item-settings.js", "dep": ["backbone"] },
+
+            { "type": "js", "name": "field-accordion-flip", "src": "js/views/fields/field-accordion-flip.js", "dep": ["backbone"] },
+            { "type": "js", "name": "field-accordion-item-flip", "src": "js/views/fields/field-accordion-flip-item.js", "dep": ["backbone"] },
+            { "type": "js", "name": "field-accordion-item-flip-settings", "src": "js/views/fields/field-accordion-flip-item-settings.js", "dep": ["backbone"] },
+            
             { "type": "js", "name": "field-checkbox-switch", "src": "js/views/fields/field-checkbox-switch.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-checkbox", "src": "js/views/fields/field-checkbox.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-colorpicker", "src": "js/views/fields/field-colorpicker.js", "dep": ["backbone"] },

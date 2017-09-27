@@ -20,12 +20,14 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.controller = options.controller;
             this.storage = options.storage;
             this.currentSide = null;
+            this.currentView = null;
         },
         addSettings: function(model) {
             var item = this.storage.getBlockConfig(model.get('lib'), model.get('block'));
             if (item) {
                 this.addView(new QoobMenuSettingsView({
-                    "id":'edit' + '-' + model.id,
+                    "id": 'edit' + '-' + model.id,
+                    "name": 'edit' + '-' + model.id,
                     "model": model,
                     "settings": item.settings,
                     "defaults": item.defaults,
@@ -151,17 +153,34 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.showSide('right', group);
         },
         showIndex: function(isBack) {
-            this.controller.layout.stopEditBlock();
             this.hideSide('right');
             var newSide = this.getView("catalog-groups");
-            this.changeSide(this.currentSide, newSide, isBack);
-            this.currentSide = newSide;
+
+            if (this.currentSide && this.currentSide.side) {
+                this.changeSide(this.currentSide.side, newSide.side, isBack);
+            } else {
+                this.changeSide(null, newSide.side, isBack);
+            }
+            this.currentView = newSide;
+            this.currentSide = newSide.side;
         },
         startEditBlock: function(id, isBack) {
             this.hideSide('right');
             var newSide = this.getSettingsView(id);
-            this.changeSide(this.currentSide, newSide, isBack);
-            this.currentSide = newSide;
+            
+            // hook for field accordion
+            var accordion = newSide.$el.find('.accordion');
+            if (accordion.length > 0) {
+                accordion.accordion("option", "active", false);
+            }
+
+            if (this.currentSide && this.currentSide.side) {
+                this.changeSide(this.currentSide.side, newSide.side, isBack);
+            } else {
+                this.changeSide(null, newSide.side, isBack);
+            }
+            this.currentView = newSide;
+            this.currentSide = newSide.side;
         },
         /**
          * Add view to position qoob
@@ -172,23 +191,23 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.menuViews.push(view);
             this.$el.find('.qoob-menu-' + position + '-side').append(view.render().el);
         },
-        setInnerSettingsView: function(view) {            
+        setInnerSettingsView: function(view) {
             this.addView(view, 'main');
             view.$el.trigger('shown');
         },
-        showInnerSettingsView: function(id, isBack){
-            var newSide = this.getView(id);
-            console.log(this.currentSide, newSide);
-            this.changeSide(this.currentSide, newSide, isBack);
-            this.currentSide = newSide;
+        showInnerSettingsView: function(id, isBack) {
+            var newView = this.getView(id);
+            this.changeSide(this.currentSide, newView.side, isBack);
+            this.currentSide = newView.side;
+            this.currentview = newView;
         },
         /**
-         * Get SettingsView by id
-         * @param {Number} id modelId
+         * Get SettingsView by name
+         * @param {String}  name view
          */
-        getView: function(id) {
+        getView: function(name) {
             for (var i = 0; i < this.menuViews.length; i++) {
-                if (this.menuViews[i].id == id) {
+                if (this.menuViews[i].name == name) {
                     return this.menuViews[i];
                 }
             }
@@ -230,14 +249,10 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
         changeSide: function(oldSide, newSide, direction) {
             var self = this,
-            cloneSide;
-
-            // console.log('oldSide', oldSide);
-            // console.log('newSide', newSide);
-            // console.log('compare', oldSide == newSide);
+                cloneSide;
 
             if (oldSide == newSide)
-                return;
+                return false;
 
             if (direction) { // back
                 cloneSide = oldSide.$el.clone();

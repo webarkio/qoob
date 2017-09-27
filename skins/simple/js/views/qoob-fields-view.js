@@ -17,11 +17,13 @@ var QoobFieldsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         initialize: function(options) {
             this.model = options.model;
+            this.name = options.name;
             this.storage = options.storage;
             this.settings = options.settings;
             this.defaults = options.defaults;
             this.controller = options.controller;
             this.fields = [];
+            this.side = this;
         },
         /**
          * Render settings
@@ -32,12 +34,14 @@ var QoobFieldsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             for (var i = 0; i < this.settings.length; i++) {
                 if (Fields[this.settings[i].type]) {
                     var field = new Fields[this.settings[i].type]({
+                        name: this.settings[i].name,
                         model: this.model,
                         storage: this.storage,
                         settings: this.settings[i],
                         defaults: this.defaults[this.settings[i].name],
                         controller: this.controller,
-                        parent: this
+                        parent: this,
+                        side: this
                     });
 
                     this.fields.push(field);

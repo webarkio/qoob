@@ -1,17 +1,18 @@
-/* global QoobFieldView, FieldAccordionItem, QoobUtils */
+/* global QoobFieldView, FieldAccordionFlipItem, QoobUtils */
 var Fields = Fields || {};
-Fields.accordion = QoobFieldView.extend(
+Fields.accordion_flip = QoobFieldView.extend(
     /** @lends Fields.accordion.prototype */
     {
         className: 'field-accordion field-group',
         uniqueId: null,
+        classNameItem: "",
         accordionMenuViews: [],
         events: {
             'drop .accordion': 'changePosition'
         },
         /**
          * View field accordion
-         * @class Fields.accordion
+         * @class Fields.accordion_flip
          * @augments Backbone.View
          * @constructs
          */
@@ -85,7 +86,7 @@ Fields.accordion = QoobFieldView.extend(
                 this.trigger('change', this);
             });
             newModel.on("remove_item", this.removeItem.bind(this));
-            var item = new FieldAccordionItem({
+            var item = new FieldAccordionFlipItem({
                 name: this.name + '_' + newModel.id,
                 model: newModel,
                 settings: settings,
@@ -108,7 +109,6 @@ Fields.accordion = QoobFieldView.extend(
          * @returns {Object}
          */
         render: function() {
-
             var values = this.getValue(),
                 items = [];
             // sort accordion settings
@@ -118,7 +118,7 @@ Fields.accordion = QoobFieldView.extend(
 
             if (values.length && values.length > 0) {
                 for (var i = 0; i < values.models.length; i++) {
-                    var item = new FieldAccordionItem({
+                    var item = new FieldAccordionFlipItem({
                         name: this.name + '_' + values.models[i].id,
                         model: values.models[i],
                         settings: this.settings.settings,
@@ -155,20 +155,18 @@ Fields.accordion = QoobFieldView.extend(
 
             return this;
         },
-
         sortableInit: function() {
             var self = this,
                 id = this.getUniqueId();
 
             this.$el.find("#" + id).accordion({
                 header: "> div > h3.inner-settings-expand",
-                icons: false,
                 animate: 500,
                 collapsible: true,
                 active: false,
                 heightStyle: 'content'
             }).sortable({
-                items: ".field-accordion-item",
+                items: ".field-accordion__settings",
                 revert: false,
                 axis: "y",
                 helper: 'clone',
