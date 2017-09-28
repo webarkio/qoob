@@ -45,7 +45,7 @@ var QoobBlockWrapperView = Backbone.View.extend({ // eslint-disable-line no-unus
             this.controller.navigate('edit-' + this.model.id, { trigger: true });
         }
  
-        if (isMobile.phone) {
+        if (isMobile.phone || isMobile.tablet) {
             this.controller.showSwipeMenu();
         }
     },

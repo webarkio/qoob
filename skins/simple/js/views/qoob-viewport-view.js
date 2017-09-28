@@ -121,7 +121,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
 
             this.$el.stop().animate({
                 width: jQuery(window).width() - size.width
-            });
+            }, 300, 'linear');
 
             //Iframe resize
             this.getIframe().height(jQuery(window).height());
