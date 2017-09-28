@@ -306,7 +306,7 @@
                             "box-sizing: inherit;"+
                         "}"+
                         "body {"+
-                            "overflow: hidden; line-height: 1;"+
+                            "margin:0; overflow: hidden; line-height: 1;"+
                         "}"+
                         "@-webkit-keyframes block-elements {"+
                             "0%,100%,80%{"+
