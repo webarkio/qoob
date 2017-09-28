@@ -109,7 +109,7 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
 
     //EVENTS
     clickPreviewMode: function() {
-         if (!isMobile.phone) {
+        if (!isMobile.phone) {
             this.controller.setPreviewMode();
         }
     },

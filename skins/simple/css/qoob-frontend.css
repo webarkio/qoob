@@ -3,14 +3,11 @@
 * Includes: core.css, draggable.css
 * Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
 
-
 /* Layout helpers
 ----------------------------------*/
-
 .ui-helper-hidden {
     display: none;
 }
-
 .ui-helper-hidden-accessible {
     border: 0;
     clip: rect(0 0 0 0);
@@ -21,7 +18,6 @@
     position: absolute;
     width: 1px;
 }
-
 .ui-helper-reset {
     margin: 0;
     padding: 0;
@@ -32,23 +28,19 @@
     font-size: 100%;
     list-style: none;
 }
-
 .ui-helper-clearfix:before,
 .ui-helper-clearfix:after {
     content: "";
     display: table;
     border-collapse: collapse;
 }
-
 .ui-helper-clearfix:after {
     clear: both;
 }
-
 .ui-helper-clearfix {
     min-height: 0;
     /* support: IE7 */
 }
-
 .ui-helper-zfix {
     width: 100%;
     height: 100%;
@@ -59,26 +51,20 @@
     filter: Alpha(Opacity=0);
     /* support: IE8 */
 }
-
 .ui-front {
     z-index: 99999;
 }
 
-
 /* Interaction Cues
 ----------------------------------*/
-
 .ui-state-disabled {
     cursor: default !important;
 }
 
-
 /* Icons
 ----------------------------------*/
 
-
 /* states and img */
-
 .ui-icon {
     display: block;
     text-indent: -99999px;
@@ -86,13 +72,10 @@
     background-repeat: no-repeat;
 }
 
-
 /* Misc visuals
 ----------------------------------*/
 
-
 /* Overlays */
-
 .ui-widget-overlay {
     position: fixed;
     top: 0;
@@ -100,23 +83,18 @@
     width: 100%;
     height: 100%;
 }
-
 .ui-draggable-handle {
     -ms-touch-action: none;
     touch-action: none;
 }
-
 .ui-draggable-dragging {
     z-index: 9999999 !important;
 }
 
-
 /* Misc visuals
 ----------------------------------*/
 
-
 /* Fonts */
-
 @font-face {
     font-family: 'robotothin';
     src: url('../fonts/roboto/Roboto-Thin-webfont.eot');
@@ -124,7 +102,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'robotolight';
     src: url('../fonts/roboto/Roboto-Light-webfont.eot');
@@ -132,7 +109,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'robotobold';
     src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
@@ -140,7 +116,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'robotoregular';
     src: url('../fonts/roboto/Roboto-Regular.eot');
@@ -149,9 +124,7 @@
     font-style: normal;
 }
 
-
 /* Overlays */
-
 .droppable-zone.ui-droppable {
     position: absolute;
     width: 100%;
@@ -166,38 +139,31 @@
     text-align: center;
     background-color: #ececec;
 }
-
 .droppable-zone.ui-droppable i.plus {
     margin: 0 8px 0 0;
 }
-
 .droppable-zone.ui-droppable .dropp-block {
     cursor: default;
     /*line-height: 75px;
     height: 75px;*/
 }
-
 .droppable-zone.ui-droppable-active {
     visibility: visible;
     display: block;
 }
-
 .droppable-zone.ui-droppable-hover {
     background-color: #00ce63;
     color: #ffffff;
     display: block;
 }
-
 .droppable-zone.ui-droppable-hover i.plus {
     margin-top: -10px;
 }
-
 .droppable-zone.ui-droppable-hover span {
     margin-top: -10px;
 }
 
 /* Wait Block */
-
 .wait-block {
     cursor: default;
     visibility: visible;
@@ -209,7 +175,6 @@
     height: 50px;
     text-align: center;
 }
-
 .wait-block .clock {
     display: inline-block;
     border-radius: 50%;
@@ -219,12 +184,10 @@
     width: 35px;
     vertical-align: middle;
 }
-
-.wait-block .clock + span {
+.wait-block .clock+span {
     margin-left: 20px;
     vertical-align: middle;
 }
-
 .wait-block .clock:after {
     background: #00ce63;
     content: "";
@@ -237,7 +200,6 @@
     z-index: 10;
     border-radius: 50%;
 }
-
 .wait-block .minutes-container,
 .wait-block .seconds-container {
     position: absolute;
@@ -246,7 +208,6 @@
     bottom: 0;
     left: 0;
 }
-
 .wait-block .minutes,
 .wait-block .seconds {
     background: #00ce63;
@@ -256,41 +217,33 @@
     top: 10%;
     width: 3px;
 }
-
 .wait-block .seconds {
     z-index: 8;
 }
-
 .wait-block .minutes-container {
     animation: rotate 1s infinite linear;
 }
-
 .wait-block .seconds-container {
     animation: rotate 0.3s infinite linear;
 }
 
-
 /* Animation add block and remove block */
-
 @-webkit-keyframes rotate {
     100% {
         transform: rotateZ(360deg);
     }
 }
-
 @keyframes rotate {
     100% {
         transform: rotateZ(360deg);
     }
 }
-
 @-webkit-keyframes scaleUp {
     from {
         opacity: 0;
         -webkit-transform: scale(.5);
     }
 }
-
 @keyframes scaleUp {
     from {
         opacity: 0;
@@ -298,7 +251,6 @@
         transform: scale(.5);
     }
 }
-
 @-webkit-keyframes scaleDown {
     from {}
     to {
@@ -306,7 +258,6 @@
         -webkit-transform: scale(.8);
     }
 }
-
 @keyframes scaleDown {
     from {}
     to {
@@ -315,40 +266,32 @@
         transform: scale(.8);
     }
 }
-
 .content-block-outer.content-show {
     -webkit-animation: scaleUp .7s ease both;
     animation: scaleUp .7s ease both;
 }
-
 .content-block-outer.content-hide {
     -webkit-animation: scaleDown .7s ease both;
     animation: scaleDown .7s ease both;
 }
-
 .content-block-inner {
     position: relative;
 }
-
 .content-block-inner .empty-block {
     height: 300px;
     width: 100%;
     text-align: center;
     line-height: 300px;
 }
-
 .content-block-inner .empty-block .empty-block-text {
     font-family: 'robotolight' color: #000;
     font-size: 20px;
 }
 
-
 /* Overlay */
-
 #qoob-blocks .content-block-outer {
     position: relative;
 }
-
 .content-block-outer .qoob-overlay {
     position: absolute;
     display: block;
@@ -359,43 +302,34 @@
     transition: all;
     z-index: 9999;
 }
-
 .content-block-outer .qoob-overlay:hover {
     background: #fff;
     opacity: .4;
     cursor: pointer;
 }
-
 .content-block-outer .qoob-overlay.active {
     display: none;
 }
-
 .content-block-outer .qoob-overlay.no-active {
     background: #000;
     opacity: .7;
 }
-
 .content-block-outer .qoob-overlay.no-active:hover {
     background: #000;
     opacity: .4;
 }
-
 #qoob-blocks.preview .qoob-overlay {
     display: none;
 }
 
-
 /* Frontend Blank Block */
-
 #qoob-blocks .block-blank {
     position: relative;
     width: 100%;
 }
-
 #qoob-blocks .block-blank.full-page {
     height: calc(100vh - 40px);
 }
-
 #qoob-blocks .block-blank-inner {
     position: relative;
     overflow: hidden;
@@ -406,21 +340,17 @@
     line-height: 40px;
     text-align: center;
 }
-
 @media (max-width: 480px) {
     #qoob-blocks .block-blank-inner {
         height: 245px;
     }
 }
-
 #qoob-blocks .block-blank.full-page .block-blank-inner {
     height: calc(100% - 40px);
 }
-
 #qoob-blocks .block-blank-inner i {
     font-size: 40px;
 }
-
 #qoob-blocks .block-blank-inner-wrap {
     transform: translate(-50%, -50%);
     position: absolute;
@@ -428,7 +358,6 @@
     left: 50%;
     width: 100%;
 }
-
 #qoob-blocks .block-blank-inner-image {
     width: 196px;
     height: 116px;
@@ -436,25 +365,21 @@
     background-repeat: no-repeat;
     margin: 0 auto 10px auto;
 }
-
 #qoob-blocks .block-blank-inner-text .blank-text {
     font-family: 'robotobold';
     font-size: 24px;
     letter-spacing: 0.06em;
 }
-
 #qoob-blocks .block-blank-inner i,
 #qoob-blocks .block-blank-inner-text .blank-text {
     display: inline-block;
     color: #cdcdcd;
     vertical-align: middle;
 }
-
 #qoob-blocks .qoob-templates {
     position: relative;
     width: 100%;
 }
-
 #qoob-blocks .qoob-templates .title-block {
     color: #cdcdcd;
     letter-spacing: 0.06em;
@@ -464,12 +389,10 @@
     margin-top: 75px;
     margin-bottom: 49px;
 }
-
 #qoob-blocks .qoob-templates .templates {
     margin: 0 auto;
     max-width: 878px;
 }
-
 #qoob-blocks .qoob-templates .template {
     position: relative;
     text-align: center;
@@ -477,7 +400,6 @@
     border-radius: 3px;
     margin: 0 41px 39px 0px;
 }
-
 #qoob-blocks .qoob-templates .template .title {
     cursor: pointer;
     font-family: 'robotoblack';
@@ -487,7 +409,6 @@
     margin-top: 17px;
     color: #010833;
 }
-
 #qoob-blocks .qoob-templates .template .image-bg {
     overflow: hidden;
     margin-top: 5px;
@@ -502,7 +423,6 @@
     background-position: center;
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
 }
-
 #qoob-blocks .qoob-templates .template .image-bg .template-no-image {
     display: block;
     position: absolute;
@@ -513,7 +433,6 @@
     height: 100%;
     font-size: 22px;
 }
-
 #qoob-blocks .qoob-templates .template .remove {
     position: absolute;
     display: block;
@@ -526,7 +445,6 @@
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.21);
     color: #fff;
 }
-
 @media (min-width: 1200px) {
     #qoob-blocks .qoob-templates .template {
         width: 264px;
@@ -535,16 +453,14 @@
         margin: 0 0 32px 0;
     }
 }
-
 @media (min-width: 992px) and (max-width: 1199px) {
     #qoob-blocks .qoob-templates .template {
         width: 264px;
     }
-     #qoob-blocks .qoob-templates .template:nth-child(3n) {
+    #qoob-blocks .qoob-templates .template:nth-child(3n) {
         margin: 0 0 32px 0;
     }
 }
-
 @media (min-width: 768px) and (max-width: 991px) {
     #qoob-blocks .qoob-templates .templates {
         max-width: 690px;
@@ -559,7 +475,6 @@
         margin: 0 0 32px 0;
     }
 }
-
 @media (max-width: 767px) {
     #qoob-blocks .qoob-templates .template {
         width: 46.5%;
@@ -574,7 +489,6 @@
         margin: 0 0 32px 0;
     }
 }
-
 @media (max-width: 480px) {
     #qoob-blocks .qoob-templates {
         background-color: #fff;
@@ -594,26 +508,20 @@
     }
 }
 
-
 /* Quill editor
 ----------------------------------*/
-
 .ql-align-center {
     text-align: center;
 }
-
 .ql-align-justify {
     text-align: justify;
 }
-
 .ql-align-right {
     text-align: right;
 }
 
-
 /* Loader
 ----------------------------------*/
-
 @keyframes loader {
     0%,
     10%,
@@ -626,7 +534,6 @@
         height: 150px;
     }
 }
-
 @keyframes loaderBlock {
     0%,
     30% {
@@ -639,7 +546,6 @@
         transform: rotate(90deg);
     }
 }
-
 @keyframes loaderBlockInverse {
     0%,
     20% {
@@ -652,7 +558,6 @@
         transform: rotate(-90deg);
     }
 }
-
 .loader-wrap {
     position: absolute;
     top: 0;
@@ -662,7 +567,6 @@
     background: #fff;
     z-index: 9999999;
 }
-
 .loader {
     position: fixed;
     top: 50%;
@@ -673,7 +577,6 @@
     animation: loader 1.2s infinite ease-in-out;
     z-index: 9999999;
 }
-
 .loader span {
     position: absolute;
     display: block;
@@ -682,24 +585,20 @@
     background-color: #949599;
     animation: loaderBlock 1.2s infinite ease-in-out both;
 }
-
 .loader span:nth-child(1) {
     top: 0;
     left: 0;
 }
-
 .loader span:nth-child(2) {
     top: 0;
     right: 0;
     animation: loaderBlockInverse 1.2s infinite ease-in-out both;
 }
-
 .loader span:nth-child(3) {
     bottom: 0;
     left: 0;
     animation: loaderBlockInverse 1.2s infinite ease-in-out both;
 }
-
 .loader span:nth-child(4) {
     bottom: 0;
     right: 0;

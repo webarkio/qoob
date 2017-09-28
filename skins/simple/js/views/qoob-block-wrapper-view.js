@@ -1,4 +1,4 @@
-/*global QoobBlockView*/
+/*global QoobBlockView, isMobile*/
 /**
  * Create view for block
  * 

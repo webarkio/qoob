@@ -6,10 +6,11 @@
 var QoobImportExportView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobImportExportView.prototype */
     {
-        tagName: 'div',
         id: 'qoob-import-export',
         events: {
-            'click .save-changes': 'clickSaveChanges'
+            'click .save-changes': 'clickSaveChanges',
+            'click .close': 'clickClose',
+            'click': 'clickOverlay'
         },
         /**
          * View import/export
@@ -22,18 +23,39 @@ var QoobImportExportView = Backbone.View.extend( // eslint-disable-line no-unuse
             this.storage = options.storage;
         },
         /**
+         * Close modal window
+         */
+        clickClose: function() {
+            this.$el.removeClass('show');
+        },
+        /**
+         * Close modal window
+         * @param {Object} evt
+         */
+        clickOverlay: function(evt) {
+            if (jQuery(evt.target).prop('id') == this.id) {
+                console.log('clci');
+                this.$el.removeClass('show');
+            }
+        },
+        /**
          * Save new page data
          * @param {Object} evt
          */
         clickSaveChanges: function(evt) {
             evt.preventDefault();
+            var data;
 
             if (this.controller.pageModel.get('blocks').models.length > 0) {
                 this.controller.removePageData();
             }
-    
-            var data = JSON.parse(this.$el.find('.qoob-import-export-textarea').val());
-            
+
+            if (this.$el.find('.qoob-import-export-textarea').val().length == 0) {
+                data = { "blocks": []};
+            } else {
+                data = JSON.parse(this.$el.find('.qoob-import-export-textarea').val());
+            }
+
             this.controller.load(data.blocks);
         },
         /**
@@ -44,10 +66,10 @@ var QoobImportExportView = Backbone.View.extend( // eslint-disable-line no-unuse
             // Update page data
             this.render();
             // Show modal window
-            this.$el.find('#qoob-import-export-window').modal('show');
+            this.$el.addClass('show');
             // listen event "blocks_loaded"
             this.controller.layout.viewPort.once('blocks_loaded', function() {
-                self.$el.find('#qoob-import-export-window').modal('hide');
+                self.$el.removeClass('show');
             });
         },
         /**
@@ -61,6 +83,7 @@ var QoobImportExportView = Backbone.View.extend( // eslint-disable-line no-unuse
             this.$el.html(_.template(this.storage.getSkinTemplate('block-import-export-preview'))({
                 "page_data_text": this.storage.__('page_data', 'Page data'),
                 "cancel": this.storage.__('cancel', 'Cancel'),
+                "Close": this.storage.__('Close', 'Close'),
                 "save_changes": this.storage.__('save_changes', 'Save changes'),
                 "page_data": JSON.stringify(json)
             }));

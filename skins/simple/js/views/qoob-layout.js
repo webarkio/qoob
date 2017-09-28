@@ -120,7 +120,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 this.scrollTo(param);
             } else if (page == "inner") {
                 var model,
-                    parentSide = this.menu.currentSide,
+                    // parentSide = this.menu.currentSide,
                     parentView = this.menu.currentView,
                     currentId = parentView.name + "_" + param,
                     innerView = this.menu.getView(currentId);

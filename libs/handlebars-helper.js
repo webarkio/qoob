@@ -1,3 +1,4 @@
+/*global Handlebars*/
 'use strict';
 
 /**
@@ -102,7 +103,7 @@ Handlebars.registerHelper('each_by_group', function(opts) {
         tempArr = opts.hash.array,
         group = opts.hash.group;
 
-    var arr = _.chain(tempArr)
+    arr = _.chain(tempArr)
         .groupBy(function(obj) {
             return obj[group];
         })
@@ -202,6 +203,7 @@ Handlebars.registerHelper("splitString", function(context, options) {
 });
 
 /**
+ * @Deprecated
  * Handlebars helpers.
  * @namespace Handlebars.helpers
  * @function videoUrl
@@ -366,7 +368,7 @@ Handlebars.registerHelper('globalVar', function(varName) {
  * @param {string} rvalue - The key to sort by.
  * @returns {float}
  */
-Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
+Handlebars.registerHelper("math", function(lvalue, operator, rvalue) {
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
 
@@ -387,10 +389,10 @@ Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
  * @api public
  */
 Handlebars.registerHelper('abs', function(num) {
-  if (!Handlebars.utils.isNumber(num)) {
-    throw new TypeError('expected a number');
-  }
-  return Math.abs(num);
+    if (!Handlebars.utils.isNumber(num)) {
+        throw new TypeError('expected a number');
+    }
+    return Math.abs(num);
 });
 
 /**
@@ -402,13 +404,13 @@ Handlebars.registerHelper('abs', function(num) {
  * @api public
  */
 Handlebars.registerHelper('add', function(a, b) {
-  if (Handlebars.utils.isNumber(a) && Handlebars.utils.isNumber(b)) {
-    return Number(a) + Number(b);
-  }
-  if (typeof a === 'string' && typeof b === 'string') {
-    return a + b;
-  }
-  return '';
+    if (Handlebars.utils.isNumber(a) && Handlebars.utils.isNumber(b)) {
+        return Number(a) + Number(b);
+    }
+    if (typeof a === 'string' && typeof b === 'string') {
+        return a + b;
+    }
+    return '';
 });
 
 /**
@@ -425,25 +427,25 @@ Handlebars.registerHelper('add', function(a, b) {
  */
 
 Handlebars.registerHelper('avg', function() {
-  var args = [].concat.apply([], arguments);
+    var args = [].concat.apply([], arguments);
 
-  // remove handlebars options object
-  args.pop();
+    // remove handlebars options object
+    args.pop();
 
-  args = args[0].replace(/[\[\]']+/g, '');
-  
-  var args = args.split(",");
+    args = args[0].replace(/[\[\]']+/g, '');
 
-  var len = args.length;
-  var sum = 0;
+    args = args.split(",");
 
-  while (len--) {
-    if (Handlebars.utils.isNumber(args[len])) {
-      sum += Number(args[len]);
+    var len = args.length;
+    var sum = 0;
+
+    while (len--) {
+        if (Handlebars.utils.isNumber(args[len])) {
+            sum += Number(args[len]);
+        }
     }
-  }
 
-  return sum / args.length;
+    return sum / args.length;
 });
 
 /**
@@ -455,10 +457,10 @@ Handlebars.registerHelper('avg', function() {
  */
 
 Handlebars.registerHelper('ceil', function(num) {
-  if (!Handlebars.utils.isNumber(num)) {
-    throw new TypeError('expected a number');
-  }
-  return Math.ceil(num);
+    if (!Handlebars.utils.isNumber(num)) {
+        throw new TypeError('expected a number');
+    }
+    return Math.ceil(num);
 });
 
 /**
@@ -470,13 +472,13 @@ Handlebars.registerHelper('ceil', function(num) {
  */
 
 Handlebars.registerHelper('divide', function(a, b) {
-  if (!Handlebars.utils.isNumber(a)) {
-    throw new TypeError('expected the first argument to be a number');
-  }
-  if (!Handlebars.utils.isNumber(b)) {
-    throw new TypeError('expected the second argument to be a number');
-  }
-  return Number(a) / Number(b);
+    if (!Handlebars.utils.isNumber(a)) {
+        throw new TypeError('expected the first argument to be a number');
+    }
+    if (!Handlebars.utils.isNumber(b)) {
+        throw new TypeError('expected the second argument to be a number');
+    }
+    return Number(a) / Number(b);
 });
 
 /**
@@ -488,10 +490,10 @@ Handlebars.registerHelper('divide', function(a, b) {
  */
 
 Handlebars.registerHelper('floor', function(num) {
-  if (!Handlebars.utils.isNumber(num)) {
-    throw new TypeError('expected a number');
-  }
-  return Math.floor(num);
+    if (!Handlebars.utils.isNumber(num)) {
+        throw new TypeError('expected a number');
+    }
+    return Math.floor(num);
 });
 
 /**
@@ -504,13 +506,13 @@ Handlebars.registerHelper('floor', function(num) {
  */
 
 Handlebars.registerHelper('minus', function(a, b) {
-  if (!Handlebars.utils.isNumber(a)) {
-    throw new TypeError('expected the first argument to be a number');
-  }
-  if (!Handlebars.utils.isNumber(b)) {
-    throw new TypeError('expected the second argument to be a number');
-  }
-  return Number(a) - Number(b);
+    if (!Handlebars.utils.isNumber(a)) {
+        throw new TypeError('expected the first argument to be a number');
+    }
+    if (!Handlebars.utils.isNumber(b)) {
+        throw new TypeError('expected the second argument to be a number');
+    }
+    return Number(a) - Number(b);
 });
 
 /**
@@ -523,13 +525,13 @@ Handlebars.registerHelper('minus', function(a, b) {
  */
 
 Handlebars.registerHelper('modulo', function(a, b) {
-  if (!Handlebars.utils.isNumber(a)) {
-    throw new TypeError('expected the first argument to be a number');
-  }
-  if (!Handlebars.utils.isNumber(b)) {
-    throw new TypeError('expected the second argument to be a number');
-  }
-  return Number(a) % Number(b);
+    if (!Handlebars.utils.isNumber(a)) {
+        throw new TypeError('expected the first argument to be a number');
+    }
+    if (!Handlebars.utils.isNumber(b)) {
+        throw new TypeError('expected the second argument to be a number');
+    }
+    return Number(a) % Number(b);
 });
 
 /**
@@ -543,13 +545,13 @@ Handlebars.registerHelper('modulo', function(a, b) {
  */
 
 Handlebars.registerHelper('multiply', function(a, b) {
-  if (!Handlebars.utils.isNumber(a)) {
-    throw new TypeError('expected the first argument to be a number');
-  }
-  if (!Handlebars.utils.isNumber(b)) {
-    throw new TypeError('expected the second argument to be a number');
-  }
-  return Number(a) * Number(b);
+    if (!Handlebars.utils.isNumber(a)) {
+        throw new TypeError('expected the first argument to be a number');
+    }
+    if (!Handlebars.utils.isNumber(b)) {
+        throw new TypeError('expected the second argument to be a number');
+    }
+    return Number(a) * Number(b);
 });
 
 /**
@@ -561,13 +563,13 @@ Handlebars.registerHelper('multiply', function(a, b) {
  */
 
 Handlebars.registerHelper('plus', function(a, b) {
-  if (!Handlebars.utils.isNumber(a)) {
-    throw new TypeError('expected the first argument to be a number');
-  }
-  if (!Handlebars.utils.isNumber(b)) {
-    throw new TypeError('expected the second argument to be a number');
-  }
-  return Number(a) + Number(b);
+    if (!Handlebars.utils.isNumber(a)) {
+        throw new TypeError('expected the first argument to be a number');
+    }
+    if (!Handlebars.utils.isNumber(b)) {
+        throw new TypeError('expected the second argument to be a number');
+    }
+    return Number(a) + Number(b);
 });
 
 /**
@@ -580,13 +582,13 @@ Handlebars.registerHelper('plus', function(a, b) {
  */
 
 Handlebars.registerHelper('random', function(min, max) {
-  if (!Handlebars.utils.isNumber(min)) {
-    throw new TypeError('expected minimum to be a number');
-  }
-  if (!Handlebars.utils.isNumber(max)) {
-    throw new TypeError('expected maximum to be a number');
-  }
-  return Handlebars.utils.random(min, max);
+    if (!Handlebars.utils.isNumber(min)) {
+        throw new TypeError('expected minimum to be a number');
+    }
+    if (!Handlebars.utils.isNumber(max)) {
+        throw new TypeError('expected maximum to be a number');
+    }
+    return Handlebars.utils.random(min, max);
 });
 
 /**
@@ -598,7 +600,7 @@ Handlebars.registerHelper('random', function(min, max) {
  */
 
 Handlebars.registerHelper('remainder', function(a, b) {
-  return a % b;
+    return a % b;
 });
 
 /**
@@ -610,10 +612,10 @@ Handlebars.registerHelper('remainder', function(a, b) {
  */
 
 Handlebars.registerHelper('round', function(num) {
-  if (!Handlebars.utils.isNumber(num)) {
-    throw new TypeError('expected a number');
-  }
-  return Math.round(num);
+    if (!Handlebars.utils.isNumber(num)) {
+        throw new TypeError('expected a number');
+    }
+    return Math.round(num);
 });
 
 /**
@@ -627,13 +629,13 @@ Handlebars.registerHelper('round', function(num) {
  */
 
 Handlebars.registerHelper('subtract', function(a, b) {
-  if (!Handlebars.utils.isNumber(a)) {
-    throw new TypeError('expected the first argument to be a number');
-  }
-  if (!Handlebars.utils.isNumber(b)) {
-    throw new TypeError('expected the second argument to be a number');
-  }
-  return Number(a) - Number(b);
+    if (!Handlebars.utils.isNumber(a)) {
+        throw new TypeError('expected the first argument to be a number');
+    }
+    if (!Handlebars.utils.isNumber(b)) {
+        throw new TypeError('expected the second argument to be a number');
+    }
+    return Number(a) - Number(b);
 });
 
 /**
@@ -649,20 +651,20 @@ Handlebars.registerHelper('subtract', function(a, b) {
  */
 
 Handlebars.registerHelper('sum', function() {
-  var args = [].concat.apply([], arguments);
+    var args = [].concat.apply([], arguments);
 
-  // remove handlebars options object
-  args.pop();
+    // remove handlebars options object
+    args.pop();
 
-  args = args[0];
+    args = args[0];
 
-  var len = args.length;
-  var sum = 0;
+    var len = args.length;
+    var sum = 0;
 
-  while (len--) {
-    if (Handlebars.utils.isNumber(args[len])) {
-      sum += Number(args[len]);
+    while (len--) {
+        if (Handlebars.utils.isNumber(args[len])) {
+            sum += Number(args[len]);
+        }
     }
-  }
-  return sum;
+    return sum;
 });

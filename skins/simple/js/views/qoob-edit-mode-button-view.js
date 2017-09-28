@@ -33,12 +33,5 @@ var QoobEditModeButtonView = Backbone.View.extend({ // eslint-disable-line no-un
     },
     setEditMode: function() {
         this.$el.removeClass('edit-mode-button-show');
-    },
-    /**
-     * If visible toolbar
-     */
-    isVisible: function() {
-        return this.$el.is(":visible");
     }
-
 });

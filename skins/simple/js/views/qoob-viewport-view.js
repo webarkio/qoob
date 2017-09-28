@@ -88,7 +88,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                     self.controller.layout.editModeButton.$el.off('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
                 }
             });
-            
+
         },
         setDeviceMode: function(mode) {
             var self = this;

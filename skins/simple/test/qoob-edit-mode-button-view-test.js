@@ -90,18 +90,3 @@ QUnit.test("hide", function(assert) {
     assert.equal(editModeButton.$el.css('display'), 'none', 'hide Ok');
     editModeButton.remove();
 });
-
-QUnit.test("isVisible", function(assert) {
-    var editModeButton = new QoobEditModeButtonView({
-        storage: 1,
-        controller: 2
-    });
-
-    jQuery('body').append(editModeButton.render().el);
-
-    editModeButton.hide();
-    assert.ok(!editModeButton.isVisible(), 'is not visible');
-    editModeButton.show();
-    assert.ok(editModeButton.isVisible(), 'is visible');
-    editModeButton.remove();
-});

@@ -167,7 +167,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         startEditBlock: function(id, isBack) {
             this.hideSide('right');
             var newSide = this.getSettingsView(id);
-            
+
             // hook for field accordion
             var accordion = newSide.$el.find('.accordion');
             if (accordion.length > 0) {
