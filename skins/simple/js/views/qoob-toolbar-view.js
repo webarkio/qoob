@@ -1,3 +1,4 @@
+/*global isMobile*/
 /**
  * Create view for toolbar in qoob layout
  *
@@ -108,7 +109,9 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
 
     //EVENTS
     clickPreviewMode: function() {
-        this.controller.setPreviewMode();
+        if (!isMobile.phone) {
+            this.controller.setPreviewMode();
+        }
     },
     changeDeviceMode: function(evt) {
         this.controller.setDeviceMode(evt.target.value);

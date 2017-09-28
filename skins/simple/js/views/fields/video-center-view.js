@@ -1,5 +1,5 @@
 /**
- * Create buidler view 
+ * Create VideoCenterView 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
@@ -8,7 +8,6 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
     {
         className: "inner-settings-video settings inner-settings",
         dataVideos: null,
-        dataSearchVideos: null,
         offset: 0,
         limit: 12,
         events: {
@@ -36,6 +35,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * @constructs
          */
         initialize: function(options) {
+            this.name = options.name;
+            this.side = options.side;
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-video-setting-preview'));
@@ -142,25 +143,26 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var videos = this.dataVideos.slice(offset, offset + this.limit);
                 for (var i = 0; i < videos.length; i++) {
-                    result.push('<div class="ajax-video' + (images[i].src === this.src.url ? ' chosen ' : '') + '" data-src="' + videos[i].src + '" data-preview="' + videos[i].preview + '" style="background-image: url(' + videos[i].preview + ');"></div>');
+                    result.push('<div class="ajax-video' + (videos[i].src === this.src.url ? ' chosen ' : '') + '" data-src="' + videos[i].src + '" data-preview="' + videos[i].preview + '" style="background-image: url(' + videos[i].preview + ');"></div>');
                 }
             } else {
-                this.dataSearchVideos = [];
+                var dataSearchVideos = [];
                 for (var y = 0; y < this.dataVideos.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
-                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
+                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ''));
                         if (filteredWords[j] !== '' && (this.dataVideos[y].tags && this.dataVideos[y].tags.join(' ').match(regEx))) {
-                            this.dataSearchVideos.push(this.dataVideos[y]);
+                            if (dataSearchVideos.indexOf(this.dataVideos[y]) < 0) {
+                                dataSearchVideos.push(this.dataVideos[y]);
+                            }
                         }
                     }
                 }
 
-                var searchVideos = this.dataSearchVideos.slice(offset, offset + this.limit);
+                var searchVideos = dataSearchVideos.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchVideos.length; x++) {
                     result.push('<div class="ajax-video' + (searchVideos[x].src === this.src.url ? ' chosen ' : '') + '" data-src="' + searchVideos[x].src + '" data-preview="' + searchVideos[x].preview + '" style="background-image: url(' + searchVideos[x].preview + ');"></div>');
                 }
             }
-
 
             return result.join('');
         },

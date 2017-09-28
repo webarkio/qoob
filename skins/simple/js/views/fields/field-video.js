@@ -1,4 +1,4 @@
-/*global QoobFieldView, VideoCenterView*/
+/*global QoobFieldView*/
 var Fields = Fields || {};
 
 /**
@@ -78,7 +78,7 @@ Fields.video = QoobFieldView.extend(
          */
         clickOtherVideo: function(evt) {
             var video = this.$(evt.currentTarget).data('src-video'),
-            preview = this.$(evt.currentTarget).data('src-preview');
+                preview = this.$(evt.currentTarget).data('src-preview');
 
             var src = {
                 'url': video,

@@ -1,4 +1,4 @@
-/*global jQuery*/
+/*global jQuery, Loader, Skin*/
 /*jslint browser: true */
 (function() {
     'use strict';

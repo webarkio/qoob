@@ -38,7 +38,7 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
                 _.template(
                     this.storage.getSkinTemplate('menu-settings-preview')
                 )({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })
-            ).find('.settings-blocks').html(html); // prepend(this.fieldsView.render().el);
+            ).find('.settings-blocks').html(html);
 
             this.afterRender();
 
@@ -50,27 +50,35 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
                 fields = this.fields,
                 allow = false;
 
-            // allow fields
-            var allowedArr = ['image', 'video'];
+            var allowedFields = ['image', 'video'];
 
             for (var i = 0; i < fields.length; i++) {
-                if (~allowedArr.indexOf(fields[i].settings.type)) {
+                if (allowedFields.indexOf(fields[i].settings.type) > -1) {
                     allow = true;
+                    break;
+                } else if (fields[i].settings.type == 'accordion') {
+                    var searchField = _.some(fields[i].settings.settings, function(item) {
+                        if (allowedFields.indexOf(item.type) > -1) {
+                            return item;
+                        }
+                    });
+
+                    if (searchField) {
+                        allow = true;
+                        break;
+                    }
                 }
             }
 
             var getCurrentRoute = function(evt) {
                 var currentRoute = self.controller.current();
-                if (currentRoute.route !== 'startEditBlock') {
+                if (['startEditBlock', 'default'].indexOf(currentRoute.route) == -1) {
                     evt.stopImmediatePropagation();
                 }
             }
 
             if (allow) {
                 self.controller.layout.sidebar.$el.on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
-                        evt.preventDefault();
-                        evt.stopPropagation();
-
                         getCurrentRoute(evt);
                     })
                     .on('dragenter', function(evt) {
@@ -92,9 +100,12 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
                             self.controller.layout.sidebar.$el.removeClass('overlay');
                         }
                     })
+                    .on('dragover', function(evt) {
+                        evt.preventDefault();
+                    })
                     .on('drop', function(evt) {
+                        evt.preventDefault();
                         getCurrentRoute(evt);
-
                         self.controller.layout.sidebar.$el.removeClass('overlay');
                         counter = 0;
                     });

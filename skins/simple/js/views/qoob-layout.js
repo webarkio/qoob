@@ -1,4 +1,4 @@
-/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView, AccordionFlipView, ImageCenterView, IconCenterView, VideoCenterView, isMobile, Hammer*/
+/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView, AccordionFlipItemSettingsView, ImageCenterView, IconCenterView, VideoCenterView, isMobile, Hammer*/
 /**
  * Create qoob view
  *
@@ -108,75 +108,91 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             swipeResize();
         },
         navigate: function(page, param, isBack) {
-            // console.log(page, param);
             if (page == "index") {
                 this.menu.showIndex(isBack);
                 this.stopEditBlock();
             } else if (page == "group") {
                 this.menu.showIndex(isBack);
+                this.stopEditBlock();
                 this.menu.showGroup(param);
             } else if (page == "edit") {
                 this.startEditBlock(param, isBack);
                 this.scrollTo(param);
             } else if (page == "inner") {
                 var model,
-                    parent = this.menu.currentSide,
-                    currentId = parent.id + "_" + param,
+                    // parentSide = this.menu.currentSide,
+                    parentView = this.menu.currentView,
+                    currentId = parentView.name + "_" + param,
                     innerView = this.menu.getView(currentId);
 
                 var fieldName = param.split("-")[0]; //bgImageUrl
                 var fieldIndex = param.split("-")[1]; //null
 
-                var settings = _.findWhere(parent.settings, { name: fieldName });
-                var defaults = parent.defaults[fieldName];
+                var settings = _.findWhere(parentView.settings, { name: fieldName });
+                var defaults = parentView.defaults[fieldName];
 
                 if (fieldIndex) {
-                    model = parent.model.get(fieldName).at(fieldIndex);
+                    model = parentView.model.get(fieldName).get(fieldIndex);
                 } else {
-                    model = parent.model;
+                    model = parentView.model;
                 }
 
-                if (settings.type == "accordion" && settings.viewType == 'flip') {
+                if (settings.type == "accordion_flip") {
                     if (!innerView) {
-                        innerView = new AccordionFlipView({
-                            id: parent.id + "_" + param,
+                        innerView = new AccordionFlipItemSettingsView({
+                            name: currentId,
                             storage: this.storage,
                             controller: this.controller,
                             model: model,
                             settings: settings.settings,
-                            defaults: defaults
+                            defaults: defaults,
+                            parent: parentView,
+                            side: parentView.side
                         });
+                        innerView.side = innerView;
                     }
 
-                    if (innerView !== undefined) {
-                        this.menu.setInnerSettingsView(innerView);
-                    }
+                    this.menu.currentView = innerView;
 
+                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
-                } else if (settings.type == "accordion" && settings.viewType != 'flip') {
-                    var accordionExpand = _.find(parent.fields, function(view) {
+                } else if (settings.type == "accordion") {
+                    var accordionView = _.find(parentView.fields, function(view) {
                         if (view.settings.name == fieldName) {
                             return view;
                         }
                     });
 
-                    var accordionExpandItemView = accordionExpand.getAccordionMenuViews(model.id);
-                    console.log(accordionExpandItemView);
-                    accordionExpandItemView.id = parent.id + "_" + param;
-                    this.menu.currentSide = accordionExpandItemView;
-                    
+                    var accordionItem = accordionView.getAccordionMenuViews(fieldIndex);
+                    if (accordionItem != undefined) {
+                        this.menu.currentView = accordionItem.settingsView;
+                    } else {
+                        this.controller.navigate('', {
+                            trigger: true,
+                            replace: true
+                        });
+                    }
 
-                    // accordionExpand.$el.find('.field-accordion__settings .inner-settings-expand').eq(fieldIndex).trigger('click');
+                    var accordion = accordionView.$el.find('.accordion');
+
+                    var index = null;
+                    accordion.find('.field-accordion-item').each(function(i, div) {
+                        if (jQuery(div).attr('data-model-id') == fieldIndex) {
+                            index = i;
+                        }
+                    });
+
+                    accordion.accordion("option", "active", index);
                 } else if (settings.type == "image") {
                     if (!innerView) {
-                        var imageView = _.find(parent.fields, function(view) {
+                        var imageView = _.find(parentView.fields, function(view) {
                             if (view.settings.name == fieldName) {
                                 return view;
                             }
                         });
 
                         innerView = new ImageCenterView({
-                            id: parent.id + "_" + param,
+                            name: currentId,
                             storage: this.storage,
                             controller: this.controller,
                             model: model,
@@ -186,17 +202,14 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             iframeUrl: imageView.getIframeUrl(),
                             cb: imageView.changeImage.bind(imageView)
                         });
+                        innerView.side = innerView;
                     }
 
-                    if (innerView !== undefined) {
-                        this.menu.setInnerSettingsView(innerView);
-                    }
-
+                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
                 } else if (settings.type == "icon") {
                     if (!innerView) {
-                        console.log(parent);
-                        var iconView = _.find(parent.fields, function(view) {
+                        var iconView = _.find(parentView.fields, function(view) {
                             if (view.settings.name == fieldName) {
                                 return view;
                             }
@@ -205,45 +218,41 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         var iconObject = iconView.findByClasses(iconView.getValue());
 
                         innerView = new IconCenterView({
-                            id: parent.id + "_" + param,
+                            name: currentId,
                             storage: this.storage,
                             controller: this.controller,
-                            model: this.model,
+                            model: model,
                             icon: iconObject ? { classes: iconObject.classes, tags: iconObject.tags } : '',
                             icons: iconView.icons,
                             cb: iconView.changeIcon.bind(iconView)
                         });
+                        innerView.side = innerView;
                     }
 
-                    if (innerView !== undefined) {
-                        this.menu.setInnerSettingsView(innerView);
-                    }
-
+                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
                 } else if (settings.type == "video") {
                     if (!innerView) {
-                        var videoView = _.find(parent.fields, function(view) {
+                        var videoView = _.find(parentView.fields, function(view) {
                             if (view.settings.name == fieldName) {
                                 return view;
                             }
                         });
 
                         innerView = new VideoCenterView({
-                            id: parent.id + "_" + param,
+                            name: currentId,
                             storage: this.storage,
                             controller: this.controller,
-                            model: this.model,
+                            model: model,
                             src: videoView.getValue(),
                             assets: videoView.storage.getAssets(),
                             tags: videoView.tags ? videoView.tags.join(', ') : '',
                             cb: videoView.changeVideo.bind(videoView)
                         });
+                        innerView.side = innerView;
                     }
 
-                    if (innerView !== undefined) {
-                        this.menu.setInnerSettingsView(innerView);
-                    }
-
+                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
                 }
             }

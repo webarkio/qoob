@@ -8,6 +8,8 @@ var QoobFieldView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     className: "settings-item",
     initialize: function(options) {
         this.model = options.model;
+        this.side = options.side;
+        this.name = options.name;
         this.storage = options.storage;
         this.settings = options.settings;
         this.defaults = options.defaults;

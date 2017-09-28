@@ -1,6 +1,5 @@
-/*global window*/
 /**
- * Create buidler view 
+ * Create ImageCenterView 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
@@ -9,7 +8,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
     {
         className: "inner-settings-image settings inner-settings",
         dataImages: null,
-        dataSearchImages: null,
         offset: 0,
         limit: 12,
         events: {
@@ -38,6 +36,8 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * @constructs
          */
         initialize: function(options) {
+            this.name = options.name;
+            this.side = options.side;
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-image-setting-preview'));
@@ -141,7 +141,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         getImages: function(tags, offset) {
             var filteredWords = tags,
                 result = [];
- 
+
             if (_.isString(filteredWords)) {
                 filteredWords = filteredWords.split(',');
             } else if (_.isArray(filteredWords)) {
@@ -151,22 +151,24 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var images = this.dataImages.slice(offset, offset + this.limit);
                 for (var i = 0; i < images.length; i++) {
-                    result.push('<div class="ajax-image' + (images[i].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + images[i].src + ');" data-url="'+ images[i].src +'"></div>');
+                    result.push('<div class="ajax-image' + (images[i].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + images[i].src + ');" data-url="' + images[i].src + '"></div>');
                 }
             } else {
-                this.dataSearchImages = [];
+                var dataSearchImages = [];
                 for (var y = 0; y < this.dataImages.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
-                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
+                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ''));
                         if (filteredWords[j] !== '' && (this.dataImages[y].tags && this.dataImages[y].tags.join(' ').match(regEx))) {
-                            this.dataSearchImages.push(this.dataImages[y]);
+                            if (dataSearchImages.indexOf(this.dataImages[y]) < 0) {
+                                dataSearchImages.push(this.dataImages[y]);
+                            }
                         }
                     }
                 }
 
-                var searchImages = this.dataSearchImages.slice(offset, offset + this.limit);
+                var searchImages = dataSearchImages.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchImages.length; x++) {
-                    result.push('<div class="ajax-image' + (searchImages[x].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + searchImages[x].src + ');" data-url="'+ images[i].src +'"></div>');
+                    result.push('<div class="ajax-image' + (searchImages[x].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + searchImages[x].src + ');" data-url="' + searchImages[x].src + '"></div>');
                 }
             }
 
@@ -176,7 +178,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * Setting an image by clicking it
          * @param {type} evt
          */
-       clickListImage: function(evt) {
+        clickListImage: function(evt) {
             if (evt.currentTarget.classList.contains('chosen')) {
                 return;
             }
