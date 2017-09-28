@@ -1613,7 +1613,7 @@ a {
     overflow: hidden;
     position: fixed;
     bottom: 0;
-    padding: 8px 8px 22px 6px;
+    padding: 8px 6px 22px 6px;
     background: #fff;
     z-index: 2;
 }
@@ -1638,7 +1638,7 @@ a {
 }
 
  .delete-button-small {
-     width: 60px;
+     width: 62px;
      height: 46px;
      border-radius: 2px;
      background-color: rgb(236, 236, 236);
