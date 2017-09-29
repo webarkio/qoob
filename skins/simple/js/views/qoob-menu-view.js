@@ -106,7 +106,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             this.$el.find('.preview-block').each(function() {
-                jQuery(this).on("mousedown", function() {
+                jQuery(this).on("mousedown", function(event) {
                     if (event.buttons === 0) {} else {
                         longTouch = true;
                     }
