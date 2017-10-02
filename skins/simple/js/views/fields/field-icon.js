@@ -68,7 +68,9 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
                 'data-icon-tags': (iconObject ? iconObject.tags : '')
             });
 
-            if (iconObject === '') {
+            console.log(iconObject);
+
+            if (iconObject === undefined) {
                 this.$el.find('.field-icon-container').addClass('empty');
             } else {
                 this.$el.find('.field-icon-container').removeClass('empty');

@@ -88,6 +88,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             var device = this.getDeviceState();
 
+            if (device === 'mobile') {
+                self.showSwipeMenu();
+            }
+
             var swipeResize = function() {
                 var container = self.$el;
                 container.removeClass('mobile tablet desktop');
@@ -95,29 +99,18 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 var device = self.getDeviceState();
 
                 if (device === 'mobile') {
-                    console.log('mobile');
                     container.addClass('mobile');
                 } else if (device === 'tablet') {
-                    console.log('tablet');
                     container.addClass('tablet');
                 } else {
-                    console.log('desktop');
                     container.addClass('desktop');
-                    // hammer.off('swipeleft').off('swiperight');
                 }
             }
 
-            if (device === 'mobile') {
-                self.showSwipeMenu();
-            }
 
             Hammer.on(window, "resize", function() {
                 swipeResize();
             });
-
-            // Hammer.on(window, "load resize scroll", function(ev) {
-            //     console.log(ev.type);
-            // });
 
             swipeResize();
         },
