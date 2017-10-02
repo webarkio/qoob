@@ -2161,7 +2161,7 @@ a {
     height: 20px;
     border-radius: 50%;
     background-color: #010833;
-    top: -8px;
+    top: -9px;
     border: none;
 }
 
@@ -2452,7 +2452,7 @@ a {
 
 .others {
     padding: 0;
-    margin: 0 0 8px 0;
+    margin: 0 0 4px 0;
     list-style: none;
     -ms-box-orient: horizontal;
     display: -webkit-box;
@@ -2820,6 +2820,7 @@ a {
 
 .media-center {
     position: relative;
+    margin-top: 8px;
 }
 
 .media-center__button {
@@ -2886,6 +2887,9 @@ a {
     width: 178px;
 }
 
+.tablet .media-center {
+    margin-top: 5px;
+}
 
 /* ----------------------------------------------------------------------------- 
 
@@ -3815,7 +3819,7 @@ a {
 }
 
 .tablet .field-accordion .settings-blocks {
-    padding: 0px 5px 14px 5px;
+    padding: 24px 5px 14px 5px;
     margin: 0;
 }
 
