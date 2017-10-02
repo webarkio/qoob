@@ -1,4 +1,3 @@
-/*global isMobile*/
 /**
  * Create view for toolbar in qoob layout
  *
@@ -60,6 +59,7 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         var data = {
             "libs": this.storage.librariesData,
             "curLib": this.storage.currentLib,
+            "device": this.controller.layout.getDeviceState(),
             "allThemes": this.storage.__('all_libs', 'All Libs'),
             "save": this.storage.__('save', 'Save'),
             "close": this.storage.__('close', 'close'),

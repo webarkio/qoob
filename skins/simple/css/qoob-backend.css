@@ -1360,10 +1360,14 @@ a {
     position: relative;
 }
 
-.tablet .side-item-show,
+.preview-block-wrap + .side-item-show {
+    height: 100%;
+}
+
+/*.tablet .side-item-show,
 .mobile .side-item-show {
     margin-right: 0;
-}
+}*/
 
 /* Detect Mac Firefox 25 or newer */
 

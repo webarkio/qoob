@@ -1,4 +1,3 @@
-/*global isMobile*/
 /**
  * Create view block's preview
  * 
@@ -22,8 +21,10 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-
 
             this.controller.addNewBlock(lib, name);
 
-            if (isMobile.phone) {
-                this.controller.hideSwipeMenu();
+            if (this.controller.layout.getDeviceState() !== 'mobile') {
+                this.controller.navigate('', {
+                        trigger: true
+                });
             }
         },
         /**

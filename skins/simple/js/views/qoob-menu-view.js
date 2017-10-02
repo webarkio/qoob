@@ -1,4 +1,4 @@
-/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView, isMobile */
+/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView */
 /**
  * Create view for menu in qoob layout
  *
@@ -80,6 +80,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             // set params for touch punch
             this.$el.find('.preview-block').data("blockPreventDefault", true);
 
+            var device = this.controller.layout.getDeviceState();
+
             this.$el.find('.preview-block').draggable({
                 appendTo: "body",
                 helper: "clone",
@@ -95,9 +97,15 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         self.controller.removeEmptyDraggableElement();
                         return false;
                     } else {
-                        if (isMobile.phone) {
+                        if (device === 'mobile') {
                             self.controller.hideSwipeMenu();
                         }
+                    }
+
+                    if (device !== 'mobile') {
+                        self.controller.navigate('', {
+                                trigger: true
+                        });
                     }
                 },
                 stop: function() {

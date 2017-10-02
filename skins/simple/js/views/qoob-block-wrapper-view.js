@@ -1,4 +1,4 @@
-/*global QoobBlockView, isMobile*/
+/*global QoobBlockView*/
 /**
  * Create view for block
  * 
@@ -44,8 +44,9 @@ var QoobBlockWrapperView = Backbone.View.extend({ // eslint-disable-line no-unus
         if (this.controller.layout.menu.getSettingsView(this.model.id)) {
             this.controller.navigate('edit-' + this.model.id, { trigger: true });
         }
- 
-        if (isMobile.phone || isMobile.tablet) {
+
+        var device = this.controller.layout.getDeviceState();
+        if (device === 'mobile' || device === 'tablet') {
             this.controller.showSwipeMenu();
         }
     },

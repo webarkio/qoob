@@ -44,7 +44,7 @@
 
 <div class="control-buttons clearfix">
     <button class="button backward"></button>
-    <button class="button view-preview" <% if (isMobile.phone) { %> disabled<% } %>></button>
+    <button class="button view-preview" <% if (device) { %> disabled<% } %>></button>
     <button class="button save" title="<%= save %>">
         <span class="save-clock">
             <span class="minutes-container"><span class="minutes"></span></span>
@@ -52,7 +52,7 @@
         </span>
     </button>
     <div class="preview-modes">
-        <% if (isMobile.phone || isMobile.tablet) { %>
+        <% if (device == "mobile" || device == "tablet") { %>
             <div class="qoob-selected-value" data-value="pc" tabindex="0"><i class="fa fa-desktop"></i></div>
         <% } else { %>
             <select class="qoob-select-item">

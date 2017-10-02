@@ -1,4 +1,4 @@
-/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView, AccordionFlipItemSettingsView, ImageCenterView, IconCenterView, VideoCenterView, isMobile, Hammer*/
+/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView, AccordionFlipItemSettingsView, ImageCenterView, IconCenterView, VideoCenterView, Hammer, isMobile*/
 /**
  * Create qoob view
  *
@@ -17,6 +17,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         initialize: function(options) {
             var self = this;
+
             this.inner = null;
             this.storage = options.storage;
             this.controller = options.controller;
@@ -85,25 +86,38 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }
             });
 
+            var device = this.getDeviceState();
+
             var swipeResize = function() {
                 var container = self.$el;
-                container.removeClass('mobile tablet');
-                if (isMobile.phone) {
+                container.removeClass('mobile tablet desktop');
+
+                var device = self.getDeviceState();
+
+                if (device === 'mobile') {
+                    console.log('mobile');
                     container.addClass('mobile');
-                } else if (isMobile.tablet) {
+                } else if (device === 'tablet') {
+                    console.log('tablet');
                     container.addClass('tablet');
                 } else {
-                    hammer.off('swipeleft').off('swiperight');
+                    console.log('desktop');
+                    container.addClass('desktop');
+                    // hammer.off('swipeleft').off('swiperight');
                 }
             }
 
-            if (isMobile.phone) {
+            if (device === 'mobile') {
                 self.showSwipeMenu();
             }
 
             Hammer.on(window, "resize", function() {
                 swipeResize();
             });
+
+            // Hammer.on(window, "load resize scroll", function(ev) {
+            //     console.log(ev.type);
+            // });
 
             swipeResize();
         },
@@ -266,7 +280,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         render: function() {
             this.sidebar.$el.html([this.toolbar.render().el, this.menu.render().el]);
-
             this.$el.html([this.sidebar.render().el, this.viewPort.render().el, this.ImportExport.render().el, this.editModeButton.render().el]);
             return this;
         },
@@ -344,5 +357,19 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         triggerBlocksLoader: function() {
             this.viewPort.trigger('blocks_loaded');
+        },
+        getDeviceState: function() {
+            var windowWidth = jQuery(window).width(),
+                device;
+
+            if (isMobile.mobile || (windowWidth >= 320 && windowWidth <= 767)) {
+                device = 'mobile';
+            } else if (isMobile.tablet || (windowWidth >= 768 && windowWidth <= 991)) {
+                device = 'tablet';
+            } else if (windowWidth >= 992) {
+                device = 'desktop';
+            }
+
+            return device;
         }
     });
