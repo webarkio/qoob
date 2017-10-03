@@ -1359,7 +1359,10 @@ a {
     margin-right: -17px;
     position: relative;
 }
-
+.tablet .side-item-show, 
+.mobile .side-item-show {
+    margin-right: 0;
+}
 .preview-block-wrap + .side-item-show {
     height: 100%;
 }
@@ -1779,6 +1782,10 @@ a {
 
 .field-checkbox {
     padding-left: 24px;
+}
+
+.field-checkbox label {
+    color: #000;
 }
 
 .field-checkbox .input-checkbox {
