@@ -626,12 +626,13 @@ a {
 
 .group-list__link:hover {
     background-color: #ececec;
+    color: #010833;
 }
 
 .group-list__link-active,
 .group-list__link-active:hover {
     background-color: #010833;
-    color: #fff;
+    color: #fff !important;
 }
 
 

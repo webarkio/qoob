@@ -97,29 +97,25 @@
 /* Fonts */
 @font-face {
     font-family: 'robotothin';
-    src: url('../fonts/roboto/Roboto-Thin-webfont.eot');
-    src: url('../fonts/roboto/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Thin-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Thin-webfont.ttf') format('truetype'), url('../fonts/roboto/Roboto-Thin-webfont.svg#robotobold') format('svg');
+    src: url('../fonts/roboto/Roboto-Thin-webfont.woff') format('font-woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'robotolight';
-    src: url('../fonts/roboto/Roboto-Light-webfont.eot');
-    src: url('../fonts/roboto/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Light-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Light-webfont.ttf') format('truetype'), url('../fonts/roboto/Roboto-Light-webfont.svg#robotobold') format('svg');
+    src: url('../fonts/roboto/Roboto-Light-webfont.woff') format('font-woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'robotobold';
-    src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
-    src: url('../fonts/roboto/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.ttf') format('truetype'), url('../fonts/roboto/Roboto-Bold-webfont.svg#robotobold') format('svg');
+    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('font-woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'robotoregular';
-    src: url('../fonts/roboto/Roboto-Regular.eot');
-    src: url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'), url('../fonts/roboto/Roboto-Regular.svg#robotoregular') format('svg');
+    src: url('../fonts/roboto/Roboto-Regular.woff') format('font-woff');
     font-weight: normal;
     font-style: normal;
 }
