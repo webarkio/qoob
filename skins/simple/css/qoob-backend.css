@@ -8,39 +8,31 @@ body {
 
 @font-face {
     font-family: 'robotobold';
-    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('font-woff');
+    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('font-woff'), url('../fonts/roboto/Roboto-Bold-webfont.woff2') format('font-woff2');;
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'robotoregular';
-    src: url('../fonts/roboto/Roboto-Regular.woff') format('font-woff');
+    src: url('../fonts/roboto/Roboto-Regular.woff') format('font-woff'), url('../fonts/roboto/Roboto-Regular.woff2') format('font-woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'robotolight';
-    src: url('../fonts/roboto/Roboto-Regular.woff') format('font-woff');
+    src: url('../fonts/roboto/Roboto-Light.woff') format('font-woff'), url('../fonts/roboto/Roboto-Light.woff2') format('font-woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'robotoblack';
-    src: url('../fonts/roboto/Roboto-Black.woff') format('font-woff');
+    src: url('../fonts/roboto/Roboto-Black.woff') format('font-woff'), url('../fonts/roboto/Roboto-Black.woff2') format('font-woff2');
     font-weight: normal;
     font-style: normal;
 }
-
-@font-face {
-    font-family: 'robotolight';
-    src: url('../fonts/roboto/Roboto-Light.woff') format('font-woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 
 /* HTML5 display definitions
    ========================================================================== */
