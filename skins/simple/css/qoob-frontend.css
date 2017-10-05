@@ -97,20 +97,20 @@
 /* Fonts */
 
 @font-face {
-    font-family: 'robotolight';
-    src: url('../fonts/roboto/Roboto-Light-webfont.woff') format('font-woff'), url('../fonts/roboto/Roboto-Light-webfont.woff2') format('font-woff2');
+    font-family: 'qrobotolight';
+    src: url('../fonts/roboto/Roboto-Light-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Light-webfont.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'robotobold';
-    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('font-woff'), url('../fonts/roboto/Roboto-Bold-webfont.woff2') format('font-woff2');
+    font-family: 'qrobotobold';
+    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'robotoregular';
-    src: url('../fonts/roboto/Roboto-Regular.woff') format('font-woff'), url('../fonts/roboto/Roboto-Regular.woff2') format('font-woff2');
+    font-family: 'qrobotoregular';
+    src: url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -123,7 +123,7 @@
     visibility: hidden;
     margin-top: 0;
     z-index: 999;
-    font-family: 'robotoregular';
+    font-family: 'qrobotoregular';
     font-size: 16px;
     color: #010833;
     line-height: 50px;
@@ -160,7 +160,7 @@
     visibility: visible;
     background-color: #00ce63;
     color: #fff;
-    font-family: 'robotoregular';
+    font-family: 'qrobotoregular';
     font-size: 16px;
     line-height: 46px;
     height: 50px;
@@ -275,7 +275,7 @@
     line-height: 300px;
 }
 .content-block-inner .empty-block .empty-block-text {
-    font-family: 'robotolight' color: #000;
+    font-family: 'qrobotolight' color: #000;
     font-size: 20px;
 }
 
@@ -327,7 +327,7 @@
     height: 136px;
     font-size: 25px;
     color: #b2b2b2;
-    font-family: 'robotobold';
+    font-family: 'qrobotobold';
     line-height: 40px;
     text-align: center;
 }
@@ -357,7 +357,7 @@
     margin: 0 auto 10px auto;
 }
 #qoob-blocks .block-blank-inner-text .blank-text {
-    font-family: 'robotobold';
+    font-family: 'qrobotobold';
     font-size: 24px;
     letter-spacing: 0.06em;
 }
