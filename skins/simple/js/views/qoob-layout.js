@@ -230,9 +230,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             parent: parentView
                         });
                         innerView.side = innerView;
-                    }
 
-                    this.menu.setInnerSettingsView(innerView);
+                        this.menu.setInnerSettingsView(innerView);
+                    }
+                    
                     this.menu.showInnerSettingsView(currentId, isBack);
                 } else if (settings.type == "icon") {
                     if (!innerView) {
@@ -255,9 +256,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             parent: parentView
                         });
                         innerView.side = innerView;
+
+                        this.menu.setInnerSettingsView(innerView);
                     }
 
-                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
                 } else if (settings.type == "video") {
                     if (!innerView) {
@@ -279,9 +281,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             parent: parentView
                         });
                         innerView.side = innerView;
+
+                        this.menu.setInnerSettingsView(innerView);
                     }
 
-                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
                 }
             }

@@ -40,7 +40,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.side = options.side;
             this.storage = options.storage;
             this.controller = options.controller;
-            this.tpl = _.template(this.storage.getSkinTemplate('field-image-setting-preview'));
             this.curSrc = options.curSrc;
             this.assets = options.assets;
             this.tags = options.tags;
@@ -69,7 +68,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          */
         render: function() {
             //Creating layout
-            this.$el.html(this.tpl({
+            this.$el.html(_.template(this.storage.getSkinTemplate('field-image-setting-preview'))({
                 'curSrc': this.curSrc,
                 'search': this.storage.__('search', 'Search'),
                 'url': this.storage.__('url', 'url')

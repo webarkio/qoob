@@ -59,6 +59,7 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          */
         changeIcon: function(icon) {
             var iconObject = this.findByClasses(icon);
+
             this.$el.find('.field-icon__preview-icon span').attr({
                 'class': icon,
                 'data-icon-tags': (iconObject ? iconObject.tags : '')

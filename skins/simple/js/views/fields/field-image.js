@@ -58,7 +58,7 @@ Fields.image = QoobFieldView.extend(
             this.$el.find('.field-image-container').removeClass('empty');
             if (!url) {
                 this.$el.find('.field-image-container').addClass('empty');
-            }            
+            }
             this.$el.find('.field-image__preview-image').attr('src', url);
             this.model.set(this.$el.find('.field-image__url-hidden').attr('name'), url);
             this.$el.find('.field-image__url-hidden').val(url);

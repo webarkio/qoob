@@ -43,37 +43,11 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.tags = options.icon.tags || '';
             this.cb = options.cb;
             this.parent = options.parent;
-        },
-        /**
-         * Render IconCenter view
-         * @returns {Object}
-         */
-        render: function() {
-            //Creating layout
-            this.$el.html(this.tpl({
-                search: this.storage.__('search', 'Search'),
-                icon: this.icon
-            }));
+            this.model = options.model;
 
-            return this;
-        },
-        /**
-         * Actions to do after element is rendered 
-         *
-         */
-        afterRender: function() {
-            var self = this;
-
-            //Inserting tags if such existed
-            if (!!this.tags) {
-                this.$el.find('.icon-search').val(this.tags);
-            }
-
-            this.loadMore();
-            this.$el.find('.filtered-icons').on('scroll', function() {
-                if (self.checkLoadMore()) {
-                    self.loadMore();
-                }
+            this.listenTo(this.model, 'change', function(select) {
+                var icon = Object.keys(select.changed)[0];
+                this.changeIcon(select.changed[icon]);
             });
         },
         checkLoadMore: function() {
@@ -126,7 +100,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var icons = this.icons.slice(offset, offset + this.limit);
                 for (var i = 0; i < icons.length; i++) {
-                    result.push('<div class="ajax-icon"><span  data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
+                    result.push('<div class="ajax-icon' + (icons[x].classes === this.icon.classes ? ' chosen ' : '') + '"><span data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
                 }
             } else {
                 var dataSearchIcons = [];
@@ -163,15 +137,39 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.$el.find('.ajax-icon').removeClass('chosen');
             evt.currentTarget.classList.add('chosen');
 
-            if (this.$el.find('.field-icon-container-inner').hasClass('empty')) {
-                this.$el.find('.field-icon-container-inner').removeClass('empty');
-            }
+            this.changeIcon(currentTarget.attr('class'));
+        },
+        /**
+         * Main method change icon
+         * @param {String} icon
+         */
+        changeIcon: function(icon) {
+            if (icon === undefined || icon == '') {
+                if (!this.$el.find('.field-icon-container-inner').hasClass('empty')) {
+                    this.$el.find('.field-icon-container-inner').addClass('empty');
+                }
+                this.$el.find('.field-icon__selected-icon span').attr({
+                    'class': '',
+                    'data-icon-tags': ''
+                });
 
-            this.$el.find('.field-icon__selected-icon span').attr({
-                'class': currentTarget.attr('class'),
-                'data-icon-tags': currentTarget.attr('data-icon-tags')
-            });
-            this.cb(currentTarget.attr('class'));
+                this.$el.find('.ajax-icon').removeClass('chosen');
+
+                this.$el.find('.icon-search').val('');
+            } else {
+                var iconObject = this.findByClasses(icon);
+
+                this.$el.find('.field-icon-container-inner').removeClass('empty');
+
+                this.$el.find('.field-icon__selected-icon span').attr({
+                    'class': icon,
+                    'data-icon-tags': (iconObject ? iconObject.tags : '')
+                });
+
+                this.icon = { class: icon, tags: (iconObject ? iconObject.tags : '') };
+
+                this.cb(icon);
+            }
         },
         /**
          * Keyup event for filtering icons by tags in search input
@@ -206,6 +204,14 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             };
         },
         /**
+         * Return icon object from icon's storage with needed classes
+         * @param {string} classes
+         * @returns {Object} Iconobject
+         */
+        findByClasses: function(classes) {
+            return _.findWhere(this.icons, { "classes": classes });
+        },
+        /**
          * Remove view
          */
         dispose: function() {
@@ -213,5 +219,37 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             // unbind events that are
             // set on this view
             this.off();
+        },
+        /**
+         * Render IconCenter view
+         * @returns {Object}
+         */
+        render: function() {
+            //Creating layout
+            this.$el.html(this.tpl({
+                search: this.storage.__('search', 'Search'),
+                icon: this.icon
+            }));
+
+            return this;
+        },
+        /**
+         * Actions to do after element is rendered 
+         *
+         */
+        afterRender: function() {
+            var self = this;
+
+            //Inserting tags if such existed
+            if (!!this.tags) {
+                this.$el.find('.icon-search').val(this.tags);
+            }
+
+            this.loadMore();
+            this.$el.find('.filtered-icons').on('scroll', function() {
+                if (self.checkLoadMore()) {
+                    self.loadMore();
+                }
+            });
         }
     });
