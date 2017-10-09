@@ -96,7 +96,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         self.controller.removeEmptyDraggableElement();
                         return false;
                     } else {
-                        if (device === 'mobile') {
+                        if (device === 'mobile' || device === 'tablet') {
                             self.controller.hideSwipeMenu();
                         }
                     }
