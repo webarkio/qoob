@@ -369,5 +369,10 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if (element.find('.input-text').hasClass('error')) {
                 element.find('.input-text').removeClass('error');
             }
+        },
+        hideSwipeMenu: function() {
+            if (~this.currentView.name.indexOf('edit') != -1) {
+                this.controller.stopEditBlock();
+            }
         }
     });

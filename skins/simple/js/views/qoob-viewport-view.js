@@ -1,4 +1,4 @@
-/*global QoobBlockWrapperView, QoobPageTemplatesView*/
+/*global QoobBlockWrapperView, QoobPageTemplatesView, Hammer*/
 /**
  * Create view for viewport in qoob layout
  * 
@@ -38,11 +38,34 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
         },
-
         iframeLoaded: function() {
             this.trigger('iframe_loaded');
             this.triggerIframe();
             this.defaultDroppable();
+            this.initSwipe();
+        },
+        initSwipe: function() {
+            var self = this;
+            // Init swipe
+            var hammer = new Hammer.Manager(this.getWindowIframe().document.documentElement, {
+                touchAction: 'auto',
+                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
+                recognizers: [
+                    [Hammer.Swipe, {
+                        direction: Hammer.DIRECTION_HORIZONTAL
+                    }]
+                ]
+            });
+
+            hammer.on('swipeleft swiperight', function(e) {
+                if (self.controller.layout.$el.hasClass('tablet', 'mobile')) {
+                    if (e.type === 'swipeleft') {
+                        self.controller.layout.hideSwipeMenu();
+                    } else if (e.type === 'swiperight') {
+                        self.controller.layout.showSwipeMenu();
+                    }
+                }
+            });
         },
         /**
          * Create default droppable zone

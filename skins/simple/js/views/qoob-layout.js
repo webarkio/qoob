@@ -62,22 +62,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 ]
             });
 
-            var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-            var eventer = window[eventMethod];
-            var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-
-            eventer(messageEvent, function(e) {
-                var key = e.message ? "message" : "data";
-                var data = e[key];
-
-                if (data === 'SwipeRightPageMessage') {
-                    self.showSwipeMenu();
-                } else if (data === 'SwipeLeftPageMessage') {
-                    self.hideSwipeMenu();
-                }
-            }, false);
-
-
             hammer.on('swipeleft swiperight', function(e) {
                 if (e.type === 'swipeleft') {
                     self.hideSwipeMenu();
@@ -398,6 +382,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         hideSwipeMenu: function() {
             this.sidebar.hideSwipeMenu();
+            this.menu.hideSwipeMenu();
         },
         triggerBlocksLoader: function() {
             this.viewPort.trigger('blocks_loaded');

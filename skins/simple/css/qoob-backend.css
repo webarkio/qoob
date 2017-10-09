@@ -1213,33 +1213,12 @@ a {
     background-color: rgb(236, 236, 236);
     box-shadow: inset 8px 0 8px -8px rgba(0, 0, 0, 0.3);
     transition: left .3s linear;
+    z-index: 0;
 }
 
 .qoob-menu-right-side.show-side {
     left: 264px;
     transition: left .3s linear;
-}
-
-.mobile .qoob-menu-right-side,
-.tablet .qoob-menu-right-side {
-    top: 0;
-    left: -264px;
-    width: 264px;
-    box-shadow: none;
-    z-index: 1;
-}
-
-.tablet .qoob-menu-right-side {
-    top: 0;
-    left: -196px;
-    width: 196px;
-    box-shadow: none;
-    z-index: 1;
-}
-
-.tablet .qoob-menu-right-side.show-side,
-.mobile .qoob-menu-right-side.show-side {
-    left: 0;
 }
 
 .catalog-groups {
@@ -1354,15 +1333,11 @@ a {
     overflow-y: scroll;
     margin-right: -17px;
     position: relative;
+    z-index: 1;
 }
 
 .preview-block-wrap + .side-item-show {
     height: 100%;
-}
-
-.tablet .side-item-show,
-.mobile .side-item-show {
-    margin-right: 0;
 }
 
 /* Detect Mac Firefox 25 or newer */
@@ -2882,10 +2857,6 @@ a {
     width: calc(100% - 58px);
 }
 
-.tablet .media-center {
-    margin-top: 5px;
-}
-
 /* ----------------------------------------------------------------------------- 
 
   jQuery DateTimePicker - Responsive flat design jQuery DateTime Picker plugin for Web & Mobile
@@ -3360,6 +3331,21 @@ a {
     width: 100% !important;
 }
 
+.tablet .qoob-menu-right-side {
+    top: 0;
+    left: -264px;
+    width: 264px;
+    box-shadow: none;
+    z-index: 1;
+}
+
+.tablet .qoob-menu-right-side.show-side {
+    left: 0;
+}
+
+.tablet .side-item-show {
+    margin-right: 0;
+}
 
 /*
 .tablet #qoob-sidebar {
@@ -3409,6 +3395,20 @@ a {
 .tablet .qoob-menu-backward-side,
 .tablet .qoob-menu-forward-side {
     width: 196px;
+}
+
+.tablet .qoob-menu-right-side {
+    top: 0;
+    left: -264px;
+    width: 264px;
+    box-shadow: none;
+    z-index: 1;
+}
+
+
+.tablet .qoob-menu-right-side.show-side,
+.mobile .qoob-menu-right-side.show-side {
+    left: 0;
 }
 
 .tablet .libraries .qoob-select-dropdown li {
@@ -3917,6 +3917,15 @@ a {
 
 }
 
+.tablet .media-center {
+    margin-top: 5px;
+}
+
+.tablet .side-item-show {
+    margin-right: 0;
+}
+
+
 */
 
 /* Mobile sidebar
@@ -3955,4 +3964,20 @@ a {
 
 .mobile .control-buttons .preview-modes {
     color: rgb(165, 165, 165);
+}
+
+.mobile .qoob-menu-right-side {
+    top: 0;
+    left: -264px;
+    width: 264px;
+    box-shadow: none;
+    z-index: 1;
+}
+
+.mobile .qoob-menu-right-side.show-side {
+    left: 0;
+}
+
+.mobile .side-item-show {
+    margin-right: 0;
 }
