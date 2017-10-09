@@ -1,5 +1,5 @@
 var FieldAccordionFlipItem = Backbone.View.extend({ // eslint-disable-line no-unused-vars
-    className: "field-accordion-item",
+    className: "field-accordion-item field-accordion-flip-item",
     events: {
         'click': 'showSettings',
     },
@@ -30,7 +30,15 @@ var FieldAccordionFlipItem = Backbone.View.extend({ // eslint-disable-line no-un
         // change preview accordion item
         this.listenTo(this.model, 'change', function() {
             this.$el.find(".title-item").first().html(this.model.get('title'));
-            this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
+            if (this.model.get('image') != '') {
+                if (this.$el.find(".preview-image").is(':visible')) {
+                    this.$el.find(".preview-image").show();
+                }
+                this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
+                
+            } else {
+                this.$el.find(".preview-image").hide();
+            }
         });
     },
     /**

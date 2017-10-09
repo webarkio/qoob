@@ -22,6 +22,7 @@ var QoobFieldsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.settings = options.settings;
             this.defaults = options.defaults;
             this.controller = options.controller;
+            this.parent = options.parent;
             this.fields = [];
             this.side = this;
         },

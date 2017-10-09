@@ -34,7 +34,6 @@ var QoobImportExportView = Backbone.View.extend( // eslint-disable-line no-unuse
          */
         clickOverlay: function(evt) {
             if (jQuery(evt.target).prop('id') == this.id) {
-                console.log('clci');
                 this.$el.removeClass('show');
             }
         },

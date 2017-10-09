@@ -44,7 +44,7 @@
 
 <div class="control-buttons clearfix">
     <button class="button backward"></button>
-    <button class="button view-preview" <% if (device) { %> disabled<% } %>></button>
+    <button class="button view-preview" <% if (device == "mobile") { %> disabled<% } %>></button>
     <button class="button save" title="<%= save %>">
         <span class="save-clock">
             <span class="minutes-container"><span class="minutes"></span></span>

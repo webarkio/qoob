@@ -44,6 +44,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.assets = options.assets;
             this.tags = options.tags;
             this.cb = options.cb;
+            this.parent = options.parent;
 
             //Getting info about all video assets
             this.dataVideos = [];
