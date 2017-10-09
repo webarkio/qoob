@@ -1256,6 +1256,15 @@ a {
     margin-bottom: 12px;
     z-index: 10;
     touch-action: pan-y;
+    position: relative;
+}
+.preview-block .shield {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .preview-block img {
@@ -1656,7 +1665,7 @@ a {
 
 .field-label {
     font-size: 14px;
-    font-family: "robotolight";
+    font-family: "qrobotolight";
     color: rgb(0, 0, 0);
     display: block;
     text-align: left;
