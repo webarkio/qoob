@@ -1,5 +1,4 @@
 /* Edit admin page */
-
 body {
     margin: 0;
     background-color: #ffffff;
@@ -7,48 +6,32 @@ body {
 }
 
 @font-face {
-    font-family: 'robotobold';
-    src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
-    src: url('../fonts/roboto/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.ttf') format('truetype'), url('../fonts/roboto/Roboto-Bold-webfont.svg#robotobold') format('svg');
+    font-family: 'qrobotobold';
+    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.woff2') format('woff2');;
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'robotoregular';
-    src: url('../fonts/roboto/Roboto-Regular.eot');
-    src: url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'), url('../fonts/roboto/Roboto-Regular.svg#robotoregular') format('svg');
+    font-family: 'qrobotoregular';
+    src: url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'robotolight';
-    src: url('../fonts/roboto/Roboto-Regular.eot');
-    src: url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype'), url('../fonts/roboto/Roboto-Regular.svg#robotoregular') format('svg');
+    font-family: 'qrobotolight';
+    src: url('../fonts/roboto/Roboto-Light.woff') format('woff'), url('../fonts/roboto/Roboto-Light.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'robotoblack';
-    src: url('../fonts/roboto/Roboto-Black.eot');
-    src: url('../fonts/roboto/Roboto-Black.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Black.woff') format('woff'), url('../fonts/roboto/Roboto-Black.ttf') format('truetype'), url('../fonts/roboto/Roboto-Black.svg#robotoblack') format('svg');
+    font-family: 'qrobotoblack';
+    src: url('../fonts/roboto/Roboto-Black.woff') format('woff'), url('../fonts/roboto/Roboto-Black.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
-
-@font-face {
-    font-family: 'robotolight';
-    src: url('../fonts/roboto/Roboto-Light.eot');
-    src: url('../fonts/roboto/Roboto-Light.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/roboto/Roboto-Light.woff') format('woff'),
-    url('../fonts/roboto/Roboto-Light.ttf') format('truetype'),
-    url('../fonts/roboto/Roboto-Light.svg#robotolight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 
 /* HTML5 display definitions
    ========================================================================== */
@@ -545,7 +528,7 @@ a {
 
 #qoob {
     width: 100%;
-    font-family: 'robotoregular';
+    font-family: 'qrobotoregular';
     color: rgb(1, 8, 51);
 }
 
@@ -626,12 +609,13 @@ a {
 
 .group-list__link:hover {
     background-color: #ececec;
+    color: #010833;
 }
 
 .group-list__link-active,
 .group-list__link-active:hover {
     background-color: #010833;
-    color: #fff;
+    color: #fff !important;
 }
 
 
@@ -684,7 +668,7 @@ a {
     width: 188px;
     height: 50px;
     font-size: 16px;
-    font-family: "robotoblack";
+    font-family: "qrobotoblack";
 }
 
 #card .lib-select.disabled {}
@@ -770,7 +754,7 @@ a {
     visibility: hidden;
     margin-top: 0;
     z-index: 999;
-    font-family: 'robotoregular';
+    font-family: 'qrobotoregular';
     font-size: 16px;
     color: #010833;
     line-height: 50px;
@@ -880,7 +864,7 @@ a {
     padding-right: 8px;
     border-radius: 2px;
     font-size: 16px;
-    font-family: 'robotoregular';
+    font-family: 'qrobotoregular';
     line-height: 1.2;
     text-align: left;
     background-color: rgb(255, 255, 255);
@@ -891,7 +875,9 @@ a {
 .qoob-dropdown .qoob-dropdown-content li {
     line-height: 47px;
 }
-
+.qoob-dropdown .qoob-dropdown-content li a:hover {
+    color: #010833;
+}
 .qoob-dropdown .qoob-dropdown-content:before {
     content: '';
     display: block;
@@ -1128,7 +1114,7 @@ a {
     left: 47%;
     position: absolute;
     width: 2px;
-    background-color: #00ce63;
+    background-color: #010833;
 }
 
 .save-clock .minutes {
@@ -1149,7 +1135,7 @@ a {
 }
 
 .save-clock:after {
-    background-color: #00ce63;
+    background-color: #010833;
 }
 
 
@@ -1269,6 +1255,7 @@ a {
 .preview-block {
     margin-bottom: 12px;
     z-index: 10;
+    touch-action: pan-y;
 }
 
 .preview-block img {
@@ -1364,10 +1351,10 @@ a {
     height: 100%;
 }
 
-/*.tablet .side-item-show,
+.tablet .side-item-show,
 .mobile .side-item-show {
     margin-right: 0;
-}*/
+}
 
 /* Detect Mac Firefox 25 or newer */
 
@@ -1448,7 +1435,7 @@ a {
 
 #qoob-import-export .modal-title {
     letter-spacing: 0.025em;
-    font-family: 'robotobold';
+    font-family: 'qrobotobold';
     font-size: 18px;
     color: #121619;
     margin: 0;
@@ -1487,7 +1474,7 @@ a {
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
-    font-family: 'robotobold';
+    font-family: 'qrobotobold';
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.025em;
@@ -1786,6 +1773,10 @@ a {
     padding-left: 24px;
 }
 
+.field-checkbox label {
+    color: #000;
+}
+
 .field-checkbox .input-checkbox {
     display: none;
 }
@@ -1851,7 +1842,7 @@ a {
 }
 
 .field-input-autocomplete-list {
-    font-family: 'robotoregular';
+    font-family: 'qrobotoregular';
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
     border: 0;
@@ -2327,7 +2318,7 @@ a {
 
 .field-accordion-item .preview-image+.title-item {
     width: 130px;
-    font-family: 'robotoregular';
+    font-family: 'qrobotoregular';
 }
 
 .field-accordion .settings-block-items {
@@ -3307,7 +3298,7 @@ a {
 }
 
 .field-upload-error__text-bold {
-    font-family: 'robotobold';
+    font-family: 'qrobotobold';
 }
 
 /* Inner setttings
