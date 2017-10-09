@@ -46,6 +46,13 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.tags = options.tags;
             this.iframeUrl = options.iframeUrl;
             this.cb = options.cb;
+            this.parent = options.parent;
+            this.model = options.model;
+
+            this.listenTo(this.model, 'change',  function(select){
+                var image = Object.keys(select.changed)[0];
+                this.changeImage(select.changed[image]);
+            });
 
             this.dataImages = [];
             for (var i = 0; i < this.assets.length; i++) {

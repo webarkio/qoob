@@ -8,7 +8,7 @@
 var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     className: "field-accordion-item",
     events: {
-        'click .inner-settings-expand': 'showSettings',
+        'click': 'showSettings',
     },
     attributes: function() {
         return {
@@ -51,10 +51,14 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
 
         this.controller.navigate(
             baseUrl +
-            (jQuery(evt.currentTarget).hasClass('ui-state-active') ? ("/" + this.parent.settings.name + "-" + itemId) : ""), {
-                trigger: true,
+            (jQuery(evt.currentTarget).find('.inner-settings-expand').hasClass('ui-state-active') ? ("/" + this.parent.settings.name + "-" + itemId) : ""), {
+                trigger: false,
                 replace: true
             });
+
+        if (jQuery(evt.currentTarget).find('.inner-settings-expand').hasClass('ui-state-active')) {
+            this.controller.layout.menu.currentView = this.settingsView;
+        }
 
         return true;
     },
@@ -82,11 +86,19 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
             side: this.side
         });
 
-        this.$el.find('.settings-blocks').html(this.settingsView.getHtml());
+        this.$el.find('.settings-blocks').html(this.settingsView.render().el);
 
         this.listenTo(this.model, 'change', function() {
             this.$el.find(".title-item").first().html(this.model.get('title'));
-            this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
+            if (this.model.get('image') != '') {
+                if (!this.$el.find(".preview-image").is(':visible')) {
+                    this.$el.find(".preview-image").show();
+                }
+                this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
+                
+            } else {
+                this.$el.find(".preview-image").hide();
+            }
         });
 
         return this;

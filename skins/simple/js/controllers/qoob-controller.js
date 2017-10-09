@@ -54,7 +54,8 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     },
     backward: function() {
         this.isBack = true;
-        this.navigate(this.getHistory(), true);
+        // this.navigate(this.getHistory(), true);
+        this.layout.backward(this.currentUrl());
     },
     index: function() {
         this.addHistory(Backbone.history.getFragment());
@@ -146,7 +147,8 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         }
     },
     showSavePageTemplate: function() {
-        this.layout.showSavePageTemplate();
+        this.layout.navigate("save-template", null, this.isBack);
+        this.isBack = false;
     },
     addNewBlock: function(lib, block, afterId) {
         var blockConfig = this.storage.getBlockConfig(lib, block);

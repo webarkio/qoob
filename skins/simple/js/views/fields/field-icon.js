@@ -47,15 +47,11 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          */
         clickRemoveIcon: function(evt) {
             evt.preventDefault();
-            this.$el.find('.field-icon-container').addClass('empty');
             this.changeIcon('');
         },
         clickResetIconToDefault: function(evt) {
             evt.preventDefault();
             this.changeIcon(this.options.defaults);
-            if (this.$el.find('.field-icon-container').hasClass('empty')) {
-                this.$el.find('.field-icon-container').removeClass('empty');
-            }
         },
         /**
          * Main method change icon
@@ -68,7 +64,7 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
                 'data-icon-tags': (iconObject ? iconObject.tags : '')
             });
 
-            if (iconObject === '') {
+            if (iconObject === undefined) {
                 this.$el.find('.field-icon-container').addClass('empty');
             } else {
                 this.$el.find('.field-icon-container').removeClass('empty');

@@ -7,9 +7,10 @@
 var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuSavePageTemplateView.prototype */
     {
+        id: 'save-template',
         events: {
             'click .create-template': 'clickCreateTemplate',
-            'keyup .settings-block-items .input-text': 'changeInput'
+            'keyup .input-text': 'changeInput'
         },
         settingsModel: null,
         config: [{
@@ -37,6 +38,8 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
         initialize: function(options) {
             this.controller = options.controller;
             this.storage = options.storage;
+            this.name = options.name;
+            this.side = this;
         },
         changeInput: function(evt) {
             var input = jQuery(evt.currentTarget).parent('.field-text');
@@ -99,9 +102,6 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
                     }
                 });
             });
-
-
-
         },
         /**
          * Render settings
@@ -129,7 +129,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             this.settingsModel = this.settingsView.model;
 
-            this.$el.html(_.template(this.storage.getSkinTemplate('menu-more-preview'))(data)).find('.settings-blocks-full').prepend(this.settingsView.render().el);
+            this.$el.html(_.template(this.storage.getSkinTemplate('menu-more-preview'))(data)).find('.settings-blocks-full').prepend(this.settingsView.getHtml());
 
 
             return this;

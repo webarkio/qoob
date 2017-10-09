@@ -42,6 +42,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.icon = options.icon;
             this.tags = options.icon.tags || '';
             this.cb = options.cb;
+            this.parent = options.parent;
         },
         /**
          * Render IconCenter view

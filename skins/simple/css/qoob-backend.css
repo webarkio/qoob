@@ -1336,12 +1336,12 @@ a {
 }
 
 .field-accordion .settings-blocks {
-    padding: 44px 6px 44px 6px;
+    padding: 0;
     border-top: none;
     margin: 0;
     overflow: visible;
 }
-.field-accordion .settings-blocks > .field-group:first-child {
+.field-accordion-settings > .field-group:first-child {
     margin-top: 0;
 }
 .settings-block-items>div:first-child {
@@ -1616,9 +1616,11 @@ a {
 .save-template-settings {
     padding: 0 7px;
 }
+
 .save-template-settings .save-loading {
     display: none;
 }
+
  .button-save-template {
     border-radius: 2px;
     background-color: rgb(236, 236, 236);
@@ -1629,9 +1631,11 @@ a {
     cursor: pointer;
     margin-top: 19px;
 }
+
 .save-template-settings .save-icon {
     padding-right: 13px;
 }
+
 .save-template-settings .notice-block {
     display: none;
     background-color: rgb(0, 206, 99);
@@ -1647,6 +1651,7 @@ a {
 }
 
 .save-template-settings .error-block {
+    display: none;
     border-radius: 3px;
     background-color: rgb(237, 49, 42);
     color: #fff;
@@ -2193,6 +2198,10 @@ a {
 
 .field-accordion {
     width: 100%;
+}
+
+.field-accordion-settings {
+    padding: 44px 6px 44px 6px;
 }
 
 .field-accordion-item {
@@ -2753,24 +2762,10 @@ a {
     margin-top: 4px;
 }
 
-.field-accordion .field-icon__preview {
-    margin-right: 3px;
-}
-
 .field-accordion .other-icon {
-    width: 57px;
+    width: calc(50% - 2px);
     height: 58px;
 }
-
-.field-accordion .other-icon:first-child {
-    margin-right: 3px;
-}
-
-.field-accordion .other-icon:nth-child(3) {
-    margin-right: 3px;
-    margin-top: 4px;
-}
-
 
 .field-icon__selected-icon {
     border-radius: 2px;
@@ -2880,11 +2875,11 @@ a {
 }
 
 .field-accordion .media-center__button-more .qoob-dropdown-toggle {
-    width: 58px;
+    width: 54px;
 }
 
 .field-accordion .media-center__button {
-    width: 178px;
+    width: calc(100% - 58px);
 }
 
 .tablet .media-center {
@@ -3365,6 +3360,8 @@ a {
     width: 100% !important;
 }
 
+
+/*
 .tablet #qoob-sidebar {
     width: 196px;
 }
@@ -3819,8 +3816,11 @@ a {
 }
 
 .tablet .field-accordion .settings-blocks {
-    padding: 24px 5px 14px 5px;
     margin: 0;
+}
+
+.tablet .field-accordion-settings {
+    padding: 24px 5px 14px 5px;
 }
 
 .tablet .field-accordion .field-group {
@@ -3916,6 +3916,8 @@ a {
     line-height: 36px;
 
 }
+
+*/
 
 /* Mobile sidebar
    ========================================================================== */

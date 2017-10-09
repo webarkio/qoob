@@ -160,13 +160,13 @@ Fields.accordion_flip = QoobFieldView.extend(
                 id = this.getUniqueId();
 
             this.$el.find("#" + id).accordion({
-                header: "> div > h3.inner-settings-expand",
+                header: "> div > h3.inner-settings-flip",
                 animate: 500,
                 collapsible: true,
                 active: false,
                 heightStyle: 'content'
             }).sortable({
-                items: ".field-accordion__settings",
+                items: ".field-accordion-flip-item",
                 revert: false,
                 axis: "y",
                 helper: 'clone',

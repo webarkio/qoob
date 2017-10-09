@@ -39,6 +39,7 @@ var AccordionFlipView = QoobFieldView.extend(
              * @returns {Object}
              */
             render: function () {
+                console.log(this.defaults);
                 var settingsView = new QoobFieldsView({
                     model: this.model,
                     settings: this.settings,

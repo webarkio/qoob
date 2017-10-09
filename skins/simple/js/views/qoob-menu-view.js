@@ -61,8 +61,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
 
             this.addView(new QoobMenuSavePageTemplateView({
-                url: 'save-template',
-                id: 'save-template',
+                name: 'save-template',
                 storage: this.storage,
                 controller: this.controller
             }), 'main');
@@ -176,17 +175,30 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.hideSide('right');
             var newSide = this.getSettingsView(id);
 
-            // hook for field accordion
-            var accordion = newSide.$el.find('.accordion');
-            if (accordion.length > 0) {
-                accordion.accordion("option", "active", false);
-            }
-
             if (this.currentSide && this.currentSide.side) {
                 this.changeSide(this.currentSide.side, newSide.side, isBack);
             } else {
                 this.changeSide(null, newSide.side, isBack);
             }
+            this.currentView = newSide;
+            this.currentSide = newSide.side;
+
+            // hook for field accordion
+            var accordion = newSide.$el.find('.accordion');
+            if (accordion.length > 0) {
+                accordion.accordion("option", "active", false);
+            }
+        },
+        showSavePageTemplate: function(isBack) {
+            this.hideSide('right');
+            var newSide = this.getView("save-template");
+
+            if (this.currentSide && this.currentSide.side) {
+                this.changeSide(this.currentSide, newSide, isBack);
+            } else {
+                this.changeSide(null, newSide.side, isBack);
+            }
+
             this.currentView = newSide;
             this.currentSide = newSide.side;
         },
@@ -206,8 +218,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         showInnerSettingsView: function(id, isBack) {
             var newView = this.getView(id);
             this.changeSide(this.currentSide, newView.side, isBack);
+            this.currentView = newView;
             this.currentSide = newView.side;
-            this.currentview = newView;
         },
         /**
          * Get SettingsView by name
