@@ -371,7 +371,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
         },
         hideSwipeMenu: function() {
-            if (~this.currentView.name.indexOf('edit') != -1) {
+            if (this.currentView.name.indexOf('edit') != -1) {
                 this.controller.stopEditBlock();
             }
         }

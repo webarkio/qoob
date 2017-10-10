@@ -58,7 +58,9 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             });
 
             hammer.on('swipeleft swiperight', function(e) {
-                if (self.controller.layout.$el.hasClass('tablet', 'mobile')) {
+                var classes = self.controller.layout.$el[0].className;
+
+                if (classes.indexOf('tablet') != -1 || classes.indexOf('mobile') != -1) {
                     if (e.type === 'swipeleft') {
                         self.controller.layout.hideSwipeMenu();
                     } else if (e.type === 'swiperight') {
