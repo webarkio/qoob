@@ -259,6 +259,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var side = this.$el.find('.qoob-menu-' + position + '-side');
 
             if (side.find('[data-side-id]').hasClass('side-item-show')) {
+                side.find('[data-side-id]').removeClass('side-item-show')
                 this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
             }
 
@@ -266,7 +267,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 side.removeClass('show-side');
             }
         },
-
         changeSide: function(oldSide, newSide, direction) {
             var self = this,
                 cloneSide;
@@ -295,7 +295,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         jQuery(this).off(e);
                     }
                 });
-
             } else { // forward
                 if (newSide !== undefined) {
                     cloneSide = newSide.$el.clone();
@@ -340,12 +339,17 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             groups.hide();
             blocks.hide();
 
+            self.controller.navigate('', {
+                    trigger: true
+            });
+
             if (libName !== 'all') {
-                groups = groups.filter(function(index) {
-                    return self.$(groups[index]).hasClass(libName);
-                });
                 blocks = blocks.filter(function(index) {
-                    return self.$(blocks[index]).hasClass(libName);
+                    return self.$(blocks[index]).data('lib') == libName;
+                });
+
+                groups = groups.filter(function(index) {
+                    return self.$(groups[index]).data('lib').indexOf(libName) != -1;                    
                 });
             }
 

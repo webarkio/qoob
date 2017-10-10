@@ -3,7 +3,7 @@
         <% for (var i = 0; i < groups_arr.length; i++) { %>
             <% var group = groups_arr[i]; %>
             <% var group_id = group.id.replace(/\s+/g, ''); %>
-            <li class="group-list__item <%= group.libs[0] %>">
+            <li class="group-list__item" data-lib="<%= group.libs.join(' ') %>">
                 <a href="#groups-<%= group_id %>" class="group-list__link" data-group-id="<%= group_id %>">
                 <% if (group.label){ %> 
                     <%= group.label %> 
