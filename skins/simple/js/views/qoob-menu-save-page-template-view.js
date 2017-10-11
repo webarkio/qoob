@@ -70,7 +70,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             this.controller.layout.viewPort.getIframeContents().scrollTop(0);
 
-            html2canvas(this.controller.layout.viewPort.getIframeContents().find('body'), {scale: 2}).then(function(canvas) {
+            html2canvas(this.controller.layout.viewPort.getIframeContents().find('body'), {'scale': 2}).then(function(canvas) {
                 var extraCanvas = document.createElement("canvas");
                 extraCanvas.setAttribute('width',264);
                 extraCanvas.setAttribute('height',431);

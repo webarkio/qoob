@@ -258,14 +258,23 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         hideSide: function(position) {
             var side = this.$el.find('.qoob-menu-' + position + '-side');
 
-            if (side.find('[data-side-id]').hasClass('side-item-show')) {
-                side.find('[data-side-id]').removeClass('side-item-show')
-                this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
-            }
-
             if (side.hasClass('show-side')) {
                 side.removeClass('show-side');
             }
+
+            side.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                if (e.target == this) {
+                    if (!side.hasClass('show-side')) {
+                        if (side.find('[data-side-id]').hasClass('side-item-show')) {
+                            side.find('[data-side-id]').removeClass('side-item-show')
+                        }
+                    }
+
+                    jQuery(this).off(e);
+                }
+            });
+
+            this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
         },
         changeSide: function(oldSide, newSide, direction) {
             var self = this,

@@ -327,7 +327,7 @@
                                 "-webkit-transform:scale(1);"+
                                 "transform:scale(1)"+
                             "}"+
-                        "}   "+                 
+                        "}   "+
                     "</style>"+
                "</div>";
     };
@@ -338,5 +338,5 @@
     };
 
     window.QoobStarter = QoobStarter;
-    window.QoobVersion = "2.0.4";
+    window.QoobVersion = "2.1.0";
 }());
