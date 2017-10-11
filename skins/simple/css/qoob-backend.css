@@ -1264,6 +1264,10 @@ a {
     margin-right: -17px;
 }
 
+.settings {
+    display: none;
+}
+
 .side-item-show {
     display: block;
     height: calc(100% - 128px);
@@ -1281,7 +1285,6 @@ a {
     }
 }
 
-
 /* Detect Mac Firefox 25 or newer */
 
 @supports (-moz-osx-font-smoothing:auto) {
@@ -1298,11 +1301,6 @@ a {
         margin-right: -12px;
     }
 }
-
-.settings {
-    display: none;
-}
-
 
 #qoob-sidebar.overlay .settings-blocks:before {
     content: '';
