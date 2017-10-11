@@ -4,10 +4,10 @@
  * @type @exp;Backbone@pro;View@call;extend
  */
 var QoobEditModeButtonView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
-    tagName: 'button',
     className: 'edit-mode-button',
     events: {
-        'click': 'clickEditMode'
+        'click': 'clickEditMode',
+        'touchstart': 'clickEditMode'
     },
     /**
      * View QoobEditModeButton
@@ -20,6 +20,7 @@ var QoobEditModeButtonView = Backbone.View.extend({ // eslint-disable-line no-un
         this.controller = options.controller;
     },
     clickEditMode: function() {
+        console.log('click');
         this.controller.setEditMode();
     },
     setPreviewMode: function() {
