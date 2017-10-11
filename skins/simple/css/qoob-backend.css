@@ -1264,12 +1264,20 @@ a {
     margin-right: -17px;
 }
 
+.side-item-show {
+    display: block;
+    height: calc(100% - 128px);
+    overflow-y: scroll;
+    margin-right: -17px;
+    position: relative;
+    z-index: 1;
+}
 
 /* Detect Mac Safari 6.1 or newer, hide any straggling Chrome references */
 
 @media screen and (-webkit-max-device-pixel-ratio:1) and (min-color-index:0) {
     .preview-block-wrap {
-        margin-right: -15px;
+        margin-right: 0px;
     }
 }
 
@@ -1327,14 +1335,6 @@ a {
     margin-top: 0;
 }
 
-.side-item-show {
-    display: block;
-    height: calc(100% - 128px);
-    overflow-y: scroll;
-    margin-right: -17px;
-    position: relative;
-    z-index: 1;
-}
 
 .preview-block-wrap + .side-item-show {
     height: 100%;
