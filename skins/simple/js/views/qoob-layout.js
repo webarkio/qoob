@@ -239,6 +239,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             cb: iconView.changeIcon.bind(iconView),
                             parent: parentView
                         });
+
                         innerView.side = innerView;
 
                         this.menu.setInnerSettingsView(innerView);

@@ -100,7 +100,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var icons = this.icons.slice(offset, offset + this.limit);
                 for (var i = 0; i < icons.length; i++) {
-                    result.push('<div class="ajax-icon' + (icons[x].classes === this.icon.classes ? ' chosen ' : '') + '"><span data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
+                    result.push('<div class="ajax-icon' + (this.icon != '' && icons[x].classes === this.icon.classes ? ' chosen ' : '') + '"><span data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
                 }
             } else {
                 var dataSearchIcons = [];
@@ -117,7 +117,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
                 var searchIcons = dataSearchIcons.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchIcons.length; x++) {
-                    result.push('<div class="ajax-icon' + (searchIcons[x].classes === this.icon.classes ? ' chosen ' : '') + '"><span  data-icon-tags="' + searchIcons[x].tags + '" class="' + searchIcons[x].classes + '"></span></div>');
+                    result.push('<div class="ajax-icon' + (this.icon != '' && searchIcons[x].classes === this.icon.classes ? ' chosen ' : '') + '"><span  data-icon-tags="' + searchIcons[x].tags + '" class="' + searchIcons[x].classes + '"></span></div>');
                 }
             }
 

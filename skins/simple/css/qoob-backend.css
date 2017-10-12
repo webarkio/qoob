@@ -1277,14 +1277,6 @@ a {
     z-index: 1;
 }
 
-/* Detect Mac Safari 6.1 or newer, hide any straggling Chrome references */
-
-@media screen and (-webkit-max-device-pixel-ratio:1) and (min-color-index:0) {
-    .preview-block-wrap {
-        margin-right: 0px;
-    }
-}
-
 /* Detect Mac Firefox 25 or newer */
 
 @supports (-moz-osx-font-smoothing:auto) {
