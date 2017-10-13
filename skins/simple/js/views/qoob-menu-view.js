@@ -101,11 +101,9 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         }
                     }
 
-                    if (device !== 'mobile') {
-                        self.controller.navigate('', {
-                                trigger: true
-                        });
-                    }
+                    self.controller.navigate('', {
+                            trigger: true
+                    });
                 },
                 stop: function() {
                     self.controller.removeEmptyDraggableElement();
