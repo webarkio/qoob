@@ -144,9 +144,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 'width': (this.previewMode ? 0 : parseInt(jQuery('#qoob-sidebar').css('width'), 10))
             };
 
-            this.$el.stop().animate({
-                width: jQuery(window).width() - size.width
-            }, 300, 'linear');
+            this.$el.css('width', jQuery(window).width() - size.width);
 
             //Iframe resize
             this.getIframe().height(jQuery(window).height());

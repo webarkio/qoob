@@ -323,6 +323,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         setPreviewMode: function() {
             this.editModeButton.setPreviewMode();
+            this.menu.setPreviewMode();
             this.sidebar.setPreviewMode();
             this.viewPort.setPreviewMode();
             this.resize();

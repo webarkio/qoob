@@ -20,7 +20,6 @@ var QoobEditModeButtonView = Backbone.View.extend({ // eslint-disable-line no-un
         this.controller = options.controller;
     },
     clickEditMode: function() {
-        console.log('click');
         this.controller.setEditMode();
     },
     setPreviewMode: function() {

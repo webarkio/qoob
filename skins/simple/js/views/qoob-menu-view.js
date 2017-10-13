@@ -385,5 +385,16 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if (this.currentView.name.indexOf('edit') != -1) {
                 this.controller.stopEditBlock();
             }
+        },
+        setPreviewMode: function() {
+            var device = this.controller.layout.getDeviceState();
+            if (device == 'desktop' && this.currentView.name == 'catalog-groups') {
+                this.hideSide('right');
+
+                this.controller.navigate('', {
+                        trigger: true,
+                        replace: true
+                });
+            }
         }
     });
