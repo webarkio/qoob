@@ -46,7 +46,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.iframeUrl = options.iframeUrl;
             this.cb = options.cb;
             this.parent = options.parent;
-            this.model = options.model;
 
             this.listenTo(this.model, 'change',  function(select){
                 var image = Object.keys(select.changed)[0];
@@ -151,21 +150,20 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if (_.isString(filteredWords)) {
                 filteredWords = filteredWords.split(',');
             } else if (_.isArray(filteredWords)) {
-                filteredWords = filteredWords.join('').split(',');
+                filteredWords = filteredWords.join('').split(' ');
             }
 
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var images = this.dataImages.slice(offset, offset + this.limit);
                 for (var i = 0; i < images.length; i++) {
-                    result.push('<div class="ajax-image' + (images[i].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + images[i].src + ');" data-url="' + images[i].src + '"></div>');
+                    result.push('<div class="ajax-image' + (images[i].src === this.curSrc ? ' chosen' : '') + '" style="background-image: url(' + images[i].src + ');" data-url="' + images[i].src + '"></div>');
                 }
             } else {
                 var dataSearchImages = [];
                 for (var y = 0; y < this.dataImages.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
-                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ''));
-                        if (filteredWords[j] !== '' && (this.dataImages[y].tags && this.dataImages[y].tags.join(' ').match(regEx))) {
-                            if (dataSearchImages.indexOf(this.dataImages[y]) < 0) {
+                        if (filteredWords[j] !== '' && this.dataImages[y].tags.indexOf(filteredWords[j]) != -1) {
+                            if (dataSearchImages.indexOf(this.dataImages[y]) == -1) {
                                 dataSearchImages.push(this.dataImages[y]);
                             }
                         }
@@ -174,7 +172,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
                 var searchImages = dataSearchImages.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchImages.length; x++) {
-                    result.push('<div class="ajax-image' + (searchImages[x].src === this.curSrc ? ' chosen ' : '') + '" style="background-image: url(' + searchImages[x].src + ');" data-url="' + searchImages[x].src + '"></div>');
+                    result.push('<div class="ajax-image' + (searchImages[x].src === this.curSrc ? ' chosen' : '') + '" style="background-image: url(' + searchImages[x].src + ');" data-url="' + searchImages[x].src + '"></div>');
                 }
             }
 
@@ -195,16 +193,20 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
             this.changeImage(url);
 
+            this.cb(url);
         },
         changeImage: function(url) {
             this.$el.find('.field-image__selected-image img').attr('src', url);
+
             if (this.$el.find('.field-image-container-inner').hasClass('empty')) {
                 this.$el.find('.field-image-container-inner').removeClass('empty');
             }
 
             this.$el.find('.image-url').val(url);
+
+            this.$el.find('.ajax-image').removeClass('chosen');
             this.curSrc = url;
-            this.cb(url);
+            this.search();
         },
         /**
          * Keyup event for filtering images by tags in search input
