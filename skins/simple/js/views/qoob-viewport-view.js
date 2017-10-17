@@ -132,7 +132,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.getIframe().stop().animate(size[mode], 500, function() {
                 var currentRoute = self.controller.current();
                 if (currentRoute.route == 'startEditBlock') {
-                    self.controller.scrollTo(currentRoute.params[0]);
+                    self.controller.layout.scrollTo(currentRoute.params[0]);
                 }
             });
         },

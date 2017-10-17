@@ -86,7 +86,7 @@ Fields.image = QoobFieldView.extend(
             var self = this;
             var droppedFiles = evt.originalEvent.dataTransfer.files;
 
-            // 30 MB limit
+            // 2 MB limit
             if (droppedFiles[0].size > 2097152) {
                 this.$el.find('.field-image__preview').hide();
                 this.$el.find('.field-upload-error').addClass('field-upload-error-active');
