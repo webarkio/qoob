@@ -2,66 +2,70 @@
 var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-vars
     routes: {
         "": "index", // Empty hash-tag
-        "index": "index",
-        "groups/:group(/)": "showGroup", // #groups/name
-        "edit/:blockId(/)": "startEditBlock", // #groups/name
+        "groups-:group(/)": "showGroup", // #groups/name
+        "edit-:blockId(/)": "startEditBlock", // #groups/name
         "save-template(/)": "showSavePageTemplate",
         '*default': 'default'
     },
+    isBack: false,
     initialize: function() {
         this.history = [];
-        this.on("route", this.storeRoute);
     },
-    storeRoute: function() {
-        // console.log(Backbone.history.fragment);
-        this.history.push(Backbone.history.fragment);
+    currentUrl: function() {
+        return Backbone.history.getFragment();
+    },
+    addHistory: function(url) {
+        this.history.push(url);
+    },
+    getHistory: function() {
+        var backUrl = Backbone.history.fragment;
+        while (backUrl == Backbone.history.fragment) {
+            backUrl = this.history.pop();
+        }
+        return backUrl;
     },
     default: function(args) {
-        this.index();
-        // console.log(this.current());
-        // console.log(args);
+        var fragment = args;
+
+        // Delete "/" in the end
+        if (fragment.charAt(fragment.length - 1) == '/') {
+            fragment = fragment.substr(0, fragment.length - 1);
+        }
+
+        var path = fragment.split("/");
+
+        if (path[0].indexOf('edit-') <= 0 && !(this.layout.getBlockView(path[0].split('-')[1]))) {
+            this.navigate('', {
+                trigger: true,
+                replace: true
+            });
+        } else {
+            this.addHistory(fragment);
+
+            this.layout.navigate("edit", path.shift().split('-')[1], this.isBack);
+
+            while (path.length > 0) {
+                this.layout.navigate("inner", path.shift(), this.isBack);
+            }
+
+            this.isBack = false;
+
+        }
     },
-    // execute: function(callback, args) {
-    //   // args.pop();
-    //   // if (callback) callback.apply(this, args);
-
-    //   console.log(args);
-    // },
     backward: function() {
-        // console.log(this.history.length > 1);
-        // console.log(this.history[this.history.length - 2]);
-
-        // if (this.history.length > 1) {
-        //     console.log(this.history);
-        //     this.navigate(this.history[this.history.length - 2], true);
-        //     this.history.splice(-2, 2);
-        //     console.log(this.history);
-        //     // this.history.pop();
-        // } else {
-        //     this.navigate('', {
-        //         trigger: true,
-        //         replace: true
-        //     });
-        // }
-
-        // window.history.back();
-
-        Backbone.history.history.back();
-
-        // this.before();
-        /*
-        var route = this.current();
-        var params = route.exec(route.fragment).slice(1);
-        console.log(params);
-        console.log(this.current());
-        */
+        this.isBack = true;
+        // this.navigate(this.getHistory(), true);
+        this.layout.backward(this.currentUrl());
     },
     index: function() {
-        this.layout.menu.showIndex();
-        this.layout.stopEditBlock();
+        this.addHistory(Backbone.history.getFragment());
+        this.layout.navigate("index", null, this.isBack);
+        this.isBack = false;
     },
     showGroup: function(group) {
-        this.layout.menu.showGroup(group);
+        this.addHistory(Backbone.history.getFragment());
+        this.layout.navigate("group", group, this.isBack);
+        this.isBack = false;
     },
     setLayout: function(layout) {
         this.layout = layout;
@@ -107,7 +111,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         var self = this;
 
         // show clock autosave
-        this.layout.toolbar.showSaveLoader();
+        this.layout.showSaveLoader();
 
         var json = JSON.parse(JSON.stringify(this.pageModel.toJSON()));
         json.version = window.QoobVersion;
@@ -115,13 +119,13 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         var blocks = this.pageModel.get('blocks').models;
         for (var i = 0; i < blocks.length; i++) {
             var blockModel = blocks[i];
-            var blockView = this.layout.viewPort.getBlockView(blockModel.id);
+            var blockView = this.layout.getBlockView(blockModel.id);
             html += blockView.innerBlock.renderedTemplate;
         }
 
         this.storage.save(json, html, function(err, status) {
             // hide clock autosave
-            self.layout.toolbar.hideSaveLoader();
+            self.layout.hideSaveLoader();
             // Make sure the callback is a function​
             if (typeof cb === "function") {
                 // Call it, since we have confirmed it is callable​
@@ -143,23 +147,19 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         }
     },
     showSavePageTemplate: function() {
-        this.layout.menu.showSide('left', 'save-template');
-        this.layout.menu.hideNotice();
-        this.layout.stopEditBlock();
+        this.layout.navigate("save-template", null, this.isBack);
+        this.isBack = false;
     },
     addNewBlock: function(lib, block, afterId) {
         var blockConfig = this.storage.getBlockConfig(lib, block);
-
         this.addBlock(QoobUtils.getDefaultSettings(blockConfig, blockConfig.name), afterId);
     },
     addBlock: function(values, afterId, scroll) {
         scroll = (scroll === undefined) ? true : scroll;
 
         var model = QoobUtils.createModel(values);
-
         this.pageModel.addBlock(model, afterId);
-        this.layout.menu.addSettings(model);
-        this.layout.viewPort.addBlock(model, afterId);
+        this.layout.addBlock(model, afterId);
 
         if (scroll) {
             var self = this,
@@ -176,17 +176,17 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
             }
 
             setTimeout(function() {
-                self.scrollTo(model.id, position);
+                self.layout.scrollTo(model.id, position);
             }, 700);
 
         }
     },
     startEditBlock: function(blockId) {
         if (this.pageModel.get('blocks').get(blockId)) {
-            this.layout.startEditBlock(blockId);
-            this.scrollTo(blockId);
+            this.addHistory(Backbone.history.getFragment());
+            this.layout.navigate("edit", blockId, this.isBack);
         } else {
-            this.navigate('index', {
+            this.navigate('', {
                 trigger: true,
                 replace: true
             });
@@ -194,41 +194,22 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     },
     stopEditBlock: function() {
         this.layout.stopEditBlock();
-        this.navigate('index', {
+        this.navigate('', {
             trigger: true
         });
     },
     load: function(blocks) {
         if (blocks.length === 0) {
-            this.layout.viewPort.trigger('blocks_loaded');
+            this.layout.triggerBlocksLoader();
         } else {
             for (var i = 0; i < blocks.length; i++) {
                 this.addBlock(blocks[i], null, false);
             }
         }
     },
-    setInnerSettingsView: function(view) {
-        var name = view.$el.data('side-id');
-
-        //Add view to the qoob side
-        if (!!this.layout.menu.settingsViewStorage[name]) {
-            this.deleteInnerSettingsView(name);
-        }
-
-        this.layout.menu.addView(view, 'left');
-        this.layout.menu.showSide('left', name);
-
-        view.$el.trigger('shown');
-        this.layout.menu.settingsViewStorage[name] = view;
-    },
-    deleteInnerSettingsView: function(name) {
-        this.layout.menu.delView(name);
-    },
     deleteBlock: function(model) {
         this.pageModel.deleteBlock(model);
-        this.layout.viewPort.delBlockView(model);
-        this.layout.menu.deleteSettings(model);
-        this.triggerIframe();
+        this.layout.deleteBlock(model);
     },
     moveDownBlock: function(model) {
         this.pageModel.moveDown(model);
@@ -237,17 +218,10 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         this.pageModel.moveUp(model);
     },
     triggerIframe: function() {
-        this.layout.viewPort.triggerIframe();
+        this.layout.triggerIframe();
     },
     changeLib: function(name) {
-        this.storage.currentLib = name;
-        this.layout.menu.hideLibsExcept(name);
-    },
-    /**
-     * Scroll to block
-     */
-    scrollTo: function(modelId, position) {
-        this.layout.viewPort.scrollTo(modelId, position);
+        this.layout.changeLib(name);
     },
     /**
      * Get current params from Backbone.history.fragment
@@ -310,7 +284,7 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      * Change default blank viewport when blocks is null
      */
     changeDefaultPage: function(event) {
-        this.layout.viewPort.changeDefaultPage(event);
+        this.layout.changeDefaultPage(event);
     },
     /**
      * Remove page data
@@ -325,24 +299,18 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
      * Show import/export window
      */
     showImportExportWindow: function() {
-        this.layout.ImportExport.showImportExportWindow();
+        this.layout.showImportExportWindow();
     },
     /**
      * Remove empty div for mobile
      */
     removeEmptyDraggableElement: function() {
-        this.layout.viewPort.removeEmptyDraggableElement();
+        this.layout.removeEmptyDraggableElement();
     },
-    /**
-     * Show menu sidebar
-     */
     showSwipeMenu: function() {
-        this.layout.menu.showSwipeMenu();
+        this.layout.showSwipeMenu();
     },
-    /**
-     * Hide menu sidebar
-     */
     hideSwipeMenu: function() {
-        this.layout.menu.hideSwipeMenu();
+        this.layout.hideSwipeMenu();
     }
 });

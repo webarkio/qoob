@@ -1,5 +1,5 @@
 /**
- * Create buidler view 
+ * Create VideoCenterView 
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
@@ -8,12 +8,11 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
     {
         className: "inner-settings-video settings inner-settings",
         dataVideos: null,
-        dataSearchVideos: null,
         offset: 0,
         limit: 12,
         events: {
             'keydown': 'keyAction',
-            'click .ajax-video': 'selectVideo',
+            'click .ajax-video': 'clickListVideo',
             'keyup .video-search': 'searchFilter',
             'shown': 'afterRender'
         },
@@ -36,13 +35,22 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * @constructs
          */
         initialize: function(options) {
+            this.name = options.name;
+            this.side = options.side;
             this.storage = options.storage;
             this.controller = options.controller;
             this.tpl = _.template(this.storage.getSkinTemplate('field-video-setting-preview'));
-            this.backId = (options.parentId === undefined) ? this.model.id : options.parentId;
             this.src = options.src;
             this.assets = options.assets;
             this.tags = options.tags;
+            this.cb = options.cb;
+            this.parent = options.parent;
+
+
+            this.listenTo(this.model, 'change',  function(select){
+                var video = Object.keys(select.changed)[0];
+                this.changeVideo({'url': select.changed[video].url, 'preview': select.changed[video].preview});
+            });
 
 
             //Getting info about all video assets
@@ -95,16 +103,16 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
-                this.$el.find(".search-button").click();
-                this.$el.find('.video-search').autocomplete('close');
+                this.search();
+                this.$el.find('.video-search').autocomplete("search", "");
                 return false;
             }
         },
         search: function() {
             var filteredWords = this.$el.find('.video-search').val().split(','),
-                filteredIcons = this.$el.find('.filtered-videos');
+                filteredVideos = this.$el.find('.filtered-videos');
 
-            filteredIcons.find('.ajax-video').remove();
+            filteredVideos.find('.ajax-video').remove();
 
             this.tags = filteredWords;
             this.offset = 0;
@@ -137,31 +145,32 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if (_.isString(filteredWords)) {
                 filteredWords = filteredWords.split(',');
             } else if (_.isArray(filteredWords)) {
-                filteredWords = filteredWords.join('').split(',');
+                filteredWords = filteredWords.join('').split(' ');
             }
 
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
                 var videos = this.dataVideos.slice(offset, offset + this.limit);
                 for (var i = 0; i < videos.length; i++) {
-                    result.push('<div class="ajax-video' + (images[i].src === this.src.url ? ' chosen ' : '') + '" data-src="' + videos[i].src + '" data-preview="' + videos[i].preview + '" style="background-image: url(' + videos[i].preview + ');"></div>');
+                    result.push('<div class="ajax-video' + (videos[i].src === this.src.url ? ' chosen ' : '') + '" data-src="' + videos[i].src + '" data-preview="' + videos[i].preview + '" style="background-image: url(' + videos[i].preview + ');"></div>');
                 }
             } else {
-                this.dataSearchVideos = [];
+                var dataSearchVideos = [];
                 for (var y = 0; y < this.dataVideos.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
-                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' *'));
+                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ''));
                         if (filteredWords[j] !== '' && (this.dataVideos[y].tags && this.dataVideos[y].tags.join(' ').match(regEx))) {
-                            this.dataSearchVideos.push(this.dataVideos[y]);
+                            if (dataSearchVideos.indexOf(this.dataVideos[y]) < 0) {
+                                dataSearchVideos.push(this.dataVideos[y]);
+                            }
                         }
                     }
                 }
 
-                var searchVideos = this.dataSearchVideos.slice(offset, offset + this.limit);
+                var searchVideos = dataSearchVideos.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchVideos.length; x++) {
                     result.push('<div class="ajax-video' + (searchVideos[x].src === this.src.url ? ' chosen ' : '') + '" data-src="' + searchVideos[x].src + '" data-preview="' + searchVideos[x].preview + '" style="background-image: url(' + searchVideos[x].preview + ');"></div>');
                 }
             }
-
 
             return result.join('');
         },
@@ -170,7 +179,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * @param {type} evt
          * @returns {undefined}
          */
-        selectVideo: function(evt) {
+        clickListVideo: function(evt) {
             if (evt.currentTarget.classList.contains('chosen')) {
                 return;
             }
@@ -180,12 +189,22 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             var url = this.$(evt.currentTarget).data('src'),
                 preview = this.$(evt.currentTarget).data('preview');
 
-            this.$el.find('.field-video__selected-video img').attr('src', preview);
+            var src = {'url': url, 'preview': preview};
 
-            if (this.$el.find('.selected-video').hasClass('empty')) {
-                this.$el.find('.selected-video').removeClass('empty');
+            this.changeVideo({'url': url, 'preview': preview});
+
+            this.cb(src);
+        },
+        changeVideo: function(src) {
+            this.$el.find('.field-video__selected-video img').attr('src', src.preview);
+
+            if (this.$el.find('.field-video-container-inner').hasClass('empty')) {
+                this.$el.find('.field-video-container-inner').removeClass('empty');
             }
-            window.selectFieldVideo({ url: url, preview: preview });
+
+            this.$el.find('.ajax-video').removeClass('chosen');
+            this.src = src;
+            this.search();
         },
         /**
          * Keyup event for filtering videos by tags in search input

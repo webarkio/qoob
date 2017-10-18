@@ -4,7 +4,7 @@
  * @type @exp;Backbone@pro;View@call;extend
  */
 var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-unused-vars
-    /** @lends QoobMenuGroupsView.prototype */
+    /** @lends QoobMenuBlocksPreviewView.prototype */
     {
         className: 'preview-block-wrap',
         events: {
@@ -21,13 +21,19 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-
 
             this.controller.addNewBlock(lib, name);
 
-            if (isMobile.phone) {
-                this.controller.hideSwipeMenu();
+            this.controller.navigate('', {
+                    trigger: true
+            });
+
+            var device = this.controller.layout.getDeviceState();
+
+            if (device === 'mobile' || device === 'tablet') {
+                this.controller.layout.hideSwipeMenu();
             }
         },
         /**
-         * View menu groups
-         * @class QoobMenuGroupsView
+         * View block's preview
+         * @class QoobMenuBlocksPreviewView
          * @augments Backbone.View
          * @constructs
          */

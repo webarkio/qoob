@@ -1,6 +1,7 @@
+/*global QoobFieldView*/
 var Fields = Fields || {};
 Fields.datepicker = QoobFieldView.extend(
-/** @lends Fields.radio.prototype */{
+/** @lends Fields.datepicker.prototype */{
     className: 'field-datepicker field-group',
     events: {
         'change .field-datepicker__input': 'changeInput',
@@ -22,6 +23,7 @@ Fields.datepicker = QoobFieldView.extend(
     },
     /**
      * Render filed select
+     * example value "10/10/2020"
      * @returns {Object}
      */
     render: function() {

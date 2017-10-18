@@ -5,9 +5,9 @@
 	<div class="select-container">
 		<select class="select" name="<%= name %>" data-width="100%" data-dropup-auto="false">
 			<% _.each( options, function( option ){ %>
-				<option <% if ( current === option.id ){ %> selected <% } %> value='<%- option.id %>'>
-					<% if (option.val.length > 35) { %>
-						<%= option.val.substring(0, 35) %>...
+				<option <% if ( current === option.id ){ %> selected <% } %> title="<%= option.val %>" value='<%- option.id %>'>
+					<% if (option.val.length > 22) { %>
+						<%= option.val.substring(0, 19) %>...
 					<% } else { %>
 						<%= option.val %>
 					<% } %>

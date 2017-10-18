@@ -1,4 +1,4 @@
-/*global QoobBlockWrapperView, QoobPageTemplatesView*/
+/*global QoobBlockWrapperView, QoobPageTemplatesView, Hammer*/
 /**
  * Create view for viewport in qoob layout
  * 
@@ -38,11 +38,36 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
         },
-
         iframeLoaded: function() {
             this.trigger('iframe_loaded');
             this.triggerIframe();
             this.defaultDroppable();
+            this.initSwipe();
+        },
+        initSwipe: function() {
+            var self = this;
+            // Init swipe
+            var hammer = new Hammer.Manager(this.getWindowIframe().document.documentElement, {
+                touchAction: 'auto',
+                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
+                recognizers: [
+                    [Hammer.Swipe, {
+                        direction: Hammer.DIRECTION_HORIZONTAL
+                    }]
+                ]
+            });
+
+            hammer.on('swipeleft swiperight', function(e) {
+                var classes = self.controller.layout.$el[0].className;
+
+                if (classes.indexOf('tablet') != -1 || classes.indexOf('mobile') != -1) {
+                    if (e.type === 'swipeleft') {
+                        self.controller.layout.hideSwipeMenu();
+                    } else if (e.type === 'swiperight') {
+                        self.controller.layout.showSwipeMenu();
+                    }
+                }
+            });
         },
         /**
          * Create default droppable zone
@@ -79,8 +104,16 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.getIframeContents().find('#qoob-blocks').addClass('preview');
         },
         setEditMode: function() {
+            var self = this;
             this.previewMode = false;
-            this.getIframeContents().find('#qoob-blocks').removeClass('preview');
+            this.controller.layout.editModeButton.$el.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                if (e.target == this) {
+                    self.controller.layout.resize();
+                    self.getIframeContents().find('#qoob-blocks').removeClass('preview');
+                    self.controller.layout.editModeButton.$el.off('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
+                }
+            });
+
         },
         setDeviceMode: function(mode) {
             var self = this;
@@ -99,7 +132,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.getIframe().stop().animate(size[mode], 500, function() {
                 var currentRoute = self.controller.current();
                 if (currentRoute.route == 'startEditBlock') {
-                    self.controller.scrollTo(currentRoute.params[0]);
+                    self.controller.layout.scrollTo(currentRoute.params[0]);
                 }
             });
         },
@@ -108,12 +141,10 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
          */
         resize: function() {
             var size = {
-                'width': (this.previewMode ? 0 : 264)
+                'width': (this.previewMode ? 0 : parseInt(jQuery('#qoob-sidebar').css('width'), 10))
             };
 
-            this.$el.stop().animate({
-                width: jQuery(window).width() - size.width
-            });
+            this.$el.css('width', jQuery(window).width() - size.width);
 
             //Iframe resize
             this.getIframe().height(jQuery(window).height());
@@ -129,16 +160,18 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 scroll = 0;
             } else if (position === 'bottom') {
                 scroll = iframe.document.body.scrollHeight;
-            } else {
+            } else if (this.getBlockView(blockId)) {
                 var el = this.getBlockView(blockId).$el;
                 var windowHeight = this.getIframe().height();
                 scroll = el.offset().top - (windowHeight - el.outerHeight(true)) / 2;
             }
 
-            //Scroll to new block
-            this.getWindowIframe().jQuery('html, body').animate({
-                scrollTop: scroll
-            }, 1000);
+            if (scroll) {
+                //Scroll to new block
+                this.getWindowIframe().jQuery('html, body').animate({
+                    scrollTop: scroll
+                }, 1000);
+            }
         },
         /**
          * Get BlockView by id

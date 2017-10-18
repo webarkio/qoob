@@ -33,7 +33,6 @@ Fields.select = QoobFieldView.extend(
         elem.addClass('active');
         this.$el.find('input').trigger("change");
     },
-
     /**
      * Render filed select
      * @returns {Object}

@@ -1,3 +1,4 @@
+/* global QoobFieldView */
 var Fields = Fields || {};
 Fields.checkbox_switch = QoobFieldView.extend(
 /** @lends Fields.checkbox.prototype */{

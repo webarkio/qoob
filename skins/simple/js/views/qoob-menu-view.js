@@ -1,4 +1,4 @@
-/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView, isMobile */
+/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView */
 /**
  * Create view for menu in qoob layout
  *
@@ -9,7 +9,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
     {
         id: "qoob-menu",
         menuViews: [],
-        settingsViewStorage: [],
         groupActiveClass: 'group-list__link-active',
         /**
          * View menu
@@ -20,16 +19,21 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         initialize: function(options) {
             this.controller = options.controller;
             this.storage = options.storage;
+            this.currentSide = null;
+            this.currentView = null;
         },
         addSettings: function(model) {
             var item = this.storage.getBlockConfig(model.get('lib'), model.get('block'));
             if (item) {
                 this.addView(new QoobMenuSettingsView({
+                    "id": 'edit' + '-' + model.id,
+                    "name": 'edit' + '-' + model.id,
                     "model": model,
-                    "config": item,
+                    "settings": item.settings,
+                    "defaults": item.defaults,
                     "storage": this.storage,
-                    controller: this.controller
-                }), 'left');
+                    "controller": this.controller
+                }), 'main');
             }
         },
         /**
@@ -41,25 +45,26 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var groups = this.storage.getGroups();
 
             this.addView(new QoobMenuGroupsView({
+                id: 'catalog-groups',
                 storage: this.storage,
                 groups: groups,
                 controller: this.controller
-            }));
+            }), 'main');
 
             for (var i = 0; i < groups.length; i++) {
                 this.addView(new QoobMenuBlocksPreviewView({
                     id: groups[i].id,
                     storage: this.storage,
                     controller: this.controller,
-                    group: groups[i]
+                    group: groups[i],
                 }), 'right');
             }
 
             this.addView(new QoobMenuSavePageTemplateView({
-                id: 'save-template',
+                name: 'save-template',
                 storage: this.storage,
                 controller: this.controller
-            }), 'left');
+            }), 'main');
 
             this.draggable();
 
@@ -73,6 +78,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             // set params for touch punch
             this.$el.find('.preview-block').data("blockPreventDefault", true);
+
+            var device = this.controller.layout.getDeviceState();
 
             this.$el.find('.preview-block').draggable({
                 appendTo: "body",
@@ -89,10 +96,14 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         self.controller.removeEmptyDraggableElement();
                         return false;
                     } else {
-                        if (isMobile.phone) {
+                        if (device === 'mobile' || device === 'tablet') {
                             self.controller.hideSwipeMenu();
                         }
                     }
+
+                    self.controller.navigate('', {
+                            trigger: true
+                    });
                 },
                 stop: function() {
                     self.controller.removeEmptyDraggableElement();
@@ -100,7 +111,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             this.$el.find('.preview-block').each(function() {
-                jQuery(this).on("mousedown", function() {
+                jQuery(this).on("mousedown", function(event) {
                     if (event.buttons === 0) {} else {
                         longTouch = true;
                     }
@@ -143,38 +154,82 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 });
             });
         },
-        setEditMode: function() {
-            this.$el.fadeIn(300);
-        },
         showGroup: function(group) {
-            this.hideSide('left');
             this.showSide('right', group);
         },
-        showIndex: function() {
-            this.hideSide('left');
+        showIndex: function(isBack) {
             this.hideSide('right');
+            var newSide = this.getView("catalog-groups");
+
+            if (this.currentSide && this.currentSide.side) {
+                this.changeSide(this.currentSide.side, newSide.side, isBack);
+            } else {
+                this.changeSide(null, newSide.side, isBack);
+            }
+            this.currentView = newSide;
+            this.currentSide = newSide.side;
         },
-        startEditBlock: function(id) {
+        startEditBlock: function(id, isBack) {
             this.hideSide('right');
-            this.showSide('left', id);
+            var newSide = this.getSettingsView(id);
+
+            if (this.currentSide && this.currentSide.side) {
+                this.changeSide(this.currentSide.side, newSide.side, isBack);
+            } else {
+                this.changeSide(null, newSide.side, isBack);
+            }
+            this.currentView = newSide;
+            this.currentSide = newSide.side;
+
+            // hook for field accordion
+            var accordion = newSide.$el.find('.accordion');
+            if (accordion.length > 0) {
+                accordion.accordion("option", "active", false);
+            }
+        },
+        showSavePageTemplate: function(isBack) {
+            this.hideSide('right');
+            var newSide = this.getView("save-template");
+
+            if (this.currentSide && this.currentSide.side) {
+                this.changeSide(this.currentSide, newSide, isBack);
+            } else {
+                this.changeSide(null, newSide.side, isBack);
+            }
+
+            this.currentView = newSide;
+            this.currentSide = newSide.side;
         },
         /**
-         * Add view to side qoob
+         * Add view to position qoob
          * @param {Object} BackboneView  View from render
          * @param {String} side location
          */
-        addView: function(view, side) {
+        addView: function(view, position) {
             this.menuViews.push(view);
-            if (side === 'left' || side === 'right') {
-                this.$el.find('.qoob-menu-' + side + '-side').append(view.render().el);
-            } else {
-                this.$el.find('.qoob-menu-center').append(view.render().el);
-            }
+            this.$el.find('.qoob-menu-' + position + '-side').append(view.render().el);
+        },
+        setInnerSettingsView: function(view) {
+            this.addView(view, 'main');
+            view.$el.trigger('shown');
+        },
+        showInnerSettingsView: function(id, isBack) {
+            var newView = this.getView(id);
+            this.changeSide(this.currentSide, newView.side, isBack);
+            this.currentView = newView;
+            this.currentSide = newView.side;
         },
         /**
-         * Get SettingsView by id
-         * @param {Number} id modelId
+         * Get SettingsView by name
+         * @param {String}  name view
          */
+        getView: function(name) {
+            for (var i = 0; i < this.menuViews.length; i++) {
+                if (this.menuViews[i].name == name) {
+                    return this.menuViews[i];
+                }
+            }
+        },
         getSettingsView: function(id) {
             for (var i = 0; i < this.menuViews.length; i++) {
                 if (this.menuViews[i].model && this.menuViews[i].model.id == id) {
@@ -182,8 +237,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }
             }
         },
-        showSide: function(side, id) {
-            var side = this.$el.find('.qoob-menu-' + side + '-side');
+        showSide: function(position, id) {
+            var side = this.$el.find('.qoob-menu-' + position + '-side');
 
             // Selected item menu
             this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
@@ -198,35 +253,80 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             side.find('[data-side-id]').removeClass('side-item-show');
             side.find('[data-side-id="' + id + '"]').addClass('side-item-show');
         },
-        hideSide: function(side) {
-            var side = this.$el.find('.qoob-menu-' + side + '-side');
-
-            if (side.find('[data-side-id]').hasClass('side-item-show')) {
-                this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
-            }
+        hideSide: function(position) {
+            var side = this.$el.find('.qoob-menu-' + position + '-side');
 
             if (side.hasClass('show-side')) {
                 side.removeClass('show-side');
             }
+
+            side.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                if (e.target == this) {
+                    if (!side.hasClass('show-side')) {
+                        if (side.find('[data-side-id]').hasClass('side-item-show')) {
+                            side.find('[data-side-id]').removeClass('side-item-show')
+                        }
+                    }
+
+                    jQuery(this).off(e);
+                }
+            });
+
+            this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
         },
-        onEditStart: function(blockId) {
-            this.rotate('settings-block-' + blockId);
-        },
-        onEditStop: function() {
-            this.rotate('catalog-groups');
+        changeSide: function(oldSide, newSide, direction) {
+            var self = this,
+                cloneSide;
+
+            if (oldSide == newSide)
+                return false;
+
+            if (direction) { // back
+                cloneSide = oldSide.$el.clone();
+
+                this.$el.find('.qoob-menu-backward-side').append(cloneSide.addClass('side-item-show'));
+
+                if (oldSide) {
+                    oldSide.$el.removeClass('side-item-show');
+                }
+
+                this.$el.addClass('show-backward');
+
+                newSide.$el.addClass('side-item-show');
+
+                this.$el.find('.qoob-menu-backward-side').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                    if (e.target == this) {
+                        self.$el.find('.qoob-menu-backward-side').html('');
+                        self.$el.removeClass('show-backward');
+
+                        jQuery(this).off(e);
+                    }
+                });
+            } else { // forward
+                if (newSide !== undefined) {
+                    cloneSide = newSide.$el.clone();
+
+                    this.$el.find('.qoob-menu-forward-side').append(cloneSide.addClass('side-item-show'));
+
+                    this.$el.addClass('show-forward');
+
+                    this.$el.find('.qoob-menu-forward-side').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                        if (e.target == this) {
+                            if (oldSide) {
+                                oldSide.$el.removeClass('side-item-show');
+                            }
+                            newSide.$el.addClass('side-item-show');
+                            self.$el.find('.qoob-menu-forward-side').html('');
+                            self.$el.removeClass('show-forward');
+
+                            jQuery(this).off(e);
+                        }
+                    });
+                }
+            }
         },
         onEditMode: function() {
             this.$el.fadeIn(300);
-        },
-        /**
-         * Delete view from settingsViewStorage
-         * @param {String} view name
-         */
-        delView: function(name) {
-            if (this.settingsViewStorage && this.settingsViewStorage[name]) {
-                this.settingsViewStorage[name].dispose();
-                delete this.settingsViewStorage[name];
-            }
         },
         deleteSettings: function(model) {
             this.controller.stopEditBlock();
@@ -246,12 +346,17 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             groups.hide();
             blocks.hide();
 
+            self.controller.navigate('', {
+                    trigger: true
+            });
+
             if (libName !== 'all') {
-                groups = groups.filter(function(index) {
-                    return self.$(groups[index]).hasClass(libName);
-                });
                 blocks = blocks.filter(function(index) {
-                    return self.$(blocks[index]).hasClass(libName);
+                    return self.$(blocks[index]).data('lib') == libName;
+                });
+
+                groups = groups.filter(function(index) {
+                    return self.$(groups[index]).data('lib').indexOf(libName) != -1;                    
                 });
             }
 
@@ -276,18 +381,20 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 element.find('.input-text').removeClass('error');
             }
         },
-        /**
-         * Show sidebar menu
-         */
-        showSwipeMenu: function() {
-            jQuery('#qoob').removeClass('close-panel');
-        },
-        /**
-         * Hide sidebar menu
-         */
         hideSwipeMenu: function() {
-            if (!jQuery('#qoob').hasClass('close-panel')) {
-                jQuery('#qoob').addClass('close-panel');
+            if (this.currentView.name.indexOf('edit') != -1) {
+                this.controller.stopEditBlock();
+            }
+        },
+        setPreviewMode: function() {
+            var device = this.controller.layout.getDeviceState();
+            if (device == 'desktop' && this.currentView.name == 'catalog-groups') {
+                this.hideSide('right');
+
+                this.controller.navigate('', {
+                        trigger: true,
+                        replace: true
+                });
             }
         }
     });

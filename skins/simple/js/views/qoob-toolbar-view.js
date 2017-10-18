@@ -59,6 +59,7 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         var data = {
             "libs": this.storage.librariesData,
             "curLib": this.storage.currentLib,
+            "device": this.controller.layout.getDeviceState(),
             "allThemes": this.storage.__('all_libs', 'All Libs'),
             "save": this.storage.__('save', 'Save'),
             "close": this.storage.__('close', 'close'),
@@ -97,17 +98,14 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
      * Show loader autosave
      */
     showSaveLoader: function() {
-        this.$el.find('.save span.text').hide();
-        this.$el.find('.save .clock').css('display', 'block');
+        this.$el.find('.save .save-clock').css('display', 'block');
     },
     /**
      * Hide loader autosave
      */
     hideSaveLoader: function() {
-        this.$el.find('.save .clock').css('display', '');
-        this.$el.find('.save span.text').show();
+        this.$el.find('.save .save-clock').css('display', '');
     },
-
     //EVENTS
     clickPreviewMode: function() {
         this.controller.setPreviewMode();

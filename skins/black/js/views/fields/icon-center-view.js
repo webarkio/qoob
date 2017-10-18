@@ -125,7 +125,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if (_.isString(filteredWords)) {
                 filteredWords = filteredWords.split(',');
             } else if (_.isArray(filteredWords)) {
-                filteredWords = filteredWords.join('').split(',');
+                filteredWords = filteredWords.join('').split(' ');
             }
 
             if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {

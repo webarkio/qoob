@@ -1,4 +1,4 @@
-/*global QoobFieldView, VideoCenterView*/
+/*global QoobFieldView*/
 var Fields = Fields || {};
 
 /**
@@ -29,7 +29,6 @@ Fields.video = QoobFieldView.extend(
         initialize: function(options) {
             QoobFieldView.prototype.initialize.call(this, options);
             this.options = options;
-            this.parentId = options.parentId;
             this.tags = options.settings.tags || null;
             this.tpl = _.template(this.storage.getSkinTemplate('field-video-preview'));
         },
@@ -56,6 +55,11 @@ Fields.video = QoobFieldView.extend(
          * @param {Object} evt
          */
         changeVideo: function(src) {
+            this.$el.find('.field-video-container').removeClass('empty');
+            if (!src) {
+                this.$el.find('.field-video-container').addClass('empty');
+            }
+
             if (src !== '') {
                 this.$el.find('.field-video__preview-image').attr('src', src.preview);
                 this.model.set(this.$el.find('.field-video__url-hidden').attr('name'), src);
@@ -74,7 +78,7 @@ Fields.video = QoobFieldView.extend(
          */
         clickOtherVideo: function(evt) {
             var video = this.$(evt.currentTarget).data('src-video'),
-            preview = this.$(evt.currentTarget).data('src-preview');
+                preview = this.$(evt.currentTarget).data('src-preview');
 
             var src = {
                 'url': video,
@@ -96,8 +100,27 @@ Fields.video = QoobFieldView.extend(
          * Drop image on zone
          */
         dropVideo: function(evt) {
+            var self = this;
             var droppedFiles = evt.originalEvent.dataTransfer.files;
-            this.$el.find('input[type="file"]').prop('files', droppedFiles);
+
+            // 30 MB limit
+            if (droppedFiles[0].size > 31457280) {
+                this.$el.find('.field-upload-error').addClass('field-upload-error-active');
+            } else {
+                if (droppedFiles[0].name.match(/.(mp4|ogv|webm)$/i)) {
+                    this.storage.driver.uploadVideo(droppedFiles, function(error, url) {
+                        if ('' !== url) {
+                            self.changeVideo({'url': url, 'preview': ''});
+                            if (!self.$el.find('.field-video-container').hasClass('empty')) {
+                                self.$el.find('.field-video-container').addClass('empty');
+                            }
+                        }
+                    });
+                } else {
+                    console.error('file format is not appropriate');
+                }
+            }
+
             this.counterDropZone = 0;
         },
         /**
@@ -130,26 +153,7 @@ Fields.video = QoobFieldView.extend(
          * @param {Object} evt
          */
         clickMediaCenter: function() {
-            window.selectFieldVideo = function(src) {
-                this.$el.find('.field-video-container').removeClass('empty');
-                if (!src) {
-                    this.$el.find('.field-video-container').addClass('empty');
-                }
-                this.changeVideo(src);
-            }.bind(this);
-
-            var videoCenter = new VideoCenterView({
-                model: this.model,
-                controller: this.controller,
-                parentId: this.parentId,
-                storage: this.storage,
-                src: this.getValue(),
-                assets: this.storage.getAssets(),
-                tags: this.tags ? this.tags.join(', ') : ''
-            });
-
-            this.controller.setInnerSettingsView(videoCenter);
-
+            this.controller.navigate(this.controller.currentUrl() + "/" + this.settings.name, true);
             return false;
         },
         /**

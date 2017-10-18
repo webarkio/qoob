@@ -4,15 +4,13 @@
  * 
  * @type @exp;Backbone@pro;View@call;extend
  */
-var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unused-vars
+var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unused-vars
     /** @lends QoobMenuSettingsView.prototype */
     {
         tagName: "div",
         className: "settings",
         config: null,
         events: {
-            'click .back': 'clickBack',
-            /* deprecater */
             'click .delete-block': 'clickDelete',
             'click .movedown': 'clickMoveDown',
             'click .moveup': 'clickMoveUp'
@@ -30,96 +28,19 @@ var QoobMenuSettingsView = Backbone.View.extend( // eslint-disable-line no-unuse
             };
         },
         /**
-         * View settings
-         * @class QoobMenuSettingsView
-         * @augments Backbone.View
-         * @constructs
-         */
-        initialize: function(options) {
-            this.model = options.model;
-            this.config = options.config;
-            this.storage = options.storage;
-            this.controller = options.controller;
-        },
-        /**
          * Render settings
          * @returns {Object}
          */
         render: function() {
-            this.settingsBlock = new QoobFieldsView({
-                model: this.model,
-                storage: this.storage,
-                settings: this.config.settings,
-                defaults: this.config.defaults,
-                controller: this.controller
-            });
+            var html = QoobFieldsView.prototype.getHtml.apply(this, arguments);
 
-            this.$el.html(_.template(this.storage.getSkinTemplate('menu-settings-preview'))({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })).find('.settings-blocks').prepend(this.settingsBlock.render().el);
-
-            this.afterRender();
+            this.$el.html(
+                _.template(
+                    this.storage.getSkinTemplate('menu-settings-preview')
+                )({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })
+            ).find('.settings-blocks').html(html);
 
             return this;
-        },
-        afterRender: function() {
-            var self = this,
-                counter = 0,
-                fields = this.settingsBlock.fields,
-                allow = false;
-
-            // allow fields
-            var allowedArr = ['image', 'video'];
-
-            for (var i = 0; i < fields.length; i++) {
-                if (~allowedArr.indexOf(fields[i].settings.type)) {
-                    allow = true;
-                }
-            }
-
-            var getCurrentRoute = function(evt) {
-                var currentRoute = self.controller.current();
-                    if (currentRoute.route !== 'startEditBlock') {
-                        evt.stopImmediatePropagation();
-                    }
-            }
-
-            if (allow) {
-                self.controller.layout.sidebar.$el.on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
-                        evt.preventDefault();
-                        evt.stopPropagation();
-
-                        getCurrentRoute(evt);
-                    })
-                    .on('dragenter', function(evt) {
-                        getCurrentRoute(evt);
-
-                        counter++;
-                        if (counter === 1) {
-                            for (var i = 0; i < fields.length; i++) {
-                                fields[i].$el.trigger('global_drag_start');
-                            }
-                            self.controller.layout.sidebar.$el.addClass('overlay');
-                        }
-                    })
-                    .on('dragleave', function(evt) {
-                        getCurrentRoute(evt);
-
-                        counter--;
-                        if (counter === 0) {
-                            self.controller.layout.sidebar.$el.removeClass('overlay');
-                        }
-                    })
-                    .on('drop', function(evt) {
-                        getCurrentRoute(evt);
-                        
-                        self.controller.layout.sidebar.$el.removeClass('overlay');
-                        counter = 0;
-                    });
-            }
-        },
-        /* deprecater */
-        clickBack: function(e) {
-            e.preventDefault();
-            this.controller.stopEditBlock();
         },
         /**
          * Click button remove block

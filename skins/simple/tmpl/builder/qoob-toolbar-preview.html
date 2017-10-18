@@ -5,7 +5,11 @@
             <% if(libs) { %>
                 <% for (var i = 0; i < libs.length; i++) { %>
                     <option value="<%= libs[i].name %>" data-title="<% if (libs[i].name.length > 14) { %><%= libs[i].name.substring(0, 14) %>...<% } else { %><%= libs[i].name %><% } %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
-                        <% if (libs[i].name.length > 26) { %><%= libs[i].name.substring(0, 26) %>...<% } else { %><%= libs[i].name %><% } %>
+                        <% if (libs[i].name.length > 26) { %>
+                            <%= libs[i].name.substring(0, 26) %>...
+                        <% } else { %>
+                            <%= libs[i].name %>
+                        <% } %>
                     </option>
                 <% } %>
             <% } %>
@@ -40,13 +44,22 @@
 
 <div class="control-buttons clearfix">
     <button class="button backward"></button>
-    <button class="button view-preview"></button>
-    <button class="button save" title="<%= save %>"></button>
+    <button class="button view-preview" <% if (device == "mobile") { %> disabled<% } %>></button>
+    <button class="button save" title="<%= save %>">
+        <span class="save-clock">
+            <span class="minutes-container"><span class="minutes"></span></span>
+            <span class="seconds-container"><span class="seconds"></span></span>
+        </span>
+    </button>
     <div class="preview-modes">
-        <select class="qoob-select-item">
-            <option value="pc" data-icon="fa fa-desktop"><%= desktop %></option>
-            <option value="tablet" data-icon="fa fa-tablet"><%= tablet %></option>
-            <option value="phone" data-icon="fa fa-mobile"><%= phone %></option>
-        </select>
+        <% if (device == "mobile") { %>
+            <div class="qoob-selected-value" data-value="pc" tabindex="0"><i class="fa fa-desktop"></i></div>
+        <% } else { %>
+            <select class="qoob-select-item">
+                <option value="pc" data-icon="fa fa-desktop"><%= desktop %></option>
+                <option value="tablet" data-icon="fa fa-tablet"><%= tablet %></option>
+                <option value="phone" data-icon="fa fa-mobile"><%= phone %></option>
+            </select>
+        <% } %>
     </div>
 </div>
