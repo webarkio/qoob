@@ -40,76 +40,7 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
                 )({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })
             ).find('.settings-blocks').html(html);
 
-            this.afterRender();
-
             return this;
-        },
-        afterRender: function() {
-            var self = this,
-                counter = 0,
-                fields = this.fields,
-                allow = false;
-
-            var allowedFields = ['image', 'video'];
-
-            for (var i = 0; i < fields.length; i++) {
-                if (allowedFields.indexOf(fields[i].settings.type) > -1) {
-                    allow = true;
-                    break;
-                } else if (fields[i].settings.type == 'accordion') {
-                    var searchField = _.some(fields[i].settings.settings, function(item) {
-                        if (allowedFields.indexOf(item.type) > -1) {
-                            return item;
-                        }
-                    });
-
-                    if (searchField) {
-                        allow = true;
-                        break;
-                    }
-                }
-            }
-
-            var getCurrentRoute = function(evt) {
-                var currentRoute = self.controller.current();
-                if (['startEditBlock', 'default'].indexOf(currentRoute.route) == -1) {
-                    evt.stopImmediatePropagation();
-                }
-            }
-
-            if (allow) {
-                self.controller.layout.sidebar.$el.on('drag dragstart dragend dragover dragenter dragleave drop', function(evt) {
-                        getCurrentRoute(evt);
-                    })
-                    .on('dragenter', function(evt) {
-                        getCurrentRoute(evt);
-
-                        counter++;
-                        if (counter === 1) {
-                            for (var i = 0; i < fields.length; i++) {
-                                fields[i].$el.trigger('global_drag_start');
-                            }
-                            self.controller.layout.sidebar.$el.addClass('overlay');
-                        }
-                    })
-                    .on('dragleave', function(evt) {
-                        getCurrentRoute(evt);
-
-                        counter--;
-                        if (counter === 0) {
-                            self.controller.layout.sidebar.$el.removeClass('overlay');
-                        }
-                    })
-                    .on('dragover', function(evt) {
-                        evt.preventDefault();
-                    })
-                    .on('drop', function(evt) {
-                        evt.preventDefault();
-                        getCurrentRoute(evt);
-                        self.controller.layout.sidebar.$el.removeClass('overlay');
-                        counter = 0;
-                    });
-            }
         },
         /**
          * Click button remove block

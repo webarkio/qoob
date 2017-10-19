@@ -21,10 +21,14 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-
 
             this.controller.addNewBlock(lib, name);
 
-            if (this.controller.layout.getDeviceState() !== 'mobile') {
-                this.controller.navigate('', {
-                        trigger: true
-                });
+            this.controller.navigate('', {
+                    trigger: true
+            });
+
+            var device = this.controller.layout.getDeviceState();
+
+            if (device === 'mobile' || device === 'tablet') {
+                this.controller.layout.hideSwipeMenu();
             }
         },
         /**

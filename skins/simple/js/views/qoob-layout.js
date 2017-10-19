@@ -62,22 +62,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 ]
             });
 
-            var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-            var eventer = window[eventMethod];
-            var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-
-            eventer(messageEvent, function(e) {
-                var key = e.message ? "message" : "data";
-                var data = e[key];
-
-                if (data === 'SwipeRightPageMessage') {
-                    self.showSwipeMenu();
-                } else if (data === 'SwipeLeftPageMessage') {
-                    self.hideSwipeMenu();
-                }
-            }, false);
-
-
             hammer.on('swipeleft swiperight', function(e) {
                 if (e.type === 'swipeleft') {
                     self.hideSwipeMenu();
@@ -88,6 +72,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             var device = this.getDeviceState();
 
+            if (device === 'mobile') {
+                self.showSwipeMenu();
+            }
+
             var swipeResize = function() {
                 var container = self.$el;
                 container.removeClass('mobile tablet desktop');
@@ -95,29 +83,17 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 var device = self.getDeviceState();
 
                 if (device === 'mobile') {
-                    console.log('mobile');
                     container.addClass('mobile');
                 } else if (device === 'tablet') {
-                    console.log('tablet');
                     container.addClass('tablet');
                 } else {
-                    console.log('desktop');
                     container.addClass('desktop');
-                    // hammer.off('swipeleft').off('swiperight');
                 }
-            }
-
-            if (device === 'mobile') {
-                self.showSwipeMenu();
             }
 
             Hammer.on(window, "resize", function() {
                 swipeResize();
             });
-
-            // Hammer.on(window, "load resize scroll", function(ev) {
-            //     console.log(ev.type);
-            // });
 
             swipeResize();
         },
@@ -125,6 +101,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if (page == "index") {
                 this.menu.showIndex(isBack);
                 this.stopEditBlock();
+            } else if (page == "save-template") {
+                this.stopEditBlock();
+                this.menu.hideNotice();
+                this.menu.showSavePageTemplate();
             } else if (page == "group") {
                 this.menu.showIndex(isBack);
                 this.stopEditBlock();
@@ -133,7 +113,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 this.startEditBlock(param, isBack);
                 this.scrollTo(param);
             } else if (page == "inner") {
-                var model,
+                var model, accordionView, accordionItem, accordion,
                     // parentSide = this.menu.currentSide,
                     parentView = this.menu.currentView,
                     currentId = parentView.name + "_" + param,
@@ -143,7 +123,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 var fieldIndex = param.split("-")[1]; //null
 
                 var settings = _.findWhere(parentView.settings, { name: fieldName });
-                var defaults = parentView.defaults[fieldName];
+                // var defaults = parentView.defaults[fieldName];
 
                 if (fieldIndex) {
                     model = parentView.model.get(fieldName).get(fieldIndex);
@@ -153,31 +133,47 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
                 if (settings.type == "accordion_flip") {
                     if (!innerView) {
+                        accordionView = _.find(parentView.fields, function(view) {
+                            if (view.settings.name == fieldName) {
+                                return view;
+                            }
+                        });
+
+                        accordionItem = accordionView.getAccordionMenuViews(fieldIndex);
+
                         innerView = new AccordionFlipItemSettingsView({
                             name: currentId,
                             storage: this.storage,
                             controller: this.controller,
                             model: model,
                             settings: settings.settings,
-                            defaults: defaults,
+                            defaults: accordionItem.defaults,
                             parent: parentView,
                             side: parentView.side
                         });
                         innerView.side = innerView;
+
+                        this.menu.setInnerSettingsView(innerView);
                     }
 
                     this.menu.currentView = innerView;
 
-                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
+
+                    // hook for field accordion
+                    accordion = innerView.$el.find('.accordion');
+                    if (accordion.length > 0) {
+                        accordion.accordion("option", "active", false);
+                    }
                 } else if (settings.type == "accordion") {
-                    var accordionView = _.find(parentView.fields, function(view) {
+                    accordionView = _.find(parentView.fields, function(view) {
                         if (view.settings.name == fieldName) {
                             return view;
                         }
                     });
 
-                    var accordionItem = accordionView.getAccordionMenuViews(fieldIndex);
+                    accordionItem = accordionView.getAccordionMenuViews(fieldIndex);
+
                     if (accordionItem != undefined) {
                         this.menu.currentView = accordionItem.settingsView;
                     } else {
@@ -187,11 +183,11 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         });
                     }
 
-                    var accordion = accordionView.$el.find('.accordion');
+                    accordion = accordionView.$el.find('.accordion');
 
                     var index = null;
-                    accordion.find('.field-accordion-item').each(function(i, div) {
-                        if (jQuery(div).attr('data-model-id') == fieldIndex) {
+                    accordion.find('.field-accordion-item').each(function(i, el) {
+                        if (jQuery(el).data('model-id') == fieldIndex) {
                             index = i;
                         }
                     });
@@ -214,12 +210,14 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             assets: this.storage.getAssets(),
                             tags: imageView.tags ? imageView.tags.join(', ') : '',
                             iframeUrl: imageView.getIframeUrl(),
-                            cb: imageView.changeImage.bind(imageView)
+                            cb: imageView.changeImage.bind(imageView),
+                            parent: parentView
                         });
                         innerView.side = innerView;
-                    }
 
-                    this.menu.setInnerSettingsView(innerView);
+                        this.menu.setInnerSettingsView(innerView);
+                    }
+                    
                     this.menu.showInnerSettingsView(currentId, isBack);
                 } else if (settings.type == "icon") {
                     if (!innerView) {
@@ -238,12 +236,15 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             model: model,
                             icon: iconObject ? { classes: iconObject.classes, tags: iconObject.tags } : '',
                             icons: iconView.icons,
-                            cb: iconView.changeIcon.bind(iconView)
+                            cb: iconView.changeIcon.bind(iconView),
+                            parent: parentView
                         });
+
                         innerView.side = innerView;
+
+                        this.menu.setInnerSettingsView(innerView);
                     }
 
-                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
                 } else if (settings.type == "video") {
                     if (!innerView) {
@@ -261,13 +262,46 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             src: videoView.getValue(),
                             assets: videoView.storage.getAssets(),
                             tags: videoView.tags ? videoView.tags.join(', ') : '',
-                            cb: videoView.changeVideo.bind(videoView)
+                            cb: videoView.changeVideo.bind(videoView),
+                            parent: parentView
                         });
                         innerView.side = innerView;
+
+                        this.menu.setInnerSettingsView(innerView);
                     }
 
-                    this.menu.setInnerSettingsView(innerView);
                     this.menu.showInnerSettingsView(currentId, isBack);
+                }
+            }
+        },
+        backward: function(url) {
+            if (url.length == 0) {
+               window.location = window.location.origin;
+            } else if (url.length > 0)  {
+                var hash = url.split("/");
+                if (hash.length > 1) {
+                    hash.pop();               
+                    var currentViewParent = this.menu.currentView.parent;
+                    if (currentViewParent.$el.hasClass('field-accordion-settings')) {
+                        hash.pop();
+                    }
+
+                    this.controller.navigate(hash.join('/'), {
+                        trigger: true,
+                        replace: true
+                    });
+                }else {
+                    var part = ['edit', 'group', 'save-template'];
+
+                    for (var i = 0; i < part.length; i++) {
+                        if (hash[0].indexOf(part[i]) !== -1) {
+                            this.controller.navigate('', {
+                                trigger: true,
+                                replace: true
+                            });
+                            break;
+                        }
+                    }
                 }
             }
         },
@@ -289,6 +323,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         setPreviewMode: function() {
             this.editModeButton.setPreviewMode();
+            this.menu.setPreviewMode();
             this.sidebar.setPreviewMode();
             this.viewPort.setPreviewMode();
             this.resize();
@@ -318,11 +353,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         getBlockView: function(modelId) {
             return this.viewPort.getBlockView(modelId);
-        },
-        showSavePageTemplate: function() {
-            this.menu.showSide('left', 'save-template');
-            this.menu.hideNotice();
-            this.stopEditBlock();
         },
         addBlock: function(model, afterId) {
             this.menu.addSettings(model);
@@ -354,6 +384,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         hideSwipeMenu: function() {
             this.sidebar.hideSwipeMenu();
+            this.menu.hideSwipeMenu();
         },
         triggerBlocksLoader: function() {
             this.viewPort.trigger('blocks_loaded');

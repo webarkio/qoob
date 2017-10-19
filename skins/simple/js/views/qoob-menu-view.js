@@ -61,8 +61,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
 
             this.addView(new QoobMenuSavePageTemplateView({
-                url: 'save-template',
-                id: 'save-template',
+                name: 'save-template',
                 storage: this.storage,
                 controller: this.controller
             }), 'main');
@@ -97,16 +96,14 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         self.controller.removeEmptyDraggableElement();
                         return false;
                     } else {
-                        if (device === 'mobile') {
+                        if (device === 'mobile' || device === 'tablet') {
                             self.controller.hideSwipeMenu();
                         }
                     }
 
-                    if (device !== 'mobile') {
-                        self.controller.navigate('', {
-                                trigger: true
-                        });
-                    }
+                    self.controller.navigate('', {
+                            trigger: true
+                    });
                 },
                 stop: function() {
                     self.controller.removeEmptyDraggableElement();
@@ -176,17 +173,30 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.hideSide('right');
             var newSide = this.getSettingsView(id);
 
-            // hook for field accordion
-            var accordion = newSide.$el.find('.accordion');
-            if (accordion.length > 0) {
-                accordion.accordion("option", "active", false);
-            }
-
             if (this.currentSide && this.currentSide.side) {
                 this.changeSide(this.currentSide.side, newSide.side, isBack);
             } else {
                 this.changeSide(null, newSide.side, isBack);
             }
+            this.currentView = newSide;
+            this.currentSide = newSide.side;
+
+            // hook for field accordion
+            var accordion = newSide.$el.find('.accordion');
+            if (accordion.length > 0) {
+                accordion.accordion("option", "active", false);
+            }
+        },
+        showSavePageTemplate: function(isBack) {
+            this.hideSide('right');
+            var newSide = this.getView("save-template");
+
+            if (this.currentSide && this.currentSide.side) {
+                this.changeSide(this.currentSide, newSide, isBack);
+            } else {
+                this.changeSide(null, newSide.side, isBack);
+            }
+
             this.currentView = newSide;
             this.currentSide = newSide.side;
         },
@@ -206,8 +216,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         showInnerSettingsView: function(id, isBack) {
             var newView = this.getView(id);
             this.changeSide(this.currentSide, newView.side, isBack);
+            this.currentView = newView;
             this.currentSide = newView.side;
-            this.currentview = newView;
         },
         /**
          * Get SettingsView by name
@@ -246,15 +256,24 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         hideSide: function(position) {
             var side = this.$el.find('.qoob-menu-' + position + '-side');
 
-            if (side.find('[data-side-id]').hasClass('side-item-show')) {
-                this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
-            }
-
             if (side.hasClass('show-side')) {
                 side.removeClass('show-side');
             }
-        },
 
+            side.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                if (e.target == this) {
+                    if (!side.hasClass('show-side')) {
+                        if (side.find('[data-side-id]').hasClass('side-item-show')) {
+                            side.find('[data-side-id]').removeClass('side-item-show')
+                        }
+                    }
+
+                    jQuery(this).off(e);
+                }
+            });
+
+            this.$el.find('[data-group-id]').removeClass(this.groupActiveClass);
+        },
         changeSide: function(oldSide, newSide, direction) {
             var self = this,
                 cloneSide;
@@ -283,7 +302,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         jQuery(this).off(e);
                     }
                 });
-
             } else { // forward
                 if (newSide !== undefined) {
                     cloneSide = newSide.$el.clone();
@@ -328,12 +346,17 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             groups.hide();
             blocks.hide();
 
+            self.controller.navigate('', {
+                    trigger: true
+            });
+
             if (libName !== 'all') {
-                groups = groups.filter(function(index) {
-                    return self.$(groups[index]).hasClass(libName);
-                });
                 blocks = blocks.filter(function(index) {
-                    return self.$(blocks[index]).hasClass(libName);
+                    return self.$(blocks[index]).data('lib') == libName;
+                });
+
+                groups = groups.filter(function(index) {
+                    return self.$(groups[index]).data('lib').indexOf(libName) != -1;                    
                 });
             }
 
@@ -356,6 +379,22 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
             if (element.find('.input-text').hasClass('error')) {
                 element.find('.input-text').removeClass('error');
+            }
+        },
+        hideSwipeMenu: function() {
+            if (this.currentView.name.indexOf('edit') != -1) {
+                this.controller.stopEditBlock();
+            }
+        },
+        setPreviewMode: function() {
+            var device = this.controller.layout.getDeviceState();
+            if (device == 'desktop' && this.currentView.name == 'catalog-groups') {
+                this.hideSide('right');
+
+                this.controller.navigate('', {
+                        trigger: true,
+                        replace: true
+                });
             }
         }
     });

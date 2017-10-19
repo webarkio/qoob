@@ -106,7 +106,6 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     hideSaveLoader: function() {
         this.$el.find('.save .save-clock').css('display', '');
     },
-
     //EVENTS
     clickPreviewMode: function() {
         this.controller.setPreviewMode();

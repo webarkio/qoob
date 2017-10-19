@@ -1,4 +1,4 @@
-/*global QoobBlockWrapperView, QoobPageTemplatesView*/
+/*global QoobBlockWrapperView, QoobPageTemplatesView, Hammer*/
 /**
  * Create view for viewport in qoob layout
  * 
@@ -38,11 +38,36 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
             return this;
         },
-
         iframeLoaded: function() {
             this.trigger('iframe_loaded');
             this.triggerIframe();
             this.defaultDroppable();
+            this.initSwipe();
+        },
+        initSwipe: function() {
+            var self = this;
+            // Init swipe
+            var hammer = new Hammer.Manager(this.getWindowIframe().document.documentElement, {
+                touchAction: 'auto',
+                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
+                recognizers: [
+                    [Hammer.Swipe, {
+                        direction: Hammer.DIRECTION_HORIZONTAL
+                    }]
+                ]
+            });
+
+            hammer.on('swipeleft swiperight', function(e) {
+                var classes = self.controller.layout.$el[0].className;
+
+                if (classes.indexOf('tablet') != -1 || classes.indexOf('mobile') != -1) {
+                    if (e.type === 'swipeleft') {
+                        self.controller.layout.hideSwipeMenu();
+                    } else if (e.type === 'swiperight') {
+                        self.controller.layout.showSwipeMenu();
+                    }
+                }
+            });
         },
         /**
          * Create default droppable zone
@@ -107,7 +132,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.getIframe().stop().animate(size[mode], 500, function() {
                 var currentRoute = self.controller.current();
                 if (currentRoute.route == 'startEditBlock') {
-                    self.controller.scrollTo(currentRoute.params[0]);
+                    self.controller.layout.scrollTo(currentRoute.params[0]);
                 }
             });
         },
@@ -119,9 +144,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 'width': (this.previewMode ? 0 : parseInt(jQuery('#qoob-sidebar').css('width'), 10))
             };
 
-            this.$el.stop().animate({
-                width: jQuery(window).width() - size.width
-            }, 300, 'linear');
+            this.$el.css('width', jQuery(window).width() - size.width);
 
             //Iframe resize
             this.getIframe().height(jQuery(window).height());

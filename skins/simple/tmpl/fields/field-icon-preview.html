@@ -1,8 +1,8 @@
 <label class="field-label"><%= label %></label>
 
-<div class="field-icon-container<% if (!icon.classes && icon === 'empty') { %><%= icon %><% } %>">
+<div class="field-icon-container<% if (!icon.classes) { %> empty<% } %>">
     <div class="field-icon__preview">
-        <div class="field-icon__preview-icon">
+        <div class="field-icon__preview-icon show-media-center">
             <span data-icon-tags="<%= icon.tags %>" class="<%= icon.classes %>"></span>
             <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
                 <i class="field-icon__remove-icon fa fa-times"></i>
