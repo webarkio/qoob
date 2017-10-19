@@ -1610,7 +1610,7 @@ a {
     background-color: rgb(0, 206, 99);
     border-radius: 3px;
     color: #fff;
-    font-family: "robotoregular", sans-serif;
+    font-family: "qrobotoregular", sans-serif;
     letter-spacing: 0.025em;
     font-size: 14px;
     padding: 18px 23px 20px 23px;
@@ -1624,9 +1624,10 @@ a {
     border-radius: 3px;
     background-color: rgb(237, 49, 42);
     color: #fff;
-    font-family: "robotoregular", sans-serif;
+    font-family: "qrobotoregular", sans-serif;
     letter-spacing: 0.025em;
     font-size: 14px;
+    margin-top: 26px;
     padding: 18px 23px 20px 23px;
 }
 
@@ -1991,7 +1992,7 @@ a {
 
 .radio__title {
     font-size: 12px;
-    font-family: "robotolight";
+    font-family: "qrobotolight";
     color: rgb(0, 0, 0);
     display: block;
     text-align: left;
@@ -2067,7 +2068,7 @@ a {
 
 .field-color-picker__title {
     font-size: 14px;
-    font-family: "robotolight";
+    font-family: "qrobotolight";
     color: rgb(0, 0, 0);
     display: block;
     text-align: left;
