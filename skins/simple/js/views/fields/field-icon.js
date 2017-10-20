@@ -46,7 +46,7 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          * @param {Object} evt
          */
         clickRemoveIcon: function(evt) {
-            evt.preventDefault();
+            evt.stopImmediatePropagation();
             this.changeIcon('');
         },
         clickResetIconToDefault: function(evt) {
