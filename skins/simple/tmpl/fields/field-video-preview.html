@@ -1,12 +1,24 @@
 <label class="field-label"><%= label %></label>
 
-<div class="field-video-container<% if ((src === '' || src !== '' && !src.hasOwnProperty('url')) || (src.hasOwnProperty('url') && src.url === '') || (src.hasOwnProperty('preview') && src.preview === '') ) { %> empty<% } %>">
+<div class="field-video-container
+
+
+<% if ((src === '' || src !== '' && !src.hasOwnProperty('url')) || (src.hasOwnProperty('url') && src.url === '')) { %> empty<% } else if (src.hasOwnProperty('preview') && src.preview === '') { %> empty-preview<% } %>">
     <div class="field-video__preview">
         <img class="field-video__preview-image show-media-center" src="<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= src.preview %>" />
         <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
             <i class="field-video__remove-video fa fa-times"></i>
         <% } %>
     </div>
+
+    <div class="field-video__novideo-preview show-media-center">
+        <i class="field-video__novideo-preview-icon fa fa-play-circle"></i>
+    </div>
+
+    <div class="field-video__novideo show-media-center">
+        <i class="field-video__novideo-icon fa fa-plus"></i>
+    </div>
+
     <div class="field-drop-zone"><span class="field-drop-zone-text"><%= drop_here %></span></div>
     <div class="field-upload-error">
         <div class="field-upload-error__text">

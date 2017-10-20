@@ -111,8 +111,11 @@ Fields.video = QoobFieldView.extend(
                     this.storage.driver.uploadVideo(droppedFiles, function(error, url) {
                         if ('' !== url) {
                             self.changeVideo({'url': url, 'preview': ''});
-                            if (!self.$el.find('.field-video-container').hasClass('empty')) {
-                                self.$el.find('.field-video-container').addClass('empty');
+                            if (self.$el.find('.field-video-container').hasClass('empty')) {
+                                self.$el.find('.field-video-container').removeClass('empty');
+                            }
+                            if (!self.$el.find('.field-video-container').hasClass('empty-preview')) {
+                                self.$el.find('.field-video-container').addClass('empty-preview');
                             }
                         }
                     });
