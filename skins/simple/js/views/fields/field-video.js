@@ -60,6 +60,12 @@ Fields.video = QoobFieldView.extend(
                 this.$el.find('.field-video-container').addClass('empty');
             }
 
+            this.$el.find('.field-video-container').removeClass('empty-preview');
+            if (!src) {
+                this.$el.find('.field-video-container').addClass('empty-preview');
+            }
+
+
             if (src !== '') {
                 this.$el.find('.field-video__preview-image').attr('src', src.preview);
                 this.model.set(this.$el.find('.field-video__url-hidden').attr('name'), src);
