@@ -79,7 +79,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             // set params for touch punch
             this.$el.find('.preview-block').data("blockPreventDefault", true);
 
-            var device = this.controller.layout.getDeviceState();
+            var deviceLocal = this.controller.layout.getDeviceState();
 
             this.$el.find('.preview-block').draggable({
                 appendTo: "body",
@@ -96,14 +96,16 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         self.controller.removeEmptyDraggableElement();
                         return false;
                     } else {
-                        if (device === 'mobile' || device === 'tablet') {
+                        if (deviceLocal === 'mobile' || deviceLocal === 'tablet') {
                             self.controller.hideSwipeMenu();
                         }
                     }
-
-                    self.controller.navigate('', {
+                    
+                    if (!device.ios()) {
+                        self.controller.navigate('', {
                             trigger: true
-                    });
+                        });
+                    }
                 },
                 stop: function() {
                     self.controller.removeEmptyDraggableElement();
@@ -112,8 +114,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             this.$el.find('.preview-block').each(function() {
                 jQuery(this).on("mousedown", function(event) {
-                    console.log(event.buttons);
-                    if (event.buttons === 0) {} else {
+                    if (event.buttons === 0 || device.ios()) { } else {
                         longTouch = true;
                     }
                 });
@@ -138,7 +139,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         simulateMousemove.pageX = (touch.pageX + 10);
                         simulateMousemove.pageY = touch.pageY;
                         $this.trigger(simulateMousemove);
-
                     }, 500);
 
                     $this.one("touchend", function() {
@@ -149,7 +149,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         clearTimeout(timer);
                     });
 
-                    $this.one("touchmove", function() {
+                    $this.one("touchmove", function(event) {
+                        event.preventDefault();
                         clearTimeout(timer);
                     });
                 });
@@ -389,8 +390,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
         },
         setPreviewMode: function() {
-            var device = this.controller.layout.getDeviceState();
-            if (device == 'desktop' && this.currentView.name == 'catalog-groups') {
+            var deviceLocal = this.controller.layout.getDeviceState();
+            if (deviceLocal == 'desktop' && this.currentView.name == 'catalog-groups') {
                 this.hideSide('right');
 
                 this.controller.navigate('', {

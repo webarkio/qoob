@@ -16,7 +16,7 @@ function Skin() {
             { "type": "js", "name": "hammer", "src": "js/libs/hammer.js", "min_src": "js/libs/hammer.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-select", "src": "js/libs/qoob-select.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-dropdown", "src": "js/libs/qoob-dropdown.js", "dep": ["jquery"] },
-            { "type": "js", "name": "is-mobile-device", "src": "js/libs/isMobile.js", "min_src": "js/libs/isMobile.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "device", "src": "js/libs/device.js", "min_src": "js/libs/device.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "html2canvas", "src": "js/libs/html2canvas.js", "min_src": "js/libs/html2canvas.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "jquery.easing", "src": "js/libs/jquery.easing.js", "min_src": "js/libs/jquery.easing.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-controller", "src": "js/controllers/qoob-controller.js", "dep": ["backbone"] },
@@ -70,7 +70,6 @@ function Skin() {
         ],
         "prod": [
             { "type": "js", "name": "skin_assets", "src": "skin.concated.js" },
-
         ],
         "all": [
             

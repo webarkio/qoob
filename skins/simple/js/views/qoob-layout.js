@@ -1,4 +1,4 @@
-/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView, AccordionFlipItemSettingsView, ImageCenterView, IconCenterView, VideoCenterView, Hammer, isMobile*/
+/*global QoobSidebarView, QoobMenuView, QoobToolbarView, QoobEditModeButtonView, QoobViewportView, QoobImportExportView, AccordionFlipItemSettingsView, ImageCenterView, IconCenterView, VideoCenterView, Hammer, device*/
 /**
  * Create qoob view
  *
@@ -52,7 +52,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             // Init swipe
-            var hammer = new Hammer.Manager(document.documentElement, {
+            var hammer = new Hammer(document.documentElement, {
                 touchAction: 'auto',
                 inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
                 recognizers: [
@@ -70,9 +70,9 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }
             });
 
-            var device = this.getDeviceState();
+            var deviceLocal = this.getDeviceState();
 
-            if (device === 'mobile') {
+            if (deviceLocal === 'mobile') {
                 self.showSwipeMenu();
             }
 
@@ -80,11 +80,11 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 var container = self.$el;
                 container.removeClass('mobile tablet desktop');
 
-                var device = self.getDeviceState();
+                var deviceLocal = self.getDeviceState();
 
-                if (device === 'mobile') {
+                if (deviceLocal === 'mobile') {
                     container.addClass('mobile');
-                } else if (device === 'tablet') {
+                } else if (deviceLocal === 'tablet') {
                     container.addClass('tablet');
                 } else {
                     container.addClass('desktop');
@@ -96,6 +96,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             swipeResize();
+
+            jQuery(window).on('scroll', '.qoob-menu-right-side', function(){
+                console.log('tut');
+            });
         },
         navigate: function(page, param, isBack) {
             if (page == "index") {
@@ -391,16 +395,16 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         getDeviceState: function() {
             var windowWidth = jQuery(window).width(),
-                device;
+                localDevice;
 
-            if (isMobile.mobile || (windowWidth >= 320 && windowWidth <= 767)) {
-                device = 'mobile';
-            } else if (isMobile.tablet || (windowWidth >= 768 && windowWidth <= 991)) {
-                device = 'tablet';
+            if (device.mobile() || (windowWidth >= 320 && windowWidth <= 767)) {
+                localDevice = 'mobile';
+            } else if (device.tablet() || (windowWidth >= 768 && windowWidth <= 991)) {
+                localDevice = 'tablet';
             } else if (windowWidth >= 992) {
-                device = 'desktop';
+                localDevice = 'desktop';
             }
 
-            return device;
+            return localDevice;
         }
     });

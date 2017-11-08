@@ -153,7 +153,8 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             }
         },
         scrollTo: function(blockId, position) {
-            var scroll,
+            var self = this,
+                scroll = null,
                 iframe = this.getWindowIframe();
 
             if (position === 'top') {
@@ -163,14 +164,23 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             } else if (this.getBlockView(blockId)) {
                 var el = this.getBlockView(blockId).$el;
                 var windowHeight = this.getIframe().height();
-                scroll = el.offset().top - (windowHeight - el.outerHeight(true)) / 2;
+                if (device.ios()) {                    
+                    scroll = el.offset().top;
+                } else {
+                    scroll = Math.round(el.offset().top - ((document.body.clientHeight - el.outerHeight(true)) / 2));
+                }
             }
 
-            if (scroll) {
-                //Scroll to new block
-                this.getWindowIframe().jQuery('html, body').animate({
-                    scrollTop: scroll
-                }, 1000);
+            if (scroll !== null) {
+                if (device.ios()) {
+                    jQuery('html, body').animate({
+                        scrollTop: scroll
+                    }, 800);
+                } else {
+                    self.getWindowIframe().jQuery('html, body').animate({
+                        scrollTop: scroll
+                    }, 800);
+                }
             }
         },
         /**
