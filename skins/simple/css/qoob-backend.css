@@ -1278,17 +1278,19 @@ a {
     z-index: 1;
 }
 
-/* Detect Mac Firefox 25 or newer */
+/* Detect macOs devices */
+.macos .preview-block-wrap {
+    margin-right: 0;
+}
 
+/* Detect Mac Firefox 25 or newer */
 @supports (-moz-osx-font-smoothing:auto) {
     .preview-block-wrap {
         margin-right: -15px;
     }
 }
 
-
 /* Detect Edge */
-
 @supports (-ms-ime-align:auto) {
     .preview-block-wrap {
         margin-right: -12px;
@@ -1326,9 +1328,13 @@ a {
     margin-top: 0;
 }
 
-
 .preview-block-wrap + .side-item-show {
     height: 100%;
+}
+
+/* Detect macOs devices */
+.macos .side-item-show {
+    margin-right: 0;
 }
 
 /* Detect Mac Firefox 25 or newer */
