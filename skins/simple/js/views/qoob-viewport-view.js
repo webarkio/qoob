@@ -1,4 +1,4 @@
-/*global QoobBlockWrapperView, QoobPageTemplatesView, Hammer*/
+/*global QoobBlockWrapperView, QoobPageTemplatesView, Hammer, device*/
 /**
  * Create view for viewport in qoob layout
  * 
@@ -164,10 +164,10 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             } else if (this.getBlockView(blockId)) {
                 var el = this.getBlockView(blockId).$el;
                 var windowHeight = this.getIframe().height();
-                if (device.ios()) {                    
+                if (device.ios()) {
                     scroll = el.offset().top;
                 } else {
-                    scroll = Math.round(el.offset().top - ((document.body.clientHeight - el.outerHeight(true)) / 2));
+                    scroll = Math.round(el.offset().top - ((windowHeight - el.outerHeight(true)) / 2));
                 }
             }
 

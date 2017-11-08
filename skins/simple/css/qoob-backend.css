@@ -1278,6 +1278,11 @@ a {
     z-index: 1;
 }
 
+/* Detect MacOS */
+.macos .preview-block-wrap {
+    margin-right: 0;
+}
+
 /* Detect Mac Firefox 25 or newer */
 
 @supports (-moz-osx-font-smoothing:auto) {
@@ -1326,9 +1331,13 @@ a {
     margin-top: 0;
 }
 
-
 .preview-block-wrap + .side-item-show {
     height: 100%;
+}
+
+/* Detect MacOS */
+.macos .side-item-show {
+    margin-right: 0;
 }
 
 /* Detect Mac Firefox 25 or newer */
@@ -1338,7 +1347,6 @@ a {
         margin-right: -15px;
     }
 }
-
 
 /* Detect Edge */
 
