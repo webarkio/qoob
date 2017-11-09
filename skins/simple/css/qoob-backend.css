@@ -1318,6 +1318,10 @@ a {
     padding: 0 6px 0 6px;
 }
 
+.settings-block-items {
+    height: 100%;
+}
+
 .field-accordion .settings-blocks {
     padding: 0;
     border-top: none;
@@ -2479,7 +2483,15 @@ a {
 }
 
 .filtered-images {
-    overflow: hidden;
+    height: 100%;
+    overflow-y: scroll;
+    margin-right: -22px;
+    position: relative;
+}
+
+/* Detect MacOS */
+.macos .filtered-images {
+    margin-right: 0;
 }
 
 .filtered-images .ajax-image {
@@ -2616,7 +2628,10 @@ a {
 }
 
 .filtered-videos {
-    overflow: hidden;
+    height: 100%;
+    overflow-y: scroll;
+    margin-right: -22px;
+    position: relative;
 }
 
 .filtered-videos .ajax-video {
@@ -2784,7 +2799,15 @@ a {
 }
 
 .filtered-icons {
-    overflow: hidden;
+    height: 100%;
+    overflow-y: scroll;
+    margin-right: -22px;
+    position: relative;
+}
+
+/* Detect MacOS */
+.macos .filtered-icons {
+    margin-right: 0;
 }
 
 .filtered-icons .ajax-icon {
@@ -3316,6 +3339,13 @@ a {
     padding: 0 6px;
 }
 
+.inner-settings-image,
+.inner-settings-video,
+.inner-settings-icon {
+    overflow: hidden;
+    margin-right: 0;
+}
+
 .inner-settings-icon .field-input-autocomplete {
     margin-top: 28px;
     margin-bottom: 10px;
@@ -3332,6 +3362,14 @@ a {
 .field-icon-container-inner.empty .field-icon {
     display: none;
 }
+
+.inner-settings .inview-icons,
+.inner-settings .inview-images {
+    height: 58px;
+    width: 100%;
+    clear: both;
+}
+
 
 /* Tablet sidebar
    ========================================================================== */

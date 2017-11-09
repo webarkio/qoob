@@ -60,18 +60,17 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
-                this.search();
+                var tags = this.$el.find('.icon-search').val().split(',');
+                this.search(tags);
                 this.$el.find('.icon-search').autocomplete("search", "");
                 return false;
             }
         },
-        search: function() {
-            var filteredWords = this.$el.find('.icon-search').val().split(','),
-                filteredIcons = this.$el.find('.filtered-icons');
+        search: function(tags) {
+            var filteredIcons = this.$el.find('.filtered-icons');
 
             filteredIcons.find('.ajax-icon').remove();
-
-            this.tags = filteredWords;
+            this.tags = tags;
             this.offset = 0;
             this.loadMore();
         },
@@ -153,8 +152,9 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     'data-icon-tags': ''
                 });
 
-                this.$el.find('.ajax-icon').removeClass('chosen');
+                this.tags = '';
 
+                this.$el.find('.ajax-icon').removeClass('chosen');
                 this.$el.find('.icon-search').val('');
             } else {
                 var iconObject = this.findByClasses(icon);
@@ -191,8 +191,8 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             this.$el.find('.icon-search').autocomplete({
                 source: tagsList,
-                select: function() {
-                    self.search();
+                select: function(event, ui) {
+                    self.search(ui.item.value);
                 },
             }).data("ui-autocomplete")._renderItem = function(ul, item) {
                 //Ul custom class here

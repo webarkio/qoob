@@ -213,7 +213,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         setInnerSettingsView: function(view) {
             this.addView(view, 'main');
-            view.$el.trigger('shown');
         },
         showInnerSettingsView: function(id, isBack) {
             var newView = this.getView(id);
@@ -300,7 +299,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     if (e.target == this) {
                         self.$el.find('.qoob-menu-backward-side').html('');
                         self.$el.removeClass('show-backward');
-
                         jQuery(this).off(e);
                     }
                 });
@@ -320,10 +318,13 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             newSide.$el.addClass('side-item-show');
                             self.$el.find('.qoob-menu-forward-side').html('');
                             self.$el.removeClass('show-forward');
-
+                            
+                            // Start afterRender method for mediacenter
+                            newSide.$el.trigger('shown');
+                            
                             jQuery(this).off(e);
                         }
-                    });
+                    });                    
                 }
             }
         },
