@@ -1300,7 +1300,7 @@ a {
     }
 }
 
-#qoob-sidebar.overlay .settings-blocks:before {
+#qoob-sidebar.overlay .side-item-show:before {
     content: '';
     display: block;
     height: 100%;
