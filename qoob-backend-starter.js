@@ -338,5 +338,5 @@
     };
 
     window.QoobStarter = QoobStarter;
-    window.QoobVersion = "2.0.8";
+    window.QoobVersion = "3.0.0";
 }());
