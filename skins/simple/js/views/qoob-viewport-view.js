@@ -160,7 +160,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             if (position === 'top') {
                 scroll = 0;
             } else if (position === 'bottom') {
-                scroll = iframe.document.body.scrollHeight;
+                scroll = iframe.jQuery('#qoob-blocks').outerHeight() - iframe.jQuery('#qoob-blocks .content-block-outer').last().outerHeight();
             } else if (this.getBlockView(blockId)) {
                 var el = this.getBlockView(blockId).$el;
                 var windowHeight = this.getIframe().height();
