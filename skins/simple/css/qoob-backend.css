@@ -609,6 +609,14 @@ a {
     line-height: 50px;
 }
 
+.group-list__link:focus {
+    box-shadow: none;
+}
+
+.group-list__link:active {
+    color: #010833;
+}
+
 .group-list__link:hover {
     background-color: #ececec;
     color: #010833;

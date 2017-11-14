@@ -24,7 +24,7 @@
         this.options.qoobUrl = this.options.qoobUrl + (this.options.qoobUrl.indexOf("/", this.options.qoobUrl.length - "/".length) !== -1 ? '' : '/');
         this.options.debug = this.options.debug || false;
         this.options.mode = this.options.mode || "prod";
-        this.options.skin = this.options.skin || "black";
+        this.options.skin = this.options.skin || "simple";
         this.options.skinUrl = this.options.skinUrl || this.options.qoobUrl + 'skins/'+this.options.skin+'/';
         this.options.librariesData = this.options.librariesData || [];
         this.options.pageData = this.options.pageData || {};
