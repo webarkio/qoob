@@ -23,7 +23,7 @@ Fields.datepicker = QoobFieldView.extend(
     },
     /**
      * Render filed select
-     * example value "10/10/2020"
+     * example value "10-10-2020"
      * @returns {Object}
      */
     render: function() {
