@@ -1,4 +1,4 @@
-/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView */
+/*global QoobMenuSettingsView, QoobMenuGroupsView, QoobMenuBlocksPreviewView, QoobMenuSavePageTemplateView, device */
 /**
  * Create view for menu in qoob layout
  *
@@ -143,9 +143,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
                     $this.one("touchend", function() {
                         longTouch = false;
-                        if (parent.get(0).scrollHeight > parent.get(0).clientHeight) {
-                            parent.removeAttr('style').removeClass('disable-scroll');
-                        }
+                        parent.removeAttr('style').removeClass('disable-scroll');
                         clearTimeout(timer);
                     });
 
