@@ -4,13 +4,15 @@
             <option value="all" selected><%= allThemes %></option>
             <% if(libs) { %>
                 <% for (var i = 0; i < libs.length; i++) { %>
-                    <option value="<%= libs[i].name %>" data-title="<% if (libs[i].name.length > 14) { %><%= libs[i].name.substring(0, 14) %>...<% } else { %><%= libs[i].name %><% } %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
-                        <% if (libs[i].name.length > 26) { %>
-                            <%= libs[i].name.substring(0, 26) %>...
-                        <% } else { %>
-                            <%= libs[i].name %>
-                        <% } %>
-                    </option>
+                    <% if (libs[i].name) { %>
+                        <option value="<%= libs[i].name %>" data-title="<% if (libs[i].name.length > 14) { %><%= libs[i].name.substring(0, 14) %>...<% } else { %><%= libs[i].name %><% } %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
+                            <% if (libs[i].name.length > 26) { %>
+                                <%= libs[i].name.substring(0, 26) %>...
+                            <% } else { %>
+                                <%= libs[i].name %>
+                            <% } %>
+                        </option>
+                    <% } %>
                 <% } %>
             <% } %>
         </select>
