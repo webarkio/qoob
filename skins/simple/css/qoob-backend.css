@@ -2733,6 +2733,10 @@ a {
     margin-right: 4px;
 }
 
+.field-icon__preview.no-other-icons {
+    margin-right: 0;
+}
+
 .field-icon__preview-icon {
     cursor: pointer;
     height: 100%;
