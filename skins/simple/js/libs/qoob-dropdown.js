@@ -40,7 +40,7 @@ if (typeof(jQuery) === 'undefined') {
             }
         });
 
-        $dropdown.on('click', 'a', function(event) {
+        $dropdown.on('click', 'a', function() {
             $dropdown.trigger('hide');
         });
 
