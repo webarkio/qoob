@@ -157,9 +157,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 var dataSearchVideos = [];
                 for (var y = 0; y < this.dataVideos.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
-                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ''));
-                        if (filteredWords[j] !== '' && (this.dataVideos[y].tags && this.dataVideos[y].tags.join(' ').match(regEx))) {
-                            if (dataSearchVideos.indexOf(this.dataVideos[y]) < 0) {
+                        if (filteredWords[j] !== '' && this.dataVideos[y].tags.indexOf(filteredWords[j]) != -1) {
+                            if (dataSearchVideos.indexOf(this.dataVideos[y]) == -1) {
                                 dataSearchVideos.push(this.dataVideos[y]);
                             }
                         }

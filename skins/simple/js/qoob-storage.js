@@ -176,20 +176,22 @@ QoobStorage.prototype.__ = function(title, defValue) {
 QoobStorage.prototype.getAssets = function() {
     var data = this.librariesData;
 
-    for (var i = 0; i < data.length; i++) {
-        if (undefined !== data[i].blocks) {
-            for (var j = 0; j < data[i].blocks.length; j++) {
-                if (!!data[i].blocks[j].assets)
-                    this.assets.push(data[i].blocks[j].assets);
+    if (this.assets.length == 0) {
+        for (var i = 0; i < data.length; i++) {
+            if (undefined !== data[i].blocks) {
+                for (var j = 0; j < data[i].blocks.length; j++) {
+                    if (!!data[i].blocks[j].assets)
+                        this.assets.push(data[i].blocks[j].assets);
+                }
             }
-        }
 
-        if (undefined !== data[i].assets) {
-            this.assets.push(data[i].assets);
+            if (undefined !== data[i].assets) {
+                this.assets.push(data[i].assets);
+            }
         }
     }
 
-    return this.assets;
+    return this.assets;    
 };
 
 /**

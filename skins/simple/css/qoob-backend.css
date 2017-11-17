@@ -2301,7 +2301,7 @@ a {
 .field-accordion-item .arrow {
     cursor: pointer;
     position: absolute;
-    line-height: 46px;
+    line-height: 50px;
     right: 18px;
 }
 
@@ -2311,6 +2311,10 @@ a {
     font-family: "FontAwesome";
     color: rgb(1, 8, 51);
     font-size: 13px;
+}
+
+.inner-settings-flip .arrow:before {
+    content: "\f054";
 }
 
 .field-accordion-item .ui-state-active .arrow:before {
