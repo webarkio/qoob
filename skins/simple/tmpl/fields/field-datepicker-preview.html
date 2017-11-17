@@ -2,7 +2,7 @@
 <% if (label){ %>
     <div class="field-datepicker-label field-label"><%= label %></div>
 <% } %>
-<input class="field-datepicker__input field-datepicker__input-<%= uniqueId %>" type="text" data-field="date" name="<%= name %>" value="<%= value %>">
+<input class="field-datepicker__input field-datepicker__input-<%= uniqueId %>" type="text" data-field="date" data-format="<%= dateFormat %>" name="<%= name %>" value="<%= value %>">
 
 <div id="field-datepicker__box-<%= uniqueId %>"></div>
 

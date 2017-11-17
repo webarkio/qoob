@@ -27,13 +27,14 @@ Fields.datepicker = QoobFieldView.extend(
      * @returns {Object}
      */
     render: function() {
+        //dd-MM-yyyy
         var htmldata = {
             "label": this.settings.label,
             "name": this.settings.name,
             "value" : this.getValue(),
-            "uniqueId": this.getUniqueId()
+            "uniqueId": this.getUniqueId(),
+            "dateFormat": (this.settings.dateFormat != undefined) ? this.settings.dateFormat : 'dd-MM-yyyy',
         };
-
         this.$el.html(_.template(this.storage.getSkinTemplate('field-datepicker-preview'))(htmldata));
         return this;
     }
