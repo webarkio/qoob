@@ -72,9 +72,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         draggable: function() {
             var self = this,
-                longTouch = false,
-                scrollbarWidth,
-                parent;
+                longTouch = false;
 
             // set params for touch punch
             this.$el.find('.preview-block').data("blockPreventDefault", true);
@@ -123,13 +121,9 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     var timer;
                     $this = jQuery(this);
 
-                    scrollbarWidth = jQuery.position.scrollbarWidth();
                     parent = $this.parent('.preview-blocks');
 
                     timer = setTimeout(function() {
-                        if (parent.get(0).scrollHeight > parent.get(0).clientHeight) {
-                            parent.css('padding-right', scrollbarWidth).addClass('disable-scroll');
-                        }
                         longTouch = true;
 
                         var simulateMousemove = jQuery.Event('mousemove');
@@ -143,7 +137,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
                     $this.one("touchend", function() {
                         longTouch = false;
-                        parent.removeAttr('style').removeClass('disable-scroll');
                         clearTimeout(timer);
                     });
 
