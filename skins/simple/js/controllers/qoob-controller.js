@@ -42,13 +42,13 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
         } else {
             this.addHistory(fragment);
 
+            this.isBack = false;
+
             this.layout.navigate("edit", path.shift().split('-')[1], this.isBack);
 
             while (path.length > 0) {
                 this.layout.navigate("inner", path.shift(), this.isBack);
             }
-
-            this.isBack = false;
 
         }
     },
