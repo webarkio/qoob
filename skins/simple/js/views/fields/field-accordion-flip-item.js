@@ -16,6 +16,7 @@ var FieldAccordionFlipItem = Backbone.View.extend({ // eslint-disable-line no-un
      * @constructs
      */
     initialize: function(options) {
+        var self = this;
         this.name = options.name;
         this.model = options.model;
         this.storage = options.storage;
@@ -29,12 +30,15 @@ var FieldAccordionFlipItem = Backbone.View.extend({ // eslint-disable-line no-un
 
         // change preview accordion item
         this.listenTo(this.model, 'change', function() {
+            var image = self.controller.layout.viewPort.getIframeUrl(this.model.get('image'));
+            
             this.$el.find(".title-item").first().html(this.model.get('title'));
             if (this.model.get('image') != '') {
                 if (this.$el.find(".preview-image").is(':visible')) {
                     this.$el.find(".preview-image").show();
                 }
-                this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
+                
+                this.$el.find(".preview-image img").first().prop('src', image);
                 
             } else {
                 this.$el.find(".preview-image").hide();
@@ -53,8 +57,10 @@ var FieldAccordionFlipItem = Backbone.View.extend({ // eslint-disable-line no-un
      * @returns {Object}
      */
     render: function() {
+        var image = this.controller.layout.viewPort.getIframeUrl(this.model.get('image'));
+
         var htmldata = {
-            "image": this.model.get('image'),
+            "image": image,
             "title": this.model.get('title'),
         };
 

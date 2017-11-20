@@ -23,6 +23,7 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
      * @constructs
      */
     initialize: function(options) {
+        var self = this;
         this.name = options.name;
         this.model = options.model;
         this.storage = options.storage;
@@ -31,6 +32,23 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
         this.controller = options.controller;
         this.parent = options.parent;
         this.side = options.side;
+
+
+        this.listenTo(this.model, 'change', function() {
+            var image = self.controller.layout.viewPort.getIframeUrl(this.model.get('image'));
+
+            this.$el.find(".title-item").first().html(this.model.get('title'));
+            if (this.model.get('image') != '') {
+                if (!this.$el.find(".preview-image").is(':visible')) {
+                    this.$el.find(".preview-image").show();
+                }                
+
+                this.$el.find(".preview-image img").first().prop('src', image);
+                
+            } else {
+                this.$el.find(".preview-image").hide();
+            }
+        });
     },
     /**
      * @param {Object} evt
@@ -67,9 +85,11 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
      * @returns {Object}
      */
     render: function() {
+        var image = this.controller.layout.viewPort.getIframeUrl(this.model.get('image'));
+
         var htmldata = {
-            "image": this.model.get('image'),
-            "title": this.model.get('title')
+            "image": image,
+            "title": this.model.get('title'),
         };
 
         var item = (_.template(this.storage.getSkinTemplate('field-accordion-item-expand-preview'))(htmldata));
@@ -87,19 +107,6 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
         });
 
         this.$el.find('.settings-blocks').html(this.settingsView.render().el);
-
-        this.listenTo(this.model, 'change', function() {
-            this.$el.find(".title-item").first().html(this.model.get('title'));
-            if (this.model.get('image') != '') {
-                if (!this.$el.find(".preview-image").is(':visible')) {
-                    this.$el.find(".preview-image").show();
-                }
-                this.$el.find(".preview-image img").first().prop('src', this.model.get('image'));
-                
-            } else {
-                this.$el.find(".preview-image").hide();
-            }
-        });
 
         return this;
     },

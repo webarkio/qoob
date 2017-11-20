@@ -336,5 +336,17 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 qoobBlocks.find('.qoob-templates').show();
                 this.$el.find('#droppable-default').show();
             }
+        },
+        getIframeUrl: function(url) {
+            var fullUrl, pattern = /^((http|https):\/\/)/;
+
+            // if url has "http|https"
+            if (url !== undefined && !pattern.test(url) && typeof this.storage.driver.getFrontendPageUrl === "function") {
+                fullUrl = this.storage.driver.getFrontendPageUrl() + url;
+            } else {
+                fullUrl = url;
+            }
+
+            return fullUrl;
         }
     });

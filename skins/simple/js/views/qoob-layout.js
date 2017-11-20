@@ -213,7 +213,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             curSrc: imageView.getValue(),
                             assets: this.storage.getAssets(),
                             tags: imageView.tags ? imageView.tags.join(', ') : '',
-                            iframeUrl: imageView.getIframeUrl(),
                             cb: imageView.changeImage.bind(imageView),
                             parent: parentView
                         });

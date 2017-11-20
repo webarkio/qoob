@@ -2,7 +2,7 @@
 
 <div class="field-image-container<% if (value === '') { %> empty <% } %>">
     <div class="field-image__preview">
-        <img class="field-image__preview-image show-media-center" src="<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= value %>" />
+        <img class="field-image__preview-image show-media-center" src="<%= value %>" />
         <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
             <i class="field-image__remove-image fa fa-times"></i>
         <% } %>
@@ -24,7 +24,7 @@
 <div class="others">
     <% for (var i = 0; i < images.length; i++) { %>
         <div class="others__item">
-            <div class="others-item__image" style="background-image: url('<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= images[i] %>');"></div>
+            <div class="others-item__image" style="background-image: url('<%= images[i] %>');"></div>
         </div>
     <%}%>
 </div>

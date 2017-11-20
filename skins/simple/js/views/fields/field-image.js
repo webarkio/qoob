@@ -140,30 +140,24 @@ Fields.image = QoobFieldView.extend(
             this.controller.navigate(this.controller.currentUrl() + "/" + this.settings.name, true);
             return false;
         },
-        getIframeUrl: function() {
-            var iframeUrl, pattern = /^((http|https):\/\/)/;
-
-            // if url has "http|https"
-            if (!pattern.test(this.getValue()) && typeof this.storage.driver.getFrontendPageUrl === "function") {
-                iframeUrl = this.storage.driver.getFrontendPageUrl();
-            } else {
-                iframeUrl = '';
-            }
-
-            return iframeUrl;
-        },
         /**
          * Render filed image
          * @returns {Object}
          */
         render: function() {
+            var presets = [];
+            if (this.settings.presets) {
+                for (var i = 0; i < this.settings.presets.length; i++) {
+                    presets.push(this.controller.layout.viewPort.getIframeUrl(this.settings.presets[i]));
+                }
+            }
+
             var htmldata = {
                 hideDeleteButton: this.settings.hideDeleteButton,
                 "label": this.settings.label,
                 "name": this.settings.name,
-                "images": this.settings.presets,
-                "value": this.getValue(),
-                "iframeUrl": this.getIframeUrl(),
+                "images": presets,
+                "value": this.controller.layout.viewPort.getIframeUrl(this.getValue()),
                 'media_center': this.storage.__('media_center', 'Media center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'error': this.storage.__('error', 'Error!'),
