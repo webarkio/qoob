@@ -37,7 +37,6 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.name = options.name;
             this.storage = options.storage;
             this.controller = options.controller;
-            this.tpl = _.template(this.storage.getSkinTemplate('field-icon-setting-preview'));
             this.icons = options.icons;
             this.icon = options.icon;
             this.tags = options.icon.tags || '';
@@ -226,7 +225,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         render: function() {
             //Creating layout
-            this.$el.html(this.tpl({
+            this.$el.html(_.template(this.storage.getSkinTemplate('field-icon-setting-preview'))({
                 search: this.storage.__('search', 'Search'),
                 icon: this.icon
             }));
