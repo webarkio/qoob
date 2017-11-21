@@ -536,6 +536,7 @@ a {
 #qoob-sidebar {
     position: fixed;
     width: 264px;
+    height: 100%;
     left: 0;
     top: 0;
     background-color: rgb(255, 255, 255);
@@ -1344,7 +1345,7 @@ a {
     margin-top: 0;
 }
 
-.preview-block-wrap + .side-item-show {
+.desktop .preview-block-wrap + .side-item-show {
     height: 100%;
 }
 

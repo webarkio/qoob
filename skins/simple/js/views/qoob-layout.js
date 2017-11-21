@@ -96,10 +96,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             swipeResize();
-
-            jQuery(window).on('scroll', '.qoob-menu-right-side', function(){
-                console.log('tut');
-            });
         },
         navigate: function(page, param, isBack) {
             if (page == "index") {
@@ -321,7 +317,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             return this;
         },
         resize: function() {
-            this.sidebar.resize();
             this.viewPort.resize();
         },
         setPreviewMode: function() {

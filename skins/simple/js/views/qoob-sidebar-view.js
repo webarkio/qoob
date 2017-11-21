@@ -117,12 +117,6 @@ var QoobSidebarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         });
     },
     /**
-     * Resize sidebar
-     */
-    resize: function() {
-        this.$el.css('height', jQuery(window).height());
-    },
-    /**
      * Show sidebar menu
      */
     showSwipeMenu: function() {
