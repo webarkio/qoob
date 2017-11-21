@@ -7,7 +7,7 @@ body {
 
 @font-face {
     font-family: 'qrobotobold';
-    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.woff2') format('woff2');;
+    src: url('../fonts/roboto/Roboto-Bold.woff') format('woff'), url('../fonts/roboto/Roboto-Bold.woff2') format('woff2');;
     font-weight: normal;
     font-style: normal;
 }

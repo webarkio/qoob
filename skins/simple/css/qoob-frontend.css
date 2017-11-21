@@ -98,13 +98,13 @@
 
 @font-face {
     font-family: 'qrobotolight';
-    src: url('../fonts/roboto/Roboto-Light-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Light-webfont.woff2') format('woff2');
+    src: url('../fonts/roboto/Roboto-Light.woff') format('woff'), url('../fonts/roboto/Roboto-Light.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'qrobotobold';
-    src: url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('../fonts/roboto/Roboto-Bold-webfont.woff2') format('woff2');
+    src: url('../fonts/roboto/Roboto-Bold.woff') format('woff'), url('../fonts/roboto/Roboto-Bold.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -114,7 +114,12 @@
     font-weight: normal;
     font-style: normal;
 }
-
+@font-face {
+    font-family: 'qrobotoblack';
+    src: url('../fonts/roboto/Roboto-Black.woff') format('woff'), url('../fonts/roboto/Roboto-Black.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 /* Overlays */
 .droppable-zone.ui-droppable {
     position: absolute;
