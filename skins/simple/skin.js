@@ -16,7 +16,7 @@ function Skin() {
             { "type": "js", "name": "hammer", "src": "js/libs/hammer.js", "min_src": "js/libs/hammer.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-select", "src": "js/libs/qoob-select.js", "dep": ["jquery"] },
             { "type": "js", "name": "qoob-dropdown", "src": "js/libs/qoob-dropdown.js", "dep": ["jquery"] },
-            { "type": "js", "name": "device", "src": "js/libs/device.js", "min_src": "js/libs/device.min.js", "dep": ["jquery"] },
+            { "type": "js", "name": "current-device", "src": "js/libs/current-device.js", "min_src": "js/libs/current-device.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "html2canvas", "src": "js/libs/html2canvas.js", "min_src": "js/libs/html2canvas.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "jquery.easing", "src": "js/libs/jquery.easing.js", "min_src": "js/libs/jquery.easing.min.js", "dep": ["jquery"] },
             { "type": "js", "name": "date-time-picker", "src": "js/libs/date-time-picker.js", "min_src": "js/libs/date-time-picker.min.js", "dep": ["jquery"] },
