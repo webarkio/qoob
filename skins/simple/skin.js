@@ -36,7 +36,7 @@ function Skin() {
             { "type": "js", "name": "qoob-menu-blocks-preview-view", "src": "js/views/qoob-menu-blocks-preview-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-groups-view", "src": "js/views/qoob-menu-groups-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-menu-save-page-view", "src": "js/views/qoob-menu-save-page-template-view.js", "dep": ["backbone"] },
-            { "type": "js", "name": "qoob-settings-view", "src": "js/views/qoob-settings-view.js", "dep": ["backbone"] },
+            { "type": "js", "name": "qoob-settings-view", "src": "js/views/qoob-settings-view.js", "dep": ["qoob-fields-view"] },
             { "type": "js", "name": "qoob-import-export-view", "src": "js/views/qoob-import-export-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-page-templates-view", "src": "js/views/qoob-page-templates-view.js", "dep": ["backbone"] },
             { "type": "js", "name": "field-accordion", "src": "js/views/fields/field-accordion.js", "dep": ["backbone"] },
