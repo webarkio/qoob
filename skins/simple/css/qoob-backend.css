@@ -3335,9 +3335,29 @@ a {
     padding: 0 38px;
 }
 
-.field-upload-error-active {
- display: flex;
+.field-image-container.upload-error .field-upload-error {
+    display: flex;
 }
+
+.field-image-container.upload-error .field-image__preview,
+.field-image-container.upload-error .field-image__noimage {
+    display: none;
+}
+
+.field-video-container.upload-error .field-upload-error {
+    display: flex;
+}
+
+.field-video-container.upload-error .field-video__preview,
+.field-video-container.upload-error .field-video__novideo-preview {
+    display: none;
+}
+
+
+#qoob-sidebar.overlay .field-upload-error {
+    display: none;
+}
+
 
 .field-upload-error__text {
     font-size: 14px;

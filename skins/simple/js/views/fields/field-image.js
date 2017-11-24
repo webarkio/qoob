@@ -83,21 +83,20 @@ Fields.image = QoobFieldView.extend(
          * Drop image on zone
          */
         dropImage: function(evt) {
-            var self = this;
+            var self = this,
+                container = this.$el.find('.field-image-container');
             var droppedFiles = evt.originalEvent.dataTransfer.files;
 
             // 2 MB limit
             if (droppedFiles[0].size > 2097152) {
-                this.$el.find('.field-image__preview').hide();
-                this.$el.find('.field-upload-error').addClass('field-upload-error-active');
-
+                container.addClass('upload-error');
             } else {
                 if (droppedFiles[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
                     this.storage.driver.uploadImage(droppedFiles, function(error, url) {
                         if ('' !== url) {
                             self.changeImage(url);
-                            if (self.$el.find('.field-image-container').hasClass('empty')) {
-                                self.$el.find('.field-image-container').removeClass('empty');
+                            if (container.hasClass('empty') || container.hasClass('upload-error')) {
+                                container.removeClass('empty upload-error');
                             }
                         }
                     });

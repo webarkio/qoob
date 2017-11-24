@@ -106,22 +106,23 @@ Fields.video = QoobFieldView.extend(
          * Drop image on zone
          */
         dropVideo: function(evt) {
-            var self = this;
+            var self = this,
+                container = this.$el.find('.field-video-container');
             var droppedFiles = evt.originalEvent.dataTransfer.files;
 
             // 30 MB limit
             if (droppedFiles[0].size > 31457280) {
-                this.$el.find('.field-upload-error').addClass('field-upload-error-active');
+                container.addClass('upload-error');
             } else {
                 if (droppedFiles[0].name.match(/.(mp4|ogv|webm)$/i)) {
                     this.storage.driver.uploadVideo(droppedFiles, function(error, url) {
                         if ('' !== url) {
                             self.changeVideo({'url': url, 'preview': ''});
-                            if (self.$el.find('.field-video-container').hasClass('empty')) {
-                                self.$el.find('.field-video-container').removeClass('empty');
+                            if (container.hasClass('empty') || container.hasClass('upload-error')) {
+                                container.removeClass('empty upload-error');
                             }
-                            if (!self.$el.find('.field-video-container').hasClass('empty-preview')) {
-                                self.$el.find('.field-video-container').addClass('empty-preview');
+                            if (!container.hasClass('empty-preview')) {
+                                container.addClass('empty-preview');
                             }
                         }
                     });
