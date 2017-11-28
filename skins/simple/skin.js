@@ -65,20 +65,23 @@ function Skin() {
             { "type": "js", "name": "template-adapter-underscore", "src": "js/extensions/template-adapter-underscore.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-storage", "src": "js/qoob-storage.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
+            { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
+            { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
-            { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" }
+            { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
+            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" }
         ],
         "prod": [
-            { "type": "js", "name": "skin_assets", "src": "skin.concated.js" },
+            { "type": "css", "name": "font-awesome.min.css", "src": "css/font-awesome.min.css" },
+            { "type": "css", "name": "glyphicons.min.css", "src": "css/glyphicons.min.css" },
+            { "type": "css", "name": "qoob.min.css", "src": "css/qoob-backend.min.css" },
+            { "type": "js", "name": "skin_assets", "src": "skin.concated.js" }
         ],
         "all": [
-            
             { "type": "css", "name": "jquery-ui.css", "src": "css/jquery-ui.css" },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
-            { "type": "json", "name": "skin_translation", "src": "translation.json" },
-            { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
+            { "type": "json", "name": "skin_translation", "src": "translation.json" }
         ]
     };
 }
