@@ -16,6 +16,7 @@ function QoobStorage(options) {
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
     this.pageTemplatesCollection = new Backbone.Collection();
     this.assets = [];
+    this.translations = options.translations || null;
 }
 
 /**
@@ -163,11 +164,21 @@ QoobStorage.prototype.save = function(json, html, cb) {
     });
 };
 
-
+/**
+ * Translate
+ * @param {String} title
+ * @param {String} defValue
+ */
 QoobStorage.prototype.__ = function(title, defValue) {
-    return defValue;
+    var locale = this.driver.locale;
+    if (locale !== null &&
+        this.translations[title] !== undefined &&
+        this.translations[title][locale] !== undefined) {
+        return this.translations[title][locale];
+    } else {
+        return defValue;
+    }
 };
-
 
 /**
  * Getting all assets from storage
@@ -191,7 +202,7 @@ QoobStorage.prototype.getAssets = function() {
         }
     }
 
-    return this.assets;    
+    return this.assets;
 };
 
 /**
@@ -257,7 +268,7 @@ QoobStorage.prototype.getLibraryByUrl = function(url, cb) {
     jQuery.ajax({
         dataType: "json",
         url: url,
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function(jqXHR, textStatus) {
             cb(textStatus);
         },
         success: function(data) {

@@ -28,6 +28,7 @@
         this.options.skinUrl = this.options.skinUrl || this.options.qoobUrl + 'skins/'+this.options.skin+'/';
         this.options.librariesData = this.options.librariesData || [];
         this.options.pageData = this.options.pageData || {};
+        this.options.translations = this.options.translations || null;
 
         window.onload = this.startStage1.bind(this);
     }
@@ -164,18 +165,34 @@
         });
     };
 
-
     QoobStarter.prototype.startStage4 = function() {
         var self = this;
-        self.loader.stage = 4;
+
+        if (self.options.driver.translationsUrl !== null) {
+                self.loader.stage = 4;
+                self.loader.stageLoaded = self.loader.getCountLoaded();
+
+            self.options.driver.loadTranslations(function(err, data) {
+                self.options.translations = data;
+
+                self.startStage5();
+            });
+        } else {
+            self.startStage5();
+        }
+    };
+
+    QoobStarter.prototype.startStage5 = function() {
+        var self = this;
+        self.loader.stage = 5;
         self.loader.stageLoaded = self.loader.getCountLoaded();
         self.loader.once('complete', function() {
             window.qoob = new Skin();
-            self.loader.stage = 5;
+            self.loader.stage = 6;
             self.loader.stageLoaded = self.loader.getCountLoaded();
 
             self.loader.once('complete', function() {
-                self.loader.stage = 6;
+                self.loader.stage = 7;
                 self.loader.stageLoaded = self.loader.getCountLoaded();
                 self.loader.once('skin_loaded', function() {
                     self.loadingComplete();
@@ -191,10 +208,7 @@
         if (self.options.driver.assets) {
             self.loader.add(self.options.driver.assets);
         }
-
-
     };
-
 
     QoobStarter.prototype.applyGlobalMask = function(libs) {
         var filterLibUrlFunction = function(substr) {
