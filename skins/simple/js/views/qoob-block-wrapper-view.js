@@ -41,12 +41,17 @@ var QoobBlockWrapperView = Backbone.View.extend({ // eslint-disable-line no-unus
         return this;
     },
     clickStartEditBlock: function() {
+        var deviceLocal = this.controller.layout.getDeviceState();
+        
+        if (deviceLocal !== "desktop" && this.controller.layout.viewPort.viewportTapTriggered) {
+            this.controller.layout.viewPort.viewportTapTriggered = false;
+            return false;
+        }
         if (this.controller.layout.menu.getSettingsView(this.model.id)) {
             this.controller.navigate('edit-' + this.model.id, { trigger: true });
         }
 
-        var deviceLocal = this.controller.layout.getDeviceState();
-        if (deviceLocal === 'mobile' || deviceLocal === 'tablet') {
+        if (this.controller.layout.$el.hasClass('close-panel')) {
             this.controller.showSwipeMenu();
         }
     },

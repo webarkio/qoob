@@ -170,11 +170,9 @@ QoobStorage.prototype.save = function(json, html, cb) {
  * @param {String} defValue
  */
 QoobStorage.prototype.__ = function(title, defValue) {
-    var locale = this.driver.locale;
-    if (locale !== null &&
-        this.translations[title] !== undefined &&
-        this.translations[title][locale] !== undefined) {
-        return this.translations[title][locale];
+    if (this.translations !== null &&
+        this.translations[title] !== undefined) {
+        return this.translations[title];
     } else {
         return defValue;
     }

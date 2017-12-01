@@ -53,6 +53,10 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
             }
 
             this.controller.deleteBlock(this.model);
+            
+            if (this.controller.layout.$el.hasClass('mobile')) {
+                this.controller.hideSwipeMenu();
+            }
         },
         /**
          * Click move block down

@@ -2,13 +2,13 @@
 module.exports = function(grunt) {
     var Skin = require('./skin.js');
     var skin = new Skin();
-    var resourcesJs = [], resourcesCss = [];
+    var resources = [];
     for (var i = 0; i < skin.assets.dev.length; i++) {
         if (skin.assets.dev[i].type == "js") {
             if (skin.assets.dev[i].min_src) {
-                resourcesJs.push(skin.assets.dev[i].min_src.replace("qoob/skins/simple/", ""));
+                resources.push(skin.assets.dev[i].min_src.replace("qoob/skins/simple/", ""));
             } else {
-                resourcesJs.push(skin.assets.dev[i].src.replace("qoob/skins/simple/", ""));
+                resources.push(skin.assets.dev[i].src.replace("qoob/skins/simple/", ""));
             }
         }
     }
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         uglify: {
             skin: {
                 files: {
-                    'skin.concated.js': resourcesJs
+                    'skin.concated.js': resources
                 }
             }
         },

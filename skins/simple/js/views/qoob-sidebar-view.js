@@ -120,14 +120,14 @@ var QoobSidebarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
      * Show sidebar menu
      */
     showSwipeMenu: function() {
-        jQuery('#qoob').removeClass('close-panel');
+        this.controller.layout.$el.removeClass('close-panel');
     },
     /**
      * Hide sidebar menu
      */
     hideSwipeMenu: function() {
-        if (!jQuery('#qoob').hasClass('close-panel')) {
-            jQuery('#qoob').addClass('close-panel');
+        if (!this.controller.layout.$el.hasClass('close-panel')) {
+            this.controller.layout.$el.addClass('close-panel');
         }
     }
 });

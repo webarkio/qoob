@@ -315,7 +315,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             
                             jQuery(this).off(e);
                         }
-                    });                    
+                    });
                 }
             }
         },
@@ -377,8 +377,14 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
         },
         hideSwipeMenu: function() {
-            if (this.currentView.name.indexOf('edit') != -1) {
-                this.controller.stopEditBlock();
+            var currentRoute = this.controller.current();
+            
+            if (currentRoute.route.indexOf('index') != 0) {
+                this.controller.isBack = true;
+                this.controller.navigate('', {
+                        trigger: true,
+                        replace: true
+                });
             }
         },
         setPreviewMode: function() {

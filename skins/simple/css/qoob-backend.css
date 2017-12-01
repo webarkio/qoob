@@ -1730,6 +1730,16 @@ a {
     margin-top: -4px;
 }
 
+.field-image-container-inner.empty .input-url,
+.field-video-container-inner.empty .input-url,
+.field-icon-container-inner.empty .input-url {
+        margin-top: 4px;
+}
+
+.mobile .field-text .input-url {
+    margin-top: 4px;
+}
+
 .field-text ::-webkit-input-placeholder {
     color: rgb(1, 8, 51);
 }
@@ -3396,9 +3406,21 @@ a {
     margin-bottom: 12px;
 }
 
+.mobile .inner-settings-video .field-input-autocomplete,
+.mobile .inner-settings-image .field-input-autocomplete {
+    margin-top: 4px;
+}
+
+
 .field-image-container-inner.empty .field-image,
 .field-video-container-inner.empty .field-video,
 .field-icon-container-inner.empty .field-icon {
+    display: none;
+}
+
+.mobile .field-image-container-inner .field-image,
+.mobile .field-video-container-inner .field-video,
+.mobile .field-icon-container-inner .field-icon {
     display: none;
 }
 
@@ -3409,40 +3431,10 @@ a {
     clear: both;
 }
 
-
-/* Tablet sidebar
-   ========================================================================== */
-/*
-#qoob.tablet.close-panel #qoob-sidebar {
-    transform: translate(-100%, 0);
-    transform: translate3d(-100%, 0, 0);
-}
-
-#qoob.tablet.close-panel #qoob-viewport {
-    width: 100% !important;
-}
-
-.tablet .qoob-menu-right-side {
-    top: 0;
-    left: -264px;
-    width: 264px;
-    box-shadow: none;
-    z-index: 1;
-}
-
-.tablet .qoob-menu-right-side.show-side {
-    left: 0;
-}
-
-.tablet .side-item-show {
-    margin-right: 0;
-} */
-
 /* Tablet and mobile sidebar
    ========================================================================== */
 
-#qoob.tablet.close-panel #qoob-sidebar,
-#qoob.mobile.close-panel #qoob-sidebar {
+#qoob.close-panel #qoob-sidebar {
     transform: translate(-100%, 0);
     transform: translate3d(-100%, 0, 0);
 }
@@ -3451,6 +3443,10 @@ a {
 #qoob.mobile #qoob-viewport {
     width: 100% !important;
     height: 100%;
+}
+
+#qoob.desktop.close-panel #qoob-viewport {
+    width: 100% !important;
 }
 
 #qoob.mobile #qoob-viewport:after {
@@ -3464,6 +3460,7 @@ a {
     height: 100%;
     top: 0;
     left: 0;
+    z-index: 9999;
 }
 
 #qoob.mobile.close-panel #qoob-viewport:after {

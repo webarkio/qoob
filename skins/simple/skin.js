@@ -80,8 +80,7 @@ function Skin() {
         "all": [
             { "type": "css", "name": "jquery-ui.css", "src": "css/jquery-ui.css" },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
-            { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
-            { "type": "json", "name": "skin_translation", "src": "translation.json" }
+            { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" }
         ]
     };
 }

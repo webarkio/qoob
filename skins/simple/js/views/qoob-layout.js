@@ -70,24 +70,17 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }
             });
 
-            var deviceLocal = this.getDeviceState();
-
-            if (deviceLocal === 'mobile') {
-                self.showSwipeMenu();
-            }
-
             var swipeResize = function() {
-                var container = self.$el;
-                container.removeClass('mobile tablet desktop');
+                self.$el.removeClass('mobile tablet desktop');
 
                 var deviceLocal = self.getDeviceState();
 
                 if (deviceLocal === 'mobile') {
-                    container.addClass('mobile');
+                    self.$el.addClass('mobile');
                 } else if (deviceLocal === 'tablet') {
-                    container.addClass('tablet');
+                    self.$el.addClass('tablet');
                 } else {
-                    container.addClass('desktop');
+                    self.$el.addClass('desktop');
                 }
             }
 
@@ -275,7 +268,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         backward: function(url) {
             if (url.length == 0) {
-               window.location = window.location.origin;
+               this.controller.exit();
             } else if (url.length > 0)  {
                 var hash = url.split("/");
                 if (hash.length > 1) {
@@ -314,6 +307,12 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         render: function() {
             this.sidebar.$el.html([this.toolbar.render().el, this.menu.render().el]);
             this.$el.html([this.sidebar.render().el, this.viewPort.render().el, this.ImportExport.render().el, this.editModeButton.render().el]);
+            
+            var deviceLocal = this.getDeviceState();
+            if (deviceLocal === 'mobile') {
+                this.showSwipeMenu();
+            }
+
             return this;
         },
         resize: function() {
@@ -381,8 +380,23 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.sidebar.showSwipeMenu();
         },
         hideSwipeMenu: function() {
-            this.sidebar.hideSwipeMenu();
-            this.menu.hideSwipeMenu();
+            var deviceLocal = this.controller.layout.getDeviceState();
+            var currentRoute = this.controller.current();
+
+            if ((deviceLocal == 'desktop' && currentRoute.route.indexOf('index') == 0)) {
+                this.sidebar.hideSwipeMenu();
+                this.menu.hideSwipeMenu();
+            } else if (deviceLocal != 'desktop') {
+                var self = this;
+                this.sidebar.hideSwipeMenu();
+                this.sidebar.$el.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+                    if (e.target == this) {
+                        self.menu.hideSwipeMenu();
+                        self.sidebar.$el.off('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
+                    }
+                });
+            }
+
         },
         triggerBlocksLoader: function() {
             this.viewPort.trigger('blocks_loaded');

@@ -12,6 +12,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
         previewMode: false,
         blocksCounter: 0,
         blockViews: [],
+        viewportTapTriggered: false,
         /**
          * View menu
          * @class QoobViewportView
@@ -29,6 +30,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
          * @returns {Object}
          */
         render: function() {
+            var self = this;
             // Getting driver page id for iframe
             var url = this.storage.driver.getIframePageUrl();
             this.$el.html(_.template(this.storage.getSkinTemplate('qoob-viewport-preview'))({
@@ -36,6 +38,19 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
                 "text_droppable_zone": this.storage.__('text_droppable_zone', 'Drop here to create a new block')
             }));
             this.$el.find('#qoob-iframe').on('libraries_loaded', this.iframeLoaded.bind(this));
+
+            var hammer = new Hammer.Manager(this.$el[0]);
+            hammer.add(new Hammer.Tap({ 
+                event: 'singletap',
+                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput })
+            );
+            hammer.on("singletap", function() {
+                if (!self.controller.layout.$el.hasClass('close-panel')) {
+                    self.viewportTapTriggered = true;
+                    self.controller.layout.hideSwipeMenu();
+                }
+            });
+
             return this;
         },
         iframeLoaded: function() {
@@ -58,14 +73,10 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             });
 
             hammer.on('swipeleft swiperight', function(e) {
-                var classes = self.controller.layout.$el[0].className;
-
-                if (classes.indexOf('tablet') != -1 || classes.indexOf('mobile') != -1) {
-                    if (e.type === 'swipeleft') {
-                        self.controller.layout.hideSwipeMenu();
-                    } else if (e.type === 'swiperight') {
-                        self.controller.layout.showSwipeMenu();
-                    }
+                if (e.type === 'swipeleft') {
+                    self.controller.layout.hideSwipeMenu();
+                } else if (e.type === 'swiperight') {
+                    self.controller.layout.showSwipeMenu();
                 }
             });
         },
@@ -164,7 +175,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             } else if (this.getBlockView(blockId)) {
                 var el = this.getBlockView(blockId).$el;
                 var windowHeight = this.getIframe().height();
-                if (device.ios()) {
+                if (device.ios() || device.mobile()) {
                     scroll = el.offset().top;
                 } else {
                     scroll = Math.round(el.offset().top - ((windowHeight - el.outerHeight(true)) / 2));
