@@ -162,7 +162,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 var dataSearchImages = [];
                 for (var y = 0; y < this.dataImages.length; y++) {
                     for (var j = 0; j < filteredWords.length; j++) {
-                        if (filteredWords[j] !== '' && this.dataImages[y].tags.indexOf(filteredWords[j]) != -1) {
+                        if (filteredWords[j] !== '' && (this.dataImages[y].tags !== undefined && this.dataImages[y].tags.indexOf(filteredWords[j]) != -1)) {
                             if (dataSearchImages.indexOf(this.dataImages[y]) == -1) {
                                 dataSearchImages.push(this.dataImages[y]);
                             }

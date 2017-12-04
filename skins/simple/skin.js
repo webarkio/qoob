@@ -74,7 +74,7 @@ function Skin() {
         "prod": [
             { "type": "css", "name": "font-awesome.min.css", "src": "css/font-awesome.min.css" },
             { "type": "css", "name": "glyphicons.min.css", "src": "css/glyphicons.min.css" },
-            { "type": "css", "name": "qoob.min.css", "src": "css/qoob-backend.min.css" },
+            { "type": "css", "name": "qoob.min.css", "src": "css/qoob-backend.min.css", "dep": ["jquery-ui.css"]  },
             { "type": "js", "name": "skin_assets", "src": "skin.concated.js" }
         ],
         "all": [
