@@ -12,7 +12,6 @@
      */
 
     function QoobStarter(options) {
-
         if (!(options.driver instanceof Object)) {
             throw new Error('Driver parameter mast be set!');
         }
@@ -34,7 +33,7 @@
     }
 
     QoobStarter.prototype.loadingProgress = function(queue, loading, loaded, failed) {
-        var countStages = 6;
+        var countStages = 7;
         var deltaPerStage = 100 / countStages;
         var stageLoaded = this.loader.getCountLoaded() - this.loader.stageLoaded;
         var total = queue + loading + failed + stageLoaded;
@@ -47,11 +46,13 @@
     };
 
     QoobStarter.prototype.loadingComplete = function() {
-        document.getElementById("qoob_loader_precent").innerHTML = 100;
-        this.loader.off('progress', this.loadingProgressListener);
-        jQuery('#loader-wrapper').delay(100).fadeOut(1000, function() {
-            jQuery('#loader-wrapper').remove();
-        });
+        if (document.getElementById("qoob_loader_precent") != null) {
+            document.getElementById("qoob_loader_precent").innerHTML = 100;
+            this.loader.off('progress', this.loadingProgressListener);
+            jQuery('#loader-wrapper').delay(100).fadeOut(1000, function() {
+                jQuery('#loader-wrapper').remove();
+            });
+        }
     };
 
     QoobStarter.prototype.startStage1 = function() {
@@ -168,13 +169,12 @@
     QoobStarter.prototype.startStage4 = function() {
         var self = this;
 
-        if (self.options.driver.translationsUrl !== null) {
-                self.loader.stage = 4;
-                self.loader.stageLoaded = self.loader.getCountLoaded();
+        self.loader.stage = 4;
+        self.loader.stageLoaded = self.loader.getCountLoaded();
 
+        if (self.options.driver.translationsUrl !== null) {
             self.options.driver.loadTranslations(function(err, data) {
                 self.options.translations = data;
-
                 self.startStage5();
             });
         } else {
