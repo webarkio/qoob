@@ -79,6 +79,9 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             var deviceLocal = this.controller.layout.getDeviceState();
 
+            // @property edge: Boolean; `true` for the Edge web browser.
+            var edge = 'msLaunchUri' in navigator && !('documentMode' in document);
+
             this.$el.find('.preview-block').draggable({
                 appendTo: "body",
                 helper: "clone",
@@ -98,12 +101,12 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             self.controller.hideSwipeMenu();
                         }
                     }
-                    
-                    if (!device.ios()) {
+
+                    if (device.ios() !== true && (window.PointerEvent && edge !== true)) {
                         self.controller.navigate('', {
                             trigger: true
                         });
-                    }
+                    }                    
                 },
                 stop: function() {
                     self.controller.removeEmptyDraggableElement();
@@ -111,6 +114,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             this.$el.find('.preview-block').each(function() {
+                jQuery(this)[0].addEventListener("MSHoldVisual", function(e) { e.preventDefault(); }, false);
+
                 jQuery(this).on("mousedown", function(event) {
                     if (event.buttons === 0 || device.ios()) { } else {
                         longTouch = true;
@@ -315,7 +320,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             
                             jQuery(this).off(e);
                         }
-                    });
+                    });                    
                 }
             }
         },
