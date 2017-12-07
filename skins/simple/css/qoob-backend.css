@@ -608,6 +608,8 @@ a {
     padding-left: 47px;
     height: 100%;
     line-height: 50px;
+     -ms-touch-action: none;
+    touch-action: none;
 }
 
 .group-list__link:focus {
@@ -1306,7 +1308,7 @@ a {
 
 @supports (-ms-ime-align:auto) {
     .preview-block-wrap {
-        margin-right: -12px;
+        margin-right: -17px;
     }
 }
 
@@ -1366,7 +1368,7 @@ a {
 
 @supports (-ms-ime-align:auto) {
     .side-item-show {
-        margin-right: -12px;
+        margin-right: -17px;
     }
 }
 

@@ -61,18 +61,15 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
         },
         initSwipe: function() {
             var self = this;
+
             // Init swipe
-            var hammer = new Hammer.Manager(this.getWindowIframe().document.documentElement, {
-                touchAction: 'auto',
-                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
-                recognizers: [
-                    [Hammer.Swipe, {
-                        direction: Hammer.DIRECTION_HORIZONTAL
-                    }]
-                ]
+            new Hammer(this.getWindowIframe().document.documentElement, {
+                domEvents: true,
+                touchAction: 'pan-y',
+                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchMouseInput
             });
 
-            hammer.on('swipeleft swiperight', function(e) {
+            self.getWindowIframe().jQuery('body').on('swipeleft swiperight', function(e) {
                 if (e.type === 'swipeleft') {
                     self.controller.layout.hideSwipeMenu();
                 } else if (e.type === 'swiperight') {
