@@ -383,8 +383,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var deviceLocal = this.controller.layout.getDeviceState();
             var currentRoute = this.controller.current();
 
-            if ((deviceLocal == 'desktop' && currentRoute.route.indexOf('index') == 0)) {
-                this.sidebar.hideSwipeMenu();
+            if (deviceLocal == 'desktop') {
+                if (currentRoute.route.indexOf('index') == 0) {
+                    this.sidebar.hideSwipeMenu();
+                }
                 this.menu.hideSwipeMenu();
             } else if (deviceLocal != 'desktop') {
                 var self = this;
