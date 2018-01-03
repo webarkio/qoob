@@ -82,7 +82,7 @@ var QoobImportExportView = Backbone.View.extend( // eslint-disable-line no-unuse
             this.$el.html(_.template(this.storage.getSkinTemplate('block-import-export-preview'))({
                 "page_data_text": this.storage.__('page_data', 'Page data'),
                 "cancel": this.storage.__('cancel', 'Cancel'),
-                "Close": this.storage.__('Close', 'Close'),
+                "close": this.storage.__('close', 'Close'),
                 "save_changes": this.storage.__('save_changes', 'Save changes'),
                 "page_data": JSON.stringify(json)
             }));

@@ -166,13 +166,13 @@ QoobStorage.prototype.save = function(json, html, cb) {
 
 /**
  * Translate
- * @param {String} title
+ * @param {String} key
  * @param {String} defValue
  */
-QoobStorage.prototype.__ = function(title, defValue) {
+QoobStorage.prototype.__ = function(key, defValue) {
     if (this.translations !== null &&
-        this.translations[title] !== undefined) {
-        return this.translations[title];
+        this.translations[key] !== undefined) {
+        return this.translations[key];
     } else {
         return defValue;
     }

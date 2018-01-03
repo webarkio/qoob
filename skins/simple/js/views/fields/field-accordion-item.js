@@ -9,6 +9,7 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
     className: "field-accordion-item",
     events: {
         'click': 'showSettings',
+        'click .field-accordion-item__delete': 'clickDelete'
     },
     attributes: function() {
         return {
@@ -32,7 +33,6 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
         this.controller = options.controller;
         this.parent = options.parent;
         this.side = options.side;
-
 
         this.listenTo(this.model, 'change', function() {
             var image = self.controller.layout.viewPort.getIframeUrl(this.model.get('image'));
@@ -79,6 +79,9 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
         }
 
         return true;
+    },
+    clickDelete: function() {
+        this.deleteModel();
     },
     /**
      * Render filed accordion_item

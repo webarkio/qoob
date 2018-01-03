@@ -163,7 +163,7 @@ Fields.accordion = QoobFieldView.extend(
             this.$el.find("#" + id).accordion({
                 header: "> div > h3.inner-settings-expand",
                 icons: false,
-                animate: 500,
+                animate: 300,
                 collapsible: true,
                 active: false,
                 heightStyle: 'content'

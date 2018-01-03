@@ -1,3 +1,4 @@
+/*global device*/
 /**
  * Create view block's preview
  * 
@@ -8,12 +9,16 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-
     {
         className: 'preview-block-wrap',
         events: {
-            'click .preview-block': 'clickPreviewBlock'
+            'click .preview-block': 'clickPreviewBlock',
+            'click .backward-button': 'clickBackward'
         },
         attributes: function() {
             return {
                 'data-side-id': this.id
             };
+        },
+        clickBackward: function() {
+            this.controller.backward();
         },
         clickPreviewBlock: function(evt) {
             var name = evt.currentTarget.id.replace('preview-block-', ''),
@@ -51,6 +56,7 @@ var QoobMenuBlocksPreviewView = Backbone.View.extend( // eslint-disable-line no-
         render: function() {
             var data = {
                 "group": this.group,
+                "device": this.controller.layout.getDeviceState(),
                 "items": this.storage.getBlocksByGroup(this.group.id) //FIXME: moveto utils
             };
 

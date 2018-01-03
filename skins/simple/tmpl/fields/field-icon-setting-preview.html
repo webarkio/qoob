@@ -1,4 +1,22 @@
+<div class="backward-button">
+    <div class="backward-button__text">
+        <%= back %>
+    </div>
+</div>
 <div class="settings-block-items">
+    <div class="inner-settings-control">
+        <button class="inner-settings-control__button inner-settings-control__button-search"></button>
+        <button class="inner-settings-control__button inner-settings-control__button-link inner-settings-control__button-disabled"></button>
+        <button class="inner-settings-control__button inner-settings-control__button-reset"></button>
+        <button class="inner-settings-control__button inner-settings-control__button-remove <% if (hideDeleteButton || hideDeleteButton === 1) { %>inner-settings-control__button-disabled<% } %>"></button>
+        <div class="inner-settings-control__search">
+            <div class="field-input-autocomplete">
+                <input class="field-input-autocomplete__text icon-search" type="text" value="" placeholder="<%= search %>">
+                <button class="field-input-autocomplete__icon-search"></button>
+            </div>
+        </div>
+    </div>
+
     <div class="field-icon-container-inner<%if (!icon.classes) { %> empty<%}%>">
         <div class="field-icon">
             <div class="field-icon__selected-icon">
@@ -9,11 +27,6 @@
         <div class="field-icon__noicon">
             <i class="field-icon__noicon-icon fa fa-plus"></i>
         </div>
-    </div>
-    
-    <div class="field-input-autocomplete">
-        <input class="text-autocomplete icon-search" type="text" value="" placeholder="<%= search %>">
-        <span class="fa fa-search field-input-autocomplete__icon-search"></span>
     </div>
     
     <div class="filtered-icons">

@@ -20,21 +20,26 @@ var AccordionFlipItemSettingsView = QoobFieldsView.extend( // eslint-disable-lin
             };
         },
         events: {
-            'click .delete-item-accordion': 'deleteInnerSettings'
+            'click .settings-buttons__delete': 'deleteInnerSettings',
+            'click .backward-button': 'clickBackward'
         },
         initialize: function(options) {
             QoobFieldsView.prototype.initialize.call(this, options);
+        },
+        clickBackward: function() {
+            this.controller.backward();
         },
         /**
          * Render accordion item flip view
          * @returns {Object}
          */
         render: function() {
-            this.$el.html(_.template(this.storage.getSkinTemplate('field-accordion-item-flip-view-preview'))());
+            this.$el.html(_.template(this.storage.getSkinTemplate('field-accordion-item-flip-view-preview'))({'back': this.storage.__('back', 'Back')}));
             this.$el.find('.settings-blocks').html(QoobFieldsView.prototype.getHtml.apply(this, arguments));
             return this;
         },
         deleteInnerSettings: function() {
+            this.controller.backward();
             this.model.trigger('delete_model', this);
         },
         /**

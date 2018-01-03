@@ -11,9 +11,10 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
         className: "settings",
         config: null,
         events: {
-            'click .delete-block': 'clickDelete',
-            'click .movedown': 'clickMoveDown',
-            'click .moveup': 'clickMoveUp'
+            'click .backward-button': 'clickBackward',
+            'click .settings-buttons__delete': 'clickDelete',
+            'click .control-buttons__moveup': 'clickMoveUp',
+            'click .control-buttons__movedown': 'clickMoveDown'
         },
         /**
          * Set setting's id
@@ -27,20 +28,8 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
                 id: "settings-block-" + this.model.id
             };
         },
-        /**
-         * Render settings
-         * @returns {Object}
-         */
-        render: function() {
-            var html = QoobFieldsView.prototype.getHtml.apply(this, arguments);
-
-            this.$el.html(
-                _.template(
-                    this.storage.getSkinTemplate('menu-settings-preview')
-                )({ config: this.config, 'back': this.storage.__('back', 'Back'), 'move': this.storage.__('move', 'Move') })
-            ).find('.settings-blocks').html(html);
-
-            return this;
+        clickBackward: function() {
+            this.controller.backward();
         },
         /**
          * Click button remove block
@@ -53,7 +42,7 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
             }
 
             this.controller.deleteBlock(this.model);
-            
+
             if (this.controller.layout.$el.hasClass('mobile')) {
                 this.controller.hideSwipeMenu();
             }
@@ -69,6 +58,26 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
          */
         clickMoveUp: function() {
             this.controller.moveUpBlock(this.model);
+        },
+        /**
+         * Render settings
+         * @returns {Object}
+         */
+        render: function() {
+            var html = QoobFieldsView.prototype.getHtml.apply(this, arguments);
+
+            this.$el.html(
+                _.template(
+                    this.storage.getSkinTemplate('menu-settings-preview')
+                )({ 
+                    config: this.config,
+                    'back': this.storage.__('back', 'Back'),
+                    'moveUp': this.storage.__('moveUp', 'Move'),
+                    'moveDown': this.storage.__('moveDown', 'Move')
+                })
+            ).find('.settings-blocks').html(html);
+
+            return this;
         },
         dispose: function() {
             // same as this.$el.remove();

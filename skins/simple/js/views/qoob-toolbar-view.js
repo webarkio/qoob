@@ -7,20 +7,14 @@
 var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-vars
     /** @lends QoobToolbarView.prototype */
     tagName: 'div',
-    customMenu: null,
+    id: "qoob-toolbar",
     events: {
-        'click .view-preview': 'clickPreviewMode',
-        'change .lib-select': 'changeLib',
-        'change .preview-modes': 'changeDeviceMode',
-        'click .save': 'clickSave',
+        'change .control-buttons__button-preview-list': 'changeDeviceMode',
+        'click .control-buttons__button-preview': 'clickPreviewMode',
+        'click .control-buttons__button-save': 'clickSave',
+        'click .pages-dropdown__backward-button': 'clickBackward',
         'click .autosave-checkbox': 'clickAutosave',
-        'click .backward': 'clickBackward',
         'click [data-id]': 'clickAction'
-    },
-    attributes: function() {
-        return {
-            id: "qoob-toolbar"
-        };
     },
     /**
      * View toolbar
@@ -41,7 +35,8 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         var id = jQuery(evt.currentTarget).data("id");
 
         if (typeof this.storage.driver.mainMenu === "function") {
-            var menuItem = this.customMenu.find(function(o) {
+            var mainMenu = this.storage.driver.mainMenu();
+            var menuItem = mainMenu.find(function(o) {
                 return o.id === id;
             });
 
@@ -51,60 +46,16 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         }
     },
     /**
-     * Render toolbar
-     * @returns {Object}
-     */
-    render: function() {
-        var self = this;
-        var data = {
-            "libs": this.storage.librariesData,
-            "curLib": this.storage.currentLib,
-            "device": this.controller.layout.getDeviceState(),
-            "allThemes": this.storage.__('all_libs', 'All Libs'),
-            "save": this.storage.__('save', 'Save'),
-            "close": this.storage.__('close', 'close'),
-            "more": this.storage.__('more', 'More'),
-            "desktop": this.storage.__('desktop', 'Desktop'),
-            "tablet": this.storage.__('tablet', 'Tablet'),
-            "phone": this.storage.__('phone', 'Phone'),
-            "save_template": this.storage.__('save_template', 'Save as template'),
-            "autosave": this.storage.__('autosave', 'Autosave'),
-            "customMenu": null
-        };
-
-        if (typeof this.storage.driver.mainMenu === "function") {
-            var staticCustomMenu = [{
-                "id": "import-export",
-                "label": "Import/export",
-                "action": function() { self.controller.showImportExportWindow() },
-                "icon": ""
-            }, {
-                "id": "empty-page",
-                "label": "Empty page",
-                "action": function() { self.controller.removePageData() },
-                "icon": ""
-            }];
-            data.customMenu = this.customMenu = this.storage.driver.mainMenu(staticCustomMenu);
-        }
-
-        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
-
-        // Init select
-        this.$el.find('.qoob-select-item').qoobSelect();
-
-        return this;
-    },
-    /**
      * Show loader autosave
      */
     showSaveLoader: function() {
-        this.$el.find('.save .save-clock').css('display', 'block');
+        this.$el.find('.control-buttons__button-save .save-clock').css('display', 'block');
     },
     /**
      * Hide loader autosave
      */
     hideSaveLoader: function() {
-        this.$el.find('.save .save-clock').css('display', '');
+        this.$el.find('.control-buttons__button-save .save-clock').css('display', '');
     },
     //EVENTS
     clickPreviewMode: function() {
@@ -119,10 +70,59 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
     clickAutosave: function(evt) {
         this.controller.setAutoSave(evt.target.checked);
     },
-    changeLib: function(evt) {
-        this.controller.changeLib(evt.target.value);
-    },
     clickBackward: function() {
         this.controller.backward();
+    },
+    /**
+     * Render toolbar
+     * @returns {Object}
+     */
+    render: function() {
+        var self = this;
+        var data = {
+            "device": this.controller.layout.getDeviceState(),
+            "subDomain": this.storage.driver.subDomain,
+            "page": this.storage.driver.page,
+            "pages": this.storage.driver.pages,
+            "save": this.storage.__('save', 'Save'),
+            "desktop": this.storage.__('desktop', 'Desktop'),
+            "tablet": this.storage.__('tablet', 'Tablet'),
+            "phone": this.storage.__('phone', 'Phone'),
+            "autosave": this.storage.__('autosave', 'Autosave'),
+            "locale_pages": this.storage.__('pages', 'Pages'),
+            "customMenu": []
+        };
+
+        if (typeof this.storage.driver.mainMenu === "function") {
+            var staticCustomMenu = [{
+                "id": "import-export",
+                "label": this.storage.__('importExport', 'Import/export'),
+                "action": function() { self.controller.showImportExportWindow() },
+                "icon": ""
+            }, {
+                "id": "empty-page",
+                "label": this.storage.__('epmtyPage', 'Empty page'),
+                "action": function() { self.controller.removePageData() },
+                "icon": ""
+            }];
+
+            var mainMenu = this.storage.driver.mainMenu();
+
+            if (this.storage.translations != null) {
+                for (var i = 0; i < mainMenu.length; i++) {
+                    var key = Object.keys(mainMenu[i].label);
+                    mainMenu[i].label = this.storage.__(key, mainMenu[i].label[key])
+                }
+            }
+
+            data.customMenu = staticCustomMenu.concat(mainMenu);
+        }
+
+        this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
+
+        // Init select
+        this.$el.find('.qoob-select-item').qoobSelect();
+
+        return this;
     }
 });

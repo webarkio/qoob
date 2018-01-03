@@ -1,30 +1,54 @@
-<div class="clearfix">
-    <div class="libraries">
-        <select class="lib-select <% if(!libs) { %>disabled <% } %>qoob-select-item">
-            <option value="all" selected><%= allThemes %></option>
-            <% if(libs) { %>
-                <% for (var i = 0; i < libs.length; i++) { %>
-                    <% if (libs[i].name) { %>
-                        <option value="<%= libs[i].name %>" data-title="<% if (libs[i].name.length > 14) { %><%= libs[i].name.substring(0, 14) %>...<% } else { %><%= libs[i].name %><% } %>" <% if(!!curLib && libs[i].name === curLib) { %> selected <% } %>>
-                            <% if (libs[i].name.length > 26) { %>
-                                <%= libs[i].name.substring(0, 26) %>...
-                            <% } else { %>
-                                <%= libs[i].name %>
-                            <% } %>
-                        </option>
-                    <% } %>
-                <% } %>
-            <% } %>
-        </select>
+<div class="qoob-dropdown pages-dropdown">
+    <div class="qoob-dropdown-toggle">
+        <% if (subDomain != null) { %>
+            <div class="pages-dropdown__domain">
+                <%= subDomain %>
+            </div>
+        <% } %>
+        <div class="pages-dropdown__page">
+            <%= page %>
+        </div>
     </div>
-    <div class="qoob-dropdown qoob-dropdown-more">
+    <ul class="qoob-dropdown-content pages-dropdown__list">
+        <li class="pages-dropdown__backward">
+            <div class="pages-dropdown__backward-button"><div class="pages-dropdown__backward-button-text"><%= locale_pages %></div></div>
+        </li>
+        <% if (pages) { %>
+            <% _.each( pages, function( page ) { %>
+                <li class="pages-dropdown__list-item">
+                    <a class="pages-dropdown__list-item-link" href="<%= page.url %>"><%= page.title %></a>
+                </li>
+            <% }); %>
+        <% } %>
+    </ul>
+</div>
+<div class="control-buttons clearfix">
+    <button class="control-buttons__button control-buttons__button-save" title="<%= save %>">
+        <span class="save-clock">
+            <span class="minutes-container"><span class="minutes"></span></span>
+            <span class="seconds-container"><span class="seconds"></span></span>
+        </span>
+    </button>
+    <button class="control-buttons__button control-buttons__button-preview<% if (device == "mobile") { %> control-buttons__button-preview-disabled<% } %>"></button>
+    <div class="control-buttons__button control-buttons__button-preview-list">
+        <% if (device == "mobile") { %>
+            <button class="control-buttons__button control-buttons__button-preview-modes control-buttons__button-preview-modes-disabled"></button>
+        <% } else { %>
+            <select class="qoob-select-item">
+                <option value="pc" data-icon="fa fa-desktop"><%= desktop %></option>
+                <option value="tablet" data-icon="fa fa-tablet"><%= tablet %></option>
+                <option value="phone" data-icon="fa fa-mobile"><%= phone %></option>
+            </select>
+        <% } %>
+    </div>
+    <div class="qoob-dropdown qoob-dropdown-more control-buttons-dropdown">
         <button class="qoob-dropdown-toggle" type="button">
             <div class="dot">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-        </button>        
+        </button>
         <ul class="qoob-dropdown-content">
             <li>
                 <div class="autosave clearfix">
@@ -41,27 +65,5 @@
                 <% }); %>
             <% } %>
         </ul>
-    </div>
-</div>
-
-<div class="control-buttons clearfix">
-    <button class="button backward"></button>
-    <button class="button view-preview" <% if (device == "mobile") { %> disabled<% } %>></button>
-    <button class="button save" title="<%= save %>">
-        <span class="save-clock">
-            <span class="minutes-container"><span class="minutes"></span></span>
-            <span class="seconds-container"><span class="seconds"></span></span>
-        </span>
-    </button>
-    <div class="preview-modes">
-        <% if (device == "mobile") { %>
-            <div class="qoob-selected-value" data-value="pc" tabindex="0"><i class="fa fa-desktop"></i></div>
-        <% } else { %>
-            <select class="qoob-select-item">
-                <option value="pc" data-icon="fa fa-desktop"><%= desktop %></option>
-                <option value="tablet" data-icon="fa fa-tablet"><%= tablet %></option>
-                <option value="phone" data-icon="fa fa-mobile"><%= phone %></option>
-            </select>
-        <% } %>
     </div>
 </div>

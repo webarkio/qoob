@@ -10,50 +10,60 @@ if (typeof(jQuery) === 'undefined') {
     } else {
         jQuery = $;
     }
-}
-
-;
+};
 (function($) {
-    $(document).on('click', '.qoob-dropdown-toggle', function(event) {
-        event.stopPropagation();
+    $(document).on('click', '.qoob-dropdown-toggle', function(evt) {
+        // evt.stopImmediatePropagation();
 
         var $parent = $(this).parent('.qoob-dropdown'),
             $dropdown = $parent.find('.qoob-dropdown-content');
 
+        $('.qoob-dropdown').each(function(index, el) {
+            $(el).find('.qoob-dropdown-content').trigger('hide');
+        });
+
         // Listen to show and hide event
         $dropdown.on({
             'show': function() {
+                $parent.addClass('active');
 
                 $(this).slideDown({
                         queue: false,
                         duration: 300,
                         easing: 'easeOutCubic'
                     })
-                    .css('overflow', 'visible', 'important')
                     .animate({ opacity: 1 }, { queue: false, duration: 300, easing: 'easeOutSine' });
 
-                $parent.addClass('active');
+                evt.stopImmediatePropagation();
             },
             'hide': function() {
                 $(this).fadeOut(225);
                 $parent.removeClass('active');
+                $dropdown.off('click show hide');
+            },
+            'click': function(evt) {
+                if(evt.target.tagName.toLowerCase() === 'a') {
+                    $(this).trigger('hide');
+                }
             }
-        });
-
-        $dropdown.on('click', 'a', function() {
-            $dropdown.trigger('hide');
         });
 
         if (!$dropdown.is(':visible')) {
             $dropdown.trigger('show');
         } else {
             $dropdown.trigger('hide');
-
         }
 
-        $parent.mouseleave(function() {
-            $dropdown.trigger('hide');
+        // close select drop down
+        $(window).one({
+            'click': function(evt) {
+                if ($(evt.target).parents('.qoob-dropdown-content').length == 0) {
+                    $dropdown.trigger('hide');
+                }
+            },
+            'blur': function() {
+                $dropdown.trigger('hide');
+            }
         });
     });
-
 }(jQuery));

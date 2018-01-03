@@ -52,11 +52,9 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             // Init swipe
-            new Hammer(document.documentElement, {
+            new Hammer(document.body, {
                 domEvents: true,
-                touchAction: 'pan-y',
-                inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchMouseInput
-
+                touchAction: 'pan-y'
             });
 
             jQuery('body').on('swipeleft swiperight', function(e) {
@@ -196,11 +194,13 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             storage: this.storage,
                             controller: this.controller,
                             model: model,
-                            curSrc: imageView.getValue(),
+                            src: imageView.getValue(),
                             assets: this.storage.getAssets(),
                             tags: imageView.tags ? imageView.tags.join(', ') : '',
+                            parent: parentView,
+                            settings: imageView.settings,
+                            defaults: imageView.defaults,
                             cb: imageView.changeImage.bind(imageView),
-                            parent: parentView
                         });
                         innerView.side = innerView;
 
@@ -225,8 +225,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             model: model,
                             icon: iconObject ? { classes: iconObject.classes, tags: iconObject.tags } : '',
                             icons: iconView.icons,
+                            parent: parentView,
+                            settings: iconView.settings,
+                            defaults: iconView.defaults,
                             cb: iconView.changeIcon.bind(iconView),
-                            parent: parentView
                         });
 
                         innerView.side = innerView;
@@ -251,8 +253,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             src: videoView.getValue(),
                             assets: videoView.storage.getAssets(),
                             tags: videoView.tags ? videoView.tags.join(', ') : '',
+                            parent: parentView,
+                            settings: videoView.settings,
+                            defaults: videoView.defaults,
                             cb: videoView.changeVideo.bind(videoView),
-                            parent: parentView
                         });
                         innerView.side = innerView;
 
@@ -302,7 +306,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * @returns {Object}
          */
         render: function() {
-            this.sidebar.$el.html([this.toolbar.render().el, this.menu.render().el]);
+            this.sidebar.$el.html([this.menu.render().el]);
             this.$el.html([this.sidebar.render().el, this.viewPort.render().el, this.ImportExport.render().el, this.editModeButton.render().el]);
             
             var deviceLocal = this.getDeviceState();
@@ -359,10 +363,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         triggerIframe: function() {
             this.viewPort.triggerIframe();
-        },
-        changeLib: function(name) {
-            this.storage.currentLib = name;
-            this.menu.hideLibsExcept(name);
         },
         changeDefaultPage: function(event) {
             this.viewPort.changeDefaultPage(event);

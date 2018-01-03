@@ -11,8 +11,14 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         limit: 12,
         events: {
             'keydown': 'keyAction',
-            'click .ajax-icon': 'selectIcon',
             'keyup .icon-search': 'searchFilter',
+            'blur .icon-search': 'blurInput',
+            'click .ajax-icon': 'clickListIcon',
+            'click .backward-button': 'clickBackward',
+            'click .field-input-autocomplete__icon-search': 'clickSearchButton',
+            'click .inner-settings-control__button-search': 'showSearchInput',
+            'click .inner-settings-control__button-reset': 'clickReset',
+            'click .inner-settings-control__button-remove': 'clickRemove',
             'shown': 'afterRender'
         },
         /**
@@ -37,17 +43,128 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.name = options.name;
             this.storage = options.storage;
             this.controller = options.controller;
+            this.settings = options.settings;
+            this.defaults = options.defaults;
             this.icons = options.icons;
             this.icon = options.icon;
             this.tags = options.icon.tags || '';
-            this.cb = options.cb;
-            this.parent = options.parent;
             this.model = options.model;
+            this.parent = options.parent;
+            this.cb = options.cb;
 
             this.listenTo(this.model, 'change', function(select) {
                 var icon = Object.keys(select.changed)[0];
                 this.changeIcon(select.changed[icon]);
             });
+        },
+        keyAction: function(evt) {
+            if (evt.keyCode == 13) {
+                this.tags = this.$el.find('.icon-search').val().split(',');
+                this.search();
+                this.$el.find('.icon-search').autocomplete("search", "");
+                return false;
+            }
+        },
+        /**
+         * Main method change icon
+         * @param {String} icon
+         */
+        changeIcon: function(icon) {
+            if (icon === undefined || icon == '') {
+                if (!this.$el.find('.field-icon-container-inner').hasClass('empty')) {
+                    this.$el.find('.field-icon-container-inner').addClass('empty');
+                }
+                this.$el.find('.field-icon__selected-icon span').attr({
+                    'class': '',
+                    'data-icon-tags': ''
+                });
+                this.$el.find('.ajax-icon').removeClass('chosen');
+                this.$el.find('.icon-search').val('');
+
+                this.tags = '';
+                this.icon = '';
+                
+                this.cb('');
+            } else {
+                var iconObject = this.findByClasses(icon);
+
+                this.tags = (iconObject ? iconObject.tags : '');
+
+                this.$el.find('.field-icon-container-inner').removeClass('empty');
+
+                this.$el.find('.field-icon__selected-icon span').attr({
+                    'class': icon,
+                    'data-icon-tags': this.tags
+                });
+
+                this.icon = { classes: icon, tags: this.tags };
+
+                this.cb(icon);
+            }
+        },
+        clickBackward: function() {
+            this.controller.backward();
+        },
+        /**
+         * Setting an icon by clicking it
+         * @param {type} evt
+         * @returns {undefined}
+         */
+        clickListIcon: function(evt) {
+            if (evt.currentTarget.classList.contains('chosen')) {
+                return;
+            }
+
+            var currentTarget = this.$(evt.currentTarget).find('span');
+            this.$el.find('.ajax-icon').removeClass('chosen');
+            evt.currentTarget.classList.add('chosen');
+
+            this.icon = { classes: currentTarget.attr('class'), tags: currentTarget.data('iconTags') };
+            this.cb(currentTarget.attr('class'));
+        },
+        /**
+         * Trigger search by click
+         */
+        clickSearchButton: function() {
+            this.tags = this.$el.find('.icon-search').val().split(',');
+            this.search();
+        },
+        /**
+         *  Reset to default
+         */
+        clickReset: function() {
+            if (this.defaults != undefined) {
+                this.changeIcon(this.defaults);
+                this.search();
+            }
+        },
+        /**
+         * Remove image
+         */
+        clickRemove: function() {
+            this.changeIcon('');
+        },
+        showSearchInput: function() {
+            this.$el.find('.inner-settings-control__search').addClass('inner-settings-control__search-active');
+            this.$el.find('.field-input-autocomplete__text').focus();
+        },
+        blurInput: function() {
+            var self = this;
+
+            setTimeout(function() {
+                if (!self.$el.find(".field-input-autocomplete__icon-search").is(":focus")) {
+                    self.hiddenFields();
+                }
+            }, 0);
+        },
+        hiddenFields: function() {
+            this.$el.find('.inner-settings-control__search-active').removeClass('inner-settings-control__search-active');
+        },
+        search: function() {
+            var filteredIcons = this.$el.find('.filtered-icons');
+            filteredIcons.find('.ajax-icon').remove();
+            this.offset = 0;
+            this.loadMore();
         },
         checkLoadMore: function() {
             var filteredIcons = this.$el.find('.filtered-icons');
@@ -56,22 +173,6 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             } else {
                 return false;
             }
-        },
-        keyAction: function(evt) {
-            if (evt.keyCode == 13) {
-                var tags = this.$el.find('.icon-search').val().split(',');
-                this.search(tags);
-                this.$el.find('.icon-search').autocomplete("search", "");
-                return false;
-            }
-        },
-        search: function(tags) {
-            var filteredIcons = this.$el.find('.filtered-icons');
-
-            filteredIcons.find('.ajax-icon').remove();
-            this.tags = tags;
-            this.offset = 0;
-            this.loadMore();
         },
         loadMore: function() {
             var filteredIcons = this.$el.find('.filtered-icons'),
@@ -106,7 +207,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     for (var j = 0; j < filteredWords.length; j++) {
                         var regEx = new RegExp(filteredWords[j].replace(/ /g, ' '));
                         if (filteredWords[j] !== '' && (this.icons[y].tags && this.icons[y].tags.match(regEx))) {
-                            if (dataSearchIcons.indexOf(this.icons[y]) < 0) {
+                            if (dataSearchIcons.indexOf(this.icons[y]) == -1) {
                                 dataSearchIcons.push(this.icons[y]);
                             }
                         }
@@ -120,55 +221,6 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
 
             return result.join('');
-        },
-        /**
-         * Setting an icon by clicking it
-         * @param {type} evt
-         * @returns {undefined}
-         */
-        selectIcon: function(evt) {
-            if (evt.currentTarget.classList.contains('chosen')) {
-                return;
-            }
-
-            var currentTarget = this.$(evt.currentTarget).find('span');
-            this.$el.find('.ajax-icon').removeClass('chosen');
-            evt.currentTarget.classList.add('chosen');
-
-            this.changeIcon(currentTarget.attr('class'));
-        },
-        /**
-         * Main method change icon
-         * @param {String} icon
-         */
-        changeIcon: function(icon) {
-            if (icon === undefined || icon == '') {
-                if (!this.$el.find('.field-icon-container-inner').hasClass('empty')) {
-                    this.$el.find('.field-icon-container-inner').addClass('empty');
-                }
-                this.$el.find('.field-icon__selected-icon span').attr({
-                    'class': '',
-                    'data-icon-tags': ''
-                });
-
-                this.tags = '';
-
-                this.$el.find('.ajax-icon').removeClass('chosen');
-                this.$el.find('.icon-search').val('');
-            } else {
-                var iconObject = this.findByClasses(icon);
-
-                this.$el.find('.field-icon-container-inner').removeClass('empty');
-
-                this.$el.find('.field-icon__selected-icon span').attr({
-                    'class': icon,
-                    'data-icon-tags': (iconObject ? iconObject.tags : '')
-                });
-
-                this.icon = { class: icon, tags: (iconObject ? iconObject.tags : '') };
-
-                this.cb(icon);
-            }
         },
         /**
          * Keyup event for filtering icons by tags in search input
@@ -191,7 +243,8 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.$el.find('.icon-search').autocomplete({
                 source: tagsList,
                 select: function(event, ui) {
-                    self.search(ui.item.value);
+                    self.tags = ui.item.value;
+                    self.search();
                 },
             }).data("ui-autocomplete")._renderItem = function(ul, item) {
                 //Ul custom class here
@@ -211,23 +264,16 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             return _.findWhere(this.icons, { "classes": classes });
         },
         /**
-         * Remove view
-         */
-        dispose: function() {
-            this.$el.remove();
-            // unbind events that are
-            // set on this view
-            this.off();
-        },
-        /**
          * Render IconCenter view
          * @returns {Object}
          */
         render: function() {
             //Creating layout
             this.$el.html(_.template(this.storage.getSkinTemplate('field-icon-setting-preview'))({
-                search: this.storage.__('search', 'Search'),
-                icon: this.icon
+                "hideDeleteButton": this.settings.hideDeleteButton,
+                'search': this.storage.__('search', 'Search'),
+                'back': this.storage.__('back', 'Back'),
+                'icon': this.icon
             }));
 
             return this;
@@ -250,5 +296,14 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     self.loadMore();
                 }
             });
-        }
+        },
+        /**
+         * Remove view
+         */
+        dispose: function() {
+            this.$el.remove();
+            // unbind events that are
+            // set on this view
+            this.off();
+        },
     });

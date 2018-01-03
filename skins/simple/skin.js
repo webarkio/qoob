@@ -69,7 +69,7 @@ function Skin() {
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
             { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
-            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" }
+            { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css", "dep": ["jquery-ui.css"] }
         ],
         "prod": [
             { "type": "css", "name": "font-awesome.min.css", "src": "css/font-awesome.min.css" },

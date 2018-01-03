@@ -1,11 +1,8 @@
 <label class="field-label"><%= label %></label>
 
-<div class="field-video-container
-
-
-<% if ((src === '' || src !== '' && !src.hasOwnProperty('url')) || (src.hasOwnProperty('url') && src.url === '')) { %> empty<% } else if (src.hasOwnProperty('preview') && src.preview === '') { %> empty-preview<% } %>">
+<div class="field-video-container <% if ((src === '' || src !== '' && !src.hasOwnProperty('url')) || (src.hasOwnProperty('url') && src.url === '')) { %> empty<% } else if (src.hasOwnProperty('preview') && src.preview === '') { %> empty-preview<% } %>">
     <div class="field-video__preview">
-        <img class="field-video__preview-image show-media-center" src="<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= src.preview %>" />
+        <img class="field-video__preview-image show-media-center" src="<%= src.preview %>" />
         <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
             <i class="field-video__remove-video fa fa-times"></i>
         <% } %>
@@ -35,7 +32,7 @@
         <% for (var i = 0; i < videos.length; i++) { %>
             <div class="others__item">
                 <% if (videos[i].preview !== '') { %>
-                    <div class="others-item__image" data-src-video="<%= videos[i].url %>" data-src-preview="<%= videos[i].preview %>" style="background-image: url('<% if (iframeUrl !== '') { %> <%= iframeUrl %><% } %><%= videos[i].preview %>');"></div>
+                    <div class="others-item__image" data-src-video="<%= videos[i].url %>" data-src-preview="<%= videos[i].preview %>" style="background-image: url('<%= videos[i].preview %>');"></div>
                 <% } %>
             </div>
         <%}%>

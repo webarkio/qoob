@@ -333,35 +333,6 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var settings = this.getSettingsView(model.id);
             settings.dispose();
         },
-        /**
-         * Hide groups and blocks in menu those are not contained in selected lib.
-         * @param  {String} libName Lib name for which not to hide groups and blocks
-         */
-        hideLibsExcept: function(libName) {
-            var self = this,
-                groups = this.$el.find('ul.catalog-list li'),
-                blocks = this.$el.find('.preview-block');
-
-            groups.hide();
-            blocks.hide();
-
-            self.controller.navigate('', {
-                    trigger: true
-            });
-
-            if (libName !== 'all') {
-                blocks = blocks.filter(function(index) {
-                    return self.$(blocks[index]).data('lib') == libName;
-                });
-
-                groups = groups.filter(function(index) {
-                    return self.$(groups[index]).data('lib').indexOf(libName) != -1;                    
-                });
-            }
-
-            groups.show();
-            blocks.show();
-        },
         hideNotice: function() {
             var viewSaveTemplate = _.findWhere(this.menuViews, { 'id': 'save-template' }),
                 element = viewSaveTemplate.$el;

@@ -220,9 +220,6 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     triggerIframe: function() {
         this.layout.triggerIframe();
     },
-    changeLib: function(name) {
-        this.layout.changeLib(name);
-    },
     /**
      * Get current params from Backbone.history.fragment
      */

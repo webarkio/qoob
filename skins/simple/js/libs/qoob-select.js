@@ -28,7 +28,7 @@ if (typeof(jQuery) === 'undefined') {
                 selectedOptionText = $select.find('option:selected').html() || $select.find('option:first').html() || "";
                 selectedOptionText = selectedOptionText.replace(/"/g, '&quot;');
             }
-            
+
             var $options = $('<ul class="qoob-select-dropdown"></ul>');
 
             $select.wrap('<div class="qoob-select"></div>');
@@ -78,7 +78,7 @@ if (typeof(jQuery) === 'undefined') {
                 });
             });
 
-            $selectedValue.on('click', function(e) {
+            $selectedValue.on('click', function() {
                 if ($options.hasClass('active')) {
                     $options.trigger('close');
                     return;
@@ -87,6 +87,8 @@ if (typeof(jQuery) === 'undefined') {
                 if (!$options.is(':visible')) {
                     $options.trigger('open');
 
+                    optionsHover = true;
+
                     var selectedOption = $options.find('li').filter(function() {
                         return $(this).data('value').toLowerCase() === selectedOptionValue.toLowerCase();
                     });
@@ -94,8 +96,6 @@ if (typeof(jQuery) === 'undefined') {
                     $(selectedOption).addClass('selected');
                     $(selectedOption).prependTo($options);
                 }
-
-                e.stopPropagation();
             });
 
             // Listen to open and close event
@@ -110,9 +110,9 @@ if (typeof(jQuery) === 'undefined') {
                         .animate({ opacity: 1 }, { queue: false, duration: 300, easing: 'easeOutSine' });
                 },
                 'close': function() {
+                    $(this).fadeOut(225);
                     $(this).removeClass('active');
                     $options.find('.selected').removeClass('selected');
-                    $(this).fadeOut(225);
                 }
             });
 
@@ -127,7 +127,7 @@ if (typeof(jQuery) === 'undefined') {
             });
 
             // close select drop down
-            $(window).on({
+            $(window).one({
                 'click': function() {
                     optionsHover || $options.trigger('close');
                 }

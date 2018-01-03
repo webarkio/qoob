@@ -1,19 +1,21 @@
 <h3 class="title-accordion inner-settings-expand">
-<span class="draggable">
-	<span></span>
-	<span></span>
-	<span></span>
-	<span></span>
-</span>
-<% if( image != undefined ) {%>
-	<span class="preview-image">
-		<img src="<%= image %>" />
+	<span class="draggable">
+		<span></span>
+		<span></span>
+		<span></span>
 	</span>
-<% } %>
+	<span class="field-accordion-item__delete">
+		<i class="fa fa-trash-o"></i>
+	</span>
+	<% if( image != undefined ) {%>
+		<span class="preview-image">
+			<img src="<%= image %>" />
+		</span>
+	<% } %>
 	<span class="title-item">
 		<%= title %>
 	</span>
-<span class="arrow"></span>
+	<span class="arrow"></span>
 </h3>
 <div class="settings-blocks">
 </div>

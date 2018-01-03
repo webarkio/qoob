@@ -38,23 +38,25 @@ var QoobSidebarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
             var allow,
                 allowedFields = ['image', 'video'];
 
-            for (var i = 0; i < fields.length; i++) {
-                if (allowedFields.indexOf(fields[i].settings.type) > -1) {
-                    allow = true;
-                    break;
-                } else if (fields[i].settings.type == 'accordion' || fields[i].settings.type == 'accordion_flip') {
-                    var searchField = _.some(fields[i].settings.settings, function(item) {
-                        if (allowedFields.indexOf(item.type) > -1) {
-                            return item;
-                        }
-                    });
-
-                    if (searchField) {
+            if (fields != undefined) {
+                for (var i = 0; i < fields.length; i++) {
+                    if (allowedFields.indexOf(fields[i].settings.type) > -1) {
                         allow = true;
                         break;
+                    } else if (fields[i].settings.type == 'accordion' || fields[i].settings.type == 'accordion_flip') {
+                        var searchField = _.some(fields[i].settings.settings, function(item) {
+                            if (allowedFields.indexOf(item.type) > -1) {
+                                return item;
+                            }
+                        });
+
+                        if (searchField) {
+                            allow = true;
+                            break;
+                        }
+                    } else {
+                        allow = false;
                     }
-                } else {
-                    allow = false;
                 }
             }
 

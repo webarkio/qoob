@@ -171,31 +171,33 @@ Fields.video = QoobFieldView.extend(
          * @returns {Object}
          */
         render: function() {
-            var iframeUrl,
-                pattern = /^((http|https):\/\/)/;
-
-            // if url has "http|https"
-            if (_.isObject(this.getValue())) {
-                if (!pattern.test(this.getValue().preview) && typeof this.storage.driver.getFrontendPageUrl === "function") {
-                    iframeUrl = this.storage.driver.getFrontendPageUrl();
-                } else {
-                    iframeUrl = '';
-                }
-            } else {
-                if (!pattern.test(this.getValue()) && typeof this.storage.driver.getFrontendPageUrl === "function") {
-                    iframeUrl = this.storage.driver.getFrontendPageUrl();
-                } else {
-                    iframeUrl = '';
+            var presets = [], src;
+            if (this.settings.presets) {
+                for (var i = 0; i < this.settings.presets.length; i++) {
+                    if (this.settings.presets[i].preview != undefined) {
+                        presets.push({
+                            "url": this.controller.layout.viewPort.getIframeUrl(this.settings.presets[i].url),
+                            "preview": this.controller.layout.viewPort.getIframeUrl(this.settings.presets[i].preview)
+                        });
+                    }
                 }
             }
 
-            var htmldata = {
-                label: this.settings.label,
-                name: this.settings.name,
-                videos: this.settings.presets,
-                src: this.getValue(),
-                "iframeUrl": iframeUrl,
-                hideDeleteButton: this.settings.hideDeleteButton,
+            if (_.isObject(this.getValue())) {
+                src = {
+                    "url": this.controller.layout.viewPort.getIframeUrl(this.getValue().url),
+                    "preview": this.controller.layout.viewPort.getIframeUrl(this.getValue().preview)
+                };
+            } else {
+                src = this.controller.layout.viewPort.getIframeUrl(this.getValue());
+            }
+
+            var data = {
+                'label': this.settings.label,
+                'name': this.settings.name,
+                'videos': presets,
+                'src': src,
+                'hideDeleteButton': this.settings.hideDeleteButton,
                 'media_center': this.storage.__('media_center', 'Media center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_poster': this.storage.__('no_poster', 'No poster'),
@@ -203,13 +205,23 @@ Fields.video = QoobFieldView.extend(
                 'error_text': this.storage.__('error_text', 'Video size can not exceed 30 mb')
             };
 
-            if (typeof this.storage.driver.mainMenu === "function") {
+            if (typeof this.storage.driver.fieldVideoActions === "function") {
                 var staticCustom = [];
-                htmldata.customItems = this.customItems = this.storage.driver.fieldVideoActions(staticCustom);
+
+                this.customItems = this.storage.driver.fieldVideoActions(staticCustom);
+
+                if (this.storage.translations != null) {
+                    for (var x = 0; x < this.customItems.length; x++) {
+                        var key = Object.keys(this.customItems[x].label);
+                        this.customItems[x].label = this.storage.__(key, this.customItems[x].label[key])
+                    }
+                }
+
+                data.customItems = this.customItems;
             }
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
-                this.$el.html(this.tpl(htmldata));
+                this.$el.html(this.tpl(data));
             }
 
             return this;

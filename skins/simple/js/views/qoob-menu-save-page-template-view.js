@@ -9,6 +9,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
     {
         id: 'save-template',
         events: {
+            'click .backward-button': 'clickBackward',
             'click .create-template': 'clickCreateTemplate',
             'keyup .input-text': 'changeInput'
         },
@@ -40,6 +41,9 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             this.storage = options.storage;
             this.name = options.name;
             this.side = this;
+        },
+        clickBackward: function() {
+            this.controller.backward();
         },
         changeInput: function(evt) {
             var input = jQuery(evt.currentTarget).parent('.field-text');
@@ -111,8 +115,9 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             var model = QoobUtils.createModel(this.config);
 
             var data = {
+                'back': this.storage.__('back', 'Back'),
                 'save_template': this.storage.__('save_template', 'Save template'),
-                'save_loading': this.storage.__('save_process', 'Save...'),
+                'save_loading': this.storage.__('save_process', 'Saving...'),
                 'save_notice_title': this.storage.__('save_notice_title', 'Your template has been saved successfully!'),
                 'you_cant_save_empty_template': this.storage.__('you_cant_save_empty_template', "You can't save empty template"),
                 'you_cant_save_empty_title': this.storage.__('you_cant_save_empty_title', "The name of the template must be at least 1 character")
@@ -129,7 +134,7 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             this.settingsModel = this.settingsView.model;
 
-            this.$el.html(_.template(this.storage.getSkinTemplate('menu-more-preview'))(data)).find('.settings-blocks-full').prepend(this.settingsView.getHtml());
+            this.$el.html(_.template(this.storage.getSkinTemplate('menu-save-template-preview'))(data)).find('.settings-blocks-full').prepend(this.settingsView.getHtml());
 
 
             return this;
