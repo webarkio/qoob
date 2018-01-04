@@ -605,6 +605,7 @@ a {
 
 .group-list__item {
     height: 50px;
+    margin: 0;
 }
 
 .group-list__link {
@@ -761,7 +762,7 @@ a {
 .qoob-dropdown .dot {
     position: relative;
     height: 100%;
-    width: 100%;
+    width: calc(100% - 4px);
 }
 
 .qoob-dropdown .dot span {
@@ -896,10 +897,15 @@ a {
     font-size: 20px;
     padding-top: 4px;
     font-family: "qrobotoblack";
+    text-overflow: ellipsis;
+    width: 192px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .pages-dropdown__page:first-child {
     margin-top: 4px;
+    line-height: 22px;
 }
 
 .pages-dropdown .pages-dropdown__list {

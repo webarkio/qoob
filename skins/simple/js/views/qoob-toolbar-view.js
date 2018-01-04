@@ -108,10 +108,12 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
 
             var mainMenu = this.storage.driver.mainMenu();
 
-            if (this.storage.translations != null) {
-                for (var i = 0; i < mainMenu.length; i++) {
-                    var key = Object.keys(mainMenu[i].label);
-                    mainMenu[i].label = this.storage.__(key, mainMenu[i].label[key])
+            for (var i = 0; i < mainMenu.length; i++) {
+                var key = Object.keys(mainMenu[i].label);
+                if (this.storage.translations != null) {
+                    mainMenu[i].label = this.storage.__(key, mainMenu[i].label[key]);
+                } else {
+                    mainMenu[i].label = mainMenu[i].label[key];
                 }
             }
 
