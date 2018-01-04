@@ -207,13 +207,15 @@ Fields.video = QoobFieldView.extend(
 
             if (typeof this.storage.driver.fieldVideoActions === "function") {
                 var staticCustom = [];
-
-                this.customItems = this.storage.driver.fieldVideoActions(staticCustom);
-
-                if (this.storage.translations != null) {
-                    for (var x = 0; x < this.customItems.length; x++) {
-                        var key = Object.keys(this.customItems[x].label);
-                        this.customItems[x].label = this.storage.__(key, this.customItems[x].label[key])
+                
+                this.customItems = this.storage.driver.fieldImageActions(staticCustom);
+                
+                for (var x = 0; x < this.customItems.length; x++) {
+                    var key = Object.keys(this.customItems[x].label);
+                    if (this.storage.translations != null) {
+                        this.customItems[x].label = this.storage.__(key, this.customItems[x].label[key]);
+                    } else {
+                        this.customItems[x].label = this.customItems[x].label[key];
                     }
                 }
 
