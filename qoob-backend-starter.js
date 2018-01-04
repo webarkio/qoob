@@ -172,7 +172,7 @@
         self.loader.stage = 4;
         self.loader.stageLoaded = self.loader.getCountLoaded();
 
-        if (self.options.driver.translationsUrl !== null) {
+        if (self.options.driver.translationsUrl !== undefined) {
             self.options.driver.loadTranslations(function(err, data) {
                 self.options.translations = data;
                 self.startStage5();

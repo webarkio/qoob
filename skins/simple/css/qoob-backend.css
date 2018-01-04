@@ -761,7 +761,7 @@ a {
 .qoob-dropdown .dot {
     position: relative;
     height: 100%;
-    width: calc(100% - 4px);
+    width: 100%;
 }
 
 .qoob-dropdown .dot span {
@@ -779,7 +779,7 @@ a {
 
 .qoob-dropdown.active .dot span:first-child {
     transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
-    left: 18px;
+    left: 22px;
     top: 23px;
 }
 
@@ -794,7 +794,7 @@ a {
 
 .qoob-dropdown.active .dot span:nth-child(3) {
     transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
-    right: 15px;
+    right: 18px;
     top: 23px;
 }
 
@@ -3002,7 +3002,7 @@ a {
     width: 60px;
     height: 45px;
     outline: none;
-    border: 1px solid transparent;
+    border: none;
     margin: 0;
     padding: 0;
 }
