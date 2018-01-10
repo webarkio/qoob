@@ -35,8 +35,7 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         var id = jQuery(evt.currentTarget).data("id");
 
         if (typeof this.storage.driver.mainMenu === "function") {
-            var mainMenu = this.storage.driver.mainMenu();
-            var menuItem = mainMenu.find(function(o) {
+            var menuItem = this.menu.find(function(o) {
                 return o.id === id;
             });
 
@@ -106,16 +105,18 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
                 "icon": ""
             }];
 
-            var mainMenu = this.storage.driver.mainMenu();
+            this.menu = this.storage.driver.mainMenu(staticCustomMenu);
 
-            if (this.storage.translations != null) {
-                for (var i = 0; i < mainMenu.length; i++) {
-                    var key = Object.keys(mainMenu[i].label);
-                    mainMenu[i].label = this.storage.__(key, mainMenu[i].label[key])
+            for (var i = 0; i < this.menu.length; i++) {
+                var key = Object.keys(this.menu[i].label);
+                if (this.storage.translations != null) {
+                    this.menu[i].label = this.storage.__(key, this.menu[i].label[key]);
+                } else if(_.isObject(this.menu[i].label)) {
+                    this.menu[i].label = this.menu[i].label[key];
                 }
             }
 
-            data.customMenu = staticCustomMenu.concat(mainMenu);
+            data.customMenu = this.menu;
         }
 
         this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));

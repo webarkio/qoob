@@ -52,20 +52,19 @@ function Skin() {
             { "type": "js", "name": "template-adapter-handlebars", "src": "js/extensions/template-adapter-handlebars.js", "dep": ["backbone"] },
             { "type": "js", "name": "template-adapter-underscore", "src": "js/extensions/template-adapter-underscore.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-storage", "src": "js/qoob-storage.js", "dep": ["backbone"] },
-            { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
-            { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
-            { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
-            { "type": "css", "name": "bootstrap-select.css", "src": "css/bootstrap-select.css", "min_src": "css/bootstrap-select.min.css" },
+            { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] }
         ],
         "prod": [
-            { "type": "js", "name": "skin_assets", "src": "skin.concated.js" },
-
+            { "type": "js", "name": "skin_assets", "src": "skin.concated.js" }
         ],
         "all": [
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "js", "name": "bootstrap", "src": "js/libs/bootstrap.min.js", "dep": ["jquery"] },
             { "type": "css", "name": "bootstrap.min.css", "src": "css/bootstrap.min.css" },
+            { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
+            { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
+            { "type": "css", "name": "bootstrap-select.css", "src": "css/bootstrap-select.css", "min_src": "css/bootstrap-select.min.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" },
             { "type": "json", "name": "skin_translation", "src": "translation.json" }
