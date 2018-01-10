@@ -1,3 +1,4 @@
 [submodule "blocks"]
 	path = blocks
 	url = https://github.com/webarkio/qoob_default_blocks.git
+	branch = master
