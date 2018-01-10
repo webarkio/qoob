@@ -77,8 +77,6 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
                 this.search();
-                this.$el.find('.video-search').autocomplete("search", "");
-                return false;
             }
         },
         changeVideo: function(src) {

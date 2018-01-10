@@ -103,7 +103,7 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
                 'icon': this.findByClasses(this.getValue()) || this.getValue(),
                 'hideDeleteButton': this.settings.hideDeleteButton,
                 'icon_center': this.storage.__('icon_center', 'Icon center'),
-                'reset_to_default': this.storage.__('reset_to_default', 'Reset to default')
+                'reset_to_default': this.storage.__('resetToDefault', 'Reset to default')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {

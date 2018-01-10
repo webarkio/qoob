@@ -11,7 +11,7 @@
     "save_notice_title": "Ваш шаблон успешно сохранён!",
     "you_cant_save_empty_template": "Невозможно сохранить пустой шаблон",
     "you_cant_save_empty_title": "Имя шаблона должно содержать не менее 1 символа",
-    "text_droppable_zone": "Перетащите сюда, чтобы создать новый блок",
+    "text_droppable_zone": "Перетащите сюда для создания блока",
     "page_data": "Данные страницы",
     "cancel": "Отменить",
     "save_changes": "Сохранить",
@@ -21,7 +21,9 @@
     "media_center": "Медиа-центр",
     "drop_here": "Перетащите сюда",
     "error": "Ошибка!",
-    "error_text": "Максимальный размер изображения: 2 мб",
+    "errorImageTextSize": "Максимальный размер изображения: 2 мб",
+    "errorVideoTextSize": "Максимальный размер изображения: 30 мб",
+    "errorVideoTextFormat": "Неподходящий формат файла",
     "back": "Назад",
     "moveUp": "Вверх",
     "moveDown": "Вниз",
@@ -35,5 +37,9 @@
     "showOnFrontend": "Посмотреть страницу",
     "resetToDefault": "Сбросить настройки",
     "upload": "Загрузить",
-    "pages": "Страницы"
+    "pages": "Страницы",
+    "icon_center": "Иконки",
+    "Preview": "Просмотр",
+    "Devices": "Устройства",
+    "confirm_delete_block": "Вы уверены, что хотите удалить блок?"
 }

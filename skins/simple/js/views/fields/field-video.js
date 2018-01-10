@@ -110,24 +110,26 @@ Fields.video = QoobFieldView.extend(
                 container = this.$el.find('.field-video-container');
             var droppedFiles = evt.originalEvent.dataTransfer.files;
 
+            if (container.hasClass('empty') || container.hasClass('upload-error')) {
+                container.removeClass('empty upload-error upload-error__size upload-error__format');
+            }
+
             // 30 MB limit
             if (droppedFiles[0].size > 31457280) {
-                container.addClass('upload-error');
+                container.addClass('upload-error upload-error__size');
             } else {
                 if (droppedFiles[0].name.match(/.(mp4|ogv|webm)$/i)) {
                     this.storage.driver.uploadVideo(droppedFiles, function(error, url) {
                         if ('' !== url) {
                             self.changeVideo({'url': url, 'preview': ''});
-                            if (container.hasClass('empty') || container.hasClass('upload-error')) {
-                                container.removeClass('empty upload-error');
-                            }
+
                             if (!container.hasClass('empty-preview')) {
                                 container.addClass('empty-preview');
                             }
                         }
                     });
                 } else {
-                    console.error('file format is not appropriate');
+                    container.addClass('upload-error upload-error__format');
                 }
             }
 
@@ -202,20 +204,23 @@ Fields.video = QoobFieldView.extend(
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'no_poster': this.storage.__('no_poster', 'No poster'),
                 'error': this.storage.__('error', 'Error!'),
-                'error_text': this.storage.__('error_text', 'Video size can not exceed 30 mb')
+                'error_text_size': this.storage.__('errorVideoTextSize', 'Video size can not exceed 30 mb'),
+                'error_text_format': this.storage.__('errorVideoTextFormat', 'File format is not appropriate')
             };
 
             if (typeof this.storage.driver.fieldVideoActions === "function") {
                 var staticCustom = [];
                 
-                this.customItems = this.storage.driver.fieldImageActions(staticCustom);
+                this.customItems = this.storage.driver.fieldVideoActions(staticCustom);
                 
                 for (var x = 0; x < this.customItems.length; x++) {
-                    var key = Object.keys(this.customItems[x].label);
-                    if (this.storage.translations != null) {
-                        this.customItems[x].label = this.storage.__(key, this.customItems[x].label[key]);
-                    } else {
-                        this.customItems[x].label = this.customItems[x].label[key];
+                    if(_.isObject(this.customItems[x].label)) {
+                        var key = Object.keys(this.customItems[x].label);
+                        if (this.storage.translations != null) {
+                            this.customItems[x].label = this.storage.__(key, this.customItems[x].label[key]);
+                        } else {
+                            this.customItems[x].label = this.customItems[x].label[key];
+                        }
                     }
                 }
 

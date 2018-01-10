@@ -37,11 +37,11 @@ if (typeof(jQuery) === 'undefined') {
             if (children.length) {
                 children.each(function() {
                     if ($(this).data('title') !== undefined) {
-                        $options.append($('<li data-value="' + $(this).val() + '" data-title="' + $(this).data('title') + '"><span>' + $(this).html() + '</span></li>'));
+                        $options.append($('<li data-value="' + $(this).val() + '" title="' + $(this).data('title') + '"><span>' + $(this).html() + '</span></li>'));
                     } else if ($(this).data('icon') !== undefined) {
-                        $options.append($('<li data-value="' + $(this).val() + '"><i class="' + $(this).data('icon') + '"></i></li>'));
+                        $options.append($('<li data-value="' + $(this).val() + '" title="' + $(this).html() + '"><i class="' + $(this).data('icon') + '"></i></li>'));
                     } else {
-                        $options.append($('<li data-value="' + $(this).val() + '"><span>' + $(this).html() + '</span></li>'));
+                        $options.append($('<li data-value="' + $(this).val() + '" title="' + $(this).html() + '"><span>' + $(this).html() + '</span></li>'));
                     }
                 });
             }
@@ -49,6 +49,7 @@ if (typeof(jQuery) === 'undefined') {
             var $selectedValue = $('<div />', {
                 'class': 'qoob-selected-value',
                 'data-value': selectedOptionValue,
+                'title': $select.find('option:selected').html(),
                 'tabindex': 0
             }).append(selectedOptionText);
 

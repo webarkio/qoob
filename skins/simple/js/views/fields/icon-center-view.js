@@ -61,8 +61,6 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             if (evt.keyCode == 13) {
                 this.tags = this.$el.find('.icon-search').val().split(',');
                 this.search();
-                this.$el.find('.icon-search').autocomplete("search", "");
-                return false;
             }
         },
         /**

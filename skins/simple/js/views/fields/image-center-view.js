@@ -74,8 +74,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
                 this.search();
-                this.$el.find('.img-search').autocomplete("search", "");
-                return false;
             } else if (evt.keyCode == 27) {
                 this.hiddenFields();
             }

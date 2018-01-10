@@ -304,10 +304,11 @@ var QoobController = Backbone.Router.extend({ // eslint-disable-line no-unused-v
     removeEmptyDraggableElement: function() {
         this.layout.removeEmptyDraggableElement();
     },
-    showSwipeMenu: function() {
-        this.layout.showSwipeMenu();
-    },
-    hideSwipeMenu: function() {
-        this.layout.hideSwipeMenu();
+    /**
+     * Init swipe horizontal
+     * @param {Object} element
+     */
+    initeSwipeHorizontal: function(element) {
+        this.layout.initeSwipeHorizontal(element);
     }
 });

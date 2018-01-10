@@ -73,7 +73,9 @@ var QoobMenuSettingsView = QoobFieldsView.extend( // eslint-disable-line no-unus
                     config: this.config,
                     'back': this.storage.__('back', 'Back'),
                     'moveUp': this.storage.__('moveUp', 'Move'),
-                    'moveDown': this.storage.__('moveDown', 'Move')
+                    'moveDown': this.storage.__('moveDown', 'Move'),
+                    'delete': this.storage.__('delete', 'Delete')
+                    
                 })
             ).find('.settings-blocks').html(html);
 

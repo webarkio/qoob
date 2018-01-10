@@ -57,24 +57,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
             this.trigger('iframe_loaded');
             this.triggerIframe();
             this.defaultDroppable();
-            this.initSwipe();
-        },
-        initSwipe: function() {
-            var self = this;
-
-            // Init swipe
-            new Hammer(this.getWindowIframe().document.body, {
-                domEvents: true,
-                touchAction: 'pan-y'
-            });
-
-            self.getWindowIframe().jQuery('body').on('swipeleft swiperight', function(e) {
-                if (e.type === 'swipeleft') {
-                    self.controller.layout.hideSwipeMenu();
-                } else if (e.type === 'swiperight') {
-                    self.controller.layout.showSwipeMenu();
-                }
-            });
+            this.controller.initeSwipeHorizontal(this.getWindowIframe().document.body);
         },
         /**
          * Create default droppable zone

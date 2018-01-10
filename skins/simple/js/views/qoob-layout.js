@@ -52,18 +52,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
             });
 
             // Init swipe
-            new Hammer(document.body, {
-                domEvents: true,
-                touchAction: 'pan-y'
-            });
-
-            jQuery('body').on('swipeleft swiperight', function(e) {
-                if (e.type === 'swipeleft') {
-                    self.hideSwipeMenu();
-                } else if (e.type === 'swiperight') {
-                    self.showSwipeMenu();
-                }
-            });
+            this.initeSwipeHorizontal(document.body);
 
             var swipeResize = function() {
                 self.$el.removeClass('mobile tablet desktop');
@@ -206,7 +195,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
                         this.menu.setInnerSettingsView(innerView);
                     }
-                    
+
                     this.menu.showInnerSettingsView(currentId, isBack);
                 } else if (settings.type == "icon") {
                     if (!innerView) {
@@ -267,13 +256,50 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 }
             }
         },
+        /**
+         * Init swipe horizontal
+         * @param {Object} element
+         */
+        initeSwipeHorizontal: function(element) {
+            var self = this,
+                hammer;
+
+            // @property edge: Boolean; `true` for the Edge web browser.
+            var edge = 'msLaunchUri' in navigator && !('documentMode' in document),
+                isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+            if ((edge || isIE11) && !('ontouchstart' in document.documentElement)) {
+                hammer = new Hammer(element, {
+                    domEvents: true,
+                    touchAction: 'pan-y'
+                });
+            } else {
+                hammer = new Hammer.Manager(element, {
+                    touchAction: 'pan-y',
+                    inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
+                    recognizers: [
+                        [Hammer.Swipe, {
+                            direction: Hammer.DIRECTION_HORIZONTAL
+                        }]
+                    ]
+                });
+            }
+
+            hammer.on('swipeleft swiperight', function(e) {
+                if (e.type === 'swipeleft') {
+                    self.hideSwipeMenu();
+                } else if (e.type === 'swiperight') {
+                    self.showSwipeMenu();
+                }
+            });
+        },
         backward: function(url) {
             if (url.length == 0) {
-               this.controller.exit();
-            } else if (url.length > 0)  {
+                this.controller.exit();
+            } else if (url.length > 0) {
                 var hash = url.split("/");
                 if (hash.length > 1) {
-                    hash.pop();               
+                    hash.pop();
                     var currentViewParent = this.menu.currentView.parent;
                     if (currentViewParent.$el.hasClass('field-accordion-settings')) {
                         hash.pop();
@@ -283,7 +309,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         trigger: true,
                         replace: true
                     });
-                }else {
+                } else {
                     var part = ['edit', 'group', 'save-template'];
 
                     for (var i = 0; i < part.length; i++) {
@@ -308,7 +334,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
         render: function() {
             this.sidebar.$el.html([this.menu.render().el]);
             this.$el.html([this.sidebar.render().el, this.viewPort.render().el, this.ImportExport.render().el, this.editModeButton.render().el]);
-            
+
             var deviceLocal = this.getDeviceState();
             if (deviceLocal === 'mobile') {
                 this.showSwipeMenu();

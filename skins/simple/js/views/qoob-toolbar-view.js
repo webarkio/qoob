@@ -89,35 +89,40 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
             "phone": this.storage.__('phone', 'Phone'),
             "autosave": this.storage.__('autosave', 'Autosave'),
             "locale_pages": this.storage.__('pages', 'Pages'),
+            "preview": this.storage.__('preview', 'Preview'),
+            "devices": this.storage.__('devices', 'Devices'),
             "customMenu": []
         };
 
+        data.customMenu = [{
+            "id": "import-export",
+            "label": this.storage.__('importExport', 'Import/export'),
+            "action": function() { self.controller.showImportExportWindow() },
+            "icon": ""
+        }, {
+            "id": "empty-page",
+            "label": this.storage.__('epmtyPage', 'Empty page'),
+            "action": function() { self.controller.removePageData() },
+            "icon": ""
+        }];
+
         if (typeof this.storage.driver.mainMenu === "function") {
-            var staticCustomMenu = [{
-                "id": "import-export",
-                "label": this.storage.__('importExport', 'Import/export'),
-                "action": function() { self.controller.showImportExportWindow() },
-                "icon": ""
-            }, {
-                "id": "empty-page",
-                "label": this.storage.__('epmtyPage', 'Empty page'),
-                "action": function() { self.controller.removePageData() },
-                "icon": ""
-            }];
 
-            this.menu = this.storage.driver.mainMenu(staticCustomMenu);
+            data.customMenu = this.storage.driver.mainMenu(data.customMenu);
 
-            for (var i = 0; i < this.menu.length; i++) {
-                var key = Object.keys(this.menu[i].label);
-                if (this.storage.translations != null) {
-                    this.menu[i].label = this.storage.__(key, this.menu[i].label[key]);
-                } else if(_.isObject(this.menu[i].label)) {
-                    this.menu[i].label = this.menu[i].label[key];
+            for (var i = 0; i < data.customMenu.length; i++) {
+                if(_.isObject(data.customMenu[i].label)) {
+                    var key = Object.keys(data.customMenu[i].label);
+                    if (this.storage.translations != null) {
+                        data.customMenu[i].label = this.storage.__(key, data.customMenu[i].label[key]);
+                    } else {
+                        data.customMenu[i].label = data.customMenu[i].label[key];
+                    }
                 }
             }
-
-            data.customMenu = this.menu;
         }
+
+        this.menu = data.customMenu;
 
         this.$el.html(_.template(this.storage.getSkinTemplate('qoob-toolbar-preview'))(data));
 

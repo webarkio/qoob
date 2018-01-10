@@ -29,10 +29,10 @@
             <span class="seconds-container"><span class="seconds"></span></span>
         </span>
     </button>
-    <button class="control-buttons__button control-buttons__button-preview<% if (device == "mobile") { %> control-buttons__button-preview-disabled<% } %>"></button>
+    <button class="control-buttons__button control-buttons__button-preview<% if (device == 'mobile') { %> control-buttons__button-preview-disabled<% } %>" title="<%= preview %>"></button>
     <div class="control-buttons__button control-buttons__button-preview-list">
         <% if (device == "mobile") { %>
-            <button class="control-buttons__button control-buttons__button-preview-modes control-buttons__button-preview-modes-disabled"></button>
+            <button class="control-buttons__button control-buttons__button-preview-modes control-buttons__button-preview-modes-disabled" title="<%= devices %>"></button>
         <% } else { %>
             <select class="qoob-select-item">
                 <option value="pc" data-icon="fa fa-desktop"><%= desktop %></option>

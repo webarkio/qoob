@@ -160,7 +160,7 @@ Fields.image = QoobFieldView.extend(
                 'media_center': this.storage.__('media_center', 'Media center'),
                 'drop_here': this.storage.__('drop_here', 'Drop here'),
                 'error': this.storage.__('error', 'Error!'),
-                'error_text': this.storage.__('error_text', 'Image size can not exceed 2 mb')
+                'error_text': this.storage.__('errorImageTextSize', 'Image size can not exceed 2 mb')
             };
 
             if (typeof this.storage.driver.fieldImageActions === "function") {
@@ -169,11 +169,13 @@ Fields.image = QoobFieldView.extend(
                 this.customItems = this.storage.driver.fieldImageActions(staticCustom);
                 
                 for (var x = 0; x < this.customItems.length; x++) {
-                    var key = Object.keys(this.customItems[x].label);
-                    if (this.storage.translations != null) {
-                        this.customItems[x].label = this.storage.__(key, this.customItems[x].label[key]);
-                    } else {
-                        this.customItems[x].label = this.customItems[x].label[key];
+                    if(_.isObject(this.customItems[x].label)) {
+                        var key = Object.keys(this.customItems[x].label);
+                        if (this.storage.translations != null) {
+                            this.customItems[x].label = this.storage.__(key, this.customItems[x].label[key]);
+                        } else {
+                            this.customItems[x].label = this.customItems[x].label[key];
+                        }
                     }
                 }
 
