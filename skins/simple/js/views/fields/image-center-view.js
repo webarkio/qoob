@@ -54,6 +54,7 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.src = options.src;
             this.assets = options.assets;
             this.tags = options.tags;
+            this.stockTags = options.tags;
             this.parent = options.parent;
             this.cb = options.cb;
 
@@ -91,9 +92,15 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
             this.$el.find('.image-link').val(url);
 
-            this.$el.find('.ajax-image').removeClass('chosen');
             this.src = url;
-            this.search();
+
+            this.selectImage(this.src);
+        },
+        selectImage: function(url) {
+            var filteredImages = this.$el.find('.filtered-images');
+
+            this.$el.find('.ajax-image').removeClass('chosen');
+            filteredImages.find("[data-url='" + url + "']").addClass('chosen');
         },
         /**
          * Event change input link image
@@ -115,16 +122,12 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * @param {type} evt
          */
         clickListImage: function(evt) {
-            if (evt.currentTarget.classList.contains('chosen')) {
+            if (this.$(evt.currentTarget).hasClass('chosen')) {
                 return;
             }
-            this.$el.find('.ajax-image').removeClass('chosen');
-            evt.currentTarget.classList.add('chosen');
 
             var url = this.$(evt.currentTarget).data('url');
-
-            this.changeImage(url);
-
+ 
             this.cb(url);
         },
         /**
@@ -144,7 +147,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          */
         clickReset: function() {
             if (this.defaults != undefined) {
-                this.changeImage(this.defaults);
                 this.cb(this.defaults);
             }
         },
@@ -152,7 +154,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * Remove image
          */
         clickRemove: function() {
-            this.changeImage('');
             this.cb('');
         },
         showSearchInput: function() {
@@ -179,12 +180,14 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         },
         search: function() {
             var filteredWords = this.$el.find('.img-search').val().split(','),
-                filteredImages = this.$el.find('.filtered-images');
-
+                filteredImages = this.$el.find('.filtered-images'); 
             filteredImages.find('.ajax-image').remove();
+            this.$el.find('.stock-error').remove();
 
             this.tags = filteredWords;
+            this.stockTags = this.$el.find('.img-search').val();
             this.offset = 0;
+            this.stockPage = 0;
             this.loadMore();
 
             // hide inputs
@@ -200,15 +203,50 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         },
         loadMore: function() {
             var filteredImages = this.$el.find('.filtered-images'),
-                images = this.getImages(this.tags, this.offset);
-
+                images = this.getImages(this.tags, this.offset),
+                stockImages = "",
+                self = this;
             if (images) {
                 this.offset = this.offset + this.limit;
                 filteredImages.find('.inview-images').before(images);
                 if (this.checkLoadMore()) {
                     this.loadMore();
                 }
+            } else {
+               this.stockPage = this.stockPage + 1; 
+               this.getUnsplashImages(this.stockTags, this.stockPage, function(stockImages, isImages){
+                    filteredImages.find('.inview-images').before(stockImages);
+                    if (self.checkLoadMore() && isImages) {
+                        self.loadMore();
+                    } 
+                });
             }
+        },
+        getUnsplashImages: function(tags, page, cb) {
+         
+            var stockImages = [];
+
+            jQuery.get( "https://api.unsplash.com/search/photos", 
+            {
+                page: page, 
+                query: tags,
+                per_page: 30,
+                client_id: "77964f7b496e52290be0590f8e6dd6b79650d2ba2e49a9d973e1d9695b77adb8" 
+            }, function(data) {
+                var isImages = true;
+                
+                if( !data.total_pages || page > data.total_pages  ) {
+                    isImages = false;
+                }
+                for (var i = 0; i < data.results.length; i++) {
+                    stockImages.push('<div class="ajax-image' + (data.results[i].urls.thumb === this.src ? ' chosen' : '') + '" style="background-image: url(' + data.results[i].urls.thumb + ');" data-url="' + data.results[i].urls.regular + '"></div>');
+                }
+                cb(stockImages.join(''), isImages);
+
+            }).fail(function(error){
+                stockImages.push('<div class="stock-error" style="display:block;">Unsplash ' + error.responseJSON.errors[0] + '</div>');
+                cb(stockImages.join(''), false);
+            });
         },
         getImages: function(tags, offset) {
             var filteredWords = tags,
@@ -304,8 +342,8 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             if (!!this.tags) {
                 this.$el.find('.img-search').val(this.tags);
             }
-
-            this.loadMore();
+            this.search();
+            // this.loadMore();
             this.$el.find('.filtered-images').on('scroll', function() {
                 if (self.checkLoadMore()) {
                     self.loadMore();
