@@ -26,6 +26,35 @@
     </div>
 
     <div class="filtered-videos">
-        <div class="inview-videos"></div>
+        <div class="search-result-tags">
+            <div class="search-result">
+                <div class="search-result__count search-result__count_half-width">
+                    <span class="search-result__shell-text">
+                        <span class="search-result__text"><%= text_results %>:</span>
+                        <span class="search-result__digit"></span>
+                    </span>
+                    <span class="no-search-result__text"><%= no_search_result %></span>
+                </div>
+                <div class="search-result__tags search-result__tags_half-width">
+                    <span class="search-result__text search-result__text_ellipsis"><%= tags %></span>
+                    <span class="search-result__remove-text"></span>
+                </div>
+            </div>
+        </div>
+        <div class="search-result-all">
+            <div class="search-result">
+                <div class="search-result__count">
+                    <span class="search-result__text"><%= text_all_videos %>:</span>
+                    <span class="search-result__digit"></span>
+                </div>
+            </div>
+        </div>
+        <div class="inview-videos">
+            <div class="settings-media-loader">
+                <svg class="settings-media-loader__circular" viewBox="25 25 50 50">
+                    <circle class="settings-media-loader__path" cx="50" cy="50" r="12" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                </svg>
+            </div>
+        </div>
     </div>
 </div>

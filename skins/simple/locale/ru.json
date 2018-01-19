@@ -41,5 +41,10 @@
     "icon_center": "Иконки",
     "Preview": "Просмотр",
     "Devices": "Устройства",
-    "confirm_delete_block": "Вы уверены, что хотите удалить блок?"
+    "confirm_delete_block": "Вы уверены, что хотите удалить блок?",
+    "results": "Результаты",
+    "noResult": "Нет результатов",
+    "allVideos": "Все видео",
+    "allIcons": "Все иконки",
+    "allImages": "Все изображения"
 }

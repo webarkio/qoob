@@ -10,6 +10,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         dataVideos: null,
         offset: 0,
         limit: 12,
+        numberFoundByTagsVideos: 0,
+        showAllVideos: false,
         events: {
             'keydown': 'keyAction',
             'keyup .video-search': 'searchFilter',
@@ -20,6 +22,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             'click .inner-settings-control__button-search': 'showSearchInput',
             'click .inner-settings-control__button-reset': 'clickReset',
             'click .inner-settings-control__button-remove': 'clickRemove',
+            'click .search-result__remove-text': 'clickRemoveTags',
             'shown': 'afterRender'
         },
         /**
@@ -53,9 +56,9 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.cb = options.cb;
             this.parent = options.parent;
 
-            this.listenTo(this.model, 'change',  function(select){
+            this.listenTo(this.model, 'change', function(select) {
                 var video = Object.keys(select.changed)[0];
-                this.changeVideo({'url': select.changed[video].url, 'preview': select.changed[video].preview});
+                this.changeVideo({ 'url': select.changed[video].url, 'preview': select.changed[video].preview });
             });
 
             //Getting info about all video assets
@@ -77,6 +80,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
                 this.search();
+            } else if (evt.keyCode == 27) {
+                this.hiddenFields();
             }
         },
         changeVideo: function(src) {
@@ -86,9 +91,16 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 this.$el.find('.field-video-container-inner').removeClass('empty');
             }
 
-            this.$el.find('.ajax-video').removeClass('chosen');
             this.src = src;
-            this.search();
+            
+            this.selectVideo(this.src);
+        },
+        selectVideo: function(src) {
+            this.$el.find('.ajax-video').removeClass('chosen');
+            if (src !== '') {
+                var filteredIcons = this.$el.find('.filtered-videos');
+                filteredIcons.find("[data-src='" + src.url + "']").addClass('chosen');
+            }
         },
         clickBackward: function() {
             this.controller.backward();
@@ -108,10 +120,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             var url = this.$(evt.currentTarget).data('src'),
                 preview = this.$(evt.currentTarget).data('preview');
 
-            var src = {'url': url, 'preview': preview};
-
-            this.changeVideo({'url': url, 'preview': preview});
-
+            var src = { 'url': url, 'preview': preview };
             this.cb(src);
         },
         /**
@@ -125,42 +134,48 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          */
         clickReset: function() {
             if (this.defaults != undefined) {
-                this.changeVideo(this.defaults);
-                this.search();
                 this.cb(this.defaults);
             }
         },
         /**
-         * Remove image
+         * Remove video
          */
         clickRemove: function() {
             this.changeVideo('');
+        },
+        clickRemoveTags: function() {
+            this.$el.find('.search-result-tags').hide();
+            this.$el.find('.video-search').val('');
         },
         showSearchInput: function() {
             this.$el.find('.inner-settings-control__search').addClass('inner-settings-control__search-active');
             this.$el.find('.field-input-autocomplete__text').focus();
         },
         blurInput: function() {
-            var self = this;
-
-            setTimeout(function() {
-                if (!self.$el.find(".field-input-autocomplete__icon-search").is(":focus")) {
-                    self.hiddenFields();
-                }
-            }, 0);
+            if (!this.$el.find(".field-input-autocomplete__icon-search").is(":active")) {
+                this.hiddenFields();
+            }
         },
         hiddenFields: function() {
             this.$el.find('.inner-settings-control__search-active').removeClass('inner-settings-control__search-active');
         },
         search: function() {
-            var filteredWords = this.$el.find('.video-search').val().split(','),
-                filteredVideos = this.$el.find('.filtered-videos');
+            this.$el.find('.ajax-video').remove();
+            this.tags = this.$el.find('.video-search').val();
 
-            filteredVideos.find('.ajax-video').remove();
-
-            this.tags = filteredWords;
             this.offset = 0;
+            this.showAllVideos = false;
             this.loadMore();
+
+            if (this.tags != '') {
+                this.$el.find('.search-result__tags .search-result__text').html(this.tags);
+                this.$el.find('.search-result-tags').show();
+            } else {
+                this.$el.find('.search-result-tags').hide();
+            }
+
+            // hide inputs
+            this.hiddenFields();
         },
         checkLoadMore: function() {
             var filteredVideos = this.$el.find('.filtered-videos');
@@ -171,28 +186,64 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             }
         },
         loadMore: function() {
-            var filteredVideos = this.$el.find('.filtered-videos'),
+            this.showLoader();
+
+            var videos;
+
+            if (this.tags == '' || this.showAllVideos) {
+                this.showAllSearchResult();
+
+                videos = this.getVideos('', this.offset);
+                if (videos) {
+                    this.offset = this.offset + this.limit;
+                    this.$el.find('.search-result-all').append(videos);
+
+                    if (this.checkLoadMore()) {
+                        this.loadMore();
+                    } else {
+                        this.hideLoader();
+                    }
+                } else {
+                    this.hideLoader();
+                }
+            } else {
                 videos = this.getVideos(this.tags, this.offset);
 
-            if (videos) {
-                this.offset = this.offset + this.limit;
-                filteredVideos.find('.inview-videos').before(videos);
-                if (this.checkLoadMore()) {
+                if (this.numberFoundByTagsVideos == 0) {
+                    this.$el.find('.search-result-tags .search-result__shell-text').hide();
+                    this.$el.find('.search-result-tags .no-search-result__text').show();
+                } else {
+                    this.$el.find('.search-result-tags .search-result__shell-text').show();
+                    this.$el.find('.search-result-tags .no-search-result__text').hide();
+                    this.$el.find('.search-result-tags .search-result__digit').html(this.numberFoundByTagsVideos);
+                }
+
+                if (videos) {
+                    this.offset = this.offset + this.limit;
+                    this.$el.find('.search-result-tags').append(videos);
+                    if (this.checkLoadMore()) {
+                        this.loadMore();
+                    } else {
+                        this.hideLoader();
+                    }
+                } else {
+                    this.showAllVideos = true;
+                    this.offset = 0;
                     this.loadMore();
                 }
             }
         },
         getVideos: function(tags, offset) {
-            var filteredWords = tags,
+            var tagsArr = tags,
                 result = [];
 
-            if (_.isString(filteredWords)) {
-                filteredWords = filteredWords.split(',');
-            } else if (_.isArray(filteredWords)) {
-                filteredWords = filteredWords.join('').split(' ');
+            if (_.isString(tagsArr)) {
+                tagsArr = tagsArr.split(',');
+            } else if (_.isArray(tagsArr)) {
+                tagsArr = tagsArr.join('').split(' ');
             }
 
-            if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+            if ((tagsArr.length == 1 && tagsArr[tagsArr.length - 1] === '')) {
                 var videos = this.dataVideos.slice(offset, offset + this.limit);
                 for (var i = 0; i < videos.length; i++) {
                     result.push('<div class="ajax-video' + (videos[i].src === this.src.url ? ' chosen ' : '') + '" data-src="' + videos[i].src + '" data-preview="' + videos[i].preview + '" style="background-image: url(' + videos[i].preview + ');"></div>');
@@ -200,14 +251,17 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             } else {
                 var dataSearchVideos = [];
                 for (var y = 0; y < this.dataVideos.length; y++) {
-                    for (var j = 0; j < filteredWords.length; j++) {
-                        if (filteredWords[j] !== '' && this.dataVideos[y].tags.indexOf(filteredWords[j]) != -1) {
+                    for (var j = 0; j < tagsArr.length; j++) {
+                        if (tagsArr[j] !== '' && this.dataVideos[y].tags.indexOf(tagsArr[j]) != -1) {
                             if (dataSearchVideos.indexOf(this.dataVideos[y]) == -1) {
                                 dataSearchVideos.push(this.dataVideos[y]);
                             }
                         }
                     }
                 }
+
+                // Videos count by tags
+                this.numberFoundByTagsVideos = dataSearchVideos.length;
 
                 var searchVideos = dataSearchVideos.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchVideos.length; x++) {
@@ -216,6 +270,20 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             }
 
             return result.join('');
+        },
+        showAllSearchResult: function() {
+            if (!this.$el.find('.search-result-all').is(':visible')) {
+                this.$el.find('.search-result-all').show();
+                this.$el.find('.search-result-all .search-result__digit').html(this.dataVideos.length);
+            }
+        },
+        showLoader: function() {
+            if (!this.$el.find('.settings-media-loader').is(':visible')) {
+                this.$el.find('.settings-media-loader').show();
+            }
+        },
+        hideLoader: function() {
+            this.$el.find('.settings-media-loader').hide();
         },
         /**
          * Keyup event for filtering videos by tags in search input
@@ -259,7 +327,11 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 'hideDeleteButton': this.settings.hideDeleteButton,
                 'search': this.storage.__('search', 'Search'),
                 'back': this.storage.__('back', 'Back'),
-                'src': this.src
+                'text_results': this.storage.__('results', 'Results'),
+                'text_all_videos': this.storage.__('allVideos', 'All videos'),
+                'no_search_result': this.storage.__('noResult', 'No results'),
+                'src': this.src,
+                'tags': this.tags
             }));
 
             return this;
@@ -276,7 +348,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 this.$el.find('.video-search').val(this.tags);
             }
 
-            this.loadMore();
+            this.search();
+
             this.$el.find('.filtered-videos').on('scroll', function() {
                 if (self.checkLoadMore()) {
                     self.loadMore();
@@ -287,10 +360,8 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * Remove view
          */
         dispose: function() {
-            // same as this.$el.remove();
             this.$el.remove();
-            // unbind events that are
-            // set on this view
+            // unbind events view
             this.off();
         },
     });

@@ -189,8 +189,9 @@ QoobStorage.prototype.getAssets = function() {
         for (var i = 0; i < data.length; i++) {
             if (undefined !== data[i].blocks) {
                 for (var j = 0; j < data[i].blocks.length; j++) {
-                    if (!!data[i].blocks[j].assets)
+                    if (undefined !== data[i].blocks[j] && !!data[i].blocks[j].assets) {
                         this.assets.push(data[i].blocks[j].assets);
+                    }
                 }
             }
 

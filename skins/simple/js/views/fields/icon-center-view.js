@@ -9,6 +9,8 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         className: "inner-settings-icon settings inner-settings",
         offset: 0,
         limit: 12,
+        numberFoundByTagsIcons: 0,
+        showAllIcons: false,
         events: {
             'keydown': 'keyAction',
             'keyup .icon-search': 'searchFilter',
@@ -19,6 +21,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             'click .inner-settings-control__button-search': 'showSearchInput',
             'click .inner-settings-control__button-reset': 'clickReset',
             'click .inner-settings-control__button-remove': 'clickRemove',
+            'click .search-result__remove-text': 'clickRemoveTags',
             'shown': 'afterRender'
         },
         /**
@@ -59,8 +62,9 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
-                this.tags = this.$el.find('.icon-search').val().split(',');
                 this.search();
+            } else if (evt.keyCode == 27) {
+                this.hiddenFields();
             }
         },
         /**
@@ -76,13 +80,10 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     'class': '',
                     'data-icon-tags': ''
                 });
-                this.$el.find('.ajax-icon').removeClass('chosen');
                 this.$el.find('.icon-search').val('');
 
                 this.tags = '';
                 this.icon = '';
-                
-                this.cb('');
             } else {
                 var iconObject = this.findByClasses(icon);
 
@@ -96,8 +97,15 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 });
 
                 this.icon = { classes: icon, tags: this.tags };
+            }
 
-                this.cb(icon);
+            this.selectIcon(this.icon);
+        },
+        selectIcon: function(icon) {
+            this.$el.find('.ajax-icon').removeClass('chosen');
+            if (icon !== '') {
+                var filteredIcons = this.$el.find('.filtered-icons');
+                filteredIcons.find("[class='" + icon.classes + "']").parent().addClass('chosen');
             }
         },
         clickBackward: function() {
@@ -110,12 +118,10 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         clickListIcon: function(evt) {
             if (evt.currentTarget.classList.contains('chosen')) {
-                return;
+                return false;
             }
 
             var currentTarget = this.$(evt.currentTarget).find('span');
-            this.$el.find('.ajax-icon').removeClass('chosen');
-            evt.currentTarget.classList.add('chosen');
 
             this.icon = { classes: currentTarget.attr('class'), tags: currentTarget.data('iconTags') };
             this.cb(currentTarget.attr('class'));
@@ -124,7 +130,6 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          * Trigger search by click
          */
         clickSearchButton: function() {
-            this.tags = this.$el.find('.icon-search').val().split(',');
             this.search();
         },
         /**
@@ -132,37 +137,48 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         clickReset: function() {
             if (this.defaults != undefined) {
-                this.changeIcon(this.defaults);
-                this.search();
+                this.cb(this.defaults);
             }
         },
         /**
          * Remove image
          */
         clickRemove: function() {
-            this.changeIcon('');
+            this.cb('');
+        },
+        clickRemoveTags: function() {
+            this.$el.find('.search-result-tags').hide();
+            this.$el.find('.icon-search').val('');
         },
         showSearchInput: function() {
             this.$el.find('.inner-settings-control__search').addClass('inner-settings-control__search-active');
             this.$el.find('.field-input-autocomplete__text').focus();
         },
         blurInput: function() {
-            var self = this;
-
-            setTimeout(function() {
-                if (!self.$el.find(".field-input-autocomplete__icon-search").is(":focus")) {
-                    self.hiddenFields();
-                }
-            }, 0);
+            if (!this.$el.find(".field-input-autocomplete__icon-search").is(":active")) {
+                this.hiddenFields();
+            }
         },
         hiddenFields: function() {
             this.$el.find('.inner-settings-control__search-active').removeClass('inner-settings-control__search-active');
         },
         search: function() {
-            var filteredIcons = this.$el.find('.filtered-icons');
-            filteredIcons.find('.ajax-icon').remove();
+            this.$el.find('.ajax-icon').remove();
+            this.tags = this.$el.find('.icon-search').val();
+
             this.offset = 0;
+            this.showAllIcons = false;
             this.loadMore();
+
+            if (this.tags != '') {
+                this.$el.find('.search-result__tags .search-result__text').html(this.tags);
+                this.$el.find('.search-result-tags').show();
+            } else {
+                this.$el.find('.search-result-tags').hide();
+            }
+
+            // hide inputs
+            this.hiddenFields();
         },
         checkLoadMore: function() {
             var filteredIcons = this.$el.find('.filtered-icons');
@@ -173,28 +189,65 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
         },
         loadMore: function() {
-            var filteredIcons = this.$el.find('.filtered-icons'),
+            this.showLoader();
+
+            var icons;
+
+            if (this.tags == '' || this.showAllIcons) {
+                this.showAllSearchResult();
+
+                icons = this.getIcons('', this.offset);
+
+                if (icons) {
+                    this.offset = this.offset + this.limit;
+                    this.$el.find('.search-result-all').append(icons);
+
+                    if (this.checkLoadMore()) {
+                        this.loadMore();
+                    } else {
+                        this.hideLoader();
+                    }
+                } else {
+                    this.hideLoader();
+                }
+            } else {
                 icons = this.getIcons(this.tags, this.offset);
 
-            if (icons) {
-                this.offset = this.offset + this.limit;
-                filteredIcons.find('.inview-icons').before(icons);
-                if (this.checkLoadMore()) {
+                if (this.numberFoundByTagsIcons == 0) {
+                    this.$el.find('.search-result-tags .search-result__shell-text').hide();
+                    this.$el.find('.search-result-tags .no-search-result__text').show();
+                } else {
+                    this.$el.find('.search-result-tags .search-result__shell-text').show();
+                    this.$el.find('.search-result-tags .no-search-result__text').hide();
+                    this.$el.find('.search-result-tags .search-result__digit').html(this.numberFoundByTagsIcons);
+                }
+
+                if (icons) {
+                    this.offset = this.offset + this.limit;
+                    this.$el.find('.search-result-tags').append(icons);
+                    if (this.checkLoadMore()) {
+                        this.loadMore();
+                    } else {
+                        this.hideLoader();
+                    }
+                } else {
+                    this.showAllIcons = true;
+                    this.offset = 0;
                     this.loadMore();
                 }
             }
         },
         getIcons: function(tags, offset) {
-            var filteredWords = tags,
+            var tagsArr = tags,
                 result = [];
 
-            if (_.isString(filteredWords)) {
-                filteredWords = filteredWords.split(',');
-            } else if (_.isArray(filteredWords)) {
-                filteredWords = filteredWords.join('').split(',');
+            if (_.isString(tagsArr)) {
+                tagsArr = tagsArr.split(',');
+            } else if (_.isArray(tagsArr)) {
+                tagsArr = tagsArr.join('').split(',');
             }
 
-            if ((filteredWords.length <= 1 && filteredWords[0] === '') || !filteredWords) {
+            if ((tagsArr.length == 1 && tagsArr[tagsArr.length - 1] === '')) {
                 var icons = this.icons.slice(offset, offset + this.limit);
                 for (var i = 0; i < icons.length; i++) {
                     result.push('<div class="ajax-icon' + (this.icon != '' && icons[i].classes === this.icon.classes ? ' chosen ' : '') + '"><span data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
@@ -202,15 +255,18 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             } else {
                 var dataSearchIcons = [];
                 for (var y = 0; y < this.icons.length; y++) {
-                    for (var j = 0; j < filteredWords.length; j++) {
-                        var regEx = new RegExp(filteredWords[j].replace(/ /g, ' '));
-                        if (filteredWords[j] !== '' && (this.icons[y].tags && this.icons[y].tags.match(regEx))) {
+                    for (var j = 0; j < tagsArr.length; j++) {
+                        var regEx = new RegExp(tagsArr[j].replace(/ /g, ' '));
+                        if (tagsArr[j] !== '' && (this.icons[y].tags && this.icons[y].tags.match(regEx))) {
                             if (dataSearchIcons.indexOf(this.icons[y]) == -1) {
                                 dataSearchIcons.push(this.icons[y]);
                             }
                         }
                     }
                 }
+
+                // Icons count by tags
+                this.numberFoundByTagsIcons = dataSearchIcons.length;
 
                 var searchIcons = dataSearchIcons.slice(offset, offset + this.limit);
                 for (var x = 0; x < searchIcons.length; x++) {
@@ -219,6 +275,20 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             }
 
             return result.join('');
+        },
+        showAllSearchResult: function() {
+            if (!this.$el.find('.search-result-all').is(':visible')) {
+                this.$el.find('.search-result-all').show();
+                this.$el.find('.search-result-all .search-result__digit').html(this.icons.length);
+            }
+        },
+        showLoader: function() {
+            if (!this.$el.find('.settings-media-loader').is(':visible')) {
+                this.$el.find('.settings-media-loader').show();
+            }
+        },
+        hideLoader: function() {
+            this.$el.find('.settings-media-loader').hide();
         },
         /**
          * Keyup event for filtering icons by tags in search input
@@ -271,7 +341,11 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 "hideDeleteButton": this.settings.hideDeleteButton,
                 'search': this.storage.__('search', 'Search'),
                 'back': this.storage.__('back', 'Back'),
-                'icon': this.icon
+                'text_results': this.storage.__('results', 'Results'),
+                'text_all_icons': this.storage.__('allIcons', 'All icons'),
+                'no_search_result': this.storage.__('noResult', 'No results'),
+                'icon': this.icon,
+                'tags': this.tags
             }));
 
             return this;
@@ -288,7 +362,8 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 this.$el.find('.icon-search').val(this.tags);
             }
 
-            this.loadMore();
+            this.search();
+
             this.$el.find('.filtered-icons').on('scroll', function() {
                 if (self.checkLoadMore()) {
                     self.loadMore();
@@ -300,8 +375,7 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
          */
         dispose: function() {
             this.$el.remove();
-            // unbind events that are
-            // set on this view
+            // unbind events view
             this.off();
         },
     });
