@@ -251,9 +251,9 @@ QoobStorage.prototype.removePageTemplate = function(id) {
         return template.get('external') !== true;
     });
 
-    this.driver.savePageTemplate(pageTemplatesCollection, function(error, state) {
-        if (state) {
-            console.log('Done', state);
+    this.driver.savePageTemplate(pageTemplatesCollection, function(error) {
+        if (error) {
+            console.error(error);
         }
     });
 };

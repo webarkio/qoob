@@ -41,7 +41,7 @@ if (typeof(jQuery) === 'undefined') {
                     } else if ($(this).data('icon') !== undefined) {
                         $options.append($('<li data-value="' + $(this).val() + '" title="' + $(this).html() + '"><i class="' + $(this).data('icon') + '"></i></li>'));
                     } else {
-                        $options.append($('<li data-value="' + $(this).val() + '" title="' + $(this).html() + '"><span>' + $(this).html() + '</span></li>'));
+                        $options.append($('<li data-value="' + $(this).val() + '"><span>' + $(this).html() + '</span></li>'));
                     }
                 });
             }
@@ -63,11 +63,18 @@ if (typeof(jQuery) === 'undefined') {
                         $options.find('li').removeClass('active');
                         $(this).toggleClass('active');
 
-                        var title = $(this).data('title') || $(this).html();
-                        $selectedValue.html(title);
-                        $select.find('option').eq(i).prop('selected', true);
-
                         selectedOptionValue = $(this).data('value');
+                        
+                        $selectedValue[0].dataset.value = selectedOptionValue;
+
+                        $selectedValue.html($(this).html());
+
+                        // Set title
+                        if ($(this).prop('title') != undefined) {
+                            $selectedValue[0].title = $(this).prop('title');
+                        }
+
+                        $select.find('option').eq(i).prop('selected', true);
 
                         $options.trigger('close');
 
