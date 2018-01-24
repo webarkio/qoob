@@ -1586,9 +1586,17 @@ a {
     z-index: 1;
 }
 
-.mobile #qoob-import-export .fa-times {
+.mobile #qoob-import-export .close {
     display: none;
 }
+
+.mobile #qoob-import-export .modal-header .close {
+    display: block;
+    right: 12px;
+    top: 12px;
+    color: #333540;
+}
+
 
 #qoob-import-export .modal-content {
     max-width: 1140px;
@@ -1664,11 +1672,12 @@ a {
     border: 1px solid transparent;
 }
 
+
 #qoob-import-export .modal-footer {
     border-top: 1px solid #e3e3e3;
     padding-right: 23px;
-    padding-top: 23px;
-    padding-left: 15px;
+    padding-left: 23px;
+    padding-top: 15px;
     padding-bottom: 15px;
     text-align: right;
 }
@@ -1687,6 +1696,17 @@ a {
     margin-left: 5px;
 }
 
+@media (max-width: 480px) {
+    #qoob-import-export .modal-footer {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    #qoob-import-export .btn-cancel,
+    #qoob-import-export .btn-save-changes {
+        width: 157px;
+    }
+}
 
 
 /* Add Animation */
@@ -1818,7 +1838,15 @@ a {
     padding: 0 7px;
 }
 
-.save-template-settings .save-loading {
+.button-save-template .save-loading {
+    display: none;
+}
+
+.button-save-template.active .save-loading {
+    display: block;
+}
+
+.button-save-template.active .save {
     display: none;
 }
 
@@ -3905,9 +3933,6 @@ a {
     margin-right: 0;
 }
 
-
-
-
 /* macOS and iOS devices
    ========================================================================== */
 
@@ -3916,7 +3941,9 @@ a {
     -webkit-user-select: text;
 }
 
-
+.ios .search-result {
+    margin-right: 24px;
+}
 
 /* Loader for settings
    ========================================================================== */

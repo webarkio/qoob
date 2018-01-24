@@ -54,9 +54,8 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
             }
         },
         clickCreateTemplate: function(evt) {
-            evt.preventDefault();
-            var self = this;
-            var elem = this.$(evt.currentTarget);
+            var self = this,
+                elem = this.$(evt.currentTarget);
 
             var sorted = _.sortBy(this.storage.pageTemplatesCollection.models, function(obj) {
                 return obj.id;

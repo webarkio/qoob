@@ -52,7 +52,7 @@ var QoobBlockWrapperView = Backbone.View.extend({ // eslint-disable-line no-unus
         }
 
         if (this.controller.layout.$el.hasClass('close-panel')) {
-            this.controller.showSwipeMenu();
+            this.controller.layout.showSwipeMenu();
         }
     },
     droppable: function() {
