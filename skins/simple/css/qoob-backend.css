@@ -690,8 +690,6 @@ a {
     padding-left: 47px;
     height: 100%;
     line-height: 50px;
-    -ms-touch-action: none;
-    touch-action: none;
 }
 
 .group-list__link:focus {
@@ -1451,6 +1449,7 @@ a {
     bottom: 0;
     left: 0;
     z-index: 1;
+    cursor: pointer;
 }
 
 .preview-block img {
@@ -1547,7 +1546,7 @@ a {
 @supports (-ms-ime-align:auto) {
     .settings-blocks,
     .preview-blocks {
-        margin-right: -12px;
+        margin-right: -16px;
     }
 }
 

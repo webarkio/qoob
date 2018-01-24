@@ -31,7 +31,7 @@ var QoobViewportView = Backbone.View.extend( // eslint-disable-line no-unused-va
          */
         render: function() {
             var self = this;
-            // Getting driver page id for iframe
+
             var url = this.storage.driver.getIframePageUrl();
             this.$el.html(_.template(this.storage.getSkinTemplate('qoob-viewport-preview'))({
                 "url": url,

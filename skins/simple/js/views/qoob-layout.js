@@ -285,7 +285,20 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 });
             }
 
+            // stop swipe when open dialog
+            var excludeElement = function() {
+                if (self.$el.find('#qoob-import-export').hasClass('show')) {
+                    return true;
+                }
+
+                return false;
+            };
+
             hammer.on('swipeleft swiperight', function(e) {
+                if (excludeElement()) {
+                    return false;
+                }
+
                 if (e.type === 'swipeleft') {
                     self.hideSwipeMenu();
                 } else if (e.type === 'swiperight') {
@@ -421,7 +434,6 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                     }
                 });
             }
-
         },
         triggerBlocksLoader: function() {
             this.viewPort.trigger('blocks_loaded');

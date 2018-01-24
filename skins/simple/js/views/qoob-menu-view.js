@@ -98,7 +98,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                         return false;
                     } else {
                         if (deviceLocal === 'mobile' || deviceLocal === 'tablet') {
-                            self.controller.hideSwipeMenu();
+                            self.controller.layout.hideSwipeMenu();
                         }
                     }
 
@@ -116,6 +116,7 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.$el.find('.preview-block').each(function() {
                 jQuery(this)[0].addEventListener("MSHoldVisual", function(e) { e.preventDefault(); }, false);
 
+
                 jQuery(this).on("mousedown", function(event) {
                     if (event.buttons === 0 || device.ios()) { } else {
                         longTouch = true;
@@ -123,8 +124,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 });
 
                 jQuery(this).on("touchstart", function(evt) {
-                    var timer;
-                    $this = jQuery(this);
+                    var timer,
+                        $this = jQuery(this);
 
                     parent = $this.parent('.preview-blocks');
 
