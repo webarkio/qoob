@@ -91,7 +91,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 this.scrollTo(param);
             } else if (page == "inner") {
                 var model, accordionView, accordionItem, accordion,
-                    // parentSide = this.menu.currentSide,
+                    parentSide = this.menu.currentSide,
                     parentView = this.menu.currentView,
                     currentId = parentView.name + "_" + param,
                     innerView = this.menu.getView(currentId);
@@ -100,6 +100,21 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 var fieldIndex = param.split("-")[1]; //null
 
                 var settings = _.findWhere(parentView.settings, { name: fieldName });
+
+                // if open accordion and click to other inner
+                if (settings == undefined) {
+                    settings = _.findWhere(parentSide.settings, { name: fieldName });
+                    if (settings != undefined) {
+                        parentView = parentSide;
+                        var hash = this.controller.currentUrl().split("/");
+                        hash.splice(1, 1);
+                        this.controller.navigate(hash.join('/'), {
+                            trigger: true,
+                            replace: true
+                        });
+                    }
+                }
+
                 // var defaults = parentView.defaults[fieldName];
 
                 if (fieldIndex) {

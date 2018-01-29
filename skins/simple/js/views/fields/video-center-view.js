@@ -58,7 +58,9 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
             this.listenTo(this.model, 'change', function(select) {
                 var video = Object.keys(select.changed)[0];
-                this.changeVideo({ 'url': select.changed[video].url, 'preview': select.changed[video].preview });
+                if (video == this.settings.name) {
+                    this.changeVideo({ 'url': select.changed[video].url, 'preview': select.changed[video].preview });
+                }
             });
 
             //Getting info about all video assets

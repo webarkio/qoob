@@ -1499,7 +1499,7 @@ a {
 
 .settings-blocks {
     height: 100%;
-    padding: 0 6px 0 6px;
+    padding: 0 6px 6px 6px;
     overflow-y: scroll;
     margin-right: -17px;
 }
@@ -2816,7 +2816,7 @@ a {
 /* Detect MacOS */
 
 .macos .filtered-images {
-    margin-right: 0;
+    margin-right: -12px;
 }
 
 .filtered-images .ajax-image {
@@ -2999,6 +2999,10 @@ a {
     line-height: 22px;
 }
 
+.macos .filtered-videos {
+    margin-right: -12px;
+}
+
 
 
 /* Field icon
@@ -3138,7 +3142,7 @@ a {
 /* Detect MacOS */
 
 .macos .filtered-icons {
-    margin-right: 0;
+    margin-right: -12px;
 }
 
 .filtered-icons .ajax-icon {

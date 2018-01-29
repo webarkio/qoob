@@ -62,7 +62,9 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
 
             this.listenTo(this.model, 'change', function(select) {
                 var image = Object.keys(select.changed)[0];
-                this.changeImage(select.changed[image]);
+                if (image == this.settings.name) {
+                    this.changeImage(select.changed[image]);
+                }
             });
 
             this.dataImages = [];

@@ -57,7 +57,9 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
 
             this.listenTo(this.model, 'change', function(select) {
                 var icon = Object.keys(select.changed)[0];
-                this.changeIcon(select.changed[icon]);
+                if (icon == this.settings.name) {
+                    this.changeIcon(select.changed[icon]);
+                }
             });
         },
         keyAction: function(evt) {
