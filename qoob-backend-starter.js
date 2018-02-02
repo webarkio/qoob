@@ -46,7 +46,7 @@
     };
 
     QoobStarter.prototype.loadingComplete = function() {
-        if (document.getElementById("qoob_loader_precent") != null) {
+        if (document.getElementById("qoob_loader_precent") !== null) {
             document.getElementById("qoob_loader_precent").innerHTML = 100;
             this.loader.off('progress', this.loadingProgressListener);
             jQuery('#loader-wrapper').delay(100).fadeOut(1000, function() {
