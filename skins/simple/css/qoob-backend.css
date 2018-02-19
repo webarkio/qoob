@@ -2732,6 +2732,7 @@ a {
     position: relative;
     border-radius: 2px;
     margin-bottom: 4px;
+    background-color: #ececec;
 }
 
 .field-image__preview-image {
@@ -2809,6 +2810,7 @@ a {
     overflow-y: scroll;
     margin-right: -22px;
     position: relative;
+    padding-bottom: 50px;
 }
 
 
