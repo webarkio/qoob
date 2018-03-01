@@ -239,13 +239,15 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             var tagsArr = tags,
                 result = [];
 
-            if (_.isString(tagsArr)) {
-                tagsArr = tagsArr.split(',');
-            } else if (_.isArray(tagsArr)) {
-                tagsArr = tagsArr.join('').split(' ');
+            if (tags.indexOf(',') > -1) {
+                tagsArr = tags.split(',').map(function(item) {
+                    return item.trim();
+                });
+            } else if (tags.match(/[^ \s]/g)) {
+                tagsArr = tags.split(' ');
             }
 
-            if ((tagsArr.length == 1 && tagsArr[tagsArr.length - 1] === '')) {
+            if (tagsArr.length === 0) {
                 var videos = this.dataVideos.slice(offset, offset + this.limit);
                 for (var i = 0; i < videos.length; i++) {
                     result.push('<div class="ajax-video' + (videos[i].src === this.src.url ? ' chosen ' : '') + '" data-src="' + videos[i].src + '" data-preview="' + videos[i].preview + '" style="background-image: url(' + videos[i].preview + ');"></div>');

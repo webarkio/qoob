@@ -243,13 +243,15 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             var tagsArr = tags,
                 result = [];
 
-            if (_.isString(tagsArr)) {
-                tagsArr = tagsArr.split(',');
-            } else if (_.isArray(tagsArr)) {
-                tagsArr = tagsArr.join('').split(',');
+            if (tags.indexOf(',') > -1) {
+                tagsArr = tags.split(',').map(function(item) {
+                    return item.trim();
+                });
+            } else if (tags.match(/[^ \s]/g)) {
+                tagsArr = tags.split(' ');
             }
 
-            if ((tagsArr.length == 1 && tagsArr[tagsArr.length - 1] === '')) {
+            if (tagsArr.length === 0) {
                 var icons = this.icons.slice(offset, offset + this.limit);
                 for (var i = 0; i < icons.length; i++) {
                     result.push('<div class="ajax-icon' + (this.icon != '' && icons[i].classes === this.icon.classes ? ' chosen ' : '') + '"><span data-icon-tags="' + icons[i].tags + '" class="' + icons[i].classes + '"></span> </div>');
