@@ -27,6 +27,19 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
         this.controller = options.controller;
     },
     /**
+     * Show loader autosave
+     */
+    showSaveLoader: function() {
+        this.$el.find('.control-buttons__button-save .save-clock').css('display', 'block');
+    },
+    /**
+     * Hide loader autosave
+     */
+    hideSaveLoader: function() {
+        this.$el.find('.control-buttons__button-save .save-clock').css('display', '');
+    },
+    //EVENTS
+    /**
      * Start action custom menu
      * @param {Object} evt
      */
@@ -44,19 +57,6 @@ var QoobToolbarView = Backbone.View.extend({ // eslint-disable-line no-unused-va
             }
         }
     },
-    /**
-     * Show loader autosave
-     */
-    showSaveLoader: function() {
-        this.$el.find('.control-buttons__button-save .save-clock').css('display', 'block');
-    },
-    /**
-     * Hide loader autosave
-     */
-    hideSaveLoader: function() {
-        this.$el.find('.control-buttons__button-save .save-clock').css('display', '');
-    },
-    //EVENTS
     clickPreviewMode: function() {
         this.controller.setPreviewMode();
     },
