@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxazan/qoob.git"
+    "url": "git+https://github.com/webarkio/qoob.git"
   },
   "keywords": [
     "qoob",
@@ -20,14 +20,14 @@
   "author": "Maksym Pomazan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maxazan/qoob/issues"
+    "url": "https://github.com/webarkio/qoob/issues"
   },
-  "homepage": "https://github.com/maxazan/qoob#readme",
+  "homepage": "https://github.com/webarkio/qoob#readme",
   "devDependencies": {
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.2",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-uglify": "^3.2.1",
+    "grunt-contrib-uglify": "^3.3.0",
     "grunt-contrib-cssmin": "^2.2.1",
     "load-grunt-tasks": "^3.5.2"
   }

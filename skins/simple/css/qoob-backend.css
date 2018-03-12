@@ -2078,6 +2078,7 @@ a {
     border: none;
     font-size: 16px;
     -webkit-appearance: none;
+    border: 0 !important;
 }
 
 .field-input-autocomplete__icon-search,
