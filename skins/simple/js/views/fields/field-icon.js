@@ -97,13 +97,17 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
             var htmldata = {
                 'label': this.settings.label,
                 'name': this.settings.name,
-                'icons': _.map(this.settings.presets, function(val) {
+                'icons': this.settings.presets.map(function(val) {
                     return this.findByClasses(val);
-                }.bind(this)),
+                }.bind(this)).filter(function(x) {
+                    return typeof x !== 'undefined';
+                }),
                 'icon': this.findByClasses(this.getValue()) || this.getValue(),
                 'hideDeleteButton': this.settings.hideDeleteButton,
+                'hasLibrary': this.icons.length,
                 'icon_center': this.storage.__('icon_center', 'Icon center'),
-                'reset_to_default': this.storage.__('resetToDefault', 'Reset to default')
+                'reset_to_default': this.storage.__('resetToDefault', 'Reset to default'),
+                'IconLibrariesNotFound': this.storage.__('IconLibrariesNotFound', 'Icon libraries not found')
             };
 
             if (typeof(this.settings.show) == "undefined" || this.settings.show(this.model)) {
