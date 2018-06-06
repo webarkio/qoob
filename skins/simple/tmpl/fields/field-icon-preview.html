@@ -3,45 +3,53 @@
 <div class="field-icon-container<% if (!icon.classes) { %> empty<% } %>">
     <div class="field-icon__preview <% if(icons.length == 0) { %> no-other-icons <% } %>">
         <div class="field-icon__preview-icon show-media-center">
-            <span data-icon-tags="<%= icon.tags %>" class="<%= icon.classes %>"></span>
+            <span data-icon-tags="<% if (icon) { %><%= icon.tags %><% } %>" class="<%= icon.classes %>"></span>
             <% if (!hideDeleteButton || hideDeleteButton !== 1) { %>
                 <i class="field-icon__remove-icon fa fa-times"></i>
             <% } %>
         </div>
-        <div class="field-icon__noicon show-media-center">
-            <i class="field-icon__noicon-icon fa fa-plus"></i>
-        </div>
+        <% if( hasLibrary > 0 ) { %>
+            <div class="field-icon__noicon show-media-center">
+                <i class="field-icon__noicon-icon fa fa-plus"></i>
+            </div>
+        <% } else { %>
+            <div class="field-icon__noicon">
+                <div class="field-icon__noicon-icon"><%= IconLibrariesNotFound %></div>
+            </div>
+        <% } %>
     </div>
-    <% if(icons.length !== 0) { %>
+    <% if (icons.length !== 0) { %>
         <div class="other-icons">
-            <%   for (var i = 0; i < icons.length; i++) { %>
+            <% for (var i = 0; i < icons.length; i++) { %>
                 <div class="other-icon">
                     <span data-icon-tags="<%= icons[i].tags %>" class="<%= icons[i].classes %>">
                 </div>
-            <%}%>
+            <% } %>
         </div>
     <% } %>
 </div>
-<input type="hidden" name="<%= name %>" value="<%= icon.classes %>">
+<input type="hidden" name="<%= name %>" value="<% if (icon) { %><%= icon.classes %><% } %>">
 
-<div class="media-center clearfix">
-    <button type="button" class="show-media-center media-center__button">
-        <i class="media-center__button_image-icon fa fa-cube"></i>
-        <%= icon_center %>
-    </button>
-
-    <div class="qoob-dropdown media-center__button-more">
-        <button class="qoob-dropdown-toggle" type="button">
-            <div class="dot">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+<% if( hasLibrary > 0 ) { %>
+    <div class="media-center clearfix">
+        <button type="button" class="show-media-center media-center__button">
+            <i class="media-center__button_image-icon fa fa-cube"></i>
+            <%= icon_center %>
         </button>
-        <ul class="qoob-dropdown-content">
+
+        <div class="qoob-dropdown media-center__button-more">
+            <button class="qoob-dropdown-toggle" type="button">
+                <div class="dot">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <ul class="qoob-dropdown-content">
                 <li>
                     <a href="#" class="reset"><%= reset_to_default %></a>
                 </li>
-        </ul>
+            </ul>
+        </div>
     </div>
-</div>
+<% } %>

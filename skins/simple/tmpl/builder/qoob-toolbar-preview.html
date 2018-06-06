@@ -31,7 +31,7 @@
     </button>
     <button class="control-buttons__button control-buttons__button-preview<% if (device == 'mobile') { %> control-buttons__button-preview-disabled<% } %>" title="<%= preview %>"></button>
     <div class="control-buttons__button control-buttons__button-preview-list">
-        <% if (device == "mobile") { %>
+        <% if (device == "mobile" || device == "tablet") { %>
             <button class="control-buttons__button control-buttons__button-preview-modes control-buttons__button-preview-modes-disabled" title="<%= devices %>"></button>
         <% } else { %>
             <select class="qoob-select-item">

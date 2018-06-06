@@ -317,6 +317,10 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                 if (e.type === 'swipeleft') {
                     self.hideSwipeMenu();
                 } else if (e.type === 'swiperight') {
+                    if (self.viewPort.previewMode) {
+                        self.controller.setEditMode();
+                    }
+
                     self.showSwipeMenu();
                 }
             });
