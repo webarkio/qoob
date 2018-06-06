@@ -135,7 +135,6 @@ var QoobMenuSavePageTemplateView = Backbone.View.extend( // eslint-disable-line 
 
             this.$el.html(_.template(this.storage.getSkinTemplate('menu-save-template-preview'))(data)).find('.settings-blocks-full').prepend(this.settingsView.getHtml());
 
-
             return this;
         }
     });

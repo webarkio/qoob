@@ -352,5 +352,5 @@
     };
 
     window.QoobStarter = QoobStarter;
-    window.QoobVersion = "3.0.1";
+    window.QoobVersion = "3.0.2";
 }());

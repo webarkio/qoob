@@ -94,14 +94,16 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
          * @returns {Object}
          */
         render: function() {
+            var icons = this.settings.presets ? this.settings.presets.map(function(val) {
+                    return this.findByClasses(val);
+                }.bind(this)).filter(function(x) {
+                    return typeof x !== undefined;
+                }) : '';
+
             var htmldata = {
                 'label': this.settings.label,
                 'name': this.settings.name,
-                'icons': this.settings.presets.map(function(val) {
-                    return this.findByClasses(val);
-                }.bind(this)).filter(function(x) {
-                    return typeof x !== 'undefined';
-                }),
+                'icons': icons,
                 'icon': this.findByClasses(this.getValue()) || this.getValue(),
                 'hideDeleteButton': this.settings.hideDeleteButton,
                 'hasLibrary': this.icons.length,
