@@ -366,7 +366,8 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
         },
         setPreviewMode: function() {
             var deviceLocal = this.controller.layout.getDeviceState();
-            if (deviceLocal == 'desktop' && this.currentView.name == 'catalog-groups') {
+            if (deviceLocal == 'desktop' && 
+                (this.currentView != null && this.currentView.name == 'catalog-groups')) {
                 this.hideSide('right');
 
                 this.controller.navigate('', {

@@ -86,6 +86,7 @@ var QoobImportExportView = Backbone.View.extend( // eslint-disable-line no-unuse
                 "save_changes": this.storage.__('save_changes', 'Save changes'),
                 "page_data": JSON.stringify(json)
             }));
+
             return this;
         }
     });
