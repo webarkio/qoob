@@ -1,12 +1,12 @@
-# Core of Qoob Page Builder 2.0
+# Core of Qoob Page Builder 3.0
 
 Qoob is Realtime Frontend Page Builder of New Generation. Qoob can be integrated in any framework or CMS.
 
-[Main site](http://webark.com/qoob/) 
+[Main site](http://qoob-builder.com/) 
 
-[Documentation](http://webark.com/qoob/docs/) 
+[Documentation](http://qoob-builder.com/docs/) 
 
-[DEMO](http://webark.com/qoob/demo/)
+[DEMO](http://qoob-builder.com:8000/qoob)
 
 This is not installable core of qoob. So you can install finished version of qoob from here:
 
