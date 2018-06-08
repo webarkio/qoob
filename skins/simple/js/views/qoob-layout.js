@@ -141,6 +141,7 @@ var QoobLayout = Backbone.View.extend( // eslint-disable-line no-unused-vars
                             settings: settings.settings,
                             defaults: accordionItem.defaults,
                             parent: parentView,
+                            parentSettings: accordionView.settings,
                             side: parentView.side
                         });
                         innerView.side = innerView;

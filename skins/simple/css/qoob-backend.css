@@ -1467,6 +1467,10 @@ a {
     padding-top: 104px;
 }
 
+.settings__short-pad {
+    padding-top: 46px;
+}
+
 .preview-block-wrap,
 .settings {
     display: none;
@@ -2529,6 +2533,11 @@ a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.field-accordion-item .title-item__long {
+    width: 210px;
+    padding-left: 6px;
 }
 
 .without-title .field-accordion-item .title-item {
