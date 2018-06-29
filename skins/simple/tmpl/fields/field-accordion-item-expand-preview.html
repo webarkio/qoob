@@ -4,15 +4,17 @@
 		<span></span>
 		<span></span>
 	</span>
-	<span class="field-accordion-item__delete">
-		<i class="fa fa-trash-o"></i>
-	</span>
+	<% if (!hideAddDeleteBtn) { %>
+		<span class="field-accordion-item__delete">
+			<i class="fa fa-trash-o"></i>
+		</span>
+	<% } %>
 	<% if( image != undefined ) {%>
 		<span class="preview-image">
 			<img src="<%= image %>" />
 		</span>
 	<% } %>
-	<span class="title-item">
+	<span class="title-item <% if (hideAddDeleteBtn) { %>title-item__long<% } %>">
 		<%= title %>
 	</span>
 	<span class="arrow"></span>

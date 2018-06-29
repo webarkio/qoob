@@ -93,6 +93,7 @@ var FieldAccordionItem = Backbone.View.extend({ // eslint-disable-line no-unused
         var htmldata = {
             "image": image,
             "title": this.model.get('title'),
+            "hideAddDeleteBtn": this.parent.settings.hideAddDeleteBtn ? this.parent.settings.hideAddDeleteBtn : false
         };
 
         var item = (_.template(this.storage.getSkinTemplate('field-accordion-item-expand-preview'))(htmldata));

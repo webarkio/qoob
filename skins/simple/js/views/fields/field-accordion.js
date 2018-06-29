@@ -141,6 +141,7 @@ Fields.accordion = QoobFieldView.extend(
                 "label": this.settings.label,
                 "uniqueId": this.getUniqueId(),
                 "settings": this.settings.settings,
+                "hideAddDeleteBtn": this.settings.hideAddDeleteBtn ? this.settings.hideAddDeleteBtn : false,
                 'add_new_tab': this.storage.__('add_new_tab', 'Add a new item'),
                 'Delete': this.storage.__('delete', 'Delete')
             };

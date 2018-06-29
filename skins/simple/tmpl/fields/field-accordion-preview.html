@@ -1,5 +1,7 @@
 <div id="<%= uniqueId %>" class="accordion <% if(settings.length == 1 && settings[0].type == 'image') {%> without-title <%}%>">
     <label class="accordion-title field-label"><%= label %></label>
-</div>  
+</div>
+<% if (!hideAddDeleteBtn) { %>
 <div class="add-item"><span><%= add_new_tab %></span></div>
 <div id="drop-<%= uniqueId %>" class="dropzone-remove"><span><%= Delete %></span></div>
+<% } %>
