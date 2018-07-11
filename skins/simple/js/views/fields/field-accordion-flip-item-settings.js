@@ -24,6 +24,7 @@ var AccordionFlipItemSettingsView = QoobFieldsView.extend( // eslint-disable-lin
             'click .backward-button': 'clickBackward'
         },
         initialize: function(options) {
+            this.options = options;
             QoobFieldsView.prototype.initialize.call(this, options);
         },
         clickBackward: function() {
@@ -34,7 +35,14 @@ var AccordionFlipItemSettingsView = QoobFieldsView.extend( // eslint-disable-lin
          * @returns {Object}
          */
         render: function() {
-            this.$el.html(_.template(this.storage.getSkinTemplate('field-accordion-item-flip-view-preview'))({'back': this.storage.__('back', 'Back')}));
+            if (this.options.parentSettings.hideAddDeleteBtn == 1) {
+                this.$el.addClass('settings__short-pad');
+            }
+
+            this.$el.html(_.template(this.storage.getSkinTemplate('field-accordion-item-flip-view-preview'))({
+                    'back': this.storage.__('back', 'Back'),
+                    "hideAddDeleteBtn": this.options.parentSettings.hideAddDeleteBtn ? this.options.parentSettings.hideAddDeleteBtn : false,
+            }));
             this.$el.find('.settings-blocks').html(QoobFieldsView.prototype.getHtml.apply(this, arguments));
             return this;
         },
