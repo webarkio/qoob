@@ -280,7 +280,8 @@
     line-height: 300px;
 }
 .content-block-inner .empty-block .empty-block-text {
-    font-family: 'qrobotolight' color: #000;
+    font-family: 'qrobotolight';
+    color: #000;
     font-size: 20px;
 }
 

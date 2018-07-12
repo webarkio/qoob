@@ -66,7 +66,6 @@ function Skin() {
             { "type": "js", "name": "qoob-storage", "src": "js/qoob-storage.js", "dep": ["backbone"] },
             { "type": "js", "name": "qoob-utils", "src": "js/qoob-utils.js", "dep": ["backbone"] },
             { "type": "js", "name": "quill", "src": "js/libs/quill/quill.js", "min_src": "js/libs/quill/quill.min.js", "dep": ["jquery"] },
-            { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "css", "name": "font-awesome.css", "src": "css/font-awesome.css" },
             { "type": "css", "name": "glyphicons.css", "src": "css/glyphicons.css" },
             { "type": "css", "name": "qoob.css", "src": "css/qoob-backend.css", "dep": ["jquery-ui.css"] }
@@ -79,7 +78,7 @@ function Skin() {
         ],
         "all": [
             { "type": "css", "name": "jquery-ui.css", "src": "css/jquery-ui.css" },
-            { "type": "css", "name": "quill.sno.css", "src": "js/libs/quill/quill.snow.css" },
+            { "type": "css", "name": "quill.snow.css", "src": "js/libs/quill/quill.snow.css" },
             { "type": "json", "name": "skin_templates", "src": "tmpl/templates.json" }
         ]
     };
