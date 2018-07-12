@@ -1,6 +1,6 @@
 {
   "name": "qoob",
-  "version": "3.0.0",
+  "version": "3.0.4",
   "description": "Core of qoob builder",
   "main": "index.js",
   "directories": {
