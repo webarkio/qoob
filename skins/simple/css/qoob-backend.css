@@ -922,6 +922,10 @@ a {
     height: 38px;
     font-family: "qrobotoblack";
     padding-left: 24px;
+    padding-right: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pages-dropdown__list-item-link:hover {
