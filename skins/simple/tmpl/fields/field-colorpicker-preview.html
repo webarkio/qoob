@@ -3,15 +3,17 @@
 		<%= label %>
 	</div>
 <% } %>
-<input type="text" class="field-color-picker__input input-text colorpicker-input" name="<%= name %>" value="<%= value %>" style="background-color: <%= value %>; color: <%= inputColor %>;">
+<div class="field-color-picker__container" style="background-color: <%= value %>;">
+	<input type="text" class="field-color-picker__input" name="<%= name %>" value="<%= value %>">
+</div>
 <% if (colors){ %>
-	<div class="field-color-picker__colors-list other-colors">
+	<div class="field-color-picker__colors-list">
 	    <% _.each( colors, function( color , index){ %>
 			<% if (index !== 0 && index % 6 === 0 ) { %>
 				</div>
-				<div class="field-color-picker__colors-list other-colors">
+				<div class="field-color-picker__colors-list">
 			<% } %>
-	        <div class="field-color-picker__color other-color theme-colors" data-color="<%= color %>" style="background-color: <%= color %>">
+	        <div class="field-color-picker__color theme-colors" data-color="<%= color %>" style="background-color: <%= color %>">
 	            <span></span>
 	        </div>
 	    <% }); %>
