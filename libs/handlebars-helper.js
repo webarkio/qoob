@@ -179,6 +179,8 @@ Handlebars.registerHelper('ifIsNthItem', function(options) {
 
     if (index % nth === 0) {
         return options.fn(this);
+    } else {
+        return options.inverse(this);
     }
 });
 
