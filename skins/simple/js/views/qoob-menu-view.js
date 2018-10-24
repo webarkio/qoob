@@ -332,7 +332,9 @@ var QoobMenuView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.controller.stopEditBlock();
 
             var settings = this.getSettingsView(model.id);
-            settings.dispose();
+            if (undefined !== settings) {
+                settings.dispose();
+            }
         },
         hideNotice: function() {
             var viewSaveTemplate = _.findWhere(this.menuViews, { 'id': 'save-template' }),
