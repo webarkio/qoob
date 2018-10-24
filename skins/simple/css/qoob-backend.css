@@ -2711,10 +2711,6 @@ a {
     display: none;
 }
 
-.field-video-container.empty .field-video__preview {
-    display: none;
-}
-
 .field-video-container.empty .field-video__novideo {
     display: block;
     cursor: pointer;
@@ -2744,6 +2740,11 @@ a {
     display: flex;
     align-items: center;
     margin-bottom: 2px;
+}
+
+.field-video-container.empty.empty-preview .field-video__novideo-preview,
+.field-video-container.empty .field-video__preview {
+    display: none;
 }
 
 .field-video__novideo-preview-icon {

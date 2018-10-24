@@ -55,7 +55,6 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.settings = options.settings;
             this.defaults = options.defaults;
             this.src = options.src;
-            this.assets = options.assets;
             this.tags = options.tags;
             this.parent = options.parent;
             this.cb = options.cb;
@@ -67,14 +66,8 @@ var ImageCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
                 }
             });
 
-            this.dataImages = [];
-            for (var i = 0; i < this.assets.length; i++) {
-                for (var j = 0, asset = this.assets[i]; j < asset.length; j++) {
-                    if (asset[j].type === 'image') {
-                        this.dataImages.push({ src: this.assets[i][j].src, tags: this.assets[i][j].tags });
-                    }
-                }
-            }
+            // Image assets
+            this.dataImages = this.storage.getImageAssets();
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {

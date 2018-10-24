@@ -51,33 +51,21 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             this.settings = options.settings;
             this.defaults = options.defaults;
             this.src = options.src;
-            this.assets = options.assets;
             this.tags = options.tags;
             this.cb = options.cb;
             this.parent = options.parent;
 
+            var self = this;
+
             this.listenTo(this.model, 'change', function(select) {
                 var video = Object.keys(select.changed)[0];
-                if (video == this.settings.name) {
-                    this.changeVideo({ 'url': select.changed[video].url, 'preview': select.changed[video].preview });
+                if (video == self.settings.name) {
+                    self.changeVideo({ 'url': select.changed[video].url, 'preview': select.changed[video].preview });
                 }
             });
 
             //Getting info about all video assets
-            this.dataVideos = [];
-            for (var i = 0; i < this.assets.length; i++) {
-                for (var j = 0; j < this.assets[i].length; j++) {
-                    if (this.assets[i][j].type === 'video') {
-                        this.dataVideos.push({
-                            src: this.assets[i][j].src,
-                            pack: this.assets[i][j].pack,
-                            tags: this.assets[i][j].tags,
-                            title: this.assets[i][j].title ? this.assets[i][j].title : '',
-                            preview: this.assets[i][j].preview ? this.assets[i][j].preview : ''
-                        });
-                    }
-                }
-            }
+            this.dataVideos = this.storage.getVideoAssets();
         },
         keyAction: function(evt) {
             if (evt.keyCode == 13) {
@@ -89,19 +77,22 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         changeVideo: function(src) {
             this.$el.find('.field-video__selected-video img').attr('src', src.preview);
 
-            if (this.$el.find('.field-video-container-inner').hasClass('empty')) {
-                this.$el.find('.field-video-container-inner').removeClass('empty');
+            var $container = this.$el.find('.field-video-container-inner');
+
+            if (src.url === undefined || src.preview == '') {
+                $container.addClass('empty');
+            } else if ($container.hasClass('empty')) {
+                $container.removeClass('empty');
             }
 
             this.src = src;
-            
+
             this.selectVideo(this.src);
         },
         selectVideo: function(src) {
             this.$el.find('.ajax-video').removeClass('chosen');
             if (src !== '') {
-                var filteredIcons = this.$el.find('.filtered-videos');
-                filteredIcons.find("[data-src='" + src.url + "']").addClass('chosen');
+                this.$el.find('.filtered-videos').find("[data-src='" + src.url + "']").addClass('chosen');
             }
         },
         clickBackward: function() {
@@ -122,7 +113,10 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
             var url = this.$(evt.currentTarget).data('src'),
                 preview = this.$(evt.currentTarget).data('preview');
 
-            var src = { 'url': url, 'preview': preview };
+            var src = {
+                'url': url,
+                'preview': preview
+            };
             this.cb(src);
         },
         /**
@@ -143,7 +137,7 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
          * Remove video
          */
         clickRemove: function() {
-            this.changeVideo('');
+            this.cb('');
         },
         clickRemoveTags: function() {
             this.$el.find('.search-result-tags').hide();
@@ -342,7 +336,6 @@ var VideoCenterView = Backbone.View.extend( // eslint-disable-line no-unused-var
         },
         /**
          * Actions to do after element is rendered 
-         *
          */
         afterRender: function() {
             var self = this;

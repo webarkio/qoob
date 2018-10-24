@@ -56,24 +56,31 @@ Fields.video = QoobFieldView.extend(
          */
         changeVideo: function(src) {
             this.$el.find('.field-video-container').removeClass('empty');
-            if (!src) {
+
+            if (src == '') {
                 this.$el.find('.field-video-container').addClass('empty');
             }
 
-            this.$el.find('.field-video-container').removeClass('empty-preview');
-            if (!src) {
+            if (src.preview && src.preview != '') {
+                this.$el.find('.field-video-container').removeClass('empty-preview');
+            } else {
                 this.$el.find('.field-video-container').addClass('empty-preview');
             }
 
-
             if (src !== '') {
-                this.$el.find('.field-video__preview-image').attr('src', src.preview);
-                this.model.set(this.$el.find('.field-video__url-hidden').attr('name'), src);
+                if (src.preview) {
+                    this.$el.find('.field-video__preview-image').attr('src', src.preview);
+                    this.$el.find('.field-video__preview-hidden').val(src.preview);
+                } else {
+                    this.$el.find('.field-video__preview-image').attr('src', '');
+                    this.$el.find('.field-video__preview-hidden').val('');
+                }
+
                 this.$el.find('.field-video__url-hidden').val(src.url);
-                this.$el.find('.field-video__preview-hidden').val(src.preview);
+                this.model.set(this.name, src);
             } else {
                 this.$el.find('.field-video__preview-image').attr('src', '');
-                this.model.set(this.$el.find('.field-video__url-hidden').attr('name'), '');
+                this.model.set(this.name, '');
                 this.$el.find('.field-video__url-hidden').val('');
                 this.$el.find('.field-video__preview-hidden').val('');
             }
@@ -121,7 +128,10 @@ Fields.video = QoobFieldView.extend(
                 if (droppedFiles[0].name.match(/.(mp4|ogv|webm)$/i)) {
                     this.storage.driver.uploadVideo(droppedFiles, function(error, url) {
                         if ('' !== url) {
-                            self.changeVideo({'url': url, 'preview': ''});
+                            self.changeVideo({
+                                'url': url,
+                                'preview': ''
+                            });
 
                             if (!container.hasClass('empty-preview')) {
                                 container.addClass('empty-preview');

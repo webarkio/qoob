@@ -48,12 +48,14 @@ var IconCenterView = Backbone.View.extend( // eslint-disable-line no-unused-vars
             this.controller = options.controller;
             this.settings = options.settings;
             this.defaults = options.defaults;
-            this.icons = options.icons;
             this.icon = options.icon;
             this.tags = options.icon.tags || '';
             this.model = options.model;
             this.parent = options.parent;
             this.cb = options.cb;
+
+            //Get all icons from assets
+            this.icons = this.storage.getIcons();
 
             this.listenTo(this.model, 'change', function(select) {
                 var icon = Object.keys(select.changed)[0];

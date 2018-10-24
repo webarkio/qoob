@@ -16,6 +16,9 @@ function QoobStorage(options) {
     this.blockTemplateAdapter = options.blockTemplateAdapter || 'hbs';
     this.pageTemplatesCollection = new Backbone.Collection();
     this.assets = [];
+    this.imageAssets = [];
+    this.videoAssets = [];
+    this.icons = [];
     this.translations = options.translations || null;
 }
 
@@ -186,22 +189,91 @@ QoobStorage.prototype.getAssets = function() {
     var data = this.librariesData;
 
     if (this.assets.length == 0) {
+        var assetsArr = [];
         for (var i = 0; i < data.length; i++) {
             if (undefined !== data[i].blocks) {
                 for (var j = 0; j < data[i].blocks.length; j++) {
                     if (undefined !== data[i].blocks[j] && !!data[i].blocks[j].assets) {
-                        this.assets.push(data[i].blocks[j].assets);
+                        assetsArr.push(data[i].blocks[j].assets);
                     }
                 }
             }
 
             if (undefined !== data[i].assets) {
-                this.assets.push(data[i].assets);
+                assetsArr.push(data[i].assets);
+            }
+        }
+
+        this.assets = _.flatten(assetsArr, true);
+    }
+
+    return this.assets;
+};
+
+/**
+ * Getting image assets from storage
+ * @returns Array of assets
+ */
+QoobStorage.prototype.getImageAssets = function() {
+    if (this.imageAssets.length == 0) {
+        var assets = this.getAssets();
+
+        for (var i = 0; i < assets.length; i++) {
+            if (assets[i].type === 'image') {
+                this.imageAssets.push({
+                    src: assets[i].src,
+                    tags: assets[i].tags
+                });
             }
         }
     }
 
-    return this.assets;
+    return this.imageAssets;
+};
+
+/**
+ * Getting video assets from storage
+ * @returns Array of assets
+ */
+QoobStorage.prototype.getVideoAssets = function() {
+    if (this.videoAssets.length == 0) {
+        var assets = this.getAssets();
+
+        for (var i = 0; i < assets.length; i++) {
+            if (assets[i].type === 'video') {
+                this.videoAssets.push({
+                    src: assets[i].src,
+                    pack: assets[i].pack,
+                    tags: assets[i].tags,
+                    title: assets[i].title ? assets[i].title : '',
+                    preview: assets[i].preview
+                });
+            }
+        }
+    }
+
+    return this.videoAssets;
+};
+
+/**
+ * Getting icons from storage
+ * @returns Array of icons
+ */
+QoobStorage.prototype.getIcons = function() {
+    if (this.icons.length == 0) {
+        var assets = this.getAssets();
+
+        for (var i = 0; i < assets.length; i++) {
+            if (assets[i].type === 'icon') {
+                this.icons.push({
+                    classes: assets[i].classes,
+                    tags: assets[i].tags
+                });
+            }
+        }
+    }
+
+    return this.icons;
 };
 
 /**

@@ -23,21 +23,9 @@ Fields.icon = QoobFieldView.extend( // eslint-disable-line no-unused-vars
         initialize: function(options) {
             QoobFieldView.prototype.initialize.call(this, options);
             this.options = options;
-            var assets = this.storage.getAssets();
-
-            this.icons = [];
 
             //Get all icons from assets
-            for (var i = 0; i < assets.length; i++) {
-                for (var j = 0, aLen = assets[i].length; j < aLen; j++) {
-                    if (assets[i][j].type === 'icon') {
-                        this.icons.push({
-                            classes: assets[i][j].classes,
-                            tags: assets[i][j].tags
-                        });
-                    }
-                }
-            }
+            this.icons = this.storage.getIcons();
 
             this.tpl = _.template(this.storage.getSkinTemplate('field-icon-preview'));
         },
